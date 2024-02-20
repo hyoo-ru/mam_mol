@@ -1,18 +1,4 @@
 	($.$mol_app_demo_detail) = class $mol_app_demo_detail extends ($.$mol_page) {
-		description(){
-			return "";
-		}
-		tools(){
-			return [
-				(this.Readme()), 
-				(this.Chat()), 
-				(this.Edit()), 
-				(this.Close())
-			];
-		}
-		body(){
-			return [(this.Demo())];
-		}
 		readme(next){
 			if(next !== undefined) return next;
 			return false;
@@ -81,6 +67,20 @@
 		Demo(){
 			const obj = new this.$.$mol_view();
 			return obj;
+		}
+		description(){
+			return "";
+		}
+		tools(){
+			return [
+				(this.Readme()), 
+				(this.Chat()), 
+				(this.Edit()), 
+				(this.Close())
+			];
+		}
+		body(){
+			return [(this.Demo())];
 		}
 	};
 	($mol_mem(($.$mol_app_demo_detail.prototype), "readme"));

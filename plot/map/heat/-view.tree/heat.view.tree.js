@@ -1,4 +1,22 @@
 	($.$mol_plot_map_heat) = class $mol_plot_map_heat extends ($.$mol_plot_group) {
+		level_graphs(){
+			return [];
+		}
+		level_hint(id){
+			return "";
+		}
+		level_points(id){
+			return [];
+		}
+		level_opacity(id){
+			return "1";
+		}
+		level_diameter(){
+			return 10;
+		}
+		level_aspect(){
+			return 1;
+		}
 		series_z(){
 			return [];
 		}
@@ -19,33 +37,15 @@
 			(obj.color) = () => ((this.color()));
 			return obj;
 		}
-		level_graphs(){
-			return [];
-		}
-		level_hint(id){
-			return "";
-		}
-		level_points(id){
-			return [];
-		}
-		level_opacity(id){
-			return "1";
-		}
-		level_diameter(){
-			return 10;
-		}
-		level_aspect(){
-			return 1;
-		}
 	};
 	($mol_mem_key(($.$mol_plot_map_heat.prototype), "Level"));
 	($mol_mem(($.$mol_plot_map_heat.prototype), "Sample"));
 	($.$mol_plot_map_heat_level) = class $mol_plot_map_heat_level extends ($.$mol_plot_dot) {
-		style(){
-			return {...(super.style()), "opacity": (this.opacity())};
-		}
 		opacity(){
 			return "1";
+		}
+		style(){
+			return {...(super.style()), "opacity": (this.opacity())};
 		}
 	};
 

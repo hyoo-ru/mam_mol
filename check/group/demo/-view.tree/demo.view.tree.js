@@ -1,16 +1,4 @@
 	($.$mol_check_group_demo) = class $mol_check_group_demo extends ($.$mol_example_small) {
-		title(){
-			return "Group of checkboxes";
-		}
-		sub(){
-			return [(this.Demo_items())];
-		}
-		tags(){
-			return ["multi", "group"];
-		}
-		aspects(){
-			return ["Widget/Control/Button"];
-		}
 		All(){
 			const obj = new this.$.$mol_check_group();
 			(obj.title) = () => ("SPECIAL");
@@ -133,6 +121,18 @@
 			const obj = new this.$.$mol_list();
 			(obj.rows) = () => ([(this.All()), (this.Partial())]);
 			return obj;
+		}
+		title(){
+			return "Group of checkboxes";
+		}
+		sub(){
+			return [(this.Demo_items())];
+		}
+		tags(){
+			return ["multi", "group"];
+		}
+		aspects(){
+			return ["Widget/Control/Button"];
 		}
 	};
 	($mol_mem(($.$mol_check_group_demo.prototype), "All"));

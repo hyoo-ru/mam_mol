@@ -1,16 +1,4 @@
 	($.$mol_password_demo) = class $mol_password_demo extends ($.$mol_example_small) {
-		title(){
-			return "Password input field based on $mol_string";
-		}
-		sub(){
-			return [(this.Simple()), (this.Hint())];
-		}
-		tags(){
-			return ["input"];
-		}
-		aspects(){
-			return ["Widget/Control", "Type/String"];
-		}
 		pass(next){
 			if(next !== undefined) return next;
 			return "Hello world";
@@ -29,6 +17,18 @@
 			(obj.value) = (next) => ((this.pass2(next)));
 			(obj.hint) = () => ("Top secret");
 			return obj;
+		}
+		title(){
+			return "Password input field based on $mol_string";
+		}
+		sub(){
+			return [(this.Simple()), (this.Hint())];
+		}
+		tags(){
+			return ["input"];
+		}
+		aspects(){
+			return ["Widget/Control", "Type/String"];
 		}
 	};
 	($mol_mem(($.$mol_password_demo.prototype), "pass"));

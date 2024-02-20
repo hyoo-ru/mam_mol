@@ -1,14 +1,4 @@
 	($.$mol_perf_uibench) = class $mol_perf_uibench extends ($.$mol_scroll) {
-		attr_static(){
-			return {...(super.attr_static()), "class": "Main"};
-		}
-		sub(){
-			return [
-				(this.Table()), 
-				(this.Anim()), 
-				(this.Tree())
-			];
-		}
 		table_state(){
 			return null;
 		}
@@ -32,6 +22,16 @@
 			const obj = new this.$.$mol_perf_uibench_tree();
 			(obj.state) = () => ((this.tree_state()));
 			return obj;
+		}
+		attr_static(){
+			return {...(super.attr_static()), "class": "Main"};
+		}
+		sub(){
+			return [
+				(this.Table()), 
+				(this.Anim()), 
+				(this.Tree())
+			];
 		}
 	};
 	($mol_mem(($.$mol_perf_uibench.prototype), "Table"));

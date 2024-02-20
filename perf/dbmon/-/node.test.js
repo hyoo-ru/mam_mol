@@ -3090,6 +3090,13 @@ var $;
 
 ;
 	($.$mol_scroll) = class $mol_scroll extends ($.$mol_view) {
+		tabindex(){
+			return -1;
+		}
+		event_scroll(next){
+			if(next !== undefined) return next;
+			return null;
+		}
 		scroll_top(next){
 			if(next !== undefined) return next;
 			return 0;
@@ -3104,17 +3111,10 @@ var $;
 		event(){
 			return {...(super.event()), "scroll": (next) => (this.event_scroll(next))};
 		}
-		tabindex(){
-			return -1;
-		}
-		event_scroll(next){
-			if(next !== undefined) return next;
-			return null;
-		}
 	};
+	($mol_mem(($.$mol_scroll.prototype), "event_scroll"));
 	($mol_mem(($.$mol_scroll.prototype), "scroll_top"));
 	($mol_mem(($.$mol_scroll.prototype), "scroll_left"));
-	($mol_mem(($.$mol_scroll.prototype), "event_scroll"));
 
 
 ;
@@ -3394,6 +3394,15 @@ var $;
 
 ;
 	($.$mol_list) = class $mol_list extends ($.$mol_view) {
+		rows(){
+			return [];
+		}
+		gap_before(){
+			return 0;
+		}
+		gap_after(){
+			return 0;
+		}
 		render_visible_only(){
 			return true;
 		}
@@ -3419,15 +3428,6 @@ var $;
 		}
 		view_window(){
 			return [0, 0];
-		}
-		rows(){
-			return [];
-		}
-		gap_before(){
-			return 0;
-		}
-		gap_after(){
-			return 0;
 		}
 	};
 	($mol_mem(($.$mol_list.prototype), "Empty"));
@@ -3601,25 +3601,6 @@ var $;
 
 ;
 	($.$mol_pop) = class $mol_pop extends ($.$mol_view) {
-		showed(next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		align_vert(){
-			return "";
-		}
-		align_hor(){
-			return "";
-		}
-		prefer(){
-			return "vert";
-		}
-		sub(){
-			return [(this.Anchor())];
-		}
-		sub_visible(){
-			return [(this.Anchor()), (this.Bubble())];
-		}
 		Anchor(){
 			return null;
 		}
@@ -3639,10 +3620,38 @@ var $;
 			(obj.height_max) = () => ((this.height_max()));
 			return obj;
 		}
+		showed(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		align_vert(){
+			return "";
+		}
+		align_hor(){
+			return "";
+		}
+		prefer(){
+			return "vert";
+		}
+		sub(){
+			return [(this.Anchor())];
+		}
+		sub_visible(){
+			return [(this.Anchor()), (this.Bubble())];
+		}
 	};
-	($mol_mem(($.$mol_pop.prototype), "showed"));
 	($mol_mem(($.$mol_pop.prototype), "Bubble"));
+	($mol_mem(($.$mol_pop.prototype), "showed"));
 	($.$mol_pop_bubble) = class $mol_pop_bubble extends ($.$mol_view) {
+		content(){
+			return [];
+		}
+		height_max(){
+			return 9999;
+		}
+		align(){
+			return "";
+		}
 		sub(){
 			return (this.content());
 		}
@@ -3655,15 +3664,6 @@ var $;
 				"mol_pop_align": (this.align()), 
 				"tabindex": 0
 			};
-		}
-		content(){
-			return [];
-		}
-		height_max(){
-			return 9999;
-		}
-		align(){
-			return "";
 		}
 	};
 
@@ -3792,6 +3792,18 @@ var $;
 
 ;
 	($.$mol_pop_over) = class $mol_pop_over extends ($.$mol_pop) {
+		hovered(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		event_show(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		event_hide(next){
+			if(next !== undefined) return next;
+			return null;
+		}
 		showed(){
 			return (this.hovered());
 		}
@@ -3804,18 +3816,6 @@ var $;
 				"mouseenter": (next) => (this.event_show(next)), 
 				"mouseleave": (next) => (this.event_hide(next))
 			};
-		}
-		hovered(next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		event_show(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		event_hide(next){
-			if(next !== undefined) return next;
-			return null;
 		}
 	};
 	($mol_mem(($.$mol_pop_over.prototype), "hovered"));
@@ -3856,24 +3856,6 @@ var $;
 
 ;
 	($.$mol_perf_dbmon) = class $mol_perf_dbmon extends ($.$mol_scroll) {
-		title(){
-			return "dbmon ($mol)";
-		}
-		sub(){
-			return [(this.Databases())];
-		}
-		Database(id){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ((this.database(id)));
-			return obj;
-		}
-		Query(id){
-			const obj = new this.$.$mol_perf_dbmon_query();
-			(obj.elapsed) = () => ((this.query_elapsed(id)));
-			(obj.elapsed_mod) = () => ((this.query_elapsed_mod(id)));
-			(obj.value) = () => ((this.query_value(id)));
-			return obj;
-		}
 		databases(){
 			return [];
 		}
@@ -3921,16 +3903,31 @@ var $;
 		query_value(id){
 			return "";
 		}
+		title(){
+			return "dbmon ($mol)";
+		}
+		sub(){
+			return [(this.Databases())];
+		}
+		Database(id){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this.database(id)));
+			return obj;
+		}
+		Query(id){
+			const obj = new this.$.$mol_perf_dbmon_query();
+			(obj.elapsed) = () => ((this.query_elapsed(id)));
+			(obj.elapsed_mod) = () => ((this.query_elapsed_mod(id)));
+			(obj.value) = () => ((this.query_value(id)));
+			return obj;
+		}
 	};
-	($mol_mem_key(($.$mol_perf_dbmon.prototype), "Database"));
-	($mol_mem_key(($.$mol_perf_dbmon.prototype), "Query"));
 	($mol_mem(($.$mol_perf_dbmon.prototype), "Databases"));
 	($mol_mem_key(($.$mol_perf_dbmon.prototype), "Name"));
 	($mol_mem_key(($.$mol_perf_dbmon.prototype), "Query_count"));
+	($mol_mem_key(($.$mol_perf_dbmon.prototype), "Database"));
+	($mol_mem_key(($.$mol_perf_dbmon.prototype), "Query"));
 	($.$mol_perf_dbmon_query_count) = class $mol_perf_dbmon_query_count extends ($.$mol_view) {
-		sub(){
-			return [(this.Label())];
-		}
 		label_mod(){
 			return "";
 		}
@@ -3943,21 +3940,12 @@ var $;
 			(obj.sub) = () => ([(this.count())]);
 			return obj;
 		}
+		sub(){
+			return [(this.Label())];
+		}
 	};
 	($mol_mem(($.$mol_perf_dbmon_query_count.prototype), "Label"));
 	($.$mol_perf_dbmon_query) = class $mol_perf_dbmon_query extends ($.$mol_pop_over) {
-		minimal_height(){
-			return 40;
-		}
-		Anchor(){
-			return (this.Elapsed());
-		}
-		bubble_content(){
-			return [(this.value())];
-		}
-		align(){
-			return "left_center";
-		}
 		elapsed_mod(){
 			return "";
 		}
@@ -3972,6 +3960,18 @@ var $;
 		}
 		value(){
 			return "";
+		}
+		minimal_height(){
+			return 40;
+		}
+		Anchor(){
+			return (this.Elapsed());
+		}
+		bubble_content(){
+			return [(this.value())];
+		}
+		align(){
+			return "left_center";
 		}
 	};
 	($mol_mem(($.$mol_perf_dbmon_query.prototype), "Elapsed"));

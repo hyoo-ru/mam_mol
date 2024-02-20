@@ -1,16 +1,4 @@
 	($.$mol_dimmer_demo) = class $mol_dimmer_demo extends ($.$mol_example_small) {
-		title(){
-			return "Text with highlighted found substring";
-		}
-		sub(){
-			return [(this.Cases())];
-		}
-		tags(){
-			return ["search", "highlight"];
-		}
-		aspects(){
-			return ["Widget/Text", "Type/String"];
-		}
 		One(){
 			const obj = new this.$.$mol_dimmer();
 			(obj.haystack) = () => ("Don't put all your eggs in one basket");
@@ -58,6 +46,18 @@
 				(this.Six())
 			]);
 			return obj;
+		}
+		title(){
+			return "Text with highlighted found substring";
+		}
+		sub(){
+			return [(this.Cases())];
+		}
+		tags(){
+			return ["search", "highlight"];
+		}
+		aspects(){
+			return ["Widget/Text", "Type/String"];
 		}
 	};
 	($mol_mem(($.$mol_dimmer_demo.prototype), "One"));

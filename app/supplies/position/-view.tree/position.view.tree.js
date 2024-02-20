@@ -1,14 +1,4 @@
 	($.$mol_app_supplies_position) = class $mol_app_supplies_position extends ($.$mol_card) {
-		minimal_height(){
-			return 64;
-		}
-		position(){
-			const obj = new this.$.$mol_app_supplies_domain_supply_position();
-			return obj;
-		}
-		Content(){
-			return (this.Row());
-		}
 		product_title(){
 			return "Product";
 		}
@@ -135,8 +125,17 @@
 			]);
 			return obj;
 		}
+		minimal_height(){
+			return 64;
+		}
+		position(){
+			const obj = new this.$.$mol_app_supplies_domain_supply_position();
+			return obj;
+		}
+		Content(){
+			return (this.Row());
+		}
 	};
-	($mol_mem(($.$mol_app_supplies_position.prototype), "position"));
 	($mol_mem(($.$mol_app_supplies_position.prototype), "Product_item"));
 	($mol_mem(($.$mol_app_supplies_position.prototype), "cost"));
 	($mol_mem(($.$mol_app_supplies_position.prototype), "Cost"));
@@ -152,5 +151,6 @@
 	($mol_mem(($.$mol_app_supplies_position.prototype), "Store_item"));
 	($mol_mem(($.$mol_app_supplies_position.prototype), "Supply_group"));
 	($mol_mem(($.$mol_app_supplies_position.prototype), "Row"));
+	($mol_mem(($.$mol_app_supplies_position.prototype), "position"));
 
 //# sourceMappingURL=position.view.tree.js.map

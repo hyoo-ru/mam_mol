@@ -1,23 +1,23 @@
 declare namespace $ {
 
-	type $mol_view__plugins__VRR9GY8Z = $mol_type_enforce<
+	type $mol_view__plugins__4FRZUUX5 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['plugins'] >
 	>
-	type $mol_view__sub__J15HXJ48 = $mol_type_enforce<
+	type $mol_view__sub__U95E6142 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
 	export class $mol_lights_demo extends $mol_example_small {
+		Theme( ): $mol_theme_auto
+		Lighter( ): $mol_lights_toggle
+		Sample( ): $mol_view
 		title( ): string
 		sub( ): readonly(any)[]
 		tags( ): readonly(any)[]
 		aspects( ): readonly(any)[]
-		Theme( ): $mol_theme_auto
-		Lighter( ): $mol_lights_toggle
-		Sample( ): $mol_view
 	}
 	
 }

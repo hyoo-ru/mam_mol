@@ -1,25 +1,4 @@
 	($.$mol_number_demo) = class $mol_number_demo extends ($.$mol_example_small) {
-		title(){
-			return "Number input control with various configuration";
-		}
-		value(next){
-			if(next !== undefined) return next;
-			return +NaN;
-		}
-		sub(){
-			return [(this.Rows())];
-		}
-		tags(){
-			return [
-				"number", 
-				"field", 
-				"label", 
-				"section"
-			];
-		}
-		aspects(){
-			return ["Widget/Control", "Type/Number"];
-		}
 		value_string(){
 			return "";
 		}
@@ -472,8 +451,28 @@
 			]);
 			return obj;
 		}
+		title(){
+			return "Number input control with various configuration";
+		}
+		value(next){
+			if(next !== undefined) return next;
+			return +NaN;
+		}
+		sub(){
+			return [(this.Rows())];
+		}
+		tags(){
+			return [
+				"number", 
+				"field", 
+				"label", 
+				"section"
+			];
+		}
+		aspects(){
+			return ["Widget/Control", "Type/Number"];
+		}
 	};
-	($mol_mem(($.$mol_number_demo.prototype), "value"));
 	($mol_mem(($.$mol_number_demo.prototype), "Value_string"));
 	($mol_mem(($.$mol_number_demo.prototype), "reset_value"));
 	($mol_mem(($.$mol_number_demo.prototype), "Reset"));
@@ -547,5 +546,6 @@
 	($mol_mem(($.$mol_number_demo.prototype), "Section_range_row"));
 	($mol_mem(($.$mol_number_demo.prototype), "Section_range"));
 	($mol_mem(($.$mol_number_demo.prototype), "Rows"));
+	($mol_mem(($.$mol_number_demo.prototype), "value"));
 
 //# sourceMappingURL=demo.view.tree.js.map

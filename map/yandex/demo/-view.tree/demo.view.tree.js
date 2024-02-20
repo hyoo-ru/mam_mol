@@ -1,13 +1,4 @@
 	($.$mol_map_yandex_demo) = class $mol_map_yandex_demo extends ($.$mol_example_large) {
-		title(){
-			return "Simple Yandex Maps wrapper";
-		}
-		sub(){
-			return [(this.Map())];
-		}
-		aspects(){
-			return ["Integration", "Widget/Map"];
-		}
 		place_title(){
 			return "";
 		}
@@ -28,6 +19,15 @@
 			const obj = new this.$.$mol_map_yandex();
 			(obj.objects) = () => ([(this.Place())]);
 			return obj;
+		}
+		title(){
+			return "Simple Yandex Maps wrapper";
+		}
+		sub(){
+			return [(this.Map())];
+		}
+		aspects(){
+			return ["Integration", "Widget/Map"];
 		}
 	};
 	($mol_mem(($.$mol_map_yandex_demo.prototype), "Place"));

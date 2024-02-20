@@ -1,16 +1,4 @@
 	($.$mol_bar_demo) = class $mol_bar_demo extends ($.$mol_example_small) {
-		title(){
-			return "Group of controls as one control";
-		}
-		sub(){
-			return [(this.Two()), (this.Three())];
-		}
-		tags(){
-			return ["group", "container"];
-		}
-		aspects(){
-			return ["Widget/Layout", "Widget/Island"];
-		}
 		mail_hint(){
 			return "E-mail";
 		}
@@ -60,6 +48,18 @@
 			const obj = new this.$.$mol_bar();
 			(obj.sub) = () => ([(this.Three_mail()), (this.Three_confirm())]);
 			return obj;
+		}
+		title(){
+			return "Group of controls as one control";
+		}
+		sub(){
+			return [(this.Two()), (this.Three())];
+		}
+		tags(){
+			return ["group", "container"];
+		}
+		aspects(){
+			return ["Widget/Layout", "Widget/Island"];
 		}
 	};
 	($mol_mem(($.$mol_bar_demo.prototype), "mail"));

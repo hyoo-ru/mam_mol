@@ -1,24 +1,4 @@
 	($.$mol_chart_demo_simple) = class $mol_chart_demo_simple extends ($.$mol_example_large) {
-		title(){
-			return "Simple chart with hadcoded series";
-		}
-		sub(){
-			return [(this.Chart())];
-		}
-		tags(){
-			return [
-				"plot", 
-				"visualization", 
-				"dashboard"
-			];
-		}
-		aspects(){
-			return [
-				"Widget/Draw/Chart/Line", 
-				"Widget/Draw/Chart/Dot", 
-				"Widget/Draw/Chart/Bar"
-			];
-		}
 		plan_title(){
 			return "Plan";
 		}
@@ -102,6 +82,26 @@
 				(this.Marker_cross())
 			]);
 			return obj;
+		}
+		title(){
+			return "Simple chart with hadcoded series";
+		}
+		sub(){
+			return [(this.Chart())];
+		}
+		tags(){
+			return [
+				"plot", 
+				"visualization", 
+				"dashboard"
+			];
+		}
+		aspects(){
+			return [
+				"Widget/Draw/Chart/Line", 
+				"Widget/Draw/Chart/Dot", 
+				"Widget/Draw/Chart/Bar"
+			];
 		}
 	};
 	($mol_mem(($.$mol_chart_demo_simple.prototype), "Plan"));

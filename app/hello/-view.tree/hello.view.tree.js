@@ -1,7 +1,4 @@
 	($.$mol_app_hello) = class $mol_app_hello extends ($.$mol_view) {
-		sub(){
-			return [(this.Name()), (this.Greeting())];
-		}
 		name_hint(){
 			return "Name";
 		}
@@ -22,6 +19,9 @@
 			const obj = new this.$.$mol_view();
 			(obj.sub) = () => ([(this.greeting())]);
 			return obj;
+		}
+		sub(){
+			return [(this.Name()), (this.Greeting())];
 		}
 	};
 	($mol_mem(($.$mol_app_hello.prototype), "name"));

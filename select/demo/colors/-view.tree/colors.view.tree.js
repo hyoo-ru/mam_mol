@@ -1,21 +1,4 @@
 	($.$mol_select_demo_colors) = class $mol_select_demo_colors extends ($.$mol_example_small) {
-		title(){
-			return "Color picker with filter and custom rows";
-		}
-		sub(){
-			return [(this.Color())];
-		}
-		tags(){
-			return [
-				"select", 
-				"color", 
-				"picker", 
-				"filter"
-			];
-		}
-		aspects(){
-			return ["Widget/Control"];
-		}
 		color_filter(){
 			return (this.Color().filter_pattern());
 		}
@@ -60,6 +43,23 @@
 			(obj.option_content) = (id) => ((this.option_content(id)));
 			return obj;
 		}
+		title(){
+			return "Color picker with filter and custom rows";
+		}
+		sub(){
+			return [(this.Color())];
+		}
+		tags(){
+			return [
+				"select", 
+				"color", 
+				"picker", 
+				"filter"
+			];
+		}
+		aspects(){
+			return ["Widget/Control"];
+		}
 	};
 	($mol_mem(($.$mol_select_demo_colors.prototype), "color"));
 	($mol_mem_key(($.$mol_select_demo_colors.prototype), "Color_preview"));
@@ -67,11 +67,11 @@
 	($mol_mem_key(($.$mol_select_demo_colors.prototype), "Color_option"));
 	($mol_mem(($.$mol_select_demo_colors.prototype), "Color"));
 	($.$mol_select_colors_color_preview) = class $mol_select_colors_color_preview extends ($.$mol_view) {
-		style(){
-			return {...(super.style()), "background": (this.color())};
-		}
 		color(){
 			return "";
+		}
+		style(){
+			return {...(super.style()), "background": (this.color())};
 		}
 	};
 

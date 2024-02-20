@@ -1,20 +1,4 @@
 	($.$mol_check_icon_demo) = class $mol_check_icon_demo extends ($.$mol_example_small) {
-		title(){
-			return "Iconic checkboxes in various states";
-		}
-		sub(){
-			return [
-				(this.Base()), 
-				(this.Checked()), 
-				(this.Disabled())
-			];
-		}
-		tags(){
-			return ["switch", "toggle"];
-		}
-		aspects(){
-			return ["Widget/Control/Button"];
-		}
 		Base_icon(){
 			const obj = new this.$.$mol_icon_microphone();
 			return obj;
@@ -53,6 +37,22 @@
 			(obj.checked) = () => (true);
 			(obj.enabled) = () => (false);
 			return obj;
+		}
+		title(){
+			return "Iconic checkboxes in various states";
+		}
+		sub(){
+			return [
+				(this.Base()), 
+				(this.Checked()), 
+				(this.Disabled())
+			];
+		}
+		tags(){
+			return ["switch", "toggle"];
+		}
+		aspects(){
+			return ["Widget/Control/Button"];
 		}
 	};
 	($mol_mem(($.$mol_check_icon_demo.prototype), "Base_icon"));

@@ -1,4 +1,9 @@
 	($.$mol_filler_demo) = class $mol_filler_demo extends ($.$mol_example_small) {
+		Filler(){
+			const obj = new this.$.$mol_filler();
+			(obj.min_symbols) = () => (6000);
+			return obj;
+		}
 		title(){
 			return "Prints large bulk of text";
 		}
@@ -16,11 +21,6 @@
 		}
 		aspects(){
 			return ["Widget/Text"];
-		}
-		Filler(){
-			const obj = new this.$.$mol_filler();
-			(obj.min_symbols) = () => (6000);
-			return obj;
 		}
 	};
 	($mol_mem(($.$mol_filler_demo.prototype), "Filler"));

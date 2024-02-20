@@ -1,82 +1,71 @@
 declare namespace $ {
 
-	type $mol_tag_tree_sub__9LDYG4MK = $mol_type_enforce<
-		ReturnType< $mol_tag_tree['tag_list'] >[number]
-		,
-		$mol_view
-	>
-	type $mol_tag_tree_sub__9OFZCKBL = $mol_type_enforce<
-		ReturnType< $mol_tag_tree['item_list'] >[number]
-		,
-		$mol_view
-	>
-	type $mol_view__sub__N9FRU40O = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_expander__expandable__V2EPGGTI = $mol_type_enforce<
-		boolean
-		,
-		ReturnType< $mol_expander['expandable'] >
-	>
-	type $mol_expander__expanded__Z9BRWWIR = $mol_type_enforce<
-		ReturnType< $mol_tag_tree['tag_expanded'] >
-		,
-		ReturnType< $mol_expander['expanded'] >
-	>
-	type $mol_expander__title__KKO4SSBI = $mol_type_enforce<
-		ReturnType< $mol_tag_tree['tag_name'] >
-		,
-		ReturnType< $mol_expander['title'] >
-	>
-	type $mol_expander__content__T18AKMMF = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_expander['content'] >
-	>
-	type $mol_tag_tree__ids_tags__LC924UG1 = $mol_type_enforce<
+	type $mol_tag_tree__ids_tags__QG4NPN4S = $mol_type_enforce<
 		ReturnType< $mol_tag_tree['ids_tags'] >
 		,
 		ReturnType< $mol_tag_tree['ids_tags'] >
 	>
-	type $mol_tag_tree__path__D0B7Y5C9 = $mol_type_enforce<
+	type $mol_tag_tree__path__Y4KKRUAG = $mol_type_enforce<
 		ReturnType< $mol_tag_tree['tag_path'] >
 		,
 		ReturnType< $mol_tag_tree['path'] >
 	>
-	type $mol_tag_tree__Item__W0PEDH7W = $mol_type_enforce<
+	type $mol_tag_tree__Item__I1ZNO5TC = $mol_type_enforce<
 		ReturnType< $mol_tag_tree['Item'] >
 		,
 		ReturnType< $mol_tag_tree['Item'] >
 	>
-	type $mol_tag_tree__item_title__DSTFL29I = $mol_type_enforce<
+	type $mol_tag_tree__item_title__HU3H6HNK = $mol_type_enforce<
 		ReturnType< $mol_tag_tree['item_title'] >
 		,
 		ReturnType< $mol_tag_tree['item_title'] >
 	>
-	type $mol_tag_tree__tag_expanded__3LQA5D42 = $mol_type_enforce<
+	type $mol_tag_tree__tag_expanded__PH6WJLGR = $mol_type_enforce<
 		ReturnType< $mol_tag_tree['tag_expanded'] >
 		,
 		ReturnType< $mol_tag_tree['tag_expanded'] >
 	>
-	type $mol_tag_tree__tag_name__MHXOA86N = $mol_type_enforce<
+	type $mol_tag_tree__tag_name__7I2ZSC60 = $mol_type_enforce<
 		ReturnType< $mol_tag_tree['tag_name'] >
 		,
 		ReturnType< $mol_tag_tree['tag_name'] >
+	>
+	type $mol_tag_tree_sub__GBQ7OU3N = $mol_type_enforce<
+		ReturnType< $mol_tag_tree['tag_list'] >[number]
+		,
+		$mol_view
+	>
+	type $mol_tag_tree_sub__SM5T4GUI = $mol_type_enforce<
+		ReturnType< $mol_tag_tree['item_list'] >[number]
+		,
+		$mol_view
+	>
+	type $mol_view__sub__JY76NHFN = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_expander__expandable__TO2ZK9U2 = $mol_type_enforce<
+		boolean
+		,
+		ReturnType< $mol_expander['expandable'] >
+	>
+	type $mol_expander__expanded__3OB39330 = $mol_type_enforce<
+		ReturnType< $mol_tag_tree['tag_expanded'] >
+		,
+		ReturnType< $mol_expander['expanded'] >
+	>
+	type $mol_expander__title__4T28R4QQ = $mol_type_enforce<
+		ReturnType< $mol_tag_tree['tag_name'] >
+		,
+		ReturnType< $mol_expander['title'] >
+	>
+	type $mol_expander__content__RA01M48L = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_expander['content'] >
 	>
 	export class $mol_tag_tree extends $mol_list {
-		path( ): readonly(string)[]
-		ids_tags( ): Record<string, any>
-		ids( ): readonly(any)[]
-		tags( ): readonly(string)[]
-		levels_expanded( ): number
-		sub( ): readonly($mol_view)[]
-		tag_name( id: any): string
-		tag_list( ): readonly($mol_view)[]
-		item_list( ): readonly($mol_view)[]
-		Item( id: any): $mol_view
-		Tag( id: any): $mol_expander
 		tag_list( ): readonly($mol_view)[]
 		item_list( ): readonly($mol_view)[]
 		item_title( id: any): string
@@ -84,6 +73,14 @@ declare namespace $ {
 		tag_name( id: any): string
 		tag_path( id: any): readonly(string)[]
 		Tag_tree( id: any): $mol_tag_tree
+		path( ): readonly(string)[]
+		ids_tags( ): Record<string, any>
+		ids( ): readonly(any)[]
+		tags( ): readonly(string)[]
+		levels_expanded( ): number
+		sub( ): readonly($mol_view)[]
+		Item( id: any): $mol_view
+		Tag( id: any): $mol_expander
 	}
 	
 }

@@ -3084,6 +3084,12 @@ var $;
 
 ;
 	($.$mol_speck) = class $mol_speck extends ($.$mol_view) {
+		theme(){
+			return "$mol_theme_accent";
+		}
+		value(){
+			return null;
+		}
 		attr(){
 			return {...(super.attr()), "mol_theme": (this.theme())};
 		}
@@ -3092,12 +3098,6 @@ var $;
 		}
 		sub(){
 			return [(this.value())];
-		}
-		theme(){
-			return "$mol_theme_accent";
-		}
-		value(){
-			return null;
 		}
 	};
 
@@ -3134,6 +3134,33 @@ var $;
 
 ;
 	($.$mol_button) = class $mol_button extends ($.$mol_view) {
+		event_activate(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		clicks(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		event_key_press(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		disabled(){
+			return false;
+		}
+		tab_index(){
+			return 0;
+		}
+		hint(){
+			return "";
+		}
+		hint_safe(){
+			return (this.hint());
+		}
+		error(){
+			return "";
+		}
 		enabled(){
 			return true;
 		}
@@ -3170,40 +3197,13 @@ var $;
 			(obj.value) = () => ((this.error()));
 			return obj;
 		}
-		event_activate(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		clicks(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		event_key_press(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		disabled(){
-			return false;
-		}
-		tab_index(){
-			return 0;
-		}
-		hint(){
-			return "";
-		}
-		hint_safe(){
-			return (this.hint());
-		}
-		error(){
-			return "";
-		}
 	};
-	($mol_mem(($.$mol_button.prototype), "click"));
-	($mol_mem(($.$mol_button.prototype), "event_click"));
-	($mol_mem(($.$mol_button.prototype), "Speck"));
 	($mol_mem(($.$mol_button.prototype), "event_activate"));
 	($mol_mem(($.$mol_button.prototype), "clicks"));
 	($mol_mem(($.$mol_button.prototype), "event_key_press"));
+	($mol_mem(($.$mol_button.prototype), "click"));
+	($mol_mem(($.$mol_button.prototype), "event_click"));
+	($mol_mem(($.$mol_button.prototype), "Speck"));
 
 
 ;
@@ -3450,23 +3450,6 @@ var $;
 
 ;
 	($.$mol_perf_dopes) = class $mol_perf_dopes extends ($.$mol_view) {
-		title(){
-			return "Dopes";
-		}
-		sub(){
-			return [
-				(this.Speed()), 
-				(this.Start()), 
-				(this.Stop()), 
-				(this.Labels())
-			];
-		}
-		Label(id){
-			const obj = new this.$.$mol_view();
-			(obj.style) = () => ({"color": (this.label_color(id)), "transform": (this.label_transform(id))});
-			(obj.sub) = () => (["Dope"]);
-			return obj;
-		}
 		speed(){
 			return "{speed} Dopes/s";
 		}
@@ -3509,14 +3492,31 @@ var $;
 		label_transform(id){
 			return "";
 		}
+		title(){
+			return "Dopes";
+		}
+		sub(){
+			return [
+				(this.Speed()), 
+				(this.Start()), 
+				(this.Stop()), 
+				(this.Labels())
+			];
+		}
+		Label(id){
+			const obj = new this.$.$mol_view();
+			(obj.style) = () => ({"color": (this.label_color(id)), "transform": (this.label_transform(id))});
+			(obj.sub) = () => (["Dope"]);
+			return obj;
+		}
 	};
-	($mol_mem_key(($.$mol_perf_dopes.prototype), "Label"));
 	($mol_mem(($.$mol_perf_dopes.prototype), "Speed"));
 	($mol_mem(($.$mol_perf_dopes.prototype), "start"));
 	($mol_mem(($.$mol_perf_dopes.prototype), "Start"));
 	($mol_mem(($.$mol_perf_dopes.prototype), "stop"));
 	($mol_mem(($.$mol_perf_dopes.prototype), "Stop"));
 	($mol_mem(($.$mol_perf_dopes.prototype), "Labels"));
+	($mol_mem_key(($.$mol_perf_dopes.prototype), "Label"));
 
 
 ;

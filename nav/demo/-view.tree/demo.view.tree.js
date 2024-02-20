@@ -1,19 +1,4 @@
 	($.$mol_nav_demo) = class $mol_nav_demo extends ($.$mol_example) {
-		title(){
-			return "Number input control with various configuration";
-		}
-		plugins(){
-			return [(this.Nav())];
-		}
-		sub(){
-			return [(this.Demo_items())];
-		}
-		tags(){
-			return ["navigation"];
-		}
-		aspects(){
-			return ["Widget/Plugin", "Controler/Keyboard"];
-		}
 		Nav(){
 			const obj = new this.$.$mol_nav();
 			(obj.keys_x) = () => ((this.tab_list()));
@@ -61,6 +46,21 @@
 			(obj.content) = () => ([(this.Tab_list()), (this.Row_list())]);
 			(obj.status) = () => ("Select option and use keys to switch");
 			return obj;
+		}
+		title(){
+			return "Number input control with various configuration";
+		}
+		plugins(){
+			return [(this.Nav())];
+		}
+		sub(){
+			return [(this.Demo_items())];
+		}
+		tags(){
+			return ["navigation"];
+		}
+		aspects(){
+			return ["Widget/Plugin", "Controler/Keyboard"];
 		}
 	};
 	($mol_mem(($.$mol_nav_demo.prototype), "Nav"));

@@ -1,16 +1,4 @@
 	($.$mol_select_demo_priority) = class $mol_select_demo_priority extends ($.$mol_example_small) {
-		title(){
-			return "Priority picker";
-		}
-		sub(){
-			return [(this.Priority())];
-		}
-		tags(){
-			return ["select", "priority"];
-		}
-		aspects(){
-			return ["Widget/Control"];
-		}
 		priority(next){
 			if(next !== undefined) return next;
 			return "Lowest";
@@ -27,6 +15,18 @@
 				"Lowest"
 			]);
 			return obj;
+		}
+		title(){
+			return "Priority picker";
+		}
+		sub(){
+			return [(this.Priority())];
+		}
+		tags(){
+			return ["select", "priority"];
+		}
+		aspects(){
+			return ["Widget/Control"];
 		}
 	};
 	($mol_mem(($.$mol_select_demo_priority.prototype), "priority"));

@@ -1,25 +1,4 @@
 	($.$mol_infinite_demo) = class $mol_infinite_demo extends ($.$mol_example_large) {
-		title(){
-			return "Infinite list demo";
-		}
-		chunk_size(){
-			return 20;
-		}
-		sub(){
-			return [(this.Scroll())];
-		}
-		tags(){
-			return [
-				"avatar", 
-				"infinite", 
-				"scroll", 
-				"virtual", 
-				"container"
-			];
-		}
-		aspects(){
-			return ["Widget/Layout"];
-		}
 		before(id){
 			return [];
 		}
@@ -71,6 +50,27 @@
 			const obj = new this.$.$mol_scroll();
 			(obj.sub) = () => ([(this.List())]);
 			return obj;
+		}
+		title(){
+			return "Infinite list demo";
+		}
+		chunk_size(){
+			return 20;
+		}
+		sub(){
+			return [(this.Scroll())];
+		}
+		tags(){
+			return [
+				"avatar", 
+				"infinite", 
+				"scroll", 
+				"virtual", 
+				"container"
+			];
+		}
+		aspects(){
+			return ["Widget/Layout"];
 		}
 	};
 	($mol_mem_key(($.$mol_infinite_demo.prototype), "Photo"));

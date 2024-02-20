@@ -1,4 +1,7 @@
 	($.$mol_follower) = class $mol_follower extends ($.$mol_ghost) {
+		transform(){
+			return "";
+		}
 		Anchor(){
 			const obj = new this.$.$mol_view();
 			return obj;
@@ -8,9 +11,6 @@
 		}
 		style(){
 			return {...(super.style()), "transform": (this.transform())};
-		}
-		transform(){
-			return "";
 		}
 	};
 	($mol_mem(($.$mol_follower.prototype), "Anchor"));

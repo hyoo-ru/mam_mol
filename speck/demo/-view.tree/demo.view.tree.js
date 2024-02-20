@@ -1,22 +1,4 @@
 	($.$mol_speck_demo) = class $mol_speck_demo extends ($.$mol_example_small) {
-		sub(){
-			return [
-				(this.Link()), 
-				(this.String()), 
-				(this.Button()), 
-				(this.Message())
-			];
-		}
-		tags(){
-			return [
-				"speck", 
-				"highlight", 
-				"badge"
-			];
-		}
-		aspects(){
-			return ["Widget"];
-		}
 		Link_speck(){
 			const obj = new this.$.$mol_speck();
 			(obj.value) = () => ("β");
@@ -76,6 +58,24 @@
 			const obj = new this.$.$mol_paragraph();
 			(obj.sub) = () => ([(this.Message_speck()), (this.message_text())]);
 			return obj;
+		}
+		sub(){
+			return [
+				(this.Link()), 
+				(this.String()), 
+				(this.Button()), 
+				(this.Message())
+			];
+		}
+		tags(){
+			return [
+				"speck", 
+				"highlight", 
+				"badge"
+			];
+		}
+		aspects(){
+			return ["Widget"];
 		}
 	};
 	($mol_mem(($.$mol_speck_demo.prototype), "Link_speck"));

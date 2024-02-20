@@ -1,31 +1,4 @@
 	($.$mol_code_demo) = class $mol_code_demo extends ($.$mol_example_small) {
-		title(){
-			return "Barcode scanner with various formats support";
-		}
-		sub(){
-			return [
-				(this.Qr()), 
-				(this.Matrix()), 
-				(this.Upc_e()), 
-				(this.Upc_a()), 
-				(this.Ean_8()), 
-				(this.Ean_13()), 
-				(this.Code_128()), 
-				(this.Code_39()), 
-				(this.Itf())
-			];
-		}
-		tags(){
-			return [
-				"qrcode", 
-				"barcode", 
-				"scan", 
-				"cordova"
-			];
-		}
-		aspects(){
-			return ["Widget/Control"];
-		}
 		Qr(){
 			const obj = new this.$.$mol_code();
 			(obj.format) = () => ("QR_CODE");
@@ -70,6 +43,33 @@
 			const obj = new this.$.$mol_code();
 			(obj.format) = () => ("ITF");
 			return obj;
+		}
+		title(){
+			return "Barcode scanner with various formats support";
+		}
+		sub(){
+			return [
+				(this.Qr()), 
+				(this.Matrix()), 
+				(this.Upc_e()), 
+				(this.Upc_a()), 
+				(this.Ean_8()), 
+				(this.Ean_13()), 
+				(this.Code_128()), 
+				(this.Code_39()), 
+				(this.Itf())
+			];
+		}
+		tags(){
+			return [
+				"qrcode", 
+				"barcode", 
+				"scan", 
+				"cordova"
+			];
+		}
+		aspects(){
+			return ["Widget/Control"];
 		}
 	};
 	($mol_mem(($.$mol_code_demo.prototype), "Qr"));

@@ -1,4 +1,12 @@
 	($.$mol_perf_uibench_tree) = class $mol_perf_uibench_tree extends ($.$mol_view) {
+		root_state(){
+			return null;
+		}
+		Root(){
+			const obj = new this.$.$mol_perf_uibench_tree_branch();
+			(obj.state) = () => ((this.root_state()));
+			return obj;
+		}
 		state(){
 			return null;
 		}
@@ -8,17 +16,15 @@
 		sub(){
 			return [(this.Root())];
 		}
-		root_state(){
-			return null;
-		}
-		Root(){
-			const obj = new this.$.$mol_perf_uibench_tree_branch();
-			(obj.state) = () => ((this.root_state()));
-			return obj;
-		}
 	};
 	($mol_mem(($.$mol_perf_uibench_tree.prototype), "Root"));
 	($.$mol_perf_uibench_tree_branch) = class $mol_perf_uibench_tree_branch extends ($.$mol_list) {
+		branch_state(id){
+			return null;
+		}
+		leaf_state(id){
+			return null;
+		}
 		state(){
 			return null;
 		}
@@ -38,16 +44,13 @@
 			(obj.text) = () => ((this.leaf_state(id)));
 			return obj;
 		}
-		branch_state(id){
-			return null;
-		}
-		leaf_state(id){
-			return null;
-		}
 	};
 	($mol_mem_key(($.$mol_perf_uibench_tree_branch.prototype), "Branch"));
 	($mol_mem_key(($.$mol_perf_uibench_tree_branch.prototype), "Leaf"));
 	($.$mol_perf_uibench_tree_leaf) = class $mol_perf_uibench_tree_leaf extends ($.$mol_view) {
+		text(){
+			return "";
+		}
 		minimal_height(){
 			return 26;
 		}
@@ -59,9 +62,6 @@
 		}
 		sub(){
 			return [(this.text())];
-		}
-		text(){
-			return "";
 		}
 	};
 

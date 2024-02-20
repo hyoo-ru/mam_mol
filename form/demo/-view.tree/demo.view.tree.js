@@ -1,39 +1,4 @@
 	($.$mol_form_demo) = class $mol_form_demo extends ($.$mol_example) {
-		title(){
-			return "Sign Up form demo";
-		}
-		message(){
-			return {
-				"required": "Required", 
-				"adult": "18+ only", 
-				"no_spaces": "No spaces!", 
-				"need_more_letters": "{count} or more letters", 
-				"need_at": "@ is required", 
-				"only_one_at": "At most one @", 
-				"no_tld": "At least 2 level domain", 
-				"dots_inside": "Dots can't be at edge", 
-				"no_space_domain": "No space in domain name", 
-				"need_username": "Username required"
-			};
-		}
-		sub(){
-			return [(this.Form())];
-		}
-		tags(){
-			return [
-				"$mol_form_field", 
-				"$mol_button", 
-				"$mol_row", 
-				"$mol_string", 
-				"form", 
-				"bids", 
-				"validation", 
-				"field"
-			];
-		}
-		aspects(){
-			return ["Widget/Form"];
-		}
 		avatars_bid(){
 			return "";
 		}
@@ -260,6 +225,41 @@
 			(obj.submit) = (next) => ((this.signup(next)));
 			(obj.buttons) = () => ([(this.Signup()), (this.Result())]);
 			return obj;
+		}
+		title(){
+			return "Sign Up form demo";
+		}
+		message(){
+			return {
+				"required": "Required", 
+				"adult": "18+ only", 
+				"no_spaces": "No spaces!", 
+				"need_more_letters": "{count} or more letters", 
+				"need_at": "@ is required", 
+				"only_one_at": "At most one @", 
+				"no_tld": "At least 2 level domain", 
+				"dots_inside": "Dots can't be at edge", 
+				"no_space_domain": "No space in domain name", 
+				"need_username": "Username required"
+			};
+		}
+		sub(){
+			return [(this.Form())];
+		}
+		tags(){
+			return [
+				"$mol_form_field", 
+				"$mol_button", 
+				"$mol_row", 
+				"$mol_string", 
+				"form", 
+				"bids", 
+				"validation", 
+				"field"
+			];
+		}
+		aspects(){
+			return ["Widget/Form"];
 		}
 	};
 	($mol_mem(($.$mol_form_demo.prototype), "avatars"));

@@ -1,4 +1,10 @@
 	($.$mol_perf_uibench_table) = class $mol_perf_uibench_table extends ($.$mol_list) {
+		rows(){
+			return [];
+		}
+		row_state(id){
+			return null;
+		}
 		state(){
 			return null;
 		}
@@ -16,15 +22,29 @@
 			(obj.state) = () => ((this.row_state(id)));
 			return obj;
 		}
-		rows(){
-			return [];
-		}
-		row_state(id){
-			return null;
-		}
 	};
 	($mol_mem_key(($.$mol_perf_uibench_table.prototype), "Row"));
 	($.$mol_perf_uibench_table_row) = class $mol_perf_uibench_table_row extends ($.$mol_view) {
+		classes(){
+			return "TableRow";
+		}
+		id(){
+			return 0;
+		}
+		head_text(){
+			return "";
+		}
+		Head(){
+			const obj = new this.$.$mol_perf_uibench_table_cell();
+			(obj.text) = () => ((this.head_text()));
+			return obj;
+		}
+		cells(){
+			return [];
+		}
+		cell_state(id){
+			return null;
+		}
 		state(){
 			return null;
 		}
@@ -49,30 +69,17 @@
 			(obj.text) = () => ((this.cell_state(id)));
 			return obj;
 		}
-		classes(){
-			return "TableRow";
-		}
-		id(){
-			return 0;
-		}
-		head_text(){
-			return "";
-		}
-		Head(){
-			const obj = new this.$.$mol_perf_uibench_table_cell();
-			(obj.text) = () => ((this.head_text()));
-			return obj;
-		}
-		cells(){
-			return [];
-		}
-		cell_state(id){
+	};
+	($mol_mem(($.$mol_perf_uibench_table_row.prototype), "Head"));
+	($mol_mem_key(($.$mol_perf_uibench_table_row.prototype), "Cell"));
+	($.$mol_perf_uibench_table_cell) = class $mol_perf_uibench_table_cell extends ($.$mol_view) {
+		click(next){
+			if(next !== undefined) return next;
 			return null;
 		}
-	};
-	($mol_mem_key(($.$mol_perf_uibench_table_row.prototype), "Cell"));
-	($mol_mem(($.$mol_perf_uibench_table_row.prototype), "Head"));
-	($.$mol_perf_uibench_table_cell) = class $mol_perf_uibench_table_cell extends ($.$mol_view) {
+		text(){
+			return "";
+		}
 		dom_name(){
 			return "td";
 		}
@@ -84,13 +91,6 @@
 		}
 		sub(){
 			return [(this.text())];
-		}
-		click(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		text(){
-			return "";
 		}
 	};
 	($mol_mem(($.$mol_perf_uibench_table_cell.prototype), "click"));

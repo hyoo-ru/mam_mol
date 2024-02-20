@@ -1,13 +1,4 @@
 	($.$mol_app_supplies_card) = class $mol_app_supplies_card extends ($.$mol_link) {
-		supply(){
-			return null;
-		}
-		minimal_height(){
-			return 125;
-		}
-		sub(){
-			return [(this.Card())];
-		}
 		status(){
 			return "";
 		}
@@ -71,6 +62,15 @@
 			(obj.status) = () => ((this.status()));
 			(obj.Content) = () => ((this.Group()));
 			return obj;
+		}
+		supply(){
+			return null;
+		}
+		minimal_height(){
+			return 125;
+		}
+		sub(){
+			return [(this.Card())];
 		}
 	};
 	($mol_mem(($.$mol_app_supplies_card.prototype), "Code_item"));

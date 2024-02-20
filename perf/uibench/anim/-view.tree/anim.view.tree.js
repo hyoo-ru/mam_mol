@@ -1,4 +1,10 @@
 	($.$mol_perf_uibench_anim) = class $mol_perf_uibench_anim extends ($.$mol_view) {
+		boxes(){
+			return [];
+		}
+		box_state(id){
+			return null;
+		}
 		state(){
 			return null;
 		}
@@ -13,15 +19,18 @@
 			(obj.state) = () => ((this.box_state(id)));
 			return obj;
 		}
-		boxes(){
-			return [];
-		}
-		box_state(id){
-			return null;
-		}
 	};
 	($mol_mem_key(($.$mol_perf_uibench_anim.prototype), "Box"));
 	($.$mol_perf_uibench_anim_box) = class $mol_perf_uibench_anim_box extends ($.$mol_view) {
+		id(){
+			return "";
+		}
+		style_radius(){
+			return "";
+		}
+		style_color(){
+			return "";
+		}
 		state(){
 			return null;
 		}
@@ -38,15 +47,6 @@
 				"borderRadius": (this.style_radius()), 
 				"background": (this.style_color())
 			};
-		}
-		id(){
-			return "";
-		}
-		style_radius(){
-			return "";
-		}
-		style_color(){
-			return "";
 		}
 	};
 

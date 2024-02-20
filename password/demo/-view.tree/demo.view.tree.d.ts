@@ -1,29 +1,29 @@
 declare namespace $ {
 
-	type $mol_password__value__MAZ9V5R6 = $mol_type_enforce<
+	type $mol_password__value__VP8PED66 = $mol_type_enforce<
 		ReturnType< $mol_password_demo['pass'] >
 		,
 		ReturnType< $mol_password['value'] >
 	>
-	type $mol_password__value__GV36B2LK = $mol_type_enforce<
+	type $mol_password__value__0X1ZS8EL = $mol_type_enforce<
 		ReturnType< $mol_password_demo['pass2'] >
 		,
 		ReturnType< $mol_password['value'] >
 	>
-	type $mol_password__hint__1W70NS86 = $mol_type_enforce<
+	type $mol_password__hint__OMBGEVXE = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_password['hint'] >
 	>
 	export class $mol_password_demo extends $mol_example_small {
-		title( ): string
-		sub( ): readonly(any)[]
-		tags( ): readonly(any)[]
-		aspects( ): readonly(any)[]
 		pass( next?: string ): string
 		Simple( ): $mol_password
 		pass2( next?: string ): string
 		Hint( ): $mol_password
+		title( ): string
+		sub( ): readonly(any)[]
+		tags( ): readonly(any)[]
+		aspects( ): readonly(any)[]
 	}
 	
 }

@@ -1,10 +1,4 @@
 	($.$mol_section) = class $mol_section extends ($.$mol_list) {
-		level(){
-			return 1;
-		}
-		rows(){
-			return [(this.Head()), (this.Content())];
-		}
 		title_dom_name(){
 			return "h1";
 		}
@@ -37,6 +31,12 @@
 			const obj = new this.$.$mol_list();
 			(obj.rows) = () => ((this.content()));
 			return obj;
+		}
+		level(){
+			return 1;
+		}
+		rows(){
+			return [(this.Head()), (this.Content())];
 		}
 	};
 	($mol_mem(($.$mol_section.prototype), "Title"));

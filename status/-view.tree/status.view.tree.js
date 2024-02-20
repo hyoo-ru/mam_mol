@@ -1,4 +1,7 @@
 	($.$mol_status) = class $mol_status extends ($.$mol_view) {
+		message(){
+			return "";
+		}
 		status(){
 			return (this.title());
 		}
@@ -10,9 +13,6 @@
 		}
 		sub(){
 			return [(this.message())];
-		}
-		message(){
-			return "";
 		}
 	};
 

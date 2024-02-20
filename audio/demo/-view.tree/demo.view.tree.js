@@ -1,28 +1,4 @@
 	($.$mol_audio_demo) = class $mol_audio_demo extends ($.$mol_example_small) {
-		title(){
-			return "WebAudio API example";
-		}
-		Beep(){
-			const obj = new this.$.$mol_audio_room();
-			(obj.duration) = () => (0.1);
-			(obj.input) = () => ([(this.Beep_vibe())]);
-			return obj;
-		}
-		Noise(){
-			const obj = new this.$.$mol_audio_room();
-			(obj.duration) = () => (1);
-			(obj.input) = () => ([(this.Noise_vibe())]);
-			return obj;
-		}
-		sub(){
-			return [(this.Beep_play()), (this.Noise_play())];
-		}
-		tags(){
-			return ["sound"];
-		}
-		aspects(){
-			return ["Media/Audio"];
-		}
 		beep_play(){
 			return (this.Beep().play());
 		}
@@ -54,12 +30,36 @@
 			(obj.title) = () => ("Noise");
 			return obj;
 		}
+		title(){
+			return "WebAudio API example";
+		}
+		Beep(){
+			const obj = new this.$.$mol_audio_room();
+			(obj.duration) = () => (0.1);
+			(obj.input) = () => ([(this.Beep_vibe())]);
+			return obj;
+		}
+		Noise(){
+			const obj = new this.$.$mol_audio_room();
+			(obj.duration) = () => (1);
+			(obj.input) = () => ([(this.Noise_vibe())]);
+			return obj;
+		}
+		sub(){
+			return [(this.Beep_play()), (this.Noise_play())];
+		}
+		tags(){
+			return ["sound"];
+		}
+		aspects(){
+			return ["Media/Audio"];
+		}
 	};
-	($mol_mem(($.$mol_audio_demo.prototype), "Beep"));
-	($mol_mem(($.$mol_audio_demo.prototype), "Noise"));
 	($mol_mem(($.$mol_audio_demo.prototype), "Beep_vibe"));
 	($mol_mem(($.$mol_audio_demo.prototype), "Noise_vibe"));
 	($mol_mem(($.$mol_audio_demo.prototype), "Beep_play"));
 	($mol_mem(($.$mol_audio_demo.prototype), "Noise_play"));
+	($mol_mem(($.$mol_audio_demo.prototype), "Beep"));
+	($mol_mem(($.$mol_audio_demo.prototype), "Noise"));
 
 //# sourceMappingURL=demo.view.tree.js.map

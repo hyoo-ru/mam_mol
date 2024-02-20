@@ -1,21 +1,4 @@
 	($.$mol_dump_demo) = class $mol_dump_demo extends ($.$mol_example_small) {
-		title(){
-			return "Attach files an show them";
-		}
-		sub(){
-			return [(this.Dump_list())];
-		}
-		tags(){
-			return [
-				"dump", 
-				"json", 
-				"javascript", 
-				"debug"
-			];
-		}
-		aspects(){
-			return ["Widget"];
-		}
 		value(){
 			return null;
 		}
@@ -34,6 +17,23 @@
 			const obj = new this.$.$mol_list();
 			(obj.rows) = () => ([(this.Dump_short()), (this.Dump_long())]);
 			return obj;
+		}
+		title(){
+			return "Attach files an show them";
+		}
+		sub(){
+			return [(this.Dump_list())];
+		}
+		tags(){
+			return [
+				"dump", 
+				"json", 
+				"javascript", 
+				"debug"
+			];
+		}
+		aspects(){
+			return ["Widget"];
 		}
 	};
 	($mol_mem(($.$mol_dump_demo.prototype), "Dump_short"));

@@ -1,4 +1,15 @@
 	($.$mol_plot_dot) = class $mol_plot_dot extends ($.$mol_plot_graph) {
+		diameter(){
+			return 8;
+		}
+		curve(){
+			return "";
+		}
+		Curve(){
+			const obj = new this.$.$mol_svg_path();
+			(obj.geometry) = () => ((this.curve()));
+			return obj;
+		}
 		points_max(){
 			return +Infinity;
 		}
@@ -16,19 +27,8 @@
 			(obj.color) = () => ((this.color()));
 			return obj;
 		}
-		diameter(){
-			return 8;
-		}
-		curve(){
-			return "";
-		}
-		Curve(){
-			const obj = new this.$.$mol_svg_path();
-			(obj.geometry) = () => ((this.curve()));
-			return obj;
-		}
 	};
-	($mol_mem(($.$mol_plot_dot.prototype), "Sample"));
 	($mol_mem(($.$mol_plot_dot.prototype), "Curve"));
+	($mol_mem(($.$mol_plot_dot.prototype), "Sample"));
 
 //# sourceMappingURL=dot.view.tree.js.map

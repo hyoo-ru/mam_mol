@@ -1,7 +1,4 @@
 	($.$mol_code) = class $mol_code extends ($.$mol_view) {
-		sub(){
-			return [(this.Manual()), (this.Scan())];
-		}
 		value(next){
 			if(next !== undefined) return next;
 			return "";
@@ -30,6 +27,9 @@
 			(obj.event_click) = (next) => ((this.event_scan(next)));
 			(obj.sub) = () => ([(this.scan_label())]);
 			return obj;
+		}
+		sub(){
+			return [(this.Manual()), (this.Scan())];
 		}
 	};
 	($mol_mem(($.$mol_code.prototype), "value"));

@@ -1,35 +1,31 @@
 declare namespace $ {
 
-	type $mol_string__value__AAKS7OCH = $mol_type_enforce<
+	type $mol_string__value__52APUMWM = $mol_type_enforce<
 		ReturnType< $mol_fetch_demo['url'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_button_major__click__I5BRY5YF = $mol_type_enforce<
+	type $mol_button_major__click__757KOW32 = $mol_type_enforce<
 		ReturnType< $mol_fetch_demo['fetch_data'] >
 		,
 		ReturnType< $mol_button_major['click'] >
 	>
-	type $mol_view__sub__934P2Z33 = $mol_type_enforce<
+	type $mol_view__sub__SIBMDL65 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_dump_value__value__N6IJ42H1 = $mol_type_enforce<
+	type $mol_dump_value__value__SFJAYYU9 = $mol_type_enforce<
 		ReturnType< $mol_fetch_demo['data'] >
 		,
 		ReturnType< $mol_dump_value['value'] >
 	>
-	type $mol_list__rows__YGU1Z6AU = $mol_type_enforce<
+	type $mol_list__rows__E751MJXK = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >
 	>
 	export class $mol_fetch_demo extends $mol_example_small {
-		title( ): string
-		sub( ): readonly(any)[]
-		tags( ): readonly(any)[]
-		aspects( ): readonly(any)[]
 		url( next?: string ): string
 		Url( ): $mol_string
 		fetch_data( next?: any ): any
@@ -38,6 +34,10 @@ declare namespace $ {
 		data( next?: any ): any
 		Data( ): $mol_dump_value
 		Content( ): $mol_list
+		title( ): string
+		sub( ): readonly(any)[]
+		tags( ): readonly(any)[]
+		aspects( ): readonly(any)[]
 	}
 	
 }

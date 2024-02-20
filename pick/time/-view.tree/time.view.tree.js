@@ -1,19 +1,4 @@
 	($.$mol_pick_time) = class $mol_pick_time extends ($.$mol_pick) {
-		Icon(){
-			const obj = new this.$.$mol_icon_clock_outline();
-			return obj;
-		}
-		trigger_enabled(){
-			return (this.enabled());
-		}
-		bubble_content(){
-			return [(this.Input()), (this.Pickers())];
-		}
-		value_moment(next){
-			if(next !== undefined) return next;
-			const obj = new this.$.$mol_time_moment();
-			return obj;
-		}
 		enabled(){
 			return true;
 		}
@@ -69,9 +54,22 @@
 			]);
 			return obj;
 		}
+		Icon(){
+			const obj = new this.$.$mol_icon_clock_outline();
+			return obj;
+		}
+		trigger_enabled(){
+			return (this.enabled());
+		}
+		bubble_content(){
+			return [(this.Input()), (this.Pickers())];
+		}
+		value_moment(next){
+			if(next !== undefined) return next;
+			const obj = new this.$.$mol_time_moment();
+			return obj;
+		}
 	};
-	($mol_mem(($.$mol_pick_time.prototype), "Icon"));
-	($mol_mem(($.$mol_pick_time.prototype), "value_moment"));
 	($mol_mem(($.$mol_pick_time.prototype), "value"));
 	($mol_mem(($.$mol_pick_time.prototype), "Input"));
 	($mol_mem(($.$mol_pick_time.prototype), "hour_selected"));
@@ -80,5 +78,7 @@
 	($mol_mem(($.$mol_pick_time.prototype), "minute_selected"));
 	($mol_mem(($.$mol_pick_time.prototype), "Minutes"));
 	($mol_mem(($.$mol_pick_time.prototype), "Pickers"));
+	($mol_mem(($.$mol_pick_time.prototype), "Icon"));
+	($mol_mem(($.$mol_pick_time.prototype), "value_moment"));
 
 //# sourceMappingURL=time.view.tree.js.map

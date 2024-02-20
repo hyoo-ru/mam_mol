@@ -1,4 +1,15 @@
 	($.$mol_row_demo_products) = class $mol_row_demo_products extends ($.$mol_example) {
+		product_title(id){
+			return "";
+		}
+		products(){
+			return [];
+		}
+		Products(){
+			const obj = new this.$.$mol_row();
+			(obj.sub) = () => ((this.products()));
+			return obj;
+		}
 		title(){
 			return "Product catalog";
 		}
@@ -25,19 +36,8 @@
 		aspects(){
 			return ["Widget/Layout"];
 		}
-		product_title(id){
-			return "";
-		}
-		products(){
-			return [];
-		}
-		Products(){
-			const obj = new this.$.$mol_row();
-			(obj.sub) = () => ((this.products()));
-			return obj;
-		}
 	};
-	($mol_mem_key(($.$mol_row_demo_products.prototype), "Product"));
 	($mol_mem(($.$mol_row_demo_products.prototype), "Products"));
+	($mol_mem_key(($.$mol_row_demo_products.prototype), "Product"));
 
 //# sourceMappingURL=products.view.tree.js.map

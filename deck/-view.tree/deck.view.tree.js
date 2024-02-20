@@ -1,10 +1,4 @@
 	($.$mol_deck) = class $mol_deck extends ($.$mol_list) {
-		items(){
-			return [];
-		}
-		rows(){
-			return [(this.Switch()), (this.Content())];
-		}
 		current(next){
 			if(next !== undefined) return next;
 			return "0";
@@ -21,6 +15,12 @@
 		Content(){
 			const obj = new this.$.$mol_view();
 			return obj;
+		}
+		items(){
+			return [];
+		}
+		rows(){
+			return [(this.Switch()), (this.Content())];
 		}
 	};
 	($mol_mem(($.$mol_deck.prototype), "current"));

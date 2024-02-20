@@ -1,4 +1,10 @@
 	($.$mol_infinite) = class $mol_infinite extends ($.$mol_list) {
+		before_load(id){
+			return null;
+		}
+		after_load(id){
+			return null;
+		}
 		before(id){
 			return [];
 		}
@@ -29,12 +35,6 @@
 			(obj.minimal_height) = () => (0);
 			(obj.sub) = () => ([(this.after_load(id))]);
 			return obj;
-		}
-		before_load(id){
-			return null;
-		}
-		after_load(id){
-			return null;
 		}
 	};
 	($mol_mem(($.$mol_infinite.prototype), "row_ids"));

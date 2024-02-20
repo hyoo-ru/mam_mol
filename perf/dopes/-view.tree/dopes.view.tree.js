@@ -1,21 +1,4 @@
 	($.$mol_perf_dopes) = class $mol_perf_dopes extends ($.$mol_view) {
-		title(){
-			return "Dopes";
-		}
-		sub(){
-			return [
-				(this.Speed()), 
-				(this.Start()), 
-				(this.Stop()), 
-				(this.Labels())
-			];
-		}
-		Label(id){
-			const obj = new this.$.$mol_view();
-			(obj.style) = () => ({"color": (this.label_color(id)), "transform": (this.label_transform(id))});
-			(obj.sub) = () => (["Dope"]);
-			return obj;
-		}
 		speed(){
 			return "{speed} Dopes/s";
 		}
@@ -58,13 +41,30 @@
 		label_transform(id){
 			return "";
 		}
+		title(){
+			return "Dopes";
+		}
+		sub(){
+			return [
+				(this.Speed()), 
+				(this.Start()), 
+				(this.Stop()), 
+				(this.Labels())
+			];
+		}
+		Label(id){
+			const obj = new this.$.$mol_view();
+			(obj.style) = () => ({"color": (this.label_color(id)), "transform": (this.label_transform(id))});
+			(obj.sub) = () => (["Dope"]);
+			return obj;
+		}
 	};
-	($mol_mem_key(($.$mol_perf_dopes.prototype), "Label"));
 	($mol_mem(($.$mol_perf_dopes.prototype), "Speed"));
 	($mol_mem(($.$mol_perf_dopes.prototype), "start"));
 	($mol_mem(($.$mol_perf_dopes.prototype), "Start"));
 	($mol_mem(($.$mol_perf_dopes.prototype), "stop"));
 	($mol_mem(($.$mol_perf_dopes.prototype), "Stop"));
 	($mol_mem(($.$mol_perf_dopes.prototype), "Labels"));
+	($mol_mem_key(($.$mol_perf_dopes.prototype), "Label"));
 
 //# sourceMappingURL=dopes.view.tree.js.map

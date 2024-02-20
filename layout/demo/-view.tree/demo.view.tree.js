@@ -1,13 +1,4 @@
 	($.$mol_layout_demo) = class $mol_layout_demo extends ($.$mol_example_large) {
-		title(){
-			return "Custom flex layout engine";
-		}
-		sub(){
-			return [(this.Sample())];
-		}
-		aspects(){
-			return ["Algorithm/Constraint"];
-		}
 		paint(){
 			return null;
 		}
@@ -24,6 +15,15 @@
 			const obj = new this.$.$mol_canvas();
 			(obj.paint) = () => ((this.paint()));
 			return obj;
+		}
+		title(){
+			return "Custom flex layout engine";
+		}
+		sub(){
+			return [(this.Sample())];
+		}
+		aspects(){
+			return ["Algorithm/Constraint"];
 		}
 	};
 	($mol_mem(($.$mol_layout_demo.prototype), "Sample"));

@@ -1,31 +1,4 @@
 	($.$mol_drag_demo) = class $mol_drag_demo extends ($.$mol_example_large) {
-		task_count(){
-			return 100;
-		}
-		sub(){
-			return [(this.List_drop())];
-		}
-		Task_row(id){
-			const obj = new this.$.$mol_drag();
-			(obj.transfer) = () => ({
-				"text/plain": (this.task_title(id)), 
-				"text/html": (this.task_html(id)), 
-				"text/uri-list": (this.task_uri(id))
-			});
-			(obj.Sub) = () => ((this.Task_drop(id)));
-			return obj;
-		}
-		tags(){
-			return [
-				"drag", 
-				"dragndrop", 
-				"reorder", 
-				"transfer"
-			];
-		}
-		aspects(){
-			return ["Widget/Plugin", "Drag'n'Drop"];
-		}
 		transfer_adopt(next){
 			if(next !== undefined) return next;
 			return null;
@@ -101,8 +74,34 @@
 			(obj.Sub) = () => ((this.Task_link(id)));
 			return obj;
 		}
+		task_count(){
+			return 100;
+		}
+		sub(){
+			return [(this.List_drop())];
+		}
+		Task_row(id){
+			const obj = new this.$.$mol_drag();
+			(obj.transfer) = () => ({
+				"text/plain": (this.task_title(id)), 
+				"text/html": (this.task_html(id)), 
+				"text/uri-list": (this.task_uri(id))
+			});
+			(obj.Sub) = () => ((this.Task_drop(id)));
+			return obj;
+		}
+		tags(){
+			return [
+				"drag", 
+				"dragndrop", 
+				"reorder", 
+				"transfer"
+			];
+		}
+		aspects(){
+			return ["Widget/Plugin", "Drag'n'Drop"];
+		}
 	};
-	($mol_mem_key(($.$mol_drag_demo.prototype), "Task_row"));
 	($mol_mem(($.$mol_drag_demo.prototype), "transfer_adopt"));
 	($mol_mem(($.$mol_drag_demo.prototype), "receive"));
 	($mol_mem(($.$mol_drag_demo.prototype), "receive_trash"));
@@ -115,5 +114,6 @@
 	($mol_mem_key(($.$mol_drag_demo.prototype), "receive_before"));
 	($mol_mem_key(($.$mol_drag_demo.prototype), "Task_link"));
 	($mol_mem_key(($.$mol_drag_demo.prototype), "Task_drop"));
+	($mol_mem_key(($.$mol_drag_demo.prototype), "Task_row"));
 
 //# sourceMappingURL=demo.view.tree.js.map

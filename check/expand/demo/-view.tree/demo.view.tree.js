@@ -1,16 +1,4 @@
 	($.$mol_check_expand_demo) = class $mol_check_expand_demo extends ($.$mol_example_small) {
-		title(){
-			return "Checkbox-expand in various states";
-		}
-		sub(){
-			return [(this.Demo_items())];
-		}
-		tags(){
-			return ["fold"];
-		}
-		aspects(){
-			return ["Widget/Control/Button", "Type/Boolean"];
-		}
 		base_expanded(next){
 			if(next !== undefined) return next;
 			return false;
@@ -66,6 +54,18 @@
 				(this.Empty_expanded())
 			]);
 			return obj;
+		}
+		title(){
+			return "Checkbox-expand in various states";
+		}
+		sub(){
+			return [(this.Demo_items())];
+		}
+		tags(){
+			return ["fold"];
+		}
+		aspects(){
+			return ["Widget/Control/Button", "Type/Boolean"];
 		}
 	};
 	($mol_mem(($.$mol_check_expand_demo.prototype), "base_expanded"));

@@ -1,16 +1,4 @@
 	($.$mol_float_demo) = class $mol_float_demo extends ($.$mol_example_large) {
-		title(){
-			return "Floating header example";
-		}
-		sub(){
-			return [(this.Scroll())];
-		}
-		tags(){
-			return ["scroll", "container"];
-		}
-		aspects(){
-			return ["Widget/Float"];
-		}
 		Head_content(){
 			const obj = new this.$.$mol_paragraph();
 			(obj.title) = () => ("Float header");
@@ -43,6 +31,18 @@
 			const obj = new this.$.$mol_scroll();
 			(obj.sub) = () => ([(this.Head()), (this.Content())]);
 			return obj;
+		}
+		title(){
+			return "Floating header example";
+		}
+		sub(){
+			return [(this.Scroll())];
+		}
+		tags(){
+			return ["scroll", "container"];
+		}
+		aspects(){
+			return ["Widget/Float"];
 		}
 	};
 	($mol_mem(($.$mol_float_demo.prototype), "Head_content"));

@@ -31,42 +31,6 @@
 	($mol_mem(($.$mol_form_draft_demo_article.prototype), "friends"));
 	($mol_mem(($.$mol_form_draft_demo_article.prototype), "hobbies"));
 	($.$mol_form_draft_demo) = class $mol_form_draft_demo extends ($.$mol_example) {
-		title(){
-			return "Article draft form demo";
-		}
-		message_done(){
-			return "Done";
-		}
-		bid_required(id){
-			return "Required";
-		}
-		bid_swearing(id){
-			return "No swearing";
-		}
-		bid_short(id){
-			return "> 5 letters";
-		}
-		bid_long(id){
-			return "> 100 letters";
-		}
-		sub(){
-			return [(this.Form())];
-		}
-		tags(){
-			return [
-				"$mol_form_field", 
-				"$mol_button", 
-				"$mol_string", 
-				"$mol_switch", 
-				"form", 
-				"bids", 
-				"validation", 
-				"field"
-			];
-		}
-		aspects(){
-			return ["Widget/Form"];
-		}
 		model(){
 			const obj = new this.$.$mol_form_draft_demo_article();
 			return obj;
@@ -238,6 +202,42 @@
 				(this.Reset())
 			]);
 			return obj;
+		}
+		title(){
+			return "Article draft form demo";
+		}
+		message_done(){
+			return "Done";
+		}
+		bid_required(id){
+			return "Required";
+		}
+		bid_swearing(id){
+			return "No swearing";
+		}
+		bid_short(id){
+			return "> 5 letters";
+		}
+		bid_long(id){
+			return "> 100 letters";
+		}
+		sub(){
+			return [(this.Form())];
+		}
+		tags(){
+			return [
+				"$mol_form_field", 
+				"$mol_button", 
+				"$mol_string", 
+				"$mol_switch", 
+				"form", 
+				"bids", 
+				"validation", 
+				"field"
+			];
+		}
+		aspects(){
+			return ["Widget/Form"];
 		}
 	};
 	($mol_mem(($.$mol_form_draft_demo.prototype), "model"));

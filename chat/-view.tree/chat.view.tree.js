@@ -1,22 +1,4 @@
 	($.$mol_chat) = class $mol_chat extends ($.$mol_link) {
-		seed(){
-			return "";
-		}
-		opened(){
-			return false;
-		}
-		arg(){
-			return {"mol_chat": ""};
-		}
-		hint(){
-			return (this.title());
-		}
-		sub(){
-			return [(this.Icon())];
-		}
-		pages(){
-			return [(this.Page())];
-		}
 		Icon(){
 			const obj = new this.$.$mol_icon_forum_outline();
 			return obj;
@@ -61,6 +43,24 @@
 			(obj.tools) = () => ([(this.Esternal()), (this.Close())]);
 			(obj.Body) = () => ((this.Embed()));
 			return obj;
+		}
+		seed(){
+			return "";
+		}
+		opened(){
+			return false;
+		}
+		arg(){
+			return {"mol_chat": ""};
+		}
+		hint(){
+			return (this.title());
+		}
+		sub(){
+			return [(this.Icon())];
+		}
+		pages(){
+			return [(this.Page())];
 		}
 	};
 	($mol_mem(($.$mol_chat.prototype), "Icon"));

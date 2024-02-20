@@ -1,16 +1,4 @@
 	($.$mol_tag_tree_demo) = class $mol_tag_tree_demo extends ($.$mol_example) {
-		title(){
-			return "Autoatic tag tree";
-		}
-		sub(){
-			return [(this.Tree())];
-		}
-		tags(){
-			return ["taxonomy", "menu"];
-		}
-		aspects(){
-			return ["Widget/Layout"];
-		}
 		item_title(id){
 			return "";
 		}
@@ -101,6 +89,18 @@
 				]
 			});
 			return obj;
+		}
+		title(){
+			return "Autoatic tag tree";
+		}
+		sub(){
+			return [(this.Tree())];
+		}
+		tags(){
+			return ["taxonomy", "menu"];
+		}
+		aspects(){
+			return ["Widget/Layout"];
 		}
 	};
 	($mol_mem_key(($.$mol_tag_tree_demo.prototype), "Item"));

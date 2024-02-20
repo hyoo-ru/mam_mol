@@ -1,6 +1,19 @@
 declare namespace $ {
 
 	export class $mol_video_player extends $mol_view {
+		uri( ): string
+		controls( ): boolean
+		autoplay( ): boolean
+		inline( ): boolean
+		loop( ): boolean
+		poster( ): string
+		stream( ): any
+		revolume( next?: any ): any
+		retime( next?: any ): any
+		redurate( next?: any ): any
+		play_started( next?: any ): any
+		play( next?: any ): any
+		pause( next?: any ): any
 		dom_name( ): string
 		playing( next?: boolean ): boolean
 		volume( next?: number ): number
@@ -25,19 +38,6 @@ declare namespace $ {
 			play( next?: ReturnType< $mol_video_player['play'] > ): ReturnType< $mol_video_player['play'] >,
 			pause( next?: ReturnType< $mol_video_player['pause'] > ): ReturnType< $mol_video_player['pause'] >,
 		}) 
-		uri( ): string
-		controls( ): boolean
-		autoplay( ): boolean
-		inline( ): boolean
-		loop( ): boolean
-		poster( ): string
-		stream( ): any
-		revolume( next?: any ): any
-		retime( next?: any ): any
-		redurate( next?: any ): any
-		play_started( next?: any ): any
-		play( next?: any ): any
-		pause( next?: any ): any
 	}
 	
 }

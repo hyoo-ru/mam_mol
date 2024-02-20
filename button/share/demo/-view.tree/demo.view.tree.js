@@ -1,17 +1,4 @@
 	($.$mol_button_share_demo) = class $mol_button_share_demo extends ($.$mol_example_small) {
-		title(){
-			return "Share button demo";
-		}
-		sub(){
-			return [
-				(this.Share_page()), 
-				(this.Share_screenshot()), 
-				(this.Share_hyoo())
-			];
-		}
-		aspects(){
-			return ["Widget/Control/Button"];
-		}
 		Share_page(){
 			const obj = new this.$.$mol_button_share();
 			(obj.title) = () => ((this.title()));
@@ -33,6 +20,19 @@
 			(obj.uri) = () => ("https://hyoo.ru");
 			(obj.capture) = () => (null);
 			return obj;
+		}
+		title(){
+			return "Share button demo";
+		}
+		sub(){
+			return [
+				(this.Share_page()), 
+				(this.Share_screenshot()), 
+				(this.Share_hyoo())
+			];
+		}
+		aspects(){
+			return ["Widget/Control/Button"];
 		}
 	};
 	($mol_mem(($.$mol_button_share_demo.prototype), "Share_page"));

@@ -1,22 +1,4 @@
 	($.$mol_fetch_demo) = class $mol_fetch_demo extends ($.$mol_example_small) {
-		title(){
-			return "Simple spoiler";
-		}
-		sub(){
-			return [(this.Content())];
-		}
-		tags(){
-			return [
-				"fetch", 
-				"load", 
-				"api", 
-				"response", 
-				"request"
-			];
-		}
-		aspects(){
-			return ["Network/HTTP"];
-		}
 		url(next){
 			if(next !== undefined) return next;
 			return "https://jsonplaceholder.typicode.com/users";
@@ -53,6 +35,24 @@
 			const obj = new this.$.$mol_list();
 			(obj.rows) = () => ([(this.Request()), (this.Data())]);
 			return obj;
+		}
+		title(){
+			return "Simple spoiler";
+		}
+		sub(){
+			return [(this.Content())];
+		}
+		tags(){
+			return [
+				"fetch", 
+				"load", 
+				"api", 
+				"response", 
+				"request"
+			];
+		}
+		aspects(){
+			return ["Network/HTTP"];
 		}
 	};
 	($mol_mem(($.$mol_fetch_demo.prototype), "url"));

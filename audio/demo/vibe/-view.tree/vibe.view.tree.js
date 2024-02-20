@@ -1,22 +1,4 @@
 	($.$mol_audio_demo_vibe) = class $mol_audio_demo_vibe extends ($.$mol_example_small) {
-		title(){
-			return "WebAudio API complex example";
-		}
-		Room(){
-			const obj = new this.$.$mol_audio_room();
-			(obj.duration) = () => ((this.duration()));
-			(obj.input) = () => ([(this.Beep_vibe())]);
-			return obj;
-		}
-		sub(){
-			return [(this.List())];
-		}
-		tags(){
-			return ["sound"];
-		}
-		aspects(){
-			return ["Media/Audio"];
-		}
 		play(){
 			return (this.Room().play());
 		}
@@ -114,8 +96,25 @@
 			]);
 			return obj;
 		}
+		title(){
+			return "WebAudio API complex example";
+		}
+		Room(){
+			const obj = new this.$.$mol_audio_room();
+			(obj.duration) = () => ((this.duration()));
+			(obj.input) = () => ([(this.Beep_vibe())]);
+			return obj;
+		}
+		sub(){
+			return [(this.List())];
+		}
+		tags(){
+			return ["sound"];
+		}
+		aspects(){
+			return ["Media/Audio"];
+		}
 	};
-	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Room"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Beep_vibe"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "duration"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Duration_num"));
@@ -130,5 +129,6 @@
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Play_button"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Button_row"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "List"));
+	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Room"));
 
 //# sourceMappingURL=vibe.view.tree.js.map

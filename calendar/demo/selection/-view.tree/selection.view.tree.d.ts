@@ -1,16 +1,19 @@
 declare namespace $ {
 
-	type $mol_calendar__month_string__FEI5DJ0O = $mol_type_enforce<
+	type $mol_calendar__month_string__T38KSPE8 = $mol_type_enforce<
 		ReturnType< $mol_calendar_demo_selection['month'] >
 		,
 		ReturnType< $mol_calendar['month_string'] >
 	>
-	type $mol_calendar__day_selected__DV0Q6LF8 = $mol_type_enforce<
+	type $mol_calendar__day_selected__Y67KXZRM = $mol_type_enforce<
 		ReturnType< $mol_calendar_demo_selection['selected'] >
 		,
 		ReturnType< $mol_calendar['day_selected'] >
 	>
 	export class $mol_calendar_demo_selection extends $mol_example_small {
+		month( ): string
+		selected( id: any): boolean
+		Calendar( ): $mol_calendar
 		title( ): string
 		interval_config( ): ({ 
 			'start': string,
@@ -20,9 +23,6 @@ declare namespace $ {
 		sub( ): readonly(any)[]
 		tags( ): readonly(any)[]
 		aspects( ): readonly(any)[]
-		month( ): string
-		selected( id: any): boolean
-		Calendar( ): $mol_calendar
 	}
 	
 }

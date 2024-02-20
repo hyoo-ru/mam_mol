@@ -1,4 +1,39 @@
 	($.$mol_section_demo_level) = class $mol_section_demo_level extends ($.$mol_example_small) {
+		Section1_text(){
+			const obj = new this.$.$mol_filler();
+			(obj.min_symbols) = () => (250);
+			return obj;
+		}
+		Section2_text(){
+			const obj = new this.$.$mol_filler();
+			(obj.min_symbols) = () => (250);
+			return obj;
+		}
+		Section3_text(){
+			const obj = new this.$.$mol_filler();
+			(obj.min_symbols) = () => (250);
+			return obj;
+		}
+		Section4_text(){
+			const obj = new this.$.$mol_filler();
+			(obj.min_symbols) = () => (250);
+			return obj;
+		}
+		Section5_text(){
+			const obj = new this.$.$mol_filler();
+			(obj.min_symbols) = () => (250);
+			return obj;
+		}
+		Section6_text(){
+			const obj = new this.$.$mol_filler();
+			(obj.min_symbols) = () => (250);
+			return obj;
+		}
+		Section7_text(){
+			const obj = new this.$.$mol_filler();
+			(obj.min_symbols) = () => (250);
+			return obj;
+		}
 		title(){
 			return "Section with header";
 		}
@@ -64,49 +99,7 @@
 		aspects(){
 			return ["Widget/Layout"];
 		}
-		Section1_text(){
-			const obj = new this.$.$mol_filler();
-			(obj.min_symbols) = () => (250);
-			return obj;
-		}
-		Section2_text(){
-			const obj = new this.$.$mol_filler();
-			(obj.min_symbols) = () => (250);
-			return obj;
-		}
-		Section3_text(){
-			const obj = new this.$.$mol_filler();
-			(obj.min_symbols) = () => (250);
-			return obj;
-		}
-		Section4_text(){
-			const obj = new this.$.$mol_filler();
-			(obj.min_symbols) = () => (250);
-			return obj;
-		}
-		Section5_text(){
-			const obj = new this.$.$mol_filler();
-			(obj.min_symbols) = () => (250);
-			return obj;
-		}
-		Section6_text(){
-			const obj = new this.$.$mol_filler();
-			(obj.min_symbols) = () => (250);
-			return obj;
-		}
-		Section7_text(){
-			const obj = new this.$.$mol_filler();
-			(obj.min_symbols) = () => (250);
-			return obj;
-		}
 	};
-	($mol_mem(($.$mol_section_demo_level.prototype), "Section1"));
-	($mol_mem(($.$mol_section_demo_level.prototype), "Section2"));
-	($mol_mem(($.$mol_section_demo_level.prototype), "Section3"));
-	($mol_mem(($.$mol_section_demo_level.prototype), "Section4"));
-	($mol_mem(($.$mol_section_demo_level.prototype), "Section5"));
-	($mol_mem(($.$mol_section_demo_level.prototype), "Section6"));
-	($mol_mem(($.$mol_section_demo_level.prototype), "Section7"));
 	($mol_mem(($.$mol_section_demo_level.prototype), "Section1_text"));
 	($mol_mem(($.$mol_section_demo_level.prototype), "Section2_text"));
 	($mol_mem(($.$mol_section_demo_level.prototype), "Section3_text"));
@@ -114,5 +107,12 @@
 	($mol_mem(($.$mol_section_demo_level.prototype), "Section5_text"));
 	($mol_mem(($.$mol_section_demo_level.prototype), "Section6_text"));
 	($mol_mem(($.$mol_section_demo_level.prototype), "Section7_text"));
+	($mol_mem(($.$mol_section_demo_level.prototype), "Section1"));
+	($mol_mem(($.$mol_section_demo_level.prototype), "Section2"));
+	($mol_mem(($.$mol_section_demo_level.prototype), "Section3"));
+	($mol_mem(($.$mol_section_demo_level.prototype), "Section4"));
+	($mol_mem(($.$mol_section_demo_level.prototype), "Section5"));
+	($mol_mem(($.$mol_section_demo_level.prototype), "Section6"));
+	($mol_mem(($.$mol_section_demo_level.prototype), "Section7"));
 
 //# sourceMappingURL=level.view.tree.js.map

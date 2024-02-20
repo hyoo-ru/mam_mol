@@ -1,13 +1,4 @@
 	($.$mol_svg_text_box) = class $mol_svg_text_box extends ($.$mol_svg_group) {
-		font_size(){
-			return 16;
-		}
-		width(){
-			return 0;
-		}
-		sub(){
-			return [(this.Back()), (this.Text())];
-		}
 		box_width(){
 			return "0.5rem";
 		}
@@ -45,6 +36,15 @@
 			(obj.align) = () => ((this.align()));
 			(obj.sub) = () => ([(this.text())]);
 			return obj;
+		}
+		font_size(){
+			return 16;
+		}
+		width(){
+			return 0;
+		}
+		sub(){
+			return [(this.Back()), (this.Text())];
 		}
 	};
 	($mol_mem(($.$mol_svg_text_box.prototype), "Back"));

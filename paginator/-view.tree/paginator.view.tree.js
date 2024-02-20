@@ -1,11 +1,4 @@
 	($.$mol_paginator) = class $mol_paginator extends ($.$mol_bar) {
-		sub(){
-			return [
-				(this.Backward()), 
-				(this.Value()), 
-				(this.Forward())
-			];
-		}
 		backward_hint(){
 			return (this.$.$mol_locale.text("$mol_paginator_backward_hint"));
 		}
@@ -50,6 +43,13 @@
 			(obj.click) = (next) => ((this.forward(next)));
 			(obj.sub) = () => ([(this.Forward_icon())]);
 			return obj;
+		}
+		sub(){
+			return [
+				(this.Backward()), 
+				(this.Value()), 
+				(this.Forward())
+			];
 		}
 	};
 	($mol_mem(($.$mol_paginator.prototype), "backward"));

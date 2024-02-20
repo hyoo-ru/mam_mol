@@ -1,7 +1,4 @@
 	($.$mol_perf_jsfb) = class $mol_perf_jsfb extends ($.$mol_scroll) {
-		sub(){
-			return [(this.Content())];
-		}
 		title(){
 			return "$mol keyed";
 		}
@@ -127,6 +124,9 @@
 			(obj.rows) = () => ([(this.Head()), (this.Rows())]);
 			return obj;
 		}
+		sub(){
+			return [(this.Content())];
+		}
 	};
 	($mol_mem(($.$mol_perf_jsfb.prototype), "Title"));
 	($mol_mem(($.$mol_perf_jsfb.prototype), "create_1K"));
@@ -149,22 +149,6 @@
 	($mol_mem(($.$mol_perf_jsfb.prototype), "Rows"));
 	($mol_mem(($.$mol_perf_jsfb.prototype), "Content"));
 	($.$mol_perf_jsfb_row) = class $mol_perf_jsfb_row extends ($.$mol_view) {
-		minimal_height(){
-			return 40;
-		}
-		minimal_width(){
-			return 200;
-		}
-		attr(){
-			return {...(super.attr()), "mol_perf_jsfb_row_selected": (this.selected())};
-		}
-		sub(){
-			return [
-				(this.Id()), 
-				(this.Title()), 
-				(this.Drop())
-			];
-		}
 		id(){
 			return "";
 		}
@@ -200,6 +184,22 @@
 			(obj.sub) = () => ([(this.Drop_icon())]);
 			(obj.click) = (next) => ((this.drop(next)));
 			return obj;
+		}
+		minimal_height(){
+			return 40;
+		}
+		minimal_width(){
+			return 200;
+		}
+		attr(){
+			return {...(super.attr()), "mol_perf_jsfb_row_selected": (this.selected())};
+		}
+		sub(){
+			return [
+				(this.Id()), 
+				(this.Title()), 
+				(this.Drop())
+			];
 		}
 	};
 	($mol_mem(($.$mol_perf_jsfb_row.prototype), "Id"));

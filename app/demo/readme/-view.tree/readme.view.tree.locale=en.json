@@ -1,6 +1,6 @@
 {
-	"$mol_app_demo_readme_title": "Readme",
 	"$mol_app_demo_readme_source_hint": "Source code of this demo",
 	"$mol_app_demo_readme_Close_hint": "Close panel",
-	"$mol_app_demo_readme_Not_found_caption": "Readme not found"
+	"$mol_app_demo_readme_Not_found_caption": "Readme not found",
+	"$mol_app_demo_readme_title": "Readme"
 }

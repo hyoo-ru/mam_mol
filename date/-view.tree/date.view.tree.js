@@ -1,20 +1,4 @@
 	($.$mol_date) = class $mol_date extends ($.$mol_pick) {
-		Icon(){
-			const obj = new this.$.$mol_icon_calendar();
-			return obj;
-		}
-		bubble_content(){
-			return [(this.Input_row()), (this.Calendar())];
-		}
-		value_number(next){
-			if(next !== undefined) return next;
-			return +NaN;
-		}
-		value_moment(next){
-			if(next !== undefined) return next;
-			const obj = new this.$.$mol_time_moment();
-			return obj;
-		}
 		enabled(){
 			return true;
 		}
@@ -146,10 +130,23 @@
 			(obj.head) = () => ([(this.Calendar_tools())]);
 			return obj;
 		}
+		Icon(){
+			const obj = new this.$.$mol_icon_calendar();
+			return obj;
+		}
+		bubble_content(){
+			return [(this.Input_row()), (this.Calendar())];
+		}
+		value_number(next){
+			if(next !== undefined) return next;
+			return +NaN;
+		}
+		value_moment(next){
+			if(next !== undefined) return next;
+			const obj = new this.$.$mol_time_moment();
+			return obj;
+		}
 	};
-	($mol_mem(($.$mol_date.prototype), "Icon"));
-	($mol_mem(($.$mol_date.prototype), "value_number"));
-	($mol_mem(($.$mol_date.prototype), "value_moment"));
 	($mol_mem(($.$mol_date.prototype), "today_click"));
 	($mol_mem(($.$mol_date.prototype), "Today_icon"));
 	($mol_mem(($.$mol_date.prototype), "Today"));
@@ -168,10 +165,10 @@
 	($mol_mem(($.$mol_date.prototype), "Next"));
 	($mol_mem(($.$mol_date.prototype), "Calendar_tools"));
 	($mol_mem(($.$mol_date.prototype), "Calendar"));
+	($mol_mem(($.$mol_date.prototype), "Icon"));
+	($mol_mem(($.$mol_date.prototype), "value_number"));
+	($mol_mem(($.$mol_date.prototype), "value_moment"));
 	($.$mol_date_calendar) = class $mol_date_calendar extends ($.$mol_calendar) {
-		day_content(id){
-			return [(this.Day_button(id))];
-		}
 		day_click(id, next){
 			if(next !== undefined) return next;
 			return null;
@@ -186,6 +183,9 @@
 			(obj.minimal_height) = () => (24);
 			(obj.enabled) = () => ((this.enabled()));
 			return obj;
+		}
+		day_content(id){
+			return [(this.Day_button(id))];
 		}
 	};
 	($mol_mem_key(($.$mol_date_calendar.prototype), "day_click"));

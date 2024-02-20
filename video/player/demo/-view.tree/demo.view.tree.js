@@ -1,16 +1,4 @@
 	($.$mol_video_player_demo) = class $mol_video_player_demo extends ($.$mol_example_large) {
-		title(){
-			return "Reactive video player";
-		}
-		sub(){
-			return [(this.Controls()), (this.Player())];
-		}
-		tags(){
-			return ["palyback"];
-		}
-		aspects(){
-			return ["Media/Video"];
-		}
 		files(){
 			return (this.Open().files());
 		}
@@ -93,6 +81,18 @@
 			const obj = new this.$.$mol_video_player();
 			(obj.uri) = () => ((this.uri()));
 			return obj;
+		}
+		title(){
+			return "Reactive video player";
+		}
+		sub(){
+			return [(this.Controls()), (this.Player())];
+		}
+		tags(){
+			return ["palyback"];
+		}
+		aspects(){
+			return ["Media/Video"];
 		}
 	};
 	($mol_mem(($.$mol_video_player_demo.prototype), "Open"));

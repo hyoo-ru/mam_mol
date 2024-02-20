@@ -3,7 +3,7 @@
 	"sources": [
 		"mol/format/format.view.tree"
 	],
-	"mappings": "AAAA;AAAA;AAAA,AAAA,yBAAY,oBAAZ;AACC,AAAA,YAAO;AACP,AAAA,WAAQ,YAFT,WAES;AACR,AAAA,eAAU;AADF,AAAA,kBAAQ;AAFjB;AAAA;AAAA;",
+	"mappings": "AAAA;AAAA;AAAA,AAAA,yBAAY,oBAAZ;AAES,AAAA,kBAAQ;AADhB,AAAA,YAAO;AACP,AAAA,WAAQ,YAFT,WAES;AACR,AAAA,eAAU;AAHX;AAAA;AAAA;",
 	"file": "format.view.tree.d.ts",
 	"sourceRoot": "../../.."
 }

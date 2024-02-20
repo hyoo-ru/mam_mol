@@ -1,24 +1,4 @@
 	($.$mol_app_supplies_detail) = class $mol_app_supplies_detail extends ($.$mol_page) {
-		supply(){
-			return null;
-		}
-		title(){
-			return "Supply";
-		}
-		tools(){
-			return [(this.Close())];
-		}
-		body(){
-			return [(this.Content())];
-		}
-		foot(){
-			return (this.actions());
-		}
-		Position(id){
-			const obj = new this.$.$mol_app_supplies_position();
-			(obj.position) = () => ((this.position(id)));
-			return obj;
-		}
 		Close_icon(){
 			const obj = new this.$.$mol_icon_cross();
 			return obj;
@@ -252,8 +232,27 @@
 		position(id){
 			return null;
 		}
+		supply(){
+			return null;
+		}
+		title(){
+			return "Supply";
+		}
+		tools(){
+			return [(this.Close())];
+		}
+		body(){
+			return [(this.Content())];
+		}
+		foot(){
+			return (this.actions());
+		}
+		Position(id){
+			const obj = new this.$.$mol_app_supplies_position();
+			(obj.position) = () => ((this.position(id)));
+			return obj;
+		}
 	};
-	($mol_mem_key(($.$mol_app_supplies_detail.prototype), "Position"));
 	($mol_mem(($.$mol_app_supplies_detail.prototype), "Close_icon"));
 	($mol_mem(($.$mol_app_supplies_detail.prototype), "Close"));
 	($mol_mem(($.$mol_app_supplies_detail.prototype), "Provider"));
@@ -278,5 +277,6 @@
 	($mol_mem(($.$mol_app_supplies_detail.prototype), "Content"));
 	($mol_mem(($.$mol_app_supplies_detail.prototype), "approved"));
 	($mol_mem(($.$mol_app_supplies_detail.prototype), "Approve"));
+	($mol_mem_key(($.$mol_app_supplies_detail.prototype), "Position"));
 
 //# sourceMappingURL=detail.view.tree.js.map

@@ -1,20 +1,4 @@
 	($.$mol_textarea_demo) = class $mol_textarea_demo extends ($.$mol_example) {
-		title(){
-			return "Text input field in various states";
-		}
-		sub(){
-			return [(this.Content())];
-		}
-		tags(){
-			return [
-				"code", 
-				"syntax", 
-				"highlight"
-			];
-		}
-		aspects(){
-			return ["Widget/Control", "Type/String"];
-		}
 		filled_descr(next){
 			if(next !== undefined) return next;
 			return "function hello( name = 'World' ) {\n\treturn `Hello, ${ name }!`\n}";
@@ -38,6 +22,22 @@
 			const obj = new this.$.$mol_list();
 			(obj.rows) = () => ([(this.Filled_descr()), (this.Disabled())]);
 			return obj;
+		}
+		title(){
+			return "Text input field in various states";
+		}
+		sub(){
+			return [(this.Content())];
+		}
+		tags(){
+			return [
+				"code", 
+				"syntax", 
+				"highlight"
+			];
+		}
+		aspects(){
+			return ["Widget/Control", "Type/String"];
 		}
 	};
 	($mol_mem(($.$mol_textarea_demo.prototype), "filled_descr"));

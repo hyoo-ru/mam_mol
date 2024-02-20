@@ -1,27 +1,26 @@
 declare namespace $ {
 
-	type $mol_search__query__BBB4Q1XD = $mol_type_enforce<
+	type $mol_search__query__X0K7G22A = $mol_type_enforce<
 		ReturnType< $mol_code['value'] >
 		,
 		ReturnType< $mol_search['query'] >
 	>
-	type $mol_search__hint__9BFB104N = $mol_type_enforce<
+	type $mol_search__hint__DXAV67R3 = $mol_type_enforce<
 		ReturnType< $mol_code['hint'] >
 		,
 		ReturnType< $mol_search['hint'] >
 	>
-	type $mol_button__event_click__JZTDP44F = $mol_type_enforce<
+	type $mol_button__event_click__LAJ3HED7 = $mol_type_enforce<
 		ReturnType< $mol_code['event_scan'] >
 		,
 		ReturnType< $mol_button['event_click'] >
 	>
-	type $mol_button__sub__H78PB03D = $mol_type_enforce<
+	type $mol_button__sub__U8TYLRRO = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button['sub'] >
 	>
 	export class $mol_code extends $mol_view {
-		sub( ): readonly(any)[]
 		value( next?: string ): string
 		format( ): string
 		hint( ): ReturnType< $mol_code['format'] >
@@ -29,6 +28,7 @@ declare namespace $ {
 		event_scan( next?: any ): any
 		scan_label( ): string
 		Scan( ): $mol_button
+		sub( ): readonly(any)[]
 	}
 	
 }

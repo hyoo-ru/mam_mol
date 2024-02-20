@@ -1,22 +1,4 @@
 	($.$mol_pop_demo) = class $mol_pop_demo extends ($.$mol_example) {
-		title(){
-			return "Pop up block with various alignment";
-		}
-		sub(){
-			return [(this.Manage()), (this.Pop_area())];
-		}
-		tags(){
-			return [
-				"popup", 
-				"menu", 
-				"align", 
-				"container", 
-				"modal"
-			];
-		}
-		aspects(){
-			return ["Widget/Float"];
-		}
 		show_title(){
 			return "Showed";
 		}
@@ -113,6 +95,24 @@
 			const obj = new this.$.$mol_view();
 			(obj.sub) = () => ([(this.Pop())]);
 			return obj;
+		}
+		title(){
+			return "Pop up block with various alignment";
+		}
+		sub(){
+			return [(this.Manage()), (this.Pop_area())];
+		}
+		tags(){
+			return [
+				"popup", 
+				"menu", 
+				"align", 
+				"container", 
+				"modal"
+			];
+		}
+		aspects(){
+			return ["Widget/Float"];
 		}
 	};
 	($mol_mem(($.$mol_pop_demo.prototype), "pop_showed"));

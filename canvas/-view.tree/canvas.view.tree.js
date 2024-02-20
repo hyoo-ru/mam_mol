@@ -1,4 +1,10 @@
 	($.$mol_canvas) = class $mol_canvas extends ($.$mol_view) {
+		width(){
+			return 0;
+		}
+		height(){
+			return 0;
+		}
 		dom_name(){
 			return "canvas";
 		}
@@ -15,12 +21,6 @@
 		}
 		paint(){
 			return null;
-		}
-		width(){
-			return 0;
-		}
-		height(){
-			return 0;
 		}
 	};
 	($mol_mem(($.$mol_canvas.prototype), "context"));

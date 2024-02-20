@@ -1,20 +1,4 @@
 	($.$mol_switch_demo) = class $mol_switch_demo extends ($.$mol_example) {
-		title(){
-			return "Color switchers in various state";
-		}
-		sub(){
-			return [(this.Demo_items())];
-		}
-		tags(){
-			return [
-				"option", 
-				"group", 
-				"radio"
-			];
-		}
-		aspects(){
-			return ["Widget/Control"];
-		}
 		color(next){
 			if(next !== undefined) return next;
 			return "red";
@@ -69,6 +53,22 @@
 			const obj = new this.$.$mol_list();
 			(obj.sub) = () => ([(this.Enabled_labeler()), (this.Disabled_labeler())]);
 			return obj;
+		}
+		title(){
+			return "Color switchers in various state";
+		}
+		sub(){
+			return [(this.Demo_items())];
+		}
+		tags(){
+			return [
+				"option", 
+				"group", 
+				"radio"
+			];
+		}
+		aspects(){
+			return ["Widget/Control"];
 		}
 	};
 	($mol_mem(($.$mol_switch_demo.prototype), "color"));

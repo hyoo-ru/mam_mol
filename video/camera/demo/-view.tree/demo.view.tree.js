@@ -1,16 +1,4 @@
 	($.$mol_video_camera_demo) = class $mol_video_camera_demo extends ($.$mol_example_large) {
-		title(){
-			return "Reactive video camera";
-		}
-		sub(){
-			return [(this.Scroll())];
-		}
-		tags(){
-			return ["capture"];
-		}
-		aspects(){
-			return ["Media/Video"];
-		}
 		Player(){
 			const obj = new this.$.$mol_video_camera();
 			(obj.torch) = () => ((this.torch()));
@@ -141,6 +129,18 @@
 			const obj = new this.$.$mol_scroll();
 			(obj.sub) = () => ([(this.View()), (this.Controls())]);
 			return obj;
+		}
+		title(){
+			return "Reactive video camera";
+		}
+		sub(){
+			return [(this.Scroll())];
+		}
+		tags(){
+			return ["capture"];
+		}
+		aspects(){
+			return ["Media/Video"];
 		}
 	};
 	($mol_mem(($.$mol_video_camera_demo.prototype), "Player"));

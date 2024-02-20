@@ -1,11 +1,13 @@
 declare namespace $ {
 
-	type $mol_perf_uibench_table_row__state__8QYOGRPN = $mol_type_enforce<
+	type $mol_perf_uibench_table_row__state__GI83EC7Y = $mol_type_enforce<
 		ReturnType< $mol_perf_uibench_table['row_state'] >
 		,
 		ReturnType< $mol_perf_uibench_table_row['state'] >
 	>
 	export class $mol_perf_uibench_table extends $mol_list {
+		rows( ): readonly(any)[]
+		row_state( id: any): any
 		state( ): any
 		dom_name( ): string
 		attr_static( ): ({ 
@@ -13,21 +15,25 @@ declare namespace $ {
 		})  & ReturnType< $mol_list['attr_static'] >
 		sub( ): ReturnType< $mol_perf_uibench_table['rows'] >
 		Row( id: any): $mol_perf_uibench_table_row
-		rows( ): readonly(any)[]
-		row_state( id: any): any
 	}
 	
-	type $mol_perf_uibench_table_cell__text__Y3MN1CNO = $mol_type_enforce<
-		ReturnType< $mol_perf_uibench_table_row['cell_state'] >
-		,
-		ReturnType< $mol_perf_uibench_table_cell['text'] >
-	>
-	type $mol_perf_uibench_table_cell__text__7FK6HTLW = $mol_type_enforce<
+	type $mol_perf_uibench_table_cell__text__O707GP3G = $mol_type_enforce<
 		ReturnType< $mol_perf_uibench_table_row['head_text'] >
 		,
 		ReturnType< $mol_perf_uibench_table_cell['text'] >
 	>
+	type $mol_perf_uibench_table_cell__text__0YP4HRU1 = $mol_type_enforce<
+		ReturnType< $mol_perf_uibench_table_row['cell_state'] >
+		,
+		ReturnType< $mol_perf_uibench_table_cell['text'] >
+	>
 	export class $mol_perf_uibench_table_row extends $mol_view {
+		classes( ): string
+		id( ): number
+		head_text( ): string
+		Head( ): $mol_perf_uibench_table_cell
+		cells( ): readonly(any)[]
+		cell_state( id: any): any
 		state( ): any
 		minimal_height( ): number
 		dom_name( ): string
@@ -37,15 +43,11 @@ declare namespace $ {
 		})  & ReturnType< $mol_view['attr'] >
 		sub( ): readonly(any)[]
 		Cell( id: any): $mol_perf_uibench_table_cell
-		classes( ): string
-		id( ): number
-		head_text( ): string
-		Head( ): $mol_perf_uibench_table_cell
-		cells( ): readonly(any)[]
-		cell_state( id: any): any
 	}
 	
 	export class $mol_perf_uibench_table_cell extends $mol_view {
+		click( next?: any ): any
+		text( ): string
 		dom_name( ): string
 		attr_static( ): ({ 
 			'class': string,
@@ -54,8 +56,6 @@ declare namespace $ {
 			click( next?: ReturnType< $mol_perf_uibench_table_cell['click'] > ): ReturnType< $mol_perf_uibench_table_cell['click'] >,
 		})  & ReturnType< $mol_view['event'] >
 		sub( ): readonly(any)[]
-		click( next?: any ): any
-		text( ): string
 	}
 	
 }

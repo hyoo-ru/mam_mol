@@ -2582,6 +2582,13 @@ var $;
 
 ;
 	($.$mol_scroll) = class $mol_scroll extends ($.$mol_view) {
+		tabindex(){
+			return -1;
+		}
+		event_scroll(next){
+			if(next !== undefined) return next;
+			return null;
+		}
 		scroll_top(next){
 			if(next !== undefined) return next;
 			return 0;
@@ -2596,17 +2603,10 @@ var $;
 		event(){
 			return {...(super.event()), "scroll": (next) => (this.event_scroll(next))};
 		}
-		tabindex(){
-			return -1;
-		}
-		event_scroll(next){
-			if(next !== undefined) return next;
-			return null;
-		}
 	};
+	($mol_mem(($.$mol_scroll.prototype), "event_scroll"));
 	($mol_mem(($.$mol_scroll.prototype), "scroll_top"));
 	($mol_mem(($.$mol_scroll.prototype), "scroll_left"));
-	($mol_mem(($.$mol_scroll.prototype), "event_scroll"));
 
 
 ;
@@ -2886,6 +2886,15 @@ var $;
 
 ;
 	($.$mol_list) = class $mol_list extends ($.$mol_view) {
+		rows(){
+			return [];
+		}
+		gap_before(){
+			return 0;
+		}
+		gap_after(){
+			return 0;
+		}
 		render_visible_only(){
 			return true;
 		}
@@ -2911,15 +2920,6 @@ var $;
 		}
 		view_window(){
 			return [0, 0];
-		}
-		rows(){
-			return [];
-		}
-		gap_before(){
-			return 0;
-		}
-		gap_after(){
-			return 0;
 		}
 	};
 	($mol_mem(($.$mol_list.prototype), "Empty"));
@@ -3093,6 +3093,12 @@ var $;
 
 ;
 	($.$mol_perf_uibench_table) = class $mol_perf_uibench_table extends ($.$mol_list) {
+		rows(){
+			return [];
+		}
+		row_state(id){
+			return null;
+		}
 		state(){
 			return null;
 		}
@@ -3110,15 +3116,29 @@ var $;
 			(obj.state) = () => ((this.row_state(id)));
 			return obj;
 		}
-		rows(){
-			return [];
-		}
-		row_state(id){
-			return null;
-		}
 	};
 	($mol_mem_key(($.$mol_perf_uibench_table.prototype), "Row"));
 	($.$mol_perf_uibench_table_row) = class $mol_perf_uibench_table_row extends ($.$mol_view) {
+		classes(){
+			return "TableRow";
+		}
+		id(){
+			return 0;
+		}
+		head_text(){
+			return "";
+		}
+		Head(){
+			const obj = new this.$.$mol_perf_uibench_table_cell();
+			(obj.text) = () => ((this.head_text()));
+			return obj;
+		}
+		cells(){
+			return [];
+		}
+		cell_state(id){
+			return null;
+		}
 		state(){
 			return null;
 		}
@@ -3143,30 +3163,17 @@ var $;
 			(obj.text) = () => ((this.cell_state(id)));
 			return obj;
 		}
-		classes(){
-			return "TableRow";
-		}
-		id(){
-			return 0;
-		}
-		head_text(){
-			return "";
-		}
-		Head(){
-			const obj = new this.$.$mol_perf_uibench_table_cell();
-			(obj.text) = () => ((this.head_text()));
-			return obj;
-		}
-		cells(){
-			return [];
-		}
-		cell_state(id){
+	};
+	($mol_mem(($.$mol_perf_uibench_table_row.prototype), "Head"));
+	($mol_mem_key(($.$mol_perf_uibench_table_row.prototype), "Cell"));
+	($.$mol_perf_uibench_table_cell) = class $mol_perf_uibench_table_cell extends ($.$mol_view) {
+		click(next){
+			if(next !== undefined) return next;
 			return null;
 		}
-	};
-	($mol_mem_key(($.$mol_perf_uibench_table_row.prototype), "Cell"));
-	($mol_mem(($.$mol_perf_uibench_table_row.prototype), "Head"));
-	($.$mol_perf_uibench_table_cell) = class $mol_perf_uibench_table_cell extends ($.$mol_view) {
+		text(){
+			return "";
+		}
 		dom_name(){
 			return "td";
 		}
@@ -3178,13 +3185,6 @@ var $;
 		}
 		sub(){
 			return [(this.text())];
-		}
-		click(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		text(){
-			return "";
 		}
 	};
 	($mol_mem(($.$mol_perf_uibench_table_cell.prototype), "click"));
@@ -3277,6 +3277,12 @@ var $;
 
 ;
 	($.$mol_perf_uibench_anim) = class $mol_perf_uibench_anim extends ($.$mol_view) {
+		boxes(){
+			return [];
+		}
+		box_state(id){
+			return null;
+		}
 		state(){
 			return null;
 		}
@@ -3291,15 +3297,18 @@ var $;
 			(obj.state) = () => ((this.box_state(id)));
 			return obj;
 		}
-		boxes(){
-			return [];
-		}
-		box_state(id){
-			return null;
-		}
 	};
 	($mol_mem_key(($.$mol_perf_uibench_anim.prototype), "Box"));
 	($.$mol_perf_uibench_anim_box) = class $mol_perf_uibench_anim_box extends ($.$mol_view) {
+		id(){
+			return "";
+		}
+		style_radius(){
+			return "";
+		}
+		style_color(){
+			return "";
+		}
 		state(){
 			return null;
 		}
@@ -3316,15 +3325,6 @@ var $;
 				"borderRadius": (this.style_radius()), 
 				"background": (this.style_color())
 			};
-		}
-		id(){
-			return "";
-		}
-		style_radius(){
-			return "";
-		}
-		style_color(){
-			return "";
 		}
 	};
 
@@ -3376,6 +3376,14 @@ var $;
 
 ;
 	($.$mol_perf_uibench_tree) = class $mol_perf_uibench_tree extends ($.$mol_view) {
+		root_state(){
+			return null;
+		}
+		Root(){
+			const obj = new this.$.$mol_perf_uibench_tree_branch();
+			(obj.state) = () => ((this.root_state()));
+			return obj;
+		}
 		state(){
 			return null;
 		}
@@ -3385,17 +3393,15 @@ var $;
 		sub(){
 			return [(this.Root())];
 		}
-		root_state(){
-			return null;
-		}
-		Root(){
-			const obj = new this.$.$mol_perf_uibench_tree_branch();
-			(obj.state) = () => ((this.root_state()));
-			return obj;
-		}
 	};
 	($mol_mem(($.$mol_perf_uibench_tree.prototype), "Root"));
 	($.$mol_perf_uibench_tree_branch) = class $mol_perf_uibench_tree_branch extends ($.$mol_list) {
+		branch_state(id){
+			return null;
+		}
+		leaf_state(id){
+			return null;
+		}
 		state(){
 			return null;
 		}
@@ -3415,16 +3421,13 @@ var $;
 			(obj.text) = () => ((this.leaf_state(id)));
 			return obj;
 		}
-		branch_state(id){
-			return null;
-		}
-		leaf_state(id){
-			return null;
-		}
 	};
 	($mol_mem_key(($.$mol_perf_uibench_tree_branch.prototype), "Branch"));
 	($mol_mem_key(($.$mol_perf_uibench_tree_branch.prototype), "Leaf"));
 	($.$mol_perf_uibench_tree_leaf) = class $mol_perf_uibench_tree_leaf extends ($.$mol_view) {
+		text(){
+			return "";
+		}
 		minimal_height(){
 			return 26;
 		}
@@ -3436,9 +3439,6 @@ var $;
 		}
 		sub(){
 			return [(this.text())];
-		}
-		text(){
-			return "";
 		}
 	};
 
@@ -3492,16 +3492,6 @@ var $;
 
 ;
 	($.$mol_perf_uibench) = class $mol_perf_uibench extends ($.$mol_scroll) {
-		attr_static(){
-			return {...(super.attr_static()), "class": "Main"};
-		}
-		sub(){
-			return [
-				(this.Table()), 
-				(this.Anim()), 
-				(this.Tree())
-			];
-		}
 		table_state(){
 			return null;
 		}
@@ -3525,6 +3515,16 @@ var $;
 			const obj = new this.$.$mol_perf_uibench_tree();
 			(obj.state) = () => ((this.tree_state()));
 			return obj;
+		}
+		attr_static(){
+			return {...(super.attr_static()), "class": "Main"};
+		}
+		sub(){
+			return [
+				(this.Table()), 
+				(this.Anim()), 
+				(this.Tree())
+			];
 		}
 	};
 	($mol_mem(($.$mol_perf_uibench.prototype), "Table"));

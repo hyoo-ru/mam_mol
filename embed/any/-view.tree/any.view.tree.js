@@ -1,4 +1,10 @@
 	($.$mol_embed_any) = class $mol_embed_any extends ($.$mol_view) {
+		title(){
+			return "";
+		}
+		uri(){
+			return "";
+		}
 		Image(){
 			const obj = new this.$.$mol_image();
 			(obj.title) = () => ((this.title()));
@@ -16,12 +22,6 @@
 			(obj.title) = () => ((this.title()));
 			(obj.uri) = () => ((this.uri()));
 			return obj;
-		}
-		title(){
-			return "";
-		}
-		uri(){
-			return "";
 		}
 	};
 	($mol_mem(($.$mol_embed_any.prototype), "Image"));

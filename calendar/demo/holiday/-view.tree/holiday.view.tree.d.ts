@@ -1,24 +1,24 @@
 declare namespace $ {
 
-	type $mol_calendar__month_string__6VWXE5VN = $mol_type_enforce<
+	type $mol_calendar__month_string__BNCKWVQ5 = $mol_type_enforce<
 		ReturnType< $mol_calendar_demo_holiday['month'] >
 		,
 		ReturnType< $mol_calendar['month_string'] >
 	>
-	type $mol_calendar__day_holiday__7VP9K774 = $mol_type_enforce<
+	type $mol_calendar__day_holiday__V53RDK2T = $mol_type_enforce<
 		ReturnType< $mol_calendar_demo_holiday['holiday'] >
 		,
 		ReturnType< $mol_calendar['day_holiday'] >
 	>
 	export class $mol_calendar_demo_holiday extends $mol_example_small {
+		month( ): string
+		holiday( id: any): boolean
+		Calendar( ): $mol_calendar
 		title( ): string
 		holidays( ): readonly(any)[]
 		sub( ): readonly(any)[]
 		tags( ): readonly(any)[]
 		aspects( ): readonly(any)[]
-		month( ): string
-		holiday( id: any): boolean
-		Calendar( ): $mol_calendar
 	}
 	
 }

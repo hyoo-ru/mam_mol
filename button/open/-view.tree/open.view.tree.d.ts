@@ -1,30 +1,33 @@
 declare namespace $ {
 
-	type $mol_button_open_native__files__YMYDOTZY = $mol_type_enforce<
+	type $mol_button_open_native__files__88408UJD = $mol_type_enforce<
 		ReturnType< $mol_button_open['files'] >
 		,
 		ReturnType< $mol_button_open_native['files'] >
 	>
-	type $mol_button_open_native__accept__FT09T4OD = $mol_type_enforce<
+	type $mol_button_open_native__accept__BY8FVH6J = $mol_type_enforce<
 		ReturnType< $mol_button_open['accept'] >
 		,
 		ReturnType< $mol_button_open_native['accept'] >
 	>
-	type $mol_button_open_native__multiple__6P5BTPNC = $mol_type_enforce<
+	type $mol_button_open_native__multiple__7U7DRYUS = $mol_type_enforce<
 		ReturnType< $mol_button_open['multiple'] >
 		,
 		ReturnType< $mol_button_open_native['multiple'] >
 	>
 	export class $mol_button_open extends $mol_button_minor {
-		sub( ): readonly(any)[]
 		Icon( ): $mol_icon_upload
 		files( next?: readonly(any)[] ): readonly(any)[]
 		accept( ): string
 		multiple( ): boolean
 		Native( ): $mol_button_open_native
+		sub( ): readonly(any)[]
 	}
 	
 	export class $mol_button_open_native extends $mol_view {
+		accept( ): string
+		multiple( ): boolean
+		picked( next?: any ): any
 		dom_name( ): string
 		files( next?: readonly(any)[] ): readonly(any)[]
 		attr( ): ({ 
@@ -35,9 +38,6 @@ declare namespace $ {
 		event( ): ({ 
 			change( next?: ReturnType< $mol_button_open_native['picked'] > ): ReturnType< $mol_button_open_native['picked'] >,
 		}) 
-		accept( ): string
-		multiple( ): boolean
-		picked( next?: any ): any
 	}
 	
 }

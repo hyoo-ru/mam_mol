@@ -1,21 +1,21 @@
 declare namespace $ {
 
-	type $mol_button_minor__title__OL5B3574 = $mol_type_enforce<
+	type $mol_button_minor__title__C5EYHDC0 = $mol_type_enforce<
 		ReturnType< $mol_tag_tree_demo['item_title'] >
 		,
 		ReturnType< $mol_button_minor['title'] >
 	>
-	type $mol_tag_tree__Item__QEBO2YW5 = $mol_type_enforce<
+	type $mol_tag_tree__Item__4C4VR1LI = $mol_type_enforce<
 		ReturnType< $mol_tag_tree_demo['Item'] >
 		,
 		ReturnType< $mol_tag_tree['Item'] >
 	>
-	type $mol_tag_tree__levels_expanded__VVL01R6S = $mol_type_enforce<
+	type $mol_tag_tree__levels_expanded__KCR1G9OD = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_tag_tree['levels_expanded'] >
 	>
-	type $mol_tag_tree__ids_tags__4REU1VPK = $mol_type_enforce<
+	type $mol_tag_tree__ids_tags__LSTMTCA8 = $mol_type_enforce<
 		({ 
 			'Batman': readonly(any)[],
 			'Superman': readonly(any)[],
@@ -37,13 +37,13 @@ declare namespace $ {
 		ReturnType< $mol_tag_tree['ids_tags'] >
 	>
 	export class $mol_tag_tree_demo extends $mol_example {
+		item_title( id: any): string
+		Item( id: any): $mol_button_minor
+		Tree( ): $mol_tag_tree
 		title( ): string
 		sub( ): readonly(any)[]
 		tags( ): readonly(any)[]
 		aspects( ): readonly(any)[]
-		item_title( id: any): string
-		Item( id: any): $mol_button_minor
-		Tree( ): $mol_tag_tree
 	}
 	
 }

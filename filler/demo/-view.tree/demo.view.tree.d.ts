@@ -1,16 +1,16 @@
 declare namespace $ {
 
-	type $mol_filler__min_symbols__6DLZXCJ1 = $mol_type_enforce<
+	type $mol_filler__min_symbols__74T8WU7Q = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_filler['min_symbols'] >
 	>
 	export class $mol_filler_demo extends $mol_example_small {
+		Filler( ): $mol_filler
 		title( ): string
 		sub( ): readonly(any)[]
 		tags( ): readonly(any)[]
 		aspects( ): readonly(any)[]
-		Filler( ): $mol_filler
 	}
 	
 }

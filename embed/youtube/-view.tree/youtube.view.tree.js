@@ -1,23 +1,4 @@
 	($.$mol_embed_youtube) = class $mol_embed_youtube extends ($.$mol_check) {
-		uri(){
-			return "";
-		}
-		video_preview(){
-			return "";
-		}
-		video_id(){
-			return "";
-		}
-		checked(next){
-			return (this.active(next));
-		}
-		sub(){
-			return [
-				(this.Image()), 
-				(this.Hint()), 
-				(this.Frame())
-			];
-		}
 		active(next){
 			if(next !== undefined) return next;
 			return false;
@@ -46,6 +27,22 @@
 			(obj.title) = () => ((this.title()));
 			(obj.uri) = () => ((this.video_embed()));
 			return obj;
+		}
+		uri(){
+			return "";
+		}
+		video_id(){
+			return "";
+		}
+		checked(next){
+			return (this.active(next));
+		}
+		sub(){
+			return [
+				(this.Image()), 
+				(this.Hint()), 
+				(this.Frame())
+			];
 		}
 	};
 	($mol_mem(($.$mol_embed_youtube.prototype), "active"));

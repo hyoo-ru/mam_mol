@@ -1,27 +1,4 @@
 	($.$mol_format_demo) = class $mol_format_demo extends ($.$mol_example_small) {
-		title(){
-			return "Formatted string input/output";
-		}
-		sub(){
-			return [
-				(this.Ip_card()), 
-				(this.Phone_card()), 
-				(this.Card_card()), 
-				(this.Moment_card())
-			];
-		}
-		tags(){
-			return [
-				"phone", 
-				"ip", 
-				"car", 
-				"datetime", 
-				"input"
-			];
-		}
-		aspects(){
-			return ["Widget/Control", "Type/String"];
-		}
 		ip(next){
 			if(next !== undefined) return next;
 			return "";
@@ -84,6 +61,29 @@
 			(obj.status) = () => ((this.moment()));
 			(obj.Content) = () => ((this.Moment()));
 			return obj;
+		}
+		title(){
+			return "Formatted string input/output";
+		}
+		sub(){
+			return [
+				(this.Ip_card()), 
+				(this.Phone_card()), 
+				(this.Card_card()), 
+				(this.Moment_card())
+			];
+		}
+		tags(){
+			return [
+				"phone", 
+				"ip", 
+				"car", 
+				"datetime", 
+				"input"
+			];
+		}
+		aspects(){
+			return ["Widget/Control", "Type/String"];
 		}
 	};
 	($mol_mem(($.$mol_format_demo.prototype), "ip"));

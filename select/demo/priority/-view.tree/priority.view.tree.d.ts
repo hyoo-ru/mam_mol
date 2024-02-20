@@ -1,27 +1,27 @@
 declare namespace $ {
 
-	type $mol_select__Filter__RWCQ2FKR = $mol_type_enforce<
+	type $mol_select__Filter__NW8M8870 = $mol_type_enforce<
 		any
 		,
 		ReturnType< $mol_select['Filter'] >
 	>
-	type $mol_select__value__IQH5FHGN = $mol_type_enforce<
+	type $mol_select__value__AKI2JRII = $mol_type_enforce<
 		ReturnType< $mol_select_demo_priority['priority'] >
 		,
 		ReturnType< $mol_select['value'] >
 	>
-	type $mol_select__options__0PGA24OU = $mol_type_enforce<
+	type $mol_select__options__FHL8CRX3 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_select['options'] >
 	>
 	export class $mol_select_demo_priority extends $mol_example_small {
+		priority( next?: string ): string
+		Priority( ): $mol_select
 		title( ): string
 		sub( ): readonly(any)[]
 		tags( ): readonly(any)[]
 		aspects( ): readonly(any)[]
-		priority( next?: string ): string
-		Priority( ): $mol_select
 	}
 	
 }

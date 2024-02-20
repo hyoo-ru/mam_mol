@@ -1,27 +1,4 @@
 	($.$mol_video_camera) = class $mol_video_camera extends ($.$mol_video_player) {
-		controls(){
-			return false;
-		}
-		style(){
-			return {"transform": (this.transform())};
-		}
-		video_constraints(){
-			return {
-				"facingMode": (this.facing()), 
-				"aspectRatio": (this.aspect()), 
-				"width": {"ideal": (this.width())}, 
-				"height": {"ideal": (this.height())}
-			};
-		}
-		video_settings(){
-			return {
-				"brightness": (this.brightness()), 
-				"sharpness": (this.sharpness()), 
-				"contrast": (this.contrast()), 
-				"saturation": (this.saturation()), 
-				"advanced": [{"colorTemperature": (this.temperature())}, {"torch": (this.torch())}]
-			};
-		}
 		transform(){
 			return "";
 		}
@@ -57,6 +34,29 @@
 		}
 		torch(){
 			return false;
+		}
+		controls(){
+			return false;
+		}
+		style(){
+			return {"transform": (this.transform())};
+		}
+		video_constraints(){
+			return {
+				"facingMode": (this.facing()), 
+				"aspectRatio": (this.aspect()), 
+				"width": {"ideal": (this.width())}, 
+				"height": {"ideal": (this.height())}
+			};
+		}
+		video_settings(){
+			return {
+				"brightness": (this.brightness()), 
+				"sharpness": (this.sharpness()), 
+				"contrast": (this.contrast()), 
+				"saturation": (this.saturation()), 
+				"advanced": [{"colorTemperature": (this.temperature())}, {"torch": (this.torch())}]
+			};
 		}
 	};
 

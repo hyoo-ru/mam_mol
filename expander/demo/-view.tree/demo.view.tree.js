@@ -1,4 +1,14 @@
 	($.$mol_expander_demo) = class $mol_expander_demo extends ($.$mol_example_small) {
+		Content(){
+			const obj = new this.$.$mol_filler();
+			return obj;
+		}
+		Expander(){
+			const obj = new this.$.$mol_expander();
+			(obj.title) = () => ("Lorem Ipsum");
+			(obj.content) = () => ([(this.Content())]);
+			return obj;
+		}
 		title(){
 			return "Simple spoiler";
 		}
@@ -16,16 +26,6 @@
 		}
 		aspects(){
 			return ["Widget/Layout"];
-		}
-		Content(){
-			const obj = new this.$.$mol_filler();
-			return obj;
-		}
-		Expander(){
-			const obj = new this.$.$mol_expander();
-			(obj.title) = () => ("Lorem Ipsum");
-			(obj.content) = () => ([(this.Content())]);
-			return obj;
 		}
 	};
 	($mol_mem(($.$mol_expander_demo.prototype), "Content"));

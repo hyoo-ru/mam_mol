@@ -1,25 +1,4 @@
 	($.$mol_link_demo) = class $mol_link_demo extends ($.$mol_example_small) {
-		title(){
-			return "Some hyperlinks";
-		}
-		sub(){
-			return [(this.Demo_items())];
-		}
-		tags(){
-			return [
-				"$mol_icon", 
-				"file", 
-				"download", 
-				"link", 
-				"icon", 
-				"navigation", 
-				"router", 
-				"url"
-			];
-		}
-		aspects(){
-			return ["Navigation", "Widget/Button"];
-		}
 		this_label(){
 			return "This page";
 		}
@@ -93,6 +72,27 @@
 				(this.Download())
 			]);
 			return obj;
+		}
+		title(){
+			return "Some hyperlinks";
+		}
+		sub(){
+			return [(this.Demo_items())];
+		}
+		tags(){
+			return [
+				"$mol_icon", 
+				"file", 
+				"download", 
+				"link", 
+				"icon", 
+				"navigation", 
+				"router", 
+				"url"
+			];
+		}
+		aspects(){
+			return ["Navigation", "Widget/Button"];
 		}
 	};
 	($mol_mem(($.$mol_link_demo.prototype), "This"));

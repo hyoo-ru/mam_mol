@@ -1,16 +1,4 @@
 	($.$mol_check_box_demo) = class $mol_check_box_demo extends ($.$mol_example_small) {
-		title(){
-			return "Checkboxes in various states";
-		}
-		sub(){
-			return [(this.Demo_items())];
-		}
-		tags(){
-			return ["switch", "toggle"];
-		}
-		aspects(){
-			return ["Widget/Control/Button", "Type/Boolean"];
-		}
 		base_checked(next){
 			if(next !== undefined) return next;
 			return false;
@@ -74,6 +62,18 @@
 				(this.Alone_disabled())
 			]);
 			return obj;
+		}
+		title(){
+			return "Checkboxes in various states";
+		}
+		sub(){
+			return [(this.Demo_items())];
+		}
+		tags(){
+			return ["switch", "toggle"];
+		}
+		aspects(){
+			return ["Widget/Control/Button", "Type/Boolean"];
 		}
 	};
 	($mol_mem(($.$mol_check_box_demo.prototype), "base_checked"));

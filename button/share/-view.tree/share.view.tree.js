@@ -1,4 +1,11 @@
 	($.$mol_button_share) = class $mol_button_share extends ($.$mol_button_minor) {
+		Icon(){
+			const obj = new this.$.$mol_icon_share_variant();
+			return obj;
+		}
+		title(){
+			return "";
+		}
 		uri(){
 			return "";
 		}
@@ -10,13 +17,6 @@
 		}
 		sub(){
 			return [(this.Icon()), (this.title())];
-		}
-		Icon(){
-			const obj = new this.$.$mol_icon_share_variant();
-			return obj;
-		}
-		title(){
-			return "";
 		}
 	};
 	($mol_mem(($.$mol_button_share.prototype), "Icon"));

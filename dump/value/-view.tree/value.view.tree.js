@@ -1,15 +1,4 @@
 	($.$mol_dump_value) = class $mol_dump_value extends ($.$mol_view) {
-		value(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		preview_show(next){
-			if(next !== undefined) return next;
-			return true;
-		}
-		sub(){
-			return [(this.Simple()), (this.Expand())];
-		}
 		simple(){
 			return "";
 		}
@@ -87,9 +76,18 @@
 			(obj.content) = () => ((this.expand_content()));
 			return obj;
 		}
+		value(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		preview_show(next){
+			if(next !== undefined) return next;
+			return true;
+		}
+		sub(){
+			return [(this.Simple()), (this.Expand())];
+		}
 	};
-	($mol_mem(($.$mol_dump_value.prototype), "value"));
-	($mol_mem(($.$mol_dump_value.prototype), "preview_show"));
 	($mol_mem(($.$mol_dump_value.prototype), "Simple"));
 	($mol_mem(($.$mol_dump_value.prototype), "expanded"));
 	($mol_mem(($.$mol_dump_value.prototype), "expand_all"));
@@ -99,5 +97,7 @@
 	($mol_mem(($.$mol_dump_value.prototype), "Preview"));
 	($mol_mem_key(($.$mol_dump_value.prototype), "Row"));
 	($mol_mem(($.$mol_dump_value.prototype), "Expand"));
+	($mol_mem(($.$mol_dump_value.prototype), "value"));
+	($mol_mem(($.$mol_dump_value.prototype), "preview_show"));
 
 //# sourceMappingURL=value.view.tree.js.map

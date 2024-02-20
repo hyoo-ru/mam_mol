@@ -311,6 +311,16 @@ $mol_plot_bar $mol_plot_graph
 $mol_plot_fill $mol_plot_line
 	threshold 4
 
+$mol_svg_rect $mol_svg
+	dom_name \rect
+	pos /
+	attr *
+		^
+		width <= width \0
+		height <= height \0
+		x <= pos_x \
+		y <= pos_y \
+
 $mol_svg_text $mol_svg
 	dom_name \text
 	pos /
@@ -322,16 +332,6 @@ $mol_svg_text $mol_svg
 		alignment-baseline <= align_vert \baseline
 	sub /
 		<= text \
-
-$mol_svg_rect $mol_svg
-	dom_name \rect
-	pos /
-	attr *
-		^
-		width <= width \0
-		height <= height \0
-		x <= pos_x \
-		y <= pos_y \
 
 $mol_plot_ruler $mol_plot_graph
 	step 0

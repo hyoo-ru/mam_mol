@@ -1,20 +1,4 @@
 	($.$mol_check_list_demo) = class $mol_check_list_demo extends ($.$mol_example_small) {
-		title(){
-			return "Set of toggles";
-		}
-		sub(){
-			return [(this.Rights())];
-		}
-		tags(){
-			return [
-				"option", 
-				"switch", 
-				"toggle"
-			];
-		}
-		aspects(){
-			return ["Widget/Control/Button"];
-		}
 		right(id, next){
 			if(next !== undefined) return next;
 			return false;
@@ -33,6 +17,22 @@
 				"docs": "Allow Read Documentation"
 			});
 			return obj;
+		}
+		title(){
+			return "Set of toggles";
+		}
+		sub(){
+			return [(this.Rights())];
+		}
+		tags(){
+			return [
+				"option", 
+				"switch", 
+				"toggle"
+			];
+		}
+		aspects(){
+			return ["Widget/Control/Button"];
 		}
 	};
 	($mol_mem_key(($.$mol_check_list_demo.prototype), "right"));

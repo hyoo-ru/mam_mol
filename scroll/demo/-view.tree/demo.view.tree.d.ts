@@ -1,20 +1,16 @@
 declare namespace $ {
 
-	type $mol_list__rows__I2XLB5WR = $mol_type_enforce<
+	type $mol_list__rows__ZUZ1UO4H = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_scroll__sub__3MLL2E11 = $mol_type_enforce<
+	type $mol_scroll__sub__GJ2YP6OE = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_scroll['sub'] >
 	>
 	export class $mol_scroll_demo extends $mol_example_large {
-		title( ): string
-		sub( ): readonly(any)[]
-		tags( ): readonly(any)[]
-		aspects( ): readonly(any)[]
 		Filler0( ): $mol_filler
 		Filler1( ): $mol_filler
 		Filler2( ): $mol_filler
@@ -27,6 +23,10 @@ declare namespace $ {
 		Filler9( ): $mol_filler
 		Content( ): $mol_list
 		Scroll( ): $mol_scroll
+		title( ): string
+		sub( ): readonly(any)[]
+		tags( ): readonly(any)[]
+		aspects( ): readonly(any)[]
 	}
 	
 }

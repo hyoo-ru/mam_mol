@@ -1,32 +1,4 @@
 	($.$mol_plot_demo) = class $mol_plot_demo extends ($.$mol_example_large) {
-		title(){
-			return "Dynamic lightweight graphs";
-		}
-		count(next){
-			if(next !== undefined) return next;
-			return 20;
-		}
-		frequency(){
-			return 8;
-		}
-		sub(){
-			return [(this.Plot())];
-		}
-		tags(){
-			return [
-				"visualization", 
-				"chart", 
-				"graph", 
-				"dashboard"
-			];
-		}
-		aspects(){
-			return [
-				"Widget/Draw/Chart/Line", 
-				"Widget/Draw/Chart/Fill", 
-				"Widget/Draw/Chart/Dot"
-			];
-		}
 		saturation_series(){
 			return [];
 		}
@@ -97,8 +69,35 @@
 			]);
 			return obj;
 		}
+		title(){
+			return "Dynamic lightweight graphs";
+		}
+		count(next){
+			if(next !== undefined) return next;
+			return 20;
+		}
+		frequency(){
+			return 8;
+		}
+		sub(){
+			return [(this.Plot())];
+		}
+		tags(){
+			return [
+				"visualization", 
+				"chart", 
+				"graph", 
+				"dashboard"
+			];
+		}
+		aspects(){
+			return [
+				"Widget/Draw/Chart/Line", 
+				"Widget/Draw/Chart/Fill", 
+				"Widget/Draw/Chart/Dot"
+			];
+		}
 	};
-	($mol_mem(($.$mol_plot_demo.prototype), "count"));
 	($mol_mem(($.$mol_plot_demo.prototype), "Saturation_fill"));
 	($mol_mem(($.$mol_plot_demo.prototype), "Saturation_line"));
 	($mol_mem(($.$mol_plot_demo.prototype), "Saturation"));
@@ -109,5 +108,6 @@
 	($mol_mem(($.$mol_plot_demo.prototype), "Voltage"));
 	($mol_mem(($.$mol_plot_demo.prototype), "Time"));
 	($mol_mem(($.$mol_plot_demo.prototype), "Plot"));
+	($mol_mem(($.$mol_plot_demo.prototype), "count"));
 
 //# sourceMappingURL=demo.view.tree.js.map

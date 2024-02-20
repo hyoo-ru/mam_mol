@@ -1,20 +1,4 @@
 	($.$mol_search_jumper) = class $mol_search_jumper extends ($.$mol_search) {
-		Root(){
-			const obj = new this.$.$mol_view();
-			return obj;
-		}
-		Index(){
-			const obj = new this.$.$mol_paginator();
-			(obj.value) = (next) => ((this.index(next)));
-			return obj;
-		}
-		plugins(){
-			return [
-				...(super.plugins()), 
-				(this.Backward()), 
-				(this.Forward())
-			];
-		}
 		index(next){
 			if(next !== undefined) return next;
 			return 0;
@@ -40,12 +24,28 @@
 			(obj.key) = () => ({"enter": (next) => (this.forward(next)), "escape": (next) => (this.escape(next))});
 			return obj;
 		}
+		Root(){
+			const obj = new this.$.$mol_view();
+			return obj;
+		}
+		Index(){
+			const obj = new this.$.$mol_paginator();
+			(obj.value) = (next) => ((this.index(next)));
+			return obj;
+		}
+		plugins(){
+			return [
+				...(super.plugins()), 
+				(this.Backward()), 
+				(this.Forward())
+			];
+		}
 	};
-	($mol_mem(($.$mol_search_jumper.prototype), "Root"));
-	($mol_mem(($.$mol_search_jumper.prototype), "Index"));
 	($mol_mem(($.$mol_search_jumper.prototype), "index"));
 	($mol_mem(($.$mol_search_jumper.prototype), "Backward"));
 	($mol_mem(($.$mol_search_jumper.prototype), "escape"));
 	($mol_mem(($.$mol_search_jumper.prototype), "Forward"));
+	($mol_mem(($.$mol_search_jumper.prototype), "Root"));
+	($mol_mem(($.$mol_search_jumper.prototype), "Index"));
 
 //# sourceMappingURL=jumper.view.tree.js.map

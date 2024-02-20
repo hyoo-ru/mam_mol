@@ -1,22 +1,4 @@
 	($.$mol_pop_over_demo) = class $mol_pop_over_demo extends ($.$mol_example_small) {
-		title(){
-			return "Menu that opens on mouse over";
-		}
-		sub(){
-			return [(this.Menu())];
-		}
-		tags(){
-			return [
-				"popover", 
-				"pop", 
-				"menu", 
-				"hover", 
-				"tooltip"
-			];
-		}
-		aspects(){
-			return ["Widget/Float"];
-		}
 		file_title(){
 			return "File";
 		}
@@ -95,6 +77,24 @@
 			const obj = new this.$.$mol_row();
 			(obj.sub) = () => ([(this.File()), (this.Help())]);
 			return obj;
+		}
+		title(){
+			return "Menu that opens on mouse over";
+		}
+		sub(){
+			return [(this.Menu())];
+		}
+		tags(){
+			return [
+				"popover", 
+				"pop", 
+				"menu", 
+				"hover", 
+				"tooltip"
+			];
+		}
+		aspects(){
+			return ["Widget/Float"];
 		}
 	};
 	($mol_mem(($.$mol_pop_over_demo.prototype), "Open"));

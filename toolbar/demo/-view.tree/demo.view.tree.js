@@ -1,13 +1,4 @@
 	($.$mol_toolbar_demo) = class $mol_toolbar_demo extends ($.$mol_example_small) {
-		title(){
-			return "Foldable toolbar demo";
-		}
-		sub(){
-			return [(this.Toolbar())];
-		}
-		aspects(){
-			return ["Widget/Layout"];
-		}
 		search_hint(){
 			return "Search...";
 		}
@@ -89,6 +80,15 @@
 				(this.Delete())
 			]);
 			return obj;
+		}
+		title(){
+			return "Foldable toolbar demo";
+		}
+		sub(){
+			return [(this.Toolbar())];
+		}
+		aspects(){
+			return ["Widget/Layout"];
 		}
 	};
 	($mol_mem(($.$mol_toolbar_demo.prototype), "Search"));

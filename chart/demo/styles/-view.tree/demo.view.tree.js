@@ -1,28 +1,4 @@
 	($.$mol_chart_demo_styles) = class $mol_chart_demo_styles extends ($.$mol_example_large) {
-		title(){
-			return "Chart with various styles of graphs.";
-		}
-		samples_count(){
-			return 15;
-		}
-		sub(){
-			return [(this.Chart())];
-		}
-		tags(){
-			return [
-				"plot", 
-				"visualization", 
-				"dashboard"
-			];
-		}
-		aspects(){
-			return [
-				"Widget/Draw/Chart/Line", 
-				"Widget/Draw/Chart/Dot", 
-				"Widget/Draw/Chart/Bar", 
-				"Widget/Draw/Chart/Fill"
-			];
-		}
 		receipts_title(){
 			return "Receipts";
 		}
@@ -173,6 +149,30 @@
 			const obj = new this.$.$mol_chart();
 			(obj.graphs) = () => ((this.graphs()));
 			return obj;
+		}
+		title(){
+			return "Chart with various styles of graphs.";
+		}
+		samples_count(){
+			return 15;
+		}
+		sub(){
+			return [(this.Chart())];
+		}
+		tags(){
+			return [
+				"plot", 
+				"visualization", 
+				"dashboard"
+			];
+		}
+		aspects(){
+			return [
+				"Widget/Draw/Chart/Line", 
+				"Widget/Draw/Chart/Dot", 
+				"Widget/Draw/Chart/Bar", 
+				"Widget/Draw/Chart/Fill"
+			];
 		}
 	};
 	($mol_mem(($.$mol_chart_demo_styles.prototype), "Receipts"));

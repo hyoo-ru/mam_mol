@@ -1,4 +1,16 @@
 	($.$mol_calendar_demo_holiday) = class $mol_calendar_demo_holiday extends ($.$mol_example_small) {
+		month(){
+			return "2018-01";
+		}
+		holiday(id){
+			return false;
+		}
+		Calendar(){
+			const obj = new this.$.$mol_calendar();
+			(obj.month_string) = () => ((this.month()));
+			(obj.day_holiday) = (id) => ((this.holiday(id)));
+			return obj;
+		}
 		title(){
 			return "Days of month 2018-01 with custom holidays";
 		}
@@ -28,18 +40,6 @@
 		}
 		aspects(){
 			return ["Widget/Grid", "Type/Date"];
-		}
-		month(){
-			return "2018-01";
-		}
-		holiday(id){
-			return false;
-		}
-		Calendar(){
-			const obj = new this.$.$mol_calendar();
-			(obj.month_string) = () => ((this.month()));
-			(obj.day_holiday) = (id) => ((this.holiday(id)));
-			return obj;
 		}
 	};
 	($mol_mem(($.$mol_calendar_demo_holiday.prototype), "Calendar"));

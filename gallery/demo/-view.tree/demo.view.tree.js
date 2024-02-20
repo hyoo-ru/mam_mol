@@ -1,4 +1,20 @@
 	($.$mol_gallery_demo) = class $mol_gallery_demo extends ($.$mol_example) {
+		items(){
+			return [];
+		}
+		App(){
+			const obj = new this.$.$mol_gallery();
+			(obj.items) = () => ((this.items()));
+			return obj;
+		}
+		item_title(id){
+			return "";
+		}
+		Item_image(id){
+			const obj = new this.$.$mol_avatar();
+			(obj.id) = () => ((this.item_title(id)));
+			return obj;
+		}
 		title(){
 			return "Gallery of cards";
 		}
@@ -24,25 +40,9 @@
 		aspects(){
 			return ["Widget/Layout"];
 		}
-		items(){
-			return [];
-		}
-		App(){
-			const obj = new this.$.$mol_gallery();
-			(obj.items) = () => ((this.items()));
-			return obj;
-		}
-		item_title(id){
-			return "";
-		}
-		Item_image(id){
-			const obj = new this.$.$mol_avatar();
-			(obj.id) = () => ((this.item_title(id)));
-			return obj;
-		}
 	};
-	($mol_mem_key(($.$mol_gallery_demo.prototype), "Item"));
 	($mol_mem(($.$mol_gallery_demo.prototype), "App"));
 	($mol_mem_key(($.$mol_gallery_demo.prototype), "Item_image"));
+	($mol_mem_key(($.$mol_gallery_demo.prototype), "Item"));
 
 //# sourceMappingURL=demo.view.tree.js.map

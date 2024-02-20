@@ -1,25 +1,4 @@
 	($.$mol_pick_demo) = class $mol_pick_demo extends ($.$mol_example_small) {
-		title(){
-			return "Simple and complex popups";
-		}
-		sub(){
-			return [(this.Info_pop()), (this.Options_pop())];
-		}
-		tags(){
-			return [
-				"pick", 
-				"popup", 
-				"info", 
-				"menu", 
-				"icon", 
-				"container", 
-				"confirm", 
-				"modal"
-			];
-		}
-		aspects(){
-			return ["Widget/Float", "Widget/Control/Button/Picker"];
-		}
 		info_content_text(){
 			return "## Info Pop-up\n**Markdown text content**";
 		}
@@ -94,6 +73,27 @@
 			(obj.trigger_content) = () => ([(this.Options_trigger_icon())]);
 			(obj.bubble_content) = () => ([(this.Options_content())]);
 			return obj;
+		}
+		title(){
+			return "Simple and complex popups";
+		}
+		sub(){
+			return [(this.Info_pop()), (this.Options_pop())];
+		}
+		tags(){
+			return [
+				"pick", 
+				"popup", 
+				"info", 
+				"menu", 
+				"icon", 
+				"container", 
+				"confirm", 
+				"modal"
+			];
+		}
+		aspects(){
+			return ["Widget/Float", "Widget/Control/Button/Picker"];
 		}
 	};
 	($mol_mem(($.$mol_pick_demo.prototype), "Info_content"));

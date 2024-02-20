@@ -1,10 +1,4 @@
 	($.$mol_filler) = class $mol_filler extends ($.$mol_paragraph) {
-		min_symbols(){
-			return 7000;
-		}
-		sub(){
-			return (this.filler_lines());
-		}
 		filler_lines(){
 			return [
 				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. ", 
@@ -136,6 +130,12 @@
 				"Aenean luctus, elit commodo laoreet commodo, justo nisi consequat massa, sed vulputate quam urna quis eros. ", 
 				"Donec vel. "
 			];
+		}
+		min_symbols(){
+			return 7000;
+		}
+		sub(){
+			return (this.filler_lines());
 		}
 	};
 

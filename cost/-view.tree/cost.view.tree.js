@@ -1,14 +1,4 @@
 	($.$mol_cost) = class $mol_cost extends ($.$mol_view) {
-		value(){
-			return null;
-		}
-		sub(){
-			return [
-				(this.Prefix()), 
-				(this.Value()), 
-				(this.Postfix())
-			];
-		}
 		prefix(){
 			return "";
 		}
@@ -32,6 +22,16 @@
 			const obj = new this.$.$mol_view();
 			(obj.sub) = () => ([(this.postfix())]);
 			return obj;
+		}
+		value(){
+			return null;
+		}
+		sub(){
+			return [
+				(this.Prefix()), 
+				(this.Value()), 
+				(this.Postfix())
+			];
 		}
 	};
 	($mol_mem(($.$mol_cost.prototype), "Prefix"));

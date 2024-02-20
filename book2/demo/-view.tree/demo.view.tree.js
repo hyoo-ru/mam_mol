@@ -1,25 +1,4 @@
 	($.$mol_book2_demo) = class $mol_book2_demo extends ($.$mol_example_large) {
-		title(){
-			return "Adaprive layout for various sizes of screen";
-		}
-		sub(){
-			return [(this.View())];
-		}
-		tags(){
-			return [
-				"app", 
-				"page", 
-				"navigation", 
-				"transition", 
-				"multipage", 
-				"dialog", 
-				"breadcrumbs", 
-				"drawer"
-			];
-		}
-		aspects(){
-			return ["Widget/Layout"];
-		}
 		Side(){
 			const obj = new this.$.$mol_view();
 			(obj.sub) = () => (["Side"]);
@@ -49,6 +28,27 @@
 				(this.Third())
 			]);
 			return obj;
+		}
+		title(){
+			return "Adaprive layout for various sizes of screen";
+		}
+		sub(){
+			return [(this.View())];
+		}
+		tags(){
+			return [
+				"app", 
+				"page", 
+				"navigation", 
+				"transition", 
+				"multipage", 
+				"dialog", 
+				"breadcrumbs", 
+				"drawer"
+			];
+		}
+		aspects(){
+			return ["Widget/Layout"];
 		}
 	};
 	($mol_mem(($.$mol_book2_demo.prototype), "Side"));

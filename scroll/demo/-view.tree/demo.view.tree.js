@@ -1,16 +1,4 @@
 	($.$mol_scroll_demo) = class $mol_scroll_demo extends ($.$mol_example_large) {
-		title(){
-			return "Simple scroll pane";
-		}
-		sub(){
-			return [(this.Scroll())];
-		}
-		tags(){
-			return ["scroll", "container"];
-		}
-		aspects(){
-			return ["Widget/Scroll"];
-		}
 		Filler0(){
 			const obj = new this.$.$mol_filler();
 			return obj;
@@ -71,6 +59,18 @@
 			const obj = new this.$.$mol_scroll();
 			(obj.sub) = () => ([(this.Content())]);
 			return obj;
+		}
+		title(){
+			return "Simple scroll pane";
+		}
+		sub(){
+			return [(this.Scroll())];
+		}
+		tags(){
+			return ["scroll", "container"];
+		}
+		aspects(){
+			return ["Widget/Scroll"];
 		}
 	};
 	($mol_mem(($.$mol_scroll_demo.prototype), "Filler0"));

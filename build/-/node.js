@@ -2540,385 +2540,6 @@ var $;
 
 ;
 "use strict";
-var $;
-(function ($) {
-    const class_regex = /^[$A-Z][$\w<>\[\]()"'?|]+$/;
-    function $mol_view_tree2_class_match(klass) {
-        if (!klass?.type)
-            return false;
-        if (klass.type === 'NaN' || klass.type === 'Infinity')
-            return false;
-        return class_regex.test(klass.type);
-    }
-    $.$mol_view_tree2_class_match = $mol_view_tree2_class_match;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    const err = $mol_view_tree2_error_str;
-    function $mol_view_tree2_class_super(klass) {
-        if (!$mol_view_tree2_class_match(klass))
-            return this.$mol_fail(err `Wrong class name at ${klass.span}`);
-        const superclass = klass.kids.length === 1 ? klass.kids[0] : undefined;
-        if (!superclass)
-            return this.$mol_fail(err `No super class at ${klass.span}`);
-        if (!$mol_view_tree2_class_match(superclass))
-            return this.$mol_fail(err `Wrong super class name ${JSON.stringify(superclass.type).replace(/(^"|"$)/g, "")} at ${superclass.span}`);
-        return superclass;
-    }
-    $.$mol_view_tree2_class_super = $mol_view_tree2_class_super;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    const err = $mol_view_tree2_error_str;
-    function $mol_view_tree2_class_props(klass) {
-        let props = this.$mol_view_tree2_class_super(klass);
-        props = props.clone(props.hack({
-            '': (node, belt) => {
-                const normal = node.type.replace(/!\w+/, '*');
-                if (node.type === normal)
-                    return [node.clone(node.hack(belt))];
-                return [node.struct(normal, node.hack(belt))];
-            }
-        }));
-        const props_inner = {};
-        const add_inner = (prop) => {
-            const prev = props_inner[prop.type];
-            if (prev && prev.kids[0]?.type !== prop.kids[0]?.type) {
-                this.$mol_fail(err `Different kids ${prev.span} vs ${prop.span}`);
-            }
-            props_inner[prop.type] = prop;
-        };
-        const upper = (operator, belt, context) => {
-            const prop = this.$mol_view_tree2_child(operator);
-            const defs = prop.hack(belt, { factory: prop });
-            if (defs.length)
-                add_inner(prop.clone(defs));
-            return [operator.clone([prop.clone([])])];
-        };
-        const props_root = props.hack({
-            '<=': upper,
-            '<=>': upper,
-            '^': (operator, belt, context) => {
-                if (operator.kids.length === 0)
-                    return [operator];
-                return upper(operator, belt, context);
-            },
-            '': (left, belt, context) => {
-                let right;
-                const operator = left.kids[0];
-                if (operator?.type === '=>' && context.factory) {
-                    right = operator.kids[0];
-                    if (!right)
-                        this.$mol_fail(err `Need a child ${operator.span}`);
-                    if (!context.factory)
-                        this.$mol_fail(err `Need a parent ${left.span}`);
-                    add_inner(right.clone([
-                        right.struct('=', [
-                            context.factory.clone([left.clone([])]),
-                        ]),
-                    ]));
-                }
-                if (right)
-                    context = { factory: right.clone([]) };
-                else if (operator && !context.factory && $mol_view_tree2_class_match(operator)) {
-                    context = { factory: left.clone([]) };
-                }
-                return [left.clone(left.hack(belt, context))];
-            }
-        }, { factory: undefined });
-        return [...props_root, ...Object.values(props_inner)];
-    }
-    $.$mol_view_tree2_class_props = $mol_view_tree2_class_props;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    const err = $mol_view_tree2_error_str;
-    function $mol_view_tree2_value_type(val) {
-        switch (val.type) {
-            case 'true': return 'bool';
-            case 'false': return 'bool';
-            case 'null': return 'null';
-            case '*': return 'dict';
-            case '@': return 'locale';
-            case '': return 'string';
-            case '<=': return 'get';
-            case '<=>': return 'bind';
-            case '=>': return 'put';
-        }
-        const first_char = val.type && val.type[0];
-        if (first_char === '/')
-            return 'list';
-        if (Number(val.type).toString() == val.type)
-            return 'number';
-        if (/^[$A-Z]/.test(first_char))
-            return 'object';
-        return this.$mol_fail(err `Unknown value type ${val.type} at ${val.span}`);
-    }
-    $.$mol_view_tree2_value_type = $mol_view_tree2_value_type;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    const err = $mol_view_tree2_error_str;
-    function $mol_view_tree2_value(value) {
-        const type = value.type;
-        const kids = value.kids;
-        if (type === '') {
-            if (kids.length === 0)
-                return value.data(JSON.stringify(value.value));
-            return value.data(JSON.stringify(kids.map(node => node.value).join('\n')));
-        }
-        if (kids.length !== 0)
-            return this.$mol_fail(err `Kids are not allowed at ${value.span}, use ${example}`);
-        if (type === 'false' || type === 'true')
-            return value.data(type);
-        if (type === 'null')
-            return value.data(type);
-        if (Number(type).toString() === type.replace(/^\+/, ''))
-            return value.data(type);
-        return this.$mol_fail(err `Value ${value.toString()} not allowed at ${value.span}, use ${example}`);
-    }
-    $.$mol_view_tree2_value = $mol_view_tree2_value;
-    const example = new $mol_view_tree2_error_suggestions([
-        'false',
-        'true',
-        '123',
-        'null',
-        '\\some'
-    ]);
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_view_tree2_value_number(type) {
-        return type.match(/[\+\-]*NaN/) || !Number.isNaN(Number(type));
-    }
-    $.$mol_view_tree2_value_number = $mol_view_tree2_value_number;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_tree2_js_to_text(js) {
-        function sequence(open, separator, close) {
-            return (input, belt) => [
-                input.struct('line', [
-                    ...open ? [input.data(open)] : [],
-                    input.struct(separator && input.kids.length > 2 ? 'indent' : 'line', [].concat(...input.kids.map((kid, index) => [
-                        kid.struct('line', [
-                            ...kid.list([kid]).hack(belt),
-                            ...(separator && index < input.kids.length - 1) ? [input.data(separator)] : [],
-                        ]),
-                    ]))),
-                    ...close ? [input.data(close)] : [],
-                ]),
-            ];
-        }
-        function block(open, separator, close) {
-            return (input, belt) => [
-                ...open ? [input.data(open)] : [],
-                ...input.kids.length === 0 ? [] : [input.struct('indent', input.kids.map((kid, index) => kid.struct('line', [
-                        ...kid.list([kid]).hack(belt),
-                        ...(separator) ? [input.data(separator)] : [],
-                    ])))],
-                ...close ? [input.data(close)] : [],
-            ];
-        }
-        function duplet(open, separator, close) {
-            return (input, belt) => [
-                input.struct('line', [
-                    ...open ? [input.data(open)] : [],
-                    ...input.list(input.kids.slice(0, 1)).hack(belt),
-                    ...(separator && input.kids.length > 1) ? [input.data(separator)] : [],
-                    ...input.list(input.kids.slice(1, 2)).hack(belt),
-                    ...close ? [input.data(close)] : [],
-                ]),
-            ];
-        }
-        function triplet(open, separator12, separator23, close) {
-            return (input, belt) => [
-                input.struct('line', [
-                    ...open ? [input.data(open)] : [],
-                    ...input.list(input.kids.slice(0, 1)).hack(belt),
-                    ...(separator12 && input.kids.length > 1) ? [input.data(separator12)] : [],
-                    ...input.list(input.kids.slice(1, 2)).hack(belt),
-                    ...(separator23 && input.kids.length > 2) ? [input.data(separator23)] : [],
-                    ...input.list(input.kids.slice(2, 3)).hack(belt),
-                    ...close ? [input.data(close)] : [],
-                ]),
-            ];
-        }
-        return js.list(js.hack({
-            '+': sequence('+'),
-            '-': sequence('-'),
-            '!': sequence('!'),
-            '~': sequence('~'),
-            'return': sequence('return '),
-            'break': sequence('break '),
-            'continue': sequence('continue '),
-            'yield': sequence('yield '),
-            'yield*': sequence('yield* '),
-            'await': sequence('await '),
-            'void': sequence('void '),
-            'delete': sequence('delete '),
-            'typeof': sequence('typeof '),
-            'new': sequence('new '),
-            '...': sequence('...'),
-            '@++': sequence('', '', '++'),
-            '@--': sequence('', '', '--'),
-            '(in)': sequence('(', ' in ', ')'),
-            '(instanceof)': sequence('(', ' instanceof ', ')'),
-            '(+)': sequence('(', ' + ', ')'),
-            '(-)': sequence('(', ' - ', ')'),
-            '(*)': sequence('(', ' * ', ')'),
-            '(/)': sequence('(', ' / ', ')'),
-            '(%)': sequence('(', ' % ', ')'),
-            '(**)': sequence('(', ' ** ', ')'),
-            '(<)': sequence('(', ' < ', ')'),
-            '(<=)': sequence('(', ' <= ', ')'),
-            '(>)': sequence('(', ' > ', ')'),
-            '(>=)': sequence('(', ' >= ', ')'),
-            '(==)': sequence('(', ' == ', ')'),
-            '(!=)': sequence('(', ' != ', ')'),
-            '(===)': sequence('(', ' === ', ')'),
-            '(!==)': sequence('(', ' !== ', ')'),
-            '(<<)': sequence('(', ' << ', ')'),
-            '(>>)': sequence('(', ' >> ', ')'),
-            '(>>>)': sequence('(', ' >>> ', ')'),
-            '(&)': sequence('(', ' & ', ')'),
-            '(|)': sequence('(', ' | ', ')'),
-            '(^)': sequence('(', ' ^ ', ')'),
-            '(&&)': sequence('(', ' && ', ')'),
-            '(||)': sequence('(', ' || ', ')'),
-            '(,)': sequence('(', ', ', ')'),
-            '{;}': block('{', ';', '}'),
-            ';': block('', ';', ''),
-            '[,]': sequence('[', ', ', ']'),
-            '{,}': sequence('{', ', ', '}'),
-            '()': sequence('(', '', ')'),
-            '{}': block('{', '', '}'),
-            '[]': (input, belt) => {
-                const first = input.kids[0];
-                if (first.type)
-                    return sequence('[', '', ']')(input, belt);
-                else
-                    return [input.data('.' + first.text())];
-            },
-            ':': (input, belt) => {
-                const first = input.kids[0];
-                if (first.type)
-                    return duplet('[', ']: ')(input, belt);
-                else
-                    return duplet('', ': ')(input, belt);
-            },
-            'let': duplet('let ', ' = '),
-            'const': duplet('const ', ' = '),
-            'var': duplet('var ', ' = '),
-            '=': duplet('', ' = '),
-            '+=': duplet('', ' += '),
-            '-=': duplet('', ' -= '),
-            '*=': duplet('', ' *= '),
-            '/=': duplet('', ' /= '),
-            '%=': duplet('', ' %= '),
-            '**=': duplet('', ' **= '),
-            '<<=': duplet('', ' <<= '),
-            '>>=': duplet('', ' >>= '),
-            '>>>=': duplet('', ' >>>= '),
-            '&=': duplet('', ' &= '),
-            '|=': duplet('', ' |= '),
-            '^=': duplet('', ' ^= '),
-            '&&=': duplet('', ' &&= '),
-            '||=': duplet('', ' ||= '),
-            '=>': duplet('', ' => '),
-            'async=>': duplet('async ', ' => '),
-            'function': triplet('function '),
-            'function*': triplet('function* '),
-            'async': triplet('async function '),
-            'async*': triplet('async function* '),
-            'class': triplet('class ', ' '),
-            'extends': sequence('extends ', '', ' '),
-            'if': triplet('if', ' ', 'else'),
-            '?:': triplet('', ' ? ', ' : '),
-            '.': (input, belt) => {
-                const first = input.kids[0];
-                if (first.type)
-                    return triplet('[', ']')(input, belt);
-                else
-                    return [
-                        input.data(first.text()),
-                        ...input.list(input.kids.slice(1)).hack(belt),
-                    ];
-            },
-            'get': triplet('get [', ']'),
-            'set': triplet('set [', ']'),
-            'static': triplet('static [', ']'),
-            '/./': sequence(),
-            '.global': sequence('g'),
-            '.multiline': sequence('m'),
-            '.ignoreCase': sequence('i'),
-            '.source': (input, belt) => [
-                input.data('/'),
-                input.data(JSON.stringify(input.text()).slice(1, -1)),
-                input.data('/'),
-            ],
-            '``': (input, belt) => {
-                return [
-                    input.struct('line', [
-                        input.data('`'),
-                        ...[].concat(...input.kids.map(kid => {
-                            if (kid.type) {
-                                return [
-                                    kid.data('${'),
-                                    ...kid.list([kid]).hack(belt),
-                                    kid.data('}'),
-                                ];
-                            }
-                            else {
-                                return [
-                                    input.data(JSON.stringify(kid.text()).slice(1, -1)),
-                                ];
-                            }
-                        })),
-                        input.data('`'),
-                    ]),
-                ];
-            },
-            '': (input, belt) => {
-                if (!input.type)
-                    return [
-                        input.data(JSON.stringify(input.text())),
-                    ];
-                if (/^[\w$#][\w0-9$]*$/i.test(input.type))
-                    return [
-                        input.data(input.type),
-                    ];
-                if ($mol_view_tree2_value_number(input.type))
-                    return [
-                        input.data(input.type)
-                    ];
-                $mol_fail(new SyntaxError(`Wrong node type`));
-            },
-        }));
-    }
-    $.$mol_tree2_js_to_text = $mol_tree2_js_to_text;
-})($ || ($ = {}));
-
-;
-"use strict";
 
 ;
 "use strict";
@@ -3250,6 +2871,389 @@ var $;
         return name.data(JSON.stringify(name.value));
     }
     $.$mol_view_tree2_prop_quote = $mol_view_tree2_prop_quote;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    const class_regex = /^[$A-Z][$\w<>\[\]()"'?|]+$/;
+    function $mol_view_tree2_class_match(klass) {
+        if (!klass?.type)
+            return false;
+        if (klass.type === 'NaN' || klass.type === 'Infinity')
+            return false;
+        return class_regex.test(klass.type);
+    }
+    $.$mol_view_tree2_class_match = $mol_view_tree2_class_match;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    const err = $mol_view_tree2_error_str;
+    function $mol_view_tree2_class_super(klass) {
+        if (!$mol_view_tree2_class_match(klass))
+            return this.$mol_fail(err `Wrong class name at ${klass.span}`);
+        const superclass = klass.kids.length === 1 ? klass.kids[0] : undefined;
+        if (!superclass)
+            return this.$mol_fail(err `No super class at ${klass.span}`);
+        if (!$mol_view_tree2_class_match(superclass))
+            return this.$mol_fail(err `Wrong super class name ${JSON.stringify(superclass.type).replace(/(^"|"$)/g, "")} at ${superclass.span}`);
+        return superclass;
+    }
+    $.$mol_view_tree2_class_super = $mol_view_tree2_class_super;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    const err = $mol_view_tree2_error_str;
+    function $mol_view_tree2_class_props(klass) {
+        let props = this.$mol_view_tree2_class_super(klass);
+        props = props.clone(props.hack({
+            '': (node, belt) => {
+                const normal = node.type.replace(/!\w+/, '*');
+                if (node.type === normal)
+                    return [node.clone(node.hack(belt))];
+                return [node.struct(normal, node.hack(belt))];
+            }
+        }));
+        const props_inner = {};
+        const add_inner = (prop) => {
+            const { name } = this.$mol_view_tree2_prop_parts(prop);
+            const prev = props_inner[name];
+            if (prev && prev.kids[0]?.toString() !== prop.kids[0]?.toString()) {
+                this.$mol_fail(err `Need an equal default values at ${prev.span} vs ${prop.span}`);
+            }
+            props_inner[name] = prop;
+        };
+        const upper = (operator, belt, context) => {
+            const prop = this.$mol_view_tree2_child(operator);
+            const defs = prop.hack(belt, { factory: prop });
+            if (defs.length)
+                add_inner(prop.clone(defs));
+            return [operator.clone([prop.clone([])])];
+        };
+        const props_root = props.hack({
+            '<=': upper,
+            '<=>': upper,
+            '^': (operator, belt, context) => {
+                if (operator.kids.length === 0)
+                    return [operator];
+                return upper(operator, belt, context);
+            },
+            '': (left, belt, context) => {
+                let right;
+                const operator = left.kids[0];
+                if (operator?.type === '=>' && context.factory) {
+                    right = operator.kids[0];
+                    if (!right)
+                        this.$mol_fail(err `Need a child ${operator.span}`);
+                    if (!context.factory)
+                        this.$mol_fail(err `Need a parent ${left.span}`);
+                    add_inner(right.clone([
+                        right.struct('=', [
+                            context.factory.clone([left.clone([])]),
+                        ]),
+                    ]));
+                }
+                if (right)
+                    context = { factory: right.clone([]) };
+                else if (operator && !context.factory && $mol_view_tree2_class_match(operator)) {
+                    context = { factory: left.clone([]) };
+                }
+                const hacked = left.clone(left.hack(belt, context));
+                return [hacked];
+            }
+        }, { factory: undefined });
+        for (const prop of props_root)
+            add_inner(prop);
+        return Object.values(props_inner);
+    }
+    $.$mol_view_tree2_class_props = $mol_view_tree2_class_props;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    const err = $mol_view_tree2_error_str;
+    function $mol_view_tree2_value_type(val) {
+        switch (val.type) {
+            case 'true': return 'bool';
+            case 'false': return 'bool';
+            case 'null': return 'null';
+            case '*': return 'dict';
+            case '@': return 'locale';
+            case '': return 'string';
+            case '<=': return 'get';
+            case '<=>': return 'bind';
+            case '=>': return 'put';
+        }
+        const first_char = val.type && val.type[0];
+        if (first_char === '/')
+            return 'list';
+        if (Number(val.type).toString() == val.type)
+            return 'number';
+        if (/^[$A-Z]/.test(first_char))
+            return 'object';
+        return this.$mol_fail(err `Unknown value type ${val.type} at ${val.span}`);
+    }
+    $.$mol_view_tree2_value_type = $mol_view_tree2_value_type;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    const err = $mol_view_tree2_error_str;
+    function $mol_view_tree2_value(value) {
+        const type = value.type;
+        const kids = value.kids;
+        if (type === '') {
+            if (kids.length === 0)
+                return value.data(JSON.stringify(value.value));
+            return value.data(JSON.stringify(kids.map(node => node.value).join('\n')));
+        }
+        if (kids.length !== 0)
+            return this.$mol_fail(err `Kids are not allowed at ${value.span}, use ${example}`);
+        if (type === 'false' || type === 'true')
+            return value.data(type);
+        if (type === 'null')
+            return value.data(type);
+        if (Number(type).toString() === type.replace(/^\+/, ''))
+            return value.data(type);
+        return this.$mol_fail(err `Value ${value.toString()} not allowed at ${value.span}, use ${example}`);
+    }
+    $.$mol_view_tree2_value = $mol_view_tree2_value;
+    const example = new $mol_view_tree2_error_suggestions([
+        'false',
+        'true',
+        '123',
+        'null',
+        '\\some'
+    ]);
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_view_tree2_value_number(type) {
+        return type.match(/[\+\-]*NaN/) || !Number.isNaN(Number(type));
+    }
+    $.$mol_view_tree2_value_number = $mol_view_tree2_value_number;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_tree2_js_to_text(js) {
+        function sequence(open, separator, close) {
+            return (input, belt) => [
+                input.struct('line', [
+                    ...open ? [input.data(open)] : [],
+                    input.struct(separator && input.kids.length > 2 ? 'indent' : 'line', [].concat(...input.kids.map((kid, index) => [
+                        kid.struct('line', [
+                            ...kid.list([kid]).hack(belt),
+                            ...(separator && index < input.kids.length - 1) ? [input.data(separator)] : [],
+                        ]),
+                    ]))),
+                    ...close ? [input.data(close)] : [],
+                ]),
+            ];
+        }
+        function block(open, separator, close) {
+            return (input, belt) => [
+                ...open ? [input.data(open)] : [],
+                ...input.kids.length === 0 ? [] : [input.struct('indent', input.kids.map((kid, index) => kid.struct('line', [
+                        ...kid.list([kid]).hack(belt),
+                        ...(separator) ? [input.data(separator)] : [],
+                    ])))],
+                ...close ? [input.data(close)] : [],
+            ];
+        }
+        function duplet(open, separator, close) {
+            return (input, belt) => [
+                input.struct('line', [
+                    ...open ? [input.data(open)] : [],
+                    ...input.list(input.kids.slice(0, 1)).hack(belt),
+                    ...(separator && input.kids.length > 1) ? [input.data(separator)] : [],
+                    ...input.list(input.kids.slice(1, 2)).hack(belt),
+                    ...close ? [input.data(close)] : [],
+                ]),
+            ];
+        }
+        function triplet(open, separator12, separator23, close) {
+            return (input, belt) => [
+                input.struct('line', [
+                    ...open ? [input.data(open)] : [],
+                    ...input.list(input.kids.slice(0, 1)).hack(belt),
+                    ...(separator12 && input.kids.length > 1) ? [input.data(separator12)] : [],
+                    ...input.list(input.kids.slice(1, 2)).hack(belt),
+                    ...(separator23 && input.kids.length > 2) ? [input.data(separator23)] : [],
+                    ...input.list(input.kids.slice(2, 3)).hack(belt),
+                    ...close ? [input.data(close)] : [],
+                ]),
+            ];
+        }
+        return js.list(js.hack({
+            '+': sequence('+'),
+            '-': sequence('-'),
+            '!': sequence('!'),
+            '~': sequence('~'),
+            'return': sequence('return '),
+            'break': sequence('break '),
+            'continue': sequence('continue '),
+            'yield': sequence('yield '),
+            'yield*': sequence('yield* '),
+            'await': sequence('await '),
+            'void': sequence('void '),
+            'delete': sequence('delete '),
+            'typeof': sequence('typeof '),
+            'new': sequence('new '),
+            '...': sequence('...'),
+            '@++': sequence('', '', '++'),
+            '@--': sequence('', '', '--'),
+            '(in)': sequence('(', ' in ', ')'),
+            '(instanceof)': sequence('(', ' instanceof ', ')'),
+            '(+)': sequence('(', ' + ', ')'),
+            '(-)': sequence('(', ' - ', ')'),
+            '(*)': sequence('(', ' * ', ')'),
+            '(/)': sequence('(', ' / ', ')'),
+            '(%)': sequence('(', ' % ', ')'),
+            '(**)': sequence('(', ' ** ', ')'),
+            '(<)': sequence('(', ' < ', ')'),
+            '(<=)': sequence('(', ' <= ', ')'),
+            '(>)': sequence('(', ' > ', ')'),
+            '(>=)': sequence('(', ' >= ', ')'),
+            '(==)': sequence('(', ' == ', ')'),
+            '(!=)': sequence('(', ' != ', ')'),
+            '(===)': sequence('(', ' === ', ')'),
+            '(!==)': sequence('(', ' !== ', ')'),
+            '(<<)': sequence('(', ' << ', ')'),
+            '(>>)': sequence('(', ' >> ', ')'),
+            '(>>>)': sequence('(', ' >>> ', ')'),
+            '(&)': sequence('(', ' & ', ')'),
+            '(|)': sequence('(', ' | ', ')'),
+            '(^)': sequence('(', ' ^ ', ')'),
+            '(&&)': sequence('(', ' && ', ')'),
+            '(||)': sequence('(', ' || ', ')'),
+            '(,)': sequence('(', ', ', ')'),
+            '{;}': block('{', ';', '}'),
+            ';': block('', ';', ''),
+            '[,]': sequence('[', ', ', ']'),
+            '{,}': sequence('{', ', ', '}'),
+            '()': sequence('(', '', ')'),
+            '{}': block('{', '', '}'),
+            '[]': (input, belt) => {
+                const first = input.kids[0];
+                if (first.type)
+                    return sequence('[', '', ']')(input, belt);
+                else
+                    return [input.data('.' + first.text())];
+            },
+            ':': (input, belt) => {
+                const first = input.kids[0];
+                if (first.type)
+                    return duplet('[', ']: ')(input, belt);
+                else
+                    return duplet('', ': ')(input, belt);
+            },
+            'let': duplet('let ', ' = '),
+            'const': duplet('const ', ' = '),
+            'var': duplet('var ', ' = '),
+            '=': duplet('', ' = '),
+            '+=': duplet('', ' += '),
+            '-=': duplet('', ' -= '),
+            '*=': duplet('', ' *= '),
+            '/=': duplet('', ' /= '),
+            '%=': duplet('', ' %= '),
+            '**=': duplet('', ' **= '),
+            '<<=': duplet('', ' <<= '),
+            '>>=': duplet('', ' >>= '),
+            '>>>=': duplet('', ' >>>= '),
+            '&=': duplet('', ' &= '),
+            '|=': duplet('', ' |= '),
+            '^=': duplet('', ' ^= '),
+            '&&=': duplet('', ' &&= '),
+            '||=': duplet('', ' ||= '),
+            '=>': duplet('', ' => '),
+            'async=>': duplet('async ', ' => '),
+            'function': triplet('function '),
+            'function*': triplet('function* '),
+            'async': triplet('async function '),
+            'async*': triplet('async function* '),
+            'class': triplet('class ', ' '),
+            'extends': sequence('extends ', '', ' '),
+            'if': triplet('if', ' ', 'else'),
+            '?:': triplet('', ' ? ', ' : '),
+            '.': (input, belt) => {
+                const first = input.kids[0];
+                if (first.type)
+                    return triplet('[', ']')(input, belt);
+                else
+                    return [
+                        input.data(first.text()),
+                        ...input.list(input.kids.slice(1)).hack(belt),
+                    ];
+            },
+            'get': triplet('get [', ']'),
+            'set': triplet('set [', ']'),
+            'static': triplet('static [', ']'),
+            '/./': sequence(),
+            '.global': sequence('g'),
+            '.multiline': sequence('m'),
+            '.ignoreCase': sequence('i'),
+            '.source': (input, belt) => [
+                input.data('/'),
+                input.data(JSON.stringify(input.text()).slice(1, -1)),
+                input.data('/'),
+            ],
+            '``': (input, belt) => {
+                return [
+                    input.struct('line', [
+                        input.data('`'),
+                        ...[].concat(...input.kids.map(kid => {
+                            if (kid.type) {
+                                return [
+                                    kid.data('${'),
+                                    ...kid.list([kid]).hack(belt),
+                                    kid.data('}'),
+                                ];
+                            }
+                            else {
+                                return [
+                                    input.data(JSON.stringify(kid.text()).slice(1, -1)),
+                                ];
+                            }
+                        })),
+                        input.data('`'),
+                    ]),
+                ];
+            },
+            '': (input, belt) => {
+                if (!input.type)
+                    return [
+                        input.data(JSON.stringify(input.text())),
+                    ];
+                if (/^[\w$#][\w0-9$]*$/i.test(input.type))
+                    return [
+                        input.data(input.type),
+                    ];
+                if ($mol_view_tree2_value_number(input.type))
+                    return [
+                        input.data(input.type)
+                    ];
+                $mol_fail(new SyntaxError(`Wrong node type`));
+            },
+        }));
+    }
+    $.$mol_tree2_js_to_text = $mol_tree2_js_to_text;
 })($ || ($ = {}));
 
 ;

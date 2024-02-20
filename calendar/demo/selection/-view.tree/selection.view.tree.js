@@ -1,4 +1,16 @@
 	($.$mol_calendar_demo_selection) = class $mol_calendar_demo_selection extends ($.$mol_example_small) {
+		month(){
+			return "2018-01";
+		}
+		selected(id){
+			return false;
+		}
+		Calendar(){
+			const obj = new this.$.$mol_calendar();
+			(obj.month_string) = () => ((this.month()));
+			(obj.day_selected) = (id) => ((this.selected(id)));
+			return obj;
+		}
 		title(){
 			return "Days of month 2018-01 with custom selection";
 		}
@@ -22,18 +34,6 @@
 		}
 		aspects(){
 			return ["Widget/Grid", "Type/Date"];
-		}
-		month(){
-			return "2018-01";
-		}
-		selected(id){
-			return false;
-		}
-		Calendar(){
-			const obj = new this.$.$mol_calendar();
-			(obj.month_string) = () => ((this.month()));
-			(obj.day_selected) = (id) => ((this.selected(id)));
-			return obj;
 		}
 	};
 	($mol_mem(($.$mol_calendar_demo_selection.prototype), "Calendar"));

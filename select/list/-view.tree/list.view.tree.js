@@ -1,25 +1,4 @@
 	($.$mol_select_list) = class $mol_select_list extends ($.$mol_view) {
-		value(next){
-			if(next !== undefined) return next;
-			return [];
-		}
-		dictionary(){
-			return {};
-		}
-		badges_list(){
-			return (this.Badges());
-		}
-		Badge(id){
-			const obj = new this.$.$mol_button_minor();
-			(obj.title) = () => ((this.badge_title(id)));
-			(obj.click) = (next) => ((this.remove(id, next)));
-			(obj.hint) = () => ((this.badge_hint()));
-			(obj.enabled) = () => ((this.drop_enabled()));
-			return obj;
-		}
-		sub(){
-			return [(this.Pick()), ...(this.badges_list())];
-		}
 		Badges(){
 			return [];
 		}
@@ -84,13 +63,34 @@
 			(obj.Trigger_icon) = () => ((this.Pick_icon()));
 			return obj;
 		}
+		value(next){
+			if(next !== undefined) return next;
+			return [];
+		}
+		dictionary(){
+			return {};
+		}
+		badges_list(){
+			return (this.Badges());
+		}
+		Badge(id){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ((this.badge_title(id)));
+			(obj.click) = (next) => ((this.remove(id, next)));
+			(obj.hint) = () => ((this.badge_hint()));
+			(obj.enabled) = () => ((this.drop_enabled()));
+			return obj;
+		}
+		sub(){
+			return [(this.Pick()), ...(this.badges_list())];
+		}
 	};
-	($mol_mem(($.$mol_select_list.prototype), "value"));
-	($mol_mem_key(($.$mol_select_list.prototype), "Badge"));
 	($mol_mem_key(($.$mol_select_list.prototype), "remove"));
 	($mol_mem_key(($.$mol_select_list.prototype), "event_select"));
 	($mol_mem(($.$mol_select_list.prototype), "pick"));
 	($mol_mem(($.$mol_select_list.prototype), "Pick_icon"));
 	($mol_mem(($.$mol_select_list.prototype), "Pick"));
+	($mol_mem(($.$mol_select_list.prototype), "value"));
+	($mol_mem_key(($.$mol_select_list.prototype), "Badge"));
 
 //# sourceMappingURL=list.view.tree.js.map

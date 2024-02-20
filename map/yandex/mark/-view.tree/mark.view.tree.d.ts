@@ -1,35 +1,35 @@
 declare namespace $ {
 
-	type $mol_vector_2d__9U7N37Y0 = $mol_type_enforce<
+	type $mol_vector_range__V6MBSO6T = $mol_type_enforce<
+		[ number, number ]
+		,
+		ConstructorParameters< typeof $mol_vector_range<number> >
+	>
+	type $mol_vector_range__LS94WH3B = $mol_type_enforce<
+		[ number, number ]
+		,
+		ConstructorParameters< typeof $mol_vector_range<number> >
+	>
+	type $mol_vector_2d__CL21GWI2 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<number> >
 	>
-	type $mol_vector_2d__J8UMCMI2 = $mol_type_enforce<
+	type $mol_vector_2d__KRJMRR5F = $mol_type_enforce<
 		[ ReturnType< $mol_map_yandex_mark['box_lat'] >, ReturnType< $mol_map_yandex_mark['box_lon'] > ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<$mol_vector_range<number>> >
 	>
-	type $mol_vector_range__RUYAGAYU = $mol_type_enforce<
-		[ number, number ]
-		,
-		ConstructorParameters< typeof $mol_vector_range<number> >
-	>
-	type $mol_vector_range__WXWGE798 = $mol_type_enforce<
-		[ number, number ]
-		,
-		ConstructorParameters< typeof $mol_vector_range<number> >
-	>
 	export class $mol_map_yandex_mark extends $mol_object {
+		box_lat( ): $mol_vector_range<number>
+		box_lon( ): $mol_vector_range<number>
+		address( ): string
 		pos( ): $mol_vector_2d<number>
 		box( ): $mol_vector_2d<$mol_vector_range<number>>
 		hint( ): string
 		title( ): ReturnType< $mol_map_yandex_mark['address'] >
 		content( ): string
 		object( ): any
-		box_lat( ): $mol_vector_range<number>
-		box_lon( ): $mol_vector_range<number>
-		address( ): string
 	}
 	
 }

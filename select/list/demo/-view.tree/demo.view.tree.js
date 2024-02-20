@@ -1,20 +1,4 @@
 	($.$mol_select_list_demo) = class $mol_select_list_demo extends ($.$mol_example_small) {
-		title(){
-			return "Friends picker";
-		}
-		sub(){
-			return [(this.Demo_items())];
-		}
-		tags(){
-			return [
-				"select", 
-				"tags", 
-				"multiselect"
-			];
-		}
-		aspects(){
-			return ["Widget/Control", "Type/List"];
-		}
 		friends(next){
 			if(next !== undefined) return next;
 			return [];
@@ -73,6 +57,22 @@
 				(this.Friends_lazy())
 			]);
 			return obj;
+		}
+		title(){
+			return "Friends picker";
+		}
+		sub(){
+			return [(this.Demo_items())];
+		}
+		tags(){
+			return [
+				"select", 
+				"tags", 
+				"multiselect"
+			];
+		}
+		aspects(){
+			return ["Widget/Control", "Type/List"];
 		}
 	};
 	($mol_mem(($.$mol_select_list_demo.prototype), "friends"));

@@ -1,25 +1,4 @@
 	($.$mol_page_demo) = class $mol_page_demo extends ($.$mol_example_large) {
-		title(){
-			return "Page with header, body and footer";
-		}
-		sub(){
-			return [(this.Page())];
-		}
-		tags(){
-			return [
-				"container", 
-				"header", 
-				"footer", 
-				"toolbar", 
-				"app", 
-				"bar", 
-				"bottom", 
-				"navigator"
-			];
-		}
-		aspects(){
-			return ["Widget/Layout"];
-		}
 		Button_tools(){
 			const obj = new this.$.$mol_button_minor();
 			(obj.title) = () => ("Toolbar Button");
@@ -40,6 +19,27 @@
 			(obj.body) = () => ([(this.Text())]);
 			(obj.foot) = () => ([(this.Button_foot())]);
 			return obj;
+		}
+		title(){
+			return "Page with header, body and footer";
+		}
+		sub(){
+			return [(this.Page())];
+		}
+		tags(){
+			return [
+				"container", 
+				"header", 
+				"footer", 
+				"toolbar", 
+				"app", 
+				"bar", 
+				"bottom", 
+				"navigator"
+			];
+		}
+		aspects(){
+			return ["Widget/Layout"];
 		}
 	};
 	($mol_mem(($.$mol_page_demo.prototype), "Button_tools"));

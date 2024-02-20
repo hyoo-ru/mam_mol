@@ -823,6 +823,8 @@ declare namespace $ {
 declare namespace $ {
 
 	export class $mol_speck extends $mol_view {
+		theme( ): string
+		value( ): any
 		attr( ): ({ 
 			'mol_theme': ReturnType< $mol_speck['theme'] >,
 		})  & ReturnType< $mol_view['attr'] >
@@ -830,8 +832,6 @@ declare namespace $ {
 			'minHeight': string,
 		})  & ReturnType< $mol_view['style'] >
 		sub( ): readonly(any)[]
-		theme( ): string
-		value( ): any
 	}
 	
 }
@@ -948,12 +948,20 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_speck__value__6BWBRXO8 = $mol_type_enforce<
+	type $mol_speck__value__U96JZBJU = $mol_type_enforce<
 		ReturnType< $mol_button['error'] >
 		,
 		ReturnType< $mol_speck['value'] >
 	>
 	export class $mol_button extends $mol_view {
+		event_activate( next?: any ): any
+		clicks( next?: any ): any
+		event_key_press( next?: any ): any
+		disabled( ): boolean
+		tab_index( ): number
+		hint( ): string
+		hint_safe( ): ReturnType< $mol_button['hint'] >
+		error( ): string
 		enabled( ): boolean
 		click( next?: any ): any
 		event_click( next?: any ): any
@@ -970,14 +978,6 @@ declare namespace $ {
 		})  & ReturnType< $mol_view['attr'] >
 		sub( ): readonly($mol_view_content)[]
 		Speck( ): $mol_speck
-		event_activate( next?: any ): any
-		clicks( next?: any ): any
-		event_key_press( next?: any ): any
-		disabled( ): boolean
-		tab_index( ): number
-		hint( ): string
-		hint_safe( ): ReturnType< $mol_button['hint'] >
-		error( ): string
 	}
 	
 }
@@ -1050,7 +1050,37 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_view__style__27WIEXVP = $mol_type_enforce<
+	type $mol_view__sub__U0TYUT3E = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_button_major__title__XO49ONGO = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_button_major['title'] >
+	>
+	type $mol_button_major__click__XZ0POJLO = $mol_type_enforce<
+		ReturnType< $mol_perf_dopes['start'] >
+		,
+		ReturnType< $mol_button_major['click'] >
+	>
+	type $mol_button_major__title__X1MKPA88 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_button_major['title'] >
+	>
+	type $mol_button_major__click__STR6VUQK = $mol_type_enforce<
+		ReturnType< $mol_perf_dopes['stop'] >
+		,
+		ReturnType< $mol_button_major['click'] >
+	>
+	type $mol_view__sub__G0AU2B3W = $mol_type_enforce<
+		ReturnType< $mol_perf_dopes['labels'] >
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__style__VAJ8D4Z0 = $mol_type_enforce<
 		({ 
 			'color': ReturnType< $mol_perf_dopes['label_color'] >,
 			'transform': ReturnType< $mol_perf_dopes['label_transform'] >,
@@ -1058,45 +1088,12 @@ declare namespace $ {
 		,
 		ReturnType< $mol_view['style'] >
 	>
-	type $mol_view__sub__5X5C9CRK = $mol_type_enforce<
+	type $mol_view__sub__HVFXWG6H = $mol_type_enforce<
 		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_view__sub__OLM0MRLD = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_button_major__title__YLE8X4JJ = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_button_major['title'] >
-	>
-	type $mol_button_major__click__D7ZL664N = $mol_type_enforce<
-		ReturnType< $mol_perf_dopes['start'] >
-		,
-		ReturnType< $mol_button_major['click'] >
-	>
-	type $mol_button_major__title__ZOVR0K1B = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_button_major['title'] >
-	>
-	type $mol_button_major__click__RAIJ1NPY = $mol_type_enforce<
-		ReturnType< $mol_perf_dopes['stop'] >
-		,
-		ReturnType< $mol_button_major['click'] >
-	>
-	type $mol_view__sub__OI718S07 = $mol_type_enforce<
-		ReturnType< $mol_perf_dopes['labels'] >
 		,
 		ReturnType< $mol_view['sub'] >
 	>
 	export class $mol_perf_dopes extends $mol_view {
-		title( ): string
-		sub( ): readonly(any)[]
-		Label( id: any): $mol_view
 		speed( ): string
 		Speed( ): $mol_view
 		start( next?: any ): any
@@ -1107,6 +1104,9 @@ declare namespace $ {
 		Labels( ): $mol_view
 		label_color( id: any): string
 		label_transform( id: any): string
+		title( ): string
+		sub( ): readonly(any)[]
+		Label( id: any): $mol_view
 	}
 	
 }

@@ -1,4 +1,8 @@
 	($.$mol_link_lazy) = class $mol_link_lazy extends ($.$mol_link) {
+		generate(next){
+			if(next !== undefined) return next;
+			return null;
+		}
 		uri(next){
 			if(next !== undefined) return next;
 			return "";
@@ -12,12 +16,8 @@
 		event(){
 			return {...(super.event()), "mousedown": (next) => (this.generate(next))};
 		}
-		generate(next){
-			if(next !== undefined) return next;
-			return null;
-		}
 	};
-	($mol_mem(($.$mol_link_lazy.prototype), "uri"));
 	($mol_mem(($.$mol_link_lazy.prototype), "generate"));
+	($mol_mem(($.$mol_link_lazy.prototype), "uri"));
 
 //# sourceMappingURL=lazy.view.tree.js.map

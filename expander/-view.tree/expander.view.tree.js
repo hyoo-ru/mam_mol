@@ -1,7 +1,4 @@
 	($.$mol_expander) = class $mol_expander extends ($.$mol_list) {
-		rows(){
-			return [(this.Label()), (this.Content())];
-		}
 		expanded(next){
 			if(next !== undefined) return next;
 			return false;
@@ -34,6 +31,9 @@
 			const obj = new this.$.$mol_list();
 			(obj.rows) = () => ((this.content()));
 			return obj;
+		}
+		rows(){
+			return [(this.Label()), (this.Content())];
 		}
 	};
 	($mol_mem(($.$mol_expander.prototype), "expanded"));

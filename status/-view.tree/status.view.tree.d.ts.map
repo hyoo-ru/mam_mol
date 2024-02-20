@@ -3,7 +3,7 @@
 	"sources": [
 		"mol/status/status.view.tree"
 	],
-	"mappings": "AAAA;AAAA;AAAA,AAAA,yBAAY,kBAAZ;AACC,AAAA,aAAU,YADX,WACW;AACV,AAAA,qBAAe;AACf,AAAA,oBAAc;AACd,AAAA,UAAI;AACA,AAAA,cAAS;AALd;AAAA;AAAA;",
+	"mappings": "AAAA;AAAA;AAAA,AAAA,yBAAY,kBAAZ;AAKK,AAAA,cAAS;AAJb,AAAA,aAAU,YADX,WACW;AACV,AAAA,qBAAe;AACf,AAAA,oBAAc;AACd,AAAA,UAAI;AAJL;AAAA;AAAA;",
 	"file": "status.view.tree.d.ts",
 	"sourceRoot": "../../.."
 }

@@ -887,6 +887,8 @@ declare namespace $ {
 declare namespace $ {
 
 	export class $mol_scroll extends $mol_view {
+		tabindex( ): number
+		event_scroll( next?: any ): any
 		scroll_top( next?: number ): number
 		scroll_left( next?: number ): number
 		field( ): ({ 
@@ -895,8 +897,6 @@ declare namespace $ {
 		event( ): ({ 
 			scroll( next?: ReturnType< $mol_scroll['event_scroll'] > ): ReturnType< $mol_scroll['event_scroll'] >,
 		})  & ReturnType< $mol_view['event'] >
-		tabindex( ): number
-		event_scroll( next?: any ): any
 	}
 	
 }
@@ -929,14 +929,14 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_view__style__CC237EEM = $mol_type_enforce<
+	type $mol_view__style__QDGF9DTX = $mol_type_enforce<
 		({ 
 			'paddingTop': ReturnType< $mol_list['gap_before'] >,
 		}) 
 		,
 		ReturnType< $mol_view['style'] >
 	>
-	type $mol_view__style__TV800XK0 = $mol_type_enforce<
+	type $mol_view__style__XWHLA63P = $mol_type_enforce<
 		({ 
 			'paddingTop': ReturnType< $mol_list['gap_after'] >,
 		}) 
@@ -944,6 +944,9 @@ declare namespace $ {
 		ReturnType< $mol_view['style'] >
 	>
 	export class $mol_list extends $mol_view {
+		rows( ): readonly($mol_view)[]
+		gap_before( ): number
+		gap_after( ): number
 		render_visible_only( ): boolean
 		render_over( ): number
 		sub( ): ReturnType< $mol_list['rows'] >
@@ -951,9 +954,6 @@ declare namespace $ {
 		Gap_before( ): $mol_view
 		Gap_after( ): $mol_view
 		view_window( ): readonly(any)[]
-		rows( ): readonly($mol_view)[]
-		gap_before( ): number
-		gap_after( ): number
 	}
 	
 }
@@ -977,12 +977,14 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_perf_uibench_table_row__state__8QYOGRPN = $mol_type_enforce<
+	type $mol_perf_uibench_table_row__state__GI83EC7Y = $mol_type_enforce<
 		ReturnType< $mol_perf_uibench_table['row_state'] >
 		,
 		ReturnType< $mol_perf_uibench_table_row['state'] >
 	>
 	export class $mol_perf_uibench_table extends $mol_list {
+		rows( ): readonly(any)[]
+		row_state( id: any): any
 		state( ): any
 		dom_name( ): string
 		attr_static( ): ({ 
@@ -990,21 +992,25 @@ declare namespace $ {
 		})  & ReturnType< $mol_list['attr_static'] >
 		sub( ): ReturnType< $mol_perf_uibench_table['rows'] >
 		Row( id: any): $mol_perf_uibench_table_row
-		rows( ): readonly(any)[]
-		row_state( id: any): any
 	}
 	
-	type $mol_perf_uibench_table_cell__text__Y3MN1CNO = $mol_type_enforce<
-		ReturnType< $mol_perf_uibench_table_row['cell_state'] >
-		,
-		ReturnType< $mol_perf_uibench_table_cell['text'] >
-	>
-	type $mol_perf_uibench_table_cell__text__7FK6HTLW = $mol_type_enforce<
+	type $mol_perf_uibench_table_cell__text__O707GP3G = $mol_type_enforce<
 		ReturnType< $mol_perf_uibench_table_row['head_text'] >
 		,
 		ReturnType< $mol_perf_uibench_table_cell['text'] >
 	>
+	type $mol_perf_uibench_table_cell__text__0YP4HRU1 = $mol_type_enforce<
+		ReturnType< $mol_perf_uibench_table_row['cell_state'] >
+		,
+		ReturnType< $mol_perf_uibench_table_cell['text'] >
+	>
 	export class $mol_perf_uibench_table_row extends $mol_view {
+		classes( ): string
+		id( ): number
+		head_text( ): string
+		Head( ): $mol_perf_uibench_table_cell
+		cells( ): readonly(any)[]
+		cell_state( id: any): any
 		state( ): any
 		minimal_height( ): number
 		dom_name( ): string
@@ -1014,15 +1020,11 @@ declare namespace $ {
 		})  & ReturnType< $mol_view['attr'] >
 		sub( ): readonly(any)[]
 		Cell( id: any): $mol_perf_uibench_table_cell
-		classes( ): string
-		id( ): number
-		head_text( ): string
-		Head( ): $mol_perf_uibench_table_cell
-		cells( ): readonly(any)[]
-		cell_state( id: any): any
 	}
 	
 	export class $mol_perf_uibench_table_cell extends $mol_view {
+		click( next?: any ): any
+		text( ): string
 		dom_name( ): string
 		attr_static( ): ({ 
 			'class': string,
@@ -1031,8 +1033,6 @@ declare namespace $ {
 			click( next?: ReturnType< $mol_perf_uibench_table_cell['click'] > ): ReturnType< $mol_perf_uibench_table_cell['click'] >,
 		})  & ReturnType< $mol_view['event'] >
 		sub( ): readonly(any)[]
-		click( next?: any ): any
-		text( ): string
 	}
 	
 }
@@ -1068,23 +1068,26 @@ declare namespace $.$$ {
 
 declare namespace $ {
 
-	type $mol_perf_uibench_anim_box__state__QHZ43P0G = $mol_type_enforce<
+	type $mol_perf_uibench_anim_box__state__ZAOEBN9V = $mol_type_enforce<
 		ReturnType< $mol_perf_uibench_anim['box_state'] >
 		,
 		ReturnType< $mol_perf_uibench_anim_box['state'] >
 	>
 	export class $mol_perf_uibench_anim extends $mol_view {
+		boxes( ): readonly(any)[]
+		box_state( id: any): any
 		state( ): any
 		attr_static( ): ({ 
 			'class': string,
 		})  & ReturnType< $mol_view['attr_static'] >
 		sub( ): ReturnType< $mol_perf_uibench_anim['boxes'] >
 		Box( id: any): $mol_perf_uibench_anim_box
-		boxes( ): readonly(any)[]
-		box_state( id: any): any
 	}
 	
 	export class $mol_perf_uibench_anim_box extends $mol_view {
+		id( ): string
+		style_radius( ): string
+		style_color( ): string
 		state( ): any
 		attr( ): ({ 
 			'class': string,
@@ -1094,9 +1097,6 @@ declare namespace $ {
 			'borderRadius': ReturnType< $mol_perf_uibench_anim_box['style_radius'] >,
 			'background': ReturnType< $mol_perf_uibench_anim_box['style_color'] >,
 		})  & ReturnType< $mol_view['style'] >
-		id( ): string
-		style_radius( ): string
-		style_color( ): string
 	}
 	
 }
@@ -1124,32 +1124,34 @@ declare namespace $.$$ {
 
 declare namespace $ {
 
-	type $mol_perf_uibench_tree_branch__state__GDJTZH7M = $mol_type_enforce<
+	type $mol_perf_uibench_tree_branch__state__XNV876OD = $mol_type_enforce<
 		ReturnType< $mol_perf_uibench_tree['root_state'] >
 		,
 		ReturnType< $mol_perf_uibench_tree_branch['state'] >
 	>
 	export class $mol_perf_uibench_tree extends $mol_view {
+		root_state( ): any
+		Root( ): $mol_perf_uibench_tree_branch
 		state( ): any
 		attr_static( ): ({ 
 			'class': string,
 		})  & ReturnType< $mol_view['attr_static'] >
 		sub( ): readonly(any)[]
-		root_state( ): any
-		Root( ): $mol_perf_uibench_tree_branch
 	}
 	
-	type $mol_perf_uibench_tree_branch__state__6J27RXWM = $mol_type_enforce<
+	type $mol_perf_uibench_tree_branch__state__B0YTJ31D = $mol_type_enforce<
 		ReturnType< $mol_perf_uibench_tree_branch['branch_state'] >
 		,
 		ReturnType< $mol_perf_uibench_tree_branch['state'] >
 	>
-	type $mol_perf_uibench_tree_leaf__text__68NHH1EV = $mol_type_enforce<
+	type $mol_perf_uibench_tree_leaf__text__86C5D20M = $mol_type_enforce<
 		ReturnType< $mol_perf_uibench_tree_branch['leaf_state'] >
 		,
 		ReturnType< $mol_perf_uibench_tree_leaf['text'] >
 	>
 	export class $mol_perf_uibench_tree_branch extends $mol_list {
+		branch_state( id: any): any
+		leaf_state( id: any): any
 		state( ): any
 		dom_name( ): string
 		attr_static( ): ({ 
@@ -1157,18 +1159,16 @@ declare namespace $ {
 		})  & ReturnType< $mol_list['attr_static'] >
 		Branch( id: any): $mol_perf_uibench_tree_branch
 		Leaf( id: any): $mol_perf_uibench_tree_leaf
-		branch_state( id: any): any
-		leaf_state( id: any): any
 	}
 	
 	export class $mol_perf_uibench_tree_leaf extends $mol_view {
+		text( ): string
 		minimal_height( ): number
 		dom_name( ): string
 		attr_static( ): ({ 
 			'class': string,
 		})  & ReturnType< $mol_view['attr_static'] >
 		sub( ): readonly(any)[]
-		text( ): string
 	}
 	
 }
@@ -1193,32 +1193,32 @@ declare namespace $.$$ {
 
 declare namespace $ {
 
-	type $mol_perf_uibench_table__state__9QFT3XQJ = $mol_type_enforce<
+	type $mol_perf_uibench_table__state__R0X3OSQ5 = $mol_type_enforce<
 		ReturnType< $mol_perf_uibench['table_state'] >
 		,
 		ReturnType< $mol_perf_uibench_table['state'] >
 	>
-	type $mol_perf_uibench_anim__state__B2OTNRCF = $mol_type_enforce<
+	type $mol_perf_uibench_anim__state__V2PKRX0G = $mol_type_enforce<
 		ReturnType< $mol_perf_uibench['anim_state'] >
 		,
 		ReturnType< $mol_perf_uibench_anim['state'] >
 	>
-	type $mol_perf_uibench_tree__state__6M4FASNP = $mol_type_enforce<
+	type $mol_perf_uibench_tree__state__NY2XGZ2E = $mol_type_enforce<
 		ReturnType< $mol_perf_uibench['tree_state'] >
 		,
 		ReturnType< $mol_perf_uibench_tree['state'] >
 	>
 	export class $mol_perf_uibench extends $mol_scroll {
-		attr_static( ): ({ 
-			'class': string,
-		})  & ReturnType< $mol_scroll['attr_static'] >
-		sub( ): readonly(any)[]
 		table_state( ): any
 		Table( ): $mol_perf_uibench_table
 		anim_state( ): any
 		Anim( ): $mol_perf_uibench_anim
 		tree_state( ): any
 		Tree( ): $mol_perf_uibench_tree
+		attr_static( ): ({ 
+			'class': string,
+		})  & ReturnType< $mol_scroll['attr_static'] >
+		sub( ): readonly(any)[]
 	}
 	
 }

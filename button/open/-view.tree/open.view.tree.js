@@ -1,7 +1,4 @@
 	($.$mol_button_open) = class $mol_button_open extends ($.$mol_button_minor) {
-		sub(){
-			return [(this.Icon()), (this.Native())];
-		}
 		Icon(){
 			const obj = new this.$.$mol_icon_upload();
 			return obj;
@@ -23,11 +20,24 @@
 			(obj.multiple) = () => ((this.multiple()));
 			return obj;
 		}
+		sub(){
+			return [(this.Icon()), (this.Native())];
+		}
 	};
 	($mol_mem(($.$mol_button_open.prototype), "Icon"));
 	($mol_mem(($.$mol_button_open.prototype), "files"));
 	($mol_mem(($.$mol_button_open.prototype), "Native"));
 	($.$mol_button_open_native) = class $mol_button_open_native extends ($.$mol_view) {
+		accept(){
+			return "";
+		}
+		multiple(){
+			return true;
+		}
+		picked(next){
+			if(next !== undefined) return next;
+			return null;
+		}
 		dom_name(){
 			return "input";
 		}
@@ -45,18 +55,8 @@
 		event(){
 			return {"change": (next) => (this.picked(next))};
 		}
-		accept(){
-			return "";
-		}
-		multiple(){
-			return true;
-		}
-		picked(next){
-			if(next !== undefined) return next;
-			return null;
-		}
 	};
-	($mol_mem(($.$mol_button_open_native.prototype), "files"));
 	($mol_mem(($.$mol_button_open_native.prototype), "picked"));
+	($mol_mem(($.$mol_button_open_native.prototype), "files"));
 
 //# sourceMappingURL=open.view.tree.js.map

@@ -1,27 +1,4 @@
 	($.$mol_string_demo) = class $mol_string_demo extends ($.$mol_example_small) {
-		title(){
-			return "String input field in various states";
-		}
-		sub(){
-			return [
-				(this.Simple()), 
-				(this.Hint()), 
-				(this.Broken()), 
-				(this.Filled()), 
-				(this.Disabled()), 
-				(this.Button())
-			];
-		}
-		tags(){
-			return [
-				"input", 
-				"text", 
-				"field"
-			];
-		}
-		aspects(){
-			return ["Widget/Control", "Type/String"];
-		}
 		name(next){
 			if(next !== undefined) return next;
 			return "";
@@ -66,6 +43,29 @@
 			const obj = new this.$.$mol_string_button();
 			(obj.value) = (next) => ((this.name2(next)));
 			return obj;
+		}
+		title(){
+			return "String input field in various states";
+		}
+		sub(){
+			return [
+				(this.Simple()), 
+				(this.Hint()), 
+				(this.Broken()), 
+				(this.Filled()), 
+				(this.Disabled()), 
+				(this.Button())
+			];
+		}
+		tags(){
+			return [
+				"input", 
+				"text", 
+				"field"
+			];
+		}
+		aspects(){
+			return ["Widget/Control", "Type/String"];
 		}
 	};
 	($mol_mem(($.$mol_string_demo.prototype), "name"));

@@ -1,16 +1,4 @@
 	($.$mol_select_demo_month) = class $mol_select_demo_month extends ($.$mol_example_small) {
-		title(){
-			return "Month picker with filter";
-		}
-		sub(){
-			return [(this.Month())];
-		}
-		tags(){
-			return ["select", "month"];
-		}
-		aspects(){
-			return ["Widget/Control"];
-		}
 		month(next){
 			if(next !== undefined) return next;
 			return "jan";
@@ -37,6 +25,18 @@
 			(obj.value) = (next) => ((this.month(next)));
 			(obj.dictionary) = () => ((this.months()));
 			return obj;
+		}
+		title(){
+			return "Month picker with filter";
+		}
+		sub(){
+			return [(this.Month())];
+		}
+		tags(){
+			return ["select", "month"];
+		}
+		aspects(){
+			return ["Widget/Control"];
 		}
 	};
 	($mol_mem(($.$mol_select_demo_month.prototype), "month"));

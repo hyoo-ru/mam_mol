@@ -1,20 +1,4 @@
 	($.$mol_row_demo_form) = class $mol_row_demo_form extends ($.$mol_example) {
-		title(){
-			return "Some controls in one row with equal paddings and wrapping support";
-		}
-		sub(){
-			return [(this.Row())];
-		}
-		tags(){
-			return [
-				"row", 
-				"container", 
-				"flex"
-			];
-		}
-		aspects(){
-			return ["Widget/Layout"];
-		}
 		name_hint(){
 			return "Jack Sparrow";
 		}
@@ -87,6 +71,22 @@
 				(this.Drop())
 			]);
 			return obj;
+		}
+		title(){
+			return "Some controls in one row with equal paddings and wrapping support";
+		}
+		sub(){
+			return [(this.Row())];
+		}
+		tags(){
+			return [
+				"row", 
+				"container", 
+				"flex"
+			];
+		}
+		aspects(){
+			return ["Widget/Layout"];
 		}
 	};
 	($mol_mem(($.$mol_row_demo_form.prototype), "name"));

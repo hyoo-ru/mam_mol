@@ -1,22 +1,4 @@
 	($.$mol_perf_dbmon) = class $mol_perf_dbmon extends ($.$mol_scroll) {
-		title(){
-			return "dbmon ($mol)";
-		}
-		sub(){
-			return [(this.Databases())];
-		}
-		Database(id){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ((this.database(id)));
-			return obj;
-		}
-		Query(id){
-			const obj = new this.$.$mol_perf_dbmon_query();
-			(obj.elapsed) = () => ((this.query_elapsed(id)));
-			(obj.elapsed_mod) = () => ((this.query_elapsed_mod(id)));
-			(obj.value) = () => ((this.query_value(id)));
-			return obj;
-		}
 		databases(){
 			return [];
 		}
@@ -64,16 +46,31 @@
 		query_value(id){
 			return "";
 		}
+		title(){
+			return "dbmon ($mol)";
+		}
+		sub(){
+			return [(this.Databases())];
+		}
+		Database(id){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this.database(id)));
+			return obj;
+		}
+		Query(id){
+			const obj = new this.$.$mol_perf_dbmon_query();
+			(obj.elapsed) = () => ((this.query_elapsed(id)));
+			(obj.elapsed_mod) = () => ((this.query_elapsed_mod(id)));
+			(obj.value) = () => ((this.query_value(id)));
+			return obj;
+		}
 	};
-	($mol_mem_key(($.$mol_perf_dbmon.prototype), "Database"));
-	($mol_mem_key(($.$mol_perf_dbmon.prototype), "Query"));
 	($mol_mem(($.$mol_perf_dbmon.prototype), "Databases"));
 	($mol_mem_key(($.$mol_perf_dbmon.prototype), "Name"));
 	($mol_mem_key(($.$mol_perf_dbmon.prototype), "Query_count"));
+	($mol_mem_key(($.$mol_perf_dbmon.prototype), "Database"));
+	($mol_mem_key(($.$mol_perf_dbmon.prototype), "Query"));
 	($.$mol_perf_dbmon_query_count) = class $mol_perf_dbmon_query_count extends ($.$mol_view) {
-		sub(){
-			return [(this.Label())];
-		}
 		label_mod(){
 			return "";
 		}
@@ -86,21 +83,12 @@
 			(obj.sub) = () => ([(this.count())]);
 			return obj;
 		}
+		sub(){
+			return [(this.Label())];
+		}
 	};
 	($mol_mem(($.$mol_perf_dbmon_query_count.prototype), "Label"));
 	($.$mol_perf_dbmon_query) = class $mol_perf_dbmon_query extends ($.$mol_pop_over) {
-		minimal_height(){
-			return 40;
-		}
-		Anchor(){
-			return (this.Elapsed());
-		}
-		bubble_content(){
-			return [(this.value())];
-		}
-		align(){
-			return "left_center";
-		}
 		elapsed_mod(){
 			return "";
 		}
@@ -115,6 +103,18 @@
 		}
 		value(){
 			return "";
+		}
+		minimal_height(){
+			return 40;
+		}
+		Anchor(){
+			return (this.Elapsed());
+		}
+		bubble_content(){
+			return [(this.value())];
+		}
+		align(){
+			return "left_center";
 		}
 	};
 	($mol_mem(($.$mol_perf_dbmon_query.prototype), "Elapsed"));

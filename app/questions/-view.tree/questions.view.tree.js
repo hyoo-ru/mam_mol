@@ -1,39 +1,4 @@
 	($.$mol_app_questions) = class $mol_app_questions extends ($.$mol_book2) {
-		plugins(){
-			return [(this.Themme())];
-		}
-		Menu(){
-			const obj = new this.$.$mol_page();
-			(obj.title) = () => ((this.title_default()));
-			(obj.tools) = () => ([(this.Lights()), (this.Source_link())]);
-			(obj.body) = () => ([(this.Menu_links())]);
-			return obj;
-		}
-		Details(id){
-			const obj = new this.$.$mol_page();
-			(obj.title) = () => ((this.question_title(id)));
-			(obj.tools) = () => ([(this.Details_permalink(id)), (this.Details_close(id))]);
-			(obj.body) = () => ([(this.Details_descr(id)), (this.Answers(id))]);
-			return obj;
-		}
-		Answer(id){
-			const obj = new this.$.$mol_text();
-			(obj.text) = () => ((this.question_answer(id)));
-			return obj;
-		}
-		Question_link(id){
-			const obj = new this.$.$mol_link();
-			(obj.minimal_width) = () => (64);
-			(obj.minimal_height) = () => (64);
-			(obj.arg) = () => ((this.question_arg_by_index(id)));
-			(obj.sub) = () => ([(this.Question_title(id)), (this.Question_tags(id))]);
-			return obj;
-		}
-		Tag(id){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.tag_name(id))]);
-			return obj;
-		}
 		Themme(){
 			const obj = new this.$.$mol_theme_auto();
 			return obj;
@@ -125,12 +90,42 @@
 		tag_name(id){
 			return " ";
 		}
+		plugins(){
+			return [(this.Themme())];
+		}
+		Menu(){
+			const obj = new this.$.$mol_page();
+			(obj.title) = () => ((this.title_default()));
+			(obj.tools) = () => ([(this.Lights()), (this.Source_link())]);
+			(obj.body) = () => ([(this.Menu_links())]);
+			return obj;
+		}
+		Details(id){
+			const obj = new this.$.$mol_page();
+			(obj.title) = () => ((this.question_title(id)));
+			(obj.tools) = () => ([(this.Details_permalink(id)), (this.Details_close(id))]);
+			(obj.body) = () => ([(this.Details_descr(id)), (this.Answers(id))]);
+			return obj;
+		}
+		Answer(id){
+			const obj = new this.$.$mol_text();
+			(obj.text) = () => ((this.question_answer(id)));
+			return obj;
+		}
+		Question_link(id){
+			const obj = new this.$.$mol_link();
+			(obj.minimal_width) = () => (64);
+			(obj.minimal_height) = () => (64);
+			(obj.arg) = () => ((this.question_arg_by_index(id)));
+			(obj.sub) = () => ([(this.Question_title(id)), (this.Question_tags(id))]);
+			return obj;
+		}
+		Tag(id){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.tag_name(id))]);
+			return obj;
+		}
 	};
-	($mol_mem(($.$mol_app_questions.prototype), "Menu"));
-	($mol_mem_key(($.$mol_app_questions.prototype), "Details"));
-	($mol_mem_key(($.$mol_app_questions.prototype), "Answer"));
-	($mol_mem_key(($.$mol_app_questions.prototype), "Question_link"));
-	($mol_mem_key(($.$mol_app_questions.prototype), "Tag"));
 	($mol_mem(($.$mol_app_questions.prototype), "Themme"));
 	($mol_mem(($.$mol_app_questions.prototype), "Lights"));
 	($mol_mem(($.$mol_app_questions.prototype), "Source_link"));
@@ -143,5 +138,10 @@
 	($mol_mem_key(($.$mol_app_questions.prototype), "Answers"));
 	($mol_mem_key(($.$mol_app_questions.prototype), "Question_title"));
 	($mol_mem_key(($.$mol_app_questions.prototype), "Question_tags"));
+	($mol_mem(($.$mol_app_questions.prototype), "Menu"));
+	($mol_mem_key(($.$mol_app_questions.prototype), "Details"));
+	($mol_mem_key(($.$mol_app_questions.prototype), "Answer"));
+	($mol_mem_key(($.$mol_app_questions.prototype), "Question_link"));
+	($mol_mem_key(($.$mol_app_questions.prototype), "Tag"));
 
 //# sourceMappingURL=questions.view.tree.js.map

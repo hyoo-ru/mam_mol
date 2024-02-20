@@ -1,16 +1,4 @@
 	($.$mol_deck_demo) = class $mol_deck_demo extends ($.$mol_example_small) {
-		title(){
-			return "Simple deck with tabbar";
-		}
-		sub(){
-			return [(this.Deck())];
-		}
-		tags(){
-			return ["tabs", "container"];
-		}
-		aspects(){
-			return ["Widget/Layout"];
-		}
 		Greeting(){
 			const obj = new this.$.$mol_card();
 			(obj.title) = () => ("Greeting");
@@ -55,6 +43,18 @@
 				(this.Spam())
 			]);
 			return obj;
+		}
+		title(){
+			return "Simple deck with tabbar";
+		}
+		sub(){
+			return [(this.Deck())];
+		}
+		tags(){
+			return ["tabs", "container"];
+		}
+		aspects(){
+			return ["Widget/Layout"];
 		}
 	};
 	($mol_mem(($.$mol_deck_demo.prototype), "Greeting"));

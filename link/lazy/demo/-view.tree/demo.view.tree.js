@@ -1,21 +1,4 @@
 	($.$mol_link_lazy_demo) = class $mol_link_lazy_demo extends ($.$mol_example_small) {
-		title(){
-			return "Lazy generated link";
-		}
-		sub(){
-			return [(this.Download())];
-		}
-		tags(){
-			return [
-				"icon", 
-				"link", 
-				"lazy", 
-				"download"
-			];
-		}
-		aspects(){
-			return ["Widget/Button"];
-		}
 		uri_generated(){
 			return "";
 		}
@@ -36,6 +19,23 @@
 			(obj.file_name) = () => ((this.download_file()));
 			(obj.sub) = () => ([(this.Download_icon()), (this.download_label())]);
 			return obj;
+		}
+		title(){
+			return "Lazy generated link";
+		}
+		sub(){
+			return [(this.Download())];
+		}
+		tags(){
+			return [
+				"icon", 
+				"link", 
+				"lazy", 
+				"download"
+			];
+		}
+		aspects(){
+			return ["Widget/Button"];
 		}
 	};
 	($mol_mem(($.$mol_link_lazy_demo.prototype), "Download_icon"));

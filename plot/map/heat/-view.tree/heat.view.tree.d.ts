@@ -1,53 +1,53 @@
 declare namespace $ {
 
-	type $mol_plot_map_heat_level__hint__VO7IIDM9 = $mol_type_enforce<
+	type $mol_plot_map_heat_level__hint__FVAESVIP = $mol_type_enforce<
 		ReturnType< $mol_plot_map_heat['level_hint'] >
 		,
 		ReturnType< $mol_plot_map_heat_level['hint'] >
 	>
-	type $mol_plot_map_heat_level__points__Y41ELOJT = $mol_type_enforce<
+	type $mol_plot_map_heat_level__points__IHC7M9S6 = $mol_type_enforce<
 		ReturnType< $mol_plot_map_heat['level_points'] >
 		,
 		ReturnType< $mol_plot_map_heat_level['points'] >
 	>
-	type $mol_plot_map_heat_level__opacity__ZZ7BTJH8 = $mol_type_enforce<
+	type $mol_plot_map_heat_level__opacity__W2DHLMLW = $mol_type_enforce<
 		ReturnType< $mol_plot_map_heat['level_opacity'] >
 		,
 		ReturnType< $mol_plot_map_heat_level['opacity'] >
 	>
-	type $mol_plot_map_heat_level__diameter__2O7BG2XJ = $mol_type_enforce<
+	type $mol_plot_map_heat_level__diameter__K1DWNI7M = $mol_type_enforce<
 		ReturnType< $mol_plot_map_heat['level_diameter'] >
 		,
 		ReturnType< $mol_plot_map_heat_level['diameter'] >
 	>
-	type $mol_plot_map_heat_level__aspect__0LUPBOPQ = $mol_type_enforce<
+	type $mol_plot_map_heat_level__aspect__XQ5693LE = $mol_type_enforce<
 		ReturnType< $mol_plot_map_heat['level_aspect'] >
 		,
 		ReturnType< $mol_plot_map_heat_level['aspect'] >
 	>
-	type $mol_plot_graph_sample__color__97RBT574 = $mol_type_enforce<
+	type $mol_plot_graph_sample__color__6QSSD9FX = $mol_type_enforce<
 		ReturnType< $mol_plot_map_heat['color'] >
 		,
 		ReturnType< $mol_plot_graph_sample['color'] >
 	>
 	export class $mol_plot_map_heat extends $mol_plot_group {
-		series_z( ): readonly(number)[]
-		graphs( ): ReturnType< $mol_plot_map_heat['level_graphs'] >
-		Level( id: any): $mol_plot_map_heat_level
-		Sample( ): $mol_plot_graph_sample
 		level_graphs( ): readonly(any)[]
 		level_hint( id: any): string
 		level_points( id: any): readonly(any)[]
 		level_opacity( id: any): string
 		level_diameter( ): number
 		level_aspect( ): number
+		series_z( ): readonly(number)[]
+		graphs( ): ReturnType< $mol_plot_map_heat['level_graphs'] >
+		Level( id: any): $mol_plot_map_heat_level
+		Sample( ): $mol_plot_graph_sample
 	}
 	
 	export class $mol_plot_map_heat_level extends $mol_plot_dot {
+		opacity( ): string
 		style( ): ({ 
 			'opacity': ReturnType< $mol_plot_map_heat_level['opacity'] >,
 		})  & ReturnType< $mol_plot_dot['style'] >
-		opacity( ): string
 	}
 	
 }

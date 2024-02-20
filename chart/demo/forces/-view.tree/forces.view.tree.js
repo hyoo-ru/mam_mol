@@ -1,26 +1,4 @@
 	($.$mol_chart_demo_forces) = class $mol_chart_demo_forces extends ($.$mol_example_large) {
-		title(){
-			return "Fake wheel forces";
-		}
-		samples_count(){
-			return 5000;
-		}
-		points_max(){
-			return 2500;
-		}
-		sub(){
-			return [(this.Chart())];
-		}
-		tags(){
-			return [
-				"plot", 
-				"visualization", 
-				"dashboard"
-			];
-		}
-		aspects(){
-			return ["Widget/Draw/Chart/Line", "Widget/Draw/Chart/Dot"];
-		}
 		forces_left_title(){
 			return "Left wheel";
 		}
@@ -87,6 +65,28 @@
 				(this.Cross())
 			]);
 			return obj;
+		}
+		title(){
+			return "Fake wheel forces";
+		}
+		samples_count(){
+			return 5000;
+		}
+		points_max(){
+			return 2500;
+		}
+		sub(){
+			return [(this.Chart())];
+		}
+		tags(){
+			return [
+				"plot", 
+				"visualization", 
+				"dashboard"
+			];
+		}
+		aspects(){
+			return ["Widget/Draw/Chart/Line", "Widget/Draw/Chart/Dot"];
 		}
 	};
 	($mol_mem(($.$mol_chart_demo_forces.prototype), "Forces_left"));

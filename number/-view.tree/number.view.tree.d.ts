@@ -1,68 +1,61 @@
 declare namespace $ {
 
-	type $mol_string__type__K5289D8O = $mol_type_enforce<
+	type $mol_string__type__YLFP4VLV = $mol_type_enforce<
 		ReturnType< $mol_number['type'] >
 		,
 		ReturnType< $mol_string['type'] >
 	>
-	type $mol_string__value__9W19IW1B = $mol_type_enforce<
+	type $mol_string__value__55QQG1ND = $mol_type_enforce<
 		ReturnType< $mol_number['value_string'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_string__hint__LEAWFQBE = $mol_type_enforce<
+	type $mol_string__hint__1QFKFLOU = $mol_type_enforce<
 		ReturnType< $mol_number['hint'] >
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__enabled__JD7GZVNR = $mol_type_enforce<
+	type $mol_string__enabled__7MRPNUXJ = $mol_type_enforce<
 		ReturnType< $mol_number['string_enabled'] >
 		,
 		ReturnType< $mol_string['enabled'] >
 	>
-	type $mol_string__submit__7DPLMKRM = $mol_type_enforce<
+	type $mol_string__submit__U1GOLCG4 = $mol_type_enforce<
 		ReturnType< $mol_number['submit'] >
 		,
 		ReturnType< $mol_string['submit'] >
 	>
-	type $mol_button_minor__event_click__7B248C7B = $mol_type_enforce<
+	type $mol_button_minor__event_click__7YKJUYOC = $mol_type_enforce<
 		ReturnType< $mol_number['event_dec'] >
 		,
 		ReturnType< $mol_button_minor['event_click'] >
 	>
-	type $mol_button_minor__enabled__22NCQ1FI = $mol_type_enforce<
+	type $mol_button_minor__enabled__V811V5EF = $mol_type_enforce<
 		ReturnType< $mol_number['dec_enabled'] >
 		,
 		ReturnType< $mol_button_minor['enabled'] >
 	>
-	type $mol_button_minor__sub__CH11MZ2K = $mol_type_enforce<
+	type $mol_button_minor__sub__UYSU6K4X = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_minor['sub'] >
 	>
-	type $mol_button_minor__event_click__7V7FUIQI = $mol_type_enforce<
+	type $mol_button_minor__event_click__FZDAIUWH = $mol_type_enforce<
 		ReturnType< $mol_number['event_inc'] >
 		,
 		ReturnType< $mol_button_minor['event_click'] >
 	>
-	type $mol_button_minor__enabled__OERMVDWJ = $mol_type_enforce<
+	type $mol_button_minor__enabled__IQAAUS1A = $mol_type_enforce<
 		ReturnType< $mol_number['inc_enabled'] >
 		,
 		ReturnType< $mol_button_minor['enabled'] >
 	>
-	type $mol_button_minor__sub__8SQFIANW = $mol_type_enforce<
+	type $mol_button_minor__sub__88OIFEHU = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_minor['sub'] >
 	>
 	export class $mol_number extends $mol_view {
-		precision_view( ): ReturnType< $mol_number['precision'] >
-		precision_change( ): ReturnType< $mol_number['precision'] >
-		value_min( ): number
-		value_max( ): number
-		value( next?: number ): number
-		enabled( ): boolean
-		sub( ): readonly(any)[]
 		precision( ): number
 		type( ): string
 		value_string( next?: string ): string
@@ -78,6 +71,13 @@ declare namespace $ {
 		inc_enabled( ): ReturnType< $mol_number['enabled'] >
 		inc_icon( ): $mol_icon_plus
 		Inc( ): $mol_button_minor
+		precision_view( ): ReturnType< $mol_number['precision'] >
+		precision_change( ): ReturnType< $mol_number['precision'] >
+		value_min( ): number
+		value_max( ): number
+		value( next?: number ): number
+		enabled( ): boolean
+		sub( ): readonly(any)[]
 	}
 	
 }

@@ -1,16 +1,4 @@
 	($.$mol_app_demo_main) = class $mol_app_demo_main extends ($.$mol_page) {
-		minimal_width(){
-			return 400;
-		}
-		title(){
-			return "$mol libs for web ui";
-		}
-		tools(){
-			return [(this.Lights()), (this.Project())];
-		}
-		body(){
-			return [(this.Description())];
-		}
 		Lights(){
 			const obj = new this.$.$mol_lights_toggle();
 			return obj;
@@ -31,6 +19,18 @@
 			(obj.text) = () => ((this.description()));
 			(obj.uri_base) = () => ((this.project_uri()));
 			return obj;
+		}
+		minimal_width(){
+			return 400;
+		}
+		title(){
+			return "$mol libs for web ui";
+		}
+		tools(){
+			return [(this.Lights()), (this.Project())];
+		}
+		body(){
+			return [(this.Description())];
 		}
 	};
 	($mol_mem(($.$mol_app_demo_main.prototype), "Lights"));

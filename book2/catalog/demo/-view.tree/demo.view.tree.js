@@ -1,31 +1,4 @@
 	($.$mol_book2_catalog_demo) = class $mol_book2_catalog_demo extends ($.$mol_example_large) {
-		title(){
-			return "Catalog of pages";
-		}
-		Content(){
-			const obj = new this.$.$mol_filler();
-			return obj;
-		}
-		Empty(){
-			const obj = new this.$.$mol_status();
-			return obj;
-		}
-		sub(){
-			return [(this.Calatog())];
-		}
-		tags(){
-			return [
-				"app", 
-				"page", 
-				"menu", 
-				"navigation", 
-				"transition", 
-				"multipage"
-			];
-		}
-		aspects(){
-			return ["Navigation", "Widget/Layout"];
-		}
 		Spread_close(){
 			return (this.Calatog().Spread_close());
 		}
@@ -164,9 +137,34 @@
 			(obj.spreads) = () => ({"foods": (this.Foods()), "animals": (this.Animals())});
 			return obj;
 		}
+		title(){
+			return "Catalog of pages";
+		}
+		Content(){
+			const obj = new this.$.$mol_filler();
+			return obj;
+		}
+		Empty(){
+			const obj = new this.$.$mol_status();
+			return obj;
+		}
+		sub(){
+			return [(this.Calatog())];
+		}
+		tags(){
+			return [
+				"app", 
+				"page", 
+				"menu", 
+				"navigation", 
+				"transition", 
+				"multipage"
+			];
+		}
+		aspects(){
+			return ["Navigation", "Widget/Layout"];
+		}
 	};
-	($mol_mem(($.$mol_book2_catalog_demo.prototype), "Content"));
-	($mol_mem(($.$mol_book2_catalog_demo.prototype), "Empty"));
 	($mol_mem(($.$mol_book2_catalog_demo.prototype), "Pizza"));
 	($mol_mem(($.$mol_book2_catalog_demo.prototype), "Hot_dogs"));
 	($mol_mem(($.$mol_book2_catalog_demo.prototype), "Fries"));
@@ -183,5 +181,7 @@
 	($mol_mem(($.$mol_book2_catalog_demo.prototype), "Bugs"));
 	($mol_mem(($.$mol_book2_catalog_demo.prototype), "Animals"));
 	($mol_mem(($.$mol_book2_catalog_demo.prototype), "Calatog"));
+	($mol_mem(($.$mol_book2_catalog_demo.prototype), "Content"));
+	($mol_mem(($.$mol_book2_catalog_demo.prototype), "Empty"));
 
 //# sourceMappingURL=demo.view.tree.js.map

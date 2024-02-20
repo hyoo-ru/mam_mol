@@ -1,20 +1,4 @@
 	($.$mol_button_demo) = class $mol_button_demo extends ($.$mol_example_small) {
-		title(){
-			return "All types of buttons in every states";
-		}
-		sub(){
-			return [
-				(this.Major_enabled()), 
-				(this.Major_disabled()), 
-				(this.Minor_enabled()), 
-				(this.Minor_disabled()), 
-				(this.Minor_icon_only()), 
-				(this.Minor_iconed())
-			];
-		}
-		aspects(){
-			return ["Widget/Control/Button"];
-		}
 		fail(next){
 			if(next !== undefined) return next;
 			return null;
@@ -62,6 +46,22 @@
 			(obj.click) = (next) => ((this.fail(next)));
 			(obj.sub) = () => ([(this.Minor_iconed_icon()), "Minor with Icon"]);
 			return obj;
+		}
+		title(){
+			return "All types of buttons in every states";
+		}
+		sub(){
+			return [
+				(this.Major_enabled()), 
+				(this.Major_disabled()), 
+				(this.Minor_enabled()), 
+				(this.Minor_disabled()), 
+				(this.Minor_icon_only()), 
+				(this.Minor_iconed())
+			];
+		}
+		aspects(){
+			return ["Widget/Control/Button"];
 		}
 	};
 	($mol_mem(($.$mol_button_demo.prototype), "fail"));

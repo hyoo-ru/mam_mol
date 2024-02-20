@@ -1,17 +1,4 @@
 	($.$mol_list_demo) = class $mol_list_demo extends ($.$mol_example_small) {
-		sub(){
-			return [(this.Items_count_label()), (this.Items())];
-		}
-		tags(){
-			return [
-				"list", 
-				"rows", 
-				"stack"
-			];
-		}
-		aspects(){
-			return ["Widget/Layout"];
-		}
 		items_count(next){
 			if(next !== undefined) return next;
 			return 50;
@@ -50,6 +37,19 @@
 			(obj.rows) = () => ((this.list_items()));
 			(obj.Empty) = () => ((this.List_empty()));
 			return obj;
+		}
+		sub(){
+			return [(this.Items_count_label()), (this.Items())];
+		}
+		tags(){
+			return [
+				"list", 
+				"rows", 
+				"stack"
+			];
+		}
+		aspects(){
+			return ["Widget/Layout"];
 		}
 	};
 	($mol_mem(($.$mol_list_demo.prototype), "items_count"));

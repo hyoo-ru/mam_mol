@@ -1,16 +1,4 @@
 	($.$mol_text_demo) = class $mol_text_demo extends ($.$mol_example_large) {
-		title(){
-			return "Markdown visualization example";
-		}
-		sub(){
-			return [(this.Book())];
-		}
-		tags(){
-			return ["markdown", "marked"];
-		}
-		aspects(){
-			return ["Widget/Text", "Type/String"];
-		}
 		search(next){
 			if(next !== undefined) return next;
 			return "";
@@ -78,6 +66,18 @@
 			(obj.Placeholder) = () => (null);
 			(obj.pages) = () => ((this.pages()));
 			return obj;
+		}
+		title(){
+			return "Markdown visualization example";
+		}
+		sub(){
+			return [(this.Book())];
+		}
+		tags(){
+			return ["markdown", "marked"];
+		}
+		aspects(){
+			return ["Widget/Text", "Type/String"];
 		}
 	};
 	($mol_mem(($.$mol_text_demo.prototype), "search"));

@@ -1,18 +1,4 @@
 	($.$mol_chart_legend) = class $mol_chart_legend extends ($.$mol_scroll) {
-		graphs(){
-			return [];
-		}
-		graphs_front(){
-			return [];
-		}
-		sub(){
-			return [(this.Gallery())];
-		}
-		Graph_legend(id){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.Graph_sample_box(id)), (this.Graph_title(id))]);
-			return obj;
-		}
 		graph_legends(){
 			return [];
 		}
@@ -37,10 +23,24 @@
 			(obj.sub) = () => ([(this.graph_title(id))]);
 			return obj;
 		}
+		graphs(){
+			return [];
+		}
+		graphs_front(){
+			return [];
+		}
+		sub(){
+			return [(this.Gallery())];
+		}
+		Graph_legend(id){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Graph_sample_box(id)), (this.Graph_title(id))]);
+			return obj;
+		}
 	};
-	($mol_mem_key(($.$mol_chart_legend.prototype), "Graph_legend"));
 	($mol_mem(($.$mol_chart_legend.prototype), "Gallery"));
 	($mol_mem_key(($.$mol_chart_legend.prototype), "Graph_sample_box"));
 	($mol_mem_key(($.$mol_chart_legend.prototype), "Graph_title"));
+	($mol_mem_key(($.$mol_chart_legend.prototype), "Graph_legend"));
 
 //# sourceMappingURL=legend.view.tree.js.map

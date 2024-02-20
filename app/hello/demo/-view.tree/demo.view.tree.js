@@ -1,4 +1,8 @@
 	($.$mol_app_hello_demo) = class $mol_app_hello_demo extends ($.$mol_example_large) {
+		App(){
+			const obj = new this.$.$mol_app_hello();
+			return obj;
+		}
 		title(){
 			return "Simpliest application";
 		}
@@ -7,10 +11,6 @@
 		}
 		aspects(){
 			return ["Application"];
-		}
-		App(){
-			const obj = new this.$.$mol_app_hello();
-			return obj;
 		}
 	};
 	($mol_mem(($.$mol_app_hello_demo.prototype), "App"));

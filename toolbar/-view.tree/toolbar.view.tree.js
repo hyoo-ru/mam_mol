@@ -1,10 +1,4 @@
 	($.$mol_toolbar) = class $mol_toolbar extends ($.$mol_view) {
-		attr(){
-			return {...(super.attr()), "mol_toolbar_expanded": (this.expanded())};
-		}
-		sub(){
-			return [(this.Bar()), (this.Expand())];
-		}
 		items(){
 			return [];
 		}
@@ -21,6 +15,12 @@
 			const obj = new this.$.$mol_check_expand();
 			(obj.checked) = (next) => ((this.expanded(next)));
 			return obj;
+		}
+		attr(){
+			return {...(super.attr()), "mol_toolbar_expanded": (this.expanded())};
+		}
+		sub(){
+			return [(this.Bar()), (this.Expand())];
 		}
 	};
 	($mol_mem(($.$mol_toolbar.prototype), "Bar"));

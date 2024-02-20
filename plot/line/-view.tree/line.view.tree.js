@@ -1,4 +1,7 @@
 	($.$mol_plot_line) = class $mol_plot_line extends ($.$mol_plot_graph) {
+		curve(){
+			return "";
+		}
 		threshold(){
 			return 1;
 		}
@@ -22,9 +25,6 @@
 			(obj.color) = () => ((this.color()));
 			(obj.type) = () => ((this.type()));
 			return obj;
-		}
-		curve(){
-			return "";
 		}
 	};
 	($mol_mem(($.$mol_plot_line.prototype), "Sample"));

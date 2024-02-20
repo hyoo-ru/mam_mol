@@ -1,4 +1,22 @@
 	($.$mol_html_view) = class $mol_html_view extends ($.$mol_list) {
+		heading_level(id){
+			return 1;
+		}
+		content(id){
+			return [];
+		}
+		link_uri(id){
+			return "";
+		}
+		image_uri(id){
+			return "";
+		}
+		highlight(){
+			return "";
+		}
+		text(id){
+			return "";
+		}
 		html(){
 			return "";
 		}
@@ -79,24 +97,6 @@
 			(obj.haystack) = () => ((this.text(id)));
 			return obj;
 		}
-		heading_level(id){
-			return 1;
-		}
-		content(id){
-			return [];
-		}
-		link_uri(id){
-			return "";
-		}
-		image_uri(id){
-			return "";
-		}
-		highlight(){
-			return "";
-		}
-		text(id){
-			return "";
-		}
 	};
 	($mol_mem_key(($.$mol_html_view.prototype), "Heading"));
 	($mol_mem_key(($.$mol_html_view.prototype), "Paragraph"));
@@ -112,11 +112,11 @@
 	($mol_mem_key(($.$mol_html_view.prototype), "Break"));
 	($mol_mem_key(($.$mol_html_view.prototype), "Text"));
 	($.$mol_html_view_heading) = class $mol_html_view_heading extends ($.$mol_paragraph) {
-		attr(){
-			return {...(super.attr()), "mol_html_view_heading": (this.level())};
-		}
 		level(){
 			return 1;
+		}
+		attr(){
+			return {...(super.attr()), "mol_html_view_heading": (this.level())};
 		}
 	};
 

@@ -1,4 +1,16 @@
 	($.$mol_pop_over) = class $mol_pop_over extends ($.$mol_pop) {
+		hovered(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		event_show(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		event_hide(next){
+			if(next !== undefined) return next;
+			return null;
+		}
 		showed(){
 			return (this.hovered());
 		}
@@ -11,18 +23,6 @@
 				"mouseenter": (next) => (this.event_show(next)), 
 				"mouseleave": (next) => (this.event_hide(next))
 			};
-		}
-		hovered(next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		event_show(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		event_hide(next){
-			if(next !== undefined) return next;
-			return null;
 		}
 	};
 	($mol_mem(($.$mol_pop_over.prototype), "hovered"));

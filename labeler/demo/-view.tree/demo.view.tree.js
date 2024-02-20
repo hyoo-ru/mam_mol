@@ -1,21 +1,4 @@
 	($.$mol_labeler_demo) = class $mol_labeler_demo extends ($.$mol_example_small) {
-		title(){
-			return "Labeled content of some types";
-		}
-		sub(){
-			return [(this.Provider()), (this.Name())];
-		}
-		tags(){
-			return [
-				"label", 
-				"form", 
-				"field", 
-				"caption"
-			];
-		}
-		aspects(){
-			return ["Widget/Layout"];
-		}
 		Provider(){
 			const obj = new this.$.$mol_labeler();
 			(obj.title) = () => ("Provider");
@@ -37,6 +20,23 @@
 			(obj.title) = () => ("User name");
 			(obj.Content) = () => ((this.Name_control()));
 			return obj;
+		}
+		title(){
+			return "Labeled content of some types";
+		}
+		sub(){
+			return [(this.Provider()), (this.Name())];
+		}
+		tags(){
+			return [
+				"label", 
+				"form", 
+				"field", 
+				"caption"
+			];
+		}
+		aspects(){
+			return ["Widget/Layout"];
 		}
 	};
 	($mol_mem(($.$mol_labeler_demo.prototype), "Provider"));

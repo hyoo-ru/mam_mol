@@ -1,44 +1,41 @@
 declare namespace $ {
 
-	type $mol_speck__value__JBQCQYS6 = $mol_type_enforce<
+	type $mol_speck__value__SJDBT2LG = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_speck['value'] >
 	>
-	type $mol_link__sub__G37OS63W = $mol_type_enforce<
+	type $mol_link__sub__B7HRA0S7 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_link['sub'] >
 	>
-	type $mol_speck__value__L5I0LBO1 = $mol_type_enforce<
+	type $mol_speck__value__UODJRTNQ = $mol_type_enforce<
 		ReturnType< $mol_speck_demo['string_speck'] >
 		,
 		ReturnType< $mol_speck['value'] >
 	>
-	type $mol_view__sub__2WJDE71W = $mol_type_enforce<
+	type $mol_view__sub__IJD5IVIG = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_speck__value__8UDQ4TMG = $mol_type_enforce<
+	type $mol_speck__value__EXO3YTXS = $mol_type_enforce<
 		ReturnType< $mol_speck_demo['notification_count'] >
 		,
 		ReturnType< $mol_speck['value'] >
 	>
-	type $mol_button_minor__sub__LKI7NZ2Z = $mol_type_enforce<
+	type $mol_button_minor__sub__O0YDNXA3 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_minor['sub'] >
 	>
-	type $mol_paragraph__sub__EQ5375QO = $mol_type_enforce<
+	type $mol_paragraph__sub__RLKZ8MAC = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_paragraph['sub'] >
 	>
 	export class $mol_speck_demo extends $mol_example_small {
-		sub( ): readonly(any)[]
-		tags( ): readonly(any)[]
-		aspects( ): readonly(any)[]
 		Link_speck( ): $mol_speck
 		Link_icon( ): $mol_icon_settings
 		Link( ): $mol_link
@@ -53,6 +50,9 @@ declare namespace $ {
 		Message_speck( ): $mol_speck
 		message_text( ): string
 		Message( ): $mol_paragraph
+		sub( ): readonly(any)[]
+		tags( ): readonly(any)[]
+		aspects( ): readonly(any)[]
 	}
 	
 }

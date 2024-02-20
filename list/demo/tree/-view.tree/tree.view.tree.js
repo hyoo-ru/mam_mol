@@ -1,30 +1,4 @@
 	($.$mol_list_demo_tree) = class $mol_list_demo_tree extends ($.$mol_example_large) {
-		title(){
-			return "Large list of rows with dynamic content";
-		}
-		sub(){
-			return [(this.Content())];
-		}
-		Row(id){
-			const obj = new this.$.$mol_expander();
-			(obj.label) = () => ([(this.Row_title(id))]);
-			(obj.expanded) = (next) => ((this.row_expanded(id, next)));
-			(obj.expandable) = () => (true);
-			(obj.Content) = () => ((this.Row_content(id)));
-			return obj;
-		}
-		tags(){
-			return [
-				"list", 
-				"tree", 
-				"hierarchy", 
-				"container", 
-				"nested"
-			];
-		}
-		aspects(){
-			return ["Widget/Layout"];
-		}
 		root_rows(){
 			return [];
 		}
@@ -53,11 +27,37 @@
 			(obj.rows) = () => ((this.row_content(id)));
 			return obj;
 		}
+		title(){
+			return "Large list of rows with dynamic content";
+		}
+		sub(){
+			return [(this.Content())];
+		}
+		Row(id){
+			const obj = new this.$.$mol_expander();
+			(obj.label) = () => ([(this.Row_title(id))]);
+			(obj.expanded) = (next) => ((this.row_expanded(id, next)));
+			(obj.expandable) = () => (true);
+			(obj.Content) = () => ((this.Row_content(id)));
+			return obj;
+		}
+		tags(){
+			return [
+				"list", 
+				"tree", 
+				"hierarchy", 
+				"container", 
+				"nested"
+			];
+		}
+		aspects(){
+			return ["Widget/Layout"];
+		}
 	};
-	($mol_mem_key(($.$mol_list_demo_tree.prototype), "Row"));
 	($mol_mem(($.$mol_list_demo_tree.prototype), "Content"));
 	($mol_mem_key(($.$mol_list_demo_tree.prototype), "Row_title"));
 	($mol_mem_key(($.$mol_list_demo_tree.prototype), "row_expanded"));
 	($mol_mem_key(($.$mol_list_demo_tree.prototype), "Row_content"));
+	($mol_mem_key(($.$mol_list_demo_tree.prototype), "Row"));
 
 //# sourceMappingURL=tree.view.tree.js.map

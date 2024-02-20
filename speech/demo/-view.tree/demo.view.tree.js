@@ -1,22 +1,4 @@
 	($.$mol_speech_demo) = class $mol_speech_demo extends ($.$mol_example_small) {
-		sub(){
-			return [
-				(this.Toggle()), 
-				(this.Message()), 
-				(this.Speak())
-			];
-		}
-		tags(){
-			return [
-				"speech", 
-				"voice", 
-				"recognition", 
-				"dictation"
-			];
-		}
-		aspects(){
-			return ["Widget/Plugin", "Media/Audio"];
-		}
 		Toggle_icon(){
 			const obj = new this.$.$mol_icon_microphone();
 			return obj;
@@ -48,6 +30,24 @@
 			(obj.click) = (next) => ((this.speak(next)));
 			(obj.sub) = () => (["Speak"]);
 			return obj;
+		}
+		sub(){
+			return [
+				(this.Toggle()), 
+				(this.Message()), 
+				(this.Speak())
+			];
+		}
+		tags(){
+			return [
+				"speech", 
+				"voice", 
+				"recognition", 
+				"dictation"
+			];
+		}
+		aspects(){
+			return ["Widget/Plugin", "Media/Audio"];
 		}
 	};
 	($mol_mem(($.$mol_speech_demo.prototype), "Toggle_icon"));

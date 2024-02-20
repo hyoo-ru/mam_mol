@@ -1,68 +1,61 @@
 declare namespace $ {
 
-	type $mol_app_report_rower__cells__O0IUUI5A = $mol_type_enforce<
-		ReturnType< $mol_app_report['rowerCells'] >
-		,
-		ReturnType< $mol_app_report_rower['cells'] >
-	>
-	type $mol_app_report_cell__content__U04VSONO = $mol_type_enforce<
-		ReturnType< $mol_app_report['cell_content'] >
-		,
-		ReturnType< $mol_app_report_cell['content'] >
-	>
-	type $mol_app_report_cell__rows__737EI2V6 = $mol_type_enforce<
-		ReturnType< $mol_app_report['cellrows'] >
-		,
-		ReturnType< $mol_app_report_cell['rows'] >
-	>
-	type $mol_app_report_cell__cols__ATAQKZ1H = $mol_type_enforce<
-		ReturnType< $mol_app_report['cellCols'] >
-		,
-		ReturnType< $mol_app_report_cell['cols'] >
-	>
-	type $mol_view__sub__RYMWKMD3 = $mol_type_enforce<
+	type $mol_view__sub__PTL36BLR = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_select__value__79CLKFSG = $mol_type_enforce<
-		ReturnType< $mol_app_report['cell_value'] >
-		,
-		ReturnType< $mol_select['value'] >
-	>
-	type $mol_select__dictionary__P4G6BCRI = $mol_type_enforce<
-		ReturnType< $mol_app_report['cell_options'] >
-		,
-		ReturnType< $mol_select['dictionary'] >
-	>
-	type $mol_number__value__V33K39EU = $mol_type_enforce<
-		ReturnType< $mol_app_report['cell_value'] >
-		,
-		ReturnType< $mol_number['value'] >
-	>
-	type $mol_view__sub__QLEO8FW0 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_app_report_rower__cells__17W61ISA = $mol_type_enforce<
+	type $mol_app_report_rower__cells__38SK97CA = $mol_type_enforce<
 		ReturnType< $mol_app_report['headCells'] >
 		,
 		ReturnType< $mol_app_report_rower['cells'] >
 	>
-	type $mol_app_report_tabler__rows__LHVW1O3T = $mol_type_enforce<
+	type $mol_app_report_tabler__rows__8J9X9X8A = $mol_type_enforce<
 		ReturnType< $mol_app_report['rows'] >
 		,
 		ReturnType< $mol_app_report_tabler['rows'] >
 	>
+	type $mol_app_report_rower__cells__XLQ8UKX3 = $mol_type_enforce<
+		ReturnType< $mol_app_report['rowerCells'] >
+		,
+		ReturnType< $mol_app_report_rower['cells'] >
+	>
+	type $mol_app_report_cell__content__TMYHEIBQ = $mol_type_enforce<
+		ReturnType< $mol_app_report['cell_content'] >
+		,
+		ReturnType< $mol_app_report_cell['content'] >
+	>
+	type $mol_app_report_cell__rows__NUWQ7II8 = $mol_type_enforce<
+		ReturnType< $mol_app_report['cellrows'] >
+		,
+		ReturnType< $mol_app_report_cell['rows'] >
+	>
+	type $mol_app_report_cell__cols__J3URGC9T = $mol_type_enforce<
+		ReturnType< $mol_app_report['cellCols'] >
+		,
+		ReturnType< $mol_app_report_cell['cols'] >
+	>
+	type $mol_view__sub__J0OCCCDJ = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_select__value__Z8ZQBG2L = $mol_type_enforce<
+		ReturnType< $mol_app_report['cell_value'] >
+		,
+		ReturnType< $mol_select['value'] >
+	>
+	type $mol_select__dictionary__CKBWTAH0 = $mol_type_enforce<
+		ReturnType< $mol_app_report['cell_options'] >
+		,
+		ReturnType< $mol_select['dictionary'] >
+	>
+	type $mol_number__value__LGG9K79T = $mol_type_enforce<
+		ReturnType< $mol_app_report['cell_value'] >
+		,
+		ReturnType< $mol_number['value'] >
+	>
 	export class $mol_app_report extends $mol_page {
-		title( ): string
-		body( ): readonly(any)[]
-		rower( id: any): $mol_app_report_rower
-		cell( id: any): $mol_app_report_cell
-		texter( id: any): $mol_view
-		select( id: any): $mol_select
-		number( id: any): $mol_number
 		description( ): string
 		descriptor( ): $mol_view
 		headCells( ): readonly(any)[]
@@ -75,30 +68,37 @@ declare namespace $ {
 		cellCols( id: any): number
 		cell_value( id: any, next?: any ): any
 		cell_options( id: any): Record<string, any>
+		title( ): string
+		body( ): readonly(any)[]
+		rower( id: any): $mol_app_report_rower
+		cell( id: any): $mol_app_report_cell
+		texter( id: any): $mol_view
+		select( id: any): $mol_select
+		number( id: any): $mol_number
 	}
 	
 	export class $mol_app_report_tabler extends $mol_view {
+		rows( ): readonly(any)[]
 		dom_name( ): string
 		sub( ): ReturnType< $mol_app_report_tabler['rows'] >
-		rows( ): readonly(any)[]
 	}
 	
 	export class $mol_app_report_rower extends $mol_view {
+		cells( ): readonly(any)[]
 		dom_name( ): string
 		sub( ): ReturnType< $mol_app_report_rower['cells'] >
-		cells( ): readonly(any)[]
 	}
 	
 	export class $mol_app_report_cell extends $mol_view {
+		cols( ): number
+		rows( ): number
+		content( ): any
 		dom_name( ): string
 		attr( ): ({ 
 			'colspan': ReturnType< $mol_app_report_cell['cols'] >,
 			'rowspan': ReturnType< $mol_app_report_cell['rows'] >,
 		})  & ReturnType< $mol_view['attr'] >
 		sub( ): readonly(any)[]
-		cols( ): number
-		rows( ): number
-		content( ): any
 	}
 	
 }

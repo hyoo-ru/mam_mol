@@ -1,23 +1,23 @@
 declare namespace $ {
 
-	type $mol_gallery__style__LKADJEBA = $mol_type_enforce<
+	type $mol_gallery__style__J1R9772S = $mol_type_enforce<
 		({ 
 			'flexGrow': ReturnType< $mol_gallery['side_size'] >,
 		}) 
 		,
 		ReturnType< $mol_gallery['style'] >
 	>
-	type $mol_gallery__items__2T27X0BF = $mol_type_enforce<
+	type $mol_gallery__items__SM3WOX9G = $mol_type_enforce<
 		ReturnType< $mol_gallery['side_items'] >
 		,
 		ReturnType< $mol_gallery['items'] >
 	>
 	export class $mol_gallery extends $mol_view {
-		sub( ): ReturnType< $mol_gallery['items'] >
-		Side( id: any): $mol_gallery
 		items( ): readonly($mol_view)[]
 		side_size( id: any): string
 		side_items( id: any): readonly($mol_view)[]
+		sub( ): ReturnType< $mol_gallery['items'] >
+		Side( id: any): $mol_gallery
 	}
 	
 }

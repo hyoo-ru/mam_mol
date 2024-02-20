@@ -1,28 +1,4 @@
 	($.$mol_chart) = class $mol_chart extends ($.$mol_view) {
-		gap_hor(){
-			return 48;
-		}
-		gap_vert(){
-			return 24;
-		}
-		gap_left(){
-			return (this.gap_hor());
-		}
-		gap_right(){
-			return (this.gap_hor());
-		}
-		gap_bottom(){
-			return (this.gap_vert());
-		}
-		gap_top(){
-			return (this.gap_vert());
-		}
-		graphs(){
-			return [];
-		}
-		sub(){
-			return [(this.Legend()), (this.Plot())];
-		}
 		Legend(){
 			const obj = new this.$.$mol_chart_legend();
 			(obj.graphs) = () => ((this.graphs_colored()));
@@ -51,6 +27,30 @@
 			(obj.hue_base) = () => ((this.hue_base()));
 			(obj.hue_shift) = () => ((this.hue_shift()));
 			return obj;
+		}
+		gap_hor(){
+			return 48;
+		}
+		gap_vert(){
+			return 24;
+		}
+		gap_left(){
+			return (this.gap_hor());
+		}
+		gap_right(){
+			return (this.gap_hor());
+		}
+		gap_bottom(){
+			return (this.gap_vert());
+		}
+		gap_top(){
+			return (this.gap_vert());
+		}
+		graphs(){
+			return [];
+		}
+		sub(){
+			return [(this.Legend()), (this.Plot())];
 		}
 	};
 	($mol_mem(($.$mol_chart.prototype), "Legend"));

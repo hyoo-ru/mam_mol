@@ -1,16 +1,19 @@
 declare namespace $ {
 
-	type $mol_plot_graph_sample__color__9YIEO2UA = $mol_type_enforce<
-		ReturnType< $mol_plot_dot['color'] >
-		,
-		ReturnType< $mol_plot_graph_sample['color'] >
-	>
-	type $mol_svg_path__geometry__FD4859KL = $mol_type_enforce<
+	type $mol_svg_path__geometry__YGEVR4GB = $mol_type_enforce<
 		ReturnType< $mol_plot_dot['curve'] >
 		,
 		ReturnType< $mol_svg_path['geometry'] >
 	>
+	type $mol_plot_graph_sample__color__YWX51EKS = $mol_type_enforce<
+		ReturnType< $mol_plot_dot['color'] >
+		,
+		ReturnType< $mol_plot_graph_sample['color'] >
+	>
 	export class $mol_plot_dot extends $mol_plot_graph {
+		diameter( ): number
+		curve( ): string
+		Curve( ): $mol_svg_path
 		points_max( ): number
 		aspect( ): number
 		style( ): ({ 
@@ -18,9 +21,6 @@ declare namespace $ {
 		})  & ReturnType< $mol_plot_graph['style'] >
 		sub( ): readonly(any)[]
 		Sample( ): $mol_plot_graph_sample
-		diameter( ): number
-		curve( ): string
-		Curve( ): $mol_svg_path
 	}
 	
 }

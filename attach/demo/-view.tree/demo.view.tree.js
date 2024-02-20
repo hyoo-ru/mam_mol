@@ -1,4 +1,13 @@
 	($.$mol_attach_demo) = class $mol_attach_demo extends ($.$mol_example_small) {
+		filled_items(next){
+			if(next !== undefined) return next;
+			return ["https://picsum.photos/200"];
+		}
+		Filled(){
+			const obj = new this.$.$mol_attach();
+			(obj.items) = (next) => ((this.filled_items(next)));
+			return obj;
+		}
 		title(){
 			return "Attach files an show them";
 		}
@@ -14,15 +23,6 @@
 		}
 		aspects(){
 			return ["Widget/Control", "Type/File"];
-		}
-		filled_items(next){
-			if(next !== undefined) return next;
-			return ["https://picsum.photos/200"];
-		}
-		Filled(){
-			const obj = new this.$.$mol_attach();
-			(obj.items) = (next) => ((this.filled_items(next)));
-			return obj;
 		}
 	};
 	($mol_mem(($.$mol_attach_demo.prototype), "filled_items"));

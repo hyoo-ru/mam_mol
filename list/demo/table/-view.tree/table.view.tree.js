@@ -1,25 +1,4 @@
 	($.$mol_list_demo_table) = class $mol_list_demo_table extends ($.$mol_example) {
-		title(){
-			return "Large list of rows with dynamic content";
-		}
-		count(){
-			return 9999;
-		}
-		sub(){
-			return [(this.Head()), (this.Rows())];
-		}
-		tags(){
-			return [
-				"list", 
-				"table", 
-				"scroll", 
-				"divider", 
-				"grid"
-			];
-		}
-		aspects(){
-			return ["Widget/Layout"];
-		}
 		check_list(){
 			return [];
 		}
@@ -169,6 +148,27 @@
 			const obj = new this.$.$mol_list();
 			(obj.rows) = () => ((this.rows()));
 			return obj;
+		}
+		title(){
+			return "Large list of rows with dynamic content";
+		}
+		count(){
+			return 9999;
+		}
+		sub(){
+			return [(this.Head()), (this.Rows())];
+		}
+		tags(){
+			return [
+				"list", 
+				"table", 
+				"scroll", 
+				"divider", 
+				"grid"
+			];
+		}
+		aspects(){
+			return ["Widget/Layout"];
 		}
 	};
 	($mol_mem(($.$mol_list_demo_table.prototype), "Check"));

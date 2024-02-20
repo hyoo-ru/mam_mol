@@ -1,4 +1,10 @@
 	($.$mol_frame_demo) = class $mol_frame_demo extends ($.$mol_example_large) {
+		Frame(){
+			const obj = new this.$.$mol_frame();
+			(obj.title) = () => ("Another page inside that");
+			(obj.uri) = () => ("https://mol.hyoo.ru/");
+			return obj;
+		}
 		sub(){
 			return [(this.Frame())];
 		}
@@ -7,12 +13,6 @@
 		}
 		aspects(){
 			return ["Widget/Integration", "Widget/Island"];
-		}
-		Frame(){
-			const obj = new this.$.$mol_frame();
-			(obj.title) = () => ("Another page inside that");
-			(obj.uri) = () => ("https://mol.hyoo.ru/");
-			return obj;
 		}
 	};
 	($mol_mem(($.$mol_frame_demo.prototype), "Frame"));

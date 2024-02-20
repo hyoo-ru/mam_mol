@@ -1,17 +1,17 @@
 declare namespace $ {
 
-	type $mol_paginator__value__NUS43DL9 = $mol_type_enforce<
+	type $mol_paginator__value__W58GTNRB = $mol_type_enforce<
 		ReturnType< $mol_paginator_demo['page'] >
 		,
 		ReturnType< $mol_paginator['value'] >
 	>
 	export class $mol_paginator_demo extends $mol_example_small {
+		page( next?: number ): number
+		Pages( ): $mol_paginator
 		title( ): string
 		sub( ): readonly(any)[]
 		tags( ): readonly(any)[]
 		aspects( ): readonly(any)[]
-		page( next?: number ): number
-		Pages( ): $mol_paginator
 	}
 	
 }

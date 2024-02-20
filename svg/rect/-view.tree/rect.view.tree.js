@@ -1,4 +1,16 @@
 	($.$mol_svg_rect) = class $mol_svg_rect extends ($.$mol_svg) {
+		width(){
+			return "0";
+		}
+		height(){
+			return "0";
+		}
+		pos_x(){
+			return "";
+		}
+		pos_y(){
+			return "";
+		}
 		dom_name(){
 			return "rect";
 		}
@@ -13,18 +25,6 @@
 				"x": (this.pos_x()), 
 				"y": (this.pos_y())
 			};
-		}
-		width(){
-			return "0";
-		}
-		height(){
-			return "0";
-		}
-		pos_x(){
-			return "";
-		}
-		pos_y(){
-			return "";
 		}
 	};
 

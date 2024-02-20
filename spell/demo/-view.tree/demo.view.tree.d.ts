@@ -1,29 +1,29 @@
 declare namespace $ {
 
-	type $mol_textarea__value__9SOZXEIX = $mol_type_enforce<
+	type $mol_textarea__value__V9H4M9XB = $mol_type_enforce<
 		ReturnType< $mol_spell_demo['article'] >
 		,
 		ReturnType< $mol_textarea['value'] >
 	>
-	type $mol_text_code__text__AN1O5HHJ = $mol_type_enforce<
+	type $mol_text_code__text__3VWQIWYR = $mol_type_enforce<
 		ReturnType< $mol_spell_demo['report'] >
 		,
 		ReturnType< $mol_text_code['text'] >
 	>
-	type $mol_list__rows__QI7KC2T1 = $mol_type_enforce<
+	type $mol_list__rows__AUXCXOC9 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >
 	>
 	export class $mol_spell_demo extends $mol_example_small {
-		sub( ): readonly(any)[]
-		tags( ): readonly(any)[]
-		aspects( ): readonly(any)[]
 		article( next?: string ): string
 		Article( ): $mol_textarea
 		report( ): string
 		Report( ): $mol_text_code
 		List( ): $mol_list
+		sub( ): readonly(any)[]
+		tags( ): readonly(any)[]
+		aspects( ): readonly(any)[]
 	}
 	
 }

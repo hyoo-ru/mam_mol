@@ -1,14 +1,4 @@
 	($.$mol_app_supplies_enter) = class $mol_app_supplies_enter extends ($.$mol_view) {
-		entered(next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		minimal_width(){
-			return 400;
-		}
-		sub(){
-			return [(this.form())];
-		}
 		loginLabel(){
 			return "User name";
 		}
@@ -69,8 +59,17 @@
 			(obj.buttons) = () => ([(this.submit())]);
 			return obj;
 		}
+		entered(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		minimal_width(){
+			return 400;
+		}
+		sub(){
+			return [(this.form())];
+		}
 	};
-	($mol_mem(($.$mol_app_supplies_enter.prototype), "entered"));
 	($mol_mem(($.$mol_app_supplies_enter.prototype), "login"));
 	($mol_mem(($.$mol_app_supplies_enter.prototype), "loginControl"));
 	($mol_mem(($.$mol_app_supplies_enter.prototype), "loginField"));
@@ -80,5 +79,6 @@
 	($mol_mem(($.$mol_app_supplies_enter.prototype), "event_submit"));
 	($mol_mem(($.$mol_app_supplies_enter.prototype), "submit"));
 	($mol_mem(($.$mol_app_supplies_enter.prototype), "form"));
+	($mol_mem(($.$mol_app_supplies_enter.prototype), "entered"));
 
 //# sourceMappingURL=enter.view.tree.js.map

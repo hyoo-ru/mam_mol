@@ -1,6 +1,18 @@
 declare namespace $ {
 
 	export class $mol_video_camera extends $mol_video_player {
+		transform( ): string
+		facing( ): string
+		aspect( ): number
+		size( ): number
+		width( ): ReturnType< $mol_video_camera['size'] >
+		height( ): ReturnType< $mol_video_camera['size'] >
+		brightness( ): number
+		sharpness( ): number
+		contrast( ): number
+		saturation( ): number
+		temperature( ): number
+		torch( ): boolean
 		controls( ): boolean
 		style( ): ({ 
 			'transform': ReturnType< $mol_video_camera['transform'] >,
@@ -22,18 +34,6 @@ declare namespace $ {
 			'saturation': ReturnType< $mol_video_camera['saturation'] >,
 			'advanced': readonly(any)[],
 		}) 
-		transform( ): string
-		facing( ): string
-		aspect( ): number
-		size( ): number
-		width( ): ReturnType< $mol_video_camera['size'] >
-		height( ): ReturnType< $mol_video_camera['size'] >
-		brightness( ): number
-		sharpness( ): number
-		contrast( ): number
-		saturation( ): number
-		temperature( ): number
-		torch( ): boolean
 	}
 	
 }

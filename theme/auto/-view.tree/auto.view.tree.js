@@ -1,9 +1,9 @@
 	($.$mol_theme_auto) = class $mol_theme_auto extends ($.$mol_plugin) {
-		attr(){
-			return {"mol_theme": (this.theme())};
-		}
 		theme(){
 			return "";
+		}
+		attr(){
+			return {"mol_theme": (this.theme())};
 		}
 	};
 

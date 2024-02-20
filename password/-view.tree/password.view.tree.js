@@ -1,11 +1,4 @@
 	($.$mol_password) = class $mol_password extends ($.$mol_view) {
-		type(next){
-			if(next !== undefined) return next;
-			return "password";
-		}
-		sub(){
-			return (this.content());
-		}
 		hint(){
 			return "";
 		}
@@ -46,13 +39,20 @@
 		content(){
 			return [(this.Pass()), (this.Show())];
 		}
+		type(next){
+			if(next !== undefined) return next;
+			return "password";
+		}
+		sub(){
+			return (this.content());
+		}
 	};
-	($mol_mem(($.$mol_password.prototype), "type"));
 	($mol_mem(($.$mol_password.prototype), "value"));
 	($mol_mem(($.$mol_password.prototype), "submit"));
 	($mol_mem(($.$mol_password.prototype), "Pass"));
 	($mol_mem(($.$mol_password.prototype), "checked"));
 	($mol_mem(($.$mol_password.prototype), "Show_icon"));
 	($mol_mem(($.$mol_password.prototype), "Show"));
+	($mol_mem(($.$mol_password.prototype), "type"));
 
 //# sourceMappingURL=password.view.tree.js.map
