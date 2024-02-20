@@ -1,36 +1,36 @@
 declare namespace $ {
 
-	type $mol_button_minor__hint__QPUVPY7H = $mol_type_enforce<
+	type $mol_button_minor__hint__ZD8YG33W = $mol_type_enforce<
 		ReturnType< $mol_paginator['backward_hint'] >
 		,
 		ReturnType< $mol_button_minor['hint'] >
 	>
-	type $mol_button_minor__click__LE7GF4DQ = $mol_type_enforce<
+	type $mol_button_minor__click__E7PLMJ2M = $mol_type_enforce<
 		ReturnType< $mol_paginator['backward'] >
 		,
 		ReturnType< $mol_button_minor['click'] >
 	>
-	type $mol_button_minor__sub__F9HGNL6F = $mol_type_enforce<
+	type $mol_button_minor__sub__X4OP9VY6 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_minor['sub'] >
 	>
-	type $mol_view__sub__3VXXY0ZQ = $mol_type_enforce<
+	type $mol_view__sub__1MSOUKJ2 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_button_minor__hint__GQMEGXEB = $mol_type_enforce<
+	type $mol_button_minor__hint__55W6A2NA = $mol_type_enforce<
 		ReturnType< $mol_paginator['forward_hint'] >
 		,
 		ReturnType< $mol_button_minor['hint'] >
 	>
-	type $mol_button_minor__click__JH1TBQ0J = $mol_type_enforce<
+	type $mol_button_minor__click__XJB1WM7Y = $mol_type_enforce<
 		ReturnType< $mol_paginator['forward'] >
 		,
 		ReturnType< $mol_button_minor['click'] >
 	>
-	type $mol_button_minor__sub__MHY579CK = $mol_type_enforce<
+	type $mol_button_minor__sub__IQROZP2I = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_minor['sub'] >

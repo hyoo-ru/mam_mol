@@ -1,16 +1,16 @@
 declare namespace $ {
 
-	type $mol_pop_bubble__align__19WMX8LV = $mol_type_enforce<
+	type $mol_pop_bubble__align__Y02PUJCJ = $mol_type_enforce<
 		ReturnType< $mol_pop['align'] >
 		,
 		ReturnType< $mol_pop_bubble['align'] >
 	>
-	type $mol_pop_bubble__content__29ER2MWJ = $mol_type_enforce<
+	type $mol_pop_bubble__content__E9VETB1N = $mol_type_enforce<
 		ReturnType< $mol_pop['bubble_content'] >
 		,
 		ReturnType< $mol_pop_bubble['content'] >
 	>
-	type $mol_pop_bubble__height_max__50C3NC4X = $mol_type_enforce<
+	type $mol_pop_bubble__height_max__HO7TK56Y = $mol_type_enforce<
 		ReturnType< $mol_pop['height_max'] >
 		,
 		ReturnType< $mol_pop_bubble['height_max'] >

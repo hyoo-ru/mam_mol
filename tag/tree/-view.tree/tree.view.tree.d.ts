@@ -1,66 +1,66 @@
 declare namespace $ {
 
-	type $mol_tag_tree_sub__PHRKIOFE = $mol_type_enforce<
+	type $mol_tag_tree_sub__9LDYG4MK = $mol_type_enforce<
 		ReturnType< $mol_tag_tree['tag_list'] >[number]
 		,
 		$mol_view
 	>
-	type $mol_tag_tree_sub__V4SC6FD8 = $mol_type_enforce<
+	type $mol_tag_tree_sub__9OFZCKBL = $mol_type_enforce<
 		ReturnType< $mol_tag_tree['item_list'] >[number]
 		,
 		$mol_view
 	>
-	type $mol_view__sub__ZP2KJJ4Z = $mol_type_enforce<
+	type $mol_view__sub__N9FRU40O = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_expander__expandable__IVFNA1JN = $mol_type_enforce<
+	type $mol_expander__expandable__V2EPGGTI = $mol_type_enforce<
 		boolean
 		,
 		ReturnType< $mol_expander['expandable'] >
 	>
-	type $mol_expander__expanded__A4QGZFYP = $mol_type_enforce<
+	type $mol_expander__expanded__Z9BRWWIR = $mol_type_enforce<
 		ReturnType< $mol_tag_tree['tag_expanded'] >
 		,
 		ReturnType< $mol_expander['expanded'] >
 	>
-	type $mol_expander__title__UZR7QVIC = $mol_type_enforce<
+	type $mol_expander__title__KKO4SSBI = $mol_type_enforce<
 		ReturnType< $mol_tag_tree['tag_name'] >
 		,
 		ReturnType< $mol_expander['title'] >
 	>
-	type $mol_expander__content__8IF61BKY = $mol_type_enforce<
+	type $mol_expander__content__T18AKMMF = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_expander['content'] >
 	>
-	type $mol_tag_tree__ids_tags__TFKLN8SB = $mol_type_enforce<
+	type $mol_tag_tree__ids_tags__LC924UG1 = $mol_type_enforce<
 		ReturnType< $mol_tag_tree['ids_tags'] >
 		,
 		ReturnType< $mol_tag_tree['ids_tags'] >
 	>
-	type $mol_tag_tree__path__T459BYCC = $mol_type_enforce<
+	type $mol_tag_tree__path__D0B7Y5C9 = $mol_type_enforce<
 		ReturnType< $mol_tag_tree['tag_path'] >
 		,
 		ReturnType< $mol_tag_tree['path'] >
 	>
-	type $mol_tag_tree__Item__WO83WWN7 = $mol_type_enforce<
+	type $mol_tag_tree__Item__W0PEDH7W = $mol_type_enforce<
 		ReturnType< $mol_tag_tree['Item'] >
 		,
 		ReturnType< $mol_tag_tree['Item'] >
 	>
-	type $mol_tag_tree__item_title__YKYMK6OI = $mol_type_enforce<
+	type $mol_tag_tree__item_title__DSTFL29I = $mol_type_enforce<
 		ReturnType< $mol_tag_tree['item_title'] >
 		,
 		ReturnType< $mol_tag_tree['item_title'] >
 	>
-	type $mol_tag_tree__tag_expanded__3CLLOXQJ = $mol_type_enforce<
+	type $mol_tag_tree__tag_expanded__3LQA5D42 = $mol_type_enforce<
 		ReturnType< $mol_tag_tree['tag_expanded'] >
 		,
 		ReturnType< $mol_tag_tree['tag_expanded'] >
 	>
-	type $mol_tag_tree__tag_name__V5KAGYN4 = $mol_type_enforce<
+	type $mol_tag_tree__tag_name__MHXOA86N = $mol_type_enforce<
 		ReturnType< $mol_tag_tree['tag_name'] >
 		,
 		ReturnType< $mol_tag_tree['tag_name'] >
