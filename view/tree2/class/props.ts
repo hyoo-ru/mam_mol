@@ -22,11 +22,12 @@ namespace $ {
 		const props_inner = {} as Record<string, $mol_tree2>
 
 		const add_inner = ( prop: $mol_tree2 ) => {
-			const prev = props_inner[prop.type]
-			if (prev && prev.kids[0]?.type !== prop.kids[0]?.type) {
-				this.$mol_fail(err`Different kids ${prev.span} vs ${prop.span}`)
+			const { name } = this.$mol_view_tree2_prop_parts(prop)
+			const prev = props_inner[name]
+			if (prev && prev.kids[0]?.toString() !== prop.kids[0]?.toString()) {
+				this.$mol_fail(err`Need an equal default values at ${prev.span} vs ${prop.span}`)
 			}
-			props_inner[prop.type] = prop
+			props_inner[name] = prop
 		}
 
 		const upper = (operator: $mol_tree2, belt: $mol_tree2_belt<Context>, context: Context) => {
@@ -67,14 +68,17 @@ namespace $ {
 				else if( operator && ! context.factory && $mol_view_tree2_class_match( operator ) ) {
 					context = { factory: left.clone([]) }
 				}
+				
+				const hacked = left.clone( left.hack( belt, context ) )
 
-				return [ left.clone( left.hack( belt, context ) ) ]
-
+				return [ hacked ]
 			}
 
 		}, { factory: undefined } as Context)
 
-		return [ ... props_root , ... Object.values(props_inner) ]
+		for (const prop of props_root ) add_inner(prop)
+		
+		return Object.values(props_inner)
 	}
 
 }
