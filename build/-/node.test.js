@@ -3584,7 +3584,7 @@ var $;
                         ref.struct('[]', [
                             ref.data(ref.kids[0]?.type ? name_of.call(this, ref.kids[0]) : name),
                         ]),
-                        ref.struct('(,)')
+                        ref.kids[0]?.type ? params_of.call(this, ref.kids[0]) : ref.struct('(,)')
                     ]),
                 ]),
             ],
@@ -13929,7 +13929,15 @@ var $;
 						a!? $mol_view
 							expanded <=> cell_test_expanded!? null
 				`);
-            }, 'Required prop like some*? at `.view.tree#3:7/3` at .view.tree#3:7/3');
+            }, `Required prop like some*? at \`.view.tree#4:21/20\`
+<=>
+.view.tree#4:17/3
+expanded
+.view.tree#4:8/8
+$mol_view
+.view.tree#3:11/9
+a!?
+.view.tree#3:7/3`);
         },
         'Bidi bind with default object'($) {
             const _foo = $mol_view_tree2_to_js_test_ex_bidi_with_default_object_foo;
@@ -14132,9 +14140,15 @@ var $;
             $mol_assert_fail(() => {
                 $mol_view_tree2_to_js_test_run(`
 					Foo $mol_object
-						sub / <= Close_icon $mol_object
+						sub / <= Чlose_icon $mol_object
 				`);
-            }, 'Required prop like some*? at `.view.tree#3:16/10`\n<=\n.view.tree#3:13/2\n/\n.view.tree#3:11/1 at .view.tree#3:7/3');
+            }, `Required prop like some*? at \`.view.tree#3:16/10\`
+<=
+.view.tree#3:13/2
+/
+.view.tree#3:11/1
+sub
+.view.tree#3:7/3`);
         },
         'simple empty legacy indexed channel throws error'($) {
             $mol_assert_fail(() => {
@@ -14142,13 +14156,13 @@ var $;
 					Foo $mol_object
 						a!? null
 				`);
-            }, 'Required prop like some*? at `.view.tree#3:7/3` at .view.tree#3:7/3');
+            }, 'Required prop like some*? at `.view.tree#3:7/3`');
             $mol_assert_fail(() => {
                 $mol_view_tree2_to_js_test_run(`
 					Foo $mol_object
 						b! 1
 				`);
-            }, 'Required prop like some*? at `.view.tree#3:7/2` at .view.tree#3:7/2');
+            }, 'Required prop like some*? at `.view.tree#3:7/2`');
         },
         'simple two classes'($) {
             const _foo = $mol_view_tree2_to_js_test_ex_simple_two_classes_foo;
@@ -14196,7 +14210,7 @@ var $;
 					Foo $mol_object
 						item_чount 50
 				`);
-            }, 'Required prop like some*? at `.view.tree#3:7/10` at .view.tree#3:7/10');
+            }, 'Required prop like some*? at `.view.tree#3:7/10`');
         },
     });
 })($ || ($ = {}));

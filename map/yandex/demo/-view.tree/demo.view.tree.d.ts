@@ -1,21 +1,21 @@
 declare namespace $ {
 
-	type $mol_map_yandex_mark__title__UYW45MXH = $mol_type_enforce<
+	type $mol_map_yandex_mark__title__FI7AZD4X = $mol_type_enforce<
 		ReturnType< $mol_map_yandex_demo['place_title'] >
 		,
 		ReturnType< $mol_map_yandex_mark['title'] >
 	>
-	type $mol_map_yandex_mark__address__JF06SRJT = $mol_type_enforce<
+	type $mol_map_yandex_mark__address__8SAH6RKR = $mol_type_enforce<
 		ReturnType< $mol_map_yandex_demo['place_addres'] >
 		,
 		ReturnType< $mol_map_yandex_mark['address'] >
 	>
-	type $mol_map_yandex_mark__content__2SR14HWW = $mol_type_enforce<
+	type $mol_map_yandex_mark__content__PDSN3L66 = $mol_type_enforce<
 		ReturnType< $mol_map_yandex_demo['place_content'] >
 		,
 		ReturnType< $mol_map_yandex_mark['content'] >
 	>
-	type $mol_map_yandex__objects__WRTGGMW6 = $mol_type_enforce<
+	type $mol_map_yandex__objects__YU5C4E1U = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_map_yandex['objects'] >
