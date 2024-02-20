@@ -97,6 +97,25 @@ namespace $.$$ {
 			$mol_assert_equal(res.input, res.output)
 		},
 
+		'good right bind dupes'($) {
+			const src = `
+				${d}my_test ${d}my_super
+					Suggest_label ${d}mol_dimmer
+						clear? => clear?
+					Clear ${d}mol_button_minor
+						click?e <=> clear?e
+			`
+
+			const dest = `
+				clear? = Suggest_label clear?
+				Suggest_label $mol_dimmer clear? => clear?
+				Clear $mol_button_minor click?e <=> clear?e
+			`
+
+			const res = normalize($, src, dest)
+			$mol_assert_equal(res.input, res.output)
+		},
+
 		'conflicting right bind dupes'($) {
 			const src = `
 				${d}my_test ${d}my_super
@@ -105,8 +124,6 @@ namespace $.$$ {
 					Clear ${d}mol_button_minor
 						click?event <=> clear?event null
 			`
-			// const res = normalize($, src, '')
-			// $mol_assert_equal(res.input, res.output)
 
 			$mol_assert_fail(
 				() => normalize($, src).input,
