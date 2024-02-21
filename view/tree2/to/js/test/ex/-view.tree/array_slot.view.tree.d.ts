@@ -1,28 +1,28 @@
 declare namespace $ {
 
-	type $mol_view_tree2_to_js_test_ex_array_slot_foo_foot__Y9FGKAIZ = $mol_type_enforce<
+	type $mol_view_tree2_to_js_test_ex_array_slot_foo_foot__M69WQ55W = $mol_type_enforce<
 		true
 		,
 		string|number|boolean
 	>
-	type $mol_view_tree2_to_js_test_ex_array_slot_foo_foot__I9CUMAJE = $mol_type_enforce<
+	type $mol_view_tree2_to_js_test_ex_array_slot_foo_foot__2FUY9545 = $mol_type_enforce<
 		`foot1`
 		,
 		string|number|boolean
 	>
-	type $mol_view_tree2_to_js_test_ex_array_slot_foo_foot__OYWPIH7L = $mol_type_enforce<
+	type $mol_view_tree2_to_js_test_ex_array_slot_foo_foot__J1DS93IW = $mol_type_enforce<
 		ReturnType< $mol_view_tree2_to_js_test_ex_array_slot_foo['insert'] >[number]
 		,
 		string|number|boolean
 	>
 	export class $mol_view_tree2_to_js_test_ex_array_slot_foo extends $mol_object {
-		foot( ): readonly(string|number|boolean)[]
 		ins1( ): string
 		sub_ins1( ): number
 		sub_ins( ): readonly(number)[]
 		ins2( ): string
 		insert( ): readonly(any)[]
 		foot2( ): string
+		foot( ): readonly(string|number|boolean)[]
 	}
 	
 }

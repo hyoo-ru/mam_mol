@@ -10445,6 +10445,10 @@ var $;
 
 ;
 	($.$mol_hotkey) = class $mol_hotkey extends ($.$mol_plugin) {
+		keydown(next){
+			if(next !== undefined) return next;
+			return null;
+		}
 		event(){
 			return {...(super.event()), "keydown": (next) => (this.keydown(next))};
 		}
@@ -10459,10 +10463,6 @@ var $;
 		}
 		mod_shift(){
 			return false;
-		}
-		keydown(next){
-			if(next !== undefined) return next;
-			return null;
 		}
 	};
 	($mol_mem(($.$mol_hotkey.prototype), "keydown"));
@@ -10613,52 +10613,6 @@ var $;
 
 ;
 	($.$mol_string) = class $mol_string extends ($.$mol_view) {
-		dom_name(){
-			return "input";
-		}
-		enabled(){
-			return true;
-		}
-		minimal_height(){
-			return 40;
-		}
-		autocomplete(){
-			return false;
-		}
-		selection(next){
-			if(next !== undefined) return next;
-			return [0, 0];
-		}
-		auto(){
-			return [(this.selection_watcher()), (this.error_report())];
-		}
-		field(){
-			return {
-				...(super.field()), 
-				"disabled": (this.disabled()), 
-				"value": (this.value_changed()), 
-				"placeholder": (this.hint_visible()), 
-				"spellcheck": (this.spellcheck()), 
-				"autocomplete": (this.autocomplete_native()), 
-				"selectionEnd": (this.selection_end()), 
-				"selectionStart": (this.selection_start()), 
-				"inputMode": (this.keyboard()), 
-				"enterkeyhint": (this.enter())
-			};
-		}
-		attr(){
-			return {
-				...(super.attr()), 
-				"maxlength": (this.length_max()), 
-				"type": (this.type())
-			};
-		}
-		event(){
-			return {...(super.event()), "input": (next) => (this.event_change(next))};
-		}
-		plugins(){
-			return [(this.Submit())];
-		}
 		selection_watcher(){
 			return null;
 		}
@@ -10723,13 +10677,59 @@ var $;
 			(obj.key) = () => ({"enter": (next) => (this.submit(next))});
 			return obj;
 		}
+		dom_name(){
+			return "input";
+		}
+		enabled(){
+			return true;
+		}
+		minimal_height(){
+			return 40;
+		}
+		autocomplete(){
+			return false;
+		}
+		selection(next){
+			if(next !== undefined) return next;
+			return [0, 0];
+		}
+		auto(){
+			return [(this.selection_watcher()), (this.error_report())];
+		}
+		field(){
+			return {
+				...(super.field()), 
+				"disabled": (this.disabled()), 
+				"value": (this.value_changed()), 
+				"placeholder": (this.hint_visible()), 
+				"spellcheck": (this.spellcheck()), 
+				"autocomplete": (this.autocomplete_native()), 
+				"selectionEnd": (this.selection_end()), 
+				"selectionStart": (this.selection_start()), 
+				"inputMode": (this.keyboard()), 
+				"enterkeyhint": (this.enter())
+			};
+		}
+		attr(){
+			return {
+				...(super.attr()), 
+				"maxlength": (this.length_max()), 
+				"type": (this.type())
+			};
+		}
+		event(){
+			return {...(super.event()), "input": (next) => (this.event_change(next))};
+		}
+		plugins(){
+			return [(this.Submit())];
+		}
 	};
-	($mol_mem(($.$mol_string.prototype), "selection"));
 	($mol_mem(($.$mol_string.prototype), "value"));
 	($mol_mem(($.$mol_string.prototype), "type"));
 	($mol_mem(($.$mol_string.prototype), "event_change"));
 	($mol_mem(($.$mol_string.prototype), "submit"));
 	($mol_mem(($.$mol_string.prototype), "Submit"));
+	($mol_mem(($.$mol_string.prototype), "selection"));
 
 
 ;
@@ -10965,6 +10965,12 @@ var $;
 
 ;
 	($.$mol_dimmer) = class $mol_dimmer extends ($.$mol_paragraph) {
+		parts(){
+			return [];
+		}
+		string(id){
+			return "";
+		}
 		haystack(){
 			return "";
 		}
@@ -10983,12 +10989,6 @@ var $;
 			const obj = new this.$.$mol_paragraph();
 			(obj.sub) = () => ([(this.string(id))]);
 			return obj;
-		}
-		parts(){
-			return [];
-		}
-		string(id){
-			return "";
 		}
 	};
 	($mol_mem_key(($.$mol_dimmer.prototype), "Low"));
@@ -11098,6 +11098,12 @@ var $;
 
 ;
 	($.$mol_speck) = class $mol_speck extends ($.$mol_view) {
+		theme(){
+			return "$mol_theme_accent";
+		}
+		value(){
+			return null;
+		}
 		attr(){
 			return {...(super.attr()), "mol_theme": (this.theme())};
 		}
@@ -11106,12 +11112,6 @@ var $;
 		}
 		sub(){
 			return [(this.value())];
-		}
-		theme(){
-			return "$mol_theme_accent";
-		}
-		value(){
-			return null;
 		}
 	};
 
@@ -11128,6 +11128,33 @@ var $;
 
 ;
 	($.$mol_button) = class $mol_button extends ($.$mol_view) {
+		event_activate(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		clicks(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		event_key_press(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		disabled(){
+			return false;
+		}
+		tab_index(){
+			return 0;
+		}
+		hint(){
+			return "";
+		}
+		hint_safe(){
+			return (this.hint());
+		}
+		error(){
+			return "";
+		}
 		enabled(){
 			return true;
 		}
@@ -11164,40 +11191,13 @@ var $;
 			(obj.value) = () => ((this.error()));
 			return obj;
 		}
-		event_activate(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		clicks(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		event_key_press(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		disabled(){
-			return false;
-		}
-		tab_index(){
-			return 0;
-		}
-		hint(){
-			return "";
-		}
-		hint_safe(){
-			return (this.hint());
-		}
-		error(){
-			return "";
-		}
 	};
-	($mol_mem(($.$mol_button.prototype), "click"));
-	($mol_mem(($.$mol_button.prototype), "event_click"));
-	($mol_mem(($.$mol_button.prototype), "Speck"));
 	($mol_mem(($.$mol_button.prototype), "event_activate"));
 	($mol_mem(($.$mol_button.prototype), "clicks"));
 	($mol_mem(($.$mol_button.prototype), "event_key_press"));
+	($mol_mem(($.$mol_button.prototype), "click"));
+	($mol_mem(($.$mol_button.prototype), "event_click"));
+	($mol_mem(($.$mol_button.prototype), "Speck"));
 
 
 ;
@@ -12226,15 +12226,6 @@ var $;
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_array_slot_foo) = class $mol_view_tree2_to_js_test_ex_array_slot_foo extends ($.$mol_object) {
-		foot(){
-			return [
-				1, 
-				true, 
-				"foot1", 
-				...(this.insert()), 
-				(this.foot2())
-			];
-		}
 		ins1(){
 			return "ins1";
 		}
@@ -12258,6 +12249,15 @@ var $;
 		}
 		foot2(){
 			return "foot2";
+		}
+		foot(){
+			return [
+				1, 
+				true, 
+				"foot1", 
+				...(this.insert()), 
+				(this.foot2())
+			];
 		}
 	};
 
@@ -12287,6 +12287,9 @@ var $;
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_structural_foo) = class $mol_view_tree2_to_js_test_ex_structural_foo extends ($.$mol_object) {
+		lol(){
+			return 2;
+		}
 		bar(){
 			return {
 				"alpha": 1, 
@@ -12294,23 +12297,20 @@ var $;
 				"xxx": (this.lol())
 			};
 		}
-		lol(){
-			return 2;
-		}
 	};
 
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_array_union_foo) = class $mol_view_tree2_to_js_test_ex_array_union_foo extends ($.$mol_object) {
+		foo(){
+			return "c";
+		}
 		bar(){
 			return [
 				"a", 
 				(this.foo()), 
 				"b"
 			];
-		}
-		foo(){
-			return "c";
 		}
 	};
 
@@ -12330,12 +12330,12 @@ var $;
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_bidi_indexed_foo) = class $mol_view_tree2_to_js_test_ex_bidi_indexed_foo extends ($.$mol_object) {
-		indexed(id, next){
-			return (this.owner(id, next));
-		}
 		owner(id, next){
 			if(next !== undefined) return next;
 			return null;
+		}
+		indexed(id, next){
+			return (this.owner(id, next));
 		}
 	};
 	($mol_mem_key(($.$mol_view_tree2_to_js_test_ex_bidi_indexed_foo.prototype), "owner"));
@@ -12351,9 +12351,6 @@ var $;
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_array_indexed_foo) = class $mol_view_tree2_to_js_test_ex_array_indexed_foo extends ($.$mol_object) {
-		tags(id){
-			return [(this.tag1(id)), ...(this.slot())];
-		}
 		tag1(id){
 			return "t1";
 		}
@@ -12363,14 +12360,14 @@ var $;
 		slot(id){
 			return [(this.tag2(id))];
 		}
+		tags(id){
+			return [(this.tag1(id)), ...(this.slot(id))];
+		}
 	};
 
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_bidi_chaining_foo) = class $mol_view_tree2_to_js_test_ex_bidi_chaining_foo extends ($.$mol_object) {
-		a(next){
-			return (this.b(next));
-		}
 		c(next){
 			if(next !== undefined) return next;
 			return null;
@@ -12378,18 +12375,21 @@ var $;
 		b(next){
 			return (this.c(next));
 		}
+		a(next){
+			return (this.b(next));
+		}
 	};
 	($mol_mem(($.$mol_view_tree2_to_js_test_ex_bidi_chaining_foo.prototype), "c"));
 
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_bidi_fallback_foo) = class $mol_view_tree2_to_js_test_ex_bidi_fallback_foo extends ($.$mol_object) {
-		bar1(next){
-			return (this.bar2(next));
-		}
 		bar2(next){
 			if(next !== undefined) return next;
 			return 1;
+		}
+		bar1(next){
+			return (this.bar2(next));
 		}
 	};
 	($mol_mem(($.$mol_view_tree2_to_js_test_ex_bidi_fallback_foo.prototype), "bar2"));
@@ -12397,9 +12397,6 @@ var $;
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_left_chaining_foo) = class $mol_view_tree2_to_js_test_ex_left_chaining_foo extends ($.$mol_object) {
-		a(){
-			return (this.b());
-		}
 		d(next){
 			if(next !== undefined) return next;
 			return 0;
@@ -12410,6 +12407,9 @@ var $;
 		}
 		b(){
 			return (this.c());
+		}
+		a(){
+			return (this.b());
 		}
 	};
 	($mol_mem(($.$mol_view_tree2_to_js_test_ex_left_chaining_foo.prototype), "d"));
@@ -12425,12 +12425,12 @@ var $;
 	};
 	($mol_mem(($.$mol_view_tree2_to_js_test_ex_right_indexed_foo.prototype), "a"));
 	($.$mol_view_tree2_to_js_test_ex_right_indexed_bar) = class $mol_view_tree2_to_js_test_ex_right_indexed_bar extends ($.$mol_object) {
+		b(id){
+			return (this.Cls(id).a());
+		}
 		Cls(id){
 			const obj = new this.$.$mol_view_tree2_to_js_test_ex_right_indexed_foo();
 			return obj;
-		}
-		b(id){
-			return (this.Cls(id).a());
 		}
 	};
 	($mol_mem_key(($.$mol_view_tree2_to_js_test_ex_right_indexed_bar.prototype), "Cls"));
@@ -12449,12 +12449,12 @@ var $;
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_left_read_only_foo) = class $mol_view_tree2_to_js_test_ex_left_read_only_foo extends ($.$mol_object) {
-		bar1(){
-			return (this.bar2());
-		}
 		bar2(next){
 			if(next !== undefined) return next;
 			return 1;
+		}
+		bar1(){
+			return (this.bar2());
 		}
 	};
 	($mol_mem(($.$mol_view_tree2_to_js_test_ex_left_read_only_foo.prototype), "bar2"));
@@ -12462,15 +12462,6 @@ var $;
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_right_hierarchy_foo) = class $mol_view_tree2_to_js_test_ex_right_hierarchy_foo extends ($.$mol_object) {
-		Indexed(id){
-			const obj = new this.$.$mol_view_tree2_to_js_test_ex_right_hierarchy_bar();
-			(obj.id) = () => ((this.indexed_id(id)));
-			return obj;
-		}
-		prj(){
-			const obj = new this.$.$mol_view_tree2_to_js_test_ex_right_hierarchy_bar();
-			return obj;
-		}
 		indexed_title(id, next){
 			return (this.Indexed(id).title(next));
 		}
@@ -12486,6 +12477,15 @@ var $;
 		prj_user_id(id){
 			return (this.prj_user(id).id());
 		}
+		Indexed(id){
+			const obj = new this.$.$mol_view_tree2_to_js_test_ex_right_hierarchy_bar();
+			(obj.id) = () => ((this.indexed_id(id)));
+			return obj;
+		}
+		prj(){
+			const obj = new this.$.$mol_view_tree2_to_js_test_ex_right_hierarchy_bar();
+			return obj;
+		}
 	};
 	($mol_mem_key(($.$mol_view_tree2_to_js_test_ex_right_hierarchy_foo.prototype), "Indexed"));
 	($mol_mem(($.$mol_view_tree2_to_js_test_ex_right_hierarchy_foo.prototype), "prj"));
@@ -12500,12 +12500,12 @@ var $;
 	};
 	($mol_mem_key(($.$mol_view_tree2_to_js_test_ex_right_read_only_foo.prototype), "a"));
 	($.$mol_view_tree2_to_js_test_ex_right_read_only_bar) = class $mol_view_tree2_to_js_test_ex_right_read_only_bar extends ($.$mol_object) {
+		b(id, next){
+			return (this.Obj().a(id, next));
+		}
 		Obj(){
 			const obj = new this.$.$mol_view_tree2_to_js_test_ex_right_read_only_foo();
 			return obj;
-		}
-		b(id, next){
-			return (this.Obj().a(id, next));
 		}
 	};
 	($mol_mem(($.$mol_view_tree2_to_js_test_ex_right_read_only_bar.prototype), "Obj"));
@@ -12546,12 +12546,12 @@ var $;
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_bidi_legacy_value_foo) = class $mol_view_tree2_to_js_test_ex_bidi_legacy_value_foo extends ($.$mol_object) {
-		a(next){
-			return (this.b(next));
-		}
 		b(next){
 			if(next !== undefined) return next;
 			return 1;
+		}
+		a(next){
+			return (this.b(next));
 		}
 	};
 	($mol_mem(($.$mol_view_tree2_to_js_test_ex_bidi_legacy_value_foo.prototype), "b"));
@@ -12567,12 +12567,12 @@ var $;
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_bidi_in_dictionary_foo) = class $mol_view_tree2_to_js_test_ex_bidi_in_dictionary_foo extends ($.$mol_object) {
-		event(){
-			return {"click": (next) => (this.run(next))};
-		}
 		run(next){
 			if(next !== undefined) return next;
 			return null;
+		}
+		event(){
+			return {"click": (next) => (this.run(next))};
 		}
 	};
 	($mol_mem(($.$mol_view_tree2_to_js_test_ex_bidi_in_dictionary_foo.prototype), "run"));
@@ -12580,6 +12580,13 @@ var $;
 
 ;
 	($.$mol_scroll) = class $mol_scroll extends ($.$mol_view) {
+		tabindex(){
+			return -1;
+		}
+		event_scroll(next){
+			if(next !== undefined) return next;
+			return null;
+		}
 		scroll_top(next){
 			if(next !== undefined) return next;
 			return 0;
@@ -12594,17 +12601,10 @@ var $;
 		event(){
 			return {...(super.event()), "scroll": (next) => (this.event_scroll(next))};
 		}
-		tabindex(){
-			return -1;
-		}
-		event_scroll(next){
-			if(next !== undefined) return next;
-			return null;
-		}
 	};
+	($mol_mem(($.$mol_scroll.prototype), "event_scroll"));
 	($mol_mem(($.$mol_scroll.prototype), "scroll_top"));
 	($mol_mem(($.$mol_scroll.prototype), "scroll_left"));
-	($mol_mem(($.$mol_scroll.prototype), "event_scroll"));
 
 
 ;
@@ -13100,19 +13100,6 @@ var $;
 
 ;
 	($.$mol_page) = class $mol_page extends ($.$mol_view) {
-		dom_name(){
-			return "article";
-		}
-		field(){
-			return {...(super.field()), "tabIndex": (this.tabindex())};
-		}
-		sub(){
-			return [
-				(this.Head()), 
-				(this.Body()), 
-				(this.Foot())
-			];
-		}
 		tabindex(){
 			return -1;
 		}
@@ -13173,6 +13160,19 @@ var $;
 			(obj.dom_name) = () => ("footer");
 			(obj.sub) = () => ((this.foot()));
 			return obj;
+		}
+		dom_name(){
+			return "article";
+		}
+		field(){
+			return {...(super.field()), "tabIndex": (this.tabindex())};
+		}
+		sub(){
+			return [
+				(this.Head()), 
+				(this.Body()), 
+				(this.Foot())
+			];
 		}
 	};
 	($mol_mem(($.$mol_page.prototype), "Title"));
@@ -13302,12 +13302,6 @@ var $;
 		}
 	};
 	($.$mol_view_tree2_to_js_test_ex_right_in_left_bar) = class $mol_view_tree2_to_js_test_ex_right_in_left_bar extends ($.$mol_object) {
-		foo(){
-			return (this.Cls());
-		}
-		pages(){
-			return [(this.Menu())];
-		}
 		b(){
 			return (this.Cls().a());
 		}
@@ -13321,6 +13315,12 @@ var $;
 		Menu(){
 			const obj = new this.$.$mol_page();
 			return obj;
+		}
+		foo(){
+			return (this.Cls());
+		}
+		pages(){
+			return [(this.Menu())];
 		}
 	};
 	($mol_mem(($.$mol_view_tree2_to_js_test_ex_right_in_left_bar.prototype), "Cls"));
@@ -13401,9 +13401,6 @@ var $;
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_array_constructor_tuple_foo) = class $mol_view_tree2_to_js_test_ex_array_constructor_tuple_foo extends ($.$mol_object) {
-		blobs(){
-			return [(this.text_blob())];
-		}
 		text(){
 			return "123";
 		}
@@ -13411,6 +13408,9 @@ var $;
 			if(next !== undefined) return next;
 			const obj = new this.$.$mol_view_tree2_to_js_test_ex_klass_tuple([(this.text())], {"type": "text/plain"});
 			return obj;
+		}
+		blobs(){
+			return [(this.text_blob())];
 		}
 	};
 	($mol_mem(($.$mol_view_tree2_to_js_test_ex_array_constructor_tuple_foo.prototype), "text_blob"));
@@ -13423,9 +13423,6 @@ var $;
 		}
 	};
 	($.$mol_view_tree2_to_js_test_ex_left_second_level_index_foo) = class $mol_view_tree2_to_js_test_ex_left_second_level_index_foo extends ($.$mol_object) {
-		cls(id){
-			return (this.owner(id));
-		}
 		some(id, next){
 			if(next !== undefined) return next;
 			return (this.$.$mol_locale.text("$mol_view_tree2_to_js_test_ex_left_second_level_index_foo_some"));
@@ -13435,6 +13432,9 @@ var $;
 			const obj = new this.$.$mol_view_tree2_to_js_test_ex_left_second_level_index_bar();
 			(obj.localized) = () => ((this.some(id)));
 			return obj;
+		}
+		cls(id){
+			return (this.owner(id));
 		}
 	};
 	($mol_mem_key(($.$mol_view_tree2_to_js_test_ex_left_second_level_index_foo.prototype), "some"));
@@ -13475,12 +13475,12 @@ var $;
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_bidi_localized_in_object_foo) = class $mol_view_tree2_to_js_test_ex_bidi_localized_in_object_foo extends ($.$mol_object) {
-		obj(){
-			return {"loc": (next) => (this.outer(next))};
-		}
 		outer(next){
 			if(next !== undefined) return next;
 			return (this.$.$mol_locale.text("$mol_view_tree2_to_js_test_ex_bidi_localized_in_object_foo_outer"));
+		}
+		obj(){
+			return {"loc": (next) => (this.outer(next))};
 		}
 	};
 	($mol_mem(($.$mol_view_tree2_to_js_test_ex_bidi_localized_in_object_foo.prototype), "outer"));
@@ -13488,13 +13488,13 @@ var $;
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_bidi_with_default_object_foo) = class $mol_view_tree2_to_js_test_ex_bidi_with_default_object_foo extends ($.$mol_object) {
-		class(next){
-			return (this.owner(next));
-		}
 		owner(next){
 			if(next !== undefined) return next;
 			const obj = new this.$.$mol_object();
 			return obj;
+		}
+		class(next){
+			return (this.owner(next));
 		}
 	};
 	($mol_mem(($.$mol_view_tree2_to_js_test_ex_bidi_with_default_object_foo.prototype), "owner"));
@@ -13507,12 +13507,6 @@ var $;
 		}
 	};
 	($.$mol_view_tree2_to_js_test_ex_left_in_array_and_object_foo) = class $mol_view_tree2_to_js_test_ex_left_in_array_and_object_foo extends ($.$mol_object) {
-		obj(){
-			return {"prop": (this.Obj())};
-		}
-		arr(){
-			return [(this.Obj())];
-		}
 		content(){
 			return [];
 		}
@@ -13520,6 +13514,12 @@ var $;
 			const obj = new this.$.$mol_view_tree2_to_js_test_ex_left_in_array_and_object_bar();
 			(obj.rows) = () => ((this.content()));
 			return obj;
+		}
+		obj(){
+			return {"prop": (this.Obj())};
+		}
+		arr(){
+			return [(this.Obj())];
 		}
 	};
 	($mol_mem(($.$mol_view_tree2_to_js_test_ex_left_in_array_and_object_foo.prototype), "Obj"));
@@ -13532,19 +13532,19 @@ var $;
 		}
 	};
 	($.$mol_view_tree2_to_js_test_ex_bidi_indexed_second_level_foo) = class $mol_view_tree2_to_js_test_ex_bidi_indexed_second_level_foo extends ($.$mol_object) {
+		owner(id, next){
+			if(next !== undefined) return next;
+			return "w";
+		}
 		indexed(id, next){
 			if(next !== undefined) return next;
 			const obj = new this.$.$mol_view_tree2_to_js_test_ex_bidi_indexed_second_level_bar();
 			(obj.expanded) = () => ((this.owner(id, next)));
 			return obj;
 		}
-		owner(id, next){
-			if(next !== undefined) return next;
-			return "w";
-		}
 	};
-	($mol_mem_key(($.$mol_view_tree2_to_js_test_ex_bidi_indexed_second_level_foo.prototype), "indexed"));
 	($mol_mem_key(($.$mol_view_tree2_to_js_test_ex_bidi_indexed_second_level_foo.prototype), "owner"));
+	($mol_mem_key(($.$mol_view_tree2_to_js_test_ex_bidi_indexed_second_level_foo.prototype), "indexed"));
 
 
 ;
@@ -13577,12 +13577,12 @@ var $;
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_bidi_localized_default_value_foo) = class $mol_view_tree2_to_js_test_ex_bidi_localized_default_value_foo extends ($.$mol_object) {
-		a(next){
-			return (this.b(next));
-		}
 		b(next){
 			if(next !== undefined) return next;
 			return (this.$.$mol_locale.text("$mol_view_tree2_to_js_test_ex_bidi_localized_default_value_foo_b"));
+		}
+		a(next){
+			return (this.b(next));
 		}
 	};
 	($mol_mem(($.$mol_view_tree2_to_js_test_ex_bidi_localized_default_value_foo.prototype), "b"));
@@ -13643,15 +13643,15 @@ var $;
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_bidi_doubing_right_part_with_same_default_foo) = class $mol_view_tree2_to_js_test_ex_bidi_doubing_right_part_with_same_default_foo extends ($.$mol_object) {
+		b(next){
+			if(next !== undefined) return next;
+			return false;
+		}
 		a(next){
 			return (this.b(next));
 		}
 		c(next){
 			return (this.b(next));
-		}
-		b(next){
-			if(next !== undefined) return next;
-			return false;
 		}
 	};
 	($mol_mem(($.$mol_view_tree2_to_js_test_ex_bidi_doubing_right_part_with_same_default_foo.prototype), "b"));

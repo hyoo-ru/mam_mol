@@ -1,6 +1,6 @@
 declare namespace $ {
 
-	type $mol_perf_uibench_anim_box__state__N4X2QU6C = $mol_type_enforce<
+	type $mol_perf_uibench_anim_box__state__I1GA7TE6 = $mol_type_enforce<
 		ReturnType< $mol_perf_uibench_anim['box_state'] >
 		,
 		ReturnType< $mol_perf_uibench_anim_box['state'] >

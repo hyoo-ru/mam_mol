@@ -3,7 +3,7 @@
 	"sources": [
 		"mol/view/tree2/to/js/test/ex/bidi_fallback.view.tree"
 	],
-	"mappings": "AAAA;AAAA;AAAA,AAAA,6DAAgD,oBAAhD;AACC,AAAA,eAAU,YADX,+CACW,UAAV,IAAU,YADX,+CACW;AAAA,AAAA,eAAM,MAAN,IAAM;AADjB;AAAA;AAAA;",
+	"mappings": "AAAA;AAAA;AAAA,AAAA,6DAAgD,oBAAhD;AACW,AAAA,eAAM,MAAN,IAAM;AAAhB,AAAA,eAAU,YADX,+CACW,UAAV,IAAU,YADX,+CACW;AADX;AAAA;AAAA;",
 	"file": "bidi_fallback.view.tree.d.ts",
 	"sourceRoot": "../../../../../../../.."
 }

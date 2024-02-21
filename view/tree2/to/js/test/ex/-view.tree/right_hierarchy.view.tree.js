@@ -1,13 +1,4 @@
 	($.$mol_view_tree2_to_js_test_ex_right_hierarchy_foo) = class $mol_view_tree2_to_js_test_ex_right_hierarchy_foo extends ($.$mol_object) {
-		Indexed(id){
-			const obj = new this.$.$mol_view_tree2_to_js_test_ex_right_hierarchy_bar();
-			(obj.id) = () => ((this.indexed_id(id)));
-			return obj;
-		}
-		prj(){
-			const obj = new this.$.$mol_view_tree2_to_js_test_ex_right_hierarchy_bar();
-			return obj;
-		}
 		indexed_title(id, next){
 			return (this.Indexed(id).title(next));
 		}
@@ -22,6 +13,15 @@
 		}
 		prj_user_id(id){
 			return (this.prj_user(id).id());
+		}
+		Indexed(id){
+			const obj = new this.$.$mol_view_tree2_to_js_test_ex_right_hierarchy_bar();
+			(obj.id) = () => ((this.indexed_id(id)));
+			return obj;
+		}
+		prj(){
+			const obj = new this.$.$mol_view_tree2_to_js_test_ex_right_hierarchy_bar();
+			return obj;
 		}
 	};
 	($mol_mem_key(($.$mol_view_tree2_to_js_test_ex_right_hierarchy_foo.prototype), "Indexed"));

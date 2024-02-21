@@ -4,12 +4,6 @@
 		}
 	};
 	($.$mol_view_tree2_to_js_test_ex_left_in_array_and_object_foo) = class $mol_view_tree2_to_js_test_ex_left_in_array_and_object_foo extends ($.$mol_object) {
-		obj(){
-			return {"prop": (this.Obj())};
-		}
-		arr(){
-			return [(this.Obj())];
-		}
 		content(){
 			return [];
 		}
@@ -17,6 +11,12 @@
 			const obj = new this.$.$mol_view_tree2_to_js_test_ex_left_in_array_and_object_bar();
 			(obj.rows) = () => ((this.content()));
 			return obj;
+		}
+		obj(){
+			return {"prop": (this.Obj())};
+		}
+		arr(){
+			return [(this.Obj())];
 		}
 	};
 	($mol_mem(($.$mol_view_tree2_to_js_test_ex_left_in_array_and_object_foo.prototype), "Obj"));

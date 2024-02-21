@@ -3,7 +3,7 @@
 	"sources": [
 		"mol/view/tree2/to/js/test/ex/bidi_with_default_object.view.tree"
 	],
-	"mappings": "AAAA;AAAA;AAAA,AAAA,wEAA2D,oBAA3D;AACC,AAAA,gBAAW,YADZ,0DACY,WAAX,IAAW,YADZ,0DACY;AAAA,AAAA,gBAAO,WAAP,IAAO;AADnB;AAAA;AAAA;",
+	"mappings": "AAAA;AAAA;AAAA,AAAA,wEAA2D,oBAA3D;AACY,AAAA,gBAAO,WAAP,IAAO;AAAlB,AAAA,gBAAW,YADZ,0DACY,WAAX,IAAW,YADZ,0DACY;AADZ;AAAA;AAAA;",
 	"file": "bidi_with_default_object.view.tree.d.ts",
 	"sourceRoot": "../../../../../../../.."
 }

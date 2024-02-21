@@ -1,7 +1,4 @@
 	($.$mol_view_tree2_to_js_test_ex_array_constructor_tuple_foo) = class $mol_view_tree2_to_js_test_ex_array_constructor_tuple_foo extends ($.$mol_object) {
-		blobs(){
-			return [(this.text_blob())];
-		}
 		text(){
 			return "123";
 		}
@@ -9,6 +6,9 @@
 			if(next !== undefined) return next;
 			const obj = new this.$.$mol_view_tree2_to_js_test_ex_klass_tuple([(this.text())], {"type": "text/plain"});
 			return obj;
+		}
+		blobs(){
+			return [(this.text_blob())];
 		}
 	};
 	($mol_mem(($.$mol_view_tree2_to_js_test_ex_array_constructor_tuple_foo.prototype), "text_blob"));

@@ -1,13 +1,4 @@
 	($.$mol_view_tree2_to_js_test_ex_array_slot_foo) = class $mol_view_tree2_to_js_test_ex_array_slot_foo extends ($.$mol_object) {
-		foot(){
-			return [
-				1, 
-				true, 
-				"foot1", 
-				...(this.insert()), 
-				(this.foot2())
-			];
-		}
 		ins1(){
 			return "ins1";
 		}
@@ -31,6 +22,15 @@
 		}
 		foot2(){
 			return "foot2";
+		}
+		foot(){
+			return [
+				1, 
+				true, 
+				"foot1", 
+				...(this.insert()), 
+				(this.foot2())
+			];
 		}
 	};
 

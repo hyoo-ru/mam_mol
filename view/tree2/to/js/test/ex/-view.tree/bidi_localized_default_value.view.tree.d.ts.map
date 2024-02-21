@@ -3,7 +3,7 @@
 	"sources": [
 		"mol/view/tree2/to/js/test/ex/bidi_localized_default_value.view.tree"
 	],
-	"mappings": "AAAA;AAAA;AAAA,AAAA,4EAA+D,oBAA/D;AACC,AAAA,YAAO,YADR,8DACQ,OAAP,IAAO,YADR,8DACQ;AAAA,AAAA,YAAM,MAAN,IAAM;AADd;AAAA;AAAA;",
+	"mappings": "AAAA;AAAA;AAAA,AAAA,4EAA+D,oBAA/D;AACQ,AAAA,YAAM,MAAN,IAAM;AAAb,AAAA,YAAO,YADR,8DACQ,OAAP,IAAO,YADR,8DACQ;AADR;AAAA;AAAA;",
 	"file": "bidi_localized_default_value.view.tree.d.ts",
 	"sourceRoot": "../../../../../../../.."
 }

@@ -6,5 +6,5 @@
 	"sourcesContent": [
 		"$mol_view_tree2_to_js_test_ex_structural_spread_other_foo $mol_object\n\ttest *\n\t\taaa 123\n\tfield *\n\t\tbbb 321\n\t\t^ test\n"
 	],
-	"mappings": "AAAA,AAAA,iIAA0D,wBAA1D;AAAA,AACC;AAAA,AAAA,UAAK,CACJ,OAAI,GADA,CAAL;AAAA;AAEA;AAAA,AAAA,UAAM,CACL,OAAI,GADC,EAEL,gBAFK,CAAN;AAAA;AAHD,CAAA;"
+	"mappings": "AAAA,AAAA,iIAA0D,wBAA1D;AAAA,AACC;AAAA,AAAA,UAAK,CACJ,OAAI,GADA,CAAL;AAAA;AAEA;AAAA,AAAA,UAAM,CACL,OAAI,GADC,EAEL,aAAE,EAAF,CAFK,CAAN;AAAA;AAHD,CAAA;"
 }

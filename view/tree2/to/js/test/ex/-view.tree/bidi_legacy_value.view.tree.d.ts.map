@@ -3,7 +3,7 @@
 	"sources": [
 		"mol/view/tree2/to/js/test/ex/bidi_legacy_value.view.tree"
 	],
-	"mappings": "AAAA;AAAA;AAAA,AAAA,iEAAoD,oBAApD;AACC,AAAA,YAAQ,YADT,mDACS,OAAR,IAAQ,YADT,mDACS;AAAA,AAAA,YAAI,MAAJ,IAAI;AADb;AAAA;AAAA;",
+	"mappings": "AAAA;AAAA;AAAA,AAAA,iEAAoD,oBAApD;AACS,AAAA,YAAI,MAAJ,IAAI;AAAZ,AAAA,YAAQ,YADT,mDACS,OAAR,IAAQ,YADT,mDACS;AADT;AAAA;AAAA;",
 	"file": "bidi_legacy_value.view.tree.d.ts",
 	"sourceRoot": "../../../../../../../.."
 }

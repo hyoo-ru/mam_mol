@@ -4,12 +4,6 @@
 		}
 	};
 	($.$mol_view_tree2_to_js_test_ex_right_in_left_bar) = class $mol_view_tree2_to_js_test_ex_right_in_left_bar extends ($.$mol_object) {
-		foo(){
-			return (this.Cls());
-		}
-		pages(){
-			return [(this.Menu())];
-		}
 		b(){
 			return (this.Cls().a());
 		}
@@ -23,6 +17,12 @@
 		Menu(){
 			const obj = new this.$.$mol_page();
 			return obj;
+		}
+		foo(){
+			return (this.Cls());
+		}
+		pages(){
+			return [(this.Menu())];
 		}
 	};
 	($mol_mem(($.$mol_view_tree2_to_js_test_ex_right_in_left_bar.prototype), "Cls"));
