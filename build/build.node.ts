@@ -602,7 +602,9 @@ namespace $ {
 		}
 
 		gitPull(path: string) {
-			this.$.$mol_exec( path , 'git' , 'pull', this.gitDeepenSupported() ? '--deepen=1' : '--depth=1')
+			const args = [ 'pull' ]
+			if (this.gitDeepenSupported()) args.push('--deepen=1')
+			return this.$.$mol_exec( path , 'git' , 'pull', ...args)
 		}
 		
 		@ $mol_mem_key
