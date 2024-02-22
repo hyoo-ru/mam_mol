@@ -592,12 +592,17 @@ namespace $ {
 			}
 		}
 
+		@ $mol_mem
+		gitVersion() {
+			return this.$.$mol_exec('.', 'git', 'version').output.toString().match(/ ([\d\.]+)$/)?.[1] ?? ''
+		}
+
+		gitDeepenSupported() {
+			return this.gitVersion() > '2.42.0'
+		}
+
 		gitPull(path: string) {
-			try {
-				this.$.$mol_exec( path , 'git' , 'pull', '--deepen=1' )
-			} catch (e) {
-				this.$.$mol_exec( path , 'git' , 'pull', '--depth=1' )
-			}
+			this.$.$mol_exec( path , 'git' , 'pull', this.gitDeepenSupported() ? '--deepen=1' : '--depth=1')
 		}
 		
 		@ $mol_mem_key
