@@ -20,20 +20,78 @@ namespace $ {
 		toJSON() {
 			return this.errors.map( e => e.message )
 		}
-		
-		pick< Class extends typeof Error >( Class: Class ): InstanceType< Class > | null {
+
+		static recursion_protect = new WeakMap<Error, true>()
+
+		static find< Instance >(
+			host: unknown,
+			is: (e: unknown) => boolean
+		): Instance | null {
 			
-			if( ( this as any ) instanceof Class ) return this as any
-			
-			for( const e of this.errors ) {
-				if( e instanceof Class ) return e as any
+			if( is(host) ) return host as Instance
+			if ( ! ( host instanceof Error ) ) return null
+			if (this.recursion_protect.get(host)) return null
+
+			this.recursion_protect.set(host, true)
+
+			let sub
+
+			if ( ! ( host instanceof $mol_error_mix ) && Array.isArray(host.cause) ) {
+				for( const e of host.cause ) {
+					sub = this.find< Instance >(e, is)
+					if (sub) break
+				}
 			}
-			
-			for( const e of this.cause ) {
-				if( e && e instanceof Class ) return e as any
+
+			if ( ! sub && host instanceof AggregateError ) {
+				for( const e of host.errors ) {
+					sub = this.find< Instance >(e, is)
+					if (sub) break
+				}
 			}
-			
-			return null
+
+			if (! sub) sub = this.find< Instance >(host.cause, is)
+
+			this.recursion_protect.delete(host)
+
+			return sub
+		}
+
+		static filter< Instance >(
+			host: unknown,
+			is: (e: unknown) => boolean
+		): readonly Instance[] {
+
+			const finded: Instance[] = []
+
+			this.find<Instance>(host, e => {
+				if (is( e )) finded.push(e as Instance)
+				return false
+			})
+
+			return finded
+		}
+
+		filter< Instance >( is: (e: unknown) => boolean ) {
+			return $mol_error_mix.filter<Instance>(this, is)
+		}
+
+		find< Instance >( is: (e: unknown) => boolean ) {
+			return $mol_error_mix.find<Instance>(this, is)
+		}
+
+		pick<
+			Instance extends Error,
+			Class extends new (...args: any[]) => Instance
+		>( Class: Class ) {
+			return this.find<Instance>(e => e instanceof Class)
+		}
+
+		pick_all<
+			Instance extends Error,
+			Class extends new (...args: any[]) => Instance
+		>( Class: Class ) {
+			return this.filter<Instance>(e => e instanceof Class)
 		}
 
 	}
