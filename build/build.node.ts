@@ -598,7 +598,7 @@ namespace $ {
 		}
 
 		gitDeepenSupported() {
-			return this.gitVersion() > '2.42.0'
+			return $mol_compare_text()(this.gitVersion(), '2.42.0') >= 0
 		}
 
 		gitPull(path: string) {
