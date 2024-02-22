@@ -4464,6 +4464,34 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_compare_text(item = (item) => String(item)) {
+        return (a, b) => {
+            const text_a = item(a).trim().toLowerCase();
+            const text_b = item(b).trim().toLowerCase();
+            const parts_a = text_a.split(/(\d+)/);
+            const parts_b = text_b.split(/(\d+)/);
+            const count = Math.max(parts_a.length, parts_b.length);
+            for (let i = 0; i < count; ++i) {
+                const part_a = parts_a[i] || '';
+                const part_b = parts_b[i] || '';
+                const diff = Number(part_a) - Number(part_b);
+                if (diff)
+                    return diff;
+                if (part_a > part_b)
+                    return 1;
+                if (part_a < part_b)
+                    return -1;
+            }
+            return parts_a.length - parts_b.length;
+        };
+    }
+    $.$mol_compare_text = $mol_compare_text;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
     $.$mol_action = $mol_wire_method;
 })($ || ($ = {}));
 
@@ -5160,6 +5188,18 @@ var $;
                     return {};
             }
         }
+        gitVersion() {
+            return this.$.$mol_exec('.', 'git', 'version').stdout?.toString().trim().match(/.*\s+([\d\.]+)$/)?.[1] ?? '';
+        }
+        gitDeepenSupported() {
+            return $mol_compare_text()(this.gitVersion(), '2.42.0') >= 0;
+        }
+        gitPull(path) {
+            const args = ['pull'];
+            if (this.gitDeepenSupported())
+                args.push('--deepen=1');
+            return this.$.$mol_exec(path, 'git', ...args);
+        }
         modEnsure(path) {
             var mod = $mol_file.absolute(path);
             var parent = mod.parent();
@@ -5174,8 +5214,8 @@ var $;
                     if (mod.type() !== 'dir')
                         return false;
                     const git_dir = mod.resolve('.git');
-                    if (git_dir.exists()) {
-                        this.$.$mol_exec(mod.path(), 'git', 'pull', '--depth=1');
+                    if (git_dir.exists() && git_dir.type() === 'dir') {
+                        this.gitPull(mod.path());
                         return false;
                     }
                     for (let repo of mapping.select('pack', mod.name(), 'git').kids) {
@@ -5186,7 +5226,7 @@ var $;
                             ? 'master'
                             : matched[1];
                         this.$.$mol_exec(mod.path(), 'git', 'remote', 'add', '--track', head_branch_name, 'origin', repo.text());
-                        this.$.$mol_exec(mod.path(), 'git', 'pull', '--deepen=1');
+                        this.gitPull(mod.path());
                         mod.reset();
                         for (const sub of mod.sub()) {
                             sub.reset();
@@ -5948,6 +5988,9 @@ var $;
         $mol_mem_key
     ], $mol_build.prototype, "dependencies", null);
     __decorate([
+        $mol_mem
+    ], $mol_build.prototype, "gitVersion", null);
+    __decorate([
         $mol_mem_key
     ], $mol_build.prototype, "modEnsure", null);
     __decorate([
@@ -6270,34 +6313,6 @@ var $;
         $mol_mem
     ], $mol_server.prototype, "socket", null);
     $.$mol_server = $mol_server;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_compare_text(item = (item) => String(item)) {
-        return (a, b) => {
-            const text_a = item(a).trim().toLowerCase();
-            const text_b = item(b).trim().toLowerCase();
-            const parts_a = text_a.split(/(\d+)/);
-            const parts_b = text_b.split(/(\d+)/);
-            const count = Math.max(parts_a.length, parts_b.length);
-            for (let i = 0; i < count; ++i) {
-                const part_a = parts_a[i] || '';
-                const part_b = parts_b[i] || '';
-                const diff = Number(part_a) - Number(part_b);
-                if (diff)
-                    return diff;
-                if (part_a > part_b)
-                    return 1;
-                if (part_a < part_b)
-                    return -1;
-            }
-            return parts_a.length - parts_b.length;
-        };
-    }
-    $.$mol_compare_text = $mol_compare_text;
 })($ || ($ = {}));
 
 ;
@@ -12149,6 +12164,34 @@ var $;
 var $;
 (function ($) {
     $mol_test({
+        'simple sort'() {
+            const list = ['abc', 'ac', 'ab'];
+            list.sort($mol_compare_text());
+            $mol_assert_equal(`${list}`, 'ab,abc,ac');
+        },
+        'sort ignoring spaces around'() {
+            const list = [' a', '\tb', ' b'];
+            list.sort($mol_compare_text());
+            $mol_assert_equal(`${list}`, ' a,\tb, b');
+        },
+        'sort ignoring letter case'() {
+            const list = ['A', 'B', 'a'];
+            list.sort($mol_compare_text());
+            $mol_assert_equal(`${list}`, 'A,a,B');
+        },
+        'sort with custom serializer'() {
+            const list = ['abc', 'ab', 'ac'];
+            list.sort($mol_compare_text(str => str.split('').reverse().join('')));
+            $mol_assert_equal(`${list}`, 'ab,ac,abc');
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
         'auto name'() {
             class TestError extends $mol_error_mix {
             }
@@ -14276,34 +14319,6 @@ var $;
                 'key3': '3'
             });
         }
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'simple sort'() {
-            const list = ['abc', 'ac', 'ab'];
-            list.sort($mol_compare_text());
-            $mol_assert_equal(`${list}`, 'ab,abc,ac');
-        },
-        'sort ignoring spaces around'() {
-            const list = [' a', '\tb', ' b'];
-            list.sort($mol_compare_text());
-            $mol_assert_equal(`${list}`, ' a,\tb, b');
-        },
-        'sort ignoring letter case'() {
-            const list = ['A', 'B', 'a'];
-            list.sort($mol_compare_text());
-            $mol_assert_equal(`${list}`, 'A,a,B');
-        },
-        'sort with custom serializer'() {
-            const list = ['abc', 'ab', 'ac'];
-            list.sort($mol_compare_text(str => str.split('').reverse().join('')));
-            $mol_assert_equal(`${list}`, 'ab,ac,abc');
-        },
     });
 })($ || ($ = {}));
 

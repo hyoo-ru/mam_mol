@@ -912,6 +912,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_compare_text<Item>(item?: (item: Item) => string): (a: Item, b: Item) => number;
+}
+
+declare namespace $ {
     let $mol_action: typeof $mol_wire_method;
 }
 
@@ -958,6 +962,8 @@ declare namespace $ {
     function $mol_tree2_xml_to_text(xml: $mol_tree2): $mol_tree2;
 }
 
+/// <reference types="node" />
+/// <reference types="node" />
 declare namespace $ {
     function $mol_build_start(this: $, paths: string[]): void;
     class $mol_build extends $mol_object {
@@ -1055,6 +1061,9 @@ declare namespace $ {
         }): {
             [index: string]: number;
         };
+        gitVersion(): string;
+        gitDeepenSupported(): boolean;
+        gitPull(path: string): import("child_process").SpawnSyncReturns<Buffer>;
         modEnsure(path: string): boolean;
         modMeta(path: string): $mol_tree2;
         graph({ path, exclude }: {
@@ -1185,10 +1194,6 @@ declare namespace $ {
         port(): number;
         rootPublic(): string;
     }
-}
-
-declare namespace $ {
-    function $mol_compare_text<Item>(item?: (item: Item) => string): (a: Item, b: Item) => number;
 }
 
 /// <reference types="node" />
