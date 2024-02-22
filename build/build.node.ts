@@ -594,7 +594,7 @@ namespace $ {
 
 		@ $mol_mem
 		gitVersion() {
-			return this.$.$mol_exec('.', 'git', 'version').output.toString().match(/ ([\d\.]+)$/)?.[1] ?? ''
+			return this.$.$mol_exec('.', 'git', 'version').stdout?.toString().trim().match(/.*\s+([\d\.]+)$/)?.[1] ?? ''
 		}
 
 		gitDeepenSupported() {
@@ -604,7 +604,7 @@ namespace $ {
 		gitPull(path: string) {
 			const args = [ 'pull' ]
 			if (this.gitDeepenSupported()) args.push('--deepen=1')
-			return this.$.$mol_exec( path , 'git' , 'pull', ...args)
+			return this.$.$mol_exec( path , 'git', ...args)
 		}
 		
 		@ $mol_mem_key
