@@ -1,15 +1,16 @@
 namespace $ {
 
-	export class $mol_error_mix extends AggregateError {
+	export class $mol_error_mix< Cause extends {} = {} > extends AggregateError {
 		
 		name = $$.$mol_func_name( this.constructor ).replace( /^\$/, '' ) + '_Error'
 
-		constructor( message: string, ... errors: Error[] ) {
+		constructor(
+			message: string,
+			readonly cause?: Cause | null,
+			... errors: Error[]
+		) {
 			
-			super(
-				errors,
-				message,
-			)
+			super( errors, message, { cause } )
 			
 			const stack_get = Object.getOwnPropertyDescriptor( this, 'stack' )?.get!
 			
@@ -19,10 +20,6 @@ namespace $ {
 				).join('\n')
 			} )
 			
-		}
-		
-		toJSON() {
-			return this.errors.map( e => e.message )
 		}
 		
 	}

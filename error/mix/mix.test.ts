@@ -12,7 +12,7 @@ namespace $ {
 		
 		'simpe mix'() {
 			
-			const mix = new $mol_error_mix( 'foo',
+			const mix = new $mol_error_mix( 'foo', null,
 				new Error( 'bar' ),
 				new Error( 'lol' ),
 			)
@@ -24,20 +24,12 @@ namespace $ {
 		
 		'provide additional info'() {
 			
-			class Invalid extends $mol_error_mix {
-				constructor(
-					message: string,
-					readonly cause: {
-						value: string,
-						hint: string,
-					},
-					... errors: readonly Error[]
-				) {
-					super( message, ... errors )
-				}
-			}
+			class Invalid extends $mol_error_mix<{
+				value: string,
+				hint: string,
+			}> {}
 			
-			const mix: unknown = new $mol_error_mix( 'Wrong password',
+			const mix: unknown = new $mol_error_mix( 'Wrong password', null,
 				new Invalid( 'Too short', { value: 'p@ssw0rd', hint: '> 8 letters' } ),
 				new Invalid( 'Too simple', { value: 'p@ssw0rd', hint: 'need capital letter' } ),
 			)
@@ -47,7 +39,7 @@ namespace $ {
 			if( mix instanceof $mol_error_mix ) {
 				for( const er of mix.errors ) {
 					if( er instanceof Invalid ) {
-						hints.push( er.cause.hint )
+						hints.push( er.cause?.hint ?? '' )
 					}
 				}
 			}
