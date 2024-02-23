@@ -12,7 +12,7 @@ namespace $ {
 			
 			super( errors, message, { cause } )
 			
-			const stack_get = Object.getOwnPropertyDescriptor( this, 'stack' )?.get!
+			const stack_get = Object.getOwnPropertyDescriptor( this, 'stack' )?.get ?? ( ()=> super.stack )
 			
 			Object.defineProperty( this, 'stack', {
 				get: ()=> stack_get.call( this ) + '\n' + this.errors.map(
