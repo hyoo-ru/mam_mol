@@ -1,16 +1,16 @@
 declare namespace $ {
 
-	type $mol_select__Filter__TN1FSXQ7 = $mol_type_enforce<
+	type $mol_select__Filter__KMO750TQ = $mol_type_enforce<
 		any
 		,
 		ReturnType< $mol_select['Filter'] >
 	>
-	type $mol_select__value__DZT3L77H = $mol_type_enforce<
+	type $mol_select__value__625G49FN = $mol_type_enforce<
 		ReturnType< $mol_select_demo_priority['priority'] >
 		,
 		ReturnType< $mol_select['value'] >
 	>
-	type $mol_select__options__IW25PEY9 = $mol_type_enforce<
+	type $mol_select__options__3KFT9OPH = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_select['options'] >

@@ -1,28 +1,28 @@
 declare namespace $ {
 
-	type $mol_search_jumper_forward__L8DUWD6C = $mol_type_enforce<
+	type $mol_search_jumper_forward__B6ZBO3V9 = $mol_type_enforce<
 		Parameters< $mol_search_jumper['forward'] >[0]
 		,
 		Parameters< ReturnType< $mol_search_jumper['Index'] >['forward'] >[0]
 	>
-	type $mol_search_jumper_backward__63H2BG2J = $mol_type_enforce<
+	type $mol_search_jumper_backward__TZ2KQ6K3 = $mol_type_enforce<
 		Parameters< $mol_search_jumper['backward'] >[0]
 		,
 		Parameters< ReturnType< $mol_search_jumper['Index'] >['backward'] >[0]
 	>
-	type $mol_hotkey__mod_shift__3HEI8FM4 = $mol_type_enforce<
+	type $mol_hotkey__mod_shift__K2PXU4YO = $mol_type_enforce<
 		boolean
 		,
 		ReturnType< $mol_hotkey['mod_shift'] >
 	>
-	type $mol_hotkey__key__9HOQXXEO = $mol_type_enforce<
+	type $mol_hotkey__key__YJ5GOPPB = $mol_type_enforce<
 		({ 
 			enter( next?: ReturnType< $mol_search_jumper['backward'] > ): ReturnType< $mol_search_jumper['backward'] >,
 		}) 
 		,
 		ReturnType< $mol_hotkey['key'] >
 	>
-	type $mol_hotkey__key__31EGDJS1 = $mol_type_enforce<
+	type $mol_hotkey__key__54SI6ULZ = $mol_type_enforce<
 		({ 
 			enter( next?: ReturnType< $mol_search_jumper['forward'] > ): ReturnType< $mol_search_jumper['forward'] >,
 			escape( next?: ReturnType< $mol_search_jumper['escape'] > ): ReturnType< $mol_search_jumper['escape'] >,
@@ -30,7 +30,7 @@ declare namespace $ {
 		,
 		ReturnType< $mol_hotkey['key'] >
 	>
-	type $mol_paginator__value__EBPXOLGV = $mol_type_enforce<
+	type $mol_paginator__value__8AICQ34B = $mol_type_enforce<
 		ReturnType< $mol_search_jumper['index'] >
 		,
 		ReturnType< $mol_paginator['value'] >
