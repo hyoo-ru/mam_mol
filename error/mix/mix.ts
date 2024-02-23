@@ -25,7 +25,7 @@ namespace $ {
 			Instance extends Error,
 			Class extends new (...args: any[]) => Instance
 		>( Class: Class ) {
-			return $mol_error_match<Instance>(this, e => e instanceof Class)
+			return $mol_error_match(this, (e): e is Instance => e instanceof Class)
 		}
 
 	}
