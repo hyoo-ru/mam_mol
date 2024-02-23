@@ -10,16 +10,17 @@ namespace $ {
 		return [ cause ].filter(Boolean)
 	}
 
-	export class $mol_error_improve_error extends AggregateError {
-		name = $$.$mol_func_name( this.constructor )
+	export class $mol_error_improve_error extends Error {
+		name = $$.$mol_func_name( this.constructor ) + '_Error'
 
 		constructor(readonly orig: Error, protected options: ErrorOptions) {
-			super([ orig ], orig.message)
+			super(orig.message)
+			this.stack = orig.stack
 		}
 
 		get cause(): unknown[] {
 			return ( [] as unknown[] ).concat(
-				... get_cause(this.errors[0].cause),
+				... get_cause(this.orig.cause),
 				this.options.cause
 			)
 		}

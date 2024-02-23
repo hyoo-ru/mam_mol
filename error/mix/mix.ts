@@ -2,7 +2,7 @@ namespace $ {
 
 	export class $mol_error_mix extends AggregateError {
 
-		name = $$.$mol_func_name( this.constructor )
+		name = $$.$mol_func_name( this.constructor ) + 'Error'
 		
 		constructor( message: string, ... errors: Error[] ) {
 			super(
