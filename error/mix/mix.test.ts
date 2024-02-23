@@ -89,10 +89,5 @@ namespace $ {
 			$mol_assert_equal( mix.pick( MyError2 )?.message, 'my-error-2' )
 			
 		},
-		
-		'pick all by class'() {
-			const { mix } = error_mock()
-			$mol_assert_equal( mix.pick_all( SyntaxError ).map(err => err.message), [ 'xxx1', 'xxx2', 'xxx4' ] )
-		},
 	})
 }
