@@ -1,26 +1,26 @@
 declare namespace $ {
 
-	type $mol_code__hint__B4TJ87ER = $mol_type_enforce<
+	type $mol_code__hint__QVAH7FR4 = $mol_type_enforce<
 		ReturnType< $mol_app_supplies_list['search_hint'] >
 		,
 		ReturnType< $mol_code['hint'] >
 	>
-	type $mol_code__value__JR6ZP5DV = $mol_type_enforce<
+	type $mol_code__value__02ZQ65ZS = $mol_type_enforce<
 		ReturnType< $mol_app_supplies_list['search_query'] >
 		,
 		ReturnType< $mol_code['value'] >
 	>
-	type $mol_list__rows__SMLDGDM6 = $mol_type_enforce<
+	type $mol_list__rows__JGWEKFU8 = $mol_type_enforce<
 		ReturnType< $mol_app_supplies_list['supply_rows'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_app_supplies_card__supply__FHEV0OIV = $mol_type_enforce<
+	type $mol_app_supplies_card__supply__MP8978WQ = $mol_type_enforce<
 		ReturnType< $mol_app_supplies_list['supply'] >
 		,
 		ReturnType< $mol_app_supplies_card['supply'] >
 	>
-	type $mol_app_supplies_card__arg__SKPYEARD = $mol_type_enforce<
+	type $mol_app_supplies_card__arg__OPY2D33L = $mol_type_enforce<
 		ReturnType< $mol_app_supplies_list['supply_arg'] >
 		,
 		ReturnType< $mol_app_supplies_card['arg'] >

@@ -1,11 +1,11 @@
 declare namespace $ {
 
-	type $mol_view_tree2_to_js_test_ex_array_boolean_foo_bar__EGUKUXNI = $mol_type_enforce<
+	type $mol_view_tree2_to_js_test_ex_array_boolean_foo_bar__H0Z2I9CA = $mol_type_enforce<
 		false
 		,
 		boolean
 	>
-	type $mol_view_tree2_to_js_test_ex_array_boolean_foo_bar__H93CWW3R = $mol_type_enforce<
+	type $mol_view_tree2_to_js_test_ex_array_boolean_foo_bar__DIKLAO80 = $mol_type_enforce<
 		true
 		,
 		boolean

@@ -4655,28 +4655,15 @@ var $;
 var $;
 (function ($) {
     class $mol_error_mix extends AggregateError {
-        name = $$.$mol_func_name(this.constructor);
-        constructor(message, ...errors) {
-            super(errors, [message, ...errors.map(e => e.message.replace(/^/gm, '  '))].join('\n'));
-        }
-        get cause() {
-            return [].concat(...this.errors.map(e => e.cause).filter(Boolean));
-        }
-        toJSON() {
-            return this.errors.map(e => e.message);
-        }
-        pick(Class) {
-            if (this instanceof Class)
-                return this;
-            for (const e of this.errors) {
-                if (e instanceof Class)
-                    return e;
-            }
-            for (const e of this.cause) {
-                if (e && e instanceof Class)
-                    return e;
-            }
-            return null;
+        cause;
+        name = $$.$mol_func_name(this.constructor).replace(/^\$/, '') + '_Error';
+        constructor(message, cause, ...errors) {
+            super(errors, message, { cause });
+            this.cause = cause;
+            const stack_get = Object.getOwnPropertyDescriptor(this, 'stack')?.get;
+            Object.defineProperty(this, 'stack', {
+                get: () => stack_get.call(this) + '\n' + this.errors.map(e => e.stack.trim().replace(/at /gm, '   at ').replace(/^(?!    )(.*)/gm, '    at [$1] (#)')).join('\n')
+            });
         }
     }
     $.$mol_error_mix = $mol_error_mix;
@@ -5486,7 +5473,7 @@ var $;
                 }
             });
             if (errors.length)
-                $mol_fail_hidden(new $mol_error_mix(`Build fail ${path}`, ...errors));
+                $mol_fail_hidden(new $mol_error_mix(`Build fail ${path}`, null, ...errors));
             var targetJSMap = pack.resolve(`-/${bundle}.js.map`);
             targetJS.text(concater.content + '\n//# sourceMappingURL=' + targetJSMap.relate(targetJS.parent()) + '\n');
             targetJSMap.text(concater.toString());
@@ -5521,7 +5508,7 @@ var $;
             }
             this.logBundle(target, Date.now() - start);
             if (errors.length) {
-                const error = new $mol_error_mix(`Build fail ${path}`, ...errors);
+                const error = new $mol_error_mix(`Build fail ${path}`, null, ...errors);
                 target.text(`console.error(${JSON.stringify(error)})`);
                 $mol_fail_hidden(error);
             }
@@ -5567,7 +5554,7 @@ var $;
             targetMap.text(concater.toString());
             this.logBundle(target, Date.now() - start);
             if (errors.length)
-                $mol_fail_hidden(new $mol_error_mix(`Build fail ${path}`, ...errors));
+                $mol_fail_hidden(new $mol_error_mix(`Build fail ${path}`, null, ...errors));
             if (bundle === 'node') {
                 this.$.$mol_exec(this.root().path(), 'node', '--enable-source-maps', '--trace-uncaught', target.relate(this.root()));
             }

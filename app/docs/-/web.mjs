@@ -10851,28 +10851,15 @@ var $;
 var $;
 (function ($) {
     class $mol_error_mix extends AggregateError {
-        name = $$.$mol_func_name(this.constructor);
-        constructor(message, ...errors) {
-            super(errors, [message, ...errors.map(e => e.message.replace(/^/gm, '  '))].join('\n'));
-        }
-        get cause() {
-            return [].concat(...this.errors.map(e => e.cause).filter(Boolean));
-        }
-        toJSON() {
-            return this.errors.map(e => e.message);
-        }
-        pick(Class) {
-            if (this instanceof Class)
-                return this;
-            for (const e of this.errors) {
-                if (e instanceof Class)
-                    return e;
-            }
-            for (const e of this.cause) {
-                if (e && e instanceof Class)
-                    return e;
-            }
-            return null;
+        cause;
+        name = $$.$mol_func_name(this.constructor).replace(/^\$/, '') + '_Error';
+        constructor(message, cause, ...errors) {
+            super(errors, message, { cause });
+            this.cause = cause;
+            const stack_get = Object.getOwnPropertyDescriptor(this, 'stack')?.get;
+            Object.defineProperty(this, 'stack', {
+                get: () => stack_get.call(this) + '\n' + this.errors.map(e => e.stack.trim().replace(/at /gm, '   at ').replace(/^(?!    )(.*)/gm, '    at [$1] (#)')).join('\n')
+            });
         }
     }
     $.$mol_error_mix = $mol_error_mix;
@@ -10883,7 +10870,6 @@ var $;
 var $;
 (function ($) {
     class $mol_data_error extends $mol_error_mix {
-        name = '$mol_data_error';
     }
     $.$mol_data_error = $mol_data_error;
 })($ || ($ = {}));
@@ -25023,7 +25009,7 @@ var $;
                     }
                 }
             }
-            return $mol_fail(new $mol_data_error(`${val} is not any of variants`, ...errors));
+            return $mol_fail(new $mol_data_error(`${val} is not any of variants`, null, ...errors));
         }, sub);
     }
     $.$mol_data_variant = $mol_data_variant;

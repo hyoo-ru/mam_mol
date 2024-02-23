@@ -945,12 +945,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_error_mix extends AggregateError {
+    class $mol_error_mix<Cause extends {} = {}> extends AggregateError {
+        readonly cause?: Cause | null | undefined;
         name: string;
-        constructor(message: string, ...errors: Error[]);
-        get cause(): any[];
-        toJSON(): any[];
-        pick<Class extends typeof Error>(Class: Class): InstanceType<Class> | null;
+        constructor(message: string, cause?: Cause | null | undefined, ...errors: Error[]);
     }
 }
 
