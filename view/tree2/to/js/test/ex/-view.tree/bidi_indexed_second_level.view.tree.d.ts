@@ -4,7 +4,7 @@ declare namespace $ {
 		expanded( ): string
 	}
 	
-	type $mol_view_tree2_to_js_test_ex_bidi_indexed_second_level_bar__expanded__YU24PUGN = $mol_type_enforce<
+	type $mol_view_tree2_to_js_test_ex_bidi_indexed_second_level_bar__expanded__UXJDK2QL = $mol_type_enforce<
 		ReturnType< $mol_view_tree2_to_js_test_ex_bidi_indexed_second_level_foo['owner'] >
 		,
 		ReturnType< $mol_view_tree2_to_js_test_ex_bidi_indexed_second_level_bar['expanded'] >
