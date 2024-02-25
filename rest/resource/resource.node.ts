@@ -96,23 +96,20 @@ namespace $ {
 		
 		@ $mol_mem_key
 		static port( port: number ) {
+			
 			const server = $mol_rest_server.make({
 				port: ()=> port,
 			})
+			
+			server.root( this.make({}) )
+			server.start()
+			
 			return server
 		}
 		
 		static serve() {
-			
-			const name = this.$.$mol_func_name( this )
-			const port = Number( this.$.$mol_state_arg.value( name ) )
-			if( !port ) return
-			
-			const server = this.port( port )
-			server.root( new this )
-			server.start()
-			
-			return server
+			const port = Number( this.$.$mol_state_arg.value( 'port' ) )
+			return port ? this.port( port ) : null
 		}
 		
 	}

@@ -1,7 +1,6 @@
 /** @jsx $mol_jsx */
 namespace $ {
 	
-	@ $mol_rest_server.start
 	export class $mol_rest_demo extends $mol_rest_resource {
 		
 		GET( msg: $mol_rest_message ) {
@@ -15,8 +14,8 @@ namespace $ {
 		@ $mol_mem crud() { return $mol_rest_demo_crud.make({}) }
 		
 	}
+	$mol_rest_demo.serve()
 	
-	@ $mol_rest_server.start
 	export class $mol_rest_demo_crud extends $mol_rest_resource {
 		
 		GET( msg: $mol_rest_message ) {
