@@ -222,6 +222,7 @@ namespace $ {
 					this.$.$mol_log3_rise({
 						place: this,
 						message: message.method(),
+						port: $mol_key( message.port ),
 						url: message.uri(),
 						frame: frame.toString(),
 					})
