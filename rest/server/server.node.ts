@@ -256,20 +256,6 @@ namespace $ {
 			return resource ?? $mol_rest_resource.make({})
 		}
 		
-		static start< Resource extends typeof $mol_rest_resource >( Resource: Resource ) {
-			
-			const name = $$.$mol_func_name( Resource )
-			
-			const port = Number( $$.$mol_state_arg.value( name ) )
-			if( !port ) return null!
-			
-			const server = Resource.port( port )
-			server.root( Resource.make({}) )
-			server.start()
-			
-			return Resource
-		}
-		
 	}
 	
 }

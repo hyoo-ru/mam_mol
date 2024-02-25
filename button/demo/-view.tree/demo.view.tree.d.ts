@@ -1,61 +1,61 @@
 declare namespace $ {
 
-	type $mol_button_major__title__1CMIW1LR = $mol_type_enforce<
+	type $mol_button_major__title__IAZKQ79L = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_major['title'] >
 	>
-	type $mol_button_major__click__Z0585SKM = $mol_type_enforce<
+	type $mol_button_major__click__3XQYK11Q = $mol_type_enforce<
 		ReturnType< $mol_button_demo['fail'] >
 		,
 		ReturnType< $mol_button_major['click'] >
 	>
-	type $mol_button_major__title__XWCLTJV5 = $mol_type_enforce<
+	type $mol_button_major__title__X2ZLZPXW = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_major['title'] >
 	>
-	type $mol_button_major__enabled__VB4B3ZVF = $mol_type_enforce<
+	type $mol_button_major__enabled__6MGFBZLT = $mol_type_enforce<
 		boolean
 		,
 		ReturnType< $mol_button_major['enabled'] >
 	>
-	type $mol_button_minor__title__9CC3PUFZ = $mol_type_enforce<
+	type $mol_button_minor__title__IB8PHJWJ = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_minor['title'] >
 	>
-	type $mol_button_minor__click__8AKVRTK1 = $mol_type_enforce<
+	type $mol_button_minor__click__5MVN231T = $mol_type_enforce<
 		ReturnType< $mol_button_demo['fail'] >
 		,
 		ReturnType< $mol_button_minor['click'] >
 	>
-	type $mol_button_minor__title__KZ3ZR3MY = $mol_type_enforce<
+	type $mol_button_minor__title__XHZR35HZ = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_minor['title'] >
 	>
-	type $mol_button_minor__enabled__QRSW8C25 = $mol_type_enforce<
+	type $mol_button_minor__enabled__XY4UGZS7 = $mol_type_enforce<
 		boolean
 		,
 		ReturnType< $mol_button_minor['enabled'] >
 	>
-	type $mol_button_minor__click__F2T5OVM3 = $mol_type_enforce<
+	type $mol_button_minor__click__2MNLYZOR = $mol_type_enforce<
 		ReturnType< $mol_button_demo['fail'] >
 		,
 		ReturnType< $mol_button_minor['click'] >
 	>
-	type $mol_button_minor__sub__IV566SP3 = $mol_type_enforce<
+	type $mol_button_minor__sub__NJUGDGWE = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_minor['sub'] >
 	>
-	type $mol_button_minor__click__GS1PVH2W = $mol_type_enforce<
+	type $mol_button_minor__click__U45H7PG1 = $mol_type_enforce<
 		ReturnType< $mol_button_demo['fail'] >
 		,
 		ReturnType< $mol_button_minor['click'] >
 	>
-	type $mol_button_minor__sub__PJF3ZUJW = $mol_type_enforce<
+	type $mol_button_minor__sub__LFJJKGKF = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_minor['sub'] >
