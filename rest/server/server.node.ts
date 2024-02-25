@@ -199,7 +199,7 @@ namespace $ {
 				
 				if( msg_size < chunk.byteLength ) {
 					const tail = new Uint8Array( chunk.buffer, chunk.byteOffset + msg_size )
-					this._ws_icome_partial.push( tail )
+					sock.unshift( tail )
 				}
 				
 				let data: string | Uint8Array = new Uint8Array( chunk.buffer, chunk.byteOffset + frame.size(), frame.data().size )
@@ -216,7 +216,10 @@ namespace $ {
 				
 				const message = upgrade.derive( 'POST', data )
 				
-				if( op !== 'txt' && op !== 'bin' ) return
+				if( op !== 'txt' && op !== 'bin' ) {
+					setTimeout( ()=> sock.resume() )
+					return
+				}
 			
 				if( data.length !== 0 ) {
 					this.$.$mol_log3_rise({
