@@ -4,7 +4,7 @@ declare namespace $ {
 		localized( ): string
 	}
 	
-	type $mol_view_tree2_to_js_test_ex_left_second_level_index_bar__localized__WZSLV7XO = $mol_type_enforce<
+	type $mol_view_tree2_to_js_test_ex_left_second_level_index_bar__localized__TW8XVMEV = $mol_type_enforce<
 		ReturnType< $mol_view_tree2_to_js_test_ex_left_second_level_index_foo['some'] >
 		,
 		ReturnType< $mol_view_tree2_to_js_test_ex_left_second_level_index_bar['localized'] >

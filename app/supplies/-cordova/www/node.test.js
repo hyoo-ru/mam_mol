@@ -2016,8 +2016,9 @@ var $;
             shell: true,
             env: this.$mol_env(),
         });
-        if (res.status || res.error)
-            return $mol_fail(res.error || new Error(res.stderr.toString()));
+        if (res.status || res.error) {
+            return $mol_fail(res.error || new Error(res.stderr.toString(), { cause: res.stdout }));
+        }
         if (!res.stdout)
             res.stdout = Buffer.from([]);
         return res;
@@ -5546,9 +5547,13 @@ var $;
                 return exists;
             if (next === exists)
                 return exists;
-            if (next)
+            if (next) {
                 this.parent().exists(true);
-            this.ensure();
+                this.ensure();
+            }
+            else {
+                this.drop();
+            }
             this.reset();
             return next;
         }
@@ -5729,6 +5734,9 @@ var $;
                 this.$.$mol_fail_hidden(e);
             }
         }
+        drop() {
+            $node.fs.unlinkSync(this.path());
+        }
         buffer(next) {
             const path = this.path();
             if (next === undefined) {
@@ -5812,6 +5820,9 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_file_node.prototype, "ensure", null);
+    __decorate([
+        $mol_action
+    ], $mol_file_node.prototype, "drop", null);
     __decorate([
         $mol_mem
     ], $mol_file_node.prototype, "buffer", null);

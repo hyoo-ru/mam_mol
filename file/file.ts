@@ -49,6 +49,7 @@ namespace $ {
 		}
 
 		abstract ensure(): void
+		abstract drop(): void
 
 		watcher() {
 			console.warn('$mol_file_web.watcher() not implemented')
@@ -66,8 +67,12 @@ namespace $ {
 			if( next === undefined ) return exists
 			if( next === exists ) return exists
 
-			if( next ) this.parent().exists( true )
-			this.ensure()
+			if( next ) {
+				this.parent().exists( true )
+				this.ensure()
+			} else {
+				this.drop()
+			}
 			this.reset()
 			
 			return next
