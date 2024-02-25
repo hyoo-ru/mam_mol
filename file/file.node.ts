@@ -108,6 +108,11 @@ namespace $ {
 
 		}
 		
+		@ $mol_action
+		drop() {
+			$node.fs.unlinkSync( this.path() )
+		}
+		
 		@ $mol_mem
 		buffer( next? : Uint8Array ) {
 

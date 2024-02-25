@@ -64,6 +64,10 @@ namespace $ {
 			throw new Error('$mol_file_web.ensure() not implemented')
 		} 
 
+		drop() {
+			throw new Error('$mol_file_web.drop() not implemented')
+		} 
+
 		@ $mol_mem
 		sub() : $mol_file[] {
 			throw new Error('$mol_file_web.sub() not implemented')
