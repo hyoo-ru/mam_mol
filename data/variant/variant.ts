@@ -34,7 +34,7 @@ namespace $ {
 
 			}
 			
-			return $mol_fail( new $mol_data_error( `${val} is not any of variants` , null, ... errors ) )
+			return $mol_fail( new $mol_data_error( `${val} is not any of variants` , {}, ... errors ) )
 
 		} , sub )
 
