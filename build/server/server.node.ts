@@ -302,7 +302,7 @@ namespace $ {
 				
 				this.$.$mol_log3_fail({
 					place: this,
-					cause: error.cause,
+					stack: error.stack,
 					message: error.message ?? error,
 				})
 				
