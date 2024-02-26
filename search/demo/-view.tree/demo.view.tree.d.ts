@@ -1,6 +1,6 @@
 declare namespace $ {
 
-	type $mol_search__suggests__14T3IZ6D = $mol_type_enforce<
+	type $mol_search__suggests__DRK8633H = $mol_type_enforce<
 		ReturnType< $mol_search_demo['suggests'] >
 		,
 		ReturnType< $mol_search['suggests'] >

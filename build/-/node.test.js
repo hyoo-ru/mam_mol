@@ -5647,7 +5647,11 @@ var $;
                 for (let dep in deps) {
                     if (!/^\/node(?:_modules)?\//.test(dep))
                         continue;
-                    let mod = dep.replace(/^\/node(?:_modules)?\//, '').replace(/\/.*/g, '');
+                    let mod = dep.replace(/^\/node(?:_modules)?\//, '');
+                    if (mod.startsWith('@'))
+                        mod = mod.match(/@[^/]*\/[^/]*/)[0];
+                    else
+                        mod = mod.replace(/\/.*/g, '');
                     res.set(mod, src.relate());
                 }
             }
@@ -12500,7 +12504,7 @@ var $;
 ;
 	($.$mol_view_tree2_to_js_test_ex_right_hierarchy_foo) = class $mol_view_tree2_to_js_test_ex_right_hierarchy_foo extends ($.$mol_object) {
 		indexed_title(id, next){
-			return (this.Indexed("xxx").title(next));
+			return (this.Indexed(id).title(next));
 		}
 		indexed_id(id){
 			return 0;

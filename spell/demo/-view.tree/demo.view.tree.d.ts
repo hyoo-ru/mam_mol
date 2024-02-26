@@ -1,16 +1,16 @@
 declare namespace $ {
 
-	type $mol_textarea__value__2LPDQZ15 = $mol_type_enforce<
+	type $mol_textarea__value__QSVTXRG7 = $mol_type_enforce<
 		ReturnType< $mol_spell_demo['article'] >
 		,
 		ReturnType< $mol_textarea['value'] >
 	>
-	type $mol_text_code__text__AA99QNF7 = $mol_type_enforce<
+	type $mol_text_code__text__DK5BQP9X = $mol_type_enforce<
 		ReturnType< $mol_spell_demo['report'] >
 		,
 		ReturnType< $mol_text_code['text'] >
 	>
-	type $mol_list__rows__L6MRX6VZ = $mol_type_enforce<
+	type $mol_list__rows__7IF9VCQ3 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >

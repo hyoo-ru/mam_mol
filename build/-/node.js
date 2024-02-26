@@ -5656,7 +5656,11 @@ var $;
                 for (let dep in deps) {
                     if (!/^\/node(?:_modules)?\//.test(dep))
                         continue;
-                    let mod = dep.replace(/^\/node(?:_modules)?\//, '').replace(/\/.*/g, '');
+                    let mod = dep.replace(/^\/node(?:_modules)?\//, '');
+                    if (mod.startsWith('@'))
+                        mod = mod.match(/@[^/]*\/[^/]*/)[0];
+                    else
+                        mod = mod.replace(/\/.*/g, '');
                     res.set(mod, src.relate());
                 }
             }
