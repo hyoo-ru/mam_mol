@@ -3618,7 +3618,7 @@ var $;
             '=': bind => [bind.struct('()', [
                     bind.struct('this'),
                     call_method_name.call(this, bind.kids[0]),
-                    args_of.call(this, bind.kids[0]),
+                    params_of.call(this, bind.kids[0]),
                     call_method_name.call(this, bind.kids[0].kids[0]),
                     args_of.call(this, bind.kids[0].kids[0]),
                 ])],
@@ -4668,9 +4668,15 @@ var $;
     class $mol_error_mix extends AggregateError {
         cause;
         name = $$.$mol_func_name(this.constructor).replace(/^\$/, '') + '_Error';
-        constructor(message, cause, ...errors) {
+        constructor(message, cause = {}, ...errors) {
             super(errors, message, { cause });
             this.cause = cause;
+            const stack_get = Object.getOwnPropertyDescriptor(this, 'stack')?.get ?? (() => super.stack);
+            Object.defineProperty(this, 'stack', {
+                get: () => stack_get.call(this) + '\n' + [JSON.stringify(this.cause, null, '  ') ?? 'no cause', ...this.errors.map(e => e.stack)].map(e => e.trim()
+                    .replace(/at /gm, '   at ')
+                    .replace(/^(?!    +at )(.*)/gm, '    at | $1 (#)')).join('\n')
+            });
         }
     }
     $.$mol_error_mix = $mol_error_mix;
@@ -5254,12 +5260,15 @@ var $;
             if (parent === this.root()) {
                 throw new Error(`Root package "${mod.relate(this.root())}" not found`);
             }
-            if (!mod.name().startsWith('@')
-                && (parent.name() === 'node_modules'
-                    || (parent === this.root().resolve('node')) && (mod.name() !== 'node'))) {
+            const node = this.root().resolve('node');
+            const node_modules = this.root().resolve('node_modules');
+            if ([node, node_modules].includes(parent)
+                && mod.name() !== 'node'
+                && !mod.name().startsWith('@')) {
                 $node[mod.name()];
             }
-            if (parent.name().startsWith('@') && parent.parent().name() === 'node_modules') {
+            if ([node, node_modules].includes(parent.parent())
+                && parent.name().startsWith('@')) {
                 $node[`${parent.name()}/${mod.name()}`];
             }
             return false;
@@ -5480,7 +5489,7 @@ var $;
                 }
             });
             if (errors.length)
-                $mol_fail_hidden(new $mol_error_mix(`Build fail ${path}`, null, ...errors));
+                $mol_fail_hidden(new $mol_error_mix(`Build fail ${path}`, {}, ...errors));
             var targetJSMap = pack.resolve(`-/${bundle}.js.map`);
             targetJS.text(concater.content + '\n//# sourceMappingURL=' + targetJSMap.relate(targetJS.parent()) + '\n');
             targetJSMap.text(concater.toString());
@@ -5515,7 +5524,7 @@ var $;
             }
             this.logBundle(target, Date.now() - start);
             if (errors.length) {
-                const error = new $mol_error_mix(`Build fail ${path}`, null, ...errors);
+                const error = new $mol_error_mix(`Build fail ${path}`, {}, ...errors);
                 target.text(`console.error(${JSON.stringify(error)})`);
                 $mol_fail_hidden(error);
             }
@@ -5561,7 +5570,7 @@ var $;
             targetMap.text(concater.toString());
             this.logBundle(target, Date.now() - start);
             if (errors.length)
-                $mol_fail_hidden(new $mol_error_mix(`Build fail ${path}`, null, ...errors));
+                $mol_fail_hidden(new $mol_error_mix(`Build fail ${path}`, {}, ...errors));
             if (bundle === 'node') {
                 this.$.$mol_exec(this.root().path(), 'node', '--enable-source-maps', '--trace-uncaught', target.relate(this.root()));
             }
@@ -6534,7 +6543,7 @@ var $;
             catch (error) {
                 this.$.$mol_log3_fail({
                     place: this,
-                    cause: error.cause,
+                    stack: error.stack,
                     message: error.message ?? error,
                 });
                 return null;

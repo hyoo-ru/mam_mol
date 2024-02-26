@@ -2941,14 +2941,14 @@ var $;
             $mol_assert_equal(mix.name, 'Invalid_Error');
         },
         'simpe mix'() {
-            const mix = new $mol_error_mix('foo', null, new Error('bar'), new Error('lol'));
+            const mix = new $mol_error_mix('foo', {}, new Error('bar'), new Error('lol'));
             $mol_assert_equal(mix.message, 'foo');
             $mol_assert_equal(mix.errors.map(e => e.message), ['bar', 'lol']);
         },
         'provide additional info'() {
             class Invalid extends $mol_error_mix {
             }
-            const mix = new $mol_error_mix('Wrong password', null, new Invalid('Too short', { value: 'p@ssw0rd', hint: '> 8 letters' }), new Invalid('Too simple', { value: 'p@ssw0rd', hint: 'need capital letter' }));
+            const mix = new $mol_error_mix('Wrong password', {}, new Invalid('Too short', { value: 'p@ssw0rd', hint: '> 8 letters' }), new Invalid('Too simple', { value: 'p@ssw0rd', hint: 'need capital letter' }));
             const hints = [];
             if (mix instanceof $mol_error_mix) {
                 for (const er of mix.errors) {

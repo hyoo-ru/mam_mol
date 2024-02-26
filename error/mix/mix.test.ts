@@ -12,7 +12,7 @@ namespace $ {
 		
 		'simpe mix'() {
 			
-			const mix = new $mol_error_mix( 'foo', null,
+			const mix = new $mol_error_mix( 'foo', {},
 				new Error( 'bar' ),
 				new Error( 'lol' ),
 			)
@@ -29,7 +29,7 @@ namespace $ {
 				hint: string,
 			}> {}
 			
-			const mix: unknown = new $mol_error_mix( 'Wrong password', null,
+			const mix: unknown = new $mol_error_mix( 'Wrong password', {},
 				new Invalid( 'Too short', { value: 'p@ssw0rd', hint: '> 8 letters' } ),
 				new Invalid( 'Too simple', { value: 'p@ssw0rd', hint: 'need capital letter' } ),
 			)

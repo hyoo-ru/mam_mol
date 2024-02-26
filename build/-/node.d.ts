@@ -948,9 +948,9 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_error_mix<Cause extends {} = {}> extends AggregateError {
-        readonly cause?: Cause | null | undefined;
+        readonly cause: Cause;
         name: string;
-        constructor(message: string, cause?: Cause | null | undefined, ...errors: Error[]);
+        constructor(message: string, cause?: Cause, ...errors: Error[]);
     }
 }
 

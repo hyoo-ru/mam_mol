@@ -134,7 +134,7 @@ namespace $ {
 			'=': bind => [ bind.struct( '()', [
 					bind.struct( 'this' ),
 					call_method_name.call(this, bind.kids[0]),
-					args_of.call(this, bind.kids[0]),
+					params_of.call(this, bind.kids[0]),
 					call_method_name.call(this, bind.kids[0].kids[0]),
 					args_of.call(this, bind.kids[0].kids[0]),
 			] ) ],

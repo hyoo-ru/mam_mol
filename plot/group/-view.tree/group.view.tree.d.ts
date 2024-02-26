@@ -1,6 +1,6 @@
 declare namespace $ {
 
-	type $mol_plot_graph_sample__sub__7K9KFJ8U = $mol_type_enforce<
+	type $mol_plot_graph_sample__sub__17JSQ68H = $mol_type_enforce<
 		ReturnType< $mol_plot_group['graph_samples'] >
 		,
 		ReturnType< $mol_plot_graph_sample['sub'] >

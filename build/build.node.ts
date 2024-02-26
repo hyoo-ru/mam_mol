@@ -676,20 +676,23 @@ namespace $ {
 			if( parent === this.root() ) {
 				throw new Error( `Root package "${ mod.relate( this.root() ) }" not found` )
 			}
-
+			
+			const node = this.root().resolve( 'node' )
+			const node_modules = this.root().resolve( 'node_modules' )
+			
 			if(
-				!mod.name().startsWith('@')
-				&& (
-					parent.name() === 'node_modules'
-					|| ( parent === this.root().resolve( 'node' ) )&&( mod.name() !== 'node' )
-				)
+				[ node, node_modules ].includes( parent )
+				&& mod.name() !== 'node'
+				&& !mod.name().startsWith('@')
 			) {
-				$node[ mod.name() ] // force autoinstall through npm
+				$node [ mod.name() ] // force autoinstall through npm
 			}
-
-			// Handle npm pacakges with names @hello/world
-			if (parent.name().startsWith('@') && parent.parent().name() === 'node_modules') {
-				$node [ `${parent.name()}/${mod.name()}` ]
+			
+			if(
+				[ node, node_modules ].includes( parent.parent() )
+				&& parent.name().startsWith('@')
+			) {
+				$node [ `${parent.name()}/${mod.name()}` ] // force autoinstall through npm
 			}
 
 			return false
@@ -980,7 +983,7 @@ namespace $ {
 					}
 				}
 			)
-			if( errors.length ) $mol_fail_hidden( new $mol_error_mix( `Build fail ${path}`, null, ... errors ) )
+			if( errors.length ) $mol_fail_hidden( new $mol_error_mix( `Build fail ${path}`, {}, ... errors ) )
 
 			var targetJSMap = pack.resolve( `-/${bundle}.js.map` )
 	
@@ -1035,7 +1038,7 @@ namespace $ {
 			this.logBundle( target , Date.now() - start )
 			
 			if( errors.length ) {
-				const error = new $mol_error_mix( `Build fail ${path}`, null, ... errors )
+				const error = new $mol_error_mix( `Build fail ${path}`, {}, ... errors )
 				target.text( `console.error(${ JSON.stringify( error ) })` )
 				$mol_fail_hidden( error )
 			}
@@ -1091,7 +1094,7 @@ namespace $ {
 			
 			this.logBundle( target , Date.now() - start )
 			
-			if( errors.length ) $mol_fail_hidden( new $mol_error_mix( `Build fail ${path}`, null, ... errors ) )
+			if( errors.length ) $mol_fail_hidden( new $mol_error_mix( `Build fail ${path}`, {}, ... errors ) )
 
 			if( bundle === 'node' ) {
 				this.$.$mol_exec( this.root().path() , 'node' , '--enable-source-maps', '--trace-uncaught', target.relate( this.root() ) )
