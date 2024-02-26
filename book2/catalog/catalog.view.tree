@@ -14,6 +14,7 @@ $mol_book2_catalog $mol_book2
 			Title => Menu_title
 			title <= menu_title \
 			Tools => Menu_tools
+			Logo <= Menu_logo null
 			tools /
 				^ menu_tools
 				^ addon_tools

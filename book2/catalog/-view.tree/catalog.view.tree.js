@@ -8,6 +8,9 @@
 		Menu_tools(){
 			return (this.Menu().Tools());
 		}
+		Menu_logo(){
+			return null;
+		}
 		menu_head(){
 			return [(this.Menu_title()), (this.Menu_tools())];
 		}
@@ -58,6 +61,7 @@
 		Menu(){
 			const obj = new this.$.$mol_page();
 			(obj.title) = () => ((this.menu_title()));
+			(obj.Logo) = () => ((this.Menu_logo()));
 			(obj.tools) = () => ([...(this.menu_tools()), ...(this.addon_tools())]);
 			(obj.head) = () => ((this.menu_head()));
 			(obj.body) = () => ((this.menu_body()));
