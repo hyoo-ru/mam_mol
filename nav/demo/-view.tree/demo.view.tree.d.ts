@@ -1,31 +1,31 @@
 declare namespace $ {
 
-	type $mol_nav__keys_x__EDCO89XN = $mol_type_enforce<
+	type $mol_nav__keys_x__KXQ5R4RQ = $mol_type_enforce<
 		ReturnType< $mol_nav_demo['tab_list'] >
 		,
 		ReturnType< $mol_nav['keys_x'] >
 	>
-	type $mol_nav__current_x__HXDJBA57 = $mol_type_enforce<
+	type $mol_nav__current_x__KJEHVSJL = $mol_type_enforce<
 		ReturnType< $mol_nav_demo['tab_current'] >
 		,
 		ReturnType< $mol_nav['current_x'] >
 	>
-	type $mol_nav__keys_y__VTGYD36G = $mol_type_enforce<
+	type $mol_nav__keys_y__ENSCYVN1 = $mol_type_enforce<
 		ReturnType< $mol_nav_demo['row_list'] >
 		,
 		ReturnType< $mol_nav['keys_y'] >
 	>
-	type $mol_nav__current_y__WBDQUC6O = $mol_type_enforce<
+	type $mol_nav__current_y__7U617OFM = $mol_type_enforce<
 		ReturnType< $mol_nav_demo['row_current'] >
 		,
 		ReturnType< $mol_nav['current_y'] >
 	>
-	type $mol_switch__value__699UX8WW = $mol_type_enforce<
+	type $mol_switch__value__Q8AH9Y85 = $mol_type_enforce<
 		ReturnType< $mol_nav_demo['tab_current'] >
 		,
 		ReturnType< $mol_switch['value'] >
 	>
-	type $mol_switch__options__APJBNK42 = $mol_type_enforce<
+	type $mol_switch__options__C732ZU3F = $mol_type_enforce<
 		({ 
 			'first': string,
 			'second': string,
@@ -34,12 +34,12 @@ declare namespace $ {
 		,
 		ReturnType< $mol_switch['options'] >
 	>
-	type $mol_switch__value__TTC3GSQX = $mol_type_enforce<
+	type $mol_switch__value__4UA2WSZ6 = $mol_type_enforce<
 		ReturnType< $mol_nav_demo['row_current'] >
 		,
 		ReturnType< $mol_switch['value'] >
 	>
-	type $mol_switch__options__GZ083MF5 = $mol_type_enforce<
+	type $mol_switch__options__J3ETZZIW = $mol_type_enforce<
 		({ 
 			'first': string,
 			'second': string,
@@ -48,12 +48,12 @@ declare namespace $ {
 		,
 		ReturnType< $mol_switch['options'] >
 	>
-	type $mol_card__content__DVKDL9SK = $mol_type_enforce<
+	type $mol_card__content__C2IX59HY = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_card['content'] >
 	>
-	type $mol_card__status__MAEG72F0 = $mol_type_enforce<
+	type $mol_card__status__6EZIFT9P = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_card['status'] >

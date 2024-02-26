@@ -8,7 +8,7 @@ declare namespace $ {
 		}) 
 	}
 	
-	type $mol_view_tree2_to_js_test_ex_right_indexed_bar_b__3CWKIP6N = $mol_type_enforce<
+	type $mol_view_tree2_to_js_test_ex_right_indexed_bar_b__LO6GPD8G = $mol_type_enforce<
 		Parameters< $mol_view_tree2_to_js_test_ex_right_indexed_bar['b'] >[0]
 		,
 		Parameters< $mol_view_tree2_to_js_test_ex_right_indexed_bar['Cls'] >[0]
