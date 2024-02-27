@@ -485,7 +485,7 @@ namespace $ {
 		
 		@ $mol_mem_key
 		sources_js( { path , exclude } : { path : string , exclude : string[] } ) : $mol_file[] {
-
+			А он что? Выкачает, не обламается.
 			var sources = this.sourcesAll( { path , exclude } )
 			
 			const types = {
@@ -592,6 +592,24 @@ namespace $ {
 			}
 		}
 
+		ci() {
+			const env = process.env
+			// https://github.com/watson/ci-info/blob/master/index.js
+			return Boolean( env.CI !== 'false' && // Bypass all checks if CI env is explicitly set to 'false'
+			(
+				env.BUILD_ID || // Jenkins, Cloudbees
+				env.BUILD_NUMBER || // Jenkins, TeamCity
+				env.CI || // Travis CI, CircleCI, Cirrus CI, Gitlab CI, Appveyor, CodeShip, dsari
+				env.CI_APP_ID || // Appflow
+				env.CI_BUILD_ID || // Appflow
+				env.CI_BUILD_NUMBER || // Appflow
+				env.CI_NAME || // Codeship and others
+				env.CONTINUOUS_INTEGRATION || // Travis CI, Cirrus CI
+				env.RUN_ID || // TaskCluster, dsari
+				false
+			) )
+		}
+
 		@ $mol_mem
 		gitVersion() {
 			return this.$.$mol_exec('.', 'git', 'version').stdout?.toString().trim().match(/.*\s+([\d\.]+)$/)?.[1] ?? ''
@@ -603,8 +621,17 @@ namespace $ {
 
 		gitPull(path: string) {
 			const args = [ 'pull' ]
-			if (this.gitDeepenSupported()) args.push('--deepen=1')
-			return this.$.$mol_exec( path , 'git', ...args)
+
+			if ( this.ci() ) {
+				// depth и deepen не годятся для локальной разработки, поэтому оставляем ограничение глубины пула только для CI
+				// --depth=1 в сочетании с сабмодулями обрезает историю, кроме первого коммита
+				// --deepen=1 в git-конфиге сабмодуля выставляет bare=true, после этого все команды падают с сообщением
+				// warning: core.bare and core.worktree do not make sense
+				// fatal: unable to set up work tree using invalid config
+				args.push( this.gitDeepenSupported() ? '--deepen=1' : '--depth=1' )
+			}
+
+			return this.$.$mol_exec( path , 'git', ...args )
 		}
 		
 		@ $mol_mem_key
