@@ -591,7 +591,7 @@ namespace $ {
 			}
 		}
 
-		ci() {
+		interactive() {
 			return ! process.stdout.isTTY
 		}
 
@@ -607,7 +607,7 @@ namespace $ {
 		gitPull(path: string) {
 			const args = [ 'pull' ]
 
-			if ( this.ci() ) {
+			if ( this.interactive() ) {
 				// depth и deepen не годятся для локальной разработки, поэтому оставляем ограничение глубины пула только для CI
 				// --depth=1 в сочетании с сабмодулями обрезает историю, кроме первого коммита
 				// --deepen=1 в git-конфиге сабмодуля выставляет bare=true, после этого все команды падают с сообщением
