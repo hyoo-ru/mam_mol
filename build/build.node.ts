@@ -485,7 +485,6 @@ namespace $ {
 		
 		@ $mol_mem_key
 		sources_js( { path , exclude } : { path : string , exclude : string[] } ) : $mol_file[] {
-
 			var sources = this.sourcesAll( { path , exclude } )
 			
 			const types = {
@@ -592,6 +591,10 @@ namespace $ {
 			}
 		}
 
+		interactive() {
+			return process.stdout.isTTY
+		}
+
 		@ $mol_mem
 		gitVersion() {
 			return this.$.$mol_exec('.', 'git', 'version').stdout?.toString().trim().match(/.*\s+([\d\.]+)$/)?.[1] ?? ''
@@ -603,8 +606,17 @@ namespace $ {
 
 		gitPull(path: string) {
 			const args = [ 'pull' ]
-			if (this.gitDeepenSupported()) args.push('--deepen=1')
-			return this.$.$mol_exec( path , 'git', ...args)
+
+			if ( ! this.interactive() ) {
+				// depth и deepen не годятся для локальной разработки, поэтому оставляем ограничение глубины пула только для CI
+				// --depth=1 в сочетании с сабмодулями обрезает историю, кроме первого коммита
+				// --deepen=1 в git-конфиге сабмодуля выставляет bare=true, после этого все команды падают с сообщением
+				// warning: core.bare and core.worktree do not make sense
+				// fatal: unable to set up work tree using invalid config
+				args.push( this.gitDeepenSupported() ? '--deepen=1' : '--depth=1' )
+			}
+
+			return this.$.$mol_exec( path , 'git', ...args )
 		}
 		
 		@ $mol_mem_key

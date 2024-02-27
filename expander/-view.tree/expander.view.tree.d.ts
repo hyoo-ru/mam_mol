@@ -1,26 +1,26 @@
 declare namespace $ {
 
-	type $mol_check_expand__checked__BHT5PMK3 = $mol_type_enforce<
+	type $mol_check_expand__checked__9WIT0HSU = $mol_type_enforce<
 		ReturnType< $mol_expander['expanded'] >
 		,
 		ReturnType< $mol_check_expand['checked'] >
 	>
-	type $mol_check_expand__expandable__T55E51Z8 = $mol_type_enforce<
+	type $mol_check_expand__expandable__JL4JCXQ4 = $mol_type_enforce<
 		ReturnType< $mol_expander['expandable'] >
 		,
 		ReturnType< $mol_check_expand['expandable'] >
 	>
-	type $mol_check_expand__label__MDBVDHI1 = $mol_type_enforce<
+	type $mol_check_expand__label__IYMROKNG = $mol_type_enforce<
 		ReturnType< $mol_expander['label'] >
 		,
 		ReturnType< $mol_check_expand['label'] >
 	>
-	type $mol_view__sub__69P103B3 = $mol_type_enforce<
+	type $mol_view__sub__GORZVBKP = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_list__rows__F2HQQVGW = $mol_type_enforce<
+	type $mol_list__rows__VXP55TXH = $mol_type_enforce<
 		ReturnType< $mol_expander['content'] >
 		,
 		ReturnType< $mol_list['rows'] >

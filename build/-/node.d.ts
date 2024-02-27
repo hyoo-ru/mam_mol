@@ -1061,6 +1061,7 @@ declare namespace $ {
         }): {
             [index: string]: number;
         };
+        interactive(): boolean;
         gitVersion(): string;
         gitDeepenSupported(): boolean;
         gitPull(path: string): import("child_process").SpawnSyncReturns<Buffer>;

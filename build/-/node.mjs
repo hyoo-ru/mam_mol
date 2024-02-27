@@ -5197,6 +5197,9 @@ var $;
                     return {};
             }
         }
+        interactive() {
+            return process.stdout.isTTY;
+        }
         gitVersion() {
             return this.$.$mol_exec('.', 'git', 'version').stdout?.toString().trim().match(/.*\s+([\d\.]+)$/)?.[1] ?? '';
         }
@@ -5205,8 +5208,9 @@ var $;
         }
         gitPull(path) {
             const args = ['pull'];
-            if (this.gitDeepenSupported())
-                args.push('--deepen=1');
+            if (!this.interactive()) {
+                args.push(this.gitDeepenSupported() ? '--deepen=1' : '--depth=1');
+            }
             return this.$.$mol_exec(path, 'git', ...args);
         }
         modEnsure(path) {
