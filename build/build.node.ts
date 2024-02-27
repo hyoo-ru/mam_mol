@@ -485,7 +485,6 @@ namespace $ {
 		
 		@ $mol_mem_key
 		sources_js( { path , exclude } : { path : string , exclude : string[] } ) : $mol_file[] {
-			А он что? Выкачает, не обламается.
 			var sources = this.sourcesAll( { path , exclude } )
 			
 			const types = {
