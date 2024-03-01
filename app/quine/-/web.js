@@ -5095,6 +5095,9 @@ var $;
                 default: return 0;
             }
         }
+        open(...modes) {
+            return 0;
+        }
     }
     __decorate([
         $mol_mem

@@ -23,6 +23,20 @@ namespace $ {
 	function buffer_normalize(buf: Buffer): Uint8Array {
 		return new Uint8Array(buf.buffer, buf.byteOffset, buf.byteLength)
 	}
+	
+	export enum $mol_file_mode_open {
+		/** create if it doesn't already exist */
+		create = $node.fs.constants.O_CREAT,
+		/** truncate to zero size if it already exists */
+		exists_truncate = $node.fs.constants.O_TRUNC,
+		/** throw exception if it already exists */
+		exists_fail = $node.fs.constants.O_EXCL,
+		read_only = $node.fs.constants.O_RDONLY,
+		write_only = $node.fs.constants.O_WRONLY,
+		read_write = $node.fs.constants.O_RDWR,
+		/** data will be appended to the end */
+		append = $node.fs.constants.O_APPEND,
+	}
 
 	export class $mol_file_node extends $mol_file {
 		
@@ -205,7 +219,15 @@ namespace $ {
 				e.message += '\n' + path
 				return this.$.$mol_fail_hidden(e)
 			}
-		}		
+		}
+		
+		open( ... modes: readonly ( keyof typeof $mol_file_mode_open )[] ) {
+			return $node.fs.openSync(
+				this.path(),
+				modes.reduce( ( res, mode )=> res | $mol_file_mode_open[ mode ], 0 ),
+			)
+		}
+
 	}
 
 	$.$mol_file = $mol_file_node
