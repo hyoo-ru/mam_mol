@@ -1,7 +1,12 @@
 namespace $ {
 	export class $mol_buffer extends DataView {
 		
-		static from< This extends typeof $mol_buffer >( this: This, array: number | string | ArrayBufferView ) {
+		static from<
+			This extends typeof $mol_buffer
+		>(
+			this: This,
+			array: number | string | ArrayBufferView,
+		) {
 			if( typeof array === 'number' ) array = new Uint8Array( array )
 			if( typeof array === 'string' ) array = $mol_base64_ae_decode( array )
 			return new this( array.buffer, array.byteOffset, array.byteLength ) as InstanceType< This >

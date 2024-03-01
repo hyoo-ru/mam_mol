@@ -153,5 +153,9 @@ namespace $ {
 			}
 		}
 		
+		open( ... modes: readonly ( 'create' | 'exists_truncate' | 'exists_fail' | 'read_only' | 'write_only' | 'read_write' | 'append' )[] ) {
+			return 0
+		}
+		
 	}
 }
