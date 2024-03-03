@@ -131,7 +131,6 @@ namespace $.$$ {
 			const res = [] as any[]
 			let x = new Response
 			crud.DELETE( $mol_rest_message.make({
-				type: ()=> 'text/foo',
 				port: $mol_rest_port.make({
 					send_code: code => res.push( code ),
 					send_type: type => res.push( type ),
