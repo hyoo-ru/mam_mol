@@ -3,7 +3,7 @@
 Rich REST server. **Alpha-version**
 
 - **Composable.** One rest resource can be composed from others.
-- **Isomorphic**. Same API for HTTP, WebRTC, Webmsget(WIP).
+- **Isomorphic**. Same API for HTTP, WebSockets, WebRTC(WIP).
 
 ## Simple CRUD
 
