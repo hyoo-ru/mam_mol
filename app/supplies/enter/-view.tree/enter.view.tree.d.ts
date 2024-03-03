@@ -1,61 +1,61 @@
 declare namespace $ {
 
-	type $mol_string__value__CQWGBTMA = $mol_type_enforce<
+	type $mol_string__value__T27W1TT5 = $mol_type_enforce<
 		ReturnType< $mol_app_supplies_enter['login'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_form_field__name__AEZACSA4 = $mol_type_enforce<
+	type $mol_form_field__name__J8XSZRX8 = $mol_type_enforce<
 		ReturnType< $mol_app_supplies_enter['loginLabel'] >
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__control__UTUBNALA = $mol_type_enforce<
+	type $mol_form_field__control__AAXYFHAQ = $mol_type_enforce<
 		ReturnType< $mol_app_supplies_enter['loginControl'] >
 		,
 		ReturnType< $mol_form_field['control'] >
 	>
-	type $mol_string__value__3UG3HAF8 = $mol_type_enforce<
+	type $mol_string__value__GLZ8FC4E = $mol_type_enforce<
 		ReturnType< $mol_app_supplies_enter['password'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_string__type__XB3BZDGQ = $mol_type_enforce<
+	type $mol_string__type__IKFK0G90 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_string['type'] >
 	>
-	type $mol_form_field__name__J0UH5BIB = $mol_type_enforce<
+	type $mol_form_field__name__VH1CFFLW = $mol_type_enforce<
 		ReturnType< $mol_app_supplies_enter['passwordLabel'] >
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__control__GWYGCFJ1 = $mol_type_enforce<
+	type $mol_form_field__control__BZPRV260 = $mol_type_enforce<
 		ReturnType< $mol_app_supplies_enter['passControl'] >
 		,
 		ReturnType< $mol_form_field['control'] >
 	>
-	type $mol_button_major__sub__T3WSLLVN = $mol_type_enforce<
+	type $mol_button_major__sub__N3H1MHU9 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_major['sub'] >
 	>
-	type $mol_button_major__click__1OBHX2D9 = $mol_type_enforce<
+	type $mol_button_major__click__6UK75N4Y = $mol_type_enforce<
 		ReturnType< $mol_app_supplies_enter['event_submit'] >
 		,
 		ReturnType< $mol_button_major['click'] >
 	>
-	type $mol_button_major__disabled__2UUIWDDH = $mol_type_enforce<
+	type $mol_button_major__disabled__NXJI6T1R = $mol_type_enforce<
 		ReturnType< $mol_app_supplies_enter['submit_blocked'] >
 		,
 		ReturnType< $mol_button_major['disabled'] >
 	>
-	type $mol_form__form_fields__HFWBHS3K = $mol_type_enforce<
+	type $mol_form__form_fields__E5DGRJEG = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_form['form_fields'] >
 	>
-	type $mol_form__buttons__KCSVYA87 = $mol_type_enforce<
+	type $mol_form__buttons__9WSH8L4A = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_form['buttons'] >
