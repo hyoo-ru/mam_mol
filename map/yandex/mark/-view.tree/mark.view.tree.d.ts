@@ -1,21 +1,21 @@
 declare namespace $ {
 
-	type $mol_vector_range__0SYGQD94 = $mol_type_enforce<
+	type $mol_vector_range__TR0VCXPM = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range__KXT7BLLT = $mol_type_enforce<
+	type $mol_vector_range__EAQKRCOU = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_2d__YWCPXGY2 = $mol_type_enforce<
+	type $mol_vector_2d__CHIN9CP3 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<number> >
 	>
-	type $mol_vector_2d__M48LO976 = $mol_type_enforce<
+	type $mol_vector_2d__PSHB3EIW = $mol_type_enforce<
 		[ ReturnType< $mol_map_yandex_mark['box_lat'] >, ReturnType< $mol_map_yandex_mark['box_lon'] > ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<$mol_vector_range<number>> >

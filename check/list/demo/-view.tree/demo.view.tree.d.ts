@@ -1,11 +1,11 @@
 declare namespace $ {
 
-	type $mol_check_list__option_checked__UQ0I8OCF = $mol_type_enforce<
+	type $mol_check_list__option_checked__L494663M = $mol_type_enforce<
 		ReturnType< $mol_check_list_demo['right'] >
 		,
 		ReturnType< $mol_check_list['option_checked'] >
 	>
-	type $mol_check_list__options__W789BUPL = $mol_type_enforce<
+	type $mol_check_list__options__B50PUTX1 = $mol_type_enforce<
 		({ 
 			'read': string,
 			'write': string,
