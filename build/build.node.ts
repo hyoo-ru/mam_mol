@@ -995,7 +995,12 @@ namespace $ {
 					}
 				}
 			)
-			if( errors.length ) $mol_fail_hidden( new $mol_error_mix( `Build fail ${path}`, {}, ... errors ) )
+			
+			if( errors.length ) {
+				const messages = errors.map( e => '  ' + e.message ).join( '\n' )
+				const error = new $mol_error_mix( `Build fail ${ pack.relate() }\n${ messages }`, {}, ... errors )
+				$mol_fail_hidden( error )
+			}
 
 			var targetJSMap = pack.resolve( `-/${bundle}.js.map` )
 	
@@ -1050,8 +1055,9 @@ namespace $ {
 			this.logBundle( target , Date.now() - start )
 			
 			if( errors.length ) {
-				const error = new $mol_error_mix( `Build fail ${path}`, {}, ... errors )
-				target.text( `console.error(${ JSON.stringify( error ) })` )
+				const messages = errors.map( e => '  ' + e.message ).join( '\n' )
+				const error = new $mol_error_mix( `Audit fail ${ pack.relate() }\n${ messages }`, {}, ... errors )
+				target.text( `console.error(${ JSON.stringify( error.stack ) })` )
 				$mol_fail_hidden( error )
 			}
 
@@ -1106,7 +1112,11 @@ namespace $ {
 			
 			this.logBundle( target , Date.now() - start )
 			
-			if( errors.length ) $mol_fail_hidden( new $mol_error_mix( `Build fail ${path}`, {}, ... errors ) )
+			if( errors.length ) {
+				const messages = errors.map( e => '  ' + e.message ).join( '\n' )
+				const error = new $mol_error_mix( `Build fail ${ pack.relate() }\n${ messages }`, {}, ... errors )
+				$mol_fail_hidden( error )
+			}
 
 			if( bundle === 'node' ) {
 				this.$.$mol_exec( this.root().path() , 'node' , '--enable-source-maps', '--trace-uncaught', target.relate( this.root() ) )

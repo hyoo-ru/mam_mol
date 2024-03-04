@@ -4680,7 +4680,7 @@ var $;
             this.cause = cause;
             const stack_get = Object.getOwnPropertyDescriptor(this, 'stack')?.get ?? (() => super.stack);
             Object.defineProperty(this, 'stack', {
-                get: () => stack_get.call(this) + '\n' + [JSON.stringify(this.cause, null, '  ') ?? 'no cause', ...this.errors.map(e => e.stack)].map(e => e.trim()
+                get: () => (stack_get.call(this) ?? this.message) + '\n' + [JSON.stringify(this.cause, null, '  ') ?? 'no cause', ...this.errors.map(e => e.stack)].map(e => e.trim()
                     .replace(/at /gm, '   at ')
                     .replace(/^(?!    +at )(.*)/gm, '    at | $1 (#)')).join('\n')
             });
@@ -5499,8 +5499,11 @@ var $;
                     errors.push(error);
                 }
             });
-            if (errors.length)
-                $mol_fail_hidden(new $mol_error_mix(`Build fail ${path}`, {}, ...errors));
+            if (errors.length) {
+                const messages = errors.map(e => '  ' + e.message).join('\n');
+                const error = new $mol_error_mix(`Build fail ${pack.relate()}\n${messages}`, {}, ...errors);
+                $mol_fail_hidden(error);
+            }
             var targetJSMap = pack.resolve(`-/${bundle}.js.map`);
             targetJS.text(concater.content + '\n//# sourceMappingURL=' + targetJSMap.relate(targetJS.parent()) + '\n');
             targetJSMap.text(concater.toString());
@@ -5535,8 +5538,9 @@ var $;
             }
             this.logBundle(target, Date.now() - start);
             if (errors.length) {
-                const error = new $mol_error_mix(`Build fail ${path}`, {}, ...errors);
-                target.text(`console.error(${JSON.stringify(error)})`);
+                const messages = errors.map(e => '  ' + e.message).join('\n');
+                const error = new $mol_error_mix(`Audit fail ${pack.relate()}\n${messages}`, {}, ...errors);
+                target.text(`console.error(${JSON.stringify(error.stack)})`);
                 $mol_fail_hidden(error);
             }
             target.text(`console.info( '%c ▫ $mol_build ▫ Audit passed', 'color:forestgreen; font-weight:bolder' )`);
@@ -5580,8 +5584,11 @@ var $;
             target.text(concater.content + '\n//# sourceMappingURL=' + targetMap.relate(target.parent()) + '\n');
             targetMap.text(concater.toString());
             this.logBundle(target, Date.now() - start);
-            if (errors.length)
-                $mol_fail_hidden(new $mol_error_mix(`Build fail ${path}`, {}, ...errors));
+            if (errors.length) {
+                const messages = errors.map(e => '  ' + e.message).join('\n');
+                const error = new $mol_error_mix(`Build fail ${pack.relate()}\n${messages}`, {}, ...errors);
+                $mol_fail_hidden(error);
+            }
             if (bundle === 'node') {
                 this.$.$mol_exec(this.root().path(), 'node', '--enable-source-maps', '--trace-uncaught', target.relate(this.root()));
             }

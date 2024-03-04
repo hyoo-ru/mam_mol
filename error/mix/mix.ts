@@ -15,7 +15,7 @@ namespace $ {
 			const stack_get = Object.getOwnPropertyDescriptor( this, 'stack' )?.get ?? ( ()=> super.stack )
 			
 			Object.defineProperty( this, 'stack', {
-				get: ()=> stack_get.call( this ) + '\n' + [ JSON.stringify( this.cause, null, '  ' ) ?? 'no cause', ... this.errors.map( e => e.stack ) ].map(
+				get: ()=> ( stack_get.call( this ) ?? this.message ) + '\n' + [ JSON.stringify( this.cause, null, '  ' ) ?? 'no cause', ... this.errors.map( e => e.stack ) ].map(
 					e => e.trim()
 						.replace( /at /gm, '   at ' )
 						.replace( /^(?!    +at )(.*)/gm, '    at | $1 (#)' )
