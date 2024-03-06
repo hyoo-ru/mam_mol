@@ -1,66 +1,66 @@
 declare namespace $ {
 
-	type $mol_view__minimal_height__IB29NOV9 = $mol_type_enforce<
+	type $mol_view__minimal_height__YGT7RZPR = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_view['minimal_height'] >
 	>
-	type $mol_view__sub__QCNRKDI3 = $mol_type_enforce<
+	type $mol_view__sub__6PKV1603 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_view__sub__A8M0AQNN = $mol_type_enforce<
+	type $mol_view__sub__2M1RFHTG = $mol_type_enforce<
 		ReturnType< $mol_calendar['head'] >
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_hor__sub__BZ2681CY = $mol_type_enforce<
+	type $mol_hor__sub__BTTOBKXB = $mol_type_enforce<
 		ReturnType< $mol_calendar['weekdays'] >
 		,
 		ReturnType< $mol_hor['sub'] >
 	>
-	type $mol_calendar_day__holiday__1C3EIM5N = $mol_type_enforce<
+	type $mol_calendar_day__holiday__D2LNB8CT = $mol_type_enforce<
 		ReturnType< $mol_calendar['weekend'] >
 		,
 		ReturnType< $mol_calendar_day['holiday'] >
 	>
-	type $mol_calendar_day__sub__4MKGRWDO = $mol_type_enforce<
+	type $mol_calendar_day__sub__NRHZMSQT = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_calendar_day['sub'] >
 	>
-	type $mol_hor__sub__H622WBKL = $mol_type_enforce<
+	type $mol_hor__sub__V8500O2X = $mol_type_enforce<
 		ReturnType< $mol_calendar['week_days'] >
 		,
 		ReturnType< $mol_hor['sub'] >
 	>
-	type $mol_calendar_day__ghost__CYO25BF5 = $mol_type_enforce<
+	type $mol_calendar_day__ghost__TWRZOL92 = $mol_type_enforce<
 		ReturnType< $mol_calendar['day_ghost'] >
 		,
 		ReturnType< $mol_calendar_day['ghost'] >
 	>
-	type $mol_calendar_day__holiday__7X1MOKM9 = $mol_type_enforce<
+	type $mol_calendar_day__holiday__F9POT82G = $mol_type_enforce<
 		ReturnType< $mol_calendar['day_holiday'] >
 		,
 		ReturnType< $mol_calendar_day['holiday'] >
 	>
-	type $mol_calendar_day__selected__LS4GKP7K = $mol_type_enforce<
+	type $mol_calendar_day__selected__DM500P7Q = $mol_type_enforce<
 		ReturnType< $mol_calendar['day_selected'] >
 		,
 		ReturnType< $mol_calendar_day['selected'] >
 	>
-	type $mol_calendar_day__today__14SND5Y7 = $mol_type_enforce<
+	type $mol_calendar_day__today__OQSG0RDR = $mol_type_enforce<
 		ReturnType< $mol_calendar['day_today'] >
 		,
 		ReturnType< $mol_calendar_day['today'] >
 	>
-	type $mol_calendar_day__theme__PQ0ASTV8 = $mol_type_enforce<
+	type $mol_calendar_day__theme__OL4OANKT = $mol_type_enforce<
 		ReturnType< $mol_calendar['day_theme'] >
 		,
 		ReturnType< $mol_calendar_day['theme'] >
 	>
-	type $mol_calendar_day__sub__76KBGMJH = $mol_type_enforce<
+	type $mol_calendar_day__sub__36XM0Q6N = $mol_type_enforce<
 		ReturnType< $mol_calendar['day_content'] >
 		,
 		ReturnType< $mol_calendar_day['sub'] >
