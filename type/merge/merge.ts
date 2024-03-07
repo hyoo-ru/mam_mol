@@ -16,7 +16,12 @@ namespace $ {
 		
 		: Intersection extends object
 		? $mol_type_merge_object< Intersection > extends Intersection
-			? unknown extends $mol_type_equals< $mol_type_merge_object< Intersection >, Intersection >
+			? unknown extends $mol_type_equals<
+				{
+					[ Key in keyof Intersection ]: Intersection[ Key ]
+				},
+				Intersection
+			>
 				? Intersection
 				: {
 					[ Key in keyof Intersection ]: $mol_type_merge< Intersection[ Key ] >
