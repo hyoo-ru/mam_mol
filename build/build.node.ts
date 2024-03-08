@@ -621,13 +621,14 @@ namespace $ {
 
 		@ $mol_mem
 		gitSubmoduleDirs() {
-			const output = this.$.$mol_exec( this.root().path() , 'git', 'submodule', 'status', '--recursive' ).stdout.toString()
-			const dirs = output.trim().split('\n').map(str => str.match(/^\s*[^ ]+\s+([^ ]*).*/)?.[1]).filter($mol_guard_defined)
-			this.$.$mol_log3_rise({
-				place: `${this}.gitSubmoduleDirs()` ,
-				message: 'submodule dirs',
-				dirs,
-			})
+			const root = this.root().path()
+			const output = this.$.$mol_exec( root , 'git', 'submodule', 'status', '--recursive' ).stdout.toString()
+
+			const dirs = output.trim()
+				.split('\n')
+				.map( str => str.match( /^\s*[^ ]+\s+([^ ]*).*/ )?.[1]?.trim() )
+				.filter($mol_guard_defined)
+				.map(str => `${root}/${str}`)
 
 			return new Set(dirs)
 		}
@@ -660,7 +661,7 @@ namespace $ {
 						return false
 					}
 
-					const is_submodule = mod === this.root() ? false : this.gitSubmoduleDirs().has( mod.relate( this.root() ) )
+					const is_submodule = this.gitSubmoduleDirs().has( mod.path() )
 					if ( is_submodule ) {
 						this.gitPull( mod.path() )
 						return false
