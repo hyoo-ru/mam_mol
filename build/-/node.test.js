@@ -5220,6 +5220,16 @@ var $;
             }
             return this.$.$mol_exec(path, 'git', ...args);
         }
+        gitSubmoduleDirs() {
+            const root = this.root().path();
+            const output = this.$.$mol_exec(root, 'git', 'submodule', 'status', '--recursive').stdout.toString();
+            const dirs = output.trim()
+                .split('\n')
+                .map(str => str.match(/^\s*[^ ]+\s+([^ ]*).*/)?.[1]?.trim())
+                .filter($mol_guard_defined)
+                .map(str => `${root}/${str}`);
+            return new Set(dirs);
+        }
         modEnsure(path) {
             var mod = $mol_file.absolute(path);
             var parent = mod.parent();
@@ -5235,6 +5245,11 @@ var $;
                         return false;
                     const git_dir = mod.resolve('.git');
                     if (git_dir.exists() && git_dir.type() === 'dir') {
+                        this.gitPull(mod.path());
+                        return false;
+                    }
+                    const is_submodule = this.gitSubmoduleDirs().has(mod.path());
+                    if (is_submodule) {
                         this.gitPull(mod.path());
                         return false;
                     }
@@ -6024,6 +6039,9 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_build.prototype, "gitVersion", null);
+    __decorate([
+        $mol_mem
+    ], $mol_build.prototype, "gitSubmoduleDirs", null);
     __decorate([
         $mol_mem_key
     ], $mol_build.prototype, "modEnsure", null);
