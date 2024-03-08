@@ -618,7 +618,21 @@ namespace $ {
 
 			return this.$.$mol_exec( path , 'git', ...args )
 		}
-		
+
+		@ $mol_mem
+		gitSubmoduleDirs() {
+			const root = this.root().path()
+			const output = this.$.$mol_exec( root , 'git', 'submodule', 'status', '--recursive' ).stdout.toString()
+
+			const dirs = output.trim()
+				.split('\n')
+				.map( str => str.match( /^\s*[^ ]+\s+([^ ]*).*/ )?.[1]?.trim() )
+				.filter($mol_guard_defined)
+				.map(str => `${root}/${str}`)
+
+			return new Set(dirs)
+		}
+
 		@ $mol_mem_key
 		modEnsure( path : string ) {
 
@@ -644,6 +658,12 @@ namespace $ {
 						// mod.reset()
 						// for ( const sub of mod.sub() ) sub.reset()
 						
+						return false
+					}
+
+					const is_submodule = this.gitSubmoduleDirs().has( mod.path() )
+					if ( is_submodule ) {
+						this.gitPull( mod.path() )
 						return false
 					}
 					
