@@ -2,8 +2,9 @@ namespace $ {
 	export class $mol_state_local_node< Value > extends $mol_state_local< Value > {
 		
 		@ $mol_mem
-		static file() {
-			return $mol_file.absolute( $node.os.homedir() ).resolve( './hyoo_state_local' )
+		static dir() {
+			const base = process.env.XDG_DATA_HOME || ( $node.os.homedir() + '/.local/share' )
+			return $mol_file.absolute( base ).resolve( './hyoo_state_local' )
 		}
 		
 		@ $mol_mem_key
@@ -12,7 +13,7 @@ namespace $ {
 			next? : Value | null ,
 		) : Value | null {
 			
-			const file = this.file().resolve( encodeURIComponent( key ) + '.json' )
+			const file = this.dir().resolve( encodeURIComponent( key ) + '.json' )
 			
 			if( next === null ) {
 				file.exists( false )
