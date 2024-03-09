@@ -1,11 +1,11 @@
 declare namespace $ {
 
-	type $mol_image__uri__P4MQT1RP = $mol_type_enforce<
+	type $mol_image__uri__PQTL6R2V = $mol_type_enforce<
 		ReturnType< $mol_link_iconed['icon'] >
 		,
 		ReturnType< $mol_image['uri'] >
 	>
-	type $mol_image__title__9NF8LT3H = $mol_type_enforce<
+	type $mol_image__title__IAHFWARG = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_image['title'] >

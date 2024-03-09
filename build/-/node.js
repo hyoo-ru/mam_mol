@@ -2186,6 +2186,9 @@ var $;
         open(...modes) {
             return 0;
         }
+        toJSON() {
+            return this.path();
+        }
     }
     __decorate([
         $mol_mem
@@ -3457,6 +3460,34 @@ var $;
         $mol_mem_key
     ], $mol_state_local, "value", null);
     $.$mol_state_local = $mol_state_local;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_state_local_node extends $mol_state_local {
+        static file() {
+            return $mol_file.absolute($node.os.homedir()).resolve('./hyoo_state_local');
+        }
+        static value(key, next) {
+            const file = this.file().resolve(encodeURIComponent(key) + '.json');
+            if (next === null) {
+                file.exists(false);
+                return null;
+            }
+            const arg = next === undefined ? undefined : JSON.stringify(next);
+            return JSON.parse(file.text(arg) || 'null');
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_state_local_node, "file", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_state_local_node, "value", null);
+    $.$mol_state_local_node = $mol_state_local_node;
+    $.$mol_state_local = $mol_state_local_node;
 })($ || ($ = {}));
 
 ;

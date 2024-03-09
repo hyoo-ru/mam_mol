@@ -6,4 +6,5 @@ interface $node {
 	"util" : typeof import( "util" ) // mol/charset/encode/encode.ts
 	"fs" : typeof import( "fs" ) // mol/file/file.node.ts
 	"chokidar" : typeof import( "chokidar" ) // mol/file/file.node.ts
+	"os" : typeof import( "os" ) // mol/state/local/local.node.ts
 }
