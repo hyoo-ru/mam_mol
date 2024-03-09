@@ -824,7 +824,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_state_local_node<Value> extends $mol_state_local<Value> {
-        static file(): $mol_file;
+        static dir(): $mol_file;
         static value<Value>(key: string, next?: Value | null): Value | null;
     }
 }
