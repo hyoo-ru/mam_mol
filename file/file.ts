@@ -157,5 +157,9 @@ namespace $ {
 			return 0
 		}
 		
+		toJSON() {
+			return this.path()
+		}
+		
 	}
 }
