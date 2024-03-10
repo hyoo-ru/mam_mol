@@ -1,6 +1,6 @@
 declare namespace $ {
 
-	type $mol_view_tree2_to_js_test_ex_klass_tuple__7W9MWSKB = $mol_type_enforce<
+	type $mol_view_tree2_to_js_test_ex_klass_tuple__BX40Z65V = $mol_type_enforce<
 		[ readonly(string)[], ({ 
 			'type': string,
 		})  ]

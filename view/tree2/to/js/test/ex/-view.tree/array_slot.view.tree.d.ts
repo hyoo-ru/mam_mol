@@ -1,16 +1,16 @@
 declare namespace $ {
 
-	type $mol_view_tree2_to_js_test_ex_array_slot_foo_foot__BKD3UV39 = $mol_type_enforce<
+	type $mol_view_tree2_to_js_test_ex_array_slot_foo_foot__GODV9XNF = $mol_type_enforce<
 		true
 		,
 		string|number|boolean
 	>
-	type $mol_view_tree2_to_js_test_ex_array_slot_foo_foot__35KUPUK7 = $mol_type_enforce<
+	type $mol_view_tree2_to_js_test_ex_array_slot_foo_foot__02RM5L45 = $mol_type_enforce<
 		`foot1`
 		,
 		string|number|boolean
 	>
-	type $mol_view_tree2_to_js_test_ex_array_slot_foo_foot__8BRMVMFS = $mol_type_enforce<
+	type $mol_view_tree2_to_js_test_ex_array_slot_foo_foot__GQYPYYKF = $mol_type_enforce<
 		ReturnType< $mol_view_tree2_to_js_test_ex_array_slot_foo['insert'] >[number]
 		,
 		string|number|boolean
