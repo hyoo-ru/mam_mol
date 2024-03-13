@@ -52,7 +52,7 @@ namespace $.$$ {
 
 			// jumps when fully over limits
 			if( anchoring && (( bottom < limit_top )||( top > limit_bottom )) ) {
-
+				
 				min = 0
 				top = Math.ceil( rect?.top ?? 0 )
 				
@@ -74,31 +74,31 @@ namespace $.$$ {
 
 			let top2 = top
 			let bottom2 = bottom
-
+			
 			// force recalc min when overlapse top limit
-			if( anchoring && ( top <= limit_top ) && ( bottom2 < limit_bottom ) ) {
-				min2 = Math.max( 0, max - 1 )
+			if( anchoring && ( top <= limit_top ) && ( bottom < limit_bottom ) ) {
+				min2 = max
 				top2 = bottom
 			}
 
 			// force recalc max when overlapse bottom limit
-			if( ( bottom >= limit_bottom ) && ( top2 >= limit_top ) ) {
-				max2 = Math.min( min + 1, kids.length )
+			if( ( bottom >= limit_bottom ) && ( top > limit_top ) ) {
+				max2 = min
 				bottom2 = top
 			}
 
+			// extend min to cover top limit
+			while( anchoring && (( top2 > limit_top )&&( min2 > 0 )) ) {
+				-- min2
+				top2 -= kids[ min2 ].minimal_height()
+			}
+			
 			// extend max to cover bottom limit
 			while( bottom2 < limit_bottom && max2 < kids.length ) {
 				bottom2 += kids[ max2 ].minimal_height()
 				++ max2
 			}
-
-			// extend min to cover top limit
-			while( anchoring && (( top2 >= limit_top )&&( min2 > 0 )) ) {
-				-- min2
-				top2 -= kids[ min2 ].minimal_height()
-			}
-
+			
 			return [ min2 , max2 ]
 		}
 

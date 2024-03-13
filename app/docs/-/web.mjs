@@ -2941,6 +2941,7 @@ var $;
         const { per, rem, px } = $mol_style_unit;
         $mol_style_define($mol_scroll, {
             display: 'grid',
+            gridAutoRows: 'max-content',
             overflow: 'auto',
             flex: {
                 direction: 'column',
@@ -5324,8 +5325,7 @@ var $;
 (function ($) {
     let cache = null;
     function $mol_support_css_overflow_anchor() {
-        return cache ?? (cache = (!/Gecko\//.test(navigator.userAgent)
-            && this.$mol_dom_context.CSS?.supports('overflow-anchor:auto')) ?? false);
+        return cache ?? (cache = this.$mol_dom_context.CSS?.supports('overflow-anchor:auto') ?? false);
     }
     $.$mol_support_css_overflow_anchor = $mol_support_css_overflow_anchor;
 })($ || ($ = {}));
@@ -5387,21 +5387,21 @@ var $;
                 }
                 let top2 = top;
                 let bottom2 = bottom;
-                if (anchoring && (top <= limit_top) && (bottom2 < limit_bottom)) {
-                    min2 = Math.max(0, max - 1);
+                if (anchoring && (top <= limit_top) && (bottom < limit_bottom)) {
+                    min2 = max;
                     top2 = bottom;
                 }
-                if ((bottom >= limit_bottom) && (top2 >= limit_top)) {
-                    max2 = Math.min(min + 1, kids.length);
+                if ((bottom >= limit_bottom) && (top > limit_top)) {
+                    max2 = min;
                     bottom2 = top;
+                }
+                while (anchoring && ((top2 > limit_top) && (min2 > 0))) {
+                    --min2;
+                    top2 -= kids[min2].minimal_height();
                 }
                 while (bottom2 < limit_bottom && max2 < kids.length) {
                     bottom2 += kids[max2].minimal_height();
                     ++max2;
-                }
-                while (anchoring && ((top2 >= limit_top) && (min2 > 0))) {
-                    --min2;
-                    top2 -= kids[min2].minimal_height();
                 }
                 return [min2, max2];
             }
