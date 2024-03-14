@@ -5,7 +5,6 @@ namespace $.$$ {
 	$mol_style_define( $mol_scroll , {
 
 		display: 'grid',
-		gridAutoRows: 'max-content',
 		overflow: 'auto',
 		flex: {
 			direction: 'column',
