@@ -1,51 +1,51 @@
 declare namespace $ {
 
-	type $mol_chart_legend__graphs__2DK1I0AM = $mol_type_enforce<
+	type $mol_chart_legend__graphs__UJRHNKVD = $mol_type_enforce<
 		ReturnType< $mol_chart['graphs_colored'] >
 		,
 		ReturnType< $mol_chart_legend['graphs'] >
 	>
-	type $mol_chart_zoom__Y8D9HC9F = $mol_type_enforce<
+	type $mol_chart_zoom__UYDVKVMQ = $mol_type_enforce<
 		Parameters< $mol_chart['zoom'] >[0]
 		,
 		Parameters< ReturnType< $mol_chart['Plot'] >['scale_x'] >[0]
 	>
-	type $mol_plot_pane__zoom__MS47FU9G = $mol_type_enforce<
+	type $mol_plot_pane__zoom__FR2T7EIS = $mol_type_enforce<
 		ReturnType< $mol_chart['zoom'] >
 		,
 		ReturnType< $mol_plot_pane['zoom'] >
 	>
-	type $mol_plot_pane__gap_left__TB0WV28O = $mol_type_enforce<
+	type $mol_plot_pane__gap_left__RVXLREHZ = $mol_type_enforce<
 		ReturnType< $mol_chart['gap_left'] >
 		,
 		ReturnType< $mol_plot_pane['gap_left'] >
 	>
-	type $mol_plot_pane__gap_right__QQEQXZ00 = $mol_type_enforce<
+	type $mol_plot_pane__gap_right__PX5HTRGS = $mol_type_enforce<
 		ReturnType< $mol_chart['gap_right'] >
 		,
 		ReturnType< $mol_plot_pane['gap_right'] >
 	>
-	type $mol_plot_pane__gap_bottom__6W5H071C = $mol_type_enforce<
+	type $mol_plot_pane__gap_bottom__DPLSJHZY = $mol_type_enforce<
 		ReturnType< $mol_chart['gap_bottom'] >
 		,
 		ReturnType< $mol_plot_pane['gap_bottom'] >
 	>
-	type $mol_plot_pane__gap_top__35256K10 = $mol_type_enforce<
+	type $mol_plot_pane__gap_top__YWRS328W = $mol_type_enforce<
 		ReturnType< $mol_chart['gap_top'] >
 		,
 		ReturnType< $mol_plot_pane['gap_top'] >
 	>
-	type $mol_plot_pane__graphs__PAB3QMOA = $mol_type_enforce<
+	type $mol_plot_pane__graphs__S1K7KTRZ = $mol_type_enforce<
 		ReturnType< $mol_chart['graphs'] >
 		,
 		ReturnType< $mol_plot_pane['graphs'] >
 	>
-	type $mol_plot_pane__hue_base__3YTBATRW = $mol_type_enforce<
+	type $mol_plot_pane__hue_base__YYC8B1QX = $mol_type_enforce<
 		ReturnType< $mol_chart['hue_base'] >
 		,
 		ReturnType< $mol_plot_pane['hue_base'] >
 	>
-	type $mol_plot_pane__hue_shift__UXOFDWKO = $mol_type_enforce<
+	type $mol_plot_pane__hue_shift__GEJB9GHJ = $mol_type_enforce<
 		ReturnType< $mol_chart['hue_shift'] >
 		,
 		ReturnType< $mol_plot_pane['hue_shift'] >
