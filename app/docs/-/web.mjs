@@ -5389,11 +5389,11 @@ var $;
                 }
                 let top2 = top;
                 let bottom2 = bottom;
-                if (anchoring && (top <= limit_top) && (bottom < limit_bottom)) {
+                if (anchoring && (top < limit_top) && (bottom < limit_bottom)) {
                     min2 = max;
                     top2 = bottom;
                 }
-                if ((bottom >= limit_bottom) && (top > limit_top)) {
+                if ((bottom > limit_bottom) && (top > limit_top)) {
                     max2 = min;
                     bottom2 = top;
                 }

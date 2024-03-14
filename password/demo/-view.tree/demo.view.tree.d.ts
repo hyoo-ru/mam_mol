@@ -1,16 +1,16 @@
 declare namespace $ {
 
-	type $mol_password__value__8ONZB786 = $mol_type_enforce<
+	type $mol_password__value__U5E6EPOP = $mol_type_enforce<
 		ReturnType< $mol_password_demo['pass'] >
 		,
 		ReturnType< $mol_password['value'] >
 	>
-	type $mol_password__value__KB1AMBNI = $mol_type_enforce<
+	type $mol_password__value__8L5I2BKL = $mol_type_enforce<
 		ReturnType< $mol_password_demo['pass2'] >
 		,
 		ReturnType< $mol_password['value'] >
 	>
-	type $mol_password__hint__X5BXKXBF = $mol_type_enforce<
+	type $mol_password__hint__R6VXHZR2 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_password['hint'] >
