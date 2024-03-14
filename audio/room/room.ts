@@ -4,7 +4,7 @@ namespace $ {
 	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_audio_demo
 	 */
 	export class $mol_audio_room extends $mol_audio_node {
-		
+	
 		@ $mol_action
 		play() {
 			this.output()
