@@ -1,51 +1,51 @@
 declare namespace $ {
 
-	type $mol_search__hint__2Z9H6PA6 = $mol_type_enforce<
+	type $mol_search__hint__8X8YG7XU = $mol_type_enforce<
 		ReturnType< $mol_row_demo_form['name_hint'] >
 		,
 		ReturnType< $mol_search['hint'] >
 	>
-	type $mol_search__query__SWJWY6AQ = $mol_type_enforce<
+	type $mol_search__query__12QB0Z2E = $mol_type_enforce<
 		ReturnType< $mol_row_demo_form['name'] >
 		,
 		ReturnType< $mol_search['query'] >
 	>
-	type $mol_search__suggests__RNSX7RYM = $mol_type_enforce<
+	type $mol_search__suggests__QNL95XHW = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_search['suggests'] >
 	>
-	type $mol_number__hint__TSUP6UNA = $mol_type_enforce<
+	type $mol_number__hint__LFH0B5QT = $mol_type_enforce<
 		ReturnType< $mol_row_demo_form['count_hint'] >
 		,
 		ReturnType< $mol_number['hint'] >
 	>
-	type $mol_number__value__EY10Y6AK = $mol_type_enforce<
+	type $mol_number__value__4VMKXAXR = $mol_type_enforce<
 		ReturnType< $mol_row_demo_form['count'] >
 		,
 		ReturnType< $mol_number['value'] >
 	>
-	type $mol_portion__portion__TMVZS9LY = $mol_type_enforce<
+	type $mol_portion__portion__2L3DEQO3 = $mol_type_enforce<
 		ReturnType< $mol_row_demo_form['progress'] >
 		,
 		ReturnType< $mol_portion['portion'] >
 	>
-	type $mol_check_box__title__VZC7TETE = $mol_type_enforce<
+	type $mol_check_box__title__SAQA3NZA = $mol_type_enforce<
 		ReturnType< $mol_row_demo_form['publish_label'] >
 		,
 		ReturnType< $mol_check_box['title'] >
 	>
-	type $mol_check_box__checked__P5EV64JV = $mol_type_enforce<
+	type $mol_check_box__checked__384OPM1F = $mol_type_enforce<
 		ReturnType< $mol_row_demo_form['publish'] >
 		,
 		ReturnType< $mol_check_box['checked'] >
 	>
-	type $mol_button_minor__title__VXY0UHLI = $mol_type_enforce<
+	type $mol_button_minor__title__ELSTX6R4 = $mol_type_enforce<
 		ReturnType< $mol_row_demo_form['drop_title'] >
 		,
 		ReturnType< $mol_button_minor['title'] >
 	>
-	type $mol_row__sub__O6JVPFC5 = $mol_type_enforce<
+	type $mol_row__sub__N3ZVBI2Y = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_row['sub'] >

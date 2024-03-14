@@ -1,6 +1,6 @@
 declare namespace $ {
 
-	type $mol_speck__value__D7Q43VPO = $mol_type_enforce<
+	type $mol_speck__value__YLJR7G9I = $mol_type_enforce<
 		ReturnType< $mol_button['error'] >
 		,
 		ReturnType< $mol_speck['value'] >
