@@ -10,7 +10,7 @@ namespace $ {
 
 		@ $mol_mem
 		static active(next?: boolean) {
-			const context = $mol_wire_sync(this.context())
+			const context = this.context()
 
 			if (next && context.state !== 'running') context.resume()
 			if (next === false && context.state === 'running') context.suspend()
