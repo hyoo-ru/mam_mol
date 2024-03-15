@@ -1,7 +1,7 @@
 namespace $ {
-	export class $mol_audio_node extends $mol_object2 {
-		context() { return this.$.$mol_audio_context.context() }
-		
+	export class $mol_audio_node extends $mol_object {
+		context() { return this.$.$mol_audio_context.native() }
+
 		@ $mol_mem
 		node_raw() { return this.context().destination as AudioNode }
 
