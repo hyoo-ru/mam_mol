@@ -16713,14 +16713,25 @@ var $;
 var $;
 (function ($) {
     class $mol_audio_context extends $mol_object2 {
-        static context() {
+        static native() {
             const AudioContext = this.$.$mol_dom_context.AudioContext || this.$.$node['web-audio-api'].AudioContext;
-            return new AudioContext();
+            return $mol_wire_sync(new AudioContext());
+        }
+        static active(next) {
+            const context = this.native();
+            if (next && context.state !== 'running')
+                context.resume();
+            if (next === false && context.state === 'running')
+                context.suspend();
+            return context.state === 'running';
         }
     }
     __decorate([
         $mol_memo.method
-    ], $mol_audio_context, "context", null);
+    ], $mol_audio_context, "native", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_context, "active", null);
     $.$mol_audio_context = $mol_audio_context;
 })($ || ($ = {}));
 
@@ -16728,8 +16739,8 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_audio_node extends $mol_object2 {
-        context() { return this.$.$mol_audio_context.context(); }
+    class $mol_audio_node extends $mol_object {
+        context() { return this.$.$mol_audio_context.native(); }
         node_raw() { return this.context().destination; }
         node() {
             return this.node_raw();
@@ -16884,6 +16895,7 @@ var $;
 (function ($) {
     class $mol_audio_room extends $mol_audio_node {
         play() {
+            this.$.$mol_audio_context.active();
             this.output();
             this.$.$mol_wait_timeout(this.duration() * 1000);
         }

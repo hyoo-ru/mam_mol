@@ -13,7 +13,7 @@ namespace $ {
 
 		@ $mol_mem
 		audio_buffer() {
-			return $mol_wire_sync(this.context()).decodeAudioData(this.buffer())
+			return this.context().decodeAudioData(this.buffer())
 		}
 
 		@ $mol_mem
