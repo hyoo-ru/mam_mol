@@ -7,6 +7,7 @@ namespace $ {
 	
 		@ $mol_action
 		play() {
+			this.context_active()
 			this.output()
 			this.$.$mol_wait_timeout( this.duration() * 1000 )
 		}
