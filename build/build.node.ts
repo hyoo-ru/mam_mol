@@ -633,6 +633,12 @@ namespace $ {
 			return new Set(dirs)
 		}
 
+		@ $mol_mem
+		is_root_git() {
+			const git_dir = this.root().resolve('.git')
+			return git_dir.exists() && git_dir.type() === 'dir'
+		}
+
 		@ $mol_mem_key
 		modEnsure( path : string ) {
 
@@ -645,15 +651,23 @@ namespace $ {
 				? this.$.$mol_tree2_from_string( `pack ${ mod.name() } git \\https://github.com/hyoo-ru/mam.git
 ` )
 				: this.modMeta( parent.path() )
-			
-			if( mod.exists() ) {
+
+			let git_dir_exists
+			let is_submodule
+			let repository
+			let step
+
+			if (! this.is_root_git()) return false
+
+			if( mod.exists()) {
 
 				try {
 
 					if( mod.type() !== 'dir' ) return false
 					
 					const git_dir = mod.resolve( '.git' )
-					if( git_dir.exists() && git_dir.type() === 'dir') {
+					git_dir_exists = git_dir.exists() && git_dir.type() === 'dir'
+					if( git_dir_exists) {
 						this.gitPull( mod.path() )
 						// mod.reset()
 						// for ( const sub of mod.sub() ) sub.reset()
@@ -661,23 +675,28 @@ namespace $ {
 						return false
 					}
 
-					const is_submodule = this.gitSubmoduleDirs().has( mod.path() )
+					is_submodule = this.gitSubmoduleDirs().has( mod.path() )
+
 					if ( is_submodule ) {
 						this.gitPull( mod.path() )
 						return false
 					}
 					
 					for( let repo of mapping.select( 'pack' , mod.name() , 'git' ).kids ) {
-						
+						repository = repo.text()
+						step = 'exec'
 						this.$.$mol_exec( mod.path() , 'git' , 'init' )
 						
+						step = 'remote'
 						const res = this.$.$mol_exec( mod.path() , 'git' , 'remote' , 'show' , repo.text() )
 						const matched = res.stdout.toString().match( /HEAD branch: (.*?)\n/ )
 						const head_branch_name = res instanceof Error || matched === null || !matched[1]
 							? 'master'
 							: matched[1]
 						
+						step = 'add'
 						this.$.$mol_exec( mod.path() , 'git' , 'remote' , 'add' , '--track' , head_branch_name! , 'origin' , repo.text() )
+						step = 'pull'
 						this.gitPull( mod.path() )
 						mod.reset()
 						for ( const sub of mod.sub() ) {
@@ -692,6 +711,10 @@ namespace $ {
 						place: `${this}.modEnsure()` ,
 						path ,
 						message: error.message ,
+						is_submodule,
+						git_dir_exists,
+						repository,
+						step,
 					})
 
 				}
