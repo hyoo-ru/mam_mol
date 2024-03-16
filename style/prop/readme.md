@@ -6,8 +6,6 @@ Create record of CSS variables.
 ## Signature
 
 ```ts
-type Result = Record< string , $mol_style_func< 'var' > >
-
 $mol_style_prop< Keys extends string[] >(
 	prefix : string,
 	keys : Keys
