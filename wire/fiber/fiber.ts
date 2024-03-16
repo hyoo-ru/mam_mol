@@ -188,6 +188,7 @@ namespace $ {
 					result = Object.assign( result.then( put, put ), {
 						destructor: (result as any)['destructor'] ?? (()=> {})
 					} )
+					Error.captureStackTrace( result )
 					
 					handled.add( result )
 				}
@@ -207,6 +208,7 @@ namespace $ {
 					} ), {
 						destructor: (result as any)['destructor'] ?? (()=> {})
 					} )
+					Error.captureStackTrace( result )
 					
 					handled.add( result )
 				}
