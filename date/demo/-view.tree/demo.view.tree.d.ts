@@ -1,16 +1,16 @@
 declare namespace $ {
 
-	type $mol_date__value_moment__YX9AGNCB = $mol_type_enforce<
+	type $mol_date__value_moment__RZVEDP75 = $mol_type_enforce<
 		ReturnType< $mol_date_demo['date_current'] >
 		,
 		ReturnType< $mol_date['value_moment'] >
 	>
-	type $mol_view__sub__0O1SDY1K = $mol_type_enforce<
+	type $mol_view__sub__BNA2BNFZ = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_date__value_moment__PTOGLIKE = $mol_type_enforce<
+	type $mol_date__value_moment__FWCJZWCF = $mol_type_enforce<
 		ReturnType< $mol_date_demo['date_empty'] >
 		,
 		ReturnType< $mol_date['value_moment'] >

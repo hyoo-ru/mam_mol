@@ -15194,6 +15194,8 @@ var $;
             }
             simple() {
                 const value = this.value();
+                if (typeof value === 'number')
+                    return value.toLocaleString('en').replaceAll(',', '_');
                 return value ? String(value) : JSON.stringify(value) ?? 'undefined';
             }
             expand_title() {
