@@ -1,6 +1,6 @@
 namespace $ {
 	
-	export class $mol_rest_port_ws_web extends $mol_rest_port_ws {
+	export class $mol_rest_port_ws_std extends $mol_rest_port_ws {
 		
 		socket!: WebSocket
 		
@@ -24,7 +24,5 @@ namespace $ {
 		}
 		
 	}
-	
-	$.$mol_rest_port_ws = $mol_rest_port_ws_web
 	
 }
