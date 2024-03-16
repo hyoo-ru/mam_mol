@@ -1,23 +1,17 @@
 namespace $ {
 	
-	export type $mol_style_prop_result =
-		Record<
-			string ,
-			$mol_style_func< 'var' >
-		>
-	
 	/** Create record of CSS variables. */
-	export function $mol_style_prop(
-		prefix : string ,
-		postfixes : Array< string >
+	export function $mol_style_prop< Keys extends string[] >(
+		prefix: string ,
+		keys: Keys
 	) {
 		
-		const record = postfixes.reduce( ( record_obj , postfix )=> {
+		const record = keys.reduce( ( rec , key: Keys[number] )=> {
 			
-			record_obj[ postfix ] = $mol_style_func.vary( `--${ prefix }_${ postfix }` )
-			return record_obj
+			rec[ key ] = $mol_style_func.vary( `--${ prefix }_${ key }` )
+			return rec
 			
-		}, {} as $mol_style_prop_result )
+		}, {} as Record< Keys[number], $mol_style_func< 'var' > > )
 		
 		return record
 		

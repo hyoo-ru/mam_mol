@@ -19,7 +19,7 @@ namespace $ {
 			'focus',
 			'field',
 			'image',
-		]
+		] as const
 	)
 
 }
