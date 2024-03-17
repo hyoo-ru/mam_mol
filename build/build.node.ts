@@ -642,6 +642,8 @@ namespace $ {
 		@ $mol_mem_key
 		modEnsure( path : string ) {
 
+			if (! this.is_root_git()) return false
+
 			var mod = $mol_file.absolute( path )
 			var parent = mod.parent()
 			
@@ -652,13 +654,6 @@ namespace $ {
 ` )
 				: this.modMeta( parent.path() )
 
-			let git_dir_exists
-			let is_submodule
-			let repository
-			let step
-
-			if (! this.is_root_git()) return false
-
 			if( mod.exists()) {
 
 				try {
@@ -666,7 +661,7 @@ namespace $ {
 					if( mod.type() !== 'dir' ) return false
 					
 					const git_dir = mod.resolve( '.git' )
-					git_dir_exists = git_dir.exists() && git_dir.type() === 'dir'
+					const git_dir_exists = git_dir.exists() && git_dir.type() === 'dir'
 					if( git_dir_exists) {
 						this.gitPull( mod.path() )
 						// mod.reset()
@@ -675,7 +670,7 @@ namespace $ {
 						return false
 					}
 
-					is_submodule = this.gitSubmoduleDirs().has( mod.path() )
+					const is_submodule = this.gitSubmoduleDirs().has( mod.path() )
 
 					if ( is_submodule ) {
 						this.gitPull( mod.path() )
@@ -683,20 +678,15 @@ namespace $ {
 					}
 					
 					for( let repo of mapping.select( 'pack' , mod.name() , 'git' ).kids ) {
-						repository = repo.text()
-						step = 'exec'
 						this.$.$mol_exec( mod.path() , 'git' , 'init' )
 						
-						step = 'remote'
 						const res = this.$.$mol_exec( mod.path() , 'git' , 'remote' , 'show' , repo.text() )
 						const matched = res.stdout.toString().match( /HEAD branch: (.*?)\n/ )
 						const head_branch_name = res instanceof Error || matched === null || !matched[1]
 							? 'master'
 							: matched[1]
 						
-						step = 'add'
 						this.$.$mol_exec( mod.path() , 'git' , 'remote' , 'add' , '--track' , head_branch_name! , 'origin' , repo.text() )
-						step = 'pull'
 						this.gitPull( mod.path() )
 						mod.reset()
 						for ( const sub of mod.sub() ) {
@@ -711,10 +701,6 @@ namespace $ {
 						place: `${this}.modEnsure()` ,
 						path ,
 						message: error.message ,
-						is_submodule,
-						git_dir_exists,
-						repository,
-						step,
 					})
 
 				}
