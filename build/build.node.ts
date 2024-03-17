@@ -633,8 +633,16 @@ namespace $ {
 			return new Set(dirs)
 		}
 
+		@ $mol_mem
+		is_root_git() {
+			const git_dir = this.root().resolve('.git')
+			return git_dir.exists() && git_dir.type() === 'dir'
+		}
+
 		@ $mol_mem_key
 		modEnsure( path : string ) {
+
+			if (! this.is_root_git()) return false
 
 			var mod = $mol_file.absolute( path )
 			var parent = mod.parent()
@@ -645,15 +653,16 @@ namespace $ {
 				? this.$.$mol_tree2_from_string( `pack ${ mod.name() } git \\https://github.com/hyoo-ru/mam.git
 ` )
 				: this.modMeta( parent.path() )
-			
-			if( mod.exists() ) {
+
+			if( mod.exists()) {
 
 				try {
 
 					if( mod.type() !== 'dir' ) return false
 					
 					const git_dir = mod.resolve( '.git' )
-					if( git_dir.exists() && git_dir.type() === 'dir') {
+					const git_dir_exists = git_dir.exists() && git_dir.type() === 'dir'
+					if( git_dir_exists) {
 						this.gitPull( mod.path() )
 						// mod.reset()
 						// for ( const sub of mod.sub() ) sub.reset()
@@ -662,13 +671,13 @@ namespace $ {
 					}
 
 					const is_submodule = this.gitSubmoduleDirs().has( mod.path() )
+
 					if ( is_submodule ) {
 						this.gitPull( mod.path() )
 						return false
 					}
 					
 					for( let repo of mapping.select( 'pack' , mod.name() , 'git' ).kids ) {
-						
 						this.$.$mol_exec( mod.path() , 'git' , 'init' )
 						
 						const res = this.$.$mol_exec( mod.path() , 'git' , 'remote' , 'show' , repo.text() )

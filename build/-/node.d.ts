@@ -1087,6 +1087,7 @@ declare namespace $ {
         gitDeepenSupported(): boolean;
         gitPull(path: string): import("child_process").SpawnSyncReturns<Buffer>;
         gitSubmoduleDirs(): Set<string>;
+        is_root_git(): boolean;
         modEnsure(path: string): boolean;
         modMeta(path: string): $mol_tree2;
         graph({ path, exclude }: {

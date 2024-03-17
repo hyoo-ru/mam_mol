@@ -5264,7 +5264,13 @@ var $;
                 .map(str => `${root}/${str}`);
             return new Set(dirs);
         }
+        is_root_git() {
+            const git_dir = this.root().resolve('.git');
+            return git_dir.exists() && git_dir.type() === 'dir';
+        }
         modEnsure(path) {
+            if (!this.is_root_git())
+                return false;
             var mod = $mol_file.absolute(path);
             var parent = mod.parent();
             if (mod !== this.root())
@@ -5278,7 +5284,8 @@ var $;
                     if (mod.type() !== 'dir')
                         return false;
                     const git_dir = mod.resolve('.git');
-                    if (git_dir.exists() && git_dir.type() === 'dir') {
+                    const git_dir_exists = git_dir.exists() && git_dir.type() === 'dir';
+                    if (git_dir_exists) {
                         this.gitPull(mod.path());
                         return false;
                     }
@@ -6076,6 +6083,9 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_build.prototype, "gitSubmoduleDirs", null);
+    __decorate([
+        $mol_mem
+    ], $mol_build.prototype, "is_root_git", null);
     __decorate([
         $mol_mem_key
     ], $mol_build.prototype, "modEnsure", null);

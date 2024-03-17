@@ -1,26 +1,26 @@
 declare namespace $ {
 
-	type $mol_check__checked__EGJZ6JWC = $mol_type_enforce<
+	type $mol_check__checked__094RBF9R = $mol_type_enforce<
 		ReturnType< $mol_check_list['option_checked'] >
 		,
 		ReturnType< $mol_check['checked'] >
 	>
-	type $mol_check__label__G4WPPCJ7 = $mol_type_enforce<
+	type $mol_check__label__CPQ7L3SG = $mol_type_enforce<
 		ReturnType< $mol_check_list['option_label'] >
 		,
 		ReturnType< $mol_check['label'] >
 	>
-	type $mol_check__enabled__YDY5X5II = $mol_type_enforce<
+	type $mol_check__enabled__5BHM7CO4 = $mol_type_enforce<
 		ReturnType< $mol_check_list['option_enabled'] >
 		,
 		ReturnType< $mol_check['enabled'] >
 	>
-	type $mol_check__hint__IRP5W2PW = $mol_type_enforce<
+	type $mol_check__hint__55I20V7M = $mol_type_enforce<
 		ReturnType< $mol_check_list['option_hint'] >
 		,
 		ReturnType< $mol_check['hint'] >
 	>
-	type $mol_check__minimal_height__15VHWKOV = $mol_type_enforce<
+	type $mol_check__minimal_height__7X1SB5JH = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_check['minimal_height'] >

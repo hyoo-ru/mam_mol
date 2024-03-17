@@ -1,46 +1,46 @@
 declare namespace $ {
 
-	type $mol_check_expand__checked__ZPXU5N6L = $mol_type_enforce<
+	type $mol_check_expand__checked__RIYF6AGH = $mol_type_enforce<
 		ReturnType< $mol_check_expand_demo['base_expanded'] >
 		,
 		ReturnType< $mol_check_expand['checked'] >
 	>
-	type $mol_check_expand__title__ZHTIXHYD = $mol_type_enforce<
+	type $mol_check_expand__title__7TS5P61R = $mol_type_enforce<
 		ReturnType< $mol_check_expand_demo['c1Label'] >
 		,
 		ReturnType< $mol_check_expand['title'] >
 	>
-	type $mol_check_expand__title__U6L29B0K = $mol_type_enforce<
+	type $mol_check_expand__title__JDJIBCFR = $mol_type_enforce<
 		ReturnType< $mol_check_expand_demo['c2Label'] >
 		,
 		ReturnType< $mol_check_expand['title'] >
 	>
-	type $mol_check_expand__checked__QJVCJGSS = $mol_type_enforce<
+	type $mol_check_expand__checked__KBLJFNCJ = $mol_type_enforce<
 		ReturnType< $mol_check_expand_demo['expanded_expanded'] >
 		,
 		ReturnType< $mol_check_expand['checked'] >
 	>
-	type $mol_check_expand__title__7SCUVMU9 = $mol_type_enforce<
+	type $mol_check_expand__title__BIDDCSAL = $mol_type_enforce<
 		ReturnType< $mol_check_expand_demo['c5Label'] >
 		,
 		ReturnType< $mol_check_expand['title'] >
 	>
-	type $mol_check_expand__disabled__29CVUESQ = $mol_type_enforce<
+	type $mol_check_expand__disabled__IHUQJSDC = $mol_type_enforce<
 		boolean
 		,
 		ReturnType< $mol_check_expand['disabled'] >
 	>
-	type $mol_check_expand__checked__MGPHUTKI = $mol_type_enforce<
+	type $mol_check_expand__checked__B2CA6T9D = $mol_type_enforce<
 		ReturnType< $mol_check_expand_demo['base_expanded'] >
 		,
 		ReturnType< $mol_check_expand['checked'] >
 	>
-	type $mol_check_expand__checked__FV07NKZC = $mol_type_enforce<
+	type $mol_check_expand__checked__62GHWMNW = $mol_type_enforce<
 		ReturnType< $mol_check_expand_demo['expanded_expanded'] >
 		,
 		ReturnType< $mol_check_expand['checked'] >
 	>
-	type $mol_list__rows__S63ODEQ7 = $mol_type_enforce<
+	type $mol_list__rows__XRDE26IN = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >
