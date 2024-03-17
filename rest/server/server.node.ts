@@ -113,7 +113,7 @@ namespace $ {
 				return
 			}
 			
-			socket.on( 'end', $mol_wire_async( ()=> {
+			const onclose = $mol_wire_async( ()=> {
 				
 				$mol_wire_sync( this.$ ).$mol_log3_done({
 					place: this,
@@ -141,7 +141,10 @@ namespace $ {
 					return
 				}
 				
-			} ) )
+			} )
+			
+			socket.on( 'end', onclose )
+			socket.on( 'error', onclose )
 			
 			socket.on( 'data', ( chunk: Buffer )=> this.ws_income( chunk, upgrade, socket ) )
 			

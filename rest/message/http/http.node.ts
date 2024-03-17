@@ -10,7 +10,7 @@ namespace $ {
 		
 		@ $mol_mem
 		uri() {
-			const addr = this.input.socket?.localAddress ?? 'localhost'
+			const addr = this.input.socket?.localAddress ?? '::1'
 			const port = this.input.socket?.localPort ?? '80'
 			return new URL( this.input.url!, `http://[${addr}]:${port}/` )
 		}
