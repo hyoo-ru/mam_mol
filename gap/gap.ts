@@ -12,7 +12,7 @@ namespace $ {
 			'round',
 			'space',
 			'blur',
-		]
+		] as const
 	)
 
 }
