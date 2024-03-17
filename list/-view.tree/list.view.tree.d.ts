@@ -1,13 +1,13 @@
 declare namespace $ {
 
-	type $mol_view__style__JG0Z4VQ3 = $mol_type_enforce<
+	type $mol_view__style__X6O33XUE = $mol_type_enforce<
 		({ 
 			'paddingTop': ReturnType< $mol_list['gap_before'] >,
 		}) 
 		,
 		ReturnType< $mol_view['style'] >
 	>
-	type $mol_view__style__JZSEZVWU = $mol_type_enforce<
+	type $mol_view__style__M2DVE25Y = $mol_type_enforce<
 		({ 
 			'paddingTop': ReturnType< $mol_list['gap_after'] >,
 		}) 
