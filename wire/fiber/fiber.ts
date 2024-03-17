@@ -178,19 +178,14 @@ namespace $ {
 					default: result = (this.task as any).call( this.host!, ... this.args ); break
 				}
 				
-				if( $mol_promise_like( result ) ) {
+				if( $mol_promise_like( result ) && !handled.has( result ) ) {
 					
 					const put = ( res: Result )=> {
 						if( this.cache === result ) this.put( res )
 						return res
 					}
+					result = result.then( put, put )
 					
-					result = Object.assign( result.then( put, put ), {
-						destructor: (result as any)['destructor'] ?? (()=> {})
-					} )
-					// Error.captureStackTrace( result )
-					
-					handled.add( result )
 				}
 				
 			} catch( error: any ) {
@@ -203,15 +198,23 @@ namespace $ {
 				
 				if( $mol_promise_like( result ) && !handled.has( result ) ) {
 					
-					result = Object.assign( result.finally( ()=> {
+					result = result.finally( ()=> {
 						if( this.cache === result ) this.absorb()
-					} ), {
-						destructor: (result as any)['destructor'] ?? (()=> {})
 					} )
-					// Error.captureStackTrace( result )
 					
-					handled.add( result )
 				}
+				
+			}
+			
+			if( $mol_promise_like( result ) && !handled.has( result ) ) {
+					
+				result = Object.assign( result, {
+					destructor: (result as any)['destructor'] ?? (()=> {})
+				} )
+				handled.add( result )
+				
+				const error = new Error()
+				Object.defineProperty( result, 'stack', { get: ()=> error.stack } )
 				
 			}
 			
