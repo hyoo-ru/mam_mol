@@ -1,11 +1,11 @@
 declare namespace $ {
 
-	type $mol_switch__value__0B076RMK = $mol_type_enforce<
+	type $mol_switch__value__D8V3NCR7 = $mol_type_enforce<
 		ReturnType< $mol_deck['current'] >
 		,
 		ReturnType< $mol_switch['value'] >
 	>
-	type $mol_switch__options__TTW2CJE5 = $mol_type_enforce<
+	type $mol_switch__options__KYO0VFHL = $mol_type_enforce<
 		ReturnType< $mol_deck['switch_options'] >
 		,
 		ReturnType< $mol_switch['options'] >
