@@ -6,9 +6,10 @@ Create record of CSS variables.
 ## Signature
 
 ```ts
-type Result = Record< string , $mol_style_func< 'var' > >
-
-$mol_style_prop( prefix : string , postfixes : Array< string > ) : Result
+$mol_style_prop< Keys extends string[] >(
+	prefix : string,
+	keys : Keys
+) : Record< Keys[number], $mol_style_func< 'var' > >
 ```
 
 
@@ -29,7 +30,7 @@ $mol_style_prop( prefix : string , postfixes : Array< string > ) : Result
 ```ts
 export const my_app_theme = $mol_style_prop(
 	'my_app_theme',
-	[ 'main', 'main_light', 'border' ]
+	[ 'main', 'main_light', 'border' ] as const
 )
 ```
 
