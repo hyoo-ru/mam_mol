@@ -1,12 +1,38 @@
 namespace $ {
 	
+	/**
+	 * Generic Graph model.
+	 * - Supports any type of Nodes and Edges.
+	 * - All links are ordered, but this ay be ignored.
+	 * - Multigraph supported using arrays of Edges.
+	 * - Hypergraph supported by reusing same Edge on set of links.
+	 * - Ubergraph supported using Edges as Nodes to.
+	 **/
 	export class $mol_graph< Node , Edge > {
 		
+		/** All registered Nodes */
 		nodes = new Set< Node >()
 		
+		/** Edges for Nodes pairs (from-to-edge) */
 		edges_out = new Map< Node , Map< Node , Edge > >()
+		/** Edges for Nodes pairs (to-from-edge) */
 		edges_in = new Map< Node , Map< Node , Edge > >()
 		
+		// LINKING NODES
+		
+		/** Full connect two Nodes */
+		link( from : Node , to : Node , edge : Edge ) {
+			this.link_out( from , to , edge )
+			this.link_in( to , from , edge )
+		}
+		
+		/** Full disconnect two Nodes */
+		unlink( from : Node , to : Node ) {
+			this.edges_in.get( to )?.delete( from )
+			this.edges_out.get( from )?.delete( to )
+		}
+		
+		/** Forward connect two Nodes */
 		link_out( from : Node , to : Node , edge : Edge ) {
 			
 			let pair = this.edges_out.get( from )
@@ -22,6 +48,7 @@ namespace $ {
 
 		}
 		
+		/** Backward connect two Nodes */
 		link_in( to : Node , from : Node , edge : Edge ) {
 
 			let pair = this.edges_in.get( to )
@@ -37,24 +64,26 @@ namespace $ {
 
 		}
 		
+		// GETTING EDGES
+		
+		/** Return any Edge for two Nodes or null */
+		edge( from : Node , to : Node ) {
+			return this.edge_out( from, to ) ?? this.edge_in( to, from )
+		}
+		
+		/** Return output Edge for two Nodes or null */
 		edge_out( from : Node , to : Node ) {
 			return this.edges_out.get( from )?.get( to ) ?? null
 		}
 		
+		/** Return input Edge for two Nodes or null */
 		edge_in( to : Node , from : Node ) {
 			return this.edges_in.get( to )?.get( from ) ?? null
 		}
 		
-		link( from : Node , to : Node , edge : Edge ) {
-			this.link_out( from , to , edge )
-			this.link_in( to , from , edge )
-		}
+		// MUTATIONS
 		
-		unlink( from : Node , to : Node ) {
-			this.edges_in.get( to )?.delete( from )
-			this.edges_out.get( from )?.delete( to )
-		}
-		
+		/** Cut cycles at lowest priority of Edges */
 		acyclic( get_weight : ( edge : Edge )=> number ) {
 			
 			const checked = [] as Node[]
@@ -128,6 +157,9 @@ namespace $ {
 
 		}
 		
+		// NODES SELECTION
+		
+		/** Topoligical ordered set of all Nodes for acyclic graph */
 		get sorted() {
 
 			const sorted = new Set< Node >()
@@ -152,6 +184,7 @@ namespace $ {
 			return sorted
 		}
 		
+		/** All Nodes which don't have input Edges */
 		get roots() {
 			
 			const roots = [] as Node[]
@@ -165,7 +198,15 @@ namespace $ {
 			return roots
 		}
 		
-		depth( select: ( left: number, right: number )=> number ) {
+		// DEPTH STATS
+		
+		/**
+		 * Nodes depth statistics for acyclic graph
+		 * @example
+		 * graph.depth_stat( Math.min )
+		 * graph.depth_stat( Math.max )
+		 **/
+		nodes_depth( select: ( left: number, right: number )=> number ) {
 			
 			const stat = new Map< Node, number >()
 			const visit = ( node: Node, depth = 0 )=> {
@@ -181,18 +222,16 @@ namespace $ {
 			return stat
 		}
 		
-		get depth_min() {
-			return this.depth( Math.min )
-		}
-		
-		get depth_max() {
-			return this.depth( Math.max )
-		}
-		
-		group_depth( select: ( left: number, right: number )=> number ) {
+		/**
+		 * Depth's Nodes statistics for acyclic graph
+		 * @example
+		 * graph.depth_nodes( Math.min )
+		 * graph.depth_nodes( Math.max )
+		 **/
+		depth_nodes( select: ( left: number, right: number )=> number ) {
 			
 			const groups = [] as Node[][]
-			for( const [ node, depth ] of this.depth( select ).entries() ) {
+			for( const [ node, depth ] of this.nodes_depth( select ).entries() ) {
 				
 				if( groups[ depth ] ) groups[ depth ].push( node )
 				else groups[ depth ] = [ node ]
@@ -200,14 +239,6 @@ namespace $ {
 			}
 			
 			return groups
-		}
-		
-		get group_depth_min() {
-			return this.group_depth( Math.min )
-		}
-		
-		get proup_depth_max() {
-			return this.group_depth( Math.max )
 		}
 		
 	}
