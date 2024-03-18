@@ -895,21 +895,18 @@ declare namespace $ {
         nodes: Set<Node>;
         edges_out: Map<Node, Map<Node, Edge>>;
         edges_in: Map<Node, Map<Node, Edge>>;
-        link_out(from: Node, to: Node, edge: Edge): void;
-        link_in(to: Node, from: Node, edge: Edge): void;
-        edge_out(from: Node, to: Node): NonNullable<Edge> | null;
-        edge_in(to: Node, from: Node): NonNullable<Edge> | null;
         link(from: Node, to: Node, edge: Edge): void;
         unlink(from: Node, to: Node): void;
+        link_out(from: Node, to: Node, edge: Edge): void;
+        link_in(to: Node, from: Node, edge: Edge): void;
+        edge(from: Node, to: Node): NonNullable<Edge> | null;
+        edge_out(from: Node, to: Node): NonNullable<Edge> | null;
+        edge_in(to: Node, from: Node): NonNullable<Edge> | null;
         acyclic(get_weight: (edge: Edge) => number): void;
         get sorted(): Set<Node>;
         get roots(): Node[];
-        depth(select: (left: number, right: number) => number): Map<Node, number>;
-        get depth_min(): Map<Node, number>;
-        get depth_max(): Map<Node, number>;
-        group_depth(select: (left: number, right: number) => number): Node[][];
-        get group_depth_min(): Node[][];
-        get proup_depth_max(): Node[][];
+        nodes_depth(select: (left: number, right: number) => number): Map<Node, number>;
+        depth_nodes(select: (left: number, right: number) => number): Node[][];
     }
 }
 

@@ -4292,6 +4292,14 @@ var $;
         nodes = new Set();
         edges_out = new Map();
         edges_in = new Map();
+        link(from, to, edge) {
+            this.link_out(from, to, edge);
+            this.link_in(to, from, edge);
+        }
+        unlink(from, to) {
+            this.edges_in.get(to)?.delete(from);
+            this.edges_out.get(from)?.delete(to);
+        }
         link_out(from, to, edge) {
             let pair = this.edges_out.get(from);
             if (!pair) {
@@ -4312,19 +4320,14 @@ var $;
             pair.set(from, edge);
             this.nodes.add(to);
         }
+        edge(from, to) {
+            return this.edge_out(from, to) ?? this.edge_in(to, from);
+        }
         edge_out(from, to) {
             return this.edges_out.get(from)?.get(to) ?? null;
         }
         edge_in(to, from) {
             return this.edges_in.get(to)?.get(from) ?? null;
-        }
-        link(from, to, edge) {
-            this.link_out(from, to, edge);
-            this.link_in(to, from, edge);
-        }
-        unlink(from, to) {
-            this.edges_in.get(to)?.delete(from);
-            this.edges_out.get(from)?.delete(to);
         }
         acyclic(get_weight) {
             const checked = [];
@@ -4396,7 +4399,7 @@ var $;
             }
             return roots;
         }
-        depth(select) {
+        nodes_depth(select) {
             const stat = new Map();
             const visit = (node, depth = 0) => {
                 if (stat.has(node))
@@ -4410,27 +4413,15 @@ var $;
                 visit(root);
             return stat;
         }
-        get depth_min() {
-            return this.depth(Math.min);
-        }
-        get depth_max() {
-            return this.depth(Math.max);
-        }
-        group_depth(select) {
+        depth_nodes(select) {
             const groups = [];
-            for (const [node, depth] of this.depth(select).entries()) {
+            for (const [node, depth] of this.nodes_depth(select).entries()) {
                 if (groups[depth])
                     groups[depth].push(node);
                 else
                     groups[depth] = [node];
             }
             return groups;
-        }
-        get group_depth_min() {
-            return this.group_depth(Math.min);
-        }
-        get proup_depth_max() {
-            return this.group_depth(Math.max);
         }
     }
     $.$mol_graph = $mol_graph;

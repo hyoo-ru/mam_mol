@@ -1,161 +1,161 @@
 declare namespace $ {
 
-	type $mol_video_camera__torch__50YYAVAK = $mol_type_enforce<
+	type $mol_video_camera__torch__WCUJ5NE8 = $mol_type_enforce<
 		ReturnType< $mol_video_camera_demo['torch'] >
 		,
 		ReturnType< $mol_video_camera['torch'] >
 	>
-	type $mol_video_camera__brightness__7FC32A6C = $mol_type_enforce<
+	type $mol_video_camera__brightness__EVF7QVHH = $mol_type_enforce<
 		ReturnType< $mol_video_camera_demo['brightness'] >
 		,
 		ReturnType< $mol_video_camera['brightness'] >
 	>
-	type $mol_video_camera__sharpness__AVEBSD78 = $mol_type_enforce<
+	type $mol_video_camera__sharpness__TXRMH2S6 = $mol_type_enforce<
 		ReturnType< $mol_video_camera_demo['sharpness'] >
 		,
 		ReturnType< $mol_video_camera['sharpness'] >
 	>
-	type $mol_video_camera__contrast__EV64AACY = $mol_type_enforce<
+	type $mol_video_camera__contrast__FUGK0NBO = $mol_type_enforce<
 		ReturnType< $mol_video_camera_demo['contrast'] >
 		,
 		ReturnType< $mol_video_camera['contrast'] >
 	>
-	type $mol_video_camera__saturation__AYQTAI8A = $mol_type_enforce<
+	type $mol_video_camera__saturation__RQ2CRYKA = $mol_type_enforce<
 		ReturnType< $mol_video_camera_demo['saturation'] >
 		,
 		ReturnType< $mol_video_camera['saturation'] >
 	>
-	type $mol_video_camera__temperature__HQJL8YG1 = $mol_type_enforce<
+	type $mol_video_camera__temperature__HZ7BSKW9 = $mol_type_enforce<
 		ReturnType< $mol_video_camera_demo['temperature'] >
 		,
 		ReturnType< $mol_video_camera['temperature'] >
 	>
-	type $mol_row__sub__3WBKCCPY = $mol_type_enforce<
+	type $mol_row__sub__VP1O66A7 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_row['sub'] >
 	>
-	type $mol_check_icon__checked__K9MX4EVY = $mol_type_enforce<
+	type $mol_check_icon__checked__J4TH30C6 = $mol_type_enforce<
 		ReturnType< $mol_video_camera_demo['torch'] >
 		,
 		ReturnType< $mol_check_icon['checked'] >
 	>
-	type $mol_check_icon__Icon__6UIYP90E = $mol_type_enforce<
+	type $mol_check_icon__Icon__PDSRHZ5C = $mol_type_enforce<
 		ReturnType< $mol_video_camera_demo['Torch_icon'] >
 		,
 		ReturnType< $mol_check_icon['Icon'] >
 	>
-	type $mol_labeler__title__SCRKKBRZ = $mol_type_enforce<
+	type $mol_labeler__title__1FNFQQ8P = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content__UOQK95E6 = $mol_type_enforce<
+	type $mol_labeler__content__HJWRFKTH = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_number__value__NBYJC25D = $mol_type_enforce<
+	type $mol_number__value__ENK16263 = $mol_type_enforce<
 		ReturnType< $mol_video_camera_demo['brightness'] >
 		,
 		ReturnType< $mol_number['value'] >
 	>
-	type $mol_number__precision_change__93DDKT02 = $mol_type_enforce<
+	type $mol_number__precision_change__Z2L355C2 = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_number['precision_change'] >
 	>
-	type $mol_labeler__title__TA1TZ7DB = $mol_type_enforce<
+	type $mol_labeler__title__N5T28PGZ = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content__QHD0ZOI5 = $mol_type_enforce<
+	type $mol_labeler__content__6OWSU3CR = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_number__value__E6PGX7BK = $mol_type_enforce<
+	type $mol_number__value__DXVY05IP = $mol_type_enforce<
 		ReturnType< $mol_video_camera_demo['sharpness'] >
 		,
 		ReturnType< $mol_number['value'] >
 	>
-	type $mol_labeler__title__E4L0CWQ4 = $mol_type_enforce<
+	type $mol_labeler__title__QEUK2QIB = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content__ENV0GZPS = $mol_type_enforce<
+	type $mol_labeler__content__1XHDQC78 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_number__value__GAR9S2XF = $mol_type_enforce<
+	type $mol_number__value__E46SZXZF = $mol_type_enforce<
 		ReturnType< $mol_video_camera_demo['contrast'] >
 		,
 		ReturnType< $mol_number['value'] >
 	>
-	type $mol_number__precision_change__CDTHBHIC = $mol_type_enforce<
+	type $mol_number__precision_change__1WHDKXNA = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_number['precision_change'] >
 	>
-	type $mol_labeler__title__CRAHNBJG = $mol_type_enforce<
+	type $mol_labeler__title__2PLGR6IU = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content__16PQUGZC = $mol_type_enforce<
+	type $mol_labeler__content__YP397NIT = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_number__value__SLM9QQPL = $mol_type_enforce<
+	type $mol_number__value__738O278A = $mol_type_enforce<
 		ReturnType< $mol_video_camera_demo['saturation'] >
 		,
 		ReturnType< $mol_number['value'] >
 	>
-	type $mol_number__precision_change__OD8I60UK = $mol_type_enforce<
+	type $mol_number__precision_change__1QI9XBYB = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_number['precision_change'] >
 	>
-	type $mol_labeler__title__DTZWQNRH = $mol_type_enforce<
+	type $mol_labeler__title__TIWKGQZZ = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content__66E7NQXN = $mol_type_enforce<
+	type $mol_labeler__content__3BSINT8Y = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_number__value__0E3IGRO7 = $mol_type_enforce<
+	type $mol_number__value__P5U6KWUF = $mol_type_enforce<
 		ReturnType< $mol_video_camera_demo['temperature'] >
 		,
 		ReturnType< $mol_number['value'] >
 	>
-	type $mol_number__precision_change__Z6R4EX0L = $mol_type_enforce<
+	type $mol_number__precision_change__SFMKJUZA = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_number['precision_change'] >
 	>
-	type $mol_labeler__title__MDWQAULT = $mol_type_enforce<
+	type $mol_labeler__title__VC3HWG58 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content__1HNZJ6EX = $mol_type_enforce<
+	type $mol_labeler__content__7H0ZO6BQ = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_row__sub__S3VSD1NP = $mol_type_enforce<
+	type $mol_row__sub__1XGIICKT = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_row['sub'] >
 	>
-	type $mol_scroll__sub__3I35VFJH = $mol_type_enforce<
+	type $mol_scroll__sub__VBEHC33W = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_scroll['sub'] >
