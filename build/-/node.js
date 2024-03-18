@@ -5255,6 +5255,8 @@ var $;
             return this.$.$mol_exec(path, 'git', ...args);
         }
         gitSubmoduleDirs() {
+            if (!this.is_root_git())
+                return new Set();
             const root = this.root().path();
             const output = this.$.$mol_exec(root, 'git', 'submodule', 'status', '--recursive').stdout.toString();
             const dirs = output.trim()
@@ -5269,8 +5271,6 @@ var $;
             return git_dir.exists() && git_dir.type() === 'dir';
         }
         modEnsure(path) {
-            if (!this.is_root_git())
-                return false;
             var mod = $mol_file.absolute(path);
             var parent = mod.parent();
             if (mod !== this.root())
