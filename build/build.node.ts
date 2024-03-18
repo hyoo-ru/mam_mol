@@ -621,6 +621,8 @@ namespace $ {
 
 		@ $mol_mem
 		gitSubmoduleDirs() {
+			if (! this.is_root_git()) return new Set<string>()
+
 			const root = this.root().path()
 			const output = this.$.$mol_exec( root , 'git', 'submodule', 'status', '--recursive' ).stdout.toString()
 
@@ -641,8 +643,6 @@ namespace $ {
 
 		@ $mol_mem_key
 		modEnsure( path : string ) {
-
-			if (! this.is_root_git()) return false
 
 			var mod = $mol_file.absolute( path )
 			var parent = mod.parent()
