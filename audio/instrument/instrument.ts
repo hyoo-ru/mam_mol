@@ -7,25 +7,19 @@ namespace $ {
 		@ $mol_mem
 		override node() {
 			const node = super.node()
-			node.onended = $mol_wire_async((e: Event) => this.end(e))
+			node.onended = $mol_wire_async((e: Event) => {
+				this.active(false, false)
+				this.end(e)
+			})
 
 			return node
 		}
 
-		protected promise = $mol_promise<void>()
+		end(e: Event) {}
 
 		@ $mol_mem
-		wait() {
-			return this.promise
-		}
-
-		end(e: Event) {
-			this.active( false )
-		}
-
-		@ $mol_mem
-		active( next?: boolean ): boolean {
-			
+		active( next?: boolean, cached?: boolean ): boolean {
+			if (cached !== undefined) return cached
 			$mol_wire_solid()
 			
 			const node = next === false ? this.node_raw() : this.node()
@@ -37,8 +31,6 @@ namespace $ {
 				node.start()
 			} else if( prev === true ) {
 				node.stop()
-				this.promise.done()
-				this.promise = $mol_promise()
 			}
 			
 			return next ?? false
