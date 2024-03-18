@@ -1,6 +1,6 @@
 declare namespace $ {
 
-	type $mol_html_view__html__JUJ1Y13T = $mol_type_enforce<
+	type $mol_html_view__html__WAZE4IO0 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_html_view['html'] >
