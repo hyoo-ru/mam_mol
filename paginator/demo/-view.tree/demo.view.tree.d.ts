@@ -1,6 +1,6 @@
 declare namespace $ {
 
-	type $mol_paginator__value__RI0H02WH = $mol_type_enforce<
+	type $mol_paginator__value__OQ0IBZUF = $mol_type_enforce<
 		ReturnType< $mol_paginator_demo['page'] >
 		,
 		ReturnType< $mol_paginator['value'] >
