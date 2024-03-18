@@ -1,9 +1,9 @@
 namespace $ {
 	
 	/**
-	 * Generic Graph model.
+	 * # Generic Graph model
 	 * - Supports any type of Nodes and Edges.
-	 * - All links are ordered, but this ay be ignored.
+	 * - All links are ordered, but this may be ignored.
 	 * - Multigraph supported using arrays of Edges.
 	 * - Hypergraph supported by reusing same Edge on set of links.
 	 * - Ubergraph supported using Edges as Nodes to.
