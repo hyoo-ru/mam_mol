@@ -95,33 +95,33 @@ namespace $ {
 		
 		/** 16 bytes */
 		async serial() {
-			return await $mol_crypto_native.subtle.exportKey(
+			return new Uint8Array( await $mol_crypto_native.subtle.exportKey(
 				'raw',
 				this.native,
-			)
+			) )
 		}
 
 		/** 16n bytes */
-		async encrypt( open: BufferSource, salt: BufferSource ): Promise< ArrayBuffer > {
-			return await $mol_crypto_native.subtle.encrypt(
+		async encrypt( open: BufferSource, salt: BufferSource ) {
+			return new Uint8Array( await $mol_crypto_native.subtle.encrypt(
 				{
 					... algorithm,
 					iv: salt,
 				},
 				this.native,
 				open
-			)
+			) )
 		}
 		
-		async decrypt( closed: BufferSource, salt : BufferSource ): Promise< ArrayBuffer > {
-			return await $mol_crypto_native.subtle.decrypt(
+		async decrypt( closed: BufferSource, salt : BufferSource ) {
+			return new Uint8Array( await $mol_crypto_native.subtle.decrypt(
 				{
 					... algorithm,
 					iv: salt,
 				},
 				this.native,
 				closed
-			)
+			) )
 		}
 		
 	}
