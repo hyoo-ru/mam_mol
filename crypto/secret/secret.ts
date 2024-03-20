@@ -45,7 +45,7 @@ namespace $ {
 		static async pass( pass: string, salt: Uint8Array ) {
 			
 			return new this(
-				await $mol_crypto_native..subtle.deriveKey(
+				await $mol_crypto_native.subtle.deriveKey(
 					
 					{
 						name: "PBKDF2",
@@ -54,7 +54,7 @@ namespace $ {
 						hash: "SHA-256",
 					},
 					
-					await $mol_crypto_native..subtle.importKey(
+					await $mol_crypto_native.subtle.importKey(
 						"raw",
 						$mol_charset_encode( pass ),
 						"PBKDF2",
