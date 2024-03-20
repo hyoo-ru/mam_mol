@@ -28,12 +28,7 @@ namespace $ {
 			)
 		}
 		
-		static async from( serial: BufferSource | string ) {
-			
-			if( typeof serial === 'string' ) {
-				serial = $mol_charset_encode( serial )
-				serial = await $mol_crypto_native.subtle.digest( 'SHA-256', serial )
-			}
+		static async from( serial: BufferSource ) {
 			
 			return new this(
 				await $mol_crypto_native.subtle.importKey(
@@ -42,6 +37,35 @@ namespace $ {
 					algorithm,
 					true,
 					[ 'encrypt', 'decrypt' ],
+				) as CryptoKey & { type: 'secret' }
+			)
+			
+		}
+		
+		static async pass( pass: string, salt: Uint8Array ) {
+			
+			return new this(
+				await crypto.subtle.deriveKey(
+					
+					{
+						name: "PBKDF2",
+						salt,
+						iterations: 10_000,
+						hash: "SHA-256",
+					},
+					
+					await crypto.subtle.importKey(
+						"raw",
+						$mol_charset_encode( pass ),
+						"PBKDF2",
+						false,
+						[ "deriveKey" ],
+					),
+					
+					algorithm,
+					true,
+					[ 'encrypt', 'decrypt' ],
+					
 				) as CryptoKey & { type: 'secret' }
 			)
 			
