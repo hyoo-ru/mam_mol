@@ -28,12 +28,7 @@ namespace $ {
 			)
 		}
 		
-		static async from( serial: BufferSource | string ) {
-			
-			if( typeof serial === 'string' ) {
-				serial = $mol_charset_encode( serial )
-				serial = await $mol_crypto_native.subtle.digest( 'SHA-256', serial )
-			}
+		static async from( serial: BufferSource ) {
 			
 			return new this(
 				await $mol_crypto_native.subtle.importKey(
@@ -42,6 +37,35 @@ namespace $ {
 					algorithm,
 					true,
 					[ 'encrypt', 'decrypt' ],
+				) as CryptoKey & { type: 'secret' }
+			)
+			
+		}
+		
+		static async pass( pass: string, salt: Uint8Array ) {
+			
+			return new this(
+				await $mol_crypto_native.subtle.deriveKey(
+					
+					{
+						name: "PBKDF2",
+						salt,
+						iterations: 10_000,
+						hash: "SHA-256",
+					},
+					
+					await $mol_crypto_native.subtle.importKey(
+						"raw",
+						$mol_charset_encode( pass ),
+						"PBKDF2",
+						false,
+						[ "deriveKey" ],
+					),
+					
+					algorithm,
+					true,
+					[ 'encrypt', 'decrypt' ],
+					
 				) as CryptoKey & { type: 'secret' }
 			)
 			
@@ -95,33 +119,33 @@ namespace $ {
 		
 		/** 16 bytes */
 		async serial() {
-			return await $mol_crypto_native.subtle.exportKey(
+			return new Uint8Array( await $mol_crypto_native.subtle.exportKey(
 				'raw',
 				this.native,
-			)
+			) )
 		}
 
 		/** 16n bytes */
-		async encrypt( open: BufferSource, salt: BufferSource ): Promise< ArrayBuffer > {
-			return await $mol_crypto_native.subtle.encrypt(
+		async encrypt( open: BufferSource, salt: BufferSource ) {
+			return new Uint8Array( await $mol_crypto_native.subtle.encrypt(
 				{
 					... algorithm,
 					iv: salt,
 				},
 				this.native,
 				open
-			)
+			) )
 		}
 		
-		async decrypt( closed: BufferSource, salt : BufferSource ): Promise< ArrayBuffer > {
-			return await $mol_crypto_native.subtle.decrypt(
+		async decrypt( closed: BufferSource, salt : BufferSource ) {
+			return new Uint8Array( await $mol_crypto_native.subtle.decrypt(
 				{
 					... algorithm,
 					iv: salt,
 				},
 				this.native,
 				closed
-			)
+			) )
 		}
 		
 	}

@@ -14,6 +14,18 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_promise_like(val: any): val is Promise<any>;
+}
+
+declare namespace $ {
+    function $mol_fail(error: any): never;
+}
+
+declare namespace $ {
+    function $mol_fail_hidden(error: any): never;
+}
+
+declare namespace $ {
     type $mol_log3_event<Fields> = {
         [key in string]: unknown;
     } & {
@@ -56,14 +68,6 @@ declare namespace $ {
         destructor(): void;
     };
     function $mol_owning_catch<Owner, Having>(owner: Owner, having: Having): boolean;
-}
-
-declare namespace $ {
-    function $mol_fail(error: any): never;
-}
-
-declare namespace $ {
-    function $mol_fail_hidden(error: any): never;
 }
 
 declare namespace $ {
@@ -324,10 +328,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_promise_like(val: any): val is Promise<any>;
-}
-
-declare namespace $ {
     abstract class $mol_wire_fiber<Host, Args extends readonly unknown[], Result> extends $mol_wire_pub_sub {
         readonly task: (this: Host, ...args: Args) => Result;
         readonly host?: Host | undefined;
@@ -479,6 +479,7 @@ interface $node {
     [key: string]: any;
 }
 declare var $node: $node;
+declare const cache: Map<string, any>;
 
 declare namespace $ {
     function $mol_env(): Record<string, string | undefined>;

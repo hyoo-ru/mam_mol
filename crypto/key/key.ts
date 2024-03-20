@@ -115,11 +115,11 @@ namespace $ {
 		}
 		
 		async sign( data: BufferSource ) {
-			return await $mol_crypto_native.subtle.sign(
+			return new Uint8Array( await $mol_crypto_native.subtle.sign(
 				algorithm,
 				await this.native(),
 				data
-			)
+			) )
 		}
 		
 	}

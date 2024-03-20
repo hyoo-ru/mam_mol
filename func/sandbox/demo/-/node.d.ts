@@ -41,6 +41,7 @@ interface $node {
     [key: string]: any;
 }
 declare var $node: $node;
+declare const cache: Map<string, any>;
 
 declare namespace $ {
     type $mol_log3_event<Fields> = {

@@ -837,7 +837,7 @@ var $;
                     destructor: result['destructor'] ?? (() => { })
                 });
                 handled.add(result);
-                const error = new Error();
+                const error = new Error(`Promise in ${this}`);
                 Object.defineProperty(result, 'stack', { get: () => error.stack });
             }
             if (!$mol_promise_like(result)) {
@@ -1997,6 +1997,12 @@ var $node = new Proxy({ require }, {
             return target.require(name);
         }
         catch (error) {
+            if (error.code === 'ERR_REQUIRE_ESM') {
+                const module = cache.get(name);
+                if (module)
+                    return module;
+                throw import(name).then(module => cache.set(name, module));
+            }
             $.$mol_fail_log(error);
             return null;
         }
@@ -2006,6 +2012,7 @@ var $node = new Proxy({ require }, {
         return true;
     },
 });
+const cache = new Map();
 require = (req => Object.assign(function require(name) {
     return $node[name];
 }, req))(require);
@@ -5612,7 +5619,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/button/button.view.css", "[mol_button] {\n\tborder: none;\n\tfont: inherit;\n\tdisplay: inline-flex;\n\tflex-shrink: 0;\n\ttext-decoration: inherit;\n\tcursor: inherit;\n\tposition: relative;\n\tbox-sizing: border-box;\n\tword-break: normal;\n\tcursor: default;\n\tuser-select: none;\n\tborder-radius: var(--mol_gap_round);\n}\n\n[mol_button]:where(:not(:disabled)):hover {\n\tz-index: var(--mol_layer_hover);\n}\n\n[mol_button]:focus-visible {\n\toutline: none;\n\tz-index: var(--mol_layer_focus);\n}\n");
+    $mol_style_attach("mol/button/button.view.css", "[mol_button] {\n\tborder: none;\n\tfont: inherit;\n\tdisplay: inline-flex;\n\tflex-shrink: 0;\n\ttext-decoration: inherit;\n\tcursor: inherit;\n\tposition: relative;\n\tbox-sizing: border-box;\n\tword-break: normal;\n\tcursor: default;\n\tuser-select: none;\n\tborder-radius: var(--mol_gap_round);\n\tbackground: transparent;\n\tcolor: inherit;\n}\n\n[mol_button]:where(:not(:disabled)):hover {\n\tz-index: var(--mol_layer_hover);\n}\n\n[mol_button]:focus-visible {\n\toutline: none;\n\tz-index: var(--mol_layer_focus);\n}\n");
 })($ || ($ = {}));
 
 ;
@@ -15584,6 +15591,11 @@ var $;
 			(obj.sub) = () => ([(this.Results_close_icon())]);
 			return obj;
 		}
+		UI(){
+			const obj = new this.$.$mol_list();
+			(obj.sub_visible) = () => (null);
+			return obj;
+		}
 		log(id){
 			return [];
 		}
@@ -15605,7 +15617,7 @@ var $;
 			const obj = new this.$.$mol_page();
 			(obj.title) = () => ((this.result_label()));
 			(obj.tools) = () => ([(this.Results_close())]);
-			(obj.body) = () => ([(this.Result())]);
+			(obj.body) = () => ([(this.UI()), (this.Result())]);
 			return obj;
 		}
 		Placeholder(){
@@ -15651,6 +15663,7 @@ var $;
 	($mol_mem(($.$hyoo_js_eval.prototype), "Code_page"));
 	($mol_mem(($.$hyoo_js_eval.prototype), "Results_close_icon"));
 	($mol_mem(($.$hyoo_js_eval.prototype), "Results_close"));
+	($mol_mem(($.$hyoo_js_eval.prototype), "UI"));
 	($mol_mem_key(($.$hyoo_js_eval.prototype), "Log"));
 	($mol_mem(($.$hyoo_js_eval.prototype), "Result"));
 	($mol_mem(($.$hyoo_js_eval.prototype), "Result_page"));
@@ -16126,7 +16139,7 @@ var $;
 ;
 "use strict";
 var $;
-(function ($) {
+(function ($_1) {
     var $$;
     (function ($$) {
         class $hyoo_js_eval extends $.$hyoo_js_eval {
@@ -16188,6 +16201,8 @@ var $;
                     return [];
                 this.code();
                 this.result([]);
+                clearTimeout(this._defer_spy);
+                this.spy_queue.length = 0;
                 const console = new Proxy(this.$.console, {
                     get: (target, field) => {
                         if (typeof target[field] !== 'function')
@@ -16237,7 +16252,10 @@ var $;
                 return this.run() ? super.Error_mark() : null;
             }
             spy_queue = [];
+            _defer_spy = 0;
             spy_run() {
+                if (!this.run())
+                    return;
                 this.result([
                     ...this.result(),
                     ...this.spy_queue.splice(0).map(([name, task]) => {
@@ -16245,6 +16263,18 @@ var $;
                             return [name].concat(task());
                         }
                         catch (error) {
+                            if (error instanceof ReferenceError) {
+                                this.spy_queue.push([name, task]);
+                                if (!this._defer_spy) {
+                                    this._defer_spy = setTimeout(() => {
+                                        this._defer_spy = 0;
+                                        this.spy_run();
+                                    }, 100);
+                                }
+                            }
+                            else {
+                                return [name, error];
+                            }
                         }
                     }).filter(Boolean),
                 ]);
@@ -16258,12 +16288,25 @@ var $;
             result(next = []) {
                 return next;
             }
+            rejection_listener() {
+                return new $mol_dom_listener(window, 'unhandledrejection', (event) => {
+                    this.spy('Unhandled', () => event.reason);
+                });
+            }
             logs() {
+                this.rejection_listener();
                 this.execute();
                 return this.result().map((_, index) => this.Log(index));
             }
             log(index) {
                 return this.result()[index];
+            }
+            html(next = '') {
+                const root = this.UI().dom_node();
+                root.innerHTML = next;
+                return new Proxy((query) => root.querySelector(query), {
+                    get: ($, id) => $('#' + id),
+                });
             }
         }
         __decorate([
@@ -16310,12 +16353,15 @@ var $;
         ], $hyoo_js_eval.prototype, "result", null);
         __decorate([
             $mol_mem
+        ], $hyoo_js_eval.prototype, "rejection_listener", null);
+        __decorate([
+            $mol_mem
         ], $hyoo_js_eval.prototype, "logs", null);
         __decorate([
             $mol_mem_key
         ], $hyoo_js_eval.prototype, "log", null);
         $$.$hyoo_js_eval = $hyoo_js_eval;
-    })($$ = $.$$ || ($.$$ = {}));
+    })($$ = $_1.$$ || ($_1.$$ = {}));
 })($ || ($ = {}));
 
 ;

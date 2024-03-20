@@ -1,6 +1,6 @@
 {
   "name": "mam",
-  "version": "1.11.170",
+  "version": "1.11.172",
   "exports": {
     "node": {
       "import": "./node.mjs",
@@ -17,6 +17,10 @@
   "keywords": [
     "$mol_build",
     "$mol",
+    "$mol_promise_like",
+    "$mol_promise",
+    "$mol_fail_hidden",
+    "$mol_fail",
     "$mol_log3",
     "$mol_tree2_from_json",
     "$mol_tree2_from",
@@ -26,8 +30,6 @@
     "$mol_ambient",
     "$mol_owning",
     "$mol_delegate",
-    "$mol_fail_hidden",
-    "$mol_fail",
     "$mol_type_writable",
     "$mol_type",
     "$mol_func_name",
@@ -51,8 +53,6 @@
     "$mol_after_frame",
     "$mol_after",
     "$mol_after_timeout",
-    "$mol_promise_like",
-    "$mol_promise",
     "$mol_wire_task",
     "$mol_compare_deep",
     "$mol_compare",

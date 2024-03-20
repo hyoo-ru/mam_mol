@@ -808,7 +808,7 @@ var $;
                     destructor: result['destructor'] ?? (() => { })
                 });
                 handled.add(result);
-                const error = new Error();
+                const error = new Error(`Promise in ${this}`);
                 Object.defineProperty(result, 'stack', { get: () => error.stack });
             }
             if (!$mol_promise_like(result)) {

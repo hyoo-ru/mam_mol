@@ -23,6 +23,36 @@ $.$$ = $
 "use strict";
 var $;
 (function ($) {
+    function $mol_promise_like(val) {
+        return val && typeof val === 'object' && 'then' in val && typeof val.then === 'function';
+    }
+    $.$mol_promise_like = $mol_promise_like;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_fail(error) {
+        throw error;
+    }
+    $.$mol_fail = $mol_fail;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_fail_hidden(error) {
+        throw error;
+    }
+    $.$mol_fail_hidden = $mol_fail_hidden;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
     function $mol_log3_area_lazy(event) {
         const self = this;
         const stack = self.$mol_log3_stack;
@@ -145,26 +175,6 @@ var $;
         return true;
     }
     $.$mol_owning_catch = $mol_owning_catch;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_fail(error) {
-        throw error;
-    }
-    $.$mol_fail = $mol_fail;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_fail_hidden(error) {
-        throw error;
-    }
-    $.$mol_fail_hidden = $mol_fail_hidden;
 })($ || ($ = {}));
 
 ;
@@ -1118,16 +1128,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_promise_like(val) {
-        return val && typeof val === 'object' && 'then' in val && typeof val.then === 'function';
-    }
-    $.$mol_promise_like = $mol_promise_like;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
     const handled = new WeakSet();
     class $mol_wire_fiber extends $mol_wire_pub_sub {
         task;
@@ -1290,7 +1290,7 @@ var $;
                     destructor: result['destructor'] ?? (() => { })
                 });
                 handled.add(result);
-                const error = new Error();
+                const error = new Error(`Promise in ${this}`);
                 Object.defineProperty(result, 'stack', { get: () => error.stack });
             }
             if (!$mol_promise_like(result)) {
@@ -1994,6 +1994,12 @@ var $node = new Proxy({ require }, {
             return target.require(name);
         }
         catch (error) {
+            if (error.code === 'ERR_REQUIRE_ESM') {
+                const module = cache.get(name);
+                if (module)
+                    return module;
+                throw import(name).then(module => cache.set(name, module));
+            }
             $.$mol_fail_log(error);
             return null;
         }
@@ -2003,6 +2009,7 @@ var $node = new Proxy({ require }, {
         return true;
     },
 });
+const cache = new Map();
 require = (req => Object.assign(function require(name) {
     return $node[name];
 }, req))(require);
@@ -4829,6 +4836,8 @@ var $;
                 process.exit(0);
             }
             catch (error) {
+                if ($mol_promise_like(error))
+                    $mol_fail_hidden(error);
                 this.$mol_log3_fail({
                     place: '$mol_build_start',
                     message: error.message,
@@ -6616,6 +6625,8 @@ var $;
                     file.stat();
             }
             catch (error) {
+                if ($mol_promise_like(error))
+                    $mol_fail_hidden(error);
                 this.$.$mol_log3_fail({
                     place: this,
                     stack: error.stack,
@@ -11422,7 +11433,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/button/button.view.css", "[mol_button] {\n\tborder: none;\n\tfont: inherit;\n\tdisplay: inline-flex;\n\tflex-shrink: 0;\n\ttext-decoration: inherit;\n\tcursor: inherit;\n\tposition: relative;\n\tbox-sizing: border-box;\n\tword-break: normal;\n\tcursor: default;\n\tuser-select: none;\n\tborder-radius: var(--mol_gap_round);\n}\n\n[mol_button]:where(:not(:disabled)):hover {\n\tz-index: var(--mol_layer_hover);\n}\n\n[mol_button]:focus-visible {\n\toutline: none;\n\tz-index: var(--mol_layer_focus);\n}\n");
+    $mol_style_attach("mol/button/button.view.css", "[mol_button] {\n\tborder: none;\n\tfont: inherit;\n\tdisplay: inline-flex;\n\tflex-shrink: 0;\n\ttext-decoration: inherit;\n\tcursor: inherit;\n\tposition: relative;\n\tbox-sizing: border-box;\n\tword-break: normal;\n\tcursor: default;\n\tuser-select: none;\n\tborder-radius: var(--mol_gap_round);\n\tbackground: transparent;\n\tcolor: inherit;\n}\n\n[mol_button]:where(:not(:disabled)):hover {\n\tz-index: var(--mol_layer_hover);\n}\n\n[mol_button]:focus-visible {\n\toutline: none;\n\tz-index: var(--mol_layer_focus);\n}\n");
 })($ || ($ = {}));
 
 ;

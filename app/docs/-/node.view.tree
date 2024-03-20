@@ -1390,6 +1390,7 @@ $hyoo_js_eval $mol_book2
 					sub /
 						<= Results_close_icon $mol_icon_cross
 			body /
+				<= UI $mol_list sub_visible null
 				<= Result $mol_list
 					rows <= logs /
 						<= Log*0 $mol_dump_list

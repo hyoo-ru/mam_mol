@@ -134,6 +134,12 @@ var $node = new Proxy({ require }, {
             return target.require(name);
         }
         catch (error) {
+            if (error.code === 'ERR_REQUIRE_ESM') {
+                const module = cache.get(name);
+                if (module)
+                    return module;
+                throw import(name).then(module => cache.set(name, module));
+            }
             $.$mol_fail_log(error);
             return null;
         }
@@ -143,6 +149,7 @@ var $node = new Proxy({ require }, {
         return true;
     },
 });
+const cache = new Map();
 require = (req => Object.assign(function require(name) {
     return $node[name];
 }, req))(require);
