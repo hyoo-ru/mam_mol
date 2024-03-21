@@ -1,6 +1,6 @@
 {
   "name": "mam",
-  "version": "1.11.172",
+  "version": "1.11.173",
   "exports": {
     "node": {
       "import": "./node.mjs",
