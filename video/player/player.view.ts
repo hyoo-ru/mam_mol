@@ -50,8 +50,8 @@ namespace $.$$ {
 
 			if( next === undefined ) return ! node.paused
 
-			if( next ) $mol_wire_sync(node).play()
-			else node.pause()
+			if( next && node.paused) $mol_wire_sync(node).play()
+			if (! next && ! node.paused) node.pause()
 
 			return ! node.paused
 		}
