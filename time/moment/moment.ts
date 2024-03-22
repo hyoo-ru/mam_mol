@@ -38,7 +38,10 @@ namespace $ {
 			
 			super()
 
-			if( typeof config === 'number' ) config = new Date( config )
+			if( typeof config === 'number' ) {
+				config = new Date( config )
+				if( Number.isNaN( config.valueOf() ) ) throw new RangeError( `Wrong ms count` )
+			}
 			
 			if( typeof config === 'string' ) {
 				

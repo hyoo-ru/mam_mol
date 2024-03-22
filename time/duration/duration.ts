@@ -22,6 +22,7 @@ namespace $ {
 			super()
 			
 			if( typeof config === 'number' ) {
+				if( !Number.isFinite( config ) ) throw new RangeError( `Wrong ms count` )
 				this.second = config / 1000
 				return
 			}

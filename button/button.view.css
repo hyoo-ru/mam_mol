@@ -11,6 +11,8 @@
 	cursor: default;
 	user-select: none;
 	border-radius: var(--mol_gap_round);
+	background: transparent;
+	color: inherit;
 }
 
 [mol_button]:where(:not(:disabled)):hover {

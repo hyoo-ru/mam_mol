@@ -300,6 +300,8 @@ namespace $ {
 			
 			} catch( error: any ) {
 				
+				if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
+				
 				this.$.$mol_log3_fail({
 					place: this,
 					stack: error.stack,
