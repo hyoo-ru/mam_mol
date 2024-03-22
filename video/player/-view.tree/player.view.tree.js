@@ -32,15 +32,15 @@
 			if(next !== undefined) return next;
 			return null;
 		}
-		play_started(next){
+		playing_event(next){
 			if(next !== undefined) return next;
 			return null;
 		}
-		play(next){
+		play_event(next){
 			if(next !== undefined) return next;
 			return null;
 		}
-		pause(next){
+		pause_event(next){
 			if(next !== undefined) return next;
 			return null;
 		}
@@ -50,6 +50,12 @@
 		playing(next){
 			if(next !== undefined) return next;
 			return false;
+		}
+		play(){
+			return null;
+		}
+		pause(){
+			return null;
 		}
 		volume(next){
 			if(next !== undefined) return next;
@@ -80,18 +86,18 @@
 				"volumechange": (next) => (this.revolume(next)), 
 				"timeupdate": (next) => (this.retime(next)), 
 				"durationchange": (next) => (this.redurate(next)), 
-				"playing": (next) => (this.play_started(next)), 
-				"play": (next) => (this.play(next)), 
-				"pause": (next) => (this.pause(next))
+				"playing": (next) => (this.playing_event(next)), 
+				"play": (next) => (this.play_event(next)), 
+				"pause": (next) => (this.pause_event(next))
 			};
 		}
 	};
 	($mol_mem(($.$mol_video_player.prototype), "revolume"));
 	($mol_mem(($.$mol_video_player.prototype), "retime"));
 	($mol_mem(($.$mol_video_player.prototype), "redurate"));
-	($mol_mem(($.$mol_video_player.prototype), "play_started"));
-	($mol_mem(($.$mol_video_player.prototype), "play"));
-	($mol_mem(($.$mol_video_player.prototype), "pause"));
+	($mol_mem(($.$mol_video_player.prototype), "playing_event"));
+	($mol_mem(($.$mol_video_player.prototype), "play_event"));
+	($mol_mem(($.$mol_video_player.prototype), "pause_event"));
 	($mol_mem(($.$mol_video_player.prototype), "playing"));
 	($mol_mem(($.$mol_video_player.prototype), "volume"));
 	($mol_mem(($.$mol_video_player.prototype), "time"));

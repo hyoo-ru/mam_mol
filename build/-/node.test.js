@@ -4717,6 +4717,9 @@ var $;
                     .replace(/^(?!    +at )(.*)/gm, '    at | $1 (#)')).join('\n')
             });
         }
+        static make(...params) {
+            return new this(...params);
+        }
     }
     $.$mol_error_mix = $mol_error_mix;
 })($ || ($ = {}));

@@ -1,76 +1,76 @@
 declare namespace $ {
 
-	type $mol_plot_bar__title__ISJ745G3 = $mol_type_enforce<
+	type $mol_plot_bar__title__QJJB2AGZ = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_simple['plan_title'] >
 		,
 		ReturnType< $mol_plot_bar['title'] >
 	>
-	type $mol_plot_bar__series_y__JCAJ1BQH = $mol_type_enforce<
+	type $mol_plot_bar__series_y__HN8LNJH0 = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_simple['plan'] >
 		,
 		ReturnType< $mol_plot_bar['series_y'] >
 	>
-	type $mol_plot_group__title__O349F7BX = $mol_type_enforce<
+	type $mol_plot_group__title__FTOHGF4G = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_simple['fact_title'] >
 		,
 		ReturnType< $mol_plot_group['title'] >
 	>
-	type $mol_plot_group__series_y__6Y02G7GB = $mol_type_enforce<
+	type $mol_plot_group__series_y__C8FZOIEZ = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_simple['facts'] >
 		,
 		ReturnType< $mol_plot_group['series_y'] >
 	>
-	type $mol_plot_group__graphs__8XRK29UB = $mol_type_enforce<
+	type $mol_plot_group__graphs__LCNYPUS8 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_plot_group['graphs'] >
 	>
-	type $mol_plot_ruler_vert__title__1KL8BN22 = $mol_type_enforce<
+	type $mol_plot_ruler_vert__title__2JWNWP8Q = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_simple['vert_title'] >
 		,
 		ReturnType< $mol_plot_ruler_vert['title'] >
 	>
-	type $mol_chart_demo_simple_months__9O02KLA5 = $mol_type_enforce<
+	type $mol_chart_demo_simple_months__U3064D9R = $mol_type_enforce<
 		`January`
 		,
 		string
 	>
-	type $mol_chart_demo_simple_months__VGW3HQD3 = $mol_type_enforce<
+	type $mol_chart_demo_simple_months__5X50XRO4 = $mol_type_enforce<
 		`February`
 		,
 		string
 	>
-	type $mol_chart_demo_simple_months__6UBW02SJ = $mol_type_enforce<
+	type $mol_chart_demo_simple_months__HJHP66PA = $mol_type_enforce<
 		`March`
 		,
 		string
 	>
-	type $mol_chart_demo_simple_months__DQ4DKZW0 = $mol_type_enforce<
+	type $mol_chart_demo_simple_months__QP8JG9FB = $mol_type_enforce<
 		`April`
 		,
 		string
 	>
-	type $mol_plot_mark_hor__title__NVLYIE0N = $mol_type_enforce<
+	type $mol_plot_mark_hor__title__73GYMAOD = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_simple['marker_hor_title'] >
 		,
 		ReturnType< $mol_plot_mark_hor['title'] >
 	>
-	type $mol_plot_mark_hor__labels__DEYLVJT6 = $mol_type_enforce<
+	type $mol_plot_mark_hor__labels__OMH1EPQP = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_simple['months'] >
 		,
 		ReturnType< $mol_plot_mark_hor['labels'] >
 	>
-	type $mol_plot_mark_cross__labels__L7JRZ6EB = $mol_type_enforce<
+	type $mol_plot_mark_cross__labels__SI0GTJUZ = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_simple['months'] >
 		,
 		ReturnType< $mol_plot_mark_cross['labels'] >
 	>
-	type $mol_plot_mark_cross__graphs__BWFLRXT9 = $mol_type_enforce<
+	type $mol_plot_mark_cross__graphs__V164XZZI = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_plot_mark_cross['graphs'] >
 	>
-	type $mol_chart__graphs__EI79UHCJ = $mol_type_enforce<
+	type $mol_chart__graphs__AVOMENDJ = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_chart['graphs'] >

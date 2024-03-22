@@ -5744,6 +5744,8 @@ $mol_toolbar_demo $mol_example_small
 $mol_video_player $mol_view
 	dom_name \video
 	playing? false
+	play null
+	pause null
 	volume? 0
 	time? 0
 	duration 0
@@ -5757,12 +5759,12 @@ $mol_video_player $mol_view
 	field *
 		srcObject <= stream null
 	event *
-		volumechange?event <=> revolume?event null
-		timeupdate?event <=> retime?event null
-		durationchange?event <=> redurate?event null
-		playing?event <=> play_started?event null
-		play?event <=> play?event null
-		pause?event <=> pause?event null
+		volumechange? <=> revolume? null
+		timeupdate? <=> retime? null
+		durationchange? <=> redurate? null
+		playing? <=> playing_event? null
+		play? <=> play_event? null
+		pause? <=> pause_event? null
 
 $mol_video_player_demo $mol_example_large
 	title \Reactive video player

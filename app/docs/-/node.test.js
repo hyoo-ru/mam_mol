@@ -11052,6 +11052,9 @@ var $;
                     .replace(/^(?!    +at )(.*)/gm, '    at | $1 (#)')).join('\n')
             });
         }
+        static make(...params) {
+            return new this(...params);
+        }
     }
     $.$mol_error_mix = $mol_error_mix;
 })($ || ($ = {}));
@@ -37010,15 +37013,15 @@ var $;
 			if(next !== undefined) return next;
 			return null;
 		}
-		play_started(next){
+		playing_event(next){
 			if(next !== undefined) return next;
 			return null;
 		}
-		play(next){
+		play_event(next){
 			if(next !== undefined) return next;
 			return null;
 		}
-		pause(next){
+		pause_event(next){
 			if(next !== undefined) return next;
 			return null;
 		}
@@ -37028,6 +37031,12 @@ var $;
 		playing(next){
 			if(next !== undefined) return next;
 			return false;
+		}
+		play(){
+			return null;
+		}
+		pause(){
+			return null;
 		}
 		volume(next){
 			if(next !== undefined) return next;
@@ -37058,18 +37067,18 @@ var $;
 				"volumechange": (next) => (this.revolume(next)), 
 				"timeupdate": (next) => (this.retime(next)), 
 				"durationchange": (next) => (this.redurate(next)), 
-				"playing": (next) => (this.play_started(next)), 
-				"play": (next) => (this.play(next)), 
-				"pause": (next) => (this.pause(next))
+				"playing": (next) => (this.playing_event(next)), 
+				"play": (next) => (this.play_event(next)), 
+				"pause": (next) => (this.pause_event(next))
 			};
 		}
 	};
 	($mol_mem(($.$mol_video_player.prototype), "revolume"));
 	($mol_mem(($.$mol_video_player.prototype), "retime"));
 	($mol_mem(($.$mol_video_player.prototype), "redurate"));
-	($mol_mem(($.$mol_video_player.prototype), "play_started"));
-	($mol_mem(($.$mol_video_player.prototype), "play"));
-	($mol_mem(($.$mol_video_player.prototype), "pause"));
+	($mol_mem(($.$mol_video_player.prototype), "playing_event"));
+	($mol_mem(($.$mol_video_player.prototype), "play_event"));
+	($mol_mem(($.$mol_video_player.prototype), "pause_event"));
 	($mol_mem(($.$mol_video_player.prototype), "playing"));
 	($mol_mem(($.$mol_video_player.prototype), "volume"));
 	($mol_mem(($.$mol_video_player.prototype), "time"));
@@ -37111,18 +37120,16 @@ var $;
                 return this.dom_node().duration;
             }
             playing(next) {
-                if (next === undefined) {
-                    return false;
-                }
-                else {
-                    if (next) {
-                        this.dom_node().play();
-                    }
-                    else {
-                        this.dom_node().pause();
-                    }
-                    return next;
-                }
+                const node = this.dom_node();
+                this.playing_event();
+                this.play_event();
+                if (next === undefined)
+                    return !node.paused;
+                if (next && node.paused)
+                    $mol_wire_sync(node).play();
+                if (!next && !node.paused)
+                    node.pause();
+                return !node.paused;
             }
             play() {
                 this.playing(true);
