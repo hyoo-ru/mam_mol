@@ -23,6 +23,12 @@ namespace $ {
 			} )
 			
 		}
+
+		static make(
+			...params: ConstructorParameters<typeof $mol_error_mix>
+		) {
+			return new this(...params)
+		}
 		
 	}
 
