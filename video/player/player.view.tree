@@ -1,6 +1,8 @@
 $mol_video_player $mol_view
 	dom_name \video
 	playing? false
+	play null
+	pause null
 	volume? 0
 	time? 0
 	duration 0
