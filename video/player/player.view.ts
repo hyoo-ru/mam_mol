@@ -44,16 +44,16 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		playing( next?: boolean ) {
-			if( next === undefined ) {
-				return false
-			} else {
-				if( next ) {
-					this.dom_node().play()
-				} else {
-					this.dom_node().pause()
-				}
-				return next
-			}
+			const node = this.dom_node()
+			this.playing_event()
+			this.play_event()
+
+			if( next === undefined ) return ! node.paused
+
+			if( next ) $mol_wire_sync(node).play()
+			else node.pause()
+
+			return ! node.paused
 		}
 		
 		play() {
