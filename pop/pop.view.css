@@ -21,6 +21,7 @@
 	max-width: 80vw;
 	max-height: 80vw;
 	contain: paint;
+	transition-property: opacity;
 }
 
 :where( [mol_pop_bubble] > * ) {
