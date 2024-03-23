@@ -124,10 +124,9 @@ $mol_button_typed $mol_button
 	minimal_height 40
 	minimal_width 40
 
-$mol_button_major $mol_button_typed
-	attr *
-		^
-		mol_theme \$mol_theme_accent
+$mol_button_minor $mol_button_typed
+
+$mol_button_major $mol_button_minor
 
 $mol_row $mol_view
 
@@ -264,8 +263,6 @@ $mol_icon $mol_svg_root
 			geometry <= path \
 
 $mol_icon_cross $mol_icon path \M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z
-
-$mol_button_minor $mol_button_typed
 
 $mol_paragraph $mol_view
 	line_height 24

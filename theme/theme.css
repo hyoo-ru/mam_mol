@@ -21,7 +21,7 @@
 	
 	--mol_theme_text: hsl( var(--mol_theme_hue), 0%, 80% );
 	--mol_theme_shade: hsl( var(--mol_theme_hue), 0%, 60%, 1 );
-	--mol_theme_line: hsl( var(--mol_theme_hue), 0%, 50%, .2 );
+	--mol_theme_line: hsl( var(--mol_theme_hue), 0%, 50%, .25 );
 	--mol_theme_focus: hsl( calc( var(--mol_theme_hue) + 180deg ), 100%, 65% );
 	
 	--mol_theme_control: hsl( var(--mol_theme_hue), 60%, 65% );
@@ -56,7 +56,7 @@
 	
 	--mol_theme_text: hsl( var(--mol_theme_hue), 0%, 0% );
 	--mol_theme_shade: hsl( var(--mol_theme_hue), 0%, 40%, 1 );
-	--mol_theme_line: hsl( var(--mol_theme_hue), 0%, 50%, .2 );
+	--mol_theme_line: hsl( var(--mol_theme_hue), 0%, 50%, .25 );
 	--mol_theme_focus: hsl( calc( var(--mol_theme_hue) + 180deg ), 100%, 40% );
 	
 	--mol_theme_control: hsl( var(--mol_theme_hue), 80%, 30% );

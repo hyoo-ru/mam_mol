@@ -1,9 +1,6 @@
 declare namespace $ {
 
-	export class $mol_button_major extends $mol_button_typed {
-		attr( ): ({ 
-			'mol_theme': string,
-		})  & ReturnType< $mol_button_typed['attr'] >
+	export class $mol_button_major extends $mol_button_minor {
 	}
 	
 }

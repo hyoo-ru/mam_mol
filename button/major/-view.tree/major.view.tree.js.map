@@ -4,7 +4,7 @@
 		"mol/button/major/major.view.tree"
 	],
 	"sourcesContent": [
-		"$mol_button_major $mol_button_typed\n\tattr *\n\t\t^\n\t\tmol_theme \\$mol_theme_accent\n"
+		"$mol_button_major $mol_button_minor\n"
 	],
-	"mappings": "AAAA,AAAA,iDAAkB,8BAAlB;AAAA,AACC;AAAA,AAAA,UAAK,CACJ,iBADI,EAEJ,aAAW,mBAFP,CAAL;AAAA;AADD,CAAA;"
+	"mappings": "AAAA,AAAA,iDAAkB,8BAAlB,EAAA;"
 }

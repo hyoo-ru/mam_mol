@@ -42,10 +42,9 @@ $mol_button_typed $mol_button
 	minimal_height 40
 	minimal_width 40
 
-$mol_button_major $mol_button_typed
-	attr *
-		^
-		mol_theme \$mol_theme_accent
+$mol_button_minor $mol_button_typed
+
+$mol_button_major $mol_button_minor
 
 $mol_row $mol_view
 
@@ -59,8 +58,6 @@ $mol_list $mol_view
 	view_window /
 		0
 		0
-
-$mol_button_minor $mol_button_typed
 
 $mol_check $mol_button_minor
 	attr *

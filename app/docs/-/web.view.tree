@@ -870,10 +870,7 @@ $mol_app_demo_main $mol_page
 			text <= description \
 			uri_base <= project_uri
 
-$mol_button_major $mol_button_typed
-	attr *
-		^
-		mol_theme \$mol_theme_accent
+$mol_button_major $mol_button_minor
 
 $mol_textarea $mol_stack
 	attr *
