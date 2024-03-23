@@ -54,11 +54,16 @@ namespace $.$$ {
 
 			const series_x = this.series_x()
 			const series_y = this.series_y()
-			for(let i = 0; i < series_x.length; i++) {
-				if( series_x[i] > next.x.max ) next.x.max = this.repos_x( series_x[i] )
-				if( series_x[i] < next.x.min ) next.x.min = this.repos_x( series_x[i] )
-				if( series_y[i] > next.y.max ) next.y.max = this.repos_y( series_y[i] )
-				if( series_y[i] < next.y.min ) next.y.min = this.repos_y( series_y[i] )
+			for( let i = 0; i < series_x.length; i++ ) {
+
+				const x = this.repos_x( series_x[i] )
+				if( x > next.x.max ) next.x.max = x
+				if( x < next.x.min ) next.x.min = x
+
+				const y = this.repos_y( series_y[i] )
+				if( y > next.y.max ) next.y.max = y
+				if( y < next.y.min ) next.y.min = y
+
 			}
 			
 			return next
