@@ -4349,7 +4349,7 @@ var $;
 			return obj;
 		}
 		row_title(id, next){
-			return (this.Row(id).title(next));
+			return (this.Row("0").title(next));
 		}
 		row_selected(id, next){
 			if(next !== undefined) return next;
