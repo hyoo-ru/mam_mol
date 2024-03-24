@@ -126,17 +126,18 @@ namespace $ {
 						ref.struct( '[]', [
 							ref.data( ref.kids[0]?.type ? name_of.call(this, ref.kids[0]) : name ),
 						] ),
-						ref.kids[0]?.type ? params_of.call(this, ref.kids[0]) : ref.struct( '(,)' )
+						ref.kids[0]?.type ? args_of.call(this, ref.kids[0]) : ref.struct( '(,)' )
 					]),
 				] ),
 			],
 
 			'=': bind => [ bind.struct( '()', [
-					bind.struct( 'this' ),
-					call_method_name.call(this, bind.kids[0]),
-					params_of.call(this, bind.kids[0]),
-					call_method_name.call(this, bind.kids[0].kids[0]),
-					args_of.call(this, bind.kids[0].kids[0]),
+				bind.struct( 'this' ),
+				... bind.hack({ '': ( method, belt )=> [
+					call_method_name.call( this, method ),
+					args_of.call( this, method ),
+					... method.hack( belt ),
+				] }),
 			] ) ],
 				
 			'': ( input, belt, context )=> {
