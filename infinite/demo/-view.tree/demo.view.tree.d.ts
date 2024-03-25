@@ -1,46 +1,46 @@
 declare namespace $ {
 
-	type $mol_avatar__id__KU7327HH = $mol_type_enforce<
+	type $mol_avatar__id__ORSH1QNN = $mol_type_enforce<
 		ReturnType< $mol_infinite_demo['id'] >
 		,
 		ReturnType< $mol_avatar['id'] >
 	>
-	type $mol_paragraph__title__KS4IP97J = $mol_type_enforce<
+	type $mol_paragraph__title__4BYWI08Z = $mol_type_enforce<
 		ReturnType< $mol_infinite_demo['name'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_paragraph__title__2FA0LF0F = $mol_type_enforce<
+	type $mol_paragraph__title__4KNSSU7Y = $mol_type_enforce<
 		ReturnType< $mol_infinite_demo['city'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_list__rows__RJPZH8JV = $mol_type_enforce<
+	type $mol_list__rows__WYJGKD90 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_row__sub__M63PGZL4 = $mol_type_enforce<
+	type $mol_row__sub__RF8GH6A0 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_row['sub'] >
 	>
-	type $mol_infinite__before__8E1CDJI3 = $mol_type_enforce<
+	type $mol_infinite__before__8KMAQG12 = $mol_type_enforce<
 		ReturnType< $mol_infinite_demo['before'] >
 		,
 		ReturnType< $mol_infinite['before'] >
 	>
-	type $mol_infinite__after__LCJ2MCFJ = $mol_type_enforce<
+	type $mol_infinite__after__45LB8MSQ = $mol_type_enforce<
 		ReturnType< $mol_infinite_demo['after'] >
 		,
 		ReturnType< $mol_infinite['after'] >
 	>
-	type $mol_infinite__Row__AIYK47DS = $mol_type_enforce<
+	type $mol_infinite__Row__EFWHEU1M = $mol_type_enforce<
 		ReturnType< $mol_infinite_demo['Item'] >
 		,
 		ReturnType< $mol_infinite['Row'] >
 	>
-	type $mol_scroll__sub__XQ9W6GVQ = $mol_type_enforce<
+	type $mol_scroll__sub__O5V59PQC = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_scroll['sub'] >
