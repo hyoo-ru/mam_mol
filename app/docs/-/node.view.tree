@@ -5752,6 +5752,7 @@ $mol_video_player $mol_view
 		autoplay <= autoplay true
 		playsinline <= inline true
 		loop <= loop false
+		muted <= muted false
 		poster <= poster \
 	field *
 		srcObject <= stream null

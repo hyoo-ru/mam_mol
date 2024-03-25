@@ -14,6 +14,9 @@
 		loop(){
 			return false;
 		}
+		muted(){
+			return false;
+		}
 		poster(){
 			return "";
 		}
@@ -75,6 +78,7 @@
 				"autoplay": (this.autoplay()), 
 				"playsinline": (this.inline()), 
 				"loop": (this.loop()), 
+				"muted": (this.muted()), 
 				"poster": (this.poster())
 			};
 		}

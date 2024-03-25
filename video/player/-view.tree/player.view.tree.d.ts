@@ -6,6 +6,7 @@ declare namespace $ {
 		autoplay( ): boolean
 		inline( ): boolean
 		loop( ): boolean
+		muted( ): boolean
 		poster( ): string
 		stream( ): any
 		revolume( next?: any ): any
@@ -27,6 +28,7 @@ declare namespace $ {
 			'autoplay': ReturnType< $mol_video_player['autoplay'] >,
 			'playsinline': ReturnType< $mol_video_player['inline'] >,
 			'loop': ReturnType< $mol_video_player['loop'] >,
+			'muted': ReturnType< $mol_video_player['muted'] >,
 			'poster': ReturnType< $mol_video_player['poster'] >,
 		}) 
 		field( ): ({ 
