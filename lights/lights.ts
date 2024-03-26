@@ -14,7 +14,7 @@ namespace $ {
 		
 		const arg = parse( this.$mol_state_arg.value( 'mol_lights' ) )
 		
-		const base = false //this.$mol_media.match( '(prefers-color-scheme: light)' )
+		const base = this.$mol_media.match( '(prefers-color-scheme: light)' )
 		
 		if( next === undefined ) {
 			return arg ?? this.$mol_state_local.value< boolean >( '$mol_lights' ) ?? base
