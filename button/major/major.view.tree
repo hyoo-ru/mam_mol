@@ -1,1 +1,2 @@
 $mol_button_major $mol_button_minor
+	theme \$mol_theme_base

@@ -871,6 +871,7 @@ $mol_app_demo_main $mol_page
 			uri_base <= project_uri
 
 $mol_button_major $mol_button_minor
+	theme \$mol_theme_base
 
 $mol_textarea $mol_stack
 	attr *

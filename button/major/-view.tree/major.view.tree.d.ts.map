@@ -3,7 +3,7 @@
 	"sources": [
 		"mol/button/major/major.view.tree"
 	],
-	"mappings": "AAAA;AAAA;AAAA,AAAA,+BAAkB,0BAAlB;AAAA;AAAA;AAAA;",
+	"mappings": "AAAA;AAAA;AAAA,AAAA,+BAAkB,0BAAlB;AACC,AAAA,YAAO;AADR;AAAA;AAAA;",
 	"file": "major.view.tree.d.ts",
 	"sourceRoot": "../../../.."
 }

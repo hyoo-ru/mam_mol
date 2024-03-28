@@ -947,7 +947,7 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_speck__value__4TZ4EJYM = $mol_type_enforce<
+	type $mol_speck__value__SHISQPY8 = $mol_type_enforce<
 		ReturnType< $mol_button['error'] >
 		,
 		ReturnType< $mol_speck['value'] >
@@ -1028,6 +1028,7 @@ declare namespace $ {
 declare namespace $ {
 
 	export class $mol_button_major extends $mol_button_minor {
+		theme( ): string
 	}
 	
 }
@@ -1057,37 +1058,37 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_view__sub__BOT80R3L = $mol_type_enforce<
+	type $mol_view__sub__7VT8NWF8 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_button_major__title__BE1K5W4C = $mol_type_enforce<
+	type $mol_button_major__title__H6X84NR7 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_major['title'] >
 	>
-	type $mol_button_major__click__O7Y5OTXH = $mol_type_enforce<
+	type $mol_button_major__click__RKQU896N = $mol_type_enforce<
 		ReturnType< $mol_perf_dopes['start'] >
 		,
 		ReturnType< $mol_button_major['click'] >
 	>
-	type $mol_button_major__title__IR04RM2P = $mol_type_enforce<
+	type $mol_button_major__title__CMDJJZYO = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_major['title'] >
 	>
-	type $mol_button_major__click__YM3DTPRO = $mol_type_enforce<
+	type $mol_button_major__click__RRUGRTFS = $mol_type_enforce<
 		ReturnType< $mol_perf_dopes['stop'] >
 		,
 		ReturnType< $mol_button_major['click'] >
 	>
-	type $mol_view__sub__XVZILAYA = $mol_type_enforce<
+	type $mol_view__sub__GIYGG539 = $mol_type_enforce<
 		ReturnType< $mol_perf_dopes['labels'] >
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_view__style__YOZ4NG0H = $mol_type_enforce<
+	type $mol_view__style__8Q0KILRY = $mol_type_enforce<
 		({ 
 			'color': ReturnType< $mol_perf_dopes['label_color'] >,
 			'transform': ReturnType< $mol_perf_dopes['label_transform'] >,
@@ -1095,7 +1096,7 @@ declare namespace $ {
 		,
 		ReturnType< $mol_view['style'] >
 	>
-	type $mol_view__sub__NX7Z08EO = $mol_type_enforce<
+	type $mol_view__sub__HPU7SGF7 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >

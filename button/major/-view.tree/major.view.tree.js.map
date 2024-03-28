@@ -4,7 +4,7 @@
 		"mol/button/major/major.view.tree"
 	],
 	"sourcesContent": [
-		"$mol_button_major $mol_button_minor\n"
+		"$mol_button_major $mol_button_minor\n\ttheme \\$mol_theme_base\n"
 	],
-	"mappings": "AAAA,AAAA,iDAAkB,8BAAlB,EAAA;"
+	"mappings": "AAAA,AAAA,iDAAkB,8BAAlB;AAAA,AACC;AAAA,AAAA,UAAO,iBAAP;AAAA;AADD,CAAA;"
 }
