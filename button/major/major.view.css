@@ -1,3 +1,4 @@
 [mol_button_major] {
-	box-shadow: 0 0 0 1px var(--mol_theme_line);
+	background-color: var(--mol_theme_back);
+	color: var(--mol_theme_text);
 }
