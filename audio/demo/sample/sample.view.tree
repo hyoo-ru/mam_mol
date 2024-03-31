@@ -1,0 +1,35 @@
+$mol_audio_demo_sample $mol_example_small
+	title \WebAudio API sample example
+	Room $mol_audio_node
+		output => room_output
+		input /
+			<= Sample $mol_audio_sample
+				active? <=> sample_active? false
+				reset => reset
+				loop? <=> loop? true
+				buffer <= sample_buffer null
+	sub /
+		<= List $mol_list rows /
+			<= Sample_url_field $mol_form_field
+				name \Sample url
+				control <= Sample_url $mol_string
+					value? <=> sample_url? \/mol/audio/demo/sample/dl01.ogg
+			<= Controls $mol_row sub /
+				<= Active $mol_check_icon
+					checked? <=> sample_active? false
+					title \Active
+					Icon <= Active_icon $mol_icon_play
+				<= Reset $mol_button_minor
+					click <= reset
+					title \Reset
+				<= Loop $mol_check_icon
+					checked? <=> loop?
+					title \Loop
+					Icon <= Loop_icon $mol_icon_loop
+			<= Status $mol_status
+				message <= sample_message \
+	tags /
+		\sound
+		\sample
+	aspects /
+		\Media/Audio

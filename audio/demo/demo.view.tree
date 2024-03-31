@@ -2,15 +2,15 @@ $mol_audio_demo $mol_example_small
 	title \WebAudio API example
 	Beep $mol_audio_room
 		play => beep_play
-		duration 0.1
 		input /
 			<= Beep_vibe $mol_audio_vibe
+				duration 0.1
 				freq 440
 	Noise $mol_audio_room
 		play => noise_play
-		duration 1
 		input /
 			<= Noise_vibe $mol_audio_vibe
+				duration 1
 				freq <= noise_freq 440
 	sub /
 		<= Beep_play $mol_button_minor

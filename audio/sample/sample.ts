@@ -1,82 +1,70 @@
 namespace $ {
 	export class $mol_audio_sample extends $mol_audio_instrument {
 		@ $mol_mem
-		override node_raw() { return this.context().createBufferSource() }
+		override node_raw(reset?: null) {
+			const node = this.context().createBufferSource()
+			node.buffer = this.audio_buffer()
+
+			return node
+		}
 
 		override duration() {
-			return this.audio_buffer().duration
+			return this.audio_buffer()?.duration ?? 0
 		}
 
 		buffer() {
-			return new ArrayBuffer(0)
+			return new ArrayBuffer(0) as ArrayBuffer | null
 		}
 
 		@ $mol_mem
 		audio_buffer() {
-			return this.context().decodeAudioData(this.buffer())
+			const buffer = this.buffer()
+			return buffer ? this.context().decodeAudioData(buffer) : null
 		}
 
 		@ $mol_mem
-		loop(range?: readonly [ number, number ] | null) {
-			return range ?? null
+		loop(next?: boolean) {
+			return next ?? false
 		}
 
 		@ $mol_mem
-		start_time(next?: number) { return next ?? 0 }
+		loop_start(next?: number) {
+			return next ?? 0
+		}
 
 		@ $mol_mem
-		stop_time(next?: number) { return next ?? 0 }
-
-		offset() {
-			const offset = this.stop_time() - this.start_time()
-
-			return offset >= 0 && offset < this.duration() ? offset : 0
-		}
-
-		@ $mol_action
-		override start() {
-			if ( this.active_cached() ) this.stop()
-
-			this.node_raw().start()
-
-			this.start_time(this.current_time())
-			this.stop_time(0)
-			this.active_cached(true)
-		}
-
-		@ $mol_action
-		override resume() {
-			if ( this.active_cached() ) return
-
-			this.node_raw().start(undefined, this.offset())
-
-			this.start_time(this.current_time())
-			this.stop_time(0)
-			this.active_cached(true)
-		}
-
-		@ $mol_action
-		override stop() {
-			super.stop()
-			this.stop_time(this.current_time())
-		}
-
-		override output() {
-			this.offset()
-			return super.output()
+		loop_end(next?: number) {
+			return next ?? this.duration()
 		}
 
 		@ $mol_mem
 		override node() {
 			const node = super.node()
 
-			node.buffer = this.audio_buffer()
-			const loop = this.loop()
-			node.loop = loop !== null
+			node.loop = this.loop()
 
-			if (loop) {
-				node.loopStart = loop[0]
-				node.loopEnd = loop[1]
+			node.loopStart = this.loop_start()
+			node.loopEnd = this.loop_end()
+
+			node.playbackRate.value = this.active() ? node.playbackRate.defaultValue : 0
+
+			return node
+		}
+
+		reset() { this.node_raw(null) }
+
+		override onended(e: Event) {
+			if (this.loop()) return
+			return super.onended(e)
+		}
+
+		@ $mol_mem
+		protected override node_started() {
+			const node = this.node()
+
+			if (! node.started) {
+				node.start()
+				node.started = true
 			}
 
 			return node

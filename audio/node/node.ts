@@ -2,11 +2,6 @@ namespace $ {
 	export class $mol_audio_node extends $mol_object {
 		context() { return this.$.$mol_audio_context.native() }
 
-		@ $mol_action
-		current_time() {
-			return this.context().currentTime
-		}
-
 		@ $mol_mem
 		node_raw() { return this.context().destination as AudioNode }
 
@@ -51,7 +46,8 @@ namespace $ {
 			this.input_connected()
 			return this.node_raw()
 		}
-		
+
+		@ $mol_action
 		time() { return this.context().currentTime }
 		
 		destructor() {

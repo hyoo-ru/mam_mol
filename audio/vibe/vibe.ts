@@ -13,7 +13,10 @@ namespace $ {
 	export class $mol_audio_vibe extends $mol_audio_instrument {
 		
 		@ $mol_mem
-		override node_raw() { return this.context().createOscillator() }
+		override node_raw(reset?: null) {
+			this.active()
+			return this.context().createOscillator()
+		}
 
 		@ $mol_mem
 		freq( next = 440 ) { return next }

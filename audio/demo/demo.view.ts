@@ -5,6 +5,5 @@ namespace $.$$ {
 			$mol_wire_watch()
 			return Math.random() * 1000
 		}
-		
 	}
 }
