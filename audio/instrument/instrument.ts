@@ -17,21 +17,40 @@ namespace $ {
 
 		end(e: Event) {}
 
+		@ $mol_action
+		start() {
+			const node = this.node_raw()
+			node.start()
+			node.stop(this.duration() + this.current_time())
+			this.active(true, true)
+		}
+
+		@ $mol_action
+		stop() {
+			if (! this.active_cached()) return
+
+			this.node_raw().stop()
+			this.active(false, false)
+		}
+
+		active_cached() {
+			return $mol_wire_probe( ()=> this.active() )
+		}
+
+		@ $mol_mem
+		active_initial(next?: boolean) {
+			return next ?? true
+		}
+
 		@ $mol_mem
 		active( next?: boolean, cached?: boolean ): boolean {
 			if (cached !== undefined) return cached
 			$mol_wire_solid()
-			
-			const node = next === false ? this.node_raw() : this.node()
 
-			const prev = $mol_wire_probe( ()=> this.active() )
-			if( prev === next ) return next ?? false
+			this.node()
 
-			if( next === true ) {
-				node.start()
-			} else if( prev === true ) {
-				node.stop()
-			}
+			if( ( next === true || ( next === undefined && this.active_initial() ) ) && ! this.active_cached()) this.start()
+			if( next === false ) this.stop()
 			
 			return next ?? false
 		}
@@ -43,7 +62,7 @@ namespace $ {
 
 		@ $mol_mem
 		override output() {
-			this.active( true )
+			this.active()
 			return super.output()
 		}
 

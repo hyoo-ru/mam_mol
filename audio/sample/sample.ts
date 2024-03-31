@@ -17,9 +17,63 @@ namespace $ {
 		}
 
 		@ $mol_mem
+		loop(range?: readonly [ number, number ] | null) {
+			return range ?? null
+		}
+
+		@ $mol_mem
+		start_time(next?: number) { return next ?? 0 }
+
+		@ $mol_mem
+		stop_time(next?: number) { return next ?? 0 }
+
+		offset() {
+			const offset = this.stop_time() - this.start_time()
+
+			return offset >= 0 && offset < this.duration() ? offset : 0
+		}
+
+		@ $mol_action
+		override start(resume = false) {
+			
+			const node = this.node_raw()
+			
+			const offset = resume ? this.offset() : 0
+			
+			if ( this.active_cached() ) this.stop()
+			node.start(undefined, offset)
+
+			this.start_time(this.current_time())
+			this.stop_time(0)
+			this.active(true, true)
+		}
+
+		@ $mol_action
+		override stop() {
+			if (! this.active_cached()) return
+
+			this.node_raw().stop()
+
+			this.stop_time(this.current_time())
+		}
+
+		override output() {
+			this.offset()
+			return super.output()
+		}
+
+		@ $mol_mem
 		override node() {
 			const node = super.node()
+
 			node.buffer = this.audio_buffer()
+			const loop = this.loop()
+			node.loop = loop !== null
+
+			if (loop) {
+				node.loopStart = loop[0]
+				node.loopEnd = loop[1]
+			}
 
 			return node
 		}

@@ -1,21 +1,30 @@
 declare module 'web-audio-api'
 namespace $ {
-	export class $mol_audio_context extends $mol_object2 {
+	export class $mol_audio_context extends $mol_object {
 		@ $mol_memo.method
 		static native() {
 			const AudioContext = this.$.$mol_dom_context.AudioContext || this.$.$node['web-audio-api'].AudioContext
-			return $mol_wire_sync( new AudioContext() )
+
+			const ctx = new AudioContext()
+			ctx.onstatechange = (e: Event) => this.state(null)
+			
+			return $mol_wire_sync( ctx )
 		}
 
-
 		@ $mol_mem
+		static state(next?: null | AudioContextState) {
+			const ctx = this.native()
+			if (ctx.state === next) return next
+
+			if (next === 'closed') ctx.close()
+			if (next === 'running') ctx.resume()
+			if (next === 'suspended') ctx.suspend()
+
+			return ctx.state
+		}
+
 		static active(next?: boolean) {
-			const context = this.native()
-
-			if (next && context.state !== 'running') context.resume()
-			if (next === false && context.state === 'running') context.suspend()
-
-			return context.state === 'running'
+			return this.state(next ? 'running' : next === false ? 'suspended' : undefined) === 'running'
 		}
 
 	}
