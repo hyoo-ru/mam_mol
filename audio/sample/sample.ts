@@ -41,7 +41,7 @@ namespace $ {
 
 			this.start_time(this.current_time())
 			this.stop_time(0)
-			this.active(true, true)
+			this.active_cached(true)
 		}
 
 		@ $mol_action
@@ -52,7 +52,7 @@ namespace $ {
 
 			this.start_time(this.current_time())
 			this.stop_time(0)
-			this.active(true, true)
+			this.active_cached(true)
 		}
 
 		@ $mol_action

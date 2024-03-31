@@ -8,7 +8,7 @@ namespace $ {
 		override node() {
 			const node = super.node()
 			node.onended = $mol_wire_async((e: Event) => {
-				this.active(false, false)
+				this.active_cached(false)
 				this.end(e)
 			})
 
@@ -22,7 +22,7 @@ namespace $ {
 			const node = this.node_raw()
 			node.start()
 			node.stop(this.duration() + this.current_time())
-			this.active(true, true)
+			this.active_cached(true)
 		}
 
 		resume() {
@@ -35,10 +35,11 @@ namespace $ {
 			if (! this.active_cached()) return
 
 			this.node_raw().stop()
-			this.active(false, false)
+			this.active_cached(false)
 		}
 
-		active_cached() {
+		active_cached(next?: boolean) {
+			if (next !== undefined) return this.active(next, 'cache')
 			return $mol_wire_probe( ()=> this.active() )
 		}
 
@@ -48,8 +49,8 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		active( next?: boolean, cached?: boolean ): boolean {
-			if (cached !== undefined) return cached
+		active( next?: boolean, cached?: 'cache' ): boolean {
+			if (cached  === 'cache') return next ?? false
 			$mol_wire_solid()
 
 			this.node()
