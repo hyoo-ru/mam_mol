@@ -1,11 +1,11 @@
 declare namespace $ {
 
-	type $mol_bench__col_sort__TJJRPSVM = $mol_type_enforce<
+	type $mol_bench__col_sort__WLZRJUJV = $mol_type_enforce<
 		ReturnType< $mol_bench_demo['col_sort'] >
 		,
 		ReturnType< $mol_bench['col_sort'] >
 	>
-	type $mol_bench__result__C1WT3UYK = $mol_type_enforce<
+	type $mol_bench__result__E89GJ0R4 = $mol_type_enforce<
 		ReturnType< $mol_bench_demo['result'] >
 		,
 		ReturnType< $mol_bench['result'] >
