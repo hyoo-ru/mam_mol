@@ -35,12 +35,11 @@ namespace $ {
 			if (! this.active_cached()) return
 
 			this.node_raw().stop()
-			this.active_cached(false)
 		}
 
-		active_cached(next?: boolean) {
-			if (next !== undefined) return this.active(next, 'cache')
-			return $mol_wire_probe( ()=> this.active() )
+		protected active_cached(next?: boolean) {
+			if (next !== undefined) new $mol_after_frame(() => this.active(next, 'cache'))
+			return next ?? $mol_wire_probe( ()=> this.active() )
 		}
 
 		@ $mol_mem
