@@ -34,14 +34,21 @@ namespace $ {
 		}
 
 		@ $mol_action
-		override start(resume = false) {
-			
-			const node = this.node_raw()
-			
-			const offset = resume ? this.offset() : 0
-			
+		override start() {
 			if ( this.active_cached() ) this.stop()
-			node.start(undefined, offset)
+
+			this.node_raw().start()
+
+			this.start_time(this.current_time())
+			this.stop_time(0)
+			this.active(true, true)
+		}
+
+		@ $mol_action
+		override resume() {
+			if ( this.active_cached() ) return
+
+			this.node_raw().start(undefined, this.offset())
 
 			this.start_time(this.current_time())
 			this.stop_time(0)
@@ -50,10 +57,7 @@ namespace $ {
 
 		@ $mol_action
 		override stop() {
-			if (! this.active_cached()) return
-
-			this.node_raw().stop()
-
+			super.stop()
 			this.stop_time(this.current_time())
 		}
 

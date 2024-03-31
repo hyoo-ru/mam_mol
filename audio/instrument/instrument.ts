@@ -25,6 +25,11 @@ namespace $ {
 			this.active(true, true)
 		}
 
+		resume() {
+			if ( this.active_cached() ) return
+			this.start()
+		}
+
 		@ $mol_action
 		stop() {
 			if (! this.active_cached()) return
@@ -49,7 +54,11 @@ namespace $ {
 
 			this.node()
 
-			if( ( next === true || ( next === undefined && this.active_initial() ) ) && ! this.active_cached()) this.start()
+			if( next === true || ( next === undefined && this.active_initial() ) ) {
+				this.resume()
+				next = true
+			}
+
 			if( next === false ) this.stop()
 			
 			return next ?? false
