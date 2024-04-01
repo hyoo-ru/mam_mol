@@ -1,6 +1,8 @@
 namespace $ {
 	export class $mol_audio_instrument extends $mol_audio_node {
-		override node_raw(): AudioScheduledSourceNode {
+		@ $mol_mem
+		override node_raw(reset?: null): AudioScheduledSourceNode {
+			this.count()
 			throw new Error('implement')
 		}
 
@@ -9,9 +11,7 @@ namespace $ {
 			const node = super.node()
 
 			const destructor = () => {
-				if ( extended.started !== 'started') return
-
-				extended.stop()
+				if ( extended.started === 'started') extended.stop()
 				extended.started = 'stopped'
 			}
 
@@ -40,10 +40,21 @@ namespace $ {
 		end(e: Event) {}
 
 		@ $mol_mem
+		count(next?: number) { return next ?? 0 }
+
+		@ $mol_action
+		reset() {
+			this.count(this.count() + 1)
+			this.active(true)
+		}
+
+		@ $mol_mem
 		override output() {
+			this.active()
+			if ($mol_wire_probe(() => this.node())?.started === 'stopped') this.count(this.count() + 1)
 			const node = this.node()
 
-			if (node.started !== 'started') {
+			if (node.started === null) {
 				node.start()
 				node.started = 'started'
 			}
