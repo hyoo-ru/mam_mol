@@ -13,7 +13,7 @@ $mol_audio_demo_sample $mol_example_small
 			<= Sample_url_field $mol_form_field
 				name \Sample url
 				control <= Sample_url $mol_string
-					value? <=> sample_url? \/mol/audio/demo/sample/dl01.ogg
+					value? <=> sample_url? \/mol/audio/demo/sample/drumloop.ogg
 			<= Controls $mol_row sub /
 				<= Active $mol_check_icon
 					checked? <=> sample_active? false

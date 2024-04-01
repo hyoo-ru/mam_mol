@@ -1,9 +1,10 @@
 namespace $ {
 	export class $mol_audio_sample extends $mol_audio_instrument {
 		@ $mol_mem
-		override node_raw(reset?: null) {
+		override node_raw() {
 			const node = this.context().createBufferSource()
 			node.buffer = this.audio_buffer()
+			this.count()
 
 			return node
 		}
@@ -51,23 +52,12 @@ namespace $ {
 			return node
 		}
 
-		reset() { this.node_raw(null) }
-
-		override onended(e: Event) {
-			if (this.loop()) return
-			return super.onended(e)
-		}
-
 		@ $mol_mem
-		protected override node_started() {
-			const node = this.node()
+		count(next?: number) { return next ?? 0 }
 
-			if (! node.started) {
-				node.start()
-				node.started = true
-			}
-
-			return node
+		reset() {
+			this.count(this.count() + 1)
+			this.active(true)
 		}
 
 	}
