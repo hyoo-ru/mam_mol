@@ -1,11 +1,11 @@
 declare namespace $ {
 
-	type $mol_view__sub__R3LKNVYQ = $mol_type_enforce<
+	type $mol_view__sub__FYVB5A4K = $mol_type_enforce<
 		ReturnType< $mol_toolbar['items'] >
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_check_expand__checked__DCL18CKP = $mol_type_enforce<
+	type $mol_check_expand__checked__US1V493Z = $mol_type_enforce<
 		ReturnType< $mol_toolbar['expanded'] >
 		,
 		ReturnType< $mol_check_expand['checked'] >
