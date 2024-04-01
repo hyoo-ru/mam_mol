@@ -14,7 +14,7 @@ namespace $ {
 		}
 
 		buffer() {
-			return new ArrayBuffer(0) as ArrayBuffer | null
+			return null as ArrayBuffer | null
 		}
 
 		@ $mol_mem

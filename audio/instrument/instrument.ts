@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_audio_instrument extends $mol_audio_node {
-		override node_raw(reset?: null): AudioScheduledSourceNode {
+		override node_raw(): AudioScheduledSourceNode {
 			throw new Error('implement')
 		}
 
