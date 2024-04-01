@@ -50,8 +50,7 @@ namespace $ {
 
 		@ $mol_mem
 		override output() {
-			this.active()
-			if ($mol_wire_probe(() => this.node())?.started === 'stopped') this.count(this.count() + 1)
+			if (this.active() && $mol_wire_probe(() => this.node())?.started === 'stopped') this.count(this.count() + 1)
 			const node = this.node()
 
 			if (node.started === null) {
