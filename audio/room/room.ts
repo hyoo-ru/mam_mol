@@ -4,12 +4,15 @@ namespace $ {
 	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_audio_demo
 	 */
 	export class $mol_audio_room extends $mol_audio_node {
-	
-		@ $mol_action
-		play() {
-			this.$.$mol_audio_context.active()
-			this.output()
-			this.$.$mol_wait_timeout( this.duration() * 1000 )
+
+		active(next?: boolean) {
+			return this.status(next ? 'running' : undefined) === 'running'
+		}
+
+		status(next?: AudioContextState) {
+			const state = this.context_main().state(next)
+			if (state === 'running') this.output()
+			return state
 		}
 		
 	}

@@ -2,7 +2,12 @@ declare module 'web-audio-api'
 namespace $ {
 	export class $mol_audio_context extends $mol_object {
 		@ $mol_memo.method
-		static native() {
+		static main() {
+			return new this.$.$mol_audio_context
+		}
+
+		@ $mol_mem
+		native(reset?: null) {
 			const AudioContext = this.$.$mol_dom_context.AudioContext || this.$.$node['web-audio-api'].AudioContext
 
 			const ctx = new AudioContext()
@@ -12,7 +17,7 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		static state(next?: null | AudioContextState) {
+		state(next?: null | AudioContextState) {
 			const ctx = this.native()
 			if (ctx.state === next) return next
 
@@ -23,9 +28,10 @@ namespace $ {
 			return ctx.state
 		}
 
-		static active(next?: boolean) {
+		active(next?: boolean) {
 			return this.state(next ? 'running' : next === false ? 'suspended' : undefined) === 'running'
 		}
 
 	}
+	export const $mol_audio_context_main = new $mol_audio_context
 }

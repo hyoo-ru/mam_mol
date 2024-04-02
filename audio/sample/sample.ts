@@ -4,7 +4,6 @@ namespace $ {
 		override node_raw(reset?: null) {
 			const node = this.context().createBufferSource()
 			node.buffer = this.audio_buffer()
-			this.count()
 
 			return node
 		}

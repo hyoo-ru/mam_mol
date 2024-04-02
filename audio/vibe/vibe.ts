@@ -29,6 +29,16 @@ namespace $ {
 		}
 
 		@ $mol_mem
+		protected node_start() {
+			super.node_start()
+
+			return new this.$.$mol_after_timeout(
+				this.duration() * 1000,
+				() => $mol_wire_async(this).active(false)
+			)
+		}
+
+		@ $mol_mem
 		override node() {
 			const node = super.node()
 			node.frequency.setValueAtTime( this.freq(), this.time() )
