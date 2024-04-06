@@ -22,7 +22,7 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		suspend_timer(reset?: null) {
+		suspend_timer() {
 			const time = this.suspend_time()
 			if (! time ) return null
 			if (! this.active()) return null
