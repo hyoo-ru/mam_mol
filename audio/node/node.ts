@@ -8,16 +8,10 @@ namespace $ {
 		context() { return this.context_main().native() }
 
 		@ $mol_mem
-		node_raw(reset?: null): AudioNode { return this.context().destination }
+		node_raw(): AudioNode { return this.context().destination }
 
 		node() {
 			return this.node_raw() as ReturnType<this['node_raw']>
-		}
-
-		@ $mol_action
-		reset() {
-			this.node_raw(null)
-			this.active(true)
 		}
 
 		@ $mol_mem

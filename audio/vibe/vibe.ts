@@ -1,11 +1,6 @@
 namespace $ {
 
-	export type $mol_audio_vibe_shape =
-	| 'sine' 
-	| 'square' 
-	| 'sawtooth' 
-	| 'triangle' 
-	| 'custom'
+	export type $mol_audio_vibe_shape = OscillatorType
 
 	/**
 	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_audio_demo_vibe
@@ -23,27 +18,11 @@ namespace $ {
 		@ $mol_mem
 		shape( next: $mol_audio_vibe_shape = 'sine' ) { return next }
 
-		override duration() {
-			return 0.5
-		}
-
-		@ $mol_mem
-		stop_timer(reset?: null) {
-			if (! this.duration()) return null
-			if (! this.active()) return null
-
-			return new this.$.$mol_after_timeout(
-				this.duration() * 1000,
-				() => $mol_wire_async(this).active(false)
-			)
-		}
-
 		@ $mol_mem
 		override node() {
 			const node = super.node()
-			node.frequency.setValueAtTime( this.active() ? this.freq() : -1, this.time() )
+			node.frequency.setValueAtTime( this.active() && this.freq() > 0 ? this.freq() : -1, this.time() )
 			node.type = this.shape()
-			this.stop_timer()
 
 			return node
 		}

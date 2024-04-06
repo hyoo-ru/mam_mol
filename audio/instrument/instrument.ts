@@ -5,59 +5,58 @@ namespace $ {
 			throw new Error('implement')
 		}
 
-		@ $mol_mem
 		duration() {
-			let duration = 0
-			for (const input of this.input_connected()) {
-				duration = Math.max(
-					duration,
-					input instanceof $mol_audio_instrument ? input.duration() : 0
-				)
-			}
-
-			return duration
+			return 0
 		}
-		
+
 		@ $mol_mem
 		override node() {
 			const node = super.node()
+			const onended = this.onended.bind(this, node)
 
-			const destructor = () => {
-				if ( extended.started) extended.stop()
-				extended.started = false
-			}
-
-			const extended = Object.assign(node, {
-				destructor,
+			return Object.assign(node, {
+				destructor: onended,
+				onended,
 				started: null as null | boolean,
-				onended: this.onended.bind(this, node)
 			})
-
-			return extended
 		}
 
-		onended(node: AudioNode, e: Event) {
-			const current = this.node()
-			if (current !== node) return
-			current.started = false
+		protected onended(node: AudioScheduledSourceNode & { started?: boolean | null }, e?: Event) {
+			node.started = false
+			if (e === undefined) return node.stop()
+
+			if (this.node() !== node) return
+
 			this.active(false)
 			this.end()
 		}
 
 		end() {}
 
-		protected node_start() {
-			const node = this.node()
+		@ $mol_action
+		reset() {
+			this.node_raw(null)
+			this.active(true)
+		}
 
-			if (node.started === null) {
-				this.node().start()
-				node.started = true
-			}
+		protected node_autostop() {
+			const duration = this.duration()
+			if (duration > 0) this.node().stop(this.time() + duration)
 		}
 
 		@ $mol_mem
 		override output() {
-			this.node_start()
+			const prev = $mol_wire_probe(() => this.node())
+
+			if (this.active() && prev?.started === false) this.node_raw(null)
+
+			const node = this.node()
+
+			if (node.started === null) {
+				node.start()
+				node.started = true
+				this.node_autostop()
+			}
 
 			return super.output()
 		}

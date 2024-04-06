@@ -1,16 +1,16 @@
 $mol_audio_demo $mol_example_small
 	title \WebAudio API example
-	Beep $mol_audio_room
+	Beep_room $mol_audio_room
 		status? => beep_status?
 		input /
-			<= Beep_vibe $mol_audio_vibe
+			<= Beep $mol_audio_vibe
 				reset => beep_play
 				duration 0.1
 				freq 440
-	Noise $mol_audio_room
+	Noise_room $mol_audio_room
 		status? => noise_status?
 		input /
-			<= Noise_vibe $mol_audio_vibe
+			<= Noise $mol_audio_vibe
 				duration 1
 				reset => noise_play
 				freq <= noise_freq 440

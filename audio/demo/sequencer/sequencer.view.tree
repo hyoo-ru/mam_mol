@@ -6,17 +6,25 @@ $mol_audio_demo_sequencer $mol_example_small
 		time => time
 		input /
 			<= Beep $mol_audio_vibe
-				reset => beep_play
-				active? => beep_active?
-				duration <= note_duration 0.1
+				active <= beep_active false
 				freq <= note_freq? 0
 	sub /
 		<= List $mol_list rows /
-			<= Note_length_field $mol_form_field
-				name \Note length, sec
-				control <= Note_length $mol_number
-					precision .05
-					value? <=> note_length? .15
+			<= Note_settings $mol_row sub /
+				<= Note_length_field $mol_form_field
+					name \Note length, sec
+					control <= Note_length $mol_number
+						precision .05
+						value_min .05
+						value? <=> note_length? .25
+				<= Note_off_field $mol_form_field
+					name \Note off, sec
+					bids /
+						<= note_off_less_length \Should be less than note length
+					control <= Note_off $mol_number
+						precision .05
+						value_min .05
+						value? <=> note_off? .15
 			<= Notes_field $mol_form_field
 				name \Notes
 				bid \Example: e e5/2 -/2
@@ -24,7 +32,7 @@ $mol_audio_demo_sequencer $mol_example_small
 					value? <=> notes? \e e e - e e e - e g c d e - - -/2 f f f f f e e e e e d d e d - g -
 			<= Beep_row $mol_row sub /
 				<= Beep_play $mol_button_minor
-					click? <=> play_notes? null
+					click? <=> play? null
 					title <= beep_play_title \Play {note}
 				<= Beep_status $mol_audio_status status? <=> room_status?
 	tags /
