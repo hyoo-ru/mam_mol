@@ -1,7 +1,7 @@
 $mol_audio_demo_sample $mol_example_small
 	title \WebAudio API sample example
 	Room $mol_audio_room
-		status => room_status
+		status? => room_status?
 		input /
 			<= Sample $mol_audio_sample
 				active? <=> sample_active? false
@@ -26,7 +26,8 @@ $mol_audio_demo_sample $mol_example_small
 					checked? <=> loop?
 					title \Loop
 					Icon <= Loop_icon $mol_icon_loop
-			<= Room_status $mol_status message <= room_status
+			<= Room_status $mol_audio_status
+				status? <=> room_status?
 	tags /
 		\sound
 		\sample

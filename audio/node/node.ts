@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_audio_node extends $mol_object {
-		context_main() { return this.$.$mol_audio_context.main() }
+		context_main() { return this.$.$mol_audio_context_main }
 		context() { return this.context_main().native() }
 
 		@ $mol_mem
