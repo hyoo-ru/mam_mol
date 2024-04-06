@@ -12,7 +12,7 @@ namespace $ {
 			return new this.$.$mol_audio_context
 		}
 
-		active(next?: boolean) {
+		override active(next?: boolean) {
 			return this.context_main().active(next)
 		}
 
@@ -22,18 +22,11 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		suspend_timer() {
+		suspend_timer(reset?: null) {
 			const time = this.suspend_time()
 			if (! time ) return null
-
-			if (this.inputs_active()) return null
-
+			if (! this.active()) return null
 			return new this.$.$mol_after_timeout(time * 1000, () => $mol_wire_async(this).active(false))
-		}
-
-		@ $mol_mem
-		inputs_active() {
-			return this.input_connected().some(src => src.active())
 		}
 
 		@ $mol_mem
@@ -42,9 +35,9 @@ namespace $ {
 			if (state === 'closed') return state
 
 			this.output()
-			this.suspend_timer()
 
-			if (state === 'running' && this.inputs_active()) return 'playing'
+			if (this.inputs_active() && state === 'running') return 'playing'
+			this.suspend_timer()
 
 			return state
 		}

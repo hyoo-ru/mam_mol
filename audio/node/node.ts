@@ -25,6 +25,7 @@ namespace $ {
 		
 		@ $mol_mem
 		active(next?: boolean) {
+			if (next) this.context_main().active(true)
 			return next ?? false
 		}
 
@@ -52,6 +53,11 @@ namespace $ {
 		}
 		
 		@ $mol_mem
+		inputs_active() {
+			return this.input_connected().some(src => src.active())
+		}
+
+		@ $mol_mem
 		output() {
 			this.input_connected()
 			return this.node()
@@ -59,7 +65,7 @@ namespace $ {
 
 		@ $mol_action
 		time() { return this.context().currentTime }
-		
+
 		destructor() {
 			
 			const node = $mol_wire_probe(() => this.node())

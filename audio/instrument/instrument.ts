@@ -52,7 +52,7 @@ namespace $ {
 
 		@ $mol_mem
 		override output() {
-			if (this.active() && $mol_wire_probe(() => this.node())?.started === false) this.reset()
+			// if (this.active() && $mol_wire_probe(() => this.node())?.started === false) this.reset()
 			const node = this.node()
 
 			if (node.started === null) {

@@ -1,6 +1,7 @@
-$mol_audio_status $mol_status
+$mol_audio_status $mol_view
 	sub /
-		<= status? \suspended
+		<= Status $mol_status
+			message <= status? \suspended
 		<= Wakeup $mol_button_major
 			click? <=> wakeup? null
 			title \Enable audio

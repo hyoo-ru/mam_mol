@@ -1,7 +1,7 @@
 $mol_audio_demo_vibe $mol_example_small
 	title \WebAudio API complex example
 	Room $mol_audio_room
-		status => room_status
+		status? => room_status?
 		input /
 			<= Beep_vibe $mol_audio_vibe
 				duration <= duration -
@@ -39,7 +39,7 @@ $mol_audio_demo_vibe $mol_example_small
 					sub /
 						<= Play_icon $mol_icon_play
 						\Play
-				<= Room_status $mol_status message <= room_status
+				<= Room_status $mol_audio_status status? <=> room_status?
 	tags /
 		\sound
 	aspects /

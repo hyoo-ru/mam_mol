@@ -4,7 +4,7 @@ $mol_audio_demo_sample $mol_example_small
 		status? => room_status?
 		input /
 			<= Sample $mol_audio_sample
-				active? <=> sample_active? false
+				active? => sample_active?
 				reset => reset
 				loop? <=> loop? true
 				buffer <= sample_buffer null
@@ -16,7 +16,7 @@ $mol_audio_demo_sample $mol_example_small
 					value? <=> sample_url? \/mol/audio/demo/sample/drumloop.ogg
 			<= Controls $mol_row sub /
 				<= Active $mol_check_icon
-					checked? <=> sample_active? false
+					checked? <=> sample_active?
 					title \Active
 					Icon <= Active_icon $mol_icon_play
 				<= Reset $mol_button_minor

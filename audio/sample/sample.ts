@@ -49,6 +49,7 @@ namespace $ {
 
 		@ $mol_mem
 		override node() {
+			if (this.active() && $mol_wire_probe(() => this.node())?.started === false) this.node_raw(null)
 			const node = super.node()
 
 			node.loop = this.loop()

@@ -14,7 +14,7 @@ namespace $.$$ {
 			const status = this.status()
 			if (status === 'suspended') return [ this.Wakeup() ]
 
-			return [ this.status() ]
+			return [ this.Status() ]
 		}
 	}
 }

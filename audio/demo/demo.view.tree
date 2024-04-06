@@ -1,14 +1,14 @@
 $mol_audio_demo $mol_example_small
 	title \WebAudio API example
 	Beep $mol_audio_room
-		status => beep_status
+		status? => beep_status?
 		input /
 			<= Beep_vibe $mol_audio_vibe
 				reset => beep_play
 				duration 0.1
 				freq 440
 	Noise $mol_audio_room
-		status => noise_status
+		status? => noise_status?
 		input /
 			<= Noise_vibe $mol_audio_vibe
 				duration 1
@@ -20,12 +20,12 @@ $mol_audio_demo $mol_example_small
 				<= Beep_play $mol_button_minor
 					click <= beep_play
 					title \Beep
-				<= Beep_status $mol_status message <= beep_status
+				<= Beep_status $mol_audio_status status? <=> beep_status?
 			<= Nouse_row $mol_row sub /
 				<= Noise_play $mol_button_minor
 					click <= noise_play
 					title \Noise
-				<= Noise_status $mol_status message <= noise_status
+				<= Noise_status $mol_audio_status status? <=> noise_status?
 	tags /
 		\sound
 	aspects /
