@@ -1,5 +1,7 @@
 namespace $ {
 
+	export type $mol_audio_room_status = AudioContextState | 'playing'
+
 	/**
 	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_audio_demo
 	 */
@@ -38,8 +40,8 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		status(next?: AudioContextState) {
-			const state = this.context_main().state(next)
+		status(next?: $mol_audio_room_status): $mol_audio_room_status {
+			const state = this.context_main().state(next === 'playing' ? 'running' : next)
 			if (state === 'closed') return state
 
 			this.output()

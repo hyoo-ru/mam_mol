@@ -1,8 +1,8 @@
 namespace $.$$ {
 	export class $mol_audio_status extends $.$mol_audio_status {
 
-		override status(next?: AudioContextState) {
-			return super.status(next) as AudioContextState
+		override status(next?: $mol_audio_room_status) {
+			return super.status(next) as $mol_audio_room_status
 		}
 
 		override wakeup() {
