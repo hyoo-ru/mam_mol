@@ -1,0 +1,34 @@
+$mol_audio_demo_sequencer $mol_example_small
+	title \WebAudio API example sequencer
+	Room $mol_audio_room
+		status? => room_status?
+		active? => room_active?
+		time => time
+		input /
+			<= Beep $mol_audio_vibe
+				reset => beep_play
+				active? => beep_active?
+				duration <= note_duration 0.1
+				freq <= note_freq? 0
+	sub /
+		<= List $mol_list rows /
+			<= Note_length_field $mol_form_field
+				name \Note length, sec
+				control <= Note_length $mol_number
+					precision .05
+					value? <=> note_length? .15
+			<= Notes_field $mol_form_field
+				name \Notes
+				bid \Example: e e5/2 -/2
+				control <= Notes $mol_textarea
+					value? <=> notes? \e e e - e e e - e g c d e - - -/2 f f f f f e e e e e d d e d - g -
+			<= Beep_row $mol_row sub /
+				<= Beep_play $mol_button_minor
+					click? <=> play_notes? null
+					title <= beep_play_title \Play {note}
+				<= Beep_status $mol_audio_status status? <=> room_status?
+	tags /
+		\sound
+		\sequencer
+	aspects /
+		\Media/Audio

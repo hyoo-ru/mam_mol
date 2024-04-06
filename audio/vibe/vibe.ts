@@ -28,14 +28,13 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		protected override node_start() {
-			super.node_start()
-			const duration = this.duration()
-			if (! duration) return null
+		stop_timer(reset?: null) {
+			if (! this.duration()) return null
+			if (! this.active()) return null
 
 			return new this.$.$mol_after_timeout(
-				duration * 1000,
-				() => this.active(false)
+				this.duration() * 1000,
+				() => $mol_wire_async(this).active(false)
 			)
 		}
 
@@ -44,6 +43,7 @@ namespace $ {
 			const node = super.node()
 			node.frequency.setValueAtTime( this.active() ? this.freq() : -1, this.time() )
 			node.type = this.shape()
+			this.stop_timer()
 
 			return node
 		}

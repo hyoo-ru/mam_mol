@@ -41,24 +41,23 @@ namespace $ {
 			if (current !== node) return
 			current.started = false
 			this.active(false)
-			this.end(e)
+			this.end()
 		}
 
-		end(e: Event) {}
+		end() {}
 
 		protected node_start() {
-			this.node().start()
+			const node = this.node()
+
+			if (node.started === null) {
+				this.node().start()
+				node.started = true
+			}
 		}
 
 		@ $mol_mem
 		override output() {
-			// if (this.active() && $mol_wire_probe(() => this.node())?.started === false) this.reset()
-			const node = this.node()
-
-			if (node.started === null) {
-				this.node_start()
-				node.started = true
-			}
+			this.node_start()
 
 			return super.output()
 		}

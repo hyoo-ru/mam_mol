@@ -20,6 +20,7 @@ include \/mol/attach/demo
 include \/mol/audio/demo
 include \/mol/audio/demo/vibe
 include \/mol/audio/demo/sample
+include \/mol/audio/demo/sequencer
 include \/mol/avatar/demo
 include \/mol/bar/demo
 include \/mol/bench/demo
