@@ -43,6 +43,7 @@ namespace $.$$ {
 		@ $mol_mem
 		note_index(reset?: null) {
 			const start = this.start_time()
+			if (! start) return -1
 
 			const relative = this.time() - start
 
