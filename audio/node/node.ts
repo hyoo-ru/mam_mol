@@ -13,7 +13,7 @@ namespace $ {
 		@ $mol_action
 		reset() {
 			this.node_raw(null)
-			this.context_main().active(true)
+			this.active(true)
 		}
 
 		@ $mol_mem
@@ -21,7 +21,7 @@ namespace $ {
 		
 		@ $mol_mem
 		active(next?: boolean) {
-			return next ?? false
+			return this.context_main().active(next)
 		}
 
 		@ $mol_mem
@@ -29,8 +29,8 @@ namespace $ {
 			
 			const node = this.node()
 			
-			const prev = $mol_mem_cached( ()=> this.input_connected() ) ?? []
-			const next = this.input().filter(node => node.active())
+			const prev = $mol_wire_probe( ()=> this.input_connected() ) ?? []
+			const next = ! this.active() ? [] : this.input().filter(node => node.active())
 			
 			for( const src of prev ) {
 				if( next.includes( src ) ) continue
@@ -57,9 +57,12 @@ namespace $ {
 			
 			const node = $mol_wire_probe(() => this.node())
 			if (! node ) return
-			
-			for( const src of this.input() ) {
-				if (src.active()) src.output().disconnect( node )
+
+			const inputs = $mol_wire_probe(() => this.input_connected())
+			if (! inputs?.length) return
+
+			for( const src of inputs ) {
+				src.output().disconnect( node )
 			}
 			
 		}

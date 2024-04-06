@@ -46,12 +46,6 @@ namespace $ {
 
 		end(e: Event) {}
 
-		@ $mol_action
-		override reset() {
-			super.reset()
-			this.active(true)
-		}
-
 		protected node_start() {
 			this.node().start()
 		}
