@@ -1,6 +1,10 @@
 namespace $ {
 	export class $mol_audio_node extends $mol_object {
-		context_main() { return this.$.$mol_audio_context_main }
+		@ $mol_mem
+		context_main(next?: $mol_audio_context) {
+			return next ?? this.$.$mol_audio_context_main
+		}
+
 		context() { return this.context_main().native() }
 
 		@ $mol_mem
@@ -30,14 +34,17 @@ namespace $ {
 			const node = this.node()
 			
 			const prev = $mol_wire_probe( ()=> this.input_connected() ) ?? []
-			const next = this.input() // .filter(node => node.active())
+			const next = this.input()
 			
 			for( const src of prev ) {
 				if( next.includes( src ) ) continue
 				src.output().disconnect( node )
 			}
 			
+			const context = this.context_main()
+
 			for( const src of next ) {
+				src.context_main(context)
 				src.output().connect( node )
 			}
 			

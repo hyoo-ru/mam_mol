@@ -6,14 +6,11 @@ namespace $ {
 	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_audio_demo
 	 */
 	export class $mol_audio_room extends $mol_audio_node {
-		// @ $mol_memo.field
-		// get $() {
-		// 	const ctx = $mol_audio_context.make({})
 
-		// 	return super.$.$mol_ambient({
-		// 		$mol_audio_context_main: ctx
-		// 	})
-		// }
+		@ $mol_mem
+		override context_main() {
+			return new this.$.$mol_audio_context
+		}
 
 		active(next?: boolean) {
 			return this.context_main().active(next)
