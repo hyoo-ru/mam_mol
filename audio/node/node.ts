@@ -21,7 +21,7 @@ namespace $ {
 		
 		@ $mol_mem
 		active(next?: boolean) {
-			return this.context_main().active(next)
+			return next ?? false
 		}
 
 		@ $mol_mem
@@ -30,7 +30,7 @@ namespace $ {
 			const node = this.node()
 			
 			const prev = $mol_wire_probe( ()=> this.input_connected() ) ?? []
-			const next = ! this.active() ? [] : this.input().filter(node => node.active())
+			const next = this.input() // .filter(node => node.active())
 			
 			for( const src of prev ) {
 				if( next.includes( src ) ) continue

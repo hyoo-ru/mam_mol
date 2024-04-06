@@ -1,4 +1,5 @@
 namespace $ {
+
 	export class $mol_audio_sample extends $mol_audio_instrument {
 		@ $mol_mem
 		override node_raw(reset?: null) {

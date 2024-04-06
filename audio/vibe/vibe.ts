@@ -14,7 +14,6 @@ namespace $ {
 		
 		@ $mol_mem
 		override node_raw(reset?: null) {
-			this.active()
 			return this.context().createOscillator()
 		}
 
@@ -29,19 +28,21 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		protected node_start() {
+		protected override node_start() {
 			super.node_start()
+			const duration = this.duration()
+			if (! duration) return null
 
 			return new this.$.$mol_after_timeout(
-				this.duration() * 1000,
-				() => $mol_wire_async(this).active(false)
+				duration * 1000,
+				() => this.active(false)
 			)
 		}
 
 		@ $mol_mem
 		override node() {
 			const node = super.node()
-			node.frequency.setValueAtTime( this.freq(), this.time() )
+			node.frequency.setValueAtTime( this.active() ? this.freq() : 0, this.time() )
 			node.type = this.shape()
 
 			return node
