@@ -3,7 +3,7 @@ namespace $ {
 	export class $mol_audio_sample extends $mol_audio_instrument {
 		@ $mol_mem
 		override node_raw(reset?: null) {
-			const node = this.context().createBufferSource()
+			const node = this.context().native().createBufferSource()
 			node.buffer = this.audio_buffer()
 
 			return node
@@ -20,7 +20,7 @@ namespace $ {
 		@ $mol_mem
 		audio_buffer() {
 			const buffer = this.buffer()
-			return buffer ? this.context().decodeAudioData(buffer) : null
+			return buffer ? this.context().native().decodeAudioData(buffer) : null
 		}
 
 		@ $mol_mem

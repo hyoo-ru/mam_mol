@@ -38,7 +38,7 @@ namespace $ {
 		}
 
 		relative_time() {
-			return this.time() - this.start_time()
+			return this.context().time() - this.start_time()
 		}
 
 		ended() {
@@ -48,7 +48,7 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		current(reset?: null) {
+		current() {
 			const start = this.start_time()
 			if (! start) return null
 
@@ -61,8 +61,6 @@ namespace $ {
 			const relative = this.relative_time()
 
 			const index = this.note_time_ranges().findIndex(([from, to]) => relative >= from && relative <= to)
-
-			new this.$.$mol_after_frame(() => $mol_wire_async(this).current(null))
 
 			return this.notes_normalized().at(index) ?? null
 		}

@@ -1,14 +1,12 @@
 namespace $ {
 	export class $mol_audio_node extends $mol_object {
 		@ $mol_mem
-		context_main(next?: $mol_audio_context) {
+		context(next?: $mol_audio_context) {
 			return next ?? this.$.$mol_audio_context_main
 		}
 
-		context() { return this.context_main().native() }
-
 		@ $mol_mem
-		node_raw(): AudioNode { return this.context().destination }
+		node_raw(): AudioNode { return this.context().native().destination }
 
 		node() {
 			return this.node_raw() as ReturnType<this['node_raw']>
@@ -19,12 +17,12 @@ namespace $ {
 		
 		@ $mol_mem
 		active(next?: boolean) {
-			if (next) this.context_main().active(true)
+			if (next) this.context().active(true)
 			return next ?? false
 		}
 
 		connect(parent: $mol_audio_node) {
-			this.context_main(parent.context_main())
+			this.context(parent.context())
 			this.output().connect( parent.node() )
 		}
 
@@ -63,8 +61,7 @@ namespace $ {
 			return this.node()
 		}
 
-		@ $mol_action
-		time() { return this.context().currentTime }
+		time() { return this.context().time(null) }
 
 		destructor() {
 			

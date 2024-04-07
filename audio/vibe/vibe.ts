@@ -9,7 +9,7 @@ namespace $ {
 		
 		@ $mol_mem
 		override node_raw(reset?: null) {
-			return this.context().createOscillator()
+			return this.context().native().createOscillator()
 		}
 
 		@ $mol_mem
