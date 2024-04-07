@@ -23,6 +23,15 @@ namespace $ {
 			return next ?? false
 		}
 
+		connect(parent: $mol_audio_node) {
+			this.context_main(parent.context_main())
+			this.output().connect( parent.node() )
+		}
+
+		disconnect(parent: $mol_audio_node) {
+			this.output().disconnect( parent.node() )
+		}
+
 		@ $mol_mem
 		input_connected() {
 			
@@ -33,14 +42,11 @@ namespace $ {
 			
 			for( const src of prev ) {
 				if( next.includes( src ) ) continue
-				src.output().disconnect( node )
+				src.disconnect( this )
 			}
 			
-			const context = this.context_main()
-
 			for( const src of next ) {
-				src.context_main(context)
-				src.output().connect( node )
+				src.connect( this )
 			}
 			
 			return next 
@@ -69,7 +75,7 @@ namespace $ {
 			if (! inputs?.length) return
 
 			for( const src of inputs ) {
-				src.output().disconnect( node )
+				src.disconnect( this )
 			}
 			
 		}

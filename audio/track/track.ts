@@ -1,9 +1,7 @@
 namespace $ {
-	export class $mol_audio_track extends $mol_object {
+	export class $mol_audio_track extends $mol_audio_gain {
 		@ $mol_mem
 		start_time(next?: number) { return next ?? 0 }
-
-		time(next?: number) { return next ?? 0 }
 
 		@ $mol_mem
 		notes(next?: string) { return next ?? '' }
@@ -15,7 +13,9 @@ namespace $ {
 
 		note_length(sec?: number) { return sec ?? 0.25 }
 
-		note_off() { return this.note_length() / 8 }
+		note_off_part() { return .4 }
+
+		note_off() { return this.note_length() * this.note_off_part() }
 
 		@ $mol_mem
 		note_time_ranges() {
@@ -25,7 +25,7 @@ namespace $ {
 			const note_off = this.note_off()
 
 			for (const note of this.notes_normalized()) {
-				const duration = note.divider * default_length
+				const duration = default_length / note.divider
 
 				const end = duration_prev + duration
 
@@ -39,6 +39,7 @@ namespace $ {
 
 		@ $mol_mem
 		current(reset?: null) {
+			if (! this.active()) return null
 			const start = this.start_time()
 			if (! start) return null
 
@@ -59,6 +60,22 @@ namespace $ {
 
 		start() {
 			this.start_time(this.time())
+			this.active(true)
+		}
+
+		@ $mol_mem
+		override output() {
+			// if (this.active() && ! this.current() && this.note_time_ranges().length > 0) this.start()
+
+			for (const input of this.input_connected()) {
+				input.active(this.note_active())
+
+				if (input instanceof $mol_audio_vibe) {
+					input.freq(this.note_freq())
+				}
+			}
+
+			return super.output()
 		}
 	}
 }
