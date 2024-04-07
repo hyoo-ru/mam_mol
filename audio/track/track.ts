@@ -70,7 +70,7 @@ namespace $ {
 
 		@ $mol_action
 		start(e?: Event | null) {
-			this.start_time(this.time())
+			this.start_time(this.time_cut())
 			this.active(true)
 			return e
 		}

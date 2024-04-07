@@ -8,7 +8,7 @@ namespace $ {
 		@ $mol_mem
 		override node() {
 			const node = super.node()
-			node.gain.setValueAtTime( this.gain(), this.time() )
+			node.gain.setValueAtTime( this.gain(), this.time_cut() )
 			return node
 		}
 

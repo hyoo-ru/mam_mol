@@ -61,7 +61,7 @@ namespace $ {
 			return this.node()
 		}
 
-		time() { return this.context().time(null) }
+		time_cut() { return this.context().time(null) }
 
 		destructor() {
 			
