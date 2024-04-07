@@ -61,7 +61,10 @@ namespace $ {
 			return this.node()
 		}
 
-		time_cut() { return this.context().time(null) }
+		time(reset?: null) { return this.context().time(reset) }
+
+		@ $mol_action
+		time_cut() { return this.time() }
 
 		destructor() {
 			

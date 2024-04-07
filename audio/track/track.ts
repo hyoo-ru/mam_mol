@@ -37,28 +37,31 @@ namespace $ {
 			return times
 		}
 
-		relative_time() {
-			return this.context().time() - this.start_time()
+		duration() {
+			return this.note_time_ranges().at(-1)?.[1] ?? 0
 		}
 
-		ended() {
-			const ranges = this.note_time_ranges()
-			const last_to = ranges.at(-1)?.[1] ?? 0
-			return this.relative_time() > last_to
+		protected relative_time_last = 0
+
+		loop() {
+			return false
 		}
+
+		loop_from() { return 0 }
+		loop_to() { return this.duration() }
 
 		@ $mol_mem
 		current() {
-			const start = this.start_time()
-			if (! start) return null
+			const relative = this.time() - this.start_time()
+			const ended = relative > (this.loop() ? this.loop_to() : this.duration())
 
-			if (this.ended()) {
-				this.active(false)
+			if (ended) {
+				if (this.loop()) this.start()
+				else this.active(false)
 				return null
 			}
-			if (! this.active()) return null
 
-			const relative = this.relative_time()
+			if (! this.active()) return null
 
 			const index = this.note_time_ranges().findIndex(([from, to]) => relative >= from && relative <= to)
 
@@ -69,16 +72,26 @@ namespace $ {
 		note_freq() { return this.current()?.freq ?? 0 }
 
 		@ $mol_action
+		reset() {
+			this.start_time( this.time_cut() + ( this.loop() ? this.loop_from() : 0 ) )
+		}
+
+		@ $mol_action
 		start(e?: Event | null) {
-			this.start_time(this.time_cut())
 			this.active(true)
+			this.start_paused(null)
 			return e
 		}
 
 		@ $mol_mem
-		override output() {
-			// if (this.active() && ! this.current() && this.note_time_ranges().length > 0) this.start()
+		protected start_paused(reset?: null) {
+			if (this.active()) this.reset()
+			return null
+		}
 
+		@ $mol_mem
+		override output() {
+			this.start_paused()
 			for (const input of this.input_connected()) {
 				input.active(this.note_active())
 
