@@ -33,9 +33,10 @@ namespace $ {
 		end() {}
 
 		@ $mol_action
-		start(e?: Event) {
+		start(e?: Event | null) {
 			this.node_raw(null)
 			this.active(true)
+			return e
 		}
 
 		protected node_autostop() {
