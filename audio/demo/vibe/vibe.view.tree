@@ -3,11 +3,14 @@ $mol_audio_demo_vibe $mol_example_small
 	Room $mol_audio_room
 		status? => room_status?
 		input /
-			<= Beep_vibe $mol_audio_vibe
-				duration <= duration -
+			<= Beep_track $mol_audio_track
 				start? => beep_vibe_start?
-				freq <= frequency -
-				shape <= shape -
+				note_length <= duration
+				notes \_
+				input /
+					<= Beep_vibe $mol_audio_vibe
+						freq <= frequency -
+						shape <= shape -
 	sub /
 		<= List $mol_list rows /
 			<= Duration $mol_labeler

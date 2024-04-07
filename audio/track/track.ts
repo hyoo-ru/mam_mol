@@ -37,30 +37,44 @@ namespace $ {
 			return times
 		}
 
+		relative_time() {
+			return this.time() - this.start_time()
+		}
+
+		ended() {
+			const ranges = this.note_time_ranges()
+			const last_to = ranges.at(-1)?.[1] ?? 0
+			return this.relative_time() > last_to
+		}
+
 		@ $mol_mem
 		current(reset?: null) {
-			if (! this.active()) return null
 			const start = this.start_time()
 			if (! start) return null
 
-			const relative = this.time() - start
+			if (this.ended()) {
+				this.active(false)
+				return null
+			}
+			if (! this.active()) return null
 
-			const ranges = this.note_time_ranges()
-			const index = ranges.findIndex(([from, to]) => relative >= from && relative <= to)
+			const relative = this.relative_time()
 
-			const is_end = index === ranges.length - 1
+			const index = this.note_time_ranges().findIndex(([from, to]) => relative >= from && relative <= to)
 
-			if (! is_end) new this.$.$mol_after_frame(() => $mol_wire_async(this).current(null))
+			new this.$.$mol_after_frame(() => $mol_wire_async(this).current(null))
 
-			return index >= 0 ? this.notes_normalized().at(index) : null
+			return this.notes_normalized().at(index) ?? null
 		}
 
 		note_active() { return Boolean(this.current()) }
 		note_freq() { return this.current()?.freq ?? 0 }
 
-		start() {
+		@ $mol_action
+		start(e?: Event | null) {
 			this.start_time(this.time())
 			this.active(true)
+			return e
 		}
 
 		@ $mol_mem
