@@ -34,7 +34,7 @@ namespace $ {
 		end() {}
 
 		@ $mol_action
-		reset() {
+		start(e?: Event) {
 			this.node_raw(null)
 			this.active(true)
 		}

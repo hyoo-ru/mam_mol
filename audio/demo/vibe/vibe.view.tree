@@ -5,7 +5,7 @@ $mol_audio_demo_vibe $mol_example_small
 		input /
 			<= Beep_vibe $mol_audio_vibe
 				duration <= duration -
-				reset => beep_vibe_play
+				start? => beep_vibe_start?
 				freq <= frequency -
 				shape <= shape -
 	sub /
@@ -35,7 +35,7 @@ $mol_audio_demo_vibe $mol_example_small
 							\triangle
 			<= Button_row $mol_row sub /
 				<= Play_button $mol_button_major
-					click <= beep_vibe_play
+					click? <=> beep_vibe_start?
 					sub /
 						<= Play_icon $mol_icon_play
 						\Play

@@ -4,7 +4,7 @@ $mol_audio_demo $mol_example_small
 		status? => beep_status?
 		input /
 			<= Beep $mol_audio_vibe
-				reset => beep_play
+				start? => beep_play?
 				duration 0.1
 				freq 440
 	Noise_room $mol_audio_room
@@ -12,18 +12,18 @@ $mol_audio_demo $mol_example_small
 		input /
 			<= Noise $mol_audio_vibe
 				duration 1
-				reset => noise_play
+				start? => noise_play?
 				freq <= noise_freq 440
 	sub /
 		<= List $mol_list rows /
 			<= Beep_row $mol_row sub /
 				<= Beep_play $mol_button_minor
-					click <= beep_play
+					click? <=> beep_play?
 					title \Beep
 				<= Beep_status $mol_audio_status status? <=> beep_status?
 			<= Nouse_row $mol_row sub /
 				<= Noise_play $mol_button_minor
-					click <= noise_play
+					click? <=> noise_play?
 					title \Noise
 				<= Noise_status $mol_audio_status status? <=> noise_status?
 	tags /

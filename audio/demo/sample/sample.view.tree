@@ -5,7 +5,7 @@ $mol_audio_demo_sample $mol_example_small
 		input /
 			<= Sample $mol_audio_sample
 				active? => sample_active?
-				reset => reset
+				start? => start?
 				loop? <=> loop? true
 				buffer <= sample_buffer null
 	sub /
@@ -19,9 +19,9 @@ $mol_audio_demo_sample $mol_example_small
 					checked? <=> sample_active?
 					title \Active
 					Icon <= Active_icon $mol_icon_play
-				<= Reset $mol_button_minor
-					click <= reset
-					title \Reset
+				<= Start $mol_button_minor
+					click? <=> start?
+					title \Start
 				<= Loop $mol_check_icon
 					checked? <=> loop?
 					title \Loop
