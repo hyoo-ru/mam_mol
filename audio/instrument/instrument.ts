@@ -5,10 +5,6 @@ namespace $ {
 			throw new Error('implement')
 		}
 
-		duration() {
-			return 0
-		}
-
 		@ $mol_mem
 		override node() {
 			const node = super.node()
@@ -39,10 +35,7 @@ namespace $ {
 			return e
 		}
 
-		protected node_autostop() {
-			const duration = this.duration()
-			if (duration > 0) this.node().stop(this.time() + duration)
-		}
+		protected node_autostop() {}
 
 		@ $mol_mem
 		override output() {

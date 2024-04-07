@@ -9,7 +9,7 @@ namespace $ {
 			return node
 		}
 
-		override duration() {
+		duration() {
 			return this.audio_buffer()?.duration ?? 0
 		}
 
@@ -48,7 +48,6 @@ namespace $ {
 		}
 
 		protected override node_autostop() {
-			if (! this.loop()) super.node_autostop()
 		}
 
 		@ $mol_mem

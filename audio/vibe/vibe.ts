@@ -15,6 +15,15 @@ namespace $ {
 		@ $mol_mem
 		freq( next = 440 ) { return next }
 
+		duration() {
+			return 0
+		}
+
+		protected override node_autostop() {
+			const duration = this.duration()
+			if (duration > 0) this.node().stop(this.time() + duration)
+		}
+
 		@ $mol_mem
 		shape( next: $mol_audio_vibe_shape = 'sine' ) { return next }
 
