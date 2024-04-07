@@ -1,13 +1,22 @@
 $mol_audio_demo_sequencer $mol_example_small
 	title \WebAudio API example sequencer
+	Beep_track $mol_audio_track
+		start => beep_track_start
+		notes? <=> notes? \e e e _ e e e _ e g c d e _ _ _/2 f f f f f e e e e e d d e d _ g _
+		note_length? <=> note_length? .25
+		note_off? <=> note_off? .15
+		note_active => beep_active
+		note_freq => beep_freq
+		current => beep_current_note
+		time <= time
 	Room $mol_audio_room
 		status? => room_status?
 		active? => room_active?
 		time => time
 		input /
 			<= Beep $mol_audio_vibe
-				active <= beep_active false
-				freq <= note_freq? 0
+				active <= beep_active
+				freq <= beep_freq
 	sub /
 		<= List $mol_list rows /
 			<= Note_settings $mol_row sub /
@@ -16,7 +25,7 @@ $mol_audio_demo_sequencer $mol_example_small
 					control <= Note_length $mol_number
 						precision .05
 						value_min .05
-						value? <=> note_length? .25
+						value? <=> note_length?
 				<= Note_off_field $mol_form_field
 					name \Note off, sec
 					bids /
@@ -24,12 +33,12 @@ $mol_audio_demo_sequencer $mol_example_small
 					control <= Note_off $mol_number
 						precision .05
 						value_min .05
-						value? <=> note_off? .15
+						value? <=> note_off?
 			<= Notes_field $mol_form_field
 				name \Notes
 				control <= Notes $mol_textarea
 					hint \Example: e _ c#5/2 _/2
-					value? <=> notes? \e e e _ e e e _ e g c d e _ _ _/2 f f f f f e e e e e d d e d _ g _
+					value? <=> notes?
 			<= Beep_row $mol_row sub /
 				<= Beep_play $mol_button_minor
 					click? <=> play? null
