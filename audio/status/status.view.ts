@@ -9,12 +9,16 @@ namespace $.$$ {
 			this.status('running')
 		}
 
-		@ $mol_mem
-		override sub() {
-			const status = this.status()
-			if (status === 'suspended') return [ this.Wakeup() ]
+		override Icon() {
+			return this.icons()[this.status()] ?? super.Icon()
+		}
 
-			return [ this.Status() ]
+		override wakeup_enabled() {
+			return this.status() === 'suspended'
+		}
+
+		override status_name() {
+			return this.status_template().replace('{status}', this.status())
 		}
 	}
 }

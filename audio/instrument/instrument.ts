@@ -12,11 +12,10 @@ namespace $ {
 		@ $mol_mem
 		override node() {
 			const node = super.node()
-			const onended = this.onended.bind(this, node)
+			node.onended = this.onended.bind(this, node)
 
 			return Object.assign(node, {
-				destructor: onended,
-				onended,
+				destructor: node.onended,
 				started: null as null | boolean,
 			})
 		}
