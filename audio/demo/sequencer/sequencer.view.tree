@@ -3,7 +3,6 @@ $mol_audio_demo_sequencer $mol_example_small
 	Room $mol_audio_room
 		status? => room_status?
 		active? => room_active?
-		time => time
 		input /
 			<= Beep_track $mol_audio_track
 				start => beep_track_start
