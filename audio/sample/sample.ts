@@ -47,9 +47,6 @@ namespace $ {
 			return next ?? this.rate_default()
 		}
 
-		protected override node_autostop() {
-		}
-
 		@ $mol_mem
 		override node() {
 			const node = super.node()
