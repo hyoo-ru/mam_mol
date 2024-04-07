@@ -31,8 +31,7 @@ namespace $ {
 
 		@ $mol_mem
 		fast_refresh_timer(reset?: null): $mol_after_frame {
-			this.time(reset)
-
+			if (reset === null) this.time(null)
 			return new this.$.$mol_after_frame(() => $mol_wire_async(this).status(null))
 		}
 
