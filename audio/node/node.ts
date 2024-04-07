@@ -64,7 +64,7 @@ namespace $ {
 		time(reset?: null) { return this.context().time(reset) }
 
 		@ $mol_action
-		time_cut() { return this.time() }
+		time_cut() { return this.time(null) }
 
 		destructor() {
 			

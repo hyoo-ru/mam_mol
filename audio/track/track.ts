@@ -52,6 +52,8 @@ namespace $ {
 
 		@ $mol_mem
 		current() {
+			if (! this.active()) return null
+
 			const relative = this.time() - this.start_time()
 			const ended = relative > (this.loop() ? this.loop_to() : this.duration())
 
@@ -60,8 +62,6 @@ namespace $ {
 				else this.active(false)
 				return null
 			}
-
-			if (! this.active()) return null
 
 			const index = this.note_time_ranges().findIndex(([from, to]) => relative >= from && relative <= to)
 
@@ -92,12 +92,10 @@ namespace $ {
 		@ $mol_mem
 		override output() {
 			this.start_paused()
-			for (const input of this.input_connected()) {
-				input.active(this.note_active())
+			const active = this.note_active()
 
-				if (input instanceof $mol_audio_vibe) {
-					input.freq(this.note_freq())
-				}
+			for (const input of this.input_connected()) {
+				input.active(active)
 			}
 
 			return super.output()

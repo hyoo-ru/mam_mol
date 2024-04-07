@@ -7,10 +7,10 @@ namespace $ {
 	 */
 	export class $mol_audio_room extends $mol_audio_node {
 
-		@ $mol_mem
-		override context() {
-			return new this.$.$mol_audio_context
-		}
+		// @ $mol_mem
+		// override context() {
+		// 	return new this.$.$mol_audio_context
+		// }
 
 		override active(next?: boolean) {
 			return this.context().active(next)
@@ -30,7 +30,7 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		fast_refresh_timer(reset?: null) {
+		fast_refresh_timer(reset?: null): $mol_after_frame {
 			this.time(reset)
 
 			return new this.$.$mol_after_frame(() => $mol_wire_async(this).status(null))

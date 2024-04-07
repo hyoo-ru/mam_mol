@@ -11,8 +11,9 @@ $mol_audio_demo_sequencer $mol_example_small
 				note_length? <=> note_length? .25
 				note_off_part? <=> note_off_part? .4
 				current => beep_current_note
+				note_freq => beep_freq
 				input /
-					<= Beep $mol_audio_vibe
+					<= Beep $mol_audio_vibe freq <= beep_freq
 	sub /
 		<= List $mol_list rows /
 			<= Note_settings $mol_row sub /
