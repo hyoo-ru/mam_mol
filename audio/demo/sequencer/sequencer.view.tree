@@ -28,8 +28,8 @@ $mol_audio_demo_sequencer $mol_example_small
 			<= Notes_field $mol_form_field
 				name \Notes
 				control <= Notes $mol_textarea
-					hint \Example: e e5/2 -/2
-					value? <=> notes? \e e e - e e e - e g c d e - - -/2 f f f f f e e e e e d d e d - g -
+					hint \Example: e _ c#5/2 _/2
+					value? <=> notes? \e e e _ e e e _ e g c d e _ _ _/2 f f f f f e e e e e d d e d _ g _
 			<= Beep_row $mol_row sub /
 				<= Beep_play $mol_button_minor
 					click? <=> play? null
