@@ -27,8 +27,8 @@ $mol_audio_demo_sequencer $mol_example_small
 						value? <=> note_off? .15
 			<= Notes_field $mol_form_field
 				name \Notes
-				bid \Example: e e5/2 -/2
 				control <= Notes $mol_textarea
+					hint \Example: e e5/2 -/2
 					value? <=> notes? \e e e - e e e - e g c d e - - -/2 f f f f f e e e e e d d e d - g -
 			<= Beep_row $mol_row sub /
 				<= Beep_play $mol_button_minor
