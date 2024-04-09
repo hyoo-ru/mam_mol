@@ -10,29 +10,29 @@
 	font-weight: normal;
 }
 
-h1[mol_section_title] {
+[mol_section_title]:where(h1) {
 	font-size: 1.5rem;
 }
 
-h2[mol_section_title] {
+[mol_section_title]:where(h2) {
 	font-size: 1.5rem;
 	font-style: italic;
 }
 
-h3[mol_section_title] {
+[mol_section_title]:where(h3) {
 	font-size: 1.25rem;
 }
 
-h4[mol_section_title] {
+[mol_section_title]:where(h4) {
 	font-size: 1.25rem;
 	font-style: italic;
 }
 
-h5[mol_section_title] {
+[mol_section_title]:where(h5) {
 	font-size: 1rem;
 }
 
-h6[mol_section_title] {
+[mol_section_title]:where(h6) {
 	font-size: 1rem;
 	font-style: italic;
 }

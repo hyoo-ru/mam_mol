@@ -1,16 +1,16 @@
 declare namespace $ {
 
-	type $mol_button_open_native__files__JSN073X6 = $mol_type_enforce<
+	type $mol_button_open_native__files__0K1A7ELP = $mol_type_enforce<
 		ReturnType< $mol_button_open['files'] >
 		,
 		ReturnType< $mol_button_open_native['files'] >
 	>
-	type $mol_button_open_native__accept__45W3RZKY = $mol_type_enforce<
+	type $mol_button_open_native__accept__PYZL288Q = $mol_type_enforce<
 		ReturnType< $mol_button_open['accept'] >
 		,
 		ReturnType< $mol_button_open_native['accept'] >
 	>
-	type $mol_button_open_native__multiple__2Y24C0IU = $mol_type_enforce<
+	type $mol_button_open_native__multiple__7UKGQXO2 = $mol_type_enforce<
 		ReturnType< $mol_button_open['multiple'] >
 		,
 		ReturnType< $mol_button_open_native['multiple'] >
