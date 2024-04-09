@@ -1,13 +1,6 @@
 namespace $ {
 
 	export class $mol_audio_sample extends $mol_audio_instrument {
-		@ $mol_mem
-		override node_raw(reset?: null) {
-			const node = this.context().native().createBufferSource()
-			node.buffer = this.audio_buffer()
-
-			return node
-		}
 
 		duration() {
 			return this.audio_buffer()?.duration ?? 0
@@ -48,14 +41,54 @@ namespace $ {
 		}
 
 		@ $mol_mem
+		override node_raw(): AudioBufferSourceNode {
+			this.start_at()
+			this.offset()
+			const prev = $mol_wire_probe(() => this.node_raw())
+			const started = $mol_wire_probe(() => this.start_scheduled())
+			if (prev && prev !== started) return prev
+
+			const node = this.context().native().createBufferSource()
+			node.buffer = this.audio_buffer()
+
+			const destructor = node.onended = this.onended.bind(this, node)
+			return Object.assign(node, { destructor })
+		}
+
+		@ $mol_mem
+		offset(next?: number) {
+			if (next && ( next > this.duration() || next < 0 ) ) return 0
+			return next ?? 0
+		}
+
+		@ $mol_action
+		override start() {
+			super.start()
+			this.offset(0)
+		}
+
+		@ $mol_action
+		override pause() {
+			super.pause()
+			this.offset( this.time_cut() - this.start_at() )
+		}
+
+		@ $mol_mem
+		protected override start_scheduled() {
+			if ( this.start_at() < this.time_cut() ) return null
+			const node = this.node()
+			node.start(this.start_at(), this.offset())
+			return node
+		}
+
+		@ $mol_mem
 		override node() {
 			const node = super.node()
 
 			node.loop = this.loop()
 			node.loopStart = this.loop_start()
 			node.loopEnd = this.loop_end()
-
-			node.playbackRate.value = this.active() ? this.rate() : 0
+			node.playbackRate.value = this.rate()
 
 			return node
 		}

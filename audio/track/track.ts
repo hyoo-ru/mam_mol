@@ -1,14 +1,24 @@
 namespace $ {
 	export class $mol_audio_track extends $mol_audio_gain {
 		@ $mol_mem
-		start_time(next?: number) { return next ?? 0 }
-
-		@ $mol_mem
 		notes(next?: string) { return next ?? '' }
 
 		@ $mol_mem
-		notes_normalized() {
-			return this.notes().split(' ').map(note => $mol_audio_tone_parse(note.trim()))
+		commands() {
+			let start_at_prev = 0
+			const default_length = this.note_length()
+			const note_off = this.note_off()
+
+			return this.notes().split(' ').map(note => {
+				const { freq, divider } = $mol_audio_tone_parse(note.trim())
+				const duration = default_length / divider
+
+				const start_at = start_at_prev
+				const stop_at = start_at + duration - note_off
+				start_at_prev += duration
+
+				return { freq, start_at, stop_at, }
+			})
 		}
 
 		note_length(sec?: number) { return sec ?? 0.25 }
@@ -17,88 +27,66 @@ namespace $ {
 
 		note_off() { return this.note_length() * this.note_off_part() }
 
-		@ $mol_mem
-		note_time_ranges() {
-			const times = [] as [number, number][]
-			let duration_prev = 0
-			const default_length = this.note_length()
-			const note_off = this.note_off()
-
-			for (const note of this.notes_normalized()) {
-				const duration = default_length / note.divider
-
-				const end = duration_prev + duration
-
-				times.push([ duration_prev, end - note_off ])
-
-				duration_prev = end
-			}
-
-			return times
-		}
-
-		duration() {
-			return this.note_time_ranges().at(-1)?.[1] ?? 0
-		}
-
-		protected relative_time_last = 0
-
-		loop() {
-			return false
-		}
-
-		loop_from() { return 0 }
-		loop_to() { return this.duration() }
+		duration() { return this.commands().at(-1)?.stop_at ?? 0 }
 
 		@ $mol_mem
-		current() {
-			if (! this.active()) return null
+		clips() {
+			const time = this.time_cut()
+			const from = time - this.start_at()
+			let to = time - this.stop_at()
+			if (to <= from) to = 0
 
-			const relative = this.time() - this.start_time()
-			const ended = relative > (this.loop() ? this.loop_to() : this.duration())
-
-			if (ended) {
-				if (this.loop()) this.start()
-				else this.active(false)
-				return null
-			}
-
-			const index = this.note_time_ranges().findIndex(([from, to]) => relative >= from && relative <= to)
-
-			return this.notes_normalized().at(index) ?? null
+			return this.commands()
+				.filter(clip => clip.start_at >= from && ( ! to || clip.stop_at <= to) )
+				.map(clip => ({ ... clip, start_at: clip.start_at + time, stop_at: clip.stop_at + time }))
 		}
 
-		note_active() { return Boolean(this.current()) }
-		note_freq() { return this.current()?.freq ?? 0 }
+		clip(index: number) { return this.clips()[index] }
+		clip_start_at(index: number) { return this.clip(index).start_at }
+		clip_stop_at(index: number) { return this.clip(index).stop_at }
+		clip_freq(index: number) { return this.clip(index).freq }
+
+		@ $mol_mem
+		start_at(next?: number ) { return next ?? 0 }
+
+		@ $mol_mem
+		stop_at(next?: number) { return next ?? 0 }
 
 		@ $mol_action
-		reset() {
-			this.start_time( this.time_cut() + ( this.loop() ? this.loop_from() : 0 ) )
+		start() {
+			this.start_at( this.time_cut() )
+			this.stop_at( this.time_cut() + this.duration() )
 		}
 
 		@ $mol_action
-		start(e?: Event | null) {
-			this.active(true)
-			this.start_paused(null)
-			return e
+		resume() {
+			let paused = this.stop_at() - this.start_at()
+			if (paused >= this.duration()) paused = 0
+			this.start_at( this.time_cut() + paused )
+			this.stop_at( this.time_cut() + this.duration() )
+		}
+
+		@ $mol_action
+		pause() { this.stop_at(this.time_cut()) }
+
+		@ $mol_mem
+		override active(next?: boolean) {
+			if (next) this.resume()
+			if (next === false) this.pause()
+
+			this.input().every(clip => clip.ended())
+
+			return this.input().length > 0
+		}
+
+		@ $mol_mem_key
+		instrument(index: number): $mol_audio_instrument {
+			throw new Error('implement')
 		}
 
 		@ $mol_mem
-		protected start_paused(reset?: null) {
-			if (this.active()) this.reset()
-			return null
-		}
-
-		@ $mol_mem
-		override output() {
-			this.start_paused()
-			const active = this.note_active()
-
-			for (const input of this.input_connected()) {
-				input.active(active)
-			}
-
-			return super.output()
+		override input() {
+			return this.clips().map((_, index) => this.instrument(index))
 		}
 	}
 }

@@ -1,58 +1,68 @@
 namespace $ {
+
 	export class $mol_audio_instrument extends $mol_audio_node {
 		@ $mol_mem
-		override node_raw(reset?: null): AudioScheduledSourceNode {
+		override node_raw(): AudioScheduledSourceNode {
 			throw new Error('implement')
 		}
 
+		protected onended(node: AudioScheduledSourceNode, e?: Event) {
+			const started = $mol_wire_probe( () => this.start_scheduled() )
+			if ( node === started ) node.stop()
+			this.ended(true)
+		}
+
 		@ $mol_mem
-		override node() {
-			const node = super.node()
-			node.onended = this.onended.bind(this, node)
-
-			return Object.assign(node, {
-				destructor: node.onended,
-				started: null as null | boolean,
-			})
+		ended(next?: boolean) {
+			return next ?? false
 		}
 
-		protected onended(node: AudioScheduledSourceNode & { started?: boolean | null }, e?: Event) {
-			node.started = false
-			if (e === undefined) return node.stop()
+		@ $mol_mem
+		start_at(next?: number ) { return next ?? 0 }
 
-			if (this.node() !== node) return
-
-			this.active(false)
-			this.end()
-		}
-
-		end() {}
+		@ $mol_mem
+		stop_at(next?: number ) { return next ?? 0 }
 
 		@ $mol_action
-		start(e?: Event | null) {
-			this.node_raw(null)
-			this.active(true)
-			return e
+		start() {
+			this.start_at( this.time_cut())
+			this.stop_at(0)
 		}
 
-		protected node_autostop() {}
+		@ $mol_action
+		resume() {
+			this.start_at(this.time_cut())
+			this.stop_at( 0 )
+		}
+
+		@ $mol_action
+		pause() {
+			this.start_at(0)
+		}
+
+		override input_connected() {
+			const input = super.input_connected()
+			this.stop_scheduled()
+			return input
+		}
 
 		@ $mol_mem
-		override output() {
-			const prev = $mol_wire_probe(() => this.node())
-
-			if (this.active() && prev?.started === false) this.node_raw(null)
-
+		protected start_scheduled() {
+			if ( this.start_at() < this.time_cut() ) return null
 			const node = this.node()
-
-			if (node.started === null) {
-				node.start()
-				node.started = true
-				this.node_autostop()
-			}
-
-			return super.output()
+			node.start(this.start_at())
+			return node
 		}
 
+		@ $mol_mem
+		protected stop_scheduled() {
+			const node = this.start_scheduled()
+
+			if (! node) return null
+			if ( this.stop_at() <= this.start_at() ) return null
+
+			node.stop(this.stop_at())
+			return node
+		}
 	}
 }

@@ -6,53 +6,47 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		node_raw(): AudioNode { return this.context().native().destination }
-
-		node() {
-			return this.node_raw() as ReturnType<this['node_raw']>
-		}
-
-		@ $mol_mem
 		input( next = [] as readonly $mol_audio_node[] ) { return next }
-		
-		@ $mol_mem
-		active(next?: boolean) {
-			if (next) this.context().active(true)
-			return next ?? false
-		}
-
-		connect(parent: $mol_audio_node) {
-			this.context(parent.context())
-			this.output().connect( parent.node() )
-		}
-
-		disconnect(parent: $mol_audio_node) {
-			this.output().disconnect( parent.node() )
-		}
 
 		@ $mol_mem
 		input_connected() {
-			
-			const node = this.node()
-			
+
+			const node = this.node_raw()
+			if (! node ) return []
+
 			const prev = $mol_wire_probe( ()=> this.input_connected() ) ?? []
 			const next = this.input()
-			
+
 			for( const src of prev ) {
 				if( next.includes( src ) ) continue
-				src.disconnect( this )
+				src.output().disconnect( node )
 			}
 			
+			const ctx = this.context()
+
 			for( const src of next ) {
-				src.connect( this )
+				src.context(ctx)
+				src.output().connect( node )
 			}
 			
 			return next 
 		}
+
+		@ $mol_mem
+		active(next?: boolean) { return next ?? false }
 		
 		@ $mol_mem
 		inputs_active() {
 			return this.input_connected().some(src => src.active())
+		}
+
+		@ $mol_mem
+		node_raw(): AudioNode {
+			throw new Error('implement')
+		}
+
+		node() {
+			return this.node_raw() as ReturnType<this['node_raw']>
 		}
 
 		@ $mol_mem
@@ -67,15 +61,14 @@ namespace $ {
 		time_cut() { return this.time(null) }
 
 		destructor() {
-			
-			const node = $mol_wire_probe(() => this.node())
-			if (! node ) return
-
 			const inputs = $mol_wire_probe(() => this.input_connected())
 			if (! inputs?.length) return
 
+			const node = $mol_wire_probe(() => this.node_raw())
+			if (! node ) return
+
 			for( const src of inputs ) {
-				src.disconnect( this )
+				src.output().disconnect( node )
 			}
 			
 		}

@@ -7,6 +7,11 @@ namespace $ {
 	 */
 	export class $mol_audio_room extends $mol_audio_node {
 
+		@ $mol_mem
+		override node_raw() {
+			return this.context().native().destination
+		}
+
 		// @ $mol_mem
 		// override context() {
 		// 	return new this.$.$mol_audio_context

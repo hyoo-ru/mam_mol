@@ -8,8 +8,11 @@ namespace $ {
 	export class $mol_audio_vibe extends $mol_audio_instrument {
 		
 		@ $mol_mem
-		override node_raw(reset?: null) {
-			return this.context().native().createOscillator()
+		override node_raw() {
+			const node = this.context().native().createOscillator()
+			this.start_at()
+			const destructor = node.onended = this.onended.bind(this, node)
+			return Object.assign(node, { destructor })
 		}
 
 		@ $mol_mem
@@ -18,15 +21,11 @@ namespace $ {
 		@ $mol_mem
 		shape( next: $mol_audio_vibe_shape = 'sine' ) { return next }
 
-		freq_normalized() {
-			const freq = this.freq()
-			return this.active() && freq > 0 ? freq : -1
-		}
-
 		@ $mol_mem
 		override node() {
 			const node = super.node()
-			node.frequency.setValueAtTime( this.freq_normalized(), this.time_cut() )
+
+			node.frequency.setValueAtTime( this.freq(), this.time_cut() )
 			node.type = this.shape()
 
 			return node

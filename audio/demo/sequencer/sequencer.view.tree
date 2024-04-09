@@ -10,10 +10,15 @@ $mol_audio_demo_sequencer $mol_example_small
 				notes? <=> notes? \e e e _ e e e _ e g c d e _ _ _/2 f f f f f e e e e/2 e/2 d d e d _ g _
 				note_length? <=> note_length? .25
 				note_off_part? <=> note_off_part? .4
-				current => beep_current_note
-				note_freq => beep_freq
-				input /
-					<= Beep $mol_audio_vibe freq <= beep_freq
+				-
+				clip_freq* => clip_freq*
+				clip_start_at* => clip_start_at*
+				clip_stop_at* => clip_stop_at*
+				-
+				instrument* <= Beep_osc* $mol_audio_vibe
+					freq <= clip_freq*
+					start_at <= clip_start_at*
+					stop_at <= clip_stop_at*
 	sub /
 		<= List $mol_list rows /
 			<= Note_settings $mol_row sub /
@@ -40,8 +45,8 @@ $mol_audio_demo_sequencer $mol_example_small
 					Icon <= Beep_active_icon $mol_icon_play_pause
 					checked? <=> beep_track_active?
 				<= Beep_play $mol_button_minor
-					click? <=> play? null
-					title <= beep_play_title \Play {note}
+					click? <=> beep_track_start? null
+					title <= \Play
 				<= Beep_status $mol_audio_status status? <=> room_status?
 	tags /
 		\sound
