@@ -25,6 +25,11 @@
 
 [mol_textarea_clickable] > [mol_textarea_view] {
 	pointer-events: all;
+	user-select: all;
+}
+
+[mol_textarea_clickable] > [mol_textarea_edit] {
+	user-select: none;
 }
 
 [mol_textarea_edit] {
