@@ -16,6 +16,7 @@
 	white-space: inherit;
 	font-family: inherit;
 	tab-size: inherit;
+	user-select: none;
 }
 
 [mol_textarea_view_copy] {
