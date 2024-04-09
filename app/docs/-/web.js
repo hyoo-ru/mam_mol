@@ -34877,7 +34877,24 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_defer = $mol_after_frame;
+    class $mol_after_work extends $mol_object2 {
+        delay;
+        task;
+        id;
+        constructor(delay, task) {
+            super();
+            this.delay = delay;
+            this.task = task;
+            this.id = requestIdleCallback(task, { timeout: delay });
+        }
+        destructor() {
+            cancelIdleCallback(this.id);
+        }
+    }
+    $.$mol_after_work = $mol_after_work;
+    if (typeof requestIdleCallback !== 'function') {
+        $.$mol_after_work = $mol_after_timeout;
+    }
 })($ || ($ = {}));
 
 ;
@@ -35019,10 +35036,9 @@ var $;
                     const found = commands[i].match(matcher);
                     if (!found)
                         continue;
-                    new $mol_defer(() => {
-                        if (this.event_catch(found.slice(1))) {
-                            this.commands_skip(i + 1);
-                        }
+                    new $mol_after_work(16, () => {
+                        this.commands_skip(i + 1);
+                        $mol_wire_async(this).event_catch(found.slice(1));
                     });
                     return null;
                 }
@@ -35044,7 +35060,7 @@ var $;
             return '';
         }
         suffix() {
-            return '[,\\s]+(?:please|would you kindly|пожалуйста|пожалуй 100|будь любезен|будь любезна|будь добра?)\.?$';
+            return '[,\\s]+(?:please|would you kindly|пожалуйста|пожалуй 100|будь любезен|будь любезна|будь добра?|плиз)\.?$';
         }
     }
     __decorate([
