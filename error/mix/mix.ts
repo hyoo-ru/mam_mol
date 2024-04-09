@@ -24,6 +24,14 @@ namespace $ {
 			
 		}
 
+		static [ Symbol.toPrimitive ]() {
+			return this.toString()
+		}
+		
+		static toString() {
+			return $$.$mol_func_name( this )
+		}
+
 		static make(
 			...params: ConstructorParameters<typeof $mol_error_mix>
 		) {
