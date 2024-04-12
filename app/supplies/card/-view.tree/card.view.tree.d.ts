@@ -1,56 +1,56 @@
 declare namespace $ {
 
-	type $mol_labeler__title__FJ26PWYN = $mol_type_enforce<
+	type $mol_labeler__title__2XHP7AA2 = $mol_type_enforce<
 		ReturnType< $mol_app_supplies_card['code_title'] >
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content__KSERS2BM = $mol_type_enforce<
+	type $mol_labeler__content__M9TGMGGD = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_unit_money__valueOf__G3YM236W = $mol_type_enforce<
+	type $mol_unit_money__valueOf__QXR1YDJT = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_unit_money['valueOf'] >
 	>
-	type $mol_cost__value__LK8U5JEZ = $mol_type_enforce<
+	type $mol_cost__value__CPOVIL9G = $mol_type_enforce<
 		ReturnType< $mol_app_supplies_card['cost'] >
 		,
 		ReturnType< $mol_cost['value'] >
 	>
-	type $mol_labeler__title__6ZSFF2OU = $mol_type_enforce<
+	type $mol_labeler__title__W8ELEC0K = $mol_type_enforce<
 		ReturnType< $mol_app_supplies_card['cost_title'] >
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content__9X199VLG = $mol_type_enforce<
+	type $mol_labeler__content__OWQ1Z7CB = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_labeler__title__Q7RHOPRB = $mol_type_enforce<
+	type $mol_labeler__title__JA6T36UQ = $mol_type_enforce<
 		ReturnType< $mol_app_supplies_card['provider_title'] >
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content__BUXW7CV3 = $mol_type_enforce<
+	type $mol_labeler__content__19PJUQF0 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_row__sub__9UH0H2EV = $mol_type_enforce<
+	type $mol_row__sub__QGTZTW5H = $mol_type_enforce<
 		ReturnType< $mol_app_supplies_card['items'] >
 		,
 		ReturnType< $mol_row['sub'] >
 	>
-	type $mol_card__status__KKUIF1M3 = $mol_type_enforce<
+	type $mol_card__status__2ZI49KAF = $mol_type_enforce<
 		ReturnType< $mol_app_supplies_card['status'] >
 		,
 		ReturnType< $mol_card['status'] >
 	>
-	type $mol_card__Content__Q85KDT99 = $mol_type_enforce<
+	type $mol_card__Content__649IO2NL = $mol_type_enforce<
 		ReturnType< $mol_app_supplies_card['Group'] >
 		,
 		ReturnType< $mol_card['Content'] >
