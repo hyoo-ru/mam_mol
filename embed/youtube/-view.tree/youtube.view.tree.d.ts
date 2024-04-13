@@ -1,21 +1,21 @@
 declare namespace $ {
 
-	type $mol_image__title__108KAZV6 = $mol_type_enforce<
+	type $mol_image__title__EIJWN3NP = $mol_type_enforce<
 		ReturnType< $mol_embed_youtube['title'] >
 		,
 		ReturnType< $mol_image['title'] >
 	>
-	type $mol_image__uri__7YIK9IE3 = $mol_type_enforce<
+	type $mol_image__uri__00F9W73A = $mol_type_enforce<
 		ReturnType< $mol_embed_youtube['video_preview'] >
 		,
 		ReturnType< $mol_image['uri'] >
 	>
-	type $mol_frame__title__208D9RQ2 = $mol_type_enforce<
+	type $mol_frame__title__BKZB7EEJ = $mol_type_enforce<
 		ReturnType< $mol_embed_youtube['title'] >
 		,
 		ReturnType< $mol_frame['title'] >
 	>
-	type $mol_frame__uri__OITTXGNI = $mol_type_enforce<
+	type $mol_frame__uri__LGNHBSVR = $mol_type_enforce<
 		ReturnType< $mol_embed_youtube['video_embed'] >
 		,
 		ReturnType< $mol_frame['uri'] >
