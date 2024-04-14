@@ -3,8 +3,8 @@ $mol_audio_demo $mol_example_small
 	Beep_room $mol_audio_room
 		status? => beep_status?
 		input /
-			<= Beep_track $mol_audio_track
-				start? => beep_play?
+			<= Beep_track $mol_audio_melody
+				start => beep_play
 				note_length .5
 				notes \e
 				note_freq* => beep_freq*
@@ -12,8 +12,8 @@ $mol_audio_demo $mol_example_small
 	Noise_room $mol_audio_room
 		status? => noise_status?
 		input /
-			<= Noise_track $mol_audio_track
-				start? => noise_play?
+			<= Noise_track $mol_audio_melody
+				start => noise_play
 				note_length 1
 				notes \_
 				note_freq* => noise_base_freq*
@@ -22,12 +22,12 @@ $mol_audio_demo $mol_example_small
 		<= List $mol_list rows /
 			<= Beep_row $mol_row sub /
 				<= Beep_play $mol_button_minor
-					click? <=> beep_play?
+					click? <=> beep_play_click? null
 					title \Beep
 				<= Beep_status $mol_audio_status status? <=> beep_status?
 			<= Nouse_row $mol_row sub /
 				<= Noise_play $mol_button_minor
-					click? <=> noise_play?
+					click? <=> noise_play_click? null
 					title \Noise
 				<= Noise_status $mol_audio_status status? <=> noise_status?
 	tags /

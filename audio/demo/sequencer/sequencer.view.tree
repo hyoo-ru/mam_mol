@@ -4,7 +4,7 @@ $mol_audio_demo_sequencer $mol_example_small
 		status? => room_status?
 		active? => room_active?
 		input /
-			<= Beep_track $mol_audio_track
+			<= Beep_track $mol_audio_melody
 				start => beep_track_start
 				active? => beep_track_active?
 				notes? <=> notes? \e e e _ e e e _ e g c d e _ _ _/2 f f f f f e e e e/2 e/2 d d e d _ g _

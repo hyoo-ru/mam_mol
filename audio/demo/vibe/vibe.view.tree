@@ -3,8 +3,8 @@ $mol_audio_demo_vibe $mol_example_small
 	Room $mol_audio_room
 		status? => room_status?
 		input /
-			<= Beep_track $mol_audio_track
-				start? => beep_vibe_start?
+			<= Beep_track $mol_audio_melody
+				start => beep_vibe_start
 				note_length <= duration
 				notes \_
 				instrument* <= Beep_vibe* $mol_audio_vibe
@@ -37,7 +37,7 @@ $mol_audio_demo_vibe $mol_example_small
 							\triangle
 			<= Button_row $mol_row sub /
 				<= Play_button $mol_button_major
-					click? <=> beep_vibe_start?
+					click? <=> beep_vibe_start_click? null
 					sub /
 						<= Play_icon $mol_icon_play
 						\Play

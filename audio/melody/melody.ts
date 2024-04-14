@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_audio_track extends $mol_audio_gain {
+	export class $mol_audio_melody extends $mol_audio_gain {
 		@ $mol_mem
 		notes(next?: string) { return next ?? '' }
 

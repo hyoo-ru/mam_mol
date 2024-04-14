@@ -5,7 +5,7 @@ $mol_audio_demo_sample $mol_example_small
 		input /
 			<= Sample $mol_audio_sample
 				active? => sample_active?
-				start? => start?
+				start => start
 				loop? <=> loop? true
 				buffer <= sample_buffer null
 	sub /
@@ -20,7 +20,7 @@ $mol_audio_demo_sample $mol_example_small
 					title \Active
 					Icon <= Active_icon $mol_icon_play
 				<= Start $mol_button_minor
-					click? <=> start?
+					click? <=> start_click? null
 					title \Start
 				<= Loop $mol_check_icon
 					checked? <=> loop?

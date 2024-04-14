@@ -5,6 +5,10 @@ namespace $.$$ {
 
 			return this.$.$mol_fetch.response(this.sample_url()).buffer()
 		}
+
+		override start_click(e: Event) {
+			this.start()
+		}
 	}
 }
 
