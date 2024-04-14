@@ -8,11 +8,8 @@ namespace $ {
 	export class $mol_audio_vibe extends $mol_audio_instrument {
 		
 		@ $mol_mem
-		override node_raw() {
-			const node = this.context().native().createOscillator()
-			this.start_at()
-			const destructor = node.onended = this.onended.bind(this, node)
-			return Object.assign(node, { destructor })
+		override node_raw(reset?: null) {
+			return this.context().native().createOscillator()
 		}
 
 		@ $mol_mem

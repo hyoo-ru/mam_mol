@@ -7,10 +7,9 @@ $mol_audio_demo_vibe $mol_example_small
 				start? => beep_vibe_start?
 				note_length <= duration
 				notes \_
-				input /
-					<= Beep_vibe $mol_audio_vibe
-						freq <= frequency -
-						shape <= shape -
+				instrument* <= Beep_vibe* $mol_audio_vibe
+					freq <= frequency
+					shape <= shape
 	sub /
 		<= List $mol_list rows /
 			<= Duration $mol_labeler

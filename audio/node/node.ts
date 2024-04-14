@@ -11,15 +11,14 @@ namespace $ {
 		@ $mol_mem
 		input_connected() {
 
-			const node = this.node_raw()
-			if (! node ) return []
+			const node = this.node()
 
 			const prev = $mol_wire_probe( ()=> this.input_connected() ) ?? []
 			const next = this.input()
 
 			for( const src of prev ) {
 				if( next.includes( src ) ) continue
-				src.output().disconnect( node )
+				$mol_wire_probe(() => src.output())?.disconnect( node )
 			}
 			
 			const ctx = this.context()
@@ -55,10 +54,8 @@ namespace $ {
 			return this.node()
 		}
 
-		time(reset?: null) { return this.context().time(reset) }
-
 		@ $mol_action
-		time_cut() { return this.time(null) }
+		time_cut() { return this.context().time() }
 
 		destructor() {
 			const inputs = $mol_wire_probe(() => this.input_connected())

@@ -2,8 +2,7 @@ declare module 'web-audio-api'
 namespace $ {
 	export class $mol_audio_context extends $mol_object {
 
-		@ $mol_mem
-		time(reset?: null) {
+		time() {
 			return this.native().currentTime
 		}
 

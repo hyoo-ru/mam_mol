@@ -34,11 +34,6 @@ namespace $ {
 			return new this.$.$mol_after_timeout(time * 1000, () => $mol_wire_async(this).active(false))
 		}
 
-		@ $mol_mem
-		fast_refresh_timer(reset?: null): $mol_after_frame {
-			if (reset === null) this.time(null)
-			return new this.$.$mol_after_frame(() => $mol_wire_async(this).status(null))
-		}
 
 		@ $mol_mem
 		status(next?: $mol_audio_room_status | null): $mol_audio_room_status {
@@ -46,8 +41,6 @@ namespace $ {
 			if (state === 'closed') return state
 
 			this.output()
-
-			if (state === 'running') this.fast_refresh_timer(next === null ? null : undefined)
 
 			if (this.inputs_active() && state === 'running') return 'playing'
 

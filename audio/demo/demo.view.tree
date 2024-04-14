@@ -7,8 +7,8 @@ $mol_audio_demo $mol_example_small
 				start? => beep_play?
 				note_length .5
 				notes \e
-				note_freq => beep_freq
-				input / <= Beep $mol_audio_vibe freq <= beep_freq
+				note_freq* => beep_freq*
+				instrument* <= Beep* $mol_audio_vibe freq <= beep_freq*
 	Noise_room $mol_audio_room
 		status? => noise_status?
 		input /
@@ -16,9 +16,8 @@ $mol_audio_demo $mol_example_small
 				start? => noise_play?
 				note_length 1
 				notes \_
-				note_freq => noise_base_freq
-				input / <= Noise $mol_audio_vibe
-					freq <= noise_freq <= noise_base_freq
+				note_freq* => noise_base_freq*
+				instrument* <= Noise* $mol_audio_vibe freq <= noise_freq* 0
 	sub /
 		<= List $mol_list rows /
 			<= Beep_row $mol_row sub /
