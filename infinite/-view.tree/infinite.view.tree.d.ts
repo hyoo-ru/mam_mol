@@ -1,31 +1,31 @@
 declare namespace $ {
 
-	type $mol_view__minimal_width__9QDZU2UH = $mol_type_enforce<
+	type $mol_view__minimal_width__XADG2XB8 = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_view['minimal_width'] >
 	>
-	type $mol_view__minimal_height__AXZ8HTUX = $mol_type_enforce<
+	type $mol_view__minimal_height__PTWKOMF8 = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_view['minimal_height'] >
 	>
-	type $mol_view__sub__UH4QVDHW = $mol_type_enforce<
+	type $mol_view__sub__B97I42UD = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_view__minimal_width__NMOQBKEC = $mol_type_enforce<
+	type $mol_view__minimal_width__HP1BAMAU = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_view['minimal_width'] >
 	>
-	type $mol_view__minimal_height__09AEGSLS = $mol_type_enforce<
+	type $mol_view__minimal_height__BV92TKZ1 = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_view['minimal_height'] >
 	>
-	type $mol_view__sub__TZQQZKYR = $mol_type_enforce<
+	type $mol_view__sub__XQA9PKIK = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
