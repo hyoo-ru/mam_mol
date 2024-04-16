@@ -12,22 +12,30 @@ namespace $ {
 			return this.context().native().createOscillator()
 		}
 
-		@ $mol_mem
-		freq( next?: number ) {
-			const note = this.note()
-			if (next === undefined) return $mol_audio_tone_parse(note).freq
-			return next
-		}
+		freq_default() { return 440 }
 
 		@ $mol_mem
-		shape( next: $mol_audio_vibe_shape = 'sine' ) { return next }
+		freq( next?: number | null) {
+			const note = this.note()
+			next = next ?? ( note ? $mol_audio_tone_parse(note).freq : this.freq_default() )
+
+			this.node_raw().frequency.setValueAtTime(next, this.time_cut())
+
+			return next
+		}
+		
+		shape_default() { return 'sine' as $mol_audio_vibe_shape }
+
+		@ $mol_mem
+		shape( next?: $mol_audio_vibe_shape | null ) {
+			return this.node_raw().type = next ?? this.shape_default()
+		}
 
 		@ $mol_mem
 		override node() {
 			const node = super.node()
-
-			node.frequency.setValueAtTime( this.freq(), this.time_cut() )
-			node.type = this.shape()
+			this.freq()
+			this.shape()
 
 			return node
 		}

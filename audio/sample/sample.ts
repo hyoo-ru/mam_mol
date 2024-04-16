@@ -16,19 +16,25 @@ namespace $ {
 			return buffer ? this.context().native().decodeAudioData(buffer) : null
 		}
 
-		@ $mol_mem
-		loop(next?: boolean) {
-			return next ?? false
-		}
+		loop_default() { return false }
 
 		@ $mol_mem
-		loop_start(next?: number) {
-			return next ?? 0
+		loop(next?: boolean | null) {
+			return this.node_raw().loop = next ?? this.loop_default()
 		}
 
+		loop_start_default() { return 0 }
+
 		@ $mol_mem
-		loop_end(next?: number) {
-			return next ?? this.duration()
+		loop_start(next?: number | null) {
+			return this.node_raw().loopStart = next ?? this.loop_start_default()
+		}
+
+		loop_end_default() { return this.duration() }
+
+		@ $mol_mem
+		loop_end(next?: number | null) {
+			return this.node_raw().loopEnd = next ?? this.loop_end_default()
 		}
 
 		rate_default() {
@@ -36,8 +42,8 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		rate(next?: number) {
-			return next ?? this.rate_default()
+		rate(next?: number | null) {
+			return this.node_raw().playbackRate.value = next ?? this.rate_default()
 		}
 
 		@ $mol_mem
@@ -53,7 +59,7 @@ namespace $ {
 
 			if (this.node_started()) {
 				if (next) this.context().active(true)
-				this.node().playbackRate.value = next ? this.rate() : 0
+				this.rate(next ? null : 0)
 
 				return next ?? false
 			}
@@ -65,10 +71,10 @@ namespace $ {
 		override node() {
 			const node = super.node()
 
-			node.loop = this.loop()
-			node.loopStart = this.loop_start()
-			node.loopEnd = this.loop_end()
-			node.playbackRate.value = this.rate()
+			this.loop()
+			this.loop_start()
+			this.loop_end()
+			this.rate()
 
 			return node
 		}

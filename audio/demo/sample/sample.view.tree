@@ -6,7 +6,7 @@ $mol_audio_demo_sample $mol_example_small
 			<= Sample $mol_audio_sample
 				active? => sample_active?
 				start => start
-				loop? <=> loop? true
+				loop? => loop?
 				buffer <= sample_buffer null
 	sub /
 		<= List $mol_list rows /
