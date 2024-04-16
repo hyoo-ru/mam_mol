@@ -10,9 +10,6 @@ $mol_audio_demo_sequencer $mol_example_small
 				notes? <=> notes? \e e e _ e e e _ e g c d e _ _ _/2 f f f f f e e e e/2 e/2 d d e d _ g _
 				note_length? <=> note_length? .25
 				note_off_part? <=> note_off_part? .4
-				note_freq* => note_freq*
-				instrument* <= Beep_osc* $mol_audio_vibe
-					freq <= note_freq*
 	sub /
 		<= List $mol_list rows /
 			<= Note_settings $mol_row sub /

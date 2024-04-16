@@ -3,7 +3,8 @@ namespace $.$$ {
 		@ $mol_mem_key
 		override noise_freq(id: number) {
 			$mol_wire_watch()
-			return this.noise_base_freq(id) + Math.random() * 1000
+			const base_freq = $mol_audio_tone_parse(this.note(id)).freq
+			return base_freq + Math.random() * 1000
 		}
 
 		override beep_play_click(e: Event) { this.beep_play() }

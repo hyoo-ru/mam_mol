@@ -46,6 +46,9 @@ namespace $ {
 		}
 
 		@ $mol_mem
+		note(next?: string) { return next ?? 'a' }
+
+		@ $mol_mem
 		stop_at(next?: number ) {
 			if (next === undefined || next < 0) return -1
 			if (! this.node_started()) return next

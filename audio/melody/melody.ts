@@ -9,15 +9,16 @@ namespace $ {
 			const default_length = this.note_length()
 			const note_off = this.note_off()
 
-			return this.notes().split(' ').map((note, id) => {
-				const { freq, divider } = $mol_audio_tone_parse(note.trim())
+			return this.notes().split(' ').map((command, id) => {
+				const note = command.trim()
+				const { divider } = $mol_audio_tone_parse(note)
 				const duration = default_length / divider
 
 				const start_at = start_at_prev
 				const stop_at = start_at + duration - note_off
 				start_at_prev += duration
 
-				return { freq, start_at, stop_at, id }
+				return { note, start_at, stop_at, id }
 			})
 		}
 
@@ -27,22 +28,24 @@ namespace $ {
 
 		note_off() { return this.note_length() * this.note_off_part() }
 
-		duration() { return this.clips().at(-1)?.stop_at ?? 0 }
+		@ $mol_mem
+		duration() { return this.clips().reduce((acc, clip) => Math.max(acc, clip.stop_at), 0) }
 
 		note(index: number) { return this.clips()[index] }
-		note_freq(index: number) { return this.note(index).freq }
 
-		protected input_remove(target: $mol_audio_instrument) {
-			this.offset(null)
-			this.input(this.input().filter(instrument => instrument !== target))
+		@ $mol_action
+		offset_cut(next: number) {
+			let offset = this.offset()
+			if (offset === null) offset = this.offset(0) ?? 0
+			if (offset === 0) this.start_at_absolute = this.time_cut() + next
+			return offset
 		}
 
 		@ $mol_mem
 		start_at(next?: number) {
 			if (next === undefined) return -1
 
-			const offset = this.offset()
-			if (! offset) this.start_at_absolute = this.time_cut() + next
+			const offset = this.offset_cut(next)
 
 			const instruments = []
 			for (const clip of this.clips()) {
@@ -50,10 +53,13 @@ namespace $ {
 
 				const instrument = this.instrument(clip.id)
 
+				instrument.note(clip.note)
 				instrument.start_at(next + clip.start_at - offset)
-				instrument.stop_at(next + clip.stop_at - offset)
+				const stop_at = next + clip.stop_at - offset
+				instrument.stop_at(stop_at)
+				instrument.end = () => this.offset(null)
+
 				instruments.push(instrument)
-				instrument.end = () => this.input_remove(instrument)
 			}
 			this.input(instruments)
 			this.output()
@@ -98,15 +104,17 @@ namespace $ {
 		@ $mol_mem
 		offset(next?: number | null) {
 			if (next === null) next = this.time_cut() - this.start_at_absolute
-			if (! next) next = 0
-			if (next >= this.duration()) next = 0
-			next = Math.max(next, 0)
+
+			if (next === undefined) return null
+			if (next > this.duration()) return null
+			if (next < 0) return null
 
 			return next
+
 		}
 
 		@ $mol_mem
-		override active(next?: boolean | null) {
+		override active(next?: boolean) {
 			if (next) {
 				this.context().active(true)
 				this.start_at(0)
@@ -119,12 +127,12 @@ namespace $ {
 				return next
 			}
 
-			return this.input().length > 0
+			return this.offset() !== null
 		}
 
 		@ $mol_mem_key
 		instrument(index: number): $mol_audio_instrument {
-			throw new Error('implement')
+			return this.$.$mol_audio_vibe.make({})
 		}
 	}
 }

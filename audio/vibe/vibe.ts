@@ -13,7 +13,11 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		freq( next = 440 ) { return next }
+		freq( next?: number ) {
+			const note = this.note()
+			if (next === undefined) return $mol_audio_tone_parse(note).freq
+			return next
+		}
 
 		@ $mol_mem
 		shape( next: $mol_audio_vibe_shape = 'sine' ) { return next }
