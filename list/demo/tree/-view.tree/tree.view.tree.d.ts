@@ -1,36 +1,36 @@
 declare namespace $ {
 
-	type $mol_list__rows__4Z42RWAB = $mol_type_enforce<
+	type $mol_list__rows__9LKUTQHD = $mol_type_enforce<
 		ReturnType< $mol_list_demo_tree['root_rows'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_paragraph__sub__WG4AZ16D = $mol_type_enforce<
+	type $mol_paragraph__sub__H607WWQ6 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_paragraph['sub'] >
 	>
-	type $mol_list__rows__CN4B6LTD = $mol_type_enforce<
+	type $mol_list__rows__30XJNV92 = $mol_type_enforce<
 		ReturnType< $mol_list_demo_tree['row_content'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_expander__label__TDCE8JKP = $mol_type_enforce<
+	type $mol_expander__label__19Q144WT = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_expander['label'] >
 	>
-	type $mol_expander__expanded__EFD1CQBV = $mol_type_enforce<
+	type $mol_expander__expanded__77ZSOFC4 = $mol_type_enforce<
 		ReturnType< $mol_list_demo_tree['row_expanded'] >
 		,
 		ReturnType< $mol_expander['expanded'] >
 	>
-	type $mol_expander__expandable__M5RXKDGK = $mol_type_enforce<
+	type $mol_expander__expandable__URG8KG9A = $mol_type_enforce<
 		boolean
 		,
 		ReturnType< $mol_expander['expandable'] >
 	>
-	type $mol_expander__Content__XJFMYHH3 = $mol_type_enforce<
+	type $mol_expander__Content__4BJWKHNO = $mol_type_enforce<
 		ReturnType< $mol_list_demo_tree['Row_content'] >
 		,
 		ReturnType< $mol_expander['Content'] >
