@@ -40,18 +40,14 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		node_raw(): AudioNode {
+		node(): AudioNode {
 			throw new Error('implement')
-		}
-
-		node() {
-			return this.node_raw() as ReturnType<this['node_raw']>
 		}
 
 		@ $mol_mem
 		output() {
 			this.input_connected()
-			return this.node()
+			return this.node() as ReturnType<this['node']>
 		}
 
 		@ $mol_action
@@ -61,7 +57,7 @@ namespace $ {
 			const inputs = $mol_wire_probe(() => this.input_connected())
 			if (! inputs?.length) return
 
-			const node = $mol_wire_probe(() => this.node_raw())
+			const node = $mol_wire_probe(() => this.node())
 			if (! node ) return
 
 			for( const src of inputs ) {

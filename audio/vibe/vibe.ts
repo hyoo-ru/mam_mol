@@ -8,7 +8,7 @@ namespace $ {
 	export class $mol_audio_vibe extends $mol_audio_instrument {
 		
 		@ $mol_mem
-		override node_raw(reset?: null) {
+		override node(reset?: null) {
 			return this.context().native().createOscillator()
 		}
 
@@ -19,7 +19,7 @@ namespace $ {
 			const note = this.note()
 			next = next ?? ( note ? $mol_audio_tone_parse(note).freq : this.freq_default() )
 
-			this.node_raw().frequency.setValueAtTime(next, this.time_cut())
+			this.node().frequency.setValueAtTime(next, this.time_cut())
 
 			return next
 		}
@@ -28,16 +28,15 @@ namespace $ {
 
 		@ $mol_mem
 		shape( next?: $mol_audio_vibe_shape | null ) {
-			return this.node_raw().type = next ?? this.shape_default()
+			return this.node().type = next ?? this.shape_default()
 		}
 
 		@ $mol_mem
-		override node() {
-			const node = super.node()
+		override output() {
 			this.freq()
 			this.shape()
 
-			return node
+			return super.output()
 		}
 
 	}

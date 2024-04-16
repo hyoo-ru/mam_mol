@@ -3,15 +3,21 @@ namespace $ {
 	const started = new WeakMap<Object, boolean | null>()
 
 	export class $mol_audio_instrument extends $mol_audio_node {
-		override node_raw(reset?: null): AudioScheduledSourceNode {
+		override node(reset?: null): AudioScheduledSourceNode {
 			throw new Error('implement')
 		}
 
 		@ $mol_mem
-		override node() {
-			const node = super.node()
+		node_destruct() {
+			const node = this.node()
 			const destructor = node.onended = this.onended.bind(this, node)
 			return Object.assign(node, { destructor })
+		}
+
+		@ $mol_mem
+		override output() {
+			this.node_destruct()
+			return super.output()
 		}
 
 		protected onended(node: AudioScheduledSourceNode, e?: Event) {
@@ -22,7 +28,7 @@ namespace $ {
 
 			started.set(node, false)
 
-			if ( node !== $mol_wire_probe(() => this.node_raw()) ) return
+			if ( node !== $mol_wire_probe(() => this.node()) ) return
 			this.active(false)
 			if (e) this.end()
 		}
@@ -30,18 +36,18 @@ namespace $ {
 		end() {}
 
 		node_started() {
-			const prev = $mol_wire_probe(() => this.node_raw())
+			const prev = $mol_wire_probe(() => this.node())
 			return prev ? ( started.get(prev) ?? null ) : null
 		}
 
 		@ $mol_mem
 		start_at(next?: number ) {
-			if (this.node_started() !== null) this.node_raw(null)
+			if (this.node_started() !== null) this.node(null)
 			if (next === undefined) return -1
 
 			this.output().start(next + this.time_cut())
 
-			started.set(this.node_raw(), true)
+			started.set(this.node(), true)
 			return next
 		}
 
@@ -74,7 +80,7 @@ namespace $ {
 
 		@ $mol_action
 		start() {
-			this.node_raw(null)
+			this.node(null)
 			this.active(true)
 		}
 	}
