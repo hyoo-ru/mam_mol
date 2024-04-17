@@ -16616,27 +16616,40 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_audio_context extends $mol_object2 {
-        static native() {
-            const AudioContext = this.$.$mol_dom_context.AudioContext || this.$.$node['web-audio-api'].AudioContext;
-            return $mol_wire_sync(new AudioContext());
+    class $mol_audio_context extends $mol_object {
+        time() {
+            return this.native().currentTime;
         }
-        static active(next) {
-            const context = this.native();
-            if (next && context.state !== 'running')
-                context.resume();
-            if (next === false && context.state === 'running')
-                context.suspend();
-            return context.state === 'running';
+        native(reset) {
+            const AudioContext = this.$.$mol_dom_context.AudioContext || this.$.$node['web-audio-api'].AudioContext;
+            const ctx = new AudioContext();
+            ctx.onstatechange = (e) => this.state(null);
+            return $mol_wire_sync(ctx);
+        }
+        state(next) {
+            const ctx = this.native();
+            if (ctx.state === next)
+                return next;
+            if (next === 'closed')
+                ctx.close();
+            if (next === 'running')
+                ctx.resume();
+            if (next === 'suspended')
+                ctx.suspend();
+            return ctx.state;
+        }
+        active(next) {
+            return this.state(next ? 'running' : next === false ? 'suspended' : undefined) === 'running';
         }
     }
     __decorate([
-        $mol_memo.method
-    ], $mol_audio_context, "native", null);
+        $mol_mem
+    ], $mol_audio_context.prototype, "native", null);
     __decorate([
         $mol_mem
-    ], $mol_audio_context, "active", null);
+    ], $mol_audio_context.prototype, "state", null);
     $.$mol_audio_context = $mol_audio_context;
+    $.$mol_audio_context_main = new $mol_audio_context;
 })($ || ($ = {}));
 
 ;
@@ -16644,50 +16657,53 @@ var $;
 var $;
 (function ($) {
     class $mol_audio_node extends $mol_object {
-        context() { return this.$.$mol_audio_context.native(); }
-        node_raw() { return this.context().destination; }
-        node() {
-            return this.node_raw();
-        }
-        duration() {
-            let duration = 0;
-            for (const input of this.input_connected())
-                duration = Math.max(duration, input.duration());
-            return duration;
+        context(next) {
+            return next ?? this.$.$mol_audio_context_main;
         }
         input(next = []) { return next; }
         input_connected() {
-            const node = this.node_raw();
-            const prev = $mol_mem_cached(() => this.input_connected()) ?? [];
+            const node = this.node();
+            const prev = $mol_wire_probe(() => this.input_connected()) ?? [];
             const next = this.input();
             for (const src of prev) {
                 if (next.includes(src))
                     continue;
-                src.output().disconnect(node);
+                $mol_wire_probe(() => src.output())?.disconnect(node);
             }
+            const ctx = this.context();
             for (const src of next) {
+                src.context(ctx);
                 src.output().connect(node);
             }
             return next;
         }
+        active(next) { return next ?? false; }
+        inputs_active() {
+            return this.input_connected().some(src => src.active());
+        }
+        node() {
+            throw new Error('implement');
+        }
         output() {
             this.input_connected();
-            return this.node_raw();
+            return this.node();
         }
-        time() { return this.context().currentTime; }
+        time_cut() { return this.context().time(); }
         destructor() {
-            const node = this.node_raw();
-            for (const src of this.input()) {
+            const inputs = $mol_wire_probe(() => this.input_connected());
+            if (!inputs?.length)
+                return;
+            const node = $mol_wire_probe(() => this.node());
+            if (!node)
+                return;
+            for (const src of inputs) {
                 src.output().disconnect(node);
             }
         }
     }
     __decorate([
         $mol_mem
-    ], $mol_audio_node.prototype, "node_raw", null);
-    __decorate([
-        $mol_mem
-    ], $mol_audio_node.prototype, "duration", null);
+    ], $mol_audio_node.prototype, "context", null);
     __decorate([
         $mol_mem
     ], $mol_audio_node.prototype, "input", null);
@@ -16696,7 +16712,19 @@ var $;
     ], $mol_audio_node.prototype, "input_connected", null);
     __decorate([
         $mol_mem
+    ], $mol_audio_node.prototype, "active", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_node.prototype, "inputs_active", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_node.prototype, "node", null);
+    __decorate([
+        $mol_mem
     ], $mol_audio_node.prototype, "output", null);
+    __decorate([
+        $mol_action
+    ], $mol_audio_node.prototype, "time_cut", null);
     $.$mol_audio_node = $mol_audio_node;
 })($ || ($ = {}));
 
@@ -16704,53 +16732,160 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_audio_instrument extends $mol_audio_node {
-        node_raw() {
-            throw new Error('implement');
-        }
-        node() {
-            const node = super.node();
-            node.onended = $mol_wire_async((e) => {
-                this.active(false, false);
-                this.end(e);
-            });
-            return node;
-        }
-        end(e) { }
-        active(next, cached) {
-            if (cached !== undefined)
-                return cached;
-            $mol_wire_solid();
-            const node = next === false ? this.node_raw() : this.node();
-            const prev = $mol_wire_probe(() => this.active());
-            if (prev === next)
-                return next ?? false;
-            if (next === true) {
-                node.start();
-            }
-            else if (prev === true) {
-                node.stop();
-            }
-            return next ?? false;
-        }
-        destructor() {
-            this.active(false);
-            super.destructor();
-        }
+    class $mol_audio_gain extends $mol_audio_node {
+        node(reset) { return this.context().native().createGain(); }
         output() {
-            this.active(true);
+            this.gain();
             return super.output();
+        }
+        gain_default() { return 1; }
+        gain(next) {
+            this.node().gain.setValueAtTime(next ?? this.gain_default(), this.time_cut());
+            return next;
         }
     }
     __decorate([
         $mol_mem
-    ], $mol_audio_instrument.prototype, "node", null);
+    ], $mol_audio_gain.prototype, "node", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_gain.prototype, "output", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_gain.prototype, "gain", null);
+    $.$mol_audio_gain = $mol_audio_gain;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_audio_tone_indices = {
+        'b#': 0,
+        a: 1,
+        'a#': 2,
+        b: 3,
+        c: 4,
+        'c#': 5,
+        d: 6,
+        'd#': 7,
+        e: 8,
+        f: 9,
+        'f#': 10,
+        g: 11,
+    };
+    $.$mol_audio_tone_base_freq = 440;
+    function $mol_audio_tone_name_freq(name, octave) {
+        if (name === '_')
+            return 0;
+        const index = $.$mol_audio_tone_indices[name] + 12 * (octave ?? 4);
+        return $.$mol_audio_tone_base_freq * (2 ** ((index - 49) / 12));
+    }
+    $.$mol_audio_tone_name_freq = $mol_audio_tone_name_freq;
+    function $mol_audio_tone_parse(note) {
+        const [, name, octave_str, duration_str] = note.match(/((?:[a-g]#?)|_)([0-8])?(?:\/(\d+))?/) ?? [];
+        if (!name)
+            throw new $mol_error_mix('Not a note', { note });
+        const octave = octave_str ? Number(octave_str) : null;
+        const divider = Number(duration_str || 1);
+        const freq = $mol_audio_tone_name_freq(name, octave);
+        return { freq, name: name, octave, divider };
+    }
+    $.$mol_audio_tone_parse = $mol_audio_tone_parse;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    const started = new WeakMap();
+    class $mol_audio_instrument extends $mol_audio_node {
+        node(reset) {
+            throw new Error('implement');
+        }
+        node_destruct() {
+            const node = this.node();
+            const destructor = node.onended = this.onended.bind(this, node);
+            return Object.assign(node, { destructor });
+        }
+        output() {
+            this.node_destruct();
+            return super.output();
+        }
+        onended(node, e) {
+            const state = started.get(node);
+            if (state === false)
+                return;
+            if (state === true)
+                node.stop();
+            started.set(node, false);
+            if (node !== $mol_wire_probe(() => this.node()))
+                return;
+            this.active(false);
+            if (e)
+                this.end();
+        }
+        end() { }
+        node_started() {
+            const prev = $mol_wire_probe(() => this.node());
+            return prev ? (started.get(prev) ?? null) : null;
+        }
+        start_at(next) {
+            if (this.node_started() !== null)
+                this.node(null);
+            if (next === undefined)
+                return -1;
+            this.output().start(next + this.time_cut());
+            started.set(this.node(), true);
+            return next;
+        }
+        note(next) { return next ?? 'a'; }
+        stop_at(next) {
+            if (next === undefined || next < 0)
+                return -1;
+            if (!this.node_started())
+                return next;
+            this.node().stop(next + this.time_cut());
+            return next;
+        }
+        active(next) {
+            if (next) {
+                this.context().active(true);
+                this.start_at(0);
+                this.stop_at(-1);
+            }
+            if (next === false)
+                this.stop_at(0);
+            if (next !== undefined)
+                return next;
+            return next ?? (this.node_started() ?? false);
+        }
+        start() {
+            this.node(null);
+            this.active(true);
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_audio_instrument.prototype, "node_destruct", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_instrument.prototype, "output", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_instrument.prototype, "start_at", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_instrument.prototype, "note", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_instrument.prototype, "stop_at", null);
     __decorate([
         $mol_mem
     ], $mol_audio_instrument.prototype, "active", null);
     __decorate([
-        $mol_mem
-    ], $mol_audio_instrument.prototype, "output", null);
+        $mol_action
+    ], $mol_audio_instrument.prototype, "start", null);
     $.$mol_audio_instrument = $mol_audio_instrument;
 })($ || ($ = {}));
 
@@ -16759,22 +16894,29 @@ var $;
 var $;
 (function ($) {
     class $mol_audio_vibe extends $mol_audio_instrument {
-        node_raw() { return this.context().createOscillator(); }
-        freq(next = 440) { return next; }
-        shape(next = 'sine') { return next; }
-        duration() {
-            return 0.5;
+        node(reset) {
+            return this.context().native().createOscillator();
         }
-        node() {
-            const node = super.node();
-            node.frequency.setValueAtTime(this.freq(), this.time());
-            node.type = this.shape();
-            return node;
+        freq_default() { return 440; }
+        freq(next) {
+            const note = this.note();
+            next = next ?? (note ? $mol_audio_tone_parse(note).freq : this.freq_default());
+            this.node().frequency.setValueAtTime(next, this.time_cut());
+            return next;
+        }
+        shape_default() { return 'sine'; }
+        shape(next) {
+            return this.node().type = next ?? this.shape_default();
+        }
+        output() {
+            this.freq();
+            this.shape();
+            return super.output();
         }
     }
     __decorate([
         $mol_mem
-    ], $mol_audio_vibe.prototype, "node_raw", null);
+    ], $mol_audio_vibe.prototype, "node", null);
     __decorate([
         $mol_mem
     ], $mol_audio_vibe.prototype, "freq", null);
@@ -16783,7 +16925,7 @@ var $;
     ], $mol_audio_vibe.prototype, "shape", null);
     __decorate([
         $mol_mem
-    ], $mol_audio_vibe.prototype, "node", null);
+    ], $mol_audio_vibe.prototype, "output", null);
     $.$mol_audio_vibe = $mol_audio_vibe;
 })($ || ($ = {}));
 
@@ -16791,69 +16933,434 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_audio_room extends $mol_audio_node {
-        play() {
-            this.$.$mol_audio_context.active();
+    class $mol_audio_melody extends $mol_audio_gain {
+        notes(next) { return next ?? ''; }
+        clips() {
+            let start_at_prev = 0;
+            const default_length = this.note_length();
+            const note_off = this.note_off();
+            return this.notes().split(' ').map((command, id) => {
+                const note = command.trim();
+                const { divider } = $mol_audio_tone_parse(note);
+                const duration = default_length / divider;
+                const start_at = start_at_prev;
+                const stop_at = start_at + duration - note_off;
+                start_at_prev += duration;
+                return { note, start_at, stop_at, id };
+            });
+        }
+        note_length(sec) { return sec ?? 0.25; }
+        note_off_part() { return .4; }
+        note_off() { return this.note_length() * this.note_off_part(); }
+        duration() { return this.clips().reduce((acc, clip) => Math.max(acc, clip.stop_at), 0); }
+        note(index) { return this.clips()[index]; }
+        offset_cut(next) {
+            let offset = this.offset();
+            if (offset === null)
+                offset = this.offset(0) ?? 0;
+            if (offset === 0)
+                this.start_at_absolute = this.time_cut() + next;
+            return offset;
+        }
+        start_at(next) {
+            if (next === undefined)
+                return -1;
+            const offset = this.offset_cut(next);
+            const instruments = [];
+            for (const clip of this.clips()) {
+                if (clip.stop_at < offset)
+                    continue;
+                const instrument = this.instrument(clip.id);
+                instrument.note(clip.note);
+                instrument.start_at(next + clip.start_at - offset);
+                const stop_at = next + clip.stop_at - offset;
+                instrument.stop_at(stop_at);
+                instrument.end = () => this.offset(null);
+                instruments.push(instrument);
+            }
+            this.input(instruments);
             this.output();
-            this.$.$mol_wait_timeout(this.duration() * 1000);
+            return next;
+        }
+        output() {
+            this.offset();
+            return super.output();
+        }
+        start_at_absolute = 0;
+        stop_at_scheduled(next) {
+            if (!next) {
+                this.offset(null);
+                this.input([]);
+                return null;
+            }
+            return new $mol_after_timeout(next * 1000, () => this.stop_at_scheduled(0));
+        }
+        stop_at(next) {
+            if (next === -1)
+                return -1;
+            if (next === undefined)
+                return -1;
+            if (next < this.start_at())
+                return -1;
+            this.stop_at_scheduled(next);
+            return next;
+        }
+        start() {
+            this.offset(0);
+            this.active(true);
+        }
+        offset(next) {
+            if (next === null)
+                next = this.time_cut() - this.start_at_absolute;
+            if (next === undefined)
+                return null;
+            if (next > this.duration())
+                return null;
+            if (next < 0)
+                return null;
+            return next;
+        }
+        active(next) {
+            if (next) {
+                this.context().active(true);
+                this.start_at(0);
+                return next;
+            }
+            if (next === false) {
+                this.stop_at(0);
+                return next;
+            }
+            return this.offset() !== null;
+        }
+        instrument(index) {
+            return this.$.$mol_audio_vibe.make({});
         }
     }
     __decorate([
+        $mol_mem
+    ], $mol_audio_melody.prototype, "notes", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_melody.prototype, "clips", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_melody.prototype, "duration", null);
+    __decorate([
         $mol_action
-    ], $mol_audio_room.prototype, "play", null);
+    ], $mol_audio_melody.prototype, "offset_cut", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_melody.prototype, "start_at", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_melody.prototype, "stop_at_scheduled", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_melody.prototype, "stop_at", null);
+    __decorate([
+        $mol_action
+    ], $mol_audio_melody.prototype, "start", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_melody.prototype, "offset", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_melody.prototype, "active", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_audio_melody.prototype, "instrument", null);
+    $.$mol_audio_melody = $mol_audio_melody;
+})($ || ($ = {}));
+
+;
+	($.$mol_icon_power) = class $mol_icon_power extends ($.$mol_icon) {
+		path(){
+			return "M16.56,5.44L15.11,6.89C16.84,7.94 18,9.83 18,12C18,15.31 15.31,18 12,18C8.69,18 6,15.31 6,12C6,9.83 7.16,7.94 8.88,6.88L7.44,5.44C5.36,6.88 4,9.28 4,12C4,16.42 7.58,20 12,20C16.42,20 20,16.42 20,12C20,9.28 18.64,6.88 16.56,5.44M13,3H11V13H13";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_icon_power_sleep) = class $mol_icon_power_sleep extends ($.$mol_icon) {
+		path(){
+			return "M18.73,18C15.4,21.69 9.71,22 6,18.64C2.33,15.31 2.04,9.62 5.37,5.93C6.9,4.25 9,3.2 11.27,3C7.96,6.7 8.27,12.39 12,15.71C13.63,17.19 15.78,18 18,18C18.25,18 18.5,18 18.73,18Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_icon_sleep) = class $mol_icon_sleep extends ($.$mol_icon) {
+		path(){
+			return "M23,12H17V10L20.39,6H17V4H23V6L19.62,10H23V12M15,16H9V14L12.39,10H9V8H15V10L11.62,14H15V16M7,20H1V18L4.39,14H1V12H7V14L3.62,18H7V20Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_icon_pause) = class $mol_icon_pause extends ($.$mol_icon) {
+		path(){
+			return "M14,19H18V5H14M6,19H10V5H6V19Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_audio_status) = class $mol_audio_status extends ($.$mol_view) {
+		Closed(){
+			const obj = new this.$.$mol_icon_power_sleep();
+			return obj;
+		}
+		Suspended(){
+			const obj = new this.$.$mol_icon_sleep();
+			return obj;
+		}
+		Playing(){
+			const obj = new this.$.$mol_icon_play();
+			return obj;
+		}
+		Running(){
+			const obj = new this.$.$mol_icon_pause();
+			return obj;
+		}
+		wakeup(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		wakeup_enabled(){
+			return false;
+		}
+		status_name(){
+			return (this.status());
+		}
+		Icon(){
+			const obj = new this.$.$mol_icon_play();
+			return obj;
+		}
+		Wakeup(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.click) = (next) => ((this.wakeup(next)));
+			(obj.enabled) = () => ((this.wakeup_enabled()));
+			(obj.hint) = () => ((this.status_name()));
+			(obj.sub) = () => ([(this.Icon())]);
+			return obj;
+		}
+		icons(){
+			return {
+				"closed": (this.Closed()), 
+				"suspended": (this.Suspended()), 
+				"playing": (this.Playing()), 
+				"running": (this.Running())
+			};
+		}
+		status(next){
+			if(next !== undefined) return next;
+			return "suspended";
+		}
+		status_template(){
+			return "Audio status: {status}";
+		}
+		sub(){
+			return [(this.Wakeup())];
+		}
+	};
+	($mol_mem(($.$mol_audio_status.prototype), "Closed"));
+	($mol_mem(($.$mol_audio_status.prototype), "Suspended"));
+	($mol_mem(($.$mol_audio_status.prototype), "Playing"));
+	($mol_mem(($.$mol_audio_status.prototype), "Running"));
+	($mol_mem(($.$mol_audio_status.prototype), "wakeup"));
+	($mol_mem(($.$mol_audio_status.prototype), "Icon"));
+	($mol_mem(($.$mol_audio_status.prototype), "Wakeup"));
+	($mol_mem(($.$mol_audio_status.prototype), "status"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_audio_room extends $mol_audio_node {
+        node() {
+            return this.context().native().destination;
+        }
+        active(next) {
+            return this.context().active(next);
+        }
+        suspend_time(sec) {
+            return sec ?? 5;
+        }
+        suspend_timer() {
+            const time = this.suspend_time();
+            if (!time)
+                return null;
+            if (!this.active())
+                return null;
+            return new this.$.$mol_after_timeout(time * 1000, () => $mol_wire_async(this).active(false));
+        }
+        status(next) {
+            const state = this.context().state(next === 'playing' ? 'running' : next);
+            if (state === 'closed')
+                return state;
+            this.output();
+            if (this.inputs_active() && state === 'running')
+                return 'playing';
+            this.suspend_timer();
+            return state;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_audio_room.prototype, "node", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_room.prototype, "suspend_time", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_room.prototype, "suspend_timer", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_room.prototype, "status", null);
     $.$mol_audio_room = $mol_audio_room;
 })($ || ($ = {}));
 
 ;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_audio_status extends $.$mol_audio_status {
+            status(next) {
+                return super.status(next);
+            }
+            wakeup() {
+                this.status('running');
+            }
+            Icon() {
+                return this.icons()[this.status()] ?? super.Icon();
+            }
+            wakeup_enabled() {
+                return this.status() === 'suspended';
+            }
+            status_name() {
+                return this.status_template().replace('{status}', this.status());
+            }
+        }
+        $$.$mol_audio_status = $mol_audio_status;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
 	($.$mol_audio_demo) = class $mol_audio_demo extends ($.$mol_example_small) {
-		beep_play(){
-			return (this.Beep().play());
+		beep_status(next){
+			return (this.Beep_room().status(next));
 		}
-		Beep_vibe(){
-			const obj = new this.$.$mol_audio_vibe();
-			(obj.freq) = () => (440);
+		beep_play(){
+			return (this.Beep_track().start());
+		}
+		Beep_track(){
+			const obj = new this.$.$mol_audio_melody();
+			(obj.note_length) = () => (.5);
+			(obj.notes) = () => ("e");
 			return obj;
+		}
+		noise_status(next){
+			return (this.Noise_room().status(next));
 		}
 		noise_play(){
-			return (this.Noise().play());
+			return (this.Noise_track().start());
 		}
-		noise_freq(){
-			return 440;
+		note(id){
+			return (this.Noise(id).note());
 		}
-		Noise_vibe(){
+		noise_freq(id){
+			return 0;
+		}
+		Noise(id){
 			const obj = new this.$.$mol_audio_vibe();
-			(obj.freq) = () => ((this.noise_freq()));
+			(obj.freq) = () => ((this.noise_freq(id)));
 			return obj;
+		}
+		Noise_track(){
+			const obj = new this.$.$mol_audio_melody();
+			(obj.note_length) = () => (1);
+			(obj.notes) = () => ("_");
+			(obj.instrument) = (id) => ((this.Noise(id)));
+			return obj;
+		}
+		beep_play_click(next){
+			if(next !== undefined) return next;
+			return null;
 		}
 		Beep_play(){
 			const obj = new this.$.$mol_button_minor();
-			(obj.click) = () => ((this.beep_play()));
+			(obj.click) = (next) => ((this.beep_play_click(next)));
 			(obj.title) = () => ("Beep");
 			return obj;
 		}
+		Beep_status(){
+			const obj = new this.$.$mol_audio_status();
+			(obj.status) = (next) => ((this.beep_status(next)));
+			return obj;
+		}
+		Beep_row(){
+			const obj = new this.$.$mol_row();
+			(obj.sub) = () => ([(this.Beep_play()), (this.Beep_status())]);
+			return obj;
+		}
+		noise_play_click(next){
+			if(next !== undefined) return next;
+			return null;
+		}
 		Noise_play(){
 			const obj = new this.$.$mol_button_minor();
-			(obj.click) = () => ((this.noise_play()));
+			(obj.click) = (next) => ((this.noise_play_click(next)));
 			(obj.title) = () => ("Noise");
+			return obj;
+		}
+		Noise_status(){
+			const obj = new this.$.$mol_audio_status();
+			(obj.status) = (next) => ((this.noise_status(next)));
+			return obj;
+		}
+		Nouse_row(){
+			const obj = new this.$.$mol_row();
+			(obj.sub) = () => ([(this.Noise_play()), (this.Noise_status())]);
+			return obj;
+		}
+		List(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ([(this.Beep_row()), (this.Nouse_row())]);
 			return obj;
 		}
 		title(){
 			return "WebAudio API example";
 		}
-		Beep(){
+		Beep_room(){
 			const obj = new this.$.$mol_audio_room();
-			(obj.duration) = () => (0.1);
-			(obj.input) = () => ([(this.Beep_vibe())]);
+			(obj.input) = () => ([(this.Beep_track())]);
 			return obj;
 		}
-		Noise(){
+		Noise_room(){
 			const obj = new this.$.$mol_audio_room();
-			(obj.duration) = () => (1);
-			(obj.input) = () => ([(this.Noise_vibe())]);
+			(obj.input) = () => ([(this.Noise_track())]);
 			return obj;
 		}
 		sub(){
-			return [(this.Beep_play()), (this.Noise_play())];
+			return [(this.List())];
 		}
 		tags(){
 			return ["sound"];
@@ -16862,12 +17369,20 @@ var $;
 			return ["Media/Audio"];
 		}
 	};
-	($mol_mem(($.$mol_audio_demo.prototype), "Beep_vibe"));
-	($mol_mem(($.$mol_audio_demo.prototype), "Noise_vibe"));
+	($mol_mem(($.$mol_audio_demo.prototype), "Beep_track"));
+	($mol_mem_key(($.$mol_audio_demo.prototype), "Noise"));
+	($mol_mem(($.$mol_audio_demo.prototype), "Noise_track"));
+	($mol_mem(($.$mol_audio_demo.prototype), "beep_play_click"));
 	($mol_mem(($.$mol_audio_demo.prototype), "Beep_play"));
+	($mol_mem(($.$mol_audio_demo.prototype), "Beep_status"));
+	($mol_mem(($.$mol_audio_demo.prototype), "Beep_row"));
+	($mol_mem(($.$mol_audio_demo.prototype), "noise_play_click"));
 	($mol_mem(($.$mol_audio_demo.prototype), "Noise_play"));
-	($mol_mem(($.$mol_audio_demo.prototype), "Beep"));
-	($mol_mem(($.$mol_audio_demo.prototype), "Noise"));
+	($mol_mem(($.$mol_audio_demo.prototype), "Noise_status"));
+	($mol_mem(($.$mol_audio_demo.prototype), "Nouse_row"));
+	($mol_mem(($.$mol_audio_demo.prototype), "List"));
+	($mol_mem(($.$mol_audio_demo.prototype), "Beep_room"));
+	($mol_mem(($.$mol_audio_demo.prototype), "Noise_room"));
 
 
 ;
@@ -16880,11 +17395,17 @@ var $;
     var $$;
     (function ($$) {
         class $mol_audio_demo extends $.$mol_audio_demo {
-            noise_freq() {
+            noise_freq(id) {
                 $mol_wire_watch();
-                return Math.random() * 1000;
+                const base_freq = $mol_audio_tone_parse(this.note(id)).freq;
+                return base_freq + Math.random() * 1000;
             }
+            beep_play_click(e) { this.beep_play(); }
+            noise_play_click(e) { this.noise_play(); }
         }
+        __decorate([
+            $mol_mem_key
+        ], $mol_audio_demo.prototype, "noise_freq", null);
         $$.$mol_audio_demo = $mol_audio_demo;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -16929,13 +17450,23 @@ var $;
 
 ;
 	($.$mol_audio_demo_vibe) = class $mol_audio_demo_vibe extends ($.$mol_example_small) {
-		play(){
-			return (this.Room().play());
+		room_status(next){
+			return (this.Room().status(next));
 		}
-		Beep_vibe(){
+		beep_vibe_start(){
+			return (this.Beep_track().start());
+		}
+		Beep_vibe(id){
 			const obj = new this.$.$mol_audio_vibe();
 			(obj.freq) = () => ((this.frequency()));
 			(obj.shape) = () => ((this.shape()));
+			return obj;
+		}
+		Beep_track(){
+			const obj = new this.$.$mol_audio_melody();
+			(obj.note_length) = () => ((this.duration()));
+			(obj.notes) = () => ("_");
+			(obj.instrument) = (id) => ((this.Beep_vibe(id)));
 			return obj;
 		}
 		duration_label(){
@@ -17001,19 +17532,28 @@ var $;
 			(obj.content) = () => ([(this.Shape_select())]);
 			return obj;
 		}
+		beep_vibe_start_click(next){
+			if(next !== undefined) return next;
+			return null;
+		}
 		Play_icon(){
 			const obj = new this.$.$mol_icon_play();
 			return obj;
 		}
 		Play_button(){
 			const obj = new this.$.$mol_button_major();
-			(obj.click) = () => ((this.play()));
+			(obj.click) = (next) => ((this.beep_vibe_start_click(next)));
 			(obj.sub) = () => ([(this.Play_icon()), "Play"]);
+			return obj;
+		}
+		Room_status(){
+			const obj = new this.$.$mol_audio_status();
+			(obj.status) = (next) => ((this.room_status(next)));
 			return obj;
 		}
 		Button_row(){
 			const obj = new this.$.$mol_row();
-			(obj.sub) = () => ([(this.Play_button())]);
+			(obj.sub) = () => ([(this.Play_button()), (this.Room_status())]);
 			return obj;
 		}
 		List(){
@@ -17031,8 +17571,7 @@ var $;
 		}
 		Room(){
 			const obj = new this.$.$mol_audio_room();
-			(obj.duration) = () => ((this.duration()));
-			(obj.input) = () => ([(this.Beep_vibe())]);
+			(obj.input) = () => ([(this.Beep_track())]);
 			return obj;
 		}
 		sub(){
@@ -17045,7 +17584,8 @@ var $;
 			return ["Media/Audio"];
 		}
 	};
-	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Beep_vibe"));
+	($mol_mem_key(($.$mol_audio_demo_vibe.prototype), "Beep_vibe"));
+	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Beep_track"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "duration"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Duration_num"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Duration"));
@@ -17055,8 +17595,10 @@ var $;
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "shape"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Shape_select"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Shape"));
+	($mol_mem(($.$mol_audio_demo_vibe.prototype), "beep_vibe_start_click"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Play_icon"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Play_button"));
+	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Room_status"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Button_row"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "List"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Room"));
@@ -17075,11 +17617,586 @@ var $;
             shape(next) {
                 return next !== undefined ? next : 'sine';
             }
+            beep_vibe_start_click(e) {
+                this.beep_vibe_start();
+            }
         }
         __decorate([
             $mol_mem
         ], $mol_audio_demo_vibe.prototype, "shape", null);
         $$.$mol_audio_demo_vibe = $mol_audio_demo_vibe;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_audio_sample extends $mol_audio_instrument {
+        duration() {
+            return this.audio_buffer()?.duration ?? 0;
+        }
+        buffer() {
+            return null;
+        }
+        audio_buffer() {
+            const buffer = this.buffer();
+            return buffer ? this.context().native().decodeAudioData(buffer) : null;
+        }
+        loop_default() { return false; }
+        loop(next) {
+            return this.node().loop = next ?? this.loop_default();
+        }
+        loop_start_default() { return 0; }
+        loop_start(next) {
+            return this.node().loopStart = next ?? this.loop_start_default();
+        }
+        loop_end_default() { return this.duration(); }
+        loop_end(next) {
+            return this.node().loopEnd = next ?? this.loop_end_default();
+        }
+        rate_default() {
+            return this.node().playbackRate.defaultValue;
+        }
+        rate(next) {
+            return this.node().playbackRate.value = next ?? this.rate_default();
+        }
+        node(reset) {
+            const node = this.context().native().createBufferSource();
+            node.buffer = this.audio_buffer();
+            return node;
+        }
+        active(next) {
+            if (this.node_started()) {
+                if (next)
+                    this.context().active(true);
+                this.rate(next ? null : 0);
+                return next ?? false;
+            }
+            return super.active(next);
+        }
+        output() {
+            this.loop();
+            this.loop_start();
+            this.loop_end();
+            this.rate();
+            return super.output();
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_audio_sample.prototype, "audio_buffer", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_sample.prototype, "loop", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_sample.prototype, "loop_start", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_sample.prototype, "loop_end", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_sample.prototype, "rate", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_sample.prototype, "node", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_sample.prototype, "active", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_sample.prototype, "output", null);
+    $.$mol_audio_sample = $mol_audio_sample;
+})($ || ($ = {}));
+
+;
+	($.$mol_form_field) = class $mol_form_field extends ($.$mol_labeler) {
+		name(){
+			return "";
+		}
+		bid(){
+			return "";
+		}
+		Bid(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.bid())]);
+			return obj;
+		}
+		control(){
+			return null;
+		}
+		bids(){
+			return [];
+		}
+		label(){
+			return [(this.name()), (this.Bid())];
+		}
+		content(){
+			return [(this.control())];
+		}
+	};
+	($mol_mem(($.$mol_form_field.prototype), "Bid"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_form_field extends $.$mol_form_field {
+            bid() {
+                return this.bids().filter(Boolean)[0] ?? '';
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_form_field.prototype, "bid", null);
+        $$.$mol_form_field = $mol_form_field;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/form/field/field.view.css", "[mol_form_field] {\n\talign-items: stretch;\n}\n\n[mol_form_field_bid] {\n\tcolor: var(--mol_theme_focus);\n\tdisplay: inline-block;\n\ttext-shadow: 0 0;\n}\n\n[mol_form_field_content] {\n\tborder-radius: var(--mol_gap_round);\n}\n");
+})($ || ($ = {}));
+
+;
+	($.$mol_icon_loop) = class $mol_icon_loop extends ($.$mol_icon) {
+		path(){
+			return "M9,14V21H2V19H5.57C4,17.3 3,15 3,12.5C3,7.25 7.25,3 12.5,3C17.75,3 22,7.25 22,12.5C22,17.75 17.75,22 12.5,22H12V20H12.5C16.64,20 20,16.64 20,12.5C20,8.36 16.64,5 12.5,5C8.36,5 5,8.36 5,12.5C5,14.47 5.76,16.26 7,17.6V14H9Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_form) = class $mol_form extends ($.$mol_list) {
+		keydown(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		form_fields(){
+			return [];
+		}
+		body(){
+			return (this.form_fields());
+		}
+		Body(){
+			const obj = new this.$.$mol_list();
+			(obj.sub) = () => ((this.body()));
+			return obj;
+		}
+		buttons(){
+			return [];
+		}
+		foot(){
+			return (this.buttons());
+		}
+		Foot(){
+			const obj = new this.$.$mol_row();
+			(obj.sub) = () => ((this.foot()));
+			return obj;
+		}
+		submit_allowed(){
+			return true;
+		}
+		submit_blocked(){
+			return false;
+		}
+		event(){
+			return {...(super.event()), "keydown": (next) => (this.keydown(next))};
+		}
+		submit(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		rows(){
+			return [(this.Body()), (this.Foot())];
+		}
+	};
+	($mol_mem(($.$mol_form.prototype), "keydown"));
+	($mol_mem(($.$mol_form.prototype), "Body"));
+	($mol_mem(($.$mol_form.prototype), "Foot"));
+	($mol_mem(($.$mol_form.prototype), "submit"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_form extends $.$mol_form {
+            form_fields() {
+                return [...this.view_find(view => view instanceof $mol_form_field)]
+                    .map(path => path[path.length - 1]);
+            }
+            submit_allowed() {
+                return this.form_fields().every(field => !field.bid());
+            }
+            submit_blocked() {
+                return !this.submit_allowed();
+            }
+            keydown(next) {
+                if (next.ctrlKey && next.keyCode === $mol_keyboard_code.enter && !this.submit_blocked())
+                    this.submit(event);
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_form.prototype, "form_fields", null);
+        __decorate([
+            $mol_mem
+        ], $mol_form.prototype, "submit_allowed", null);
+        $$.$mol_form = $mol_form;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/form/form.view.css", "[mol_form] {\r\n\tgap: var(--mol_gap_block);\r\n}\r\n\r\n[mol_form_body] {\r\n\tgap: var(--mol_gap_block);\r\n}");
+})($ || ($ = {}));
+
+;
+	($.$mol_audio_demo_sample) = class $mol_audio_demo_sample extends ($.$mol_example_small) {
+		room_status(next){
+			return (this.Room().status(next));
+		}
+		sample_active(next){
+			return (this.Sample().active(next));
+		}
+		start(){
+			return (this.Sample().start());
+		}
+		loop(next){
+			return (this.Sample().loop(next));
+		}
+		sample_buffer(){
+			return null;
+		}
+		Sample(){
+			const obj = new this.$.$mol_audio_sample();
+			(obj.loop_default) = () => (true);
+			(obj.buffer) = () => ((this.sample_buffer()));
+			return obj;
+		}
+		sample_url(next){
+			if(next !== undefined) return next;
+			return "/mol/audio/demo/sample/drumloop.ogg";
+		}
+		Sample_url(){
+			const obj = new this.$.$mol_string();
+			(obj.value) = (next) => ((this.sample_url(next)));
+			return obj;
+		}
+		Sample_url_field(){
+			const obj = new this.$.$mol_form_field();
+			(obj.name) = () => ("Sample url");
+			(obj.control) = () => ((this.Sample_url()));
+			return obj;
+		}
+		Active_icon(){
+			const obj = new this.$.$mol_icon_play();
+			return obj;
+		}
+		Active(){
+			const obj = new this.$.$mol_check_icon();
+			(obj.checked) = (next) => ((this.sample_active(next)));
+			(obj.title) = () => ("Active");
+			(obj.Icon) = () => ((this.Active_icon()));
+			return obj;
+		}
+		start_click(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Start(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.click) = (next) => ((this.start_click(next)));
+			(obj.title) = () => ("Start");
+			return obj;
+		}
+		Loop_icon(){
+			const obj = new this.$.$mol_icon_loop();
+			return obj;
+		}
+		Loop(){
+			const obj = new this.$.$mol_check_icon();
+			(obj.checked) = (next) => ((this.loop(next)));
+			(obj.title) = () => ("Loop");
+			(obj.Icon) = () => ((this.Loop_icon()));
+			return obj;
+		}
+		Controls(){
+			const obj = new this.$.$mol_row();
+			(obj.sub) = () => ([
+				(this.Active()), 
+				(this.Start()), 
+				(this.Loop())
+			]);
+			return obj;
+		}
+		Room_status(){
+			const obj = new this.$.$mol_audio_status();
+			(obj.status) = (next) => ((this.room_status(next)));
+			return obj;
+		}
+		List(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ([
+				(this.Sample_url_field()), 
+				(this.Controls()), 
+				(this.Room_status())
+			]);
+			return obj;
+		}
+		title(){
+			return "WebAudio API sample example";
+		}
+		Room(){
+			const obj = new this.$.$mol_audio_room();
+			(obj.input) = () => ([(this.Sample())]);
+			return obj;
+		}
+		sub(){
+			return [(this.List())];
+		}
+		tags(){
+			return ["sound", "sample"];
+		}
+		aspects(){
+			return ["Media/Audio"];
+		}
+	};
+	($mol_mem(($.$mol_audio_demo_sample.prototype), "Sample"));
+	($mol_mem(($.$mol_audio_demo_sample.prototype), "sample_url"));
+	($mol_mem(($.$mol_audio_demo_sample.prototype), "Sample_url"));
+	($mol_mem(($.$mol_audio_demo_sample.prototype), "Sample_url_field"));
+	($mol_mem(($.$mol_audio_demo_sample.prototype), "Active_icon"));
+	($mol_mem(($.$mol_audio_demo_sample.prototype), "Active"));
+	($mol_mem(($.$mol_audio_demo_sample.prototype), "start_click"));
+	($mol_mem(($.$mol_audio_demo_sample.prototype), "Start"));
+	($mol_mem(($.$mol_audio_demo_sample.prototype), "Loop_icon"));
+	($mol_mem(($.$mol_audio_demo_sample.prototype), "Loop"));
+	($mol_mem(($.$mol_audio_demo_sample.prototype), "Controls"));
+	($mol_mem(($.$mol_audio_demo_sample.prototype), "Room_status"));
+	($mol_mem(($.$mol_audio_demo_sample.prototype), "List"));
+	($mol_mem(($.$mol_audio_demo_sample.prototype), "Room"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_audio_demo_sample extends $.$mol_audio_demo_sample {
+            sample_buffer() {
+                $mol_wire_solid();
+                return this.$.$mol_fetch.response(this.sample_url()).buffer();
+            }
+            start_click(e) {
+                this.start();
+            }
+        }
+        $$.$mol_audio_demo_sample = $mol_audio_demo_sample;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$mol_icon_play_pause) = class $mol_icon_play_pause extends ($.$mol_icon) {
+		path(){
+			return "M3,5V19L11,12M13,19H16V5H13M18,5V19H21V5";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_audio_demo_sequencer) = class $mol_audio_demo_sequencer extends ($.$mol_example_small) {
+		room_status(next){
+			return (this.Room().status(next));
+		}
+		room_active(next){
+			return (this.Room().active(next));
+		}
+		beep_track_start(){
+			return (this.Beep_track().start());
+		}
+		beep_track_active(next){
+			return (this.Beep_track().active(next));
+		}
+		notes(next){
+			if(next !== undefined) return next;
+			return "e e e _ e e e _ e g c d e _ _ _/2 f f f f f e e e e/2 e/2 d d e d _ g _";
+		}
+		note_length(next){
+			if(next !== undefined) return next;
+			return .25;
+		}
+		note_off_part(next){
+			if(next !== undefined) return next;
+			return .4;
+		}
+		Beep_track(){
+			const obj = new this.$.$mol_audio_melody();
+			(obj.notes) = (next) => ((this.notes(next)));
+			(obj.note_length) = (next) => ((this.note_length(next)));
+			(obj.note_off_part) = (next) => ((this.note_off_part(next)));
+			return obj;
+		}
+		Note_length(){
+			const obj = new this.$.$mol_number();
+			(obj.precision) = () => (.05);
+			(obj.value_min) = () => (.05);
+			(obj.value) = (next) => ((this.note_length(next)));
+			return obj;
+		}
+		Note_length_field(){
+			const obj = new this.$.$mol_form_field();
+			(obj.name) = () => ("Note length, sec");
+			(obj.control) = () => ((this.Note_length()));
+			return obj;
+		}
+		Note_off_part(){
+			const obj = new this.$.$mol_number();
+			(obj.precision) = () => (.1);
+			(obj.value_min) = () => (.1);
+			(obj.value) = (next) => ((this.note_off_part(next)));
+			return obj;
+		}
+		Note_off_part_field(){
+			const obj = new this.$.$mol_form_field();
+			(obj.name) = () => ("Note off, part of length");
+			(obj.control) = () => ((this.Note_off_part()));
+			return obj;
+		}
+		Note_settings(){
+			const obj = new this.$.$mol_row();
+			(obj.sub) = () => ([(this.Note_length_field()), (this.Note_off_part_field())]);
+			return obj;
+		}
+		Notes(){
+			const obj = new this.$.$mol_textarea();
+			(obj.hint) = () => ("Example: e _ c#5/2 _/2");
+			(obj.value) = (next) => ((this.notes(next)));
+			return obj;
+		}
+		Notes_field(){
+			const obj = new this.$.$mol_form_field();
+			(obj.name) = () => ("Notes");
+			(obj.control) = () => ((this.Notes()));
+			return obj;
+		}
+		Beep_active_icon(){
+			const obj = new this.$.$mol_icon_play_pause();
+			return obj;
+		}
+		Beep_active(){
+			const obj = new this.$.$mol_check_icon();
+			(obj.hint) = () => ("Play / Pause");
+			(obj.Icon) = () => ((this.Beep_active_icon()));
+			(obj.checked) = (next) => ((this.beep_track_active(next)));
+			return obj;
+		}
+		Beep_play(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.click) = (next) => ((this.beep_track_start(next)));
+			(obj.title) = () => ("Play");
+			return obj;
+		}
+		Beep_status(){
+			const obj = new this.$.$mol_audio_status();
+			(obj.status) = (next) => ((this.room_status(next)));
+			return obj;
+		}
+		Beep_row(){
+			const obj = new this.$.$mol_row();
+			(obj.sub) = () => ([
+				(this.Beep_active()), 
+				(this.Beep_play()), 
+				(this.Beep_status())
+			]);
+			return obj;
+		}
+		List(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ([
+				(this.Note_settings()), 
+				(this.Notes_field()), 
+				(this.Beep_row())
+			]);
+			return obj;
+		}
+		title(){
+			return "WebAudio API example sequencer";
+		}
+		Room(){
+			const obj = new this.$.$mol_audio_room();
+			(obj.input) = () => ([(this.Beep_track())]);
+			return obj;
+		}
+		sub(){
+			return [(this.List())];
+		}
+		tags(){
+			return ["sound", "sequencer"];
+		}
+		aspects(){
+			return ["Media/Audio"];
+		}
+	};
+	($mol_mem(($.$mol_audio_demo_sequencer.prototype), "notes"));
+	($mol_mem(($.$mol_audio_demo_sequencer.prototype), "note_length"));
+	($mol_mem(($.$mol_audio_demo_sequencer.prototype), "note_off_part"));
+	($mol_mem(($.$mol_audio_demo_sequencer.prototype), "Beep_track"));
+	($mol_mem(($.$mol_audio_demo_sequencer.prototype), "Note_length"));
+	($mol_mem(($.$mol_audio_demo_sequencer.prototype), "Note_length_field"));
+	($mol_mem(($.$mol_audio_demo_sequencer.prototype), "Note_off_part"));
+	($mol_mem(($.$mol_audio_demo_sequencer.prototype), "Note_off_part_field"));
+	($mol_mem(($.$mol_audio_demo_sequencer.prototype), "Note_settings"));
+	($mol_mem(($.$mol_audio_demo_sequencer.prototype), "Notes"));
+	($mol_mem(($.$mol_audio_demo_sequencer.prototype), "Notes_field"));
+	($mol_mem(($.$mol_audio_demo_sequencer.prototype), "Beep_active_icon"));
+	($mol_mem(($.$mol_audio_demo_sequencer.prototype), "Beep_active"));
+	($mol_mem(($.$mol_audio_demo_sequencer.prototype), "Beep_play"));
+	($mol_mem(($.$mol_audio_demo_sequencer.prototype), "Beep_status"));
+	($mol_mem(($.$mol_audio_demo_sequencer.prototype), "Beep_row"));
+	($mol_mem(($.$mol_audio_demo_sequencer.prototype), "List"));
+	($mol_mem(($.$mol_audio_demo_sequencer.prototype), "Room"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_audio_demo_sequencer extends $.$mol_audio_demo_sequencer {
+        }
+        $$.$mol_audio_demo_sequencer = $mol_audio_demo_sequencer;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
@@ -26821,156 +27938,6 @@ var $;
 
 ;
 "use strict";
-
-;
-	($.$mol_form) = class $mol_form extends ($.$mol_list) {
-		keydown(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		form_fields(){
-			return [];
-		}
-		body(){
-			return (this.form_fields());
-		}
-		Body(){
-			const obj = new this.$.$mol_list();
-			(obj.sub) = () => ((this.body()));
-			return obj;
-		}
-		buttons(){
-			return [];
-		}
-		foot(){
-			return (this.buttons());
-		}
-		Foot(){
-			const obj = new this.$.$mol_row();
-			(obj.sub) = () => ((this.foot()));
-			return obj;
-		}
-		submit_allowed(){
-			return true;
-		}
-		submit_blocked(){
-			return false;
-		}
-		event(){
-			return {...(super.event()), "keydown": (next) => (this.keydown(next))};
-		}
-		submit(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		rows(){
-			return [(this.Body()), (this.Foot())];
-		}
-	};
-	($mol_mem(($.$mol_form.prototype), "keydown"));
-	($mol_mem(($.$mol_form.prototype), "Body"));
-	($mol_mem(($.$mol_form.prototype), "Foot"));
-	($mol_mem(($.$mol_form.prototype), "submit"));
-
-
-;
-	($.$mol_form_field) = class $mol_form_field extends ($.$mol_labeler) {
-		name(){
-			return "";
-		}
-		bid(){
-			return "";
-		}
-		Bid(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.bid())]);
-			return obj;
-		}
-		control(){
-			return null;
-		}
-		bids(){
-			return [];
-		}
-		label(){
-			return [(this.name()), (this.Bid())];
-		}
-		content(){
-			return [(this.control())];
-		}
-	};
-	($mol_mem(($.$mol_form_field.prototype), "Bid"));
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_form_field extends $.$mol_form_field {
-            bid() {
-                return this.bids().filter(Boolean)[0] ?? '';
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_form_field.prototype, "bid", null);
-        $$.$mol_form_field = $mol_form_field;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/form/field/field.view.css", "[mol_form_field] {\n\talign-items: stretch;\n}\n\n[mol_form_field_bid] {\n\tcolor: var(--mol_theme_focus);\n\tdisplay: inline-block;\n\ttext-shadow: 0 0;\n}\n\n[mol_form_field_content] {\n\tborder-radius: var(--mol_gap_round);\n}\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_form extends $.$mol_form {
-            form_fields() {
-                return [...this.view_find(view => view instanceof $mol_form_field)]
-                    .map(path => path[path.length - 1]);
-            }
-            submit_allowed() {
-                return this.form_fields().every(field => !field.bid());
-            }
-            submit_blocked() {
-                return !this.submit_allowed();
-            }
-            keydown(next) {
-                if (next.ctrlKey && next.keyCode === $mol_keyboard_code.enter && !this.submit_blocked())
-                    this.submit(event);
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_form.prototype, "form_fields", null);
-        __decorate([
-            $mol_mem
-        ], $mol_form.prototype, "submit_allowed", null);
-        $$.$mol_form = $mol_form;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/form/form.view.css", "[mol_form] {\r\n\tgap: var(--mol_gap_block);\r\n}\r\n\r\n[mol_form_body] {\r\n\tgap: var(--mol_gap_block);\r\n}");
-})($ || ($ = {}));
 
 ;
 	($.$mol_form_group) = class $mol_form_group extends ($.$mol_view) {};

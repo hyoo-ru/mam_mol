@@ -116,6 +116,8 @@
 	include \/mol/import
 	include \/mol/wire/lib
 	deploy \/hyoo/js/eval/logo/logo.svg
+\/mol/audio/demo/sample
+	deploy \/mol/audio/demo/sample/drumloop.ogg
 \/hyoo/marked/app
 	deploy \/hyoo/marked/readme.md
 	deploy \/hyoo/marked/logo/logo.svg
@@ -139,6 +141,8 @@
 	include \/mol/attach/demo
 	include \/mol/audio/demo
 	include \/mol/audio/demo/vibe
+	include \/mol/audio/demo/sample
+	include \/mol/audio/demo/sequencer
 	include \/mol/avatar/demo
 	include \/mol/bar/demo
 	include \/mol/bench/demo

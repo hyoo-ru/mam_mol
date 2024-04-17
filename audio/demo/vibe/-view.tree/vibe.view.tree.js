@@ -1,11 +1,21 @@
 	($.$mol_audio_demo_vibe) = class $mol_audio_demo_vibe extends ($.$mol_example_small) {
-		play(){
-			return (this.Room().play());
+		room_status(next){
+			return (this.Room().status(next));
 		}
-		Beep_vibe(){
+		beep_vibe_start(){
+			return (this.Beep_track().start());
+		}
+		Beep_vibe(id){
 			const obj = new this.$.$mol_audio_vibe();
 			(obj.freq) = () => ((this.frequency()));
 			(obj.shape) = () => ((this.shape()));
+			return obj;
+		}
+		Beep_track(){
+			const obj = new this.$.$mol_audio_melody();
+			(obj.note_length) = () => ((this.duration()));
+			(obj.notes) = () => ("_");
+			(obj.instrument) = (id) => ((this.Beep_vibe(id)));
 			return obj;
 		}
 		duration_label(){
@@ -71,19 +81,28 @@
 			(obj.content) = () => ([(this.Shape_select())]);
 			return obj;
 		}
+		beep_vibe_start_click(next){
+			if(next !== undefined) return next;
+			return null;
+		}
 		Play_icon(){
 			const obj = new this.$.$mol_icon_play();
 			return obj;
 		}
 		Play_button(){
 			const obj = new this.$.$mol_button_major();
-			(obj.click) = () => ((this.play()));
+			(obj.click) = (next) => ((this.beep_vibe_start_click(next)));
 			(obj.sub) = () => ([(this.Play_icon()), "Play"]);
+			return obj;
+		}
+		Room_status(){
+			const obj = new this.$.$mol_audio_status();
+			(obj.status) = (next) => ((this.room_status(next)));
 			return obj;
 		}
 		Button_row(){
 			const obj = new this.$.$mol_row();
-			(obj.sub) = () => ([(this.Play_button())]);
+			(obj.sub) = () => ([(this.Play_button()), (this.Room_status())]);
 			return obj;
 		}
 		List(){
@@ -101,8 +120,7 @@
 		}
 		Room(){
 			const obj = new this.$.$mol_audio_room();
-			(obj.duration) = () => ((this.duration()));
-			(obj.input) = () => ([(this.Beep_vibe())]);
+			(obj.input) = () => ([(this.Beep_track())]);
 			return obj;
 		}
 		sub(){
@@ -115,7 +133,8 @@
 			return ["Media/Audio"];
 		}
 	};
-	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Beep_vibe"));
+	($mol_mem_key(($.$mol_audio_demo_vibe.prototype), "Beep_vibe"));
+	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Beep_track"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "duration"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Duration_num"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Duration"));
@@ -125,8 +144,10 @@
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "shape"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Shape_select"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Shape"));
+	($mol_mem(($.$mol_audio_demo_vibe.prototype), "beep_vibe_start_click"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Play_icon"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Play_button"));
+	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Room_status"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Button_row"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "List"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Room"));

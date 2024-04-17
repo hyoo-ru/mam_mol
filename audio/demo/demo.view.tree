@@ -1,24 +1,34 @@
 $mol_audio_demo $mol_example_small
 	title \WebAudio API example
-	Beep $mol_audio_room
-		play => beep_play
-		duration 0.1
+	Beep_room $mol_audio_room
+		status? => beep_status?
 		input /
-			<= Beep_vibe $mol_audio_vibe
-				freq 440
-	Noise $mol_audio_room
-		play => noise_play
-		duration 1
+			<= Beep_track $mol_audio_melody
+				start => beep_play
+				note_length .5
+				notes \e
+	Noise_room $mol_audio_room
+		status? => noise_status?
 		input /
-			<= Noise_vibe $mol_audio_vibe
-				freq <= noise_freq 440
+			<= Noise_track $mol_audio_melody
+				start => noise_play
+				note_length 1
+				notes \_
+				instrument* <= Noise* $mol_audio_vibe
+					note => note*
+					freq <= noise_freq* 0
 	sub /
-		<= Beep_play $mol_button_minor
-			click <= beep_play
-			title \Beep
-		<= Noise_play $mol_button_minor
-			click <= noise_play
-			title \Noise
+		<= List $mol_list rows /
+			<= Beep_row $mol_row sub /
+				<= Beep_play $mol_button_minor
+					click? <=> beep_play_click? null
+					title \Beep
+				<= Beep_status $mol_audio_status status? <=> beep_status?
+			<= Nouse_row $mol_row sub /
+				<= Noise_play $mol_button_minor
+					click? <=> noise_play_click? null
+					title \Noise
+				<= Noise_status $mol_audio_status status? <=> noise_status?
 	tags /
 		\sound
 	aspects /

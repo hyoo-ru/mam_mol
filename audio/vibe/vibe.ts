@@ -1,11 +1,6 @@
 namespace $ {
 
-	export type $mol_audio_vibe_shape =
-	| 'sine' 
-	| 'square' 
-	| 'sawtooth' 
-	| 'triangle' 
-	| 'custom'
+	export type $mol_audio_vibe_shape = OscillatorType
 
 	/**
 	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_audio_demo_vibe
@@ -13,25 +8,35 @@ namespace $ {
 	export class $mol_audio_vibe extends $mol_audio_instrument {
 		
 		@ $mol_mem
-		override node_raw() { return this.context().createOscillator() }
+		override node(reset?: null) {
+			return this.context().native().createOscillator()
+		}
+
+		freq_default() { return 440 }
 
 		@ $mol_mem
-		freq( next = 440 ) { return next }
+		freq( next?: number | null) {
+			const note = this.note()
+			next = next ?? ( note ? $mol_audio_tone_parse(note).freq : this.freq_default() )
+
+			this.node().frequency.setValueAtTime(next, this.time_cut())
+
+			return next
+		}
+		
+		shape_default() { return 'sine' as $mol_audio_vibe_shape }
 
 		@ $mol_mem
-		shape( next: $mol_audio_vibe_shape = 'sine' ) { return next }
-
-		override duration() {
-			return 0.5
+		shape( next?: $mol_audio_vibe_shape | null ) {
+			return this.node().type = next ?? this.shape_default()
 		}
 
 		@ $mol_mem
-		override node() {
-			const node = super.node()
-			node.frequency.setValueAtTime( this.freq(), this.time() )
-			node.type = this.shape()
+		override output() {
+			this.freq()
+			this.shape()
 
-			return node
+			return super.output()
 		}
 
 	}

@@ -1503,27 +1503,60 @@ $mol_attach_demo $mol_example_small
 		\Widget/Control
 		\Type/File
 
+$mol_icon_power $mol_icon path \M16.56,5.44L15.11,6.89C16.84,7.94 18,9.83 18,12C18,15.31 15.31,18 12,18C8.69,18 6,15.31 6,12C6,9.83 7.16,7.94 8.88,6.88L7.44,5.44C5.36,6.88 4,9.28 4,12C4,16.42 7.58,20 12,20C16.42,20 20,16.42 20,12C20,9.28 18.64,6.88 16.56,5.44M13,3H11V13H13
+
+$mol_icon_power_sleep $mol_icon path \M18.73,18C15.4,21.69 9.71,22 6,18.64C2.33,15.31 2.04,9.62 5.37,5.93C6.9,4.25 9,3.2 11.27,3C7.96,6.7 8.27,12.39 12,15.71C13.63,17.19 15.78,18 18,18C18.25,18 18.5,18 18.73,18Z
+
+$mol_icon_sleep $mol_icon path \M23,12H17V10L20.39,6H17V4H23V6L19.62,10H23V12M15,16H9V14L12.39,10H9V8H15V10L11.62,14H15V16M7,20H1V18L4.39,14H1V12H7V14L3.62,18H7V20Z
+
+$mol_icon_pause $mol_icon path \M14,19H18V5H14M6,19H10V5H6V19Z
+
+$mol_audio_status $mol_view
+	icons *
+		closed <= Closed $mol_icon_power_sleep
+		suspended <= Suspended $mol_icon_sleep
+		playing <= Playing $mol_icon_play
+		running <= Running $mol_icon_pause
+	status? \suspended
+	status_template \Audio status: {status}
+	sub /
+		<= Wakeup $mol_button_minor
+			click? <=> wakeup? null
+			enabled <= wakeup_enabled false
+			hint <= status_name <= status?
+			sub / <= Icon $mol_icon_play
+
 $mol_audio_demo $mol_example_small
 	title \WebAudio API example
-	Beep $mol_audio_room
-		play => beep_play
-		duration 0.1
+	Beep_room $mol_audio_room
+		status? => beep_status?
 		input /
-			<= Beep_vibe $mol_audio_vibe
-				freq 440
-	Noise $mol_audio_room
-		play => noise_play
-		duration 1
+			<= Beep_track $mol_audio_melody
+				start => beep_play
+				note_length .5
+				notes \e
+	Noise_room $mol_audio_room
+		status? => noise_status?
 		input /
-			<= Noise_vibe $mol_audio_vibe
-				freq <= noise_freq 440
+			<= Noise_track $mol_audio_melody
+				start => noise_play
+				note_length 1
+				notes \_
+				instrument* <= Noise* $mol_audio_vibe
+					note => note*
+					freq <= noise_freq* 0
 	sub /
-		<= Beep_play $mol_button_minor
-			click <= beep_play
-			title \Beep
-		<= Noise_play $mol_button_minor
-			click <= noise_play
-			title \Noise
+		<= List $mol_list rows /
+			<= Beep_row $mol_row sub /
+				<= Beep_play $mol_button_minor
+					click? <=> beep_play_click? null
+					title \Beep
+				<= Beep_status $mol_audio_status status? <=> beep_status?
+			<= Nouse_row $mol_row sub /
+				<= Noise_play $mol_button_minor
+					click? <=> noise_play_click? null
+					title \Noise
+				<= Noise_status $mol_audio_status status? <=> noise_status?
 	tags /
 		\sound
 	aspects /
@@ -1542,12 +1575,15 @@ $mol_labeler $mol_list
 $mol_audio_demo_vibe $mol_example_small
 	title \WebAudio API complex example
 	Room $mol_audio_room
-		play => play
-		duration <= duration -
+		status? => room_status?
 		input /
-			<= Beep_vibe $mol_audio_vibe
-				freq <= frequency -
-				shape <= shape -
+			<= Beep_track $mol_audio_melody
+				start => beep_vibe_start
+				note_length <= duration
+				notes \_
+				instrument* <= Beep_vibe* $mol_audio_vibe
+					freq <= frequency
+					shape <= shape
 	sub /
 		<= List $mol_list rows /
 			<= Duration $mol_labeler
@@ -1575,12 +1611,122 @@ $mol_audio_demo_vibe $mol_example_small
 							\triangle
 			<= Button_row $mol_row sub /
 				<= Play_button $mol_button_major
-					click <= play -
+					click? <=> beep_vibe_start_click? null
 					sub /
 						<= Play_icon $mol_icon_play
 						\Play
+				<= Room_status $mol_audio_status status? <=> room_status?
 	tags /
 		\sound
+	aspects /
+		\Media/Audio
+
+$mol_form_field $mol_labeler
+	bids /string
+	label /
+		<= name \
+		<= Bid $mol_view
+			sub / <= bid \
+	content / <= control null
+
+$mol_icon_loop $mol_icon path \M9,14V21H2V19H5.57C4,17.3 3,15 3,12.5C3,7.25 7.25,3 12.5,3C17.75,3 22,7.25 22,12.5C22,17.75 17.75,22 12.5,22H12V20H12.5C16.64,20 20,16.64 20,12.5C20,8.36 16.64,5 12.5,5C8.36,5 5,8.36 5,12.5C5,14.47 5.76,16.26 7,17.6V14H9Z
+
+$mol_form $mol_list
+	submit_allowed true
+	submit_blocked false
+	event *
+		^
+		keydown?event <=> keydown?event null
+	submit?event null
+	rows /
+		<= Body $mol_list
+			sub <= body <= form_fields /$mol_form_field
+		<= Foot $mol_row
+			sub <= foot <= buttons /$mol_view
+
+$mol_audio_demo_sample $mol_example_small
+	title \WebAudio API sample example
+	Room $mol_audio_room
+		status? => room_status?
+		input /
+			<= Sample $mol_audio_sample
+				active? => sample_active?
+				start => start
+				loop? => loop?
+				loop_default true
+				buffer <= sample_buffer null
+	sub /
+		<= List $mol_list rows /
+			<= Sample_url_field $mol_form_field
+				name \Sample url
+				control <= Sample_url $mol_string
+					value? <=> sample_url? \/mol/audio/demo/sample/drumloop.ogg
+			<= Controls $mol_row sub /
+				<= Active $mol_check_icon
+					checked? <=> sample_active?
+					title \Active
+					Icon <= Active_icon $mol_icon_play
+				<= Start $mol_button_minor
+					click? <=> start_click? null
+					title \Start
+				<= Loop $mol_check_icon
+					checked? <=> loop?
+					title \Loop
+					Icon <= Loop_icon $mol_icon_loop
+			<= Room_status $mol_audio_status
+				status? <=> room_status?
+	tags /
+		\sound
+		\sample
+	aspects /
+		\Media/Audio
+
+$mol_icon_play_pause $mol_icon path \M3,5V19L11,12M13,19H16V5H13M18,5V19H21V5
+
+$mol_audio_demo_sequencer $mol_example_small
+	title \WebAudio API example sequencer
+	Room $mol_audio_room
+		status? => room_status?
+		active? => room_active?
+		input /
+			<= Beep_track $mol_audio_melody
+				start => beep_track_start
+				active? => beep_track_active?
+				notes? <=> notes? \e e e _ e e e _ e g c d e _ _ _/2 f f f f f e e e e/2 e/2 d d e d _ g _
+				note_length? <=> note_length? .25
+				note_off_part? <=> note_off_part? .4
+	sub /
+		<= List $mol_list rows /
+			<= Note_settings $mol_row sub /
+				<= Note_length_field $mol_form_field
+					name \Note length, sec
+					control <= Note_length $mol_number
+						precision .05
+						value_min .05
+						value? <=> note_length?
+				<= Note_off_part_field $mol_form_field
+					name \Note off, part of length
+					control <= Note_off_part $mol_number
+						precision .1
+						value_min .1
+						value? <=> note_off_part?
+			<= Notes_field $mol_form_field
+				name \Notes
+				control <= Notes $mol_textarea
+					hint \Example: e _ c#5/2 _/2
+					value? <=> notes?
+			<= Beep_row $mol_row sub /
+				<= Beep_active $mol_check_icon
+					hint \Play / Pause
+					Icon <= Beep_active_icon $mol_icon_play_pause
+					checked? <=> beep_track_active?
+				<= Beep_play $mol_button_minor
+					click? <=> beep_track_start?
+					title \Play
+				<= Beep_status $mol_audio_status status? <=> room_status?
+	tags /
+		\sound
+		\sequencer
 	aspects /
 		\Media/Audio
 
@@ -3579,27 +3725,6 @@ $mol_float_demo $mol_example_large
 		\container
 	aspects /
 		\Widget/Float
-
-$mol_form $mol_list
-	submit_allowed true
-	submit_blocked false
-	event *
-		^
-		keydown?event <=> keydown?event null
-	submit?event null
-	rows /
-		<= Body $mol_list
-			sub <= body <= form_fields /$mol_form_field
-		<= Foot $mol_row
-			sub <= foot <= buttons /$mol_view
-
-$mol_form_field $mol_labeler
-	bids /string
-	label /
-		<= name \
-		<= Bid $mol_view
-			sub / <= bid \
-	content / <= control null
 
 $mol_form_group $mol_view
 

@@ -1,52 +1,100 @@
 	($.$mol_audio_demo) = class $mol_audio_demo extends ($.$mol_example_small) {
-		beep_play(){
-			return (this.Beep().play());
+		beep_status(next){
+			return (this.Beep_room().status(next));
 		}
-		Beep_vibe(){
-			const obj = new this.$.$mol_audio_vibe();
-			(obj.freq) = () => (440);
+		beep_play(){
+			return (this.Beep_track().start());
+		}
+		Beep_track(){
+			const obj = new this.$.$mol_audio_melody();
+			(obj.note_length) = () => (.5);
+			(obj.notes) = () => ("e");
 			return obj;
+		}
+		noise_status(next){
+			return (this.Noise_room().status(next));
 		}
 		noise_play(){
-			return (this.Noise().play());
+			return (this.Noise_track().start());
 		}
-		noise_freq(){
-			return 440;
+		note(id){
+			return (this.Noise(id).note());
 		}
-		Noise_vibe(){
+		noise_freq(id){
+			return 0;
+		}
+		Noise(id){
 			const obj = new this.$.$mol_audio_vibe();
-			(obj.freq) = () => ((this.noise_freq()));
+			(obj.freq) = () => ((this.noise_freq(id)));
 			return obj;
+		}
+		Noise_track(){
+			const obj = new this.$.$mol_audio_melody();
+			(obj.note_length) = () => (1);
+			(obj.notes) = () => ("_");
+			(obj.instrument) = (id) => ((this.Noise(id)));
+			return obj;
+		}
+		beep_play_click(next){
+			if(next !== undefined) return next;
+			return null;
 		}
 		Beep_play(){
 			const obj = new this.$.$mol_button_minor();
-			(obj.click) = () => ((this.beep_play()));
+			(obj.click) = (next) => ((this.beep_play_click(next)));
 			(obj.title) = () => ("Beep");
 			return obj;
 		}
+		Beep_status(){
+			const obj = new this.$.$mol_audio_status();
+			(obj.status) = (next) => ((this.beep_status(next)));
+			return obj;
+		}
+		Beep_row(){
+			const obj = new this.$.$mol_row();
+			(obj.sub) = () => ([(this.Beep_play()), (this.Beep_status())]);
+			return obj;
+		}
+		noise_play_click(next){
+			if(next !== undefined) return next;
+			return null;
+		}
 		Noise_play(){
 			const obj = new this.$.$mol_button_minor();
-			(obj.click) = () => ((this.noise_play()));
+			(obj.click) = (next) => ((this.noise_play_click(next)));
 			(obj.title) = () => ("Noise");
+			return obj;
+		}
+		Noise_status(){
+			const obj = new this.$.$mol_audio_status();
+			(obj.status) = (next) => ((this.noise_status(next)));
+			return obj;
+		}
+		Nouse_row(){
+			const obj = new this.$.$mol_row();
+			(obj.sub) = () => ([(this.Noise_play()), (this.Noise_status())]);
+			return obj;
+		}
+		List(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ([(this.Beep_row()), (this.Nouse_row())]);
 			return obj;
 		}
 		title(){
 			return "WebAudio API example";
 		}
-		Beep(){
+		Beep_room(){
 			const obj = new this.$.$mol_audio_room();
-			(obj.duration) = () => (0.1);
-			(obj.input) = () => ([(this.Beep_vibe())]);
+			(obj.input) = () => ([(this.Beep_track())]);
 			return obj;
 		}
-		Noise(){
+		Noise_room(){
 			const obj = new this.$.$mol_audio_room();
-			(obj.duration) = () => (1);
-			(obj.input) = () => ([(this.Noise_vibe())]);
+			(obj.input) = () => ([(this.Noise_track())]);
 			return obj;
 		}
 		sub(){
-			return [(this.Beep_play()), (this.Noise_play())];
+			return [(this.List())];
 		}
 		tags(){
 			return ["sound"];
@@ -55,11 +103,19 @@
 			return ["Media/Audio"];
 		}
 	};
-	($mol_mem(($.$mol_audio_demo.prototype), "Beep_vibe"));
-	($mol_mem(($.$mol_audio_demo.prototype), "Noise_vibe"));
+	($mol_mem(($.$mol_audio_demo.prototype), "Beep_track"));
+	($mol_mem_key(($.$mol_audio_demo.prototype), "Noise"));
+	($mol_mem(($.$mol_audio_demo.prototype), "Noise_track"));
+	($mol_mem(($.$mol_audio_demo.prototype), "beep_play_click"));
 	($mol_mem(($.$mol_audio_demo.prototype), "Beep_play"));
+	($mol_mem(($.$mol_audio_demo.prototype), "Beep_status"));
+	($mol_mem(($.$mol_audio_demo.prototype), "Beep_row"));
+	($mol_mem(($.$mol_audio_demo.prototype), "noise_play_click"));
 	($mol_mem(($.$mol_audio_demo.prototype), "Noise_play"));
-	($mol_mem(($.$mol_audio_demo.prototype), "Beep"));
-	($mol_mem(($.$mol_audio_demo.prototype), "Noise"));
+	($mol_mem(($.$mol_audio_demo.prototype), "Noise_status"));
+	($mol_mem(($.$mol_audio_demo.prototype), "Nouse_row"));
+	($mol_mem(($.$mol_audio_demo.prototype), "List"));
+	($mol_mem(($.$mol_audio_demo.prototype), "Beep_room"));
+	($mol_mem(($.$mol_audio_demo.prototype), "Noise_room"));
 
 //# sourceMappingURL=demo.view.tree.js.map
