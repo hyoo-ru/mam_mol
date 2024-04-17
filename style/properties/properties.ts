@@ -318,14 +318,24 @@ namespace $ {
 			 * @see https://developer.mozilla.org/ru/docs/Web/CSS/box-shadow
 			 */
 			shadow?:
-			| readonly {
-				inset?: boolean
-				x: Length
-				y: Length
-				blur: Length
-				spread: Length
-				color: $mol_style_properties_color
-			}[]
+			| readonly (
+				| [
+					... [ inset: 'inset' ] | [],
+					x: Length,
+					y: Length,
+					blur: Length,
+					spread: Length,
+					color: $mol_style_properties_color,
+				]
+				| {
+					inset?: boolean
+					x: Length
+					y: Length
+					blur: Length
+					spread: Length
+					color: $mol_style_properties_color
+				}
+			)[]
 			| 'none' | Common
 
 		}
