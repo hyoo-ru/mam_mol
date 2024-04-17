@@ -1,27 +1,80 @@
 namespace $ {
-	export class $mol_audio_sample extends $mol_audio_instrument {
-		@ $mol_mem
-		override node_raw() { return this.context().createBufferSource() }
 
-		override duration() {
-			return this.audio_buffer().duration
+	export class $mol_audio_sample extends $mol_audio_instrument {
+
+		duration() {
+			return this.audio_buffer()?.duration ?? 0
 		}
 
 		buffer() {
-			return new ArrayBuffer(0)
+			return null as ArrayBuffer | null
 		}
 
 		@ $mol_mem
 		audio_buffer() {
-			return this.context().decodeAudioData(this.buffer())
+			const buffer = this.buffer()
+			return buffer ? this.context().native().decodeAudioData(buffer) : null
+		}
+
+		loop_default() { return false }
+
+		@ $mol_mem
+		loop(next?: boolean | null) {
+			return this.node().loop = next ?? this.loop_default()
+		}
+
+		loop_start_default() { return 0 }
+
+		@ $mol_mem
+		loop_start(next?: number | null) {
+			return this.node().loopStart = next ?? this.loop_start_default()
+		}
+
+		loop_end_default() { return this.duration() }
+
+		@ $mol_mem
+		loop_end(next?: number | null) {
+			return this.node().loopEnd = next ?? this.loop_end_default()
+		}
+
+		rate_default() {
+			return this.node().playbackRate.defaultValue
 		}
 
 		@ $mol_mem
-		override node() {
-			const node = super.node()
+		rate(next?: number | null) {
+			return this.node().playbackRate.value = next ?? this.rate_default()
+		}
+
+		@ $mol_mem
+		override node(reset?: null) {
+			const node = this.context().native().createBufferSource()
 			node.buffer = this.audio_buffer()
 
 			return node
+		}
+
+		@ $mol_mem
+		override active(next?: boolean) {
+
+			if (this.node_started()) {
+				if (next) this.context().active(true)
+				this.rate(next ? null : 0)
+
+				return next ?? false
+			}
+
+			return super.active(next)
+		}
+
+		@ $mol_mem
+		override output() {
+			this.loop()
+			this.loop_start()
+			this.loop_end()
+			this.rate()
+
+			return super.output()
 		}
 
 	}
