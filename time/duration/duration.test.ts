@@ -18,9 +18,23 @@ namespace $ {
 			)
 		} ,
 	
+		'format readable'() {
+			$mol_assert_equal(
+				new $mol_time_duration( 'P1Y2M3DT4h5m6s' ).toString( 'hh:mm:ss.sss' ) ,
+				'04:05:06.000'
+			)
+		} ,
+	
+		'normalization'() {
+			$mol_assert_equal(
+				new $mol_time_duration( 'P1Y2M3DT44h55m66s' ).normal.toString() ,
+				'P1Y2M4DT20H56M6S'
+			)
+		} ,
+	
 		'comparison'() {
 			const iso = 'P1Y1M1DT1h1m1s'
-			$mol_assert_like( new $mol_time_duration( iso ), new $mol_time_duration( iso ) )
+			$mol_assert_equal( new $mol_time_duration( iso ), new $mol_time_duration( iso ) )
 		},
 		
 	} )
