@@ -1,59 +1,66 @@
 namespace $ {
 	export class $mol_audio_node extends $mol_object {
-		context() { return this.$.$mol_audio_context.native() }
-
 		@ $mol_mem
-		node_raw() { return this.context().destination as AudioNode }
-
-		node() {
-			return this.node_raw() as ReturnType<this['node_raw']>
+		context(next?: $mol_audio_context) {
+			return next ?? this.$.$mol_audio_context_main
 		}
-
-		@ $mol_mem
-		duration() {
-			let duration = 0
-			for (const input of this.input_connected()) duration = Math.max(duration, input.duration())
-
-			return duration
-		}
-		
 
 		@ $mol_mem
 		input( next = [] as readonly $mol_audio_node[] ) { return next }
-		
+
 		@ $mol_mem
 		input_connected() {
-			
-			const node = this.node_raw()
-			
-			const prev = $mol_mem_cached( ()=> this.input_connected() ) ?? []
+
+			const node = this.node()
+
+			const prev = $mol_wire_probe( ()=> this.input_connected() ) ?? []
 			const next = this.input()
-			
+
 			for( const src of prev ) {
 				if( next.includes( src ) ) continue
-				src.output().disconnect( node )
+				$mol_wire_probe(() => src.output())?.disconnect( node )
 			}
 			
+			const ctx = this.context()
+
 			for( const src of next ) {
+				src.context(ctx)
 				src.output().connect( node )
 			}
 			
 			return next 
 		}
+
+		@ $mol_mem
+		active(next?: boolean) { return next ?? false }
 		
+		@ $mol_mem
+		inputs_active() {
+			return this.input_connected().some(src => src.active())
+		}
+
+		@ $mol_mem
+		node(): AudioNode {
+			throw new Error('implement')
+		}
+
 		@ $mol_mem
 		output() {
 			this.input_connected()
-			return this.node_raw()
+			return this.node() as ReturnType<this['node']>
 		}
-		
-		time() { return this.context().currentTime }
-		
+
+		@ $mol_action
+		time_cut() { return this.context().time() }
+
 		destructor() {
-			
-			const node = this.node_raw()
-			
-			for( const src of this.input() ) {
+			const inputs = $mol_wire_probe(() => this.input_connected())
+			if (! inputs?.length) return
+
+			const node = $mol_wire_probe(() => this.node())
+			if (! node ) return
+
+			for( const src of inputs ) {
 				src.output().disconnect( node )
 			}
 			
