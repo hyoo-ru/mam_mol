@@ -7,7 +7,8 @@ namespace $.$$ {
 		}
 
 		override beep_vibe_start_click(e?: Event) {
-			this.beep_vibe_start()
+			this.active(true)
+			this.stop_at(this.duration())
 		}
 		
 	}

@@ -3,13 +3,11 @@ $mol_audio_demo_vibe $mol_example_small
 	Room $mol_audio_room
 		status? => room_status?
 		input /
-			<= Beep_track $mol_audio_melody
-				start => beep_vibe_start
-				note_length <= duration
-				notes \_
-				instrument* <= Beep_vibe* $mol_audio_vibe
-					freq <= frequency
-					shape <= shape
+			<= Beep_vibe $mol_audio_vibe
+				active? => active?
+				stop_at? => stop_at?
+				freq_default <= freq? 700
+				shape_default <= shape?
 	sub /
 		<= List $mol_list rows /
 			<= Duration $mol_labeler
@@ -23,13 +21,13 @@ $mol_audio_demo_vibe $mol_example_small
 				content /
 					<= Frequency_num $mol_number
 						precision_change 50
-						value? <=> frequency? 700
+						value? <=> freq?
 			<= Shape $mol_labeler
 				title <= shape_label \Shape
 				content /
 					<= Shape_select $mol_select
 						Filter null
-						value? <=> shape? null
+						value? <=> shape?
 						options /$mol_audio_vibe_shape
 							\sine
 							\square
