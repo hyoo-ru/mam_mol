@@ -42,6 +42,7 @@ namespace $ {
 
 		@ $mol_mem
 		start_at(next?: number ) {
+			if (next === -1) return next
 			if (this.node_started() !== null) this.node(null)
 			if (next === undefined) return -1
 
@@ -52,7 +53,7 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		note(next?: string) { return next ?? 'a' }
+		note(next?: $mol_audio_tone_note) { return next ?? null }
 
 		@ $mol_mem
 		stop_at(next?: number ) {
@@ -71,11 +72,16 @@ namespace $ {
 				this.stop_at(-1)
 			}
 
-			if (next === false) this.stop_at(0)
+			if (next === false) {
+				this.start_at(-1)
+				this.stop_at(0)
+			}
 
-			if (next !== undefined) return next
+			this.node()
+			this.start_at()
+			this.stop_at()
 
-			return next ?? (this.node_started() ?? false)
+			return this.start_at() !== -1
 		}
 
 		@ $mol_action
