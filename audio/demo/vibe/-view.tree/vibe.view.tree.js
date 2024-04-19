@@ -2,20 +2,20 @@
 		room_status(next){
 			return (this.Room().status(next));
 		}
-		beep_vibe_start(){
-			return (this.Beep_track().start());
+		active(next){
+			return (this.Beep_vibe().active(next));
 		}
-		Beep_vibe(id){
+		stop_at(next){
+			return (this.Beep_vibe().stop_at(next));
+		}
+		freq(next){
+			if(next !== undefined) return next;
+			return 700;
+		}
+		Beep_vibe(){
 			const obj = new this.$.$mol_audio_vibe();
-			(obj.freq) = () => ((this.frequency()));
-			(obj.shape) = () => ((this.shape()));
-			return obj;
-		}
-		Beep_track(){
-			const obj = new this.$.$mol_audio_melody();
-			(obj.note_length) = () => ((this.duration()));
-			(obj.notes) = () => ("_");
-			(obj.instrument) = (id) => ((this.Beep_vibe(id)));
+			(obj.freq_default) = () => ((this.freq()));
+			(obj.shape_default) = () => ((this.shape()));
 			return obj;
 		}
 		duration_label(){
@@ -40,14 +40,10 @@
 		frequency_label(){
 			return "Frequency, Hz";
 		}
-		frequency(next){
-			if(next !== undefined) return next;
-			return 700;
-		}
 		Frequency_num(){
 			const obj = new this.$.$mol_number();
 			(obj.precision_change) = () => (50);
-			(obj.value) = (next) => ((this.frequency(next)));
+			(obj.value) = (next) => ((this.freq(next)));
 			return obj;
 		}
 		Frequency(){
@@ -120,7 +116,7 @@
 		}
 		Room(){
 			const obj = new this.$.$mol_audio_room();
-			(obj.input) = () => ([(this.Beep_track())]);
+			(obj.input) = () => ([(this.Beep_vibe())]);
 			return obj;
 		}
 		sub(){
@@ -133,12 +129,11 @@
 			return ["Media/Audio"];
 		}
 	};
-	($mol_mem_key(($.$mol_audio_demo_vibe.prototype), "Beep_vibe"));
-	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Beep_track"));
+	($mol_mem(($.$mol_audio_demo_vibe.prototype), "freq"));
+	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Beep_vibe"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "duration"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Duration_num"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Duration"));
-	($mol_mem(($.$mol_audio_demo_vibe.prototype), "frequency"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Frequency_num"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Frequency"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "shape"));

@@ -14,12 +14,17 @@ namespace $ {
 		g: 11,
 	}
 
-	export type $mol_audio_tone_name = keyof typeof $mol_audio_tone_indices | '_'
+	export type $mol_audio_tone_key = keyof typeof $mol_audio_tone_indices
+
+	export type $mol_audio_tone_note = {
+		key: $mol_audio_tone_key | null
+		octave?: number | null // absolute octave 0-8
+		duration?: number | null // note duration
+	}
 
 	export const $mol_audio_tone_base_freq = 440
 
-	export function $mol_audio_tone_name_freq(name: $mol_audio_tone_name, octave?: number | null) {
-		if (name === '_') return 0
+	export function $mol_audio_tone_key_freq(name: $mol_audio_tone_key, octave?: number | null) {
 		const index = $mol_audio_tone_indices[name] + 12 * ( octave ?? 4 )
 
 		// @see https://en.wikipedia.org/wiki/Piano_key_frequencies
@@ -27,20 +32,24 @@ namespace $ {
 	}
 
 	/**
-	 * @param note string https://wiki.ccarh.org/wiki/Guido_Music_Notation
+	 * @param raw string https://wiki.ccarh.org/wiki/Guido_Music_Notation
 	 * 
 	 * Accidentals: only one # allowed: e5#
 	 * No Augmentation dots.
 	 */
-	export function $mol_audio_tone_parse(note: string) {
-		const [, name, octave_str, duration_str ] = note.match(/((?:[a-g]#?)|_)([0-8])?(?:\/(\d+))?/) ?? []
-		if (! name ) throw new $mol_error_mix('Not a note', { note })
-		const octave = octave_str ? Number(octave_str) : null
-		const divider = Number(duration_str || 1)
+	export function $mol_audio_tone_parse(raw: string): $mol_audio_tone_note {
+		const [, key, octave_str, duration_str ] = raw.match(/((?:[a-g]#?)|_)(-?[0-4])?(?:\/(\d+))?/) ?? []
 
-		const freq = $mol_audio_tone_name_freq(name as $mol_audio_tone_name, octave)
+		if (! key ) throw new $mol_error_mix('Not a note', { note: raw })
 
-		return { freq, name: name as $mol_audio_tone_name, octave, divider }
+		const octave = octave_str ? ( 3 + Number(octave_str) ) : null
+		const duration = Number(duration_str || 1)
+
+		return {
+			key: key.startsWith('_') ? null : key as $mol_audio_tone_key,
+			octave,
+			duration
+		}
 	}
 
 }

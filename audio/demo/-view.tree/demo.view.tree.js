@@ -14,25 +14,18 @@
 		noise_status(next){
 			return (this.Noise_room().status(next));
 		}
-		noise_play(){
-			return (this.Noise_track().start());
+		noise_active(next){
+			return (this.Noise().active(next));
 		}
-		note(id){
-			return (this.Noise(id).note());
+		noise_stop_at(next){
+			return (this.Noise().stop_at(next));
 		}
-		noise_freq(id){
+		noise_freq(){
 			return 0;
 		}
-		Noise(id){
+		Noise(){
 			const obj = new this.$.$mol_audio_vibe();
-			(obj.freq) = () => ((this.noise_freq(id)));
-			return obj;
-		}
-		Noise_track(){
-			const obj = new this.$.$mol_audio_melody();
-			(obj.note_length) = () => (1);
-			(obj.notes) = () => ("_");
-			(obj.instrument) = (id) => ((this.Noise(id)));
+			(obj.freq_default) = () => ((this.noise_freq()));
 			return obj;
 		}
 		beep_play_click(next){
@@ -90,7 +83,7 @@
 		}
 		Noise_room(){
 			const obj = new this.$.$mol_audio_room();
-			(obj.input) = () => ([(this.Noise_track())]);
+			(obj.input) = () => ([(this.Noise())]);
 			return obj;
 		}
 		sub(){
@@ -104,8 +97,7 @@
 		}
 	};
 	($mol_mem(($.$mol_audio_demo.prototype), "Beep_track"));
-	($mol_mem_key(($.$mol_audio_demo.prototype), "Noise"));
-	($mol_mem(($.$mol_audio_demo.prototype), "Noise_track"));
+	($mol_mem(($.$mol_audio_demo.prototype), "Noise"));
 	($mol_mem(($.$mol_audio_demo.prototype), "beep_play_click"));
 	($mol_mem(($.$mol_audio_demo.prototype), "Beep_play"));
 	($mol_mem(($.$mol_audio_demo.prototype), "Beep_status"));

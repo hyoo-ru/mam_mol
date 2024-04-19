@@ -16934,21 +16934,22 @@ var $;
         g: 11,
     };
     $.$mol_audio_tone_base_freq = 440;
-    function $mol_audio_tone_name_freq(name, octave) {
-        if (name === '_')
-            return 0;
+    function $mol_audio_tone_key_freq(name, octave) {
         const index = $.$mol_audio_tone_indices[name] + 12 * (octave ?? 4);
         return $.$mol_audio_tone_base_freq * (2 ** ((index - 49) / 12));
     }
-    $.$mol_audio_tone_name_freq = $mol_audio_tone_name_freq;
-    function $mol_audio_tone_parse(note) {
-        const [, name, octave_str, duration_str] = note.match(/((?:[a-g]#?)|_)([0-8])?(?:\/(\d+))?/) ?? [];
-        if (!name)
-            throw new $mol_error_mix('Not a note', { note });
-        const octave = octave_str ? Number(octave_str) : null;
-        const divider = Number(duration_str || 1);
-        const freq = $mol_audio_tone_name_freq(name, octave);
-        return { freq, name: name, octave, divider };
+    $.$mol_audio_tone_key_freq = $mol_audio_tone_key_freq;
+    function $mol_audio_tone_parse(raw) {
+        const [, key, octave_str, duration_str] = raw.match(/((?:[a-g]#?)|_)(-?[0-4])?(?:\/(\d+))?/) ?? [];
+        if (!key)
+            throw new $mol_error_mix('Not a note', { note: raw });
+        const octave = octave_str ? (3 + Number(octave_str)) : null;
+        const duration = Number(duration_str || 1);
+        return {
+            key: key.startsWith('_') ? null : key,
+            octave,
+            duration
+        };
     }
     $.$mol_audio_tone_parse = $mol_audio_tone_parse;
 })($ || ($ = {}));
@@ -16990,6 +16991,8 @@ var $;
             return prev ? (started.get(prev) ?? null) : null;
         }
         start_at(next) {
+            if (next === -1)
+                return next;
             if (this.node_started() !== null)
                 this.node(null);
             if (next === undefined)
@@ -16998,7 +17001,7 @@ var $;
             started.set(this.node(), true);
             return next;
         }
-        note(next) { return next ?? 'a'; }
+        note(next) { return next ?? null; }
         stop_at(next) {
             if (next === undefined || next < 0)
                 return -1;
@@ -17013,11 +17016,14 @@ var $;
                 this.start_at(0);
                 this.stop_at(-1);
             }
-            if (next === false)
+            if (next === false) {
+                this.start_at(-1);
                 this.stop_at(0);
-            if (next !== undefined)
-                return next;
-            return next ?? (this.node_started() ?? false);
+            }
+            this.node();
+            this.start_at();
+            this.stop_at();
+            return this.start_at() !== -1;
         }
         start() {
             this.node(null);
@@ -17059,7 +17065,14 @@ var $;
         freq_default() { return 440; }
         freq(next) {
             const note = this.note();
-            next = next ?? (note ? $mol_audio_tone_parse(note).freq : this.freq_default());
+            if (!next) {
+                if (!note)
+                    next = this.freq_default();
+                else if (note.key === null)
+                    next = 0;
+                else
+                    next = $mol_audio_tone_key_freq(note.key, note.octave);
+            }
             this.node().frequency.setValueAtTime(next, this.time_cut());
             return next;
         }
@@ -17094,19 +17107,27 @@ var $;
 (function ($) {
     class $mol_audio_melody extends $mol_audio_gain {
         notes(next) { return next ?? ''; }
+        parse(note) {
+            return $mol_audio_tone_parse(note);
+        }
+        notes_normalized() {
+            return this.notes().split(' ').map(note => this.parse(note.trim()));
+        }
         clips() {
-            let start_at_prev = 0;
             const default_length = this.note_length();
             const note_off = this.note_off();
-            return this.notes().split(' ').map((command, id) => {
-                const note = command.trim();
-                const { divider } = $mol_audio_tone_parse(note);
-                const duration = default_length / divider;
+            let start_at_prev = 0;
+            let octave_last = 4;
+            return this.notes_normalized().map((note, id) => {
+                const duration = default_length / (note.duration ?? 1);
                 const start_at = start_at_prev;
                 const stop_at = start_at + duration - note_off;
                 start_at_prev += duration;
-                return { note, start_at, stop_at, id };
-            });
+                const octave = note.octave ?? octave_last;
+                octave_last = octave;
+                return { ...note, octave, start_at, stop_at, id };
+            })
+                .filter(note => note.key);
         }
         note_length(sec) { return sec ?? 0.25; }
         note_off_part() { return .4; }
@@ -17130,7 +17151,7 @@ var $;
                 if (clip.stop_at < offset)
                     continue;
                 const instrument = this.instrument(clip.id);
-                instrument.note(clip.note);
+                instrument.note(clip);
                 instrument.start_at(next + clip.start_at - offset);
                 const stop_at = next + clip.stop_at - offset;
                 instrument.stop_at(stop_at);
@@ -17146,14 +17167,7 @@ var $;
             return super.output();
         }
         start_at_absolute = 0;
-        stop_at_scheduled(next) {
-            if (!next) {
-                this.offset(null);
-                this.input([]);
-                return null;
-            }
-            return new $mol_after_timeout(next * 1000, () => this.stop_at_scheduled(0));
-        }
+        input(next) { return next ?? []; }
         stop_at(next) {
             if (next === -1)
                 return -1;
@@ -17161,7 +17175,10 @@ var $;
                 return -1;
             if (next < this.start_at())
                 return -1;
-            this.stop_at_scheduled(next);
+            const input_next = this.input().filter(instrument => instrument.stop_at() < next);
+            this.input(input_next);
+            if (input_next.length === 0)
+                this.offset(null);
             return next;
         }
         start() {
@@ -17200,6 +17217,9 @@ var $;
     ], $mol_audio_melody.prototype, "notes", null);
     __decorate([
         $mol_mem
+    ], $mol_audio_melody.prototype, "notes_normalized", null);
+    __decorate([
+        $mol_mem
     ], $mol_audio_melody.prototype, "clips", null);
     __decorate([
         $mol_mem
@@ -17212,7 +17232,7 @@ var $;
     ], $mol_audio_melody.prototype, "start_at", null);
     __decorate([
         $mol_mem
-    ], $mol_audio_melody.prototype, "stop_at_scheduled", null);
+    ], $mol_audio_melody.prototype, "input", null);
     __decorate([
         $mol_mem
     ], $mol_audio_melody.prototype, "stop_at", null);
@@ -17439,25 +17459,18 @@ var $;
 		noise_status(next){
 			return (this.Noise_room().status(next));
 		}
-		noise_play(){
-			return (this.Noise_track().start());
+		noise_active(next){
+			return (this.Noise().active(next));
 		}
-		note(id){
-			return (this.Noise(id).note());
+		noise_stop_at(next){
+			return (this.Noise().stop_at(next));
 		}
-		noise_freq(id){
+		noise_freq(){
 			return 0;
 		}
-		Noise(id){
+		Noise(){
 			const obj = new this.$.$mol_audio_vibe();
-			(obj.freq) = () => ((this.noise_freq(id)));
-			return obj;
-		}
-		Noise_track(){
-			const obj = new this.$.$mol_audio_melody();
-			(obj.note_length) = () => (1);
-			(obj.notes) = () => ("_");
-			(obj.instrument) = (id) => ((this.Noise(id)));
+			(obj.freq_default) = () => ((this.noise_freq()));
 			return obj;
 		}
 		beep_play_click(next){
@@ -17515,7 +17528,7 @@ var $;
 		}
 		Noise_room(){
 			const obj = new this.$.$mol_audio_room();
-			(obj.input) = () => ([(this.Noise_track())]);
+			(obj.input) = () => ([(this.Noise())]);
 			return obj;
 		}
 		sub(){
@@ -17529,8 +17542,7 @@ var $;
 		}
 	};
 	($mol_mem(($.$mol_audio_demo.prototype), "Beep_track"));
-	($mol_mem_key(($.$mol_audio_demo.prototype), "Noise"));
-	($mol_mem(($.$mol_audio_demo.prototype), "Noise_track"));
+	($mol_mem(($.$mol_audio_demo.prototype), "Noise"));
 	($mol_mem(($.$mol_audio_demo.prototype), "beep_play_click"));
 	($mol_mem(($.$mol_audio_demo.prototype), "Beep_play"));
 	($mol_mem(($.$mol_audio_demo.prototype), "Beep_status"));
@@ -17554,16 +17566,18 @@ var $;
     var $$;
     (function ($$) {
         class $mol_audio_demo extends $.$mol_audio_demo {
-            noise_freq(id) {
+            noise_freq() {
                 $mol_wire_watch();
-                const base_freq = $mol_audio_tone_parse(this.note(id)).freq;
-                return base_freq + Math.random() * 1000;
+                return Math.random() * 1000;
             }
             beep_play_click(e) { this.beep_play(); }
-            noise_play_click(e) { this.noise_play(); }
+            noise_play_click(e) {
+                this.noise_active(true);
+                this.noise_stop_at(1);
+            }
         }
         __decorate([
-            $mol_mem_key
+            $mol_mem
         ], $mol_audio_demo.prototype, "noise_freq", null);
         $$.$mol_audio_demo = $mol_audio_demo;
     })($$ = $.$$ || ($.$$ = {}));
@@ -17612,20 +17626,20 @@ var $;
 		room_status(next){
 			return (this.Room().status(next));
 		}
-		beep_vibe_start(){
-			return (this.Beep_track().start());
+		active(next){
+			return (this.Beep_vibe().active(next));
 		}
-		Beep_vibe(id){
+		stop_at(next){
+			return (this.Beep_vibe().stop_at(next));
+		}
+		freq(next){
+			if(next !== undefined) return next;
+			return 700;
+		}
+		Beep_vibe(){
 			const obj = new this.$.$mol_audio_vibe();
-			(obj.freq) = () => ((this.frequency()));
-			(obj.shape) = () => ((this.shape()));
-			return obj;
-		}
-		Beep_track(){
-			const obj = new this.$.$mol_audio_melody();
-			(obj.note_length) = () => ((this.duration()));
-			(obj.notes) = () => ("_");
-			(obj.instrument) = (id) => ((this.Beep_vibe(id)));
+			(obj.freq_default) = () => ((this.freq()));
+			(obj.shape_default) = () => ((this.shape()));
 			return obj;
 		}
 		duration_label(){
@@ -17650,14 +17664,10 @@ var $;
 		frequency_label(){
 			return "Frequency, Hz";
 		}
-		frequency(next){
-			if(next !== undefined) return next;
-			return 700;
-		}
 		Frequency_num(){
 			const obj = new this.$.$mol_number();
 			(obj.precision_change) = () => (50);
-			(obj.value) = (next) => ((this.frequency(next)));
+			(obj.value) = (next) => ((this.freq(next)));
 			return obj;
 		}
 		Frequency(){
@@ -17730,7 +17740,7 @@ var $;
 		}
 		Room(){
 			const obj = new this.$.$mol_audio_room();
-			(obj.input) = () => ([(this.Beep_track())]);
+			(obj.input) = () => ([(this.Beep_vibe())]);
 			return obj;
 		}
 		sub(){
@@ -17743,12 +17753,11 @@ var $;
 			return ["Media/Audio"];
 		}
 	};
-	($mol_mem_key(($.$mol_audio_demo_vibe.prototype), "Beep_vibe"));
-	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Beep_track"));
+	($mol_mem(($.$mol_audio_demo_vibe.prototype), "freq"));
+	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Beep_vibe"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "duration"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Duration_num"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Duration"));
-	($mol_mem(($.$mol_audio_demo_vibe.prototype), "frequency"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Frequency_num"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "Frequency"));
 	($mol_mem(($.$mol_audio_demo_vibe.prototype), "shape"));
@@ -17777,7 +17786,8 @@ var $;
                 return next !== undefined ? next : 'sine';
             }
             beep_vibe_start_click(e) {
-                this.beep_vibe_start();
+                this.active(true);
+                this.stop_at(this.duration());
             }
         }
         __decorate([

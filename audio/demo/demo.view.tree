@@ -10,13 +10,10 @@ $mol_audio_demo $mol_example_small
 	Noise_room $mol_audio_room
 		status? => noise_status?
 		input /
-			<= Noise_track $mol_audio_melody
-				start => noise_play
-				note_length 1
-				notes \_
-				instrument* <= Noise* $mol_audio_vibe
-					note => note*
-					freq <= noise_freq* 0
+			<= Noise $mol_audio_vibe
+				active? => noise_active?
+				stop_at? => noise_stop_at?
+				freq_default <= noise_freq 0
 	sub /
 		<= List $mol_list rows /
 			<= Beep_row $mol_row sub /
