@@ -27,7 +27,7 @@ $mol_audio_demo_vibe $mol_example_small
 				content /
 					<= Shape_select $mol_select
 						Filter null
-						value? <=> shape? \sine
+						value? <=> shape? null
 						options /$mol_audio_vibe_shape
 							\sine
 							\square
