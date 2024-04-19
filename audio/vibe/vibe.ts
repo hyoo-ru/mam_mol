@@ -17,7 +17,12 @@ namespace $ {
 		@ $mol_mem
 		freq( next?: number | null) {
 			const note = this.note()
-			next = next ?? ( note ? $mol_audio_tone_parse(note).freq : this.freq_default() )
+
+			if (! next) {
+				if (! note) next = this.freq_default()
+				else if (note.key === null) next = 0
+				else next = $mol_audio_tone_key_freq(note.key, note.octave)
+			}
 
 			this.node().frequency.setValueAtTime(next, this.time_cut())
 

@@ -2,6 +2,16 @@
 
 ## [Online demo](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_audio_demo_vibe)
 
+## Basic concept
+
+- **[$mol_audio_room](room)** - Main audio output, other nodes are room inputs
+
+- **[$mol_audio_melody](melody)** - Sequencer for playing notes in subset of [GUIDO](https://wiki.ccarh.org/wiki/Guido_Music_Notation) music notation
+
+- **[$mol_audio_sample](sample)** - Instrument for playing samples
+
+- **[$mol_audio_vibe](vibe)** - Oscillator instrument for beeping and building synths
+
 ## Usage example
 
 ```

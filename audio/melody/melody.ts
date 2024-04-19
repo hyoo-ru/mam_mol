@@ -3,23 +3,37 @@ namespace $ {
 		@ $mol_mem
 		notes(next?: string) { return next ?? '' }
 
+		parse(note: string) {
+			return $mol_audio_tone_parse(note)
+		}
+
+		@ $mol_mem
+		notes_normalized() {
+			return this.notes().split(' ').map(note => this.parse(note.trim()))
+		}
+
 		@ $mol_mem
 		clips() {
-			let start_at_prev = 0
 			const default_length = this.note_length()
 			const note_off = this.note_off()
 
-			return this.notes().split(' ').map((command, id) => {
-				const note = command.trim()
-				const { divider } = $mol_audio_tone_parse(note)
-				const duration = default_length / divider
+			let start_at_prev = 0
+			let octave_last = 4
+
+			return this.notes_normalized().map(( note, id ) => {
+				const duration = default_length / ( note.duration ?? 1 )
 
 				const start_at = start_at_prev
 				const stop_at = start_at + duration - note_off
 				start_at_prev += duration
 
-				return { note, start_at, stop_at, id }
+				const octave = note.octave ?? octave_last
+
+				octave_last = octave
+
+				return { ...note, octave, start_at, stop_at, id }
 			})
+				.filter(note => note.key)
 		}
 
 		note_length(sec?: number) { return sec ?? 0.25 }
@@ -53,7 +67,7 @@ namespace $ {
 
 				const instrument = this.instrument(clip.id)
 
-				instrument.note(clip.note)
+				instrument.note(clip)
 				instrument.start_at(next + clip.start_at - offset)
 				const stop_at = next + clip.stop_at - offset
 				instrument.stop_at(stop_at)
@@ -75,22 +89,17 @@ namespace $ {
 		protected start_at_absolute = 0
 
 		@ $mol_mem
-		protected stop_at_scheduled(next?: number): null | $mol_after_timeout {
-			if (! next) {
-				this.offset(null)
-				this.input([])
-				return null
-			}
-
-			return new $mol_after_timeout(next * 1000, () => this.stop_at_scheduled(0))
-		}
+		override input(next?: readonly $mol_audio_instrument[]) { return next ?? [] }
 
 		@ $mol_mem
 		stop_at(next?: number) {
 			if (next === -1) return -1
 			if (next === undefined) return -1
 			if (next < this.start_at()) return -1
-			this.stop_at_scheduled(next)
+
+			const input_next = this.input().filter(instrument => instrument.stop_at() < next )
+			this.input( input_next )
+			if (input_next.length === 0) this.offset(null)
 
 			return next
 		}
