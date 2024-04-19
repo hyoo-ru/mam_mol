@@ -7,7 +7,7 @@ $mol_audio_demo_vibe $mol_example_small
 				active? => active?
 				stop_at? => stop_at?
 				freq_default <= freq? 700
-				shape_default <= shape?
+				shape_default <= shape
 	sub /
 		<= List $mol_list rows /
 			<= Duration $mol_labeler
@@ -27,7 +27,7 @@ $mol_audio_demo_vibe $mol_example_small
 				content /
 					<= Shape_select $mol_select
 						Filter null
-						value? <=> shape?
+						value? <=> shape? \sine
 						options /$mol_audio_vibe_shape
 							\sine
 							\square
