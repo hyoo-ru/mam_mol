@@ -1,41 +1,41 @@
 declare namespace $ {
 
-	type $mol_search__query__HDPS6OZR = $mol_type_enforce<
+	type $mol_search__query__WT1ATBXJ = $mol_type_enforce<
 		ReturnType< $mol_app_demo_menu['filter'] >
 		,
 		ReturnType< $mol_search['query'] >
 	>
-	type $mol_tag_tree__Item__0R379RUS = $mol_type_enforce<
+	type $mol_tag_tree__Item__2EVY24X9 = $mol_type_enforce<
 		ReturnType< $mol_app_demo_menu['Option'] >
 		,
 		ReturnType< $mol_tag_tree['Item'] >
 	>
-	type $mol_tag_tree__ids_tags__B4D99O3B = $mol_type_enforce<
+	type $mol_tag_tree__ids_tags__83074DX5 = $mol_type_enforce<
 		ReturnType< $mol_app_demo_menu['ids_tags'] >
 		,
 		ReturnType< $mol_tag_tree['ids_tags'] >
 	>
-	type $mol_tag_tree__levels_expanded__DIACNIPF = $mol_type_enforce<
+	type $mol_tag_tree__levels_expanded__L4ICENQH = $mol_type_enforce<
 		ReturnType< $mol_app_demo_menu['levels_expanded'] >
 		,
 		ReturnType< $mol_tag_tree['levels_expanded'] >
 	>
-	type $mol_dimmer__haystack__R3FY7X9A = $mol_type_enforce<
+	type $mol_dimmer__haystack__COF6CTIB = $mol_type_enforce<
 		ReturnType< $mol_app_demo_menu['option_title'] >
 		,
 		ReturnType< $mol_dimmer['haystack'] >
 	>
-	type $mol_dimmer__needle__HHJSSXO5 = $mol_type_enforce<
+	type $mol_dimmer__needle__KAVDT3C6 = $mol_type_enforce<
 		ReturnType< $mol_app_demo_menu['filter'] >
 		,
 		ReturnType< $mol_dimmer['needle'] >
 	>
-	type $mol_link__arg__KV1JNHQT = $mol_type_enforce<
+	type $mol_link__arg__GENJ4H3S = $mol_type_enforce<
 		ReturnType< $mol_app_demo_menu['option_arg'] >
 		,
 		ReturnType< $mol_link['arg'] >
 	>
-	type $mol_link__sub__093JA56E = $mol_type_enforce<
+	type $mol_link__sub__B4W0Q4HA = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_link['sub'] >
