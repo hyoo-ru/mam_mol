@@ -74,6 +74,7 @@ namespace $.$$ {
 			return page instanceof $mol_book2
 				&& page.menu_title()
 				|| page.title()
+				|| spread
 		}
 		
 	}
