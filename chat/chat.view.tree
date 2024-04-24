@@ -16,6 +16,6 @@ $mol_chat $mol_link
 				<= Close $mol_link
 					arg * mol_chat null
 					sub /
-						<= Close_icon $mol_icon_cross
+						<= Close_icon $mol_icon_close
 			Body <= Embed $mol_frame
 				uri <= embed \

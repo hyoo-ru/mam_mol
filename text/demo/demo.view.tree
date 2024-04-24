@@ -24,7 +24,7 @@ $mol_text_demo $mol_example_large
 						<= Close $mol_link
 							arg * edit null
 							sub /
-								<= Close_icon $mol_icon_cross
+								<= Close_icon $mol_icon_close
 					body /
 						<= Code $mol_textarea
 							value? <=> text? \

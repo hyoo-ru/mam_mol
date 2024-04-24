@@ -18,7 +18,7 @@ $mol_app_demo_detail $mol_page
 		<= Close $mol_link 
 			hint <= close_hint @ \Close panel
 			sub /
-				<= Close_icon $mol_icon_cross
+				<= Close_icon $mol_icon_close
 			arg <= close_arg *
 				demo null
 	body /
