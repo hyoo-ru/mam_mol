@@ -20,12 +20,12 @@ namespace $ {
 		static planning = new Set< $mol_wire_fiber< any, any, any > >()
 		static reaping = new Set< $mol_wire_fiber< any, any, any > >()
 		
-		static plan_task: $mol_after_frame | null = null
+		static plan_task: $mol_after_tick | null = null
 		static plan() {
 			
 			if( this.plan_task ) return
 			
-			this.plan_task = new $mol_after_frame( ()=> {
+			this.plan_task = new $mol_after_tick( ()=> {
 				
 				try {
 					this.sync()
@@ -294,7 +294,7 @@ namespace $ {
 				sub.track_off( prev )
 				sub.absorb = ()=> {
 					done( null )
-					sub.destructor()
+					setTimeout( ()=> sub.destructor() )
 				}
 			} )
 		}
