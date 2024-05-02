@@ -16,6 +16,11 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
+		animation_name_style() {
+			return this.animation_stylesheet() ? this.animation_name() : null
+		}
+		
+		@ $mol_mem
 		animation_stylesheet( next?: null ): HTMLStyleElement | null {
 			
 			const rect_next = this.view_rect()
