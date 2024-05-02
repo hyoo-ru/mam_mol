@@ -17,7 +17,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		animation_name_style() {
-			return this.animation_stylesheet() ? this.animation_name() : null
+			return this.animation_stylesheet() ? this.animation_name() : ''
 		}
 		
 		@ $mol_mem
