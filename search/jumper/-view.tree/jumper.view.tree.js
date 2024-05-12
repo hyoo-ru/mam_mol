@@ -4,15 +4,15 @@
 			return 0;
 		}
 		forward(next){
-			return (this.Index().forward(next));
+			return (this?.Index()?.forward(next));
 		}
 		backward(next){
-			return (this.Index().backward(next));
+			return (this?.Index()?.backward(next));
 		}
 		Backward(){
 			const obj = new this.$.$mol_hotkey();
 			(obj.mod_shift) = () => (true);
-			(obj.key) = () => ({"enter": (next) => (this.backward(next))});
+			(obj.key) = () => ({"enter": (next) => (this?.backward(next))});
 			return obj;
 		}
 		escape(next){
@@ -21,7 +21,7 @@
 		}
 		Forward(){
 			const obj = new this.$.$mol_hotkey();
-			(obj.key) = () => ({"enter": (next) => (this.forward(next)), "escape": (next) => (this.escape(next))});
+			(obj.key) = () => ({"enter": (next) => (this?.forward(next)), "escape": (next) => (this?.escape(next))});
 			return obj;
 		}
 		Root(){
@@ -30,14 +30,14 @@
 		}
 		Index(){
 			const obj = new this.$.$mol_paginator();
-			(obj.value) = (next) => ((this.index(next)));
+			(obj.value) = (next) => ((this?.index(next)));
 			return obj;
 		}
 		plugins(){
 			return [
 				...(super.plugins()), 
-				(this.Backward()), 
-				(this.Forward())
+				(this?.Backward()), 
+				(this?.Forward())
 			];
 		}
 	};

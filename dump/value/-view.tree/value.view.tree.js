@@ -4,7 +4,7 @@
 		}
 		Simple(){
 			const obj = new this.$.$mol_text_code();
-			(obj.text) = () => ((this.simple()));
+			(obj.text) = () => ((this?.simple()));
 			return obj;
 		}
 		expanded(next){
@@ -23,17 +23,17 @@
 		}
 		Expand_title(){
 			const obj = new this.$.$mol_text_code();
-			(obj.text) = () => ((this.expand_title()));
+			(obj.text) = () => ((this?.expand_title()));
 			return obj;
 		}
 		Expand_head(){
 			const obj = new this.$.$mol_check_expand();
 			(obj.minimal_height) = () => (24);
 			(obj.minimal_width) = () => (24);
-			(obj.expanded) = (next) => ((this.expanded(next)));
-			(obj.expandable) = () => ((this.expandable()));
-			(obj.clicks) = (next) => ((this.expand_all(next)));
-			(obj.label) = () => ([(this.Expand_title())]);
+			(obj.expanded) = (next) => ((this?.expanded(next)));
+			(obj.expandable) = () => ((this?.expandable()));
+			(obj.clicks) = (next) => ((this?.expand_all(next)));
+			(obj.label) = () => ([(this?.Expand_title())]);
 			return obj;
 		}
 		preview_dom(){
@@ -44,13 +44,13 @@
 		}
 		Preview_dom(){
 			const obj = new this.$.$mol_view();
-			(obj.dom_node) = () => ((this.preview_dom()));
-			(obj.render) = () => ((this.preview()));
+			(obj.dom_node) = () => ((this?.preview_dom()));
+			(obj.render) = () => ((this?.preview()));
 			return obj;
 		}
 		Preview(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.Preview_dom())]);
+			(obj.sub) = () => ([(this?.Preview_dom())]);
 			return obj;
 		}
 		row_values(id){
@@ -61,19 +61,19 @@
 		}
 		Row(id){
 			const obj = new this.$.$mol_dump_list();
-			(obj.values) = () => ((this.row_values(id)));
-			(obj.prototypes) = () => ((this.prototypes()));
-			(obj.preview_show) = () => ((this.preview_show()));
+			(obj.values) = () => ((this?.row_values(id)));
+			(obj.prototypes) = () => ((this?.prototypes()));
+			(obj.preview_show) = () => ((this?.preview_show()));
 			return obj;
 		}
 		expand_content(){
-			return [(this.Preview()), (this.Row("0"))];
+			return [(this?.Preview()), (this?.Row("0"))];
 		}
 		Expand(){
 			const obj = new this.$.$mol_expander();
-			(obj.expanded) = (next) => ((this.expanded(next)));
-			(obj.Trigger) = () => ((this.Expand_head()));
-			(obj.content) = () => ((this.expand_content()));
+			(obj.expanded) = (next) => ((this?.expanded(next)));
+			(obj.Trigger) = () => ((this?.Expand_head()));
+			(obj.content) = () => ((this?.expand_content()));
 			return obj;
 		}
 		value(next){
@@ -85,7 +85,7 @@
 			return true;
 		}
 		sub(){
-			return [(this.Simple()), (this.Expand())];
+			return [(this?.Simple()), (this?.Expand())];
 		}
 	};
 	($mol_mem(($.$mol_dump_value.prototype), "Simple"));

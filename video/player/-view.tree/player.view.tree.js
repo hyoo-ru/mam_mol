@@ -73,26 +73,26 @@
 		}
 		attr(){
 			return {
-				"src": (this.uri()), 
-				"controls": (this.controls()), 
-				"autoplay": (this.autoplay()), 
-				"playsinline": (this.inline()), 
-				"loop": (this.loop()), 
-				"muted": (this.muted()), 
-				"poster": (this.poster())
+				"src": (this?.uri()), 
+				"controls": (this?.controls()), 
+				"autoplay": (this?.autoplay()), 
+				"playsinline": (this?.inline()), 
+				"loop": (this?.loop()), 
+				"muted": (this?.muted()), 
+				"poster": (this?.poster())
 			};
 		}
 		field(){
-			return {"srcObject": (this.stream())};
+			return {"srcObject": (this?.stream())};
 		}
 		event(){
 			return {
-				"volumechange": (next) => (this.revolume(next)), 
-				"timeupdate": (next) => (this.retime(next)), 
-				"durationchange": (next) => (this.redurate(next)), 
-				"playing": (next) => (this.playing_event(next)), 
-				"play": (next) => (this.play_event(next)), 
-				"pause": (next) => (this.pause_event(next))
+				"volumechange": (next) => (this?.revolume(next)), 
+				"timeupdate": (next) => (this?.retime(next)), 
+				"durationchange": (next) => (this?.redurate(next)), 
+				"playing": (next) => (this?.playing_event(next)), 
+				"play": (next) => (this?.play_event(next)), 
+				"pause": (next) => (this?.pause_event(next))
 			};
 		}
 	};

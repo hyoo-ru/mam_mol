@@ -7,7 +7,7 @@
 			const obj = new this.$.$mol_textarea();
 			(obj.sidebar_showed) = () => (true);
 			(obj.hint) = () => ("source code");
-			(obj.value) = (next) => ((this.filled_descr(next)));
+			(obj.value) = (next) => ((this?.filled_descr(next)));
 			return obj;
 		}
 		symbols_hint(){
@@ -15,19 +15,19 @@
 		}
 		Disabled(){
 			const obj = new this.$.$mol_text();
-			(obj.text) = () => ((this.symbols_hint()));
+			(obj.text) = () => ((this?.symbols_hint()));
 			return obj;
 		}
 		Content(){
 			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ([(this.Filled_descr()), (this.Disabled())]);
+			(obj.rows) = () => ([(this?.Filled_descr()), (this?.Disabled())]);
 			return obj;
 		}
 		title(){
 			return "Text input field in various states";
 		}
 		sub(){
-			return [(this.Content())];
+			return [(this?.Content())];
 		}
 		tags(){
 			return [

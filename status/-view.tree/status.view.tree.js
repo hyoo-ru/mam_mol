@@ -3,7 +3,7 @@
 			return "";
 		}
 		status(){
-			return (this.title());
+			return (this?.title());
 		}
 		minimal_height(){
 			return 24;
@@ -12,7 +12,7 @@
 			return 0;
 		}
 		sub(){
-			return [(this.message())];
+			return [(this?.message())];
 		}
 	};
 

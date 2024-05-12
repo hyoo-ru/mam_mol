@@ -6,7 +6,7 @@
 		Priority(){
 			const obj = new this.$.$mol_select();
 			(obj.Filter) = () => (null);
-			(obj.value) = (next) => ((this.priority(next)));
+			(obj.value) = (next) => ((this?.priority(next)));
 			(obj.options) = () => ([
 				"Highest ", 
 				"High", 
@@ -20,7 +20,7 @@
 			return "Priority picker";
 		}
 		sub(){
-			return [(this.Priority())];
+			return [(this?.Priority())];
 		}
 		tags(){
 			return ["select", "priority"];

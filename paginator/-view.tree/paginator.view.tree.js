@@ -12,9 +12,9 @@
 		}
 		Backward(){
 			const obj = new this.$.$mol_button_minor();
-			(obj.hint) = () => ((this.backward_hint()));
-			(obj.click) = (next) => ((this.backward(next)));
-			(obj.sub) = () => ([(this.Backward_icon())]);
+			(obj.hint) = () => ((this?.backward_hint()));
+			(obj.click) = (next) => ((this?.backward(next)));
+			(obj.sub) = () => ([(this?.Backward_icon())]);
 			return obj;
 		}
 		value(next){
@@ -23,7 +23,7 @@
 		}
 		Value(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.value())]);
+			(obj.sub) = () => ([(this?.value())]);
 			return obj;
 		}
 		forward_hint(){
@@ -39,16 +39,16 @@
 		}
 		Forward(){
 			const obj = new this.$.$mol_button_minor();
-			(obj.hint) = () => ((this.forward_hint()));
-			(obj.click) = (next) => ((this.forward(next)));
-			(obj.sub) = () => ([(this.Forward_icon())]);
+			(obj.hint) = () => ((this?.forward_hint()));
+			(obj.click) = (next) => ((this?.forward(next)));
+			(obj.sub) = () => ([(this?.Forward_icon())]);
 			return obj;
 		}
 		sub(){
 			return [
-				(this.Backward()), 
-				(this.Value()), 
-				(this.Forward())
+				(this?.Backward()), 
+				(this?.Value()), 
+				(this?.Forward())
 			];
 		}
 	};

@@ -5,15 +5,15 @@
 		Title(){
 			const obj = new this.$.$mol_view();
 			(obj.minimal_height) = () => (24);
-			(obj.sub) = () => ([(this.title())]);
+			(obj.sub) = () => ([(this?.title())]);
 			return obj;
 		}
 		head(){
-			return [(this.Title())];
+			return [(this?.Title())];
 		}
 		Head(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ((this.head()));
+			(obj.sub) = () => ((this?.head()));
 			return obj;
 		}
 		weekdays(){
@@ -21,7 +21,7 @@
 		}
 		Weekdays(){
 			const obj = new this.$.$mol_hor();
-			(obj.sub) = () => ((this.weekdays()));
+			(obj.sub) = () => ((this?.weekdays()));
 			return obj;
 		}
 		weekend(id){
@@ -52,10 +52,10 @@
 			return "";
 		}
 		day_content(id){
-			return [(this.day_text(id))];
+			return [(this?.day_text(id))];
 		}
 		sub(){
-			return [(this.Head()), (this.Weekdays())];
+			return [(this?.Head()), (this?.Weekdays())];
 		}
 		weeks(){
 			return [];
@@ -65,23 +65,23 @@
 		}
 		Weekday(id){
 			const obj = new this.$.$mol_calendar_day();
-			(obj.holiday) = () => ((this.weekend(id)));
-			(obj.sub) = () => ([(this.weekday(id))]);
+			(obj.holiday) = () => ((this?.weekend(id)));
+			(obj.sub) = () => ([(this?.weekday(id))]);
 			return obj;
 		}
 		Week(id){
 			const obj = new this.$.$mol_hor();
-			(obj.sub) = () => ((this.week_days(id)));
+			(obj.sub) = () => ((this?.week_days(id)));
 			return obj;
 		}
 		Day(id){
 			const obj = new this.$.$mol_calendar_day();
-			(obj.ghost) = () => ((this.day_ghost(id)));
-			(obj.holiday) = () => ((this.day_holiday(id)));
-			(obj.selected) = () => ((this.day_selected(id)));
-			(obj.today) = () => ((this.day_today(id)));
-			(obj.theme) = () => ((this.day_theme(id)));
-			(obj.sub) = () => ((this.day_content(id)));
+			(obj.ghost) = () => ((this?.day_ghost(id)));
+			(obj.holiday) = () => ((this?.day_holiday(id)));
+			(obj.selected) = () => ((this?.day_selected(id)));
+			(obj.today) = () => ((this?.day_today(id)));
+			(obj.theme) = () => ((this?.day_theme(id)));
+			(obj.sub) = () => ((this?.day_content(id)));
 			return obj;
 		}
 		month_string(){
@@ -123,11 +123,11 @@
 		}
 		attr(){
 			return {
-				"mol_calendar_holiday": (this.holiday()), 
-				"mol_calendar_ghost": (this.ghost()), 
-				"mol_calendar_selected": (this.selected()), 
-				"mol_calendar_today": (this.today()), 
-				"mol_theme": (this.theme())
+				"mol_calendar_holiday": (this?.holiday()), 
+				"mol_calendar_ghost": (this?.ghost()), 
+				"mol_calendar_selected": (this?.selected()), 
+				"mol_calendar_today": (this?.today()), 
+				"mol_theme": (this?.theme())
 			};
 		}
 	};

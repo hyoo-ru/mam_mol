@@ -4,7 +4,7 @@
 		}
 		Search(){
 			const obj = new this.$.$mol_string();
-			(obj.hint) = () => ((this.search_hint()));
+			(obj.hint) = () => ((this?.search_hint()));
 			return obj;
 		}
 		replace_hint(){
@@ -12,7 +12,7 @@
 		}
 		Replace(){
 			const obj = new this.$.$mol_string();
-			(obj.hint) = () => ((this.replace_hint()));
+			(obj.hint) = () => ((this?.replace_hint()));
 			return obj;
 		}
 		approve_label(){
@@ -20,7 +20,7 @@
 		}
 		Approve(){
 			const obj = new this.$.$mol_button_major();
-			(obj.title) = () => ((this.approve_label()));
+			(obj.title) = () => ((this?.approve_label()));
 			return obj;
 		}
 		decline_label(){
@@ -28,7 +28,7 @@
 		}
 		Decline(){
 			const obj = new this.$.$mol_button_minor();
-			(obj.title) = () => ((this.decline_label()));
+			(obj.title) = () => ((this?.decline_label()));
 			return obj;
 		}
 		Copy_icon(){
@@ -37,7 +37,7 @@
 		}
 		Copy(){
 			const obj = new this.$.$mol_button_minor();
-			(obj.sub) = () => ([(this.Copy_icon())]);
+			(obj.sub) = () => ([(this?.Copy_icon())]);
 			return obj;
 		}
 		Cut_icon(){
@@ -46,7 +46,7 @@
 		}
 		Cut(){
 			const obj = new this.$.$mol_button_minor();
-			(obj.sub) = () => ([(this.Cut_icon())]);
+			(obj.sub) = () => ([(this?.Cut_icon())]);
 			return obj;
 		}
 		Paste_icon(){
@@ -55,7 +55,7 @@
 		}
 		Paste(){
 			const obj = new this.$.$mol_button_minor();
-			(obj.sub) = () => ([(this.Paste_icon())]);
+			(obj.sub) = () => ([(this?.Paste_icon())]);
 			return obj;
 		}
 		Delete_icon(){
@@ -64,20 +64,20 @@
 		}
 		Delete(){
 			const obj = new this.$.$mol_button_minor();
-			(obj.sub) = () => ([(this.Delete_icon())]);
+			(obj.sub) = () => ([(this?.Delete_icon())]);
 			return obj;
 		}
 		Toolbar(){
 			const obj = new this.$.$mol_toolbar();
 			(obj.items) = () => ([
-				(this.Search()), 
-				(this.Replace()), 
-				(this.Approve()), 
-				(this.Decline()), 
-				(this.Copy()), 
-				(this.Cut()), 
-				(this.Paste()), 
-				(this.Delete())
+				(this?.Search()), 
+				(this?.Replace()), 
+				(this?.Approve()), 
+				(this?.Decline()), 
+				(this?.Copy()), 
+				(this?.Cut()), 
+				(this?.Paste()), 
+				(this?.Delete())
 			]);
 			return obj;
 		}
@@ -85,7 +85,7 @@
 			return "Foldable toolbar demo";
 		}
 		sub(){
-			return [(this.Toolbar())];
+			return [(this?.Toolbar())];
 		}
 		aspects(){
 			return ["Widget/Layout"];

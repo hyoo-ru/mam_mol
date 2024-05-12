@@ -19,7 +19,7 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		api( next? : any , force? : $mol_mem_force ) : any {
+		api( next? : any ) : any {
 			
 			const ymaps = $mol_map_yandex.api()
 			$mol_wire_sync( this ).wait_ready( ymaps )
@@ -34,11 +34,9 @@ namespace $.$$ {
 			api.controls.remove( 'fullscreenControl' )
 			api.controls.remove( 'typeSelector' )
 
-			api.events.add( [ 'actionend' ] , ( event : any )=> {
-				new $mol_after_tick( $mol_fiber_root( ()=> {
+			api.events.add( [ 'actionend' ] , $mol_wire_async( ( event : any )=> {
 					this.update( event ) 
-				} ) )
-			} )
+			} ) )
 
 			return api
 		}
@@ -61,7 +59,7 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		center( next? : readonly[number,number] , force? : $mol_mem_force ) {
+		center( next? : readonly[number,number] ) {
 
 			if ( next !== undefined ) return next
 			

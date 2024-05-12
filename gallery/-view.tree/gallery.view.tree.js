@@ -9,12 +9,12 @@
 			return [];
 		}
 		sub(){
-			return (this.items());
+			return (this?.items());
 		}
 		Side(id){
 			const obj = new this.$.$mol_gallery();
-			(obj.style) = () => ({"flexGrow": (this.side_size(id))});
-			(obj.items) = () => ((this.side_items(id)));
+			(obj.style) = () => ({"flexGrow": (this?.side_size(id))});
+			(obj.items) = () => ((this?.side_items(id)));
 			return obj;
 		}
 	};

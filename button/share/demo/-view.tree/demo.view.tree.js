@@ -1,7 +1,7 @@
 	($.$mol_button_share_demo) = class $mol_button_share_demo extends ($.$mol_example_small) {
 		Share_page(){
 			const obj = new this.$.$mol_button_share();
-			(obj.title) = () => ((this.title()));
+			(obj.title) = () => ((this?.title()));
 			(obj.hint) = () => ("Share this page with screenshot");
 			return obj;
 		}
@@ -10,7 +10,7 @@
 			(obj.title) = () => ("Component screensht");
 			(obj.hint) = () => ("Share screenshot of component");
 			(obj.uri) = () => (null);
-			(obj.capture) = () => ((this.Share_hyoo()));
+			(obj.capture) = () => ((this?.Share_hyoo()));
 			return obj;
 		}
 		Share_hyoo(){
@@ -26,9 +26,9 @@
 		}
 		sub(){
 			return [
-				(this.Share_page()), 
-				(this.Share_screenshot()), 
-				(this.Share_hyoo())
+				(this?.Share_page()), 
+				(this?.Share_screenshot()), 
+				(this?.Share_hyoo())
 			];
 		}
 		aspects(){

@@ -3,7 +3,7 @@ $mol_app_supplies_detail $mol_page
 	title \Supply
 	tools /
 		<= Close $mol_link
-			sub / <= Close_icon $mol_icon_cross
+			sub / <= Close_icon $mol_icon_close
 			arg <= close_arg *
 				supply null
 	body /

@@ -1,15 +1,15 @@
 	($.$mol_audio_demo_sequencer) = class $mol_audio_demo_sequencer extends ($.$mol_example_small) {
 		room_status(next){
-			return (this.Room().status(next));
+			return (this?.Room()?.status(next));
 		}
 		room_active(next){
-			return (this.Room().active(next));
+			return (this?.Room()?.active(next));
 		}
 		beep_track_start(){
-			return (this.Beep_track().start());
+			return (this?.Beep_track()?.start());
 		}
 		beep_track_active(next){
-			return (this.Beep_track().active(next));
+			return (this?.Beep_track()?.active(next));
 		}
 		notes(next){
 			if(next !== undefined) return next;
@@ -25,52 +25,52 @@
 		}
 		Beep_track(){
 			const obj = new this.$.$mol_audio_melody();
-			(obj.notes) = (next) => ((this.notes(next)));
-			(obj.note_length) = (next) => ((this.note_length(next)));
-			(obj.note_off_part) = (next) => ((this.note_off_part(next)));
+			(obj.notes) = (next) => ((this?.notes(next)));
+			(obj.note_length) = (next) => ((this?.note_length(next)));
+			(obj.note_off_part) = (next) => ((this?.note_off_part(next)));
 			return obj;
 		}
 		Note_length(){
 			const obj = new this.$.$mol_number();
 			(obj.precision) = () => (.05);
 			(obj.value_min) = () => (.05);
-			(obj.value) = (next) => ((this.note_length(next)));
+			(obj.value) = (next) => ((this?.note_length(next)));
 			return obj;
 		}
 		Note_length_field(){
 			const obj = new this.$.$mol_form_field();
 			(obj.name) = () => ("Note length, sec");
-			(obj.control) = () => ((this.Note_length()));
+			(obj.control) = () => ((this?.Note_length()));
 			return obj;
 		}
 		Note_off_part(){
 			const obj = new this.$.$mol_number();
 			(obj.precision) = () => (.1);
 			(obj.value_min) = () => (.1);
-			(obj.value) = (next) => ((this.note_off_part(next)));
+			(obj.value) = (next) => ((this?.note_off_part(next)));
 			return obj;
 		}
 		Note_off_part_field(){
 			const obj = new this.$.$mol_form_field();
 			(obj.name) = () => ("Note off, part of length");
-			(obj.control) = () => ((this.Note_off_part()));
+			(obj.control) = () => ((this?.Note_off_part()));
 			return obj;
 		}
 		Note_settings(){
 			const obj = new this.$.$mol_row();
-			(obj.sub) = () => ([(this.Note_length_field()), (this.Note_off_part_field())]);
+			(obj.sub) = () => ([(this?.Note_length_field()), (this?.Note_off_part_field())]);
 			return obj;
 		}
 		Notes(){
 			const obj = new this.$.$mol_textarea();
 			(obj.hint) = () => ("Example: e _ c#5/2 _/2");
-			(obj.value) = (next) => ((this.notes(next)));
+			(obj.value) = (next) => ((this?.notes(next)));
 			return obj;
 		}
 		Notes_field(){
 			const obj = new this.$.$mol_form_field();
 			(obj.name) = () => ("Notes");
-			(obj.control) = () => ((this.Notes()));
+			(obj.control) = () => ((this?.Notes()));
 			return obj;
 		}
 		Beep_active_icon(){
@@ -80,36 +80,36 @@
 		Beep_active(){
 			const obj = new this.$.$mol_check_icon();
 			(obj.hint) = () => ("Play / Pause");
-			(obj.Icon) = () => ((this.Beep_active_icon()));
-			(obj.checked) = (next) => ((this.beep_track_active(next)));
+			(obj.Icon) = () => ((this?.Beep_active_icon()));
+			(obj.checked) = (next) => ((this?.beep_track_active(next)));
 			return obj;
 		}
 		Beep_play(){
 			const obj = new this.$.$mol_button_minor();
-			(obj.click) = (next) => ((this.beep_track_start(next)));
+			(obj.click) = (next) => ((this?.beep_track_start(next)));
 			(obj.title) = () => ("Play");
 			return obj;
 		}
 		Beep_status(){
 			const obj = new this.$.$mol_audio_status();
-			(obj.status) = (next) => ((this.room_status(next)));
+			(obj.status) = (next) => ((this?.room_status(next)));
 			return obj;
 		}
 		Beep_row(){
 			const obj = new this.$.$mol_row();
 			(obj.sub) = () => ([
-				(this.Beep_active()), 
-				(this.Beep_play()), 
-				(this.Beep_status())
+				(this?.Beep_active()), 
+				(this?.Beep_play()), 
+				(this?.Beep_status())
 			]);
 			return obj;
 		}
 		List(){
 			const obj = new this.$.$mol_list();
 			(obj.rows) = () => ([
-				(this.Note_settings()), 
-				(this.Notes_field()), 
-				(this.Beep_row())
+				(this?.Note_settings()), 
+				(this?.Notes_field()), 
+				(this?.Beep_row())
 			]);
 			return obj;
 		}
@@ -118,11 +118,11 @@
 		}
 		Room(){
 			const obj = new this.$.$mol_audio_room();
-			(obj.input) = () => ([(this.Beep_track())]);
+			(obj.input) = () => ([(this?.Beep_track())]);
 			return obj;
 		}
 		sub(){
-			return [(this.List())];
+			return [(this?.List())];
 		}
 		tags(){
 			return ["sound", "sequencer"];

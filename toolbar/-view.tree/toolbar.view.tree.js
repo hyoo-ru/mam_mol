@@ -4,7 +4,7 @@
 		}
 		Bar(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ((this.items()));
+			(obj.sub) = () => ((this?.items()));
 			return obj;
 		}
 		expanded(next){
@@ -13,14 +13,14 @@
 		}
 		Expand(){
 			const obj = new this.$.$mol_check_expand();
-			(obj.checked) = (next) => ((this.expanded(next)));
+			(obj.checked) = (next) => ((this?.expanded(next)));
 			return obj;
 		}
 		attr(){
-			return {...(super.attr()), "mol_toolbar_expanded": (this.expanded())};
+			return {...(super.attr()), "mol_toolbar_expanded": (this?.expanded())};
 		}
 		sub(){
-			return [(this.Bar()), (this.Expand())];
+			return [(this?.Bar()), (this?.Expand())];
 		}
 	};
 	($mol_mem(($.$mol_toolbar.prototype), "Bar"));

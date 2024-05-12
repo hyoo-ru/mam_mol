@@ -6,7 +6,7 @@
 			return obj;
 		}
 		sub(){
-			return [(this.Frame())];
+			return [(this?.Frame())];
 		}
 		tags(){
 			return ["iframe", "container"];

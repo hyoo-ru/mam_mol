@@ -13,7 +13,7 @@
 			return " ";
 		}
 		string_enabled(){
-			return (this.enabled());
+			return (this?.enabled());
 		}
 		submit(next){
 			if(next !== undefined) return next;
@@ -21,11 +21,11 @@
 		}
 		String(){
 			const obj = new this.$.$mol_string();
-			(obj.type) = () => ((this.type()));
-			(obj.value) = (next) => ((this.value_string(next)));
-			(obj.hint) = () => ((this.hint()));
-			(obj.enabled) = () => ((this.string_enabled()));
-			(obj.submit) = (next) => ((this.submit(next)));
+			(obj.type) = () => ((this?.type()));
+			(obj.value) = (next) => ((this?.value_string(next)));
+			(obj.hint) = () => ((this?.hint()));
+			(obj.enabled) = () => ((this?.string_enabled()));
+			(obj.submit) = (next) => ((this?.submit(next)));
 			return obj;
 		}
 		event_dec(next){
@@ -33,7 +33,7 @@
 			return null;
 		}
 		dec_enabled(){
-			return (this.enabled());
+			return (this?.enabled());
 		}
 		dec_icon(){
 			const obj = new this.$.$mol_icon_minus();
@@ -41,9 +41,9 @@
 		}
 		Dec(){
 			const obj = new this.$.$mol_button_minor();
-			(obj.event_click) = (next) => ((this.event_dec(next)));
-			(obj.enabled) = () => ((this.dec_enabled()));
-			(obj.sub) = () => ([(this.dec_icon())]);
+			(obj.event_click) = (next) => ((this?.event_dec(next)));
+			(obj.enabled) = () => ((this?.dec_enabled()));
+			(obj.sub) = () => ([(this?.dec_icon())]);
 			return obj;
 		}
 		event_inc(next){
@@ -51,7 +51,7 @@
 			return null;
 		}
 		inc_enabled(){
-			return (this.enabled());
+			return (this?.enabled());
 		}
 		inc_icon(){
 			const obj = new this.$.$mol_icon_plus();
@@ -59,16 +59,16 @@
 		}
 		Inc(){
 			const obj = new this.$.$mol_button_minor();
-			(obj.event_click) = (next) => ((this.event_inc(next)));
-			(obj.enabled) = () => ((this.inc_enabled()));
-			(obj.sub) = () => ([(this.inc_icon())]);
+			(obj.event_click) = (next) => ((this?.event_inc(next)));
+			(obj.enabled) = () => ((this?.inc_enabled()));
+			(obj.sub) = () => ([(this?.inc_icon())]);
 			return obj;
 		}
 		precision_view(){
-			return (this.precision());
+			return (this?.precision());
 		}
 		precision_change(){
-			return (this.precision());
+			return (this?.precision());
 		}
 		value_min(){
 			return -Infinity;
@@ -85,9 +85,9 @@
 		}
 		sub(){
 			return [
-				(this.String()), 
-				(this.Dec()), 
-				(this.Inc())
+				(this?.String()), 
+				(this?.Dec()), 
+				(this?.Inc())
 			];
 		}
 	};

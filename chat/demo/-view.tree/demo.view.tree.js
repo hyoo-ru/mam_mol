@@ -1,6 +1,6 @@
 	($.$mol_chat_demo) = class $mol_chat_demo extends ($.$mol_example_small) {
 		chat_pages(){
-			return (this.Chat().pages());
+			return (this?.Chat()?.pages());
 		}
 		Chat(){
 			const obj = new this.$.$mol_chat();
@@ -11,7 +11,7 @@
 			return "Feed of comments for this page";
 		}
 		sub(){
-			return [(this.Chat())];
+			return [(this?.Chat())];
 		}
 		tags(){
 			return ["communication"];

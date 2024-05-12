@@ -6,7 +6,7 @@
 		}
 		Current(){
 			const obj = new this.$.$mol_date();
-			(obj.value_moment) = (next) => ((this.date_current(next)));
+			(obj.value_moment) = (next) => ((this?.date_current(next)));
 			return obj;
 		}
 		formatted(){
@@ -14,7 +14,7 @@
 		}
 		Formatted(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.formatted())]);
+			(obj.sub) = () => ([(this?.formatted())]);
 			return obj;
 		}
 		date_empty(next){
@@ -23,14 +23,14 @@
 		}
 		Empty(){
 			const obj = new this.$.$mol_date();
-			(obj.value_moment) = (next) => ((this.date_empty(next)));
+			(obj.value_moment) = (next) => ((this?.date_empty(next)));
 			return obj;
 		}
 		sub(){
 			return [
-				(this.Current()), 
-				(this.Formatted()), 
-				(this.Empty())
+				(this?.Current()), 
+				(this?.Formatted()), 
+				(this?.Empty())
 			];
 		}
 		tags(){

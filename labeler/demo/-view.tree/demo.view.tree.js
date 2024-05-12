@@ -12,20 +12,20 @@
 		Name_control(){
 			const obj = new this.$.$mol_string();
 			(obj.hint) = () => ("Jack Sparrow");
-			(obj.value) = (next) => ((this.user_name(next)));
+			(obj.value) = (next) => ((this?.user_name(next)));
 			return obj;
 		}
 		Name(){
 			const obj = new this.$.$mol_labeler();
 			(obj.title) = () => ("User name");
-			(obj.Content) = () => ((this.Name_control()));
+			(obj.Content) = () => ((this?.Name_control()));
 			return obj;
 		}
 		title(){
 			return "Labeled content of some types";
 		}
 		sub(){
-			return [(this.Provider()), (this.Name())];
+			return [(this?.Provider()), (this?.Name())];
 		}
 		tags(){
 			return [

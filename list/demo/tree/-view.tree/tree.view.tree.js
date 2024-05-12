@@ -4,7 +4,7 @@
 		}
 		Content(){
 			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ((this.root_rows()));
+			(obj.rows) = () => ((this?.root_rows()));
 			return obj;
 		}
 		row_title(id){
@@ -12,7 +12,7 @@
 		}
 		Row_title(id){
 			const obj = new this.$.$mol_paragraph();
-			(obj.sub) = () => ([(this.row_title(id))]);
+			(obj.sub) = () => ([(this?.row_title(id))]);
 			return obj;
 		}
 		row_expanded(id, next){
@@ -24,21 +24,21 @@
 		}
 		Row_content(id){
 			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ((this.row_content(id)));
+			(obj.rows) = () => ((this?.row_content(id)));
 			return obj;
 		}
 		title(){
 			return "Large list of rows with dynamic content";
 		}
 		sub(){
-			return [(this.Content())];
+			return [(this?.Content())];
 		}
 		Row(id){
 			const obj = new this.$.$mol_expander();
-			(obj.label) = () => ([(this.Row_title(id))]);
-			(obj.expanded) = (next) => ((this.row_expanded(id, next)));
+			(obj.label) = () => ([(this?.Row_title(id))]);
+			(obj.expanded) = (next) => ((this?.row_expanded(id, next)));
 			(obj.expandable) = () => (true);
-			(obj.Content) = () => ((this.Row_content(id)));
+			(obj.Content) = () => ((this?.Row_content(id)));
 			return obj;
 		}
 		tags(){

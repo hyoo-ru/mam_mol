@@ -7,7 +7,7 @@
 		}
 		Bid(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.bid())]);
+			(obj.sub) = () => ([(this?.bid())]);
 			return obj;
 		}
 		control(){
@@ -17,10 +17,10 @@
 			return [];
 		}
 		label(){
-			return [(this.name()), (this.Bid())];
+			return [(this?.name()), (this?.Bid())];
 		}
 		content(){
-			return [(this.control())];
+			return [(this?.control())];
 		}
 	};
 	($mol_mem(($.$mol_form_field.prototype), "Bid"));

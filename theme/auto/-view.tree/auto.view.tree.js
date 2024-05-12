@@ -3,7 +3,7 @@
 			return "";
 		}
 		attr(){
-			return {"mol_theme": (this.theme())};
+			return {"mol_theme": (this?.theme())};
 		}
 	};
 

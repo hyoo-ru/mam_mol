@@ -9,15 +9,15 @@
 		}
 		Sample(){
 			const obj = new this.$.$mol_view();
-			(obj.plugins) = () => ([(this.Theme())]);
-			(obj.sub) = () => ([(this.Lighter())]);
+			(obj.plugins) = () => ([(this?.Theme())]);
+			(obj.sub) = () => ([(this?.Lighter())]);
 			return obj;
 		}
 		title(){
 			return "Switcher between light/dark themes (usually for `$mol_theme_auto` plugin).";
 		}
 		sub(){
-			return [(this.Sample())];
+			return [(this?.Sample())];
 		}
 		tags(){
 			return [

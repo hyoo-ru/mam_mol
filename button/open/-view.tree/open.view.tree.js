@@ -15,13 +15,13 @@
 		}
 		Native(){
 			const obj = new this.$.$mol_button_open_native();
-			(obj.files) = (next) => ((this.files(next)));
-			(obj.accept) = () => ((this.accept()));
-			(obj.multiple) = () => ((this.multiple()));
+			(obj.files) = (next) => ((this?.files(next)));
+			(obj.accept) = () => ((this?.accept()));
+			(obj.multiple) = () => ((this?.multiple()));
 			return obj;
 		}
 		sub(){
-			return [(this.Icon()), (this.Native())];
+			return [(this?.Icon()), (this?.Native())];
 		}
 	};
 	($mol_mem(($.$mol_button_open.prototype), "Icon"));
@@ -48,12 +48,12 @@
 		attr(){
 			return {
 				"type": "file", 
-				"accept": (this.accept()), 
-				"multiple": (this.multiple())
+				"accept": (this?.accept()), 
+				"multiple": (this?.multiple())
 			};
 		}
 		event(){
-			return {"change": (next) => (this.picked(next))};
+			return {"change": (next) => (this?.picked(next))};
 		}
 	};
 	($mol_mem(($.$mol_button_open_native.prototype), "picked"));

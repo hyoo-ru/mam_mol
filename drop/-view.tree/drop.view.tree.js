@@ -25,14 +25,14 @@
 		}
 		event(){
 			return {
-				"dragenter": (next) => (this.enter(next)), 
-				"dragover": (next) => (this.move(next)), 
-				"dragleave": (next) => (this.leave(next)), 
-				"drop": (next) => (this.drop(next))
+				"dragenter": (next) => (this?.enter(next)), 
+				"dragover": (next) => (this?.move(next)), 
+				"dragleave": (next) => (this?.leave(next)), 
+				"drop": (next) => (this?.drop(next))
 			};
 		}
 		attr(){
-			return {"mol_drop_status": (this.status())};
+			return {"mol_drop_status": (this?.status())};
 		}
 		adopt(next){
 			if(next !== undefined) return next;

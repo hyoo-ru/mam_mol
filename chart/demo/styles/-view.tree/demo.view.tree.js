@@ -10,9 +10,9 @@
 		}
 		Receipts(){
 			const obj = new this.$.$mol_plot_bar();
-			(obj.title) = () => ((this.receipts_title()));
-			(obj.series_x) = () => ((this.series_x()));
-			(obj.series_y) = () => ((this.series_2_y()));
+			(obj.title) = () => ((this?.receipts_title()));
+			(obj.series_x) = () => ((this?.series_x()));
+			(obj.series_y) = () => ((this?.series_2_y()));
 			return obj;
 		}
 		receipts_confirmed_title(){
@@ -23,9 +23,9 @@
 		}
 		Receipts_confirmed(){
 			const obj = new this.$.$mol_plot_bar();
-			(obj.title) = () => ((this.receipts_confirmed_title()));
-			(obj.series_x) = () => ((this.series_x()));
-			(obj.series_y) = () => ((this.series_3_y()));
+			(obj.title) = () => ((this?.receipts_confirmed_title()));
+			(obj.series_x) = () => ((this?.series_x()));
+			(obj.series_y) = () => ((this?.series_3_y()));
 			return obj;
 		}
 		maximum_title(){
@@ -36,9 +36,9 @@
 		}
 		Maximum(){
 			const obj = new this.$.$mol_plot_dot();
-			(obj.title) = () => ((this.maximum_title()));
-			(obj.series_x) = () => ((this.series_x()));
-			(obj.series_y) = () => ((this.series_1_y()));
+			(obj.title) = () => ((this?.maximum_title()));
+			(obj.series_x) = () => ((this?.series_x()));
+			(obj.series_y) = () => ((this?.series_1_y()));
 			return obj;
 		}
 		waste_title(){
@@ -50,9 +50,9 @@
 		Waste(){
 			const obj = new this.$.$mol_plot_line();
 			(obj.type) = () => ("dashed");
-			(obj.title) = () => ((this.waste_title()));
-			(obj.series_x) = () => ((this.series_x()));
-			(obj.series_y) = () => ((this.series_4_y()));
+			(obj.title) = () => ((this?.waste_title()));
+			(obj.series_x) = () => ((this?.series_x()));
+			(obj.series_y) = () => ((this?.series_4_y()));
 			return obj;
 		}
 		purchases_title(){
@@ -75,13 +75,13 @@
 		}
 		Purchases(){
 			const obj = new this.$.$mol_plot_group();
-			(obj.title) = () => ((this.purchases_title()));
-			(obj.series_x) = () => ((this.series_x()));
-			(obj.series_y) = () => ((this.series_5_y()));
+			(obj.title) = () => ((this?.purchases_title()));
+			(obj.series_x) = () => ((this?.series_x()));
+			(obj.series_y) = () => ((this?.series_5_y()));
 			(obj.graphs) = () => ([
-				(this.Purchases_fill()), 
-				(this.Purchases_line()), 
-				(this.Purchases_dots())
+				(this?.Purchases_fill()), 
+				(this?.Purchases_line()), 
+				(this?.Purchases_dots())
 			]);
 			return obj;
 		}
@@ -106,13 +106,13 @@
 		}
 		Taxes(){
 			const obj = new this.$.$mol_plot_group();
-			(obj.title) = () => ((this.taxes_title()));
-			(obj.series_x) = () => ((this.series_x()));
-			(obj.series_y) = () => ((this.series_6_y()));
+			(obj.title) = () => ((this?.taxes_title()));
+			(obj.series_x) = () => ((this?.series_x()));
+			(obj.series_y) = () => ((this?.series_6_y()));
 			(obj.graphs) = () => ([
-				(this.Taxes_fill()), 
-				(this.Taxes_line()), 
-				(this.Taxes_dots())
+				(this?.Taxes_fill()), 
+				(this?.Taxes_line()), 
+				(this?.Taxes_dots())
 			]);
 			return obj;
 		}
@@ -121,7 +121,7 @@
 		}
 		Energy(){
 			const obj = new this.$.$mol_plot_ruler_vert();
-			(obj.title) = () => ((this.energy_title()));
+			(obj.title) = () => ((this?.energy_title()));
 			return obj;
 		}
 		day_title(){
@@ -129,25 +129,25 @@
 		}
 		Day(){
 			const obj = new this.$.$mol_plot_mark_hor();
-			(obj.title) = () => ((this.day_title()));
-			(obj.series_x) = () => ((this.series_x()));
+			(obj.title) = () => ((this?.day_title()));
+			(obj.series_x) = () => ((this?.series_x()));
 			return obj;
 		}
 		graphs(){
 			return [
-				(this.Receipts()), 
-				(this.Receipts_confirmed()), 
-				(this.Maximum()), 
-				(this.Waste()), 
-				(this.Purchases()), 
-				(this.Taxes()), 
-				(this.Energy()), 
-				(this.Day())
+				(this?.Receipts()), 
+				(this?.Receipts_confirmed()), 
+				(this?.Maximum()), 
+				(this?.Waste()), 
+				(this?.Purchases()), 
+				(this?.Taxes()), 
+				(this?.Energy()), 
+				(this?.Day())
 			];
 		}
 		Chart(){
 			const obj = new this.$.$mol_chart();
-			(obj.graphs) = () => ((this.graphs()));
+			(obj.graphs) = () => ((this?.graphs()));
 			return obj;
 		}
 		title(){
@@ -157,7 +157,7 @@
 			return 15;
 		}
 		sub(){
-			return [(this.Chart())];
+			return [(this?.Chart())];
 		}
 		tags(){
 			return [

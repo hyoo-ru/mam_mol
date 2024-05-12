@@ -6,5 +6,5 @@
 	"sourcesContent": [
 		"$mol_chat_demo $mol_example_small\n\ttitle \\Feed of comments for this page\n\tsub /\n\t\t<= Chat $mol_chat\n\t\t\tseed \\mol_chat_demo\n\t\t\tpages => chat_pages\n\t\t- <= Pages $mol_view\n\t\t\tsub <= chat_pages\n\ttags /\n\t\t\\communication\n\taspects /\n\t\t\\Integration\n\t\t\\Widget/Button\n"
 	],
-	"mappings": "AAAA,AAAA,2CAAe,+BAAf;AAAA,AAKY;AAAA,AAAA,eAFP,OAEF,QAAS;AAAA;AAFP;AAAA,AAAK,qCAAL;AACF,uBAAM,eAAN,CADE;AAAA,UAAK,GAAL;AAAA;AAFJ;AAAA,AAAA,UAAO,gCAAP;AAAA;AACA;AAAA,AAAA,UAAI,CACH,KAAG,OAAH,CADG,CAAJ;AAAA;AAMA;AAAA,AAAA,UAAK,CACH,eADG,CAAL;AAAA;AAEA;AAAA,AAAA,UAAQ,CACN,aADM,EAEN,eAFM,CAAR;AAAA;AAVD,CAAA;AAGK,YAHL,CAGK,oCAHL;"
+	"mappings": "AAAA,AAAA,2CAAe,+BAAf;AAAA,AAKY;AAAA,AAAA,eAFP,QAEF,SAAS;AAAA;AAFP;AAAA,AAAK,qCAAL;AACF,uBAAM,eAAN,CADE;AAAA,UAAK,GAAL;AAAA;AAFJ;AAAA,AAAA,UAAO,gCAAP;AAAA;AACA;AAAA,AAAA,UAAI,CACH,KAAG,QAAH,CADG,CAAJ;AAAA;AAMA;AAAA,AAAA,UAAK,CACH,eADG,CAAL;AAAA;AAEA;AAAA,AAAA,UAAQ,CACN,aADM,EAEN,eAFM,CAAR;AAAA;AAVD,CAAA;AAGK,YAHL,CAGK,oCAHL;"
 }

@@ -4,21 +4,21 @@
 			return null;
 		}
 		drag_start(next){
-			return (this.start(next));
+			return (this?.start(next));
 		}
 		move(next){
 			if(next !== undefined) return next;
 			return null;
 		}
 		drag_move(next){
-			return (this.move(next));
+			return (this?.move(next));
 		}
 		end(next){
 			if(next !== undefined) return next;
 			return null;
 		}
 		drag_end(next){
-			return (this.end(next));
+			return (this?.end(next));
 		}
 		status(next){
 			if(next !== undefined) return next;
@@ -26,13 +26,13 @@
 		}
 		event(){
 			return {
-				"dragstart": (next) => (this.drag_start(next)), 
-				"drag": (next) => (this.drag_move(next)), 
-				"dragend": (next) => (this.drag_end(next))
+				"dragstart": (next) => (this?.drag_start(next)), 
+				"drag": (next) => (this?.drag_move(next)), 
+				"dragend": (next) => (this?.drag_end(next))
 			};
 		}
 		attr(){
-			return {"draggable": true, "mol_drag_status": (this.status())};
+			return {"draggable": true, "mol_drag_status": (this?.status())};
 		}
 		transfer(){
 			return {
@@ -51,7 +51,7 @@
 			return true;
 		}
 		image(){
-			return (this.dom_node());
+			return (this?.dom_node());
 		}
 	};
 	($mol_mem(($.$mol_drag.prototype), "start"));

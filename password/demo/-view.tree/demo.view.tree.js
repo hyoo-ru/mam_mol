@@ -5,7 +5,7 @@
 		}
 		Simple(){
 			const obj = new this.$.$mol_password();
-			(obj.value) = (next) => ((this.pass(next)));
+			(obj.value) = (next) => ((this?.pass(next)));
 			return obj;
 		}
 		pass2(next){
@@ -14,7 +14,7 @@
 		}
 		Hint(){
 			const obj = new this.$.$mol_password();
-			(obj.value) = (next) => ((this.pass2(next)));
+			(obj.value) = (next) => ((this?.pass2(next)));
 			(obj.hint) = () => ("Top secret");
 			return obj;
 		}
@@ -22,7 +22,7 @@
 			return "Password input field based on $mol_string";
 		}
 		sub(){
-			return [(this.Simple()), (this.Hint())];
+			return [(this?.Simple()), (this?.Hint())];
 		}
 		tags(){
 			return ["input"];

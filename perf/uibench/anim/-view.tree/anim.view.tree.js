@@ -12,11 +12,11 @@
 			return {...(super.attr_static()), "class": "Anim"};
 		}
 		sub(){
-			return (this.boxes());
+			return (this?.boxes());
 		}
 		Box(id){
 			const obj = new this.$.$mol_perf_uibench_anim_box();
-			(obj.state) = () => ((this.box_state(id)));
+			(obj.state) = () => ((this?.box_state(id)));
 			return obj;
 		}
 	};
@@ -38,14 +38,14 @@
 			return {
 				...(super.attr()), 
 				"class": "AnimBox", 
-				"data-id": (this.id())
+				"data-id": (this?.id())
 			};
 		}
 		style(){
 			return {
 				...(super.style()), 
-				"borderRadius": (this.style_radius()), 
-				"background": (this.style_color())
+				"borderRadius": (this?.style_radius()), 
+				"background": (this?.style_color())
 			};
 		}
 	};

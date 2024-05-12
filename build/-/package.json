@@ -1,6 +1,6 @@
 {
   "name": "mam",
-  "version": "1.11.204",
+  "version": "1.11.225",
   "exports": {
     "node": {
       "import": "./node.mjs",
@@ -50,9 +50,8 @@
     "$mol_wire_pub_sub",
     "$mol_dev_format",
     "$mol_dev",
-    "$mol_after_frame",
+    "$mol_after_tick",
     "$mol_after",
-    "$mol_after_timeout",
     "$mol_wire_task",
     "$mol_compare_deep",
     "$mol_compare",
@@ -62,6 +61,8 @@
     "$mol_wire_atom",
     "$mol_key",
     "$mol_guid",
+    "$mol_after_frame",
+    "$mol_after_timeout",
     "$mol_wire_method",
     "$mol_type_foot",
     "$mol_type_tail",

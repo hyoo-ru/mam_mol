@@ -11,8 +11,8 @@
 		}
 		Image(){
 			const obj = new this.$.$mol_image();
-			(obj.title) = () => ((this.title()));
-			(obj.uri) = () => ((this.video_preview()));
+			(obj.title) = () => ((this?.title()));
+			(obj.uri) = () => ((this?.video_preview()));
 			return obj;
 		}
 		Hint(){
@@ -24,8 +24,8 @@
 		}
 		Frame(){
 			const obj = new this.$.$mol_frame();
-			(obj.title) = () => ((this.title()));
-			(obj.uri) = () => ((this.video_embed()));
+			(obj.title) = () => ((this?.title()));
+			(obj.uri) = () => ((this?.video_embed()));
 			return obj;
 		}
 		uri(){
@@ -35,13 +35,13 @@
 			return "";
 		}
 		checked(next){
-			return (this.active(next));
+			return (this?.active(next));
 		}
 		sub(){
 			return [
-				(this.Image()), 
-				(this.Hint()), 
-				(this.Frame())
+				(this?.Image()), 
+				(this?.Hint()), 
+				(this?.Frame())
 			];
 		}
 	};

@@ -9,7 +9,7 @@
 			return "middle";
 		}
 		align_hor(){
-			return (this.align());
+			return (this?.align());
 		}
 		align_vert(){
 			return "baseline";
@@ -26,14 +26,14 @@
 		attr(){
 			return {
 				...(super.attr()), 
-				"x": (this.pos_x()), 
-				"y": (this.pos_y()), 
-				"text-anchor": (this.align_hor()), 
-				"alignment-baseline": (this.align_vert())
+				"x": (this?.pos_x()), 
+				"y": (this?.pos_y()), 
+				"text-anchor": (this?.align_hor()), 
+				"alignment-baseline": (this?.align_vert())
 			};
 		}
 		sub(){
-			return [(this.text())];
+			return [(this?.text())];
 		}
 	};
 

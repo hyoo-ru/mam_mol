@@ -10,7 +10,7 @@
 		}
 		Photo(id){
 			const obj = new this.$.$mol_avatar();
-			(obj.id) = () => ((this.id(id)));
+			(obj.id) = () => ((this?.id(id)));
 			return obj;
 		}
 		name(id){
@@ -18,7 +18,7 @@
 		}
 		Name(id){
 			const obj = new this.$.$mol_paragraph();
-			(obj.title) = () => ((this.name(id)));
+			(obj.title) = () => ((this?.name(id)));
 			return obj;
 		}
 		city(id){
@@ -26,29 +26,29 @@
 		}
 		City(id){
 			const obj = new this.$.$mol_paragraph();
-			(obj.title) = () => ((this.city(id)));
+			(obj.title) = () => ((this?.city(id)));
 			return obj;
 		}
 		Info(id){
 			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ([(this.Name(id)), (this.City(id))]);
+			(obj.rows) = () => ([(this?.Name(id)), (this?.City(id))]);
 			return obj;
 		}
 		Item(id){
 			const obj = new this.$.$mol_row();
-			(obj.sub) = () => ([(this.Photo(id)), (this.Info(id))]);
+			(obj.sub) = () => ([(this?.Photo(id)), (this?.Info(id))]);
 			return obj;
 		}
 		List(){
 			const obj = new this.$.$mol_infinite();
-			(obj.before) = (id) => ((this.before(id)));
-			(obj.after) = (id) => ((this.after(id)));
-			(obj.Row) = (id) => ((this.Item(id)));
+			(obj.before) = (id) => ((this?.before(id)));
+			(obj.after) = (id) => ((this?.after(id)));
+			(obj.Row) = (id) => ((this?.Item(id)));
 			return obj;
 		}
 		Scroll(){
 			const obj = new this.$.$mol_scroll();
-			(obj.sub) = () => ([(this.List())]);
+			(obj.sub) = () => ([(this?.List())]);
 			return obj;
 		}
 		title(){
@@ -58,7 +58,7 @@
 			return 20;
 		}
 		sub(){
-			return [(this.Scroll())];
+			return [(this?.Scroll())];
 		}
 		tags(){
 			return [

@@ -6,7 +6,7 @@
 		Major_enabled(){
 			const obj = new this.$.$mol_button_major();
 			(obj.title) = () => ("Enabled Major");
-			(obj.click) = (next) => ((this.fail(next)));
+			(obj.click) = (next) => ((this?.fail(next)));
 			return obj;
 		}
 		Major_disabled(){
@@ -18,7 +18,7 @@
 		Minor_enabled(){
 			const obj = new this.$.$mol_button_minor();
 			(obj.title) = () => ("Enabled Minor");
-			(obj.click) = (next) => ((this.fail(next)));
+			(obj.click) = (next) => ((this?.fail(next)));
 			return obj;
 		}
 		Minor_disabled(){
@@ -33,8 +33,8 @@
 		}
 		Minor_icon_only(){
 			const obj = new this.$.$mol_button_minor();
-			(obj.click) = (next) => ((this.fail(next)));
-			(obj.sub) = () => ([(this.Minor_icon_only_icon())]);
+			(obj.click) = (next) => ((this?.fail(next)));
+			(obj.sub) = () => ([(this?.Minor_icon_only_icon())]);
 			return obj;
 		}
 		Minor_iconed_icon(){
@@ -43,8 +43,8 @@
 		}
 		Minor_iconed(){
 			const obj = new this.$.$mol_button_minor();
-			(obj.click) = (next) => ((this.fail(next)));
-			(obj.sub) = () => ([(this.Minor_iconed_icon()), "Minor with Icon"]);
+			(obj.click) = (next) => ((this?.fail(next)));
+			(obj.sub) = () => ([(this?.Minor_iconed_icon()), "Minor with Icon"]);
 			return obj;
 		}
 		title(){
@@ -52,12 +52,12 @@
 		}
 		sub(){
 			return [
-				(this.Major_enabled()), 
-				(this.Major_disabled()), 
-				(this.Minor_enabled()), 
-				(this.Minor_disabled()), 
-				(this.Minor_icon_only()), 
-				(this.Minor_iconed())
+				(this?.Major_enabled()), 
+				(this?.Major_disabled()), 
+				(this?.Minor_enabled()), 
+				(this?.Minor_disabled()), 
+				(this?.Minor_icon_only()), 
+				(this?.Minor_iconed())
 			];
 		}
 		aspects(){

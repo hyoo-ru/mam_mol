@@ -8,7 +8,7 @@
 			return "View raw HTML";
 		}
 		sub(){
-			return [(this.Html())];
+			return [(this?.Html())];
 		}
 		tags(){
 			return ["html", "render"];

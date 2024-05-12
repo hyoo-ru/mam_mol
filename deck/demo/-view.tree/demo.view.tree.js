@@ -30,17 +30,17 @@
 		Spam(){
 			const obj = new this.$.$mol_card();
 			(obj.title) = () => ("Spam");
-			(obj.Content) = () => ((this.Spam_content()));
+			(obj.Content) = () => ((this?.Spam_content()));
 			return obj;
 		}
 		Deck(){
 			const obj = new this.$.$mol_deck();
 			(obj.items) = () => ([
-				(this.Greeting()), 
-				(this.Question()), 
-				(this.Answer()), 
-				(this.Command()), 
-				(this.Spam())
+				(this?.Greeting()), 
+				(this?.Question()), 
+				(this?.Answer()), 
+				(this?.Command()), 
+				(this?.Spam())
 			]);
 			return obj;
 		}
@@ -48,7 +48,7 @@
 			return "Simple deck with tabbar";
 		}
 		sub(){
-			return [(this.Deck())];
+			return [(this?.Deck())];
 		}
 		tags(){
 			return ["tabs", "container"];

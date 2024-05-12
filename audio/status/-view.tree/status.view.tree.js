@@ -23,7 +23,7 @@
 			return false;
 		}
 		status_name(){
-			return (this.status());
+			return (this?.status());
 		}
 		Icon(){
 			const obj = new this.$.$mol_icon_play();
@@ -31,18 +31,18 @@
 		}
 		Wakeup(){
 			const obj = new this.$.$mol_button_minor();
-			(obj.click) = (next) => ((this.wakeup(next)));
-			(obj.enabled) = () => ((this.wakeup_enabled()));
-			(obj.hint) = () => ((this.status_name()));
-			(obj.sub) = () => ([(this.Icon())]);
+			(obj.click) = (next) => ((this?.wakeup(next)));
+			(obj.enabled) = () => ((this?.wakeup_enabled()));
+			(obj.hint) = () => ((this?.status_name()));
+			(obj.sub) = () => ([(this?.Icon())]);
 			return obj;
 		}
 		icons(){
 			return {
-				"closed": (this.Closed()), 
-				"suspended": (this.Suspended()), 
-				"playing": (this.Playing()), 
-				"running": (this.Running())
+				"closed": (this?.Closed()), 
+				"suspended": (this?.Suspended()), 
+				"playing": (this?.Playing()), 
+				"running": (this?.Running())
 			};
 		}
 		status(next){
@@ -53,7 +53,7 @@
 			return "Audio status: {status}";
 		}
 		sub(){
-			return [(this.Wakeup())];
+			return [(this?.Wakeup())];
 		}
 	};
 	($mol_mem(($.$mol_audio_status.prototype), "Closed"));

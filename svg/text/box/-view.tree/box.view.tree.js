@@ -6,16 +6,16 @@
 			return "1rem";
 		}
 		box_pos_x(){
-			return (this.pos_x());
+			return (this?.pos_x());
 		}
 		box_pos_y(){
 			return "0";
 		}
 		Back(){
 			const obj = new this.$.$mol_svg_rect();
-			(obj.width) = () => ((this.box_width()));
-			(obj.height) = () => ((this.box_height()));
-			(obj.pos) = () => ([(this.box_pos_x()), (this.box_pos_y())]);
+			(obj.width) = () => ((this?.box_width()));
+			(obj.height) = () => ((this?.box_height()));
+			(obj.pos) = () => ([(this?.box_pos_x()), (this?.box_pos_y())]);
 			return obj;
 		}
 		pos_x(){
@@ -32,9 +32,9 @@
 		}
 		Text(){
 			const obj = new this.$.$mol_svg_text();
-			(obj.pos) = () => ([(this.pos_x()), (this.pos_y())]);
-			(obj.align) = () => ((this.align()));
-			(obj.sub) = () => ([(this.text())]);
+			(obj.pos) = () => ([(this?.pos_x()), (this?.pos_y())]);
+			(obj.align) = () => ((this?.align()));
+			(obj.sub) = () => ([(this?.text())]);
 			return obj;
 		}
 		font_size(){
@@ -44,7 +44,7 @@
 			return 0;
 		}
 		sub(){
-			return [(this.Back()), (this.Text())];
+			return [(this?.Back()), (this?.Text())];
 		}
 	};
 	($mol_mem(($.$mol_svg_text_box.prototype), "Back"));

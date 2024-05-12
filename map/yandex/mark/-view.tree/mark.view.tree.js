@@ -15,14 +15,14 @@
 			return obj;
 		}
 		box(){
-			const obj = new this.$.$mol_vector_2d((this.box_lat()), (this.box_lon()));
+			const obj = new this.$.$mol_vector_2d((this?.box_lat()), (this?.box_lon()));
 			return obj;
 		}
 		hint(){
 			return "";
 		}
 		title(){
-			return (this.address());
+			return (this?.address());
 		}
 		content(){
 			return "";

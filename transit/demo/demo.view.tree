@@ -1,0 +1,22 @@
+$mol_transit_demo $mol_example_large
+	title \Layout transition
+	style *
+		justify-content <= justify
+		align-items <= align
+	sub /
+		<= Transit $mol_transit
+			Sub <= Float $mol_list rows /
+				<= Align $mol_switch
+					value? <=> align? \center
+					options *
+						flex-start \left
+						center \center
+						flex-end \right
+				<= Justify $mol_switch
+					value? <=> justify? \center
+					options *
+						flex-start \top
+						center \center
+						flex-end \bottom
+	aspects /
+		\Widget/Layout

@@ -8,5 +8,5 @@
 		"$mol_link_source $mol_link\n\thint @ \\Source code\n\tsub /\n\t\t<= Icon $mol_icon_script_text\n",
 		"\n\t\t()\n\t\t\tthis\n\t\t\t[] \\$\n\t\t\t[] \\$mol_locale\n\t\t\t[] \\text\n\t\t\t(,) #key\n\t"
 	],
-	"mappings": "AAAA,AAAA,+CAAiB,sBAAjB;AAAA,AAGK;AAAA,AAAK,iDAAL;AAAA,UAAK,GAAL;AAAA;AAFJ;AAAA,AAAA,UCAC,CACC,IACA,EACA,YACA,KACA,CDLG,uBCKH,CALD,CDAD;AAAA;AACA;AAAA,AAAA,UAAI,CACH,KAAG,OAAH,CADG,CAAJ;AAAA;AAFD,CAAA;AAGK,YAHL,CAGK,sCAHL;"
+	"mappings": "AAAA,AAAA,+CAAiB,sBAAjB;AAAA,AAGK;AAAA,AAAK,iDAAL;AAAA,UAAK,GAAL;AAAA;AAFJ;AAAA,AAAA,UCAC,CACC,IACA,EACA,YACA,KACA,CDLG,uBCKH,CALD,CDAD;AAAA;AACA;AAAA,AAAA,UAAI,CACH,KAAG,QAAH,CADG,CAAJ;AAAA;AAFD,CAAA;AAGK,YAHL,CAGK,sCAHL;"
 }

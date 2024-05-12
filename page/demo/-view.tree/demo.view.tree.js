@@ -15,16 +15,16 @@
 		}
 		Page(){
 			const obj = new this.$.$mol_page();
-			(obj.tools) = () => ([(this.Button_tools())]);
-			(obj.body) = () => ([(this.Text())]);
-			(obj.foot) = () => ([(this.Button_foot())]);
+			(obj.tools) = () => ([(this?.Button_tools())]);
+			(obj.body) = () => ([(this?.Text())]);
+			(obj.foot) = () => ([(this?.Button_foot())]);
 			return obj;
 		}
 		title(){
 			return "Page with header, body and footer";
 		}
 		sub(){
-			return [(this.Page())];
+			return [(this?.Page())];
 		}
 		tags(){
 			return [

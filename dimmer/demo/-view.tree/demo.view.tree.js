@@ -38,12 +38,12 @@
 		Cases(){
 			const obj = new this.$.$mol_list();
 			(obj.rows) = () => ([
-				(this.One()), 
-				(this.Two()), 
-				(this.Three()), 
-				(this.Four()), 
-				(this.Five()), 
-				(this.Six())
+				(this?.One()), 
+				(this?.Two()), 
+				(this?.Three()), 
+				(this?.Four()), 
+				(this?.Five()), 
+				(this?.Six())
 			]);
 			return obj;
 		}
@@ -51,7 +51,7 @@
 			return "Text with highlighted found substring";
 		}
 		sub(){
-			return [(this.Cases())];
+			return [(this?.Cases())];
 		}
 		tags(){
 			return ["search", "highlight"];

@@ -8,7 +8,7 @@
 			return "Prints large bulk of text";
 		}
 		sub(){
-			return [(this.Filler())];
+			return [(this?.Filler())];
 		}
 		tags(){
 			return [

@@ -21,7 +21,7 @@ $mol_app_questions $mol_book2
 					<= Details_permalink_icon* $mol_icon_external
 			<= Details_close* $mol_link
 				sub /
-					<= Details_close_icon* $mol_icon_cross
+					<= Details_close_icon* $mol_icon_close
 				arg *
 					question null
 		body /

@@ -24,20 +24,20 @@
 		}
 		enter(){
 			const obj = new this.$.$mol_app_supplies_enter();
-			(obj.entered) = (next) => ((this.entered(next)));
+			(obj.entered) = (next) => ((this?.entered(next)));
 			return obj;
 		}
 		List(){
 			const obj = new this.$.$mol_app_supplies_list();
-			(obj.supplies) = () => ((this.supplies()));
-			(obj.tools) = () => ((this.tools_root()));
-			(obj.title) = () => ((this.list_title()));
-			(obj.search_query) = (next) => ((this.supply_id(next)));
+			(obj.supplies) = () => ((this?.supplies()));
+			(obj.tools) = () => ((this?.tools_root()));
+			(obj.title) = () => ((this?.list_title()));
+			(obj.search_query) = (next) => ((this?.supply_id(next)));
 			return obj;
 		}
 		Detail(id){
 			const obj = new this.$.$mol_app_supplies_detail();
-			(obj.supply) = () => ((this.supply()));
+			(obj.supply) = () => ((this?.supply()));
 			return obj;
 		}
 	};

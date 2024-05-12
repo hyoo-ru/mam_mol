@@ -1,6 +1,6 @@
 	($.$mol_app_supplies_detail) = class $mol_app_supplies_detail extends ($.$mol_page) {
 		Close_icon(){
-			const obj = new this.$.$mol_icon_cross();
+			const obj = new this.$.$mol_icon_close();
 			return obj;
 		}
 		close_arg(){
@@ -8,8 +8,8 @@
 		}
 		Close(){
 			const obj = new this.$.$mol_link();
-			(obj.sub) = () => ([(this.Close_icon())]);
-			(obj.arg) = () => ((this.close_arg()));
+			(obj.sub) = () => ([(this?.Close_icon())]);
+			(obj.arg) = () => ((this?.close_arg()));
 			return obj;
 		}
 		org_title(){
@@ -23,8 +23,8 @@
 		}
 		Provider(){
 			const obj = new this.$.$mol_labeler();
-			(obj.title) = () => ((this.provider_title()));
-			(obj.content) = () => ([(this.provider_name())]);
+			(obj.title) = () => ((this?.provider_title()));
+			(obj.content) = () => ([(this?.provider_name())]);
 			return obj;
 		}
 		customer_label(){
@@ -35,8 +35,8 @@
 		}
 		Consumer(){
 			const obj = new this.$.$mol_labeler();
-			(obj.title) = () => ((this.customer_label()));
-			(obj.content) = () => ([(this.consumer_name())]);
+			(obj.title) = () => ((this?.customer_label()));
+			(obj.content) = () => ([(this?.consumer_name())]);
 			return obj;
 		}
 		supply_group_title(){
@@ -47,8 +47,8 @@
 		}
 		Supply_group(){
 			const obj = new this.$.$mol_labeler();
-			(obj.title) = () => ((this.supply_group_title()));
-			(obj.content) = () => ([(this.supply_group_name())]);
+			(obj.title) = () => ((this?.supply_group_title()));
+			(obj.content) = () => ([(this?.supply_group_name())]);
 			return obj;
 		}
 		ballance_unit_title(){
@@ -59,22 +59,22 @@
 		}
 		Ballance_unit_item(){
 			const obj = new this.$.$mol_labeler();
-			(obj.title) = () => ((this.ballance_unit_title()));
-			(obj.content) = () => ([(this.ballance_unit_name())]);
+			(obj.title) = () => ((this?.ballance_unit_title()));
+			(obj.content) = () => ([(this?.ballance_unit_name())]);
 			return obj;
 		}
 		org_items(){
 			return [
-				(this.Provider()), 
-				(this.Consumer()), 
-				(this.Supply_group()), 
-				(this.Ballance_unit_item())
+				(this?.Provider()), 
+				(this?.Consumer()), 
+				(this?.Supply_group()), 
+				(this?.Ballance_unit_item())
 			];
 		}
 		Org(){
 			const obj = new this.$.$mol_row();
-			(obj.title) = () => ((this.org_title()));
-			(obj.sub) = () => ((this.org_items()));
+			(obj.title) = () => ((this?.org_title()));
+			(obj.sub) = () => ((this?.org_items()));
 			return obj;
 		}
 		cons_title(){
@@ -88,8 +88,8 @@
 		}
 		Contract(){
 			const obj = new this.$.$mol_labeler();
-			(obj.title) = () => ((this.contract_title()));
-			(obj.content) = () => ([(this.contract_id())]);
+			(obj.title) = () => ((this?.contract_title()));
+			(obj.content) = () => ([(this?.contract_id())]);
 			return obj;
 		}
 		pay_method_title(){
@@ -100,8 +100,8 @@
 		}
 		Pay_method(){
 			const obj = new this.$.$mol_labeler();
-			(obj.title) = () => ((this.pay_method_title()));
-			(obj.content) = () => ([(this.pay_method_name())]);
+			(obj.title) = () => ((this?.pay_method_title()));
+			(obj.content) = () => ([(this?.pay_method_name())]);
 			return obj;
 		}
 		manager_title(){
@@ -112,8 +112,8 @@
 		}
 		Manager(){
 			const obj = new this.$.$mol_labeler();
-			(obj.title) = () => ((this.manager_title()));
-			(obj.content) = () => ([(this.manager_name())]);
+			(obj.title) = () => ((this?.manager_title()));
+			(obj.content) = () => ([(this?.manager_name())]);
 			return obj;
 		}
 		debitod_title(){
@@ -124,32 +124,32 @@
 		}
 		Debitor(){
 			const obj = new this.$.$mol_labeler();
-			(obj.title) = () => ((this.debitod_title()));
-			(obj.content) = () => ([(this.debitor_name())]);
+			(obj.title) = () => ((this?.debitod_title()));
+			(obj.content) = () => ([(this?.debitor_name())]);
 			return obj;
 		}
 		cons_items(){
 			return [
-				(this.Contract()), 
-				(this.Pay_method()), 
-				(this.Manager()), 
-				(this.Debitor())
+				(this?.Contract()), 
+				(this?.Pay_method()), 
+				(this?.Manager()), 
+				(this?.Debitor())
 			];
 		}
 		Cons(){
 			const obj = new this.$.$mol_row();
-			(obj.title) = () => ((this.cons_title()));
-			(obj.sub) = () => ((this.cons_items()));
+			(obj.title) = () => ((this?.cons_title()));
+			(obj.sub) = () => ((this?.cons_items()));
 			return obj;
 		}
 		Descr_deck(){
 			const obj = new this.$.$mol_deck();
-			(obj.items) = () => ([(this.Org()), (this.Cons())]);
+			(obj.items) = () => ([(this?.Org()), (this?.Cons())]);
 			return obj;
 		}
 		Descr_card(){
 			const obj = new this.$.$mol_card();
-			(obj.Content) = () => ((this.Descr_deck()));
+			(obj.Content) = () => ((this?.Descr_deck()));
 			return obj;
 		}
 		attach_title(){
@@ -164,14 +164,14 @@
 		}
 		Attach(){
 			const obj = new this.$.$mol_attach();
-			(obj.items) = () => ((this.attachments()));
-			(obj.attach_new) = (next) => ((this.attach_new(next)));
+			(obj.items) = () => ((this?.attachments()));
+			(obj.attach_new) = (next) => ((this?.attach_new(next)));
 			return obj;
 		}
 		Attach_section(){
 			const obj = new this.$.$mol_section();
-			(obj.head) = () => ([(this.attach_title())]);
-			(obj.content) = () => ([(this.Attach())]);
+			(obj.head) = () => ([(this?.attach_title())]);
+			(obj.content) = () => ([(this?.Attach())]);
 			return obj;
 		}
 		positions_title(){
@@ -184,32 +184,32 @@
 		}
 		Cost_value(){
 			const obj = new this.$.$mol_cost();
-			(obj.value) = () => ((this.cost()));
+			(obj.value) = () => ((this?.cost()));
 			return obj;
 		}
 		positions_head(){
-			return [(this.positions_title()), (this.Cost_value())];
+			return [(this?.positions_title()), (this?.Cost_value())];
 		}
 		positions(){
 			return [];
 		}
 		Positions(){
 			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ((this.positions()));
+			(obj.rows) = () => ((this?.positions()));
 			return obj;
 		}
 		Positions_section(){
 			const obj = new this.$.$mol_section();
-			(obj.head) = () => ((this.positions_head()));
-			(obj.Content) = () => ((this.Positions()));
+			(obj.head) = () => ((this?.positions_head()));
+			(obj.Content) = () => ((this?.Positions()));
 			return obj;
 		}
 		Content(){
 			const obj = new this.$.$mol_list();
 			(obj.rows) = () => ([
-				(this.Descr_card()), 
-				(this.Attach_section()), 
-				(this.Positions_section())
+				(this?.Descr_card()), 
+				(this?.Attach_section()), 
+				(this?.Positions_section())
 			]);
 			return obj;
 		}
@@ -222,12 +222,12 @@
 		}
 		Approve(){
 			const obj = new this.$.$mol_check_box();
-			(obj.checked) = (next) => ((this.approved(next)));
-			(obj.title) = () => ((this.approved_title()));
+			(obj.checked) = (next) => ((this?.approved(next)));
+			(obj.title) = () => ((this?.approved_title()));
 			return obj;
 		}
 		actions(){
-			return [(this.Approve())];
+			return [(this?.Approve())];
 		}
 		position(id){
 			return null;
@@ -239,17 +239,17 @@
 			return "Supply";
 		}
 		tools(){
-			return [(this.Close())];
+			return [(this?.Close())];
 		}
 		body(){
-			return [(this.Content())];
+			return [(this?.Content())];
 		}
 		foot(){
-			return (this.actions());
+			return (this?.actions());
 		}
 		Position(id){
 			const obj = new this.$.$mol_app_supplies_position();
-			(obj.position) = () => ((this.position(id)));
+			(obj.position) = () => ((this?.position(id)));
 			return obj;
 		}
 	};

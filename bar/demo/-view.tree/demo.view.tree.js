@@ -8,8 +8,8 @@
 		}
 		Two_mail(){
 			const obj = new this.$.$mol_string();
-			(obj.hint) = () => ((this.mail_hint()));
-			(obj.value) = (next) => ((this.mail(next)));
+			(obj.hint) = () => ((this?.mail_hint()));
+			(obj.value) = (next) => ((this?.mail(next)));
 			return obj;
 		}
 		submit_title(){
@@ -17,18 +17,18 @@
 		}
 		Two_submit(){
 			const obj = new this.$.$mol_button_minor();
-			(obj.title) = () => ((this.submit_title()));
+			(obj.title) = () => ((this?.submit_title()));
 			return obj;
 		}
 		Two(){
 			const obj = new this.$.$mol_bar();
-			(obj.sub) = () => ([(this.Two_mail()), (this.Two_submit())]);
+			(obj.sub) = () => ([(this?.Two_mail()), (this?.Two_submit())]);
 			return obj;
 		}
 		Three_mail(){
 			const obj = new this.$.$mol_string();
-			(obj.hint) = () => ((this.mail_hint()));
-			(obj.value) = (next) => ((this.mail(next)));
+			(obj.hint) = () => ((this?.mail_hint()));
+			(obj.value) = (next) => ((this?.mail(next)));
 			return obj;
 		}
 		confirm_title(){
@@ -40,20 +40,20 @@
 		}
 		Three_confirm(){
 			const obj = new this.$.$mol_check_box();
-			(obj.title) = () => ((this.confirm_title()));
-			(obj.checked) = (next) => ((this.confirmed(next)));
+			(obj.title) = () => ((this?.confirm_title()));
+			(obj.checked) = (next) => ((this?.confirmed(next)));
 			return obj;
 		}
 		Three(){
 			const obj = new this.$.$mol_bar();
-			(obj.sub) = () => ([(this.Three_mail()), (this.Three_confirm())]);
+			(obj.sub) = () => ([(this?.Three_mail()), (this?.Three_confirm())]);
 			return obj;
 		}
 		title(){
 			return "Group of controls as one control";
 		}
 		sub(){
-			return [(this.Two()), (this.Three())];
+			return [(this?.Two()), (this?.Three())];
 		}
 		tags(){
 			return ["group", "container"];

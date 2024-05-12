@@ -12,10 +12,10 @@
 			return 720;
 		}
 		width(){
-			return (this.size());
+			return (this?.size());
 		}
 		height(){
-			return (this.size());
+			return (this?.size());
 		}
 		brightness(){
 			return 128;
@@ -39,23 +39,23 @@
 			return false;
 		}
 		style(){
-			return {"transform": (this.transform())};
+			return {"transform": (this?.transform())};
 		}
 		video_constraints(){
 			return {
-				"facingMode": (this.facing()), 
-				"aspectRatio": (this.aspect()), 
-				"width": {"ideal": (this.width())}, 
-				"height": {"ideal": (this.height())}
+				"facingMode": (this?.facing()), 
+				"aspectRatio": (this?.aspect()), 
+				"width": {"ideal": (this?.width())}, 
+				"height": {"ideal": (this?.height())}
 			};
 		}
 		video_settings(){
 			return {
-				"brightness": (this.brightness()), 
-				"sharpness": (this.sharpness()), 
-				"contrast": (this.contrast()), 
-				"saturation": (this.saturation()), 
-				"advanced": [{"colorTemperature": (this.temperature())}, {"torch": (this.torch())}]
+				"brightness": (this?.brightness()), 
+				"sharpness": (this?.sharpness()), 
+				"contrast": (this?.contrast()), 
+				"saturation": (this?.saturation()), 
+				"advanced": [{"colorTemperature": (this?.temperature())}, {"torch": (this?.torch())}]
 			};
 		}
 	};

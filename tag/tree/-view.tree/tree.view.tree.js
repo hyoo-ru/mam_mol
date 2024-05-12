@@ -20,12 +20,12 @@
 		}
 		Tag_tree(id){
 			const obj = new this.$.$mol_tag_tree();
-			(obj.ids_tags) = () => ((this.ids_tags()));
-			(obj.path) = () => ((this.tag_path(id)));
-			(obj.Item) = (id) => ((this.Item(id)));
-			(obj.item_title) = (id) => ((this.item_title(id)));
-			(obj.tag_expanded) = (id, next) => ((this.tag_expanded(id, next)));
-			(obj.tag_name) = (id) => ((this.tag_name(id)));
+			(obj.ids_tags) = () => ((this?.ids_tags()));
+			(obj.path) = () => ((this?.tag_path(id)));
+			(obj.Item) = (id) => ((this?.Item(id)));
+			(obj.item_title) = (id) => ((this?.item_title(id)));
+			(obj.tag_expanded) = (id, next) => ((this?.tag_expanded(id, next)));
+			(obj.tag_name) = (id) => ((this?.tag_name(id)));
 			return obj;
 		}
 		path(){
@@ -48,15 +48,15 @@
 		}
 		Item(id){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.item_title(id))]);
+			(obj.sub) = () => ([(this?.item_title(id))]);
 			return obj;
 		}
 		Tag(id){
 			const obj = new this.$.$mol_expander();
 			(obj.expandable) = () => (true);
-			(obj.expanded) = (next) => ((this.tag_expanded(id, next)));
-			(obj.title) = () => ((this.tag_name(id)));
-			(obj.content) = () => ([(this.Tag_tree(id))]);
+			(obj.expanded) = (next) => ((this?.tag_expanded(id, next)));
+			(obj.title) = () => ((this?.tag_name(id)));
+			(obj.content) = () => ([(this?.Tag_tree(id))]);
 			return obj;
 		}
 	};

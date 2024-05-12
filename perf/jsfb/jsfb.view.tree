@@ -47,5 +47,5 @@ $mol_perf_jsfb_row $mol_view
 			checked? <=> selected? false
 			sub / <= title? \
 		<= Drop $mol_button_minor
-			sub / <= Drop_icon $mol_icon_cross
+			sub / <= Drop_icon $mol_icon_close
 			click? <=> drop? null

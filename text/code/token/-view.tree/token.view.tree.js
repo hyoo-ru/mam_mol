@@ -3,7 +3,7 @@
 			return "";
 		}
 		attr(){
-			return {...(super.attr()), "mol_text_code_token_type": (this.type())};
+			return {...(super.attr()), "mol_text_code_token_type": (this?.type())};
 		}
 	};
 	($.$mol_text_code_token_link) = class $mol_text_code_token_link extends ($.$mol_text_code_token) {
@@ -19,7 +19,7 @@
 		attr(){
 			return {
 				...(super.attr()), 
-				"href": (this.uri()), 
+				"href": (this?.uri()), 
 				"target": "_blank"
 			};
 		}

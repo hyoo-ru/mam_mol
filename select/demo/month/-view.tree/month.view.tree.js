@@ -22,15 +22,15 @@
 		Month(){
 			const obj = new this.$.$mol_select();
 			(obj.no_options_message) = () => ("Not found");
-			(obj.value) = (next) => ((this.month(next)));
-			(obj.dictionary) = () => ((this.months()));
+			(obj.value) = (next) => ((this?.month(next)));
+			(obj.dictionary) = () => ((this?.months()));
 			return obj;
 		}
 		title(){
 			return "Month picker with filter";
 		}
 		sub(){
-			return [(this.Month())];
+			return [(this?.Month())];
 		}
 		tags(){
 			return ["select", "month"];

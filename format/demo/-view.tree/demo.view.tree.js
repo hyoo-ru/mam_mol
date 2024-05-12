@@ -6,13 +6,13 @@
 		Ip(){
 			const obj = new this.$.$mol_format();
 			(obj.mask) = () => ("___.___.___.___");
-			(obj.value) = (next) => ((this.ip(next)));
+			(obj.value) = (next) => ((this?.ip(next)));
 			return obj;
 		}
 		Ip_card(){
 			const obj = new this.$.$mol_card();
-			(obj.status) = () => ((this.ip()));
-			(obj.Content) = () => ((this.Ip()));
+			(obj.status) = () => ((this?.ip()));
+			(obj.Content) = () => ((this?.Ip()));
 			return obj;
 		}
 		phone(next){
@@ -21,13 +21,13 @@
 		}
 		Phone(){
 			const obj = new this.$.$mol_phone();
-			(obj.value) = (next) => ((this.phone(next)));
+			(obj.value) = (next) => ((this?.phone(next)));
 			return obj;
 		}
 		Phone_card(){
 			const obj = new this.$.$mol_card();
-			(obj.status) = () => ((this.phone()));
-			(obj.Content) = () => ((this.Phone()));
+			(obj.status) = () => ((this?.phone()));
+			(obj.Content) = () => ((this?.Phone()));
 			return obj;
 		}
 		card(next){
@@ -37,13 +37,13 @@
 		Card(){
 			const obj = new this.$.$mol_format();
 			(obj.mask) = () => ("____ ____ ____ ____");
-			(obj.value) = (next) => ((this.card(next)));
+			(obj.value) = (next) => ((this?.card(next)));
 			return obj;
 		}
 		Card_card(){
 			const obj = new this.$.$mol_card();
-			(obj.status) = () => ((this.card()));
-			(obj.Content) = () => ((this.Card()));
+			(obj.status) = () => ((this?.card()));
+			(obj.Content) = () => ((this?.Card()));
 			return obj;
 		}
 		moment(next){
@@ -53,13 +53,13 @@
 		Moment(){
 			const obj = new this.$.$mol_format();
 			(obj.mask) = () => ("__.__.____ __:__");
-			(obj.value) = (next) => ((this.moment(next)));
+			(obj.value) = (next) => ((this?.moment(next)));
 			return obj;
 		}
 		Moment_card(){
 			const obj = new this.$.$mol_card();
-			(obj.status) = () => ((this.moment()));
-			(obj.Content) = () => ((this.Moment()));
+			(obj.status) = () => ((this?.moment()));
+			(obj.Content) = () => ((this?.Moment()));
 			return obj;
 		}
 		title(){
@@ -67,10 +67,10 @@
 		}
 		sub(){
 			return [
-				(this.Ip_card()), 
-				(this.Phone_card()), 
-				(this.Card_card()), 
-				(this.Moment_card())
+				(this?.Ip_card()), 
+				(this?.Phone_card()), 
+				(this?.Card_card()), 
+				(this?.Moment_card())
 			];
 		}
 		tags(){

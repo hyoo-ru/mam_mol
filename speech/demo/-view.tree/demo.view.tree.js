@@ -9,8 +9,8 @@
 		}
 		Toggle(){
 			const obj = new this.$.$mol_check_icon();
-			(obj.Icon) = () => ((this.Toggle_icon()));
-			(obj.checked) = (next) => ((this.hearing(next)));
+			(obj.Icon) = () => ((this?.Toggle_icon()));
+			(obj.checked) = (next) => ((this?.hearing(next)));
 			return obj;
 		}
 		message(){
@@ -18,7 +18,7 @@
 		}
 		Message(){
 			const obj = new this.$.$mol_row();
-			(obj.sub) = () => ([(this.message())]);
+			(obj.sub) = () => ([(this?.message())]);
 			return obj;
 		}
 		speak(next){
@@ -27,15 +27,15 @@
 		}
 		Speak(){
 			const obj = new this.$.$mol_button_major();
-			(obj.click) = (next) => ((this.speak(next)));
+			(obj.click) = (next) => ((this?.speak(next)));
 			(obj.sub) = () => (["Speak"]);
 			return obj;
 		}
 		sub(){
 			return [
-				(this.Toggle()), 
-				(this.Message()), 
-				(this.Speak())
+				(this?.Toggle()), 
+				(this?.Message()), 
+				(this?.Speak())
 			];
 		}
 		tags(){

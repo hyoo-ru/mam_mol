@@ -8,15 +8,15 @@
 		}
 		View(){
 			const obj = new this.$.$mol_bench();
-			(obj.col_sort) = (next) => ((this.col_sort(next)));
-			(obj.result) = () => ((this.result()));
+			(obj.col_sort) = (next) => ((this?.col_sort(next)));
+			(obj.result) = () => ((this?.result()));
 			return obj;
 		}
 		title(){
 			return "Benchmarking results visualization";
 		}
 		sub(){
-			return [(this.View())];
+			return [(this?.View())];
 		}
 		tags(){
 			return ["perfomance", "comparison"];

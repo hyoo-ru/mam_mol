@@ -4,7 +4,7 @@
 		}
 		Root(){
 			const obj = new this.$.$mol_perf_uibench_tree_branch();
-			(obj.state) = () => ((this.root_state()));
+			(obj.state) = () => ((this?.root_state()));
 			return obj;
 		}
 		state(){
@@ -14,7 +14,7 @@
 			return {...(super.attr_static()), "class": "Tree"};
 		}
 		sub(){
-			return [(this.Root())];
+			return [(this?.Root())];
 		}
 	};
 	($mol_mem(($.$mol_perf_uibench_tree.prototype), "Root"));
@@ -36,12 +36,12 @@
 		}
 		Branch(id){
 			const obj = new this.$.$mol_perf_uibench_tree_branch();
-			(obj.state) = () => ((this.branch_state(id)));
+			(obj.state) = () => ((this?.branch_state(id)));
 			return obj;
 		}
 		Leaf(id){
 			const obj = new this.$.$mol_perf_uibench_tree_leaf();
-			(obj.text) = () => ((this.leaf_state(id)));
+			(obj.text) = () => ((this?.leaf_state(id)));
 			return obj;
 		}
 	};
@@ -61,7 +61,7 @@
 			return {...(super.attr_static()), "class": "TreeLeaf"};
 		}
 		sub(){
-			return [(this.text())];
+			return [(this?.text())];
 		}
 	};
 

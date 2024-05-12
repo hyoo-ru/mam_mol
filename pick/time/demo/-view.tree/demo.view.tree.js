@@ -6,11 +6,11 @@
 		}
 		Picker(){
 			const obj = new this.$.$mol_pick_time();
-			(obj.value_moment) = (next) => ((this.moment(next)));
+			(obj.value_moment) = (next) => ((this?.moment(next)));
 			return obj;
 		}
 		sub(){
-			return [(this.Picker())];
+			return [(this?.Picker())];
 		}
 		tags(){
 			return [

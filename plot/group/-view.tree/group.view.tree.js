@@ -3,17 +3,17 @@
 			return [];
 		}
 		graphs_enriched(){
-			return (this.graphs());
+			return (this?.graphs());
 		}
 		graph_samples(){
 			return [];
 		}
 		sub(){
-			return (this.graphs_enriched());
+			return (this?.graphs_enriched());
 		}
 		Sample(){
 			const obj = new this.$.$mol_plot_graph_sample();
-			(obj.sub) = () => ((this.graph_samples()));
+			(obj.sub) = () => ((this?.graph_samples()));
 			return obj;
 		}
 	};

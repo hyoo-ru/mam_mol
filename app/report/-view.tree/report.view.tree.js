@@ -4,7 +4,7 @@
 		}
 		descriptor(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.description())]);
+			(obj.sub) = () => ([(this?.description())]);
 			return obj;
 		}
 		headCells(){
@@ -12,15 +12,15 @@
 		}
 		headRower(){
 			const obj = new this.$.$mol_app_report_rower();
-			(obj.cells) = () => ((this.headCells()));
+			(obj.cells) = () => ((this?.headCells()));
 			return obj;
 		}
 		rows(){
-			return [(this.headRower())];
+			return [(this?.headRower())];
 		}
 		tabler(){
 			const obj = new this.$.$mol_app_report_tabler();
-			(obj.rows) = () => ((this.rows()));
+			(obj.rows) = () => ((this?.rows()));
 			return obj;
 		}
 		rowerCells(id){
@@ -46,34 +46,34 @@
 			return (this.$.$mol_locale.text("$mol_app_report_title"));
 		}
 		body(){
-			return [(this.descriptor()), (this.tabler())];
+			return [(this?.descriptor()), (this?.tabler())];
 		}
 		rower(id){
 			const obj = new this.$.$mol_app_report_rower();
-			(obj.cells) = () => ((this.rowerCells(id)));
+			(obj.cells) = () => ((this?.rowerCells(id)));
 			return obj;
 		}
 		cell(id){
 			const obj = new this.$.$mol_app_report_cell();
-			(obj.content) = () => ((this.cell_content(id)));
-			(obj.rows) = () => ((this.cellrows(id)));
-			(obj.cols) = () => ((this.cellCols(id)));
+			(obj.content) = () => ((this?.cell_content(id)));
+			(obj.rows) = () => ((this?.cellrows(id)));
+			(obj.cols) = () => ((this?.cellCols(id)));
 			return obj;
 		}
 		texter(id){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.cell_value(id))]);
+			(obj.sub) = () => ([(this?.cell_value(id))]);
 			return obj;
 		}
 		select(id){
 			const obj = new this.$.$mol_select();
-			(obj.value) = (next) => ((this.cell_value(id, next)));
-			(obj.dictionary) = () => ((this.cell_options(id)));
+			(obj.value) = (next) => ((this?.cell_value(id, next)));
+			(obj.dictionary) = () => ((this?.cell_options(id)));
 			return obj;
 		}
 		number(id){
 			const obj = new this.$.$mol_number();
-			(obj.value) = (next) => ((this.cell_value(id, next)));
+			(obj.value) = (next) => ((this?.cell_value(id, next)));
 			return obj;
 		}
 	};
@@ -94,7 +94,7 @@
 			return "table";
 		}
 		sub(){
-			return (this.rows());
+			return (this?.rows());
 		}
 	};
 	($.$mol_app_report_rower) = class $mol_app_report_rower extends ($.$mol_view) {
@@ -105,7 +105,7 @@
 			return "tr";
 		}
 		sub(){
-			return (this.cells());
+			return (this?.cells());
 		}
 	};
 	($.$mol_app_report_cell) = class $mol_app_report_cell extends ($.$mol_view) {
@@ -124,12 +124,12 @@
 		attr(){
 			return {
 				...(super.attr()), 
-				"colspan": (this.cols()), 
-				"rowspan": (this.rows())
+				"colspan": (this?.cols()), 
+				"rowspan": (this?.rows())
 			};
 		}
 		sub(){
-			return [(this.content())];
+			return [(this?.content())];
 		}
 	};
 

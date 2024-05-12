@@ -17,14 +17,14 @@
 		}
 		Friends(){
 			const obj = new this.$.$mol_select_list();
-			(obj.value) = (next) => ((this.friends(next)));
-			(obj.dictionary) = () => ((this.suggestions()));
+			(obj.value) = (next) => ((this?.friends(next)));
+			(obj.dictionary) = () => ((this?.suggestions()));
 			return obj;
 		}
 		Friends_disabled(){
 			const obj = new this.$.$mol_select_list();
-			(obj.value) = (next) => ((this.friends(next)));
-			(obj.dictionary) = () => ((this.suggestions()));
+			(obj.value) = (next) => ((this?.friends(next)));
+			(obj.dictionary) = () => ((this?.suggestions()));
 			(obj.enabled) = () => (false);
 			return obj;
 		}
@@ -36,25 +36,25 @@
 			return "";
 		}
 		filter_pattern(next){
-			return (this.Friends_lazy().filter_pattern(next));
+			return (this?.Friends_lazy()?.filter_pattern(next));
 		}
 		suggestions_lazy(){
-			return (this.suggestions());
+			return (this?.suggestions());
 		}
 		Friends_lazy(){
 			const obj = new this.$.$mol_select_list();
-			(obj.value) = (next) => ((this.friends_lazy(next)));
-			(obj.option_title) = (id) => ((this.option_title(id)));
+			(obj.value) = (next) => ((this?.friends_lazy(next)));
+			(obj.option_title) = (id) => ((this?.option_title(id)));
 			(obj.pick_enabled) = () => (true);
-			(obj.dictionary) = () => ((this.suggestions_lazy()));
+			(obj.dictionary) = () => ((this?.suggestions_lazy()));
 			return obj;
 		}
 		Demo_items(){
 			const obj = new this.$.$mol_list();
 			(obj.rows) = () => ([
-				(this.Friends()), 
-				(this.Friends_disabled()), 
-				(this.Friends_lazy())
+				(this?.Friends()), 
+				(this?.Friends_disabled()), 
+				(this?.Friends_lazy())
 			]);
 			return obj;
 		}
@@ -62,7 +62,7 @@
 			return "Friends picker";
 		}
 		sub(){
-			return [(this.Demo_items())];
+			return [(this?.Demo_items())];
 		}
 		tags(){
 			return [

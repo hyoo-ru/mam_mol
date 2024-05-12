@@ -6,14 +6,14 @@
 		Section(){
 			const obj = new this.$.$mol_section();
 			(obj.title) = () => ("Section header");
-			(obj.content) = () => ([(this.Section_content())]);
+			(obj.content) = () => ([(this?.Section_content())]);
 			return obj;
 		}
 		title(){
 			return "Section with header";
 		}
 		sub(){
-			return [(this.Section())];
+			return [(this?.Section())];
 		}
 		tags(){
 			return ["container", "header"];

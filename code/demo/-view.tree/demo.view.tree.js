@@ -49,15 +49,15 @@
 		}
 		sub(){
 			return [
-				(this.Qr()), 
-				(this.Matrix()), 
-				(this.Upc_e()), 
-				(this.Upc_a()), 
-				(this.Ean_8()), 
-				(this.Ean_13()), 
-				(this.Code_128()), 
-				(this.Code_39()), 
-				(this.Itf())
+				(this?.Qr()), 
+				(this?.Matrix()), 
+				(this?.Upc_e()), 
+				(this?.Upc_a()), 
+				(this?.Ean_8()), 
+				(this?.Ean_13()), 
+				(this?.Code_128()), 
+				(this?.Code_39()), 
+				(this?.Itf())
 			];
 		}
 		tags(){

@@ -102,7 +102,7 @@ $mol_icon $mol_svg_root
 		<= Path $mol_svg_path
 			geometry <= path \
 
-$mol_icon_cross $mol_icon path \M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z
+$mol_icon_close $mol_icon path \M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z
 
 $mol_perf_jsfb $mol_scroll
 	sub /
@@ -153,5 +153,5 @@ $mol_perf_jsfb_row $mol_view
 			checked? <=> selected? false
 			sub / <= title? \
 		<= Drop $mol_button_minor
-			sub / <= Drop_icon $mol_icon_cross
+			sub / <= Drop_icon $mol_icon_close
 			click? <=> drop? null

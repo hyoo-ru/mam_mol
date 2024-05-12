@@ -1,6 +1,6 @@
 	($.$mol_select_demo_colors) = class $mol_select_demo_colors extends ($.$mol_example_small) {
 		color_filter(){
-			return (this.Color().filter_pattern());
+			return (this?.Color()?.filter_pattern());
 		}
 		color(next){
 			if(next !== undefined) return next;
@@ -17,37 +17,37 @@
 		}
 		Color_preview(id){
 			const obj = new this.$.$mol_select_colors_color_preview();
-			(obj.color) = () => ((this.option_color(id)));
+			(obj.color) = () => ((this?.option_color(id)));
 			return obj;
 		}
 		Color_name(id){
 			const obj = new this.$.$mol_dimmer();
-			(obj.haystack) = () => ((this.color_name(id)));
-			(obj.needle) = () => ((this.color_filter()));
+			(obj.haystack) = () => ((this?.color_name(id)));
+			(obj.needle) = () => ((this?.color_filter()));
 			return obj;
 		}
 		Color_option(id){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.Color_preview(id)), (this.Color_name(id))]);
+			(obj.sub) = () => ([(this?.Color_preview(id)), (this?.Color_name(id))]);
 			(obj.minimal_height) = () => (40);
 			return obj;
 		}
 		option_content(id){
-			return [(this.Color_option(id))];
+			return [(this?.Color_option(id))];
 		}
 		Color(){
 			const obj = new this.$.$mol_select();
-			(obj.value) = (next) => ((this.color(next)));
-			(obj.dictionary) = () => ((this.colors()));
-			(obj.option_label) = (id) => ((this.color_name(id)));
-			(obj.option_content) = (id) => ((this.option_content(id)));
+			(obj.value) = (next) => ((this?.color(next)));
+			(obj.dictionary) = () => ((this?.colors()));
+			(obj.option_label) = (id) => ((this?.color_name(id)));
+			(obj.option_content) = (id) => ((this?.option_content(id)));
 			return obj;
 		}
 		title(){
 			return "Color picker with filter and custom rows";
 		}
 		sub(){
-			return [(this.Color())];
+			return [(this?.Color())];
 		}
 		tags(){
 			return [
@@ -71,7 +71,7 @@
 			return "";
 		}
 		style(){
-			return {...(super.style()), "background": (this.color())};
+			return {...(super.style()), "background": (this?.color())};
 		}
 	};
 

@@ -4,7 +4,7 @@
 		}
 		App(){
 			const obj = new this.$.$mol_gallery();
-			(obj.items) = () => ((this.items()));
+			(obj.items) = () => ((this?.items()));
 			return obj;
 		}
 		item_title(id){
@@ -12,7 +12,7 @@
 		}
 		Item_image(id){
 			const obj = new this.$.$mol_avatar();
-			(obj.id) = () => ((this.item_title(id)));
+			(obj.id) = () => ((this?.item_title(id)));
 			return obj;
 		}
 		title(){
@@ -22,11 +22,11 @@
 			return 101;
 		}
 		sub(){
-			return [(this.App())];
+			return [(this?.App())];
 		}
 		Item(id){
 			const obj = new this.$.$mol_stack();
-			(obj.sub) = () => ([(this.Item_image(id))]);
+			(obj.sub) = () => ([(this?.Item_image(id))]);
 			return obj;
 		}
 		tags(){

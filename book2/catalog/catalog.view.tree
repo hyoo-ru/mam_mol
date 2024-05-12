@@ -36,4 +36,4 @@ $mol_book2_catalog $mol_book2
 	Spread_close $mol_link
 		arg <= spread_close_arg *
 		sub /
-			<= Spread_close_icon $mol_icon_cross
+			<= Spread_close_icon $mol_icon_close

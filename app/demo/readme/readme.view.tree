@@ -12,7 +12,7 @@ $mol_app_demo_readme $mol_page
 		<= Close $mol_button_minor
 			hint @ \Close panel
 			sub /
-				<= Close_icon $mol_icon_cross
+				<= Close_icon $mol_icon_close
 			click? <=> close? null
 	-
 	Readme $mol_text

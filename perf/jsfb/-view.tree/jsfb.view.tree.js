@@ -4,7 +4,7 @@
 		}
 		Title(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.title())]);
+			(obj.sub) = () => ([(this?.title())]);
 			return obj;
 		}
 		create_1K(next){
@@ -15,7 +15,7 @@
 			const obj = new this.$.$mol_button_major();
 			(obj.dom_id) = () => ("run");
 			(obj.title) = () => ("Create 1,000 rows");
-			(obj.click) = (next) => ((this.create_1K(next)));
+			(obj.click) = (next) => ((this?.create_1K(next)));
 			return obj;
 		}
 		create_10K(next){
@@ -26,7 +26,7 @@
 			const obj = new this.$.$mol_button_major();
 			(obj.dom_id) = () => ("runlots");
 			(obj.title) = () => ("Create 10,000 rows");
-			(obj.click) = (next) => ((this.create_10K(next)));
+			(obj.click) = (next) => ((this?.create_10K(next)));
 			return obj;
 		}
 		append_1K(next){
@@ -37,7 +37,7 @@
 			const obj = new this.$.$mol_button_major();
 			(obj.dom_id) = () => ("add");
 			(obj.title) = () => ("Append 1,000 rows");
-			(obj.click) = (next) => ((this.append_1K(next)));
+			(obj.click) = (next) => ((this?.append_1K(next)));
 			return obj;
 		}
 		update_10(next){
@@ -48,7 +48,7 @@
 			const obj = new this.$.$mol_button_major();
 			(obj.dom_id) = () => ("update");
 			(obj.title) = () => ("Update every 10th row");
-			(obj.click) = (next) => ((this.update_10(next)));
+			(obj.click) = (next) => ((this?.update_10(next)));
 			return obj;
 		}
 		clear(next){
@@ -59,7 +59,7 @@
 			const obj = new this.$.$mol_button_major();
 			(obj.dom_id) = () => ("clear");
 			(obj.title) = () => ("Clear");
-			(obj.click) = (next) => ((this.clear(next)));
+			(obj.click) = (next) => ((this?.clear(next)));
 			return obj;
 		}
 		swap(next){
@@ -70,28 +70,28 @@
 			const obj = new this.$.$mol_button_major();
 			(obj.dom_id) = () => ("swaprows");
 			(obj.title) = () => ("Swap Rows");
-			(obj.click) = (next) => ((this.swap(next)));
+			(obj.click) = (next) => ((this?.swap(next)));
 			return obj;
 		}
 		Controls(){
 			const obj = new this.$.$mol_row();
 			(obj.sub) = () => ([
-				(this.Create_1K()), 
-				(this.Create_10K()), 
-				(this.Append_1K()), 
-				(this.Update_10()), 
-				(this.Clear()), 
-				(this.Swap())
+				(this?.Create_1K()), 
+				(this?.Create_10K()), 
+				(this?.Append_1K()), 
+				(this?.Update_10()), 
+				(this?.Clear()), 
+				(this?.Swap())
 			]);
 			return obj;
 		}
 		Head(){
 			const obj = new this.$.$mol_row();
-			(obj.sub) = () => ([(this.Title()), (this.Controls())]);
+			(obj.sub) = () => ([(this?.Title()), (this?.Controls())]);
 			return obj;
 		}
 		row_title(id, next){
-			return (this.Row("0").title(next));
+			return (this?.Row("0")?.title(next));
 		}
 		row_selected(id, next){
 			if(next !== undefined) return next;
@@ -106,26 +106,26 @@
 		}
 		Row(id){
 			const obj = new this.$.$mol_perf_jsfb_row();
-			(obj.selected) = (next) => ((this.row_selected(id, next)));
-			(obj.drop) = (next) => ((this.row_drop(id, next)));
-			(obj.id) = () => ((this.row_id(id)));
+			(obj.selected) = (next) => ((this?.row_selected(id, next)));
+			(obj.drop) = (next) => ((this?.row_drop(id, next)));
+			(obj.id) = () => ((this?.row_id(id)));
 			return obj;
 		}
 		rows(){
-			return [(this.Row("0"))];
+			return [(this?.Row("0"))];
 		}
 		Rows(){
 			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ((this.rows()));
+			(obj.rows) = () => ((this?.rows()));
 			return obj;
 		}
 		Content(){
 			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ([(this.Head()), (this.Rows())]);
+			(obj.rows) = () => ([(this?.Head()), (this?.Rows())]);
 			return obj;
 		}
 		sub(){
-			return [(this.Content())];
+			return [(this?.Content())];
 		}
 	};
 	($mol_mem(($.$mol_perf_jsfb.prototype), "Title"));
@@ -154,7 +154,7 @@
 		}
 		Id(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.id())]);
+			(obj.sub) = () => ([(this?.id())]);
 			return obj;
 		}
 		selected(next){
@@ -167,12 +167,12 @@
 		}
 		Title(){
 			const obj = new this.$.$mol_check();
-			(obj.checked) = (next) => ((this.selected(next)));
-			(obj.sub) = () => ([(this.title())]);
+			(obj.checked) = (next) => ((this?.selected(next)));
+			(obj.sub) = () => ([(this?.title())]);
 			return obj;
 		}
 		Drop_icon(){
-			const obj = new this.$.$mol_icon_cross();
+			const obj = new this.$.$mol_icon_close();
 			return obj;
 		}
 		drop(next){
@@ -181,8 +181,8 @@
 		}
 		Drop(){
 			const obj = new this.$.$mol_button_minor();
-			(obj.sub) = () => ([(this.Drop_icon())]);
-			(obj.click) = (next) => ((this.drop(next)));
+			(obj.sub) = () => ([(this?.Drop_icon())]);
+			(obj.click) = (next) => ((this?.drop(next)));
 			return obj;
 		}
 		minimal_height(){
@@ -192,13 +192,13 @@
 			return 200;
 		}
 		attr(){
-			return {...(super.attr()), "mol_perf_jsfb_row_selected": (this.selected())};
+			return {...(super.attr()), "mol_perf_jsfb_row_selected": (this?.selected())};
 		}
 		sub(){
 			return [
-				(this.Id()), 
-				(this.Title()), 
-				(this.Drop())
+				(this?.Id()), 
+				(this?.Title()), 
+				(this?.Drop())
 			];
 		}
 	};

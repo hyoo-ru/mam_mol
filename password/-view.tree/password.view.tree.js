@@ -15,11 +15,11 @@
 		}
 		Pass(){
 			const obj = new this.$.$mol_string();
-			(obj.type) = () => ((this.type()));
-			(obj.hint) = () => ((this.hint()));
-			(obj.value) = (next) => ((this.value(next)));
-			(obj.submit) = (next) => ((this.submit(next)));
-			(obj.enabled) = () => ((this.enabled()));
+			(obj.type) = () => ((this?.type()));
+			(obj.hint) = () => ((this?.hint()));
+			(obj.value) = (next) => ((this?.value(next)));
+			(obj.submit) = (next) => ((this?.submit(next)));
+			(obj.enabled) = () => ((this?.enabled()));
 			return obj;
 		}
 		checked(next){
@@ -32,19 +32,19 @@
 		}
 		Show(){
 			const obj = new this.$.$mol_check_icon();
-			(obj.checked) = (next) => ((this.checked(next)));
-			(obj.Icon) = () => ((this.Show_icon()));
+			(obj.checked) = (next) => ((this?.checked(next)));
+			(obj.Icon) = () => ((this?.Show_icon()));
 			return obj;
 		}
 		content(){
-			return [(this.Pass()), (this.Show())];
+			return [(this?.Pass()), (this?.Show())];
 		}
 		type(next){
 			if(next !== undefined) return next;
 			return "password";
 		}
 		sub(){
-			return (this.content());
+			return (this?.content());
 		}
 	};
 	($mol_mem(($.$mol_password.prototype), "value"));

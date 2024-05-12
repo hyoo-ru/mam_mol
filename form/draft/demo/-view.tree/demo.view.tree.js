@@ -36,42 +36,42 @@
 			return obj;
 		}
 		publish(next){
-			return (this.Form().submit(next));
+			return (this?.Form()?.submit(next));
 		}
 		publish_allowed(){
-			return (this.Form().submit_allowed());
+			return (this?.Form()?.submit_allowed());
 		}
 		value_str(id, next){
-			return (this.Form().value_str(id, next));
+			return (this?.Form()?.value_str(id, next));
 		}
 		list_string(id, next){
-			return (this.Form().list_string(id, next));
+			return (this?.Form()?.list_string(id, next));
 		}
 		dictionary_bool(id, next){
-			return (this.Form().dictionary_bool(id, next));
+			return (this?.Form()?.dictionary_bool(id, next));
 		}
 		changed(){
-			return (this.Form().changed());
+			return (this?.Form()?.changed());
 		}
 		reset(next){
-			return (this.Form().reset(next));
+			return (this?.Form()?.reset(next));
 		}
 		Title(){
 			const obj = new this.$.$mol_string();
 			(obj.hint) = () => ("How I spent the summer..");
-			(obj.value) = (next) => ((this.value_str("title", next)));
+			(obj.value) = (next) => ((this?.value_str("title", next)));
 			return obj;
 		}
 		Title_field(){
 			const obj = new this.$.$mol_form_field();
 			(obj.name) = () => ("Title");
-			(obj.bids) = () => ([(this.bid_swearing("title")), (this.bid_short("title"))]);
-			(obj.Content) = () => ((this.Title()));
+			(obj.bids) = () => ([(this?.bid_swearing("title")), (this?.bid_short("title"))]);
+			(obj.Content) = () => ((this?.Title()));
 			return obj;
 		}
 		Type(){
 			const obj = new this.$.$mol_switch();
-			(obj.value) = (next) => ((this.value_str("type", next)));
+			(obj.value) = (next) => ((this?.value_str("type", next)));
 			(obj.options) = () => ({
 				"article": "Article", 
 				"news": "News", 
@@ -82,38 +82,38 @@
 		Type_field(){
 			const obj = new this.$.$mol_form_field();
 			(obj.name) = () => ("Type");
-			(obj.bids) = () => ([(this.bid_required("type"))]);
-			(obj.Content) = () => ((this.Type()));
+			(obj.bids) = () => ([(this?.bid_required("type"))]);
+			(obj.Content) = () => ((this?.Type()));
 			return obj;
 		}
 		Adult(){
 			const obj = new this.$.$mol_switch();
-			(obj.value) = (next) => ((this.value_str("adult", next)));
+			(obj.value) = (next) => ((this?.value_str("adult", next)));
 			(obj.options) = () => ({"false": "No", "true": "Yes"});
 			return obj;
 		}
 		Adult_field(){
 			const obj = new this.$.$mol_form_field();
 			(obj.name) = () => ("Adult only");
-			(obj.Content) = () => ((this.Adult()));
+			(obj.Content) = () => ((this?.Adult()));
 			return obj;
 		}
 		Content(){
 			const obj = new this.$.$mol_textarea();
 			(obj.hint) = () => ("Long long story..");
-			(obj.value) = (next) => ((this.value_str("content", next)));
+			(obj.value) = (next) => ((this?.value_str("content", next)));
 			return obj;
 		}
 		Content_field(){
 			const obj = new this.$.$mol_form_field();
 			(obj.name) = () => ("Content");
-			(obj.bids) = () => ([(this.bid_swearing("content")), (this.bid_long("content"))]);
-			(obj.Content) = () => ((this.Content()));
+			(obj.bids) = () => ([(this?.bid_swearing("content")), (this?.bid_long("content"))]);
+			(obj.Content) = () => ((this?.Content()));
 			return obj;
 		}
 		Hobbies(){
 			const obj = new this.$.$mol_check_list();
-			(obj.dictionary) = (next) => ((this.dictionary_bool("hobbies", next)));
+			(obj.dictionary) = (next) => ((this?.dictionary_bool("hobbies", next)));
 			(obj.options) = () => ({
 				"programming": "Programming", 
 				"bikinkg": "Biking", 
@@ -124,7 +124,7 @@
 		Hobbies_field(){
 			const obj = new this.$.$mol_form_field();
 			(obj.name) = () => ("Hobbies");
-			(obj.Content) = () => ((this.Hobbies()));
+			(obj.Content) = () => ((this?.Hobbies()));
 			return obj;
 		}
 		Friends(){
@@ -139,33 +139,33 @@
 				"clay": "Clayface", 
 				"mask": "Black Mask"
 			});
-			(obj.value) = (next) => ((this.list_string("friends", next)));
+			(obj.value) = (next) => ((this?.list_string("friends", next)));
 			return obj;
 		}
 		Friends_field(){
 			const obj = new this.$.$mol_form_field();
 			(obj.name) = () => ("Friends");
-			(obj.Content) = () => ((this.Friends()));
+			(obj.Content) = () => ((this?.Friends()));
 			return obj;
 		}
 		Config(){
 			const obj = new this.$.$mol_form_group();
-			(obj.sub) = () => ([(this.Adult_field()), (this.Type_field())]);
+			(obj.sub) = () => ([(this?.Adult_field()), (this?.Type_field())]);
 			return obj;
 		}
 		form_body(){
 			return [
-				(this.Title_field()), 
-				(this.Config()), 
-				(this.Content_field()), 
-				(this.Friends_field())
+				(this?.Title_field()), 
+				(this?.Config()), 
+				(this?.Content_field()), 
+				(this?.Friends_field())
 			];
 		}
 		Publish(){
 			const obj = new this.$.$mol_button_major();
 			(obj.title) = () => ("Publish");
-			(obj.click) = (next) => ((this.publish(next)));
-			(obj.enabled) = () => ((this.publish_allowed()));
+			(obj.click) = (next) => ((this?.publish(next)));
+			(obj.enabled) = () => ((this?.publish_allowed()));
 			return obj;
 		}
 		result(next){
@@ -174,32 +174,32 @@
 		}
 		Result(){
 			const obj = new this.$.$mol_status();
-			(obj.message) = () => ((this.result()));
+			(obj.message) = () => ((this?.result()));
 			return obj;
 		}
 		Reset(){
 			const obj = new this.$.$mol_button_minor();
 			(obj.title) = () => ("Сбросить");
-			(obj.click) = (next) => ((this.reset(next)));
-			(obj.enabled) = () => ((this.changed()));
+			(obj.click) = (next) => ((this?.reset(next)));
+			(obj.enabled) = () => ((this?.changed()));
 			return obj;
 		}
 		Form(){
 			const obj = new this.$.$mol_form_draft();
-			(obj.model) = () => ((this.model()));
+			(obj.model) = () => ((this?.model()));
 			(obj.form_fields) = () => ([
-				(this.Title_field()), 
-				(this.Type_field()), 
-				(this.Adult_field()), 
-				(this.Content_field()), 
-				(this.Hobbies_field()), 
-				(this.Friends_field())
+				(this?.Title_field()), 
+				(this?.Type_field()), 
+				(this?.Adult_field()), 
+				(this?.Content_field()), 
+				(this?.Hobbies_field()), 
+				(this?.Friends_field())
 			]);
-			(obj.body) = () => ((this.form_body()));
+			(obj.body) = () => ((this?.form_body()));
 			(obj.buttons) = () => ([
-				(this.Publish()), 
-				(this.Result()), 
-				(this.Reset())
+				(this?.Publish()), 
+				(this?.Result()), 
+				(this?.Reset())
 			]);
 			return obj;
 		}
@@ -222,7 +222,7 @@
 			return "> 100 letters";
 		}
 		sub(){
-			return [(this.Form())];
+			return [(this?.Form())];
 		}
 		tags(){
 			return [

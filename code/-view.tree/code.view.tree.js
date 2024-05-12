@@ -7,12 +7,12 @@
 			return "";
 		}
 		hint(){
-			return (this.format());
+			return (this?.format());
 		}
 		Manual(){
 			const obj = new this.$.$mol_search();
-			(obj.query) = (next) => ((this.value(next)));
-			(obj.hint) = () => ((this.hint()));
+			(obj.query) = (next) => ((this?.value(next)));
+			(obj.hint) = () => ((this?.hint()));
 			return obj;
 		}
 		event_scan(next){
@@ -24,12 +24,12 @@
 		}
 		Scan(){
 			const obj = new this.$.$mol_button();
-			(obj.event_click) = (next) => ((this.event_scan(next)));
-			(obj.sub) = () => ([(this.scan_label())]);
+			(obj.event_click) = (next) => ((this?.event_scan(next)));
+			(obj.sub) = () => ([(this?.scan_label())]);
 			return obj;
 		}
 		sub(){
-			return [(this.Manual()), (this.Scan())];
+			return [(this?.Manual()), (this?.Scan())];
 		}
 	};
 	($mol_mem(($.$mol_code.prototype), "value"));

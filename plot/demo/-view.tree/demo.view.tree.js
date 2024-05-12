@@ -13,8 +13,8 @@
 		}
 		Saturation(){
 			const obj = new this.$.$mol_plot_group();
-			(obj.series_y) = () => ((this.saturation_series()));
-			(obj.graphs) = () => ([(this.Saturation_fill()), (this.Saturation_line())]);
+			(obj.series_y) = () => ((this?.saturation_series()));
+			(obj.graphs) = () => ([(this?.Saturation_fill()), (this?.Saturation_line())]);
 			return obj;
 		}
 		input_series(){
@@ -30,8 +30,8 @@
 		}
 		Input(){
 			const obj = new this.$.$mol_plot_group();
-			(obj.series_y) = () => ((this.input_series()));
-			(obj.graphs) = () => ([(this.Input_line()), (this.Input_dots())]);
+			(obj.series_y) = () => ((this?.input_series()));
+			(obj.graphs) = () => ([(this?.Input_line()), (this?.Input_dots())]);
 			return obj;
 		}
 		output_series(){
@@ -39,7 +39,7 @@
 		}
 		Output(){
 			const obj = new this.$.$mol_plot_bar();
-			(obj.series_y) = () => ((this.output_series()));
+			(obj.series_y) = () => ((this?.output_series()));
 			return obj;
 		}
 		Voltage_title(){
@@ -47,7 +47,7 @@
 		}
 		Voltage(){
 			const obj = new this.$.$mol_plot_ruler_vert();
-			(obj.title) = () => ((this.Voltage_title()));
+			(obj.title) = () => ((this?.Voltage_title()));
 			return obj;
 		}
 		Time_title(){
@@ -55,17 +55,17 @@
 		}
 		Time(){
 			const obj = new this.$.$mol_plot_ruler_hor();
-			(obj.title) = () => ((this.Time_title()));
+			(obj.title) = () => ((this?.Time_title()));
 			return obj;
 		}
 		Plot(){
 			const obj = new this.$.$mol_plot_pane();
 			(obj.graphs) = () => ([
-				(this.Saturation()), 
-				(this.Input()), 
-				(this.Output()), 
-				(this.Voltage()), 
-				(this.Time())
+				(this?.Saturation()), 
+				(this?.Input()), 
+				(this?.Output()), 
+				(this?.Voltage()), 
+				(this?.Time())
 			]);
 			return obj;
 		}
@@ -80,7 +80,7 @@
 			return 8;
 		}
 		sub(){
-			return [(this.Plot())];
+			return [(this?.Plot())];
 		}
 		tags(){
 			return [

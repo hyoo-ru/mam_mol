@@ -4,18 +4,18 @@
 		}
 		Icon(){
 			const obj = new this.$.$mol_image();
-			(obj.uri) = () => ((this.icon()));
+			(obj.uri) = () => ((this?.icon()));
 			(obj.title) = () => ("");
 			return obj;
 		}
 		title(){
-			return (this.uri());
+			return (this?.uri());
 		}
 		sub(){
-			return [(this.Icon())];
+			return [(this?.Icon())];
 		}
 		content(){
-			return [(this.title())];
+			return [(this?.title())];
 		}
 		host(){
 			return "";

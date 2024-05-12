@@ -6,14 +6,14 @@
 		Expander(){
 			const obj = new this.$.$mol_expander();
 			(obj.title) = () => ("Lorem Ipsum");
-			(obj.content) = () => ([(this.Content())]);
+			(obj.content) = () => ([(this?.Content())]);
 			return obj;
 		}
 		title(){
 			return "Simple spoiler";
 		}
 		sub(){
-			return [(this.Expander())];
+			return [(this?.Expander())];
 		}
 		tags(){
 			return [

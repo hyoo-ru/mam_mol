@@ -5,13 +5,13 @@
 		}
 		Simple(){
 			const obj = new this.$.$mol_string();
-			(obj.value) = (next) => ((this.name(next)));
+			(obj.value) = (next) => ((this?.name(next)));
 			return obj;
 		}
 		Hint(){
 			const obj = new this.$.$mol_string();
 			(obj.hint) = () => ("Batman");
-			(obj.value) = (next) => ((this.name(next)));
+			(obj.value) = (next) => ((this?.name(next)));
 			return obj;
 		}
 		broken(next){
@@ -21,7 +21,7 @@
 		Broken(){
 			const obj = new this.$.$mol_string();
 			(obj.hint) = () => ("Broken");
-			(obj.value) = (next) => ((this.broken(next)));
+			(obj.value) = (next) => ((this?.broken(next)));
 			return obj;
 		}
 		name2(next){
@@ -30,18 +30,18 @@
 		}
 		Filled(){
 			const obj = new this.$.$mol_string();
-			(obj.value) = (next) => ((this.name2(next)));
+			(obj.value) = (next) => ((this?.name2(next)));
 			return obj;
 		}
 		Disabled(){
 			const obj = new this.$.$mol_string();
 			(obj.disabled) = () => (true);
-			(obj.value) = (next) => ((this.name2(next)));
+			(obj.value) = (next) => ((this?.name2(next)));
 			return obj;
 		}
 		Button(){
 			const obj = new this.$.$mol_string_button();
-			(obj.value) = (next) => ((this.name2(next)));
+			(obj.value) = (next) => ((this?.name2(next)));
 			return obj;
 		}
 		title(){
@@ -49,12 +49,12 @@
 		}
 		sub(){
 			return [
-				(this.Simple()), 
-				(this.Hint()), 
-				(this.Broken()), 
-				(this.Filled()), 
-				(this.Disabled()), 
-				(this.Button())
+				(this?.Simple()), 
+				(this?.Hint()), 
+				(this?.Broken()), 
+				(this?.Filled()), 
+				(this?.Disabled()), 
+				(this?.Button())
 			];
 		}
 		tags(){

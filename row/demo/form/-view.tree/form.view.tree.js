@@ -14,9 +14,9 @@
 		}
 		Name(){
 			const obj = new this.$.$mol_search();
-			(obj.hint) = () => ((this.name_hint()));
-			(obj.query) = (next) => ((this.name(next)));
-			(obj.suggests) = () => ([(this.suggest1()), (this.suggest2())]);
+			(obj.hint) = () => ((this?.name_hint()));
+			(obj.query) = (next) => ((this?.name(next)));
+			(obj.suggests) = () => ([(this?.suggest1()), (this?.suggest2())]);
 			return obj;
 		}
 		count_hint(){
@@ -28,8 +28,8 @@
 		}
 		Count(){
 			const obj = new this.$.$mol_number();
-			(obj.hint) = () => ((this.count_hint()));
-			(obj.value) = (next) => ((this.count(next)));
+			(obj.hint) = () => ((this?.count_hint()));
+			(obj.value) = (next) => ((this?.count(next)));
 			return obj;
 		}
 		progress(){
@@ -37,7 +37,7 @@
 		}
 		Progress(){
 			const obj = new this.$.$mol_portion();
-			(obj.portion) = () => ((this.progress()));
+			(obj.portion) = () => ((this?.progress()));
 			return obj;
 		}
 		publish_label(){
@@ -49,8 +49,8 @@
 		}
 		Publish(){
 			const obj = new this.$.$mol_check_box();
-			(obj.title) = () => ((this.publish_label()));
-			(obj.checked) = (next) => ((this.publish(next)));
+			(obj.title) = () => ((this?.publish_label()));
+			(obj.checked) = (next) => ((this?.publish(next)));
 			return obj;
 		}
 		drop_title(){
@@ -58,17 +58,17 @@
 		}
 		Drop(){
 			const obj = new this.$.$mol_button_minor();
-			(obj.title) = () => ((this.drop_title()));
+			(obj.title) = () => ((this?.drop_title()));
 			return obj;
 		}
 		Row(){
 			const obj = new this.$.$mol_row();
 			(obj.sub) = () => ([
-				(this.Name()), 
-				(this.Count()), 
-				(this.Progress()), 
-				(this.Publish()), 
-				(this.Drop())
+				(this?.Name()), 
+				(this?.Count()), 
+				(this?.Progress()), 
+				(this?.Publish()), 
+				(this?.Drop())
 			]);
 			return obj;
 		}
@@ -76,7 +76,7 @@
 			return "Some controls in one row with equal paddings and wrapping support";
 		}
 		sub(){
-			return [(this.Row())];
+			return [(this?.Row())];
 		}
 		tags(){
 			return [

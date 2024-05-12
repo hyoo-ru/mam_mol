@@ -7,7 +7,7 @@
 		}
 		Curve(){
 			const obj = new this.$.$mol_svg_path();
-			(obj.geometry) = () => ((this.curve()));
+			(obj.geometry) = () => ((this?.curve()));
 			return obj;
 		}
 		points_max(){
@@ -17,14 +17,14 @@
 			return 1;
 		}
 		style(){
-			return {...(super.style()), "stroke-width": (this.diameter())};
+			return {...(super.style()), "stroke-width": (this?.diameter())};
 		}
 		sub(){
-			return [(this.Hint()), (this.Curve())];
+			return [(this?.Hint()), (this?.Curve())];
 		}
 		Sample(){
 			const obj = new this.$.$mol_plot_graph_sample();
-			(obj.color) = () => ((this.color()));
+			(obj.color) = () => ((this?.color()));
 			return obj;
 		}
 	};

@@ -20,7 +20,7 @@
 		}
 		Menu_links(){
 			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ((this.menu_rows()));
+			(obj.rows) = () => ((this?.menu_rows()));
 			return obj;
 		}
 		question_title(id){
@@ -35,17 +35,17 @@
 		}
 		Details_permalink(id){
 			const obj = new this.$.$mol_link();
-			(obj.uri) = () => ((this.question_permalink(id)));
-			(obj.sub) = () => ([(this.Details_permalink_icon(id))]);
+			(obj.uri) = () => ((this?.question_permalink(id)));
+			(obj.sub) = () => ([(this?.Details_permalink_icon(id))]);
 			return obj;
 		}
 		Details_close_icon(id){
-			const obj = new this.$.$mol_icon_cross();
+			const obj = new this.$.$mol_icon_close();
 			return obj;
 		}
 		Details_close(id){
 			const obj = new this.$.$mol_link();
-			(obj.sub) = () => ([(this.Details_close_icon(id))]);
+			(obj.sub) = () => ([(this?.Details_close_icon(id))]);
 			(obj.arg) = () => ({"question": null});
 			return obj;
 		}
@@ -54,7 +54,7 @@
 		}
 		Details_descr(id){
 			const obj = new this.$.$mol_text();
-			(obj.text) = () => ((this.question_descr(id)));
+			(obj.text) = () => ((this?.question_descr(id)));
 			return obj;
 		}
 		answers(id){
@@ -62,7 +62,7 @@
 		}
 		Answers(id){
 			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ((this.answers(id)));
+			(obj.rows) = () => ((this?.answers(id)));
 			return obj;
 		}
 		question_answer(id){
@@ -76,7 +76,7 @@
 		}
 		Question_title(id){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.question_title_by_index(id))]);
+			(obj.sub) = () => ([(this?.question_title_by_index(id))]);
 			return obj;
 		}
 		question_tags_by_index(id){
@@ -84,45 +84,45 @@
 		}
 		Question_tags(id){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ((this.question_tags_by_index(id)));
+			(obj.sub) = () => ((this?.question_tags_by_index(id)));
 			return obj;
 		}
 		tag_name(id){
 			return " ";
 		}
 		plugins(){
-			return [(this.Themme())];
+			return [(this?.Themme())];
 		}
 		Menu(){
 			const obj = new this.$.$mol_page();
-			(obj.title) = () => ((this.title_default()));
-			(obj.tools) = () => ([(this.Lights()), (this.Source_link())]);
-			(obj.body) = () => ([(this.Menu_links())]);
+			(obj.title) = () => ((this?.title_default()));
+			(obj.tools) = () => ([(this?.Lights()), (this?.Source_link())]);
+			(obj.body) = () => ([(this?.Menu_links())]);
 			return obj;
 		}
 		Details(id){
 			const obj = new this.$.$mol_page();
-			(obj.title) = () => ((this.question_title(id)));
-			(obj.tools) = () => ([(this.Details_permalink(id)), (this.Details_close(id))]);
-			(obj.body) = () => ([(this.Details_descr(id)), (this.Answers(id))]);
+			(obj.title) = () => ((this?.question_title(id)));
+			(obj.tools) = () => ([(this?.Details_permalink(id)), (this?.Details_close(id))]);
+			(obj.body) = () => ([(this?.Details_descr(id)), (this?.Answers(id))]);
 			return obj;
 		}
 		Answer(id){
 			const obj = new this.$.$mol_text();
-			(obj.text) = () => ((this.question_answer(id)));
+			(obj.text) = () => ((this?.question_answer(id)));
 			return obj;
 		}
 		Question_link(id){
 			const obj = new this.$.$mol_link();
 			(obj.minimal_width) = () => (64);
 			(obj.minimal_height) = () => (64);
-			(obj.arg) = () => ((this.question_arg_by_index(id)));
-			(obj.sub) = () => ([(this.Question_title(id)), (this.Question_tags(id))]);
+			(obj.arg) = () => ((this?.question_arg_by_index(id)));
+			(obj.sub) = () => ([(this?.Question_title(id)), (this?.Question_tags(id))]);
 			return obj;
 		}
 		Tag(id){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.tag_name(id))]);
+			(obj.sub) = () => ([(this?.tag_name(id))]);
 			return obj;
 		}
 	};

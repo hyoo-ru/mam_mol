@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/transit/transit.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,0BAAa,mBAAb;AAC0B,AAAA,2BAAsB;AACrB,AAAA,gBAAO,GAAP,IAAO;AADjC,AAAA,YAAM;AAAA,AAAE,oBAAiB,YAD1B,YAC0B,0BAAjB;AAAF;AACN,AAAA,YAAM;AAAA,AAAE,wBAAkB,YAF3B,YAE2B,WAAlB,IAAkB,YAF3B,YAE2B,WAAlB;AAAF;AAFP;AAAA;AAAA;",
+	"file": "transit.view.tree.d.ts",
+	"sourceRoot": "../../.."
+}
