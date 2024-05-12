@@ -18969,6 +18969,7 @@ var $;
 		Spread_close(){
 			const obj = new this.$.$mol_link();
 			(obj.arg) = () => ((this?.spread_close_arg()));
+			(obj.hint) = () => ((this.$.$mol_locale.text("$mol_book2_catalog_Spread_close_hint")));
 			(obj.sub) = () => ([(this?.Spread_close_icon())]);
 			return obj;
 		}

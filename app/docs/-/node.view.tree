@@ -1897,6 +1897,7 @@ $mol_book2_catalog $mol_book2
 			foot <= menu_foot /
 	Spread_close $mol_link
 		arg <= spread_close_arg *
+		hint @ \Close page
 		sub /
 			<= Spread_close_icon $mol_icon_close
 
