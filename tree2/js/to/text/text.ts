@@ -127,6 +127,12 @@ namespace $ {
 				else return [ input.data( '.' + first.text() ) ]
 			},
 			
+			'?.[]': ( input, belt )=> {
+				const first = input.kids[0]
+				if( first.type ) return sequence( '?.[', '', ']' )( input, belt )
+				else return [ input.data( '?.' + first.text() ) ]
+			},
+			
 			':': ( input, belt )=> {
 				const first = input.kids[0]
 				if( first.type ) return duplet( '[', ']: ' )( input, belt )

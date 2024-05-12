@@ -35,7 +35,7 @@ namespace $ {
 	}
 
 	function call_method_name(this: $, child: $mol_tree2) {
-		return child.struct( '[]', [
+		return child.struct( '?.[]', [
 			child.data( name_of.call( this, child ) )
 		] )
 	}

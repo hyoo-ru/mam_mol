@@ -156,7 +156,7 @@ namespace $ {
 
 							let conflict: 'next' | 'key' | undefined
 
-							if (left_parts.next && right_parts.next) conflict = 'next'
+							// if (left_parts.next && right_parts.next) conflict = 'next'
 							if (left_parts.key && right_parts.key) conflict = 'key'
 
 							if (conflict) {
