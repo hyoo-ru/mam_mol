@@ -52,9 +52,9 @@ namespace $ {
 				not.close()
 			}
 			
-			const vibrate = [ 100, 200, 300, 400, 500 ]
+			// const vibrate = [ 100, 200, 300, 400, 500 ]
 			
-			await $mol_service().showNotification( title, { body, data, vibrate, tag } )
+			await $mol_service().showNotification( title, { body, data, /*vibrate,*/ tag } )
 			
 		} )
 		
