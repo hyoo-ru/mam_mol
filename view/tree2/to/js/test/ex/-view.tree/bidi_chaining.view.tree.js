@@ -4,10 +4,10 @@
 			return null;
 		}
 		b(next){
-			return (this.c(next));
+			return (this?.c(next));
 		}
 		a(next){
-			return (this.b(next));
+			return (this?.b(next));
 		}
 	};
 	($mol_mem(($.$mol_view_tree2_to_js_test_ex_bidi_chaining_foo.prototype), "c"));

@@ -6,5 +6,5 @@
 	"sourcesContent": [
 		"$mol_view_tree2_to_js_test_ex_right_read_only_foo $mol_object\n\ta*? null\n$mol_view_tree2_to_js_test_ex_right_read_only_bar $mol_object\n\tObj $mol_view_tree2_to_js_test_ex_right_read_only_foo\n\t\ta*? => b*?\n"
 	],
-	"mappings": "AAAA,AAAA,iHAAkD,wBAAlD;AAAA,AACC;AAAA,AAAA;AAAA,UAAI,IAAJ;AAAA;AADD,CAAA;AACC,gBADD,CACC,oEADD;AAEA,iHAAkD,wBAAlD;AAAA,AAES;AAAA,AAAA,eADR,MACC,YAAO;AAAA;AADR;AAAA,AAAI,6EAAJ;AAAA,UAAI,GAAJ;AAAA;AADD,CAFA;AAGC,YADD,CACC,sEAHD;"
+	"mappings": "AAAA,AAAA,iHAAkD,wBAAlD;AAAA,AACC;AAAA,AAAA;AAAA,UAAI,IAAJ;AAAA;AADD,CAAA;AACC,gBADD,CACC,oEADD;AAEA,iHAAkD,wBAAlD;AAAA,AAES;AAAA,AAAA,eADR,OACC,aAAO;AAAA;AADR;AAAA,AAAI,6EAAJ;AAAA,UAAI,GAAJ;AAAA;AADD,CAFA;AAGC,YADD,CACC,sEAHD;"
 }

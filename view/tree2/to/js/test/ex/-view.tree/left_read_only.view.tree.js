@@ -4,7 +4,7 @@
 			return 1;
 		}
 		bar1(){
-			return (this.bar2());
+			return (this?.bar2());
 		}
 	};
 	($mol_mem(($.$mol_view_tree2_to_js_test_ex_left_read_only_foo.prototype), "bar2"));

@@ -6,5 +6,5 @@
 	"sourcesContent": [
 		"$mol_view_tree2_to_js_test_ex_bidi_with_default_object_foo $mol_object\n\tclass? <=> owner? $mol_object\n"
 	],
-	"mappings": "AAAA,AAAA,mIAA2D,wBAA3D;AAAA,AACY;AAAA,AAAA;AAAO,uCAAP;AAAA,UAAO,GAAP;AAAA;AAAX;AAAA,AAAA,UAAO,KAAI,YAAJ,CAAP;AAAA;AADD,CAAA;AACY,YADZ,CACY,iFADZ;"
+	"mappings": "AAAA,AAAA,mIAA2D,wBAA3D;AAAA,AACY;AAAA,AAAA;AAAO,uCAAP;AAAA,UAAO,GAAP;AAAA;AAAX;AAAA,AAAA,UAAO,KAAI,aAAJ,CAAP;AAAA;AADD,CAAA;AACY,YADZ,CACY,iFADZ;"
 }

@@ -6,5 +6,5 @@
 	"sourcesContent": [
 		"$mol_view_tree2_to_js_test_ex_left_read_only_foo $mol_object\n\tbar1 <= bar2? 1\n"
 	],
-	"mappings": "AAAA,AAAA,+GAAiD,wBAAjD;AAAA,AACS;AAAA,AAAA;AAAA,UAAM,CAAN;AAAA;AAAR;AAAA,AAAA,UAAK,KAAG,OAAH,CAAL;AAAA;AADD,CAAA;AACS,YADT,CACS,sEADT;"
+	"mappings": "AAAA,AAAA,+GAAiD,wBAAjD;AAAA,AACS;AAAA,AAAA;AAAA,UAAM,CAAN;AAAA;AAAR;AAAA,AAAA,UAAK,KAAG,QAAH,CAAL;AAAA;AADD,CAAA;AACS,YADT,CACS,sEADT;"
 }

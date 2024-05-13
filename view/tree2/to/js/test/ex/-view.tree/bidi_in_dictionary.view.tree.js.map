@@ -6,5 +6,5 @@
 	"sourcesContent": [
 		"$mol_view_tree2_to_js_test_ex_bidi_in_dictionary_foo $mol_object\n\tevent *\n\t\tclick? <=> run? null\n"
 	],
-	"mappings": "AAAA,AAAA,uHAAqD,wBAArD;AAAA,AAEa;AAAA,AAAA;AAAA,UAAK,IAAL;AAAA;AADZ;AAAA,AAAA,UAAM,CACL,mBAAO,KAAI,UAAJ,CADF,CAAN;AAAA;AADD,CAAA;AAEa,YAFb,CAEa,yEAFb;"
+	"mappings": "AAAA,AAAA,uHAAqD,wBAArD;AAAA,AAEa;AAAA,AAAA;AAAA,UAAK,IAAL;AAAA;AADZ;AAAA,AAAA,UAAM,CACL,mBAAO,KAAI,WAAJ,CADF,CAAN;AAAA;AADD,CAAA;AAEa,YAFb,CAEa,yEAFb;"
 }

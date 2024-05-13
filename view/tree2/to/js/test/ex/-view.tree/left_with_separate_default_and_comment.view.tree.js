@@ -9,7 +9,7 @@
 		}
 		Obj(){
 			const obj = new this.$.$mol_view_tree2_to_js_test_ex_left_with_separate_default_and_comment_bar();
-			(obj.rows) = () => ([(this.content())]);
+			(obj.rows) = () => ([(this?.content())]);
 			return obj;
 		}
 	};

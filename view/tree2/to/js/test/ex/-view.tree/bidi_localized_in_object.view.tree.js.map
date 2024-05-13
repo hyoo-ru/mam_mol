@@ -8,5 +8,5 @@
 		"$mol_view_tree2_to_js_test_ex_bidi_localized_in_object_foo $mol_object\n\tobj *\n\t\tloc? <=> outer? @ \\test1\n",
 		"\n\t\t()\n\t\t\tthis\n\t\t\t[] \\$\n\t\t\t[] \\$mol_locale\n\t\t\t[] \\text\n\t\t\t(,) #key\n\t"
 	],
-	"mappings": "AAAA,AAAA,mIAA2D,wBAA3D;AAAA,AAEW;AAAA,AAAA;AAAA,UCDT,CACC,IACA,EACA,YACA,KACA,CDJe,kECIf,CALD,CDCS;AAAA;AADV;AAAA,AAAA,UAAI,CACH,iBAAK,KAAI,YAAJ,CADF,CAAJ;AAAA;AADD,CAAA;AAEW,YAFX,CAEW,iFAFX;"
+	"mappings": "AAAA,AAAA,mIAA2D,wBAA3D;AAAA,AAEW;AAAA,AAAA;AAAA,UCDT,CACC,IACA,EACA,YACA,KACA,CDJe,kECIf,CALD,CDCS;AAAA;AADV;AAAA,AAAA,UAAI,CACH,iBAAK,KAAI,aAAJ,CADF,CAAJ;AAAA;AADD,CAAA;AAEW,YAFX,CAEW,iFAFX;"
 }

@@ -5,7 +5,7 @@
 			return obj;
 		}
 		class(next){
-			return (this.owner(next));
+			return (this?.owner(next));
 		}
 	};
 	($mol_mem(($.$mol_view_tree2_to_js_test_ex_bidi_with_default_object_foo.prototype), "owner"));

@@ -4,7 +4,7 @@
 			return null;
 		}
 		indexed(id, next){
-			return (this.owner(id, next));
+			return (this?.owner(id, next));
 		}
 	};
 	($mol_mem_key(($.$mol_view_tree2_to_js_test_ex_bidi_indexed_foo.prototype), "owner"));

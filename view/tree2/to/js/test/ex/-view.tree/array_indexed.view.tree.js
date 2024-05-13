@@ -6,10 +6,10 @@
 			return "t2";
 		}
 		slot(id){
-			return [(this.tag2(id))];
+			return [(this?.tag2(id))];
 		}
 		tags(id){
-			return [(this.tag1(id)), ...(this.slot(id))];
+			return [(this?.tag1(id)), ...(this.slot(id))];
 		}
 	};
 

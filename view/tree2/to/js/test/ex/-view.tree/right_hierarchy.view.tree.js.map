@@ -6,5 +6,5 @@
 	"sourcesContent": [
 		"$mol_view_tree2_to_js_test_ex_right_hierarchy_foo $mol_object\n\tIndexed*xxx $mol_view_tree2_to_js_test_ex_right_hierarchy_bar\n\t\ttitle? => indexed_title*?\n\t\tid <= indexed_id* 0\n\tprj $mol_view_tree2_to_js_test_ex_right_hierarchy_bar\n\t\tdomain* => prj_domain*\n\t\t\tuser => prj_user*\n\t\t\t\tid => prj_user_id*\n"
 	],
-	"mappings": "AAAA,AAAA,iHAAkD,wBAAlD;AAAA,AAEY;AAAA,AAAA,eADX,eACC,YAAU;AAAA;AACJ;AAAA,AAAA,UAAY,CAAZ;AAAA;AAEK;AAAA,AAAA,eADZ,MACC,WAAW;AAAA;AACF;AAAA,AAAA,eADE,eACV,OAAQ;AAAA;AACD;AAAA,AAAA,eADC,aACP,KAAM;AAAA;AANT;AAAA,AAAY,6EAAZ;AAEC,qBAAG,KAAG,eAAH,CAAH,CAFD;AAAA,UAAY,GAAZ;AAAA;AAGA;AAAA,AAAI,6EAAJ;AAAA,UAAI,GAAJ;AAAA;AAJD,CAAA;AACC,gBADD,CACC,0EADD;AAIC,YAJD,CAIC,sEAJD;"
+	"mappings": "AAAA,AAAA,iHAAkD,wBAAlD;AAAA,AAEY;AAAA,AAAA,eADX,gBACC,aAAU;AAAA;AACJ;AAAA,AAAA,UAAY,CAAZ;AAAA;AAEK;AAAA,AAAA,eADZ,OACC,YAAW;AAAA;AACF;AAAA,AAAA,eADE,gBACV,QAAQ;AAAA;AACD;AAAA,AAAA,eADC,cACP,MAAM;AAAA;AANT;AAAA,AAAY,6EAAZ;AAEC,qBAAG,KAAG,gBAAH,CAAH,CAFD;AAAA,UAAY,GAAZ;AAAA;AAGA;AAAA,AAAI,6EAAJ;AAAA,UAAI,GAAJ;AAAA;AAJD,CAAA;AACC,gBADD,CACC,0EADD;AAIC,YAJD,CAIC,sEAJD;"
 }
