@@ -22,11 +22,12 @@ namespace $ {
 					const node = this.view.dom_node()
 					node.setAttribute( 'mol_view_root', '' )
 					
-					this.shadowRoot!.append(
-						$mol_style_attach_force().cloneNode( true ),
-						node,
-					)
-						
+					for( const style of $mol_dom_context.document.getElementsByTagName( 'style' )  ) {
+						this.shadowRoot!.append( style.cloneNode( true ) )
+					}
+					
+					this.shadowRoot!.append( node )
+					
 				}
 				
 				this.root = $mol_wire_auto()
