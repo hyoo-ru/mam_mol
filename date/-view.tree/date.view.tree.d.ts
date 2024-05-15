@@ -1,126 +1,126 @@
 declare namespace $ {
 
-	type $mol_button_minor__hint__OPFD8QHR = $mol_type_enforce<
+	type $mol_button_minor__hint__G8WHDLKX = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_minor['hint'] >
 	>
-	type $mol_button_minor__enabled__ZDJAXM1Y = $mol_type_enforce<
+	type $mol_button_minor__enabled__1TYDZ3T0 = $mol_type_enforce<
 		ReturnType< $mol_date['enabled'] >
 		,
 		ReturnType< $mol_button_minor['enabled'] >
 	>
-	type $mol_button_minor__click__L3JOEHOG = $mol_type_enforce<
+	type $mol_button_minor__click__OCB236J6 = $mol_type_enforce<
 		ReturnType< $mol_date['today_click'] >
 		,
 		ReturnType< $mol_button_minor['click'] >
 	>
-	type $mol_button_minor__sub__2HGO9N6J = $mol_type_enforce<
+	type $mol_button_minor__sub__ZBXWAYF6 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_minor['sub'] >
 	>
-	type $mol_date_value_changed__69ZGGMZA = $mol_type_enforce<
+	type $mol_date_value_changed__KVR6M38S = $mol_type_enforce<
 		Parameters< $mol_date['value_changed'] >[0]
 		,
 		Parameters< ReturnType< $mol_date['Input'] >['value_changed'] >[0]
 	>
-	type $mol_format__value__89R1U5TX = $mol_type_enforce<
+	type $mol_format__value__M6IO7GLM = $mol_type_enforce<
 		ReturnType< $mol_date['value'] >
 		,
 		ReturnType< $mol_format['value'] >
 	>
-	type $mol_format__mask__88O83914 = $mol_type_enforce<
+	type $mol_format__mask__5VVRJF9P = $mol_type_enforce<
 		ReturnType< $mol_date['input_mask'] >
 		,
 		ReturnType< $mol_format['mask'] >
 	>
-	type $mol_format__enabled__13PE8SVX = $mol_type_enforce<
+	type $mol_format__enabled__EJGDIHRW = $mol_type_enforce<
 		ReturnType< $mol_date['enabled'] >
 		,
 		ReturnType< $mol_format['enabled'] >
 	>
-	type $mol_button_minor__hint__H9SAC5UN = $mol_type_enforce<
+	type $mol_button_minor__hint__G4GOBR58 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_minor['hint'] >
 	>
-	type $mol_button_minor__enabled__KQNZ0BQK = $mol_type_enforce<
+	type $mol_button_minor__enabled__OBX7AZ45 = $mol_type_enforce<
 		ReturnType< $mol_date['enabled'] >
 		,
 		ReturnType< $mol_button_minor['enabled'] >
 	>
-	type $mol_button_minor__click__SUUHQO28 = $mol_type_enforce<
+	type $mol_button_minor__click__Q2FUFAUG = $mol_type_enforce<
 		ReturnType< $mol_date['clear'] >
 		,
 		ReturnType< $mol_button_minor['click'] >
 	>
-	type $mol_button_minor__sub__ASTIKABV = $mol_type_enforce<
+	type $mol_button_minor__sub__4T9HB15V = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_minor['sub'] >
 	>
-	type $mol_view__sub__Z2OKLCPR = $mol_type_enforce<
+	type $mol_view__sub__MVKGOFBX = $mol_type_enforce<
 		ReturnType< $mol_date['input_content'] >
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_button_minor__hint__NMXNUXGX = $mol_type_enforce<
+	type $mol_button_minor__hint__E400C4YO = $mol_type_enforce<
 		ReturnType< $mol_date['prev_hint'] >
 		,
 		ReturnType< $mol_button_minor['hint'] >
 	>
-	type $mol_button_minor__click__LXYU2TY9 = $mol_type_enforce<
+	type $mol_button_minor__click__U9NFDY0R = $mol_type_enforce<
 		ReturnType< $mol_date['prev'] >
 		,
 		ReturnType< $mol_button_minor['click'] >
 	>
-	type $mol_button_minor__sub__1IQ58S90 = $mol_type_enforce<
+	type $mol_button_minor__sub__4ID2G1RX = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_minor['sub'] >
 	>
-	type $mol_button_minor__hint__GTMJU5AS = $mol_type_enforce<
+	type $mol_button_minor__hint__J4NXQNKM = $mol_type_enforce<
 		ReturnType< $mol_date['next_hint'] >
 		,
 		ReturnType< $mol_button_minor['hint'] >
 	>
-	type $mol_button_minor__click__0DRLMFFW = $mol_type_enforce<
+	type $mol_button_minor__click__CPQ1GFRX = $mol_type_enforce<
 		ReturnType< $mol_date['next'] >
 		,
 		ReturnType< $mol_button_minor['click'] >
 	>
-	type $mol_button_minor__sub__Q162N8KY = $mol_type_enforce<
+	type $mol_button_minor__sub__XEHWRVZC = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_minor['sub'] >
 	>
-	type $mol_view__sub__8XNKOB66 = $mol_type_enforce<
+	type $mol_view__sub__0DFRZG70 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_date_calendar__enabled__OO886JCP = $mol_type_enforce<
+	type $mol_date_calendar__enabled__3KOFVWBR = $mol_type_enforce<
 		ReturnType< $mol_date['enabled'] >
 		,
 		ReturnType< $mol_date_calendar['enabled'] >
 	>
-	type $mol_date_calendar__month_moment__4E6VCEBH = $mol_type_enforce<
+	type $mol_date_calendar__month_moment__4G0NI8CS = $mol_type_enforce<
 		ReturnType< $mol_date['month_moment'] >
 		,
 		ReturnType< $mol_date_calendar['month_moment'] >
 	>
-	type $mol_date_calendar__day_selected__4EHSUWIQ = $mol_type_enforce<
+	type $mol_date_calendar__day_selected__AIYDUE4S = $mol_type_enforce<
 		ReturnType< $mol_date['day_selected'] >
 		,
 		ReturnType< $mol_date_calendar['day_selected'] >
 	>
-	type $mol_date_calendar__day_click__G4ZMXG2O = $mol_type_enforce<
+	type $mol_date_calendar__day_click__UCEVSH0G = $mol_type_enforce<
 		ReturnType< $mol_date['day_click'] >
 		,
 		ReturnType< $mol_date_calendar['day_click'] >
 	>
-	type $mol_date_calendar__head__98IQW0SL = $mol_type_enforce<
+	type $mol_date_calendar__head__QLHYFF3G = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_date_calendar['head'] >
@@ -159,22 +159,22 @@ declare namespace $ {
 		value_moment( next?: $mol_time_moment ): $mol_time_moment
 	}
 	
-	type $mol_button_minor__title__7FH2S423 = $mol_type_enforce<
+	type $mol_button_minor__title__AEOUPYRD = $mol_type_enforce<
 		ReturnType< $mol_date_calendar['day_text'] >
 		,
 		ReturnType< $mol_button_minor['title'] >
 	>
-	type $mol_button_minor__event_click__9ALF4OWE = $mol_type_enforce<
+	type $mol_button_minor__event_click__XGGXMNU4 = $mol_type_enforce<
 		ReturnType< $mol_date_calendar['day_click'] >
 		,
 		ReturnType< $mol_button_minor['event_click'] >
 	>
-	type $mol_button_minor__minimal_height__DT56WMEV = $mol_type_enforce<
+	type $mol_button_minor__minimal_height__54FBA670 = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_button_minor['minimal_height'] >
 	>
-	type $mol_button_minor__enabled__T4ED9F32 = $mol_type_enforce<
+	type $mol_button_minor__enabled__K3GVKJMH = $mol_type_enforce<
 		ReturnType< $mol_date_calendar['enabled'] >
 		,
 		ReturnType< $mol_button_minor['enabled'] >

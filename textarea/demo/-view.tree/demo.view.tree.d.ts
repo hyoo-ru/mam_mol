@@ -1,26 +1,26 @@
 declare namespace $ {
 
-	type $mol_textarea__sidebar_showed__2GAK4CJN = $mol_type_enforce<
+	type $mol_textarea__sidebar_showed__WMFKRKBJ = $mol_type_enforce<
 		boolean
 		,
 		ReturnType< $mol_textarea['sidebar_showed'] >
 	>
-	type $mol_textarea__hint__3IM6TIE5 = $mol_type_enforce<
+	type $mol_textarea__hint__J0RZ1QBE = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_textarea['hint'] >
 	>
-	type $mol_textarea__value__NY6PLXFI = $mol_type_enforce<
+	type $mol_textarea__value__LU8D1Z5G = $mol_type_enforce<
 		ReturnType< $mol_textarea_demo['filled_descr'] >
 		,
 		ReturnType< $mol_textarea['value'] >
 	>
-	type $mol_text__text__0VU6A34R = $mol_type_enforce<
+	type $mol_text__text__72G4DB8C = $mol_type_enforce<
 		ReturnType< $mol_textarea_demo['symbols_hint'] >
 		,
 		ReturnType< $mol_text['text'] >
 	>
-	type $mol_list__rows__RQNHUA69 = $mol_type_enforce<
+	type $mol_list__rows__3EFZBGB5 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >
