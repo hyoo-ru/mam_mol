@@ -4287,7 +4287,7 @@ var $;
                         if (input.type[0] === '@') {
                             const chain = context.chain?.join('_');
                             const path = `${klass.type}_${name}${chain.length ? `_${chain}` : ''}`;
-                            locales[path] = input.kids[0].value;
+                            locales[path] = input.kids[0].text();
                         }
                         if (input.type[0] === '*') {
                             for (const field of input.kids) {
