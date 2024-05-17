@@ -1,16 +1,16 @@
 declare namespace $ {
 
-	type $mol_vector_2d__8JTASUDQ = $mol_type_enforce<
+	type $mol_vector_2d__Y5U2ME53 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<number> >
 	>
-	type $mol_vector_2d__QI8WZJM2 = $mol_type_enforce<
+	type $mol_vector_2d__KYI75EUE = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<number> >
 	>
-	type $mol_vector_2d__PBI7M5C7 = $mol_type_enforce<
+	type $mol_vector_2d__KCYBKL32 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<number> >
