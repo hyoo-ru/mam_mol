@@ -3,7 +3,8 @@ namespace $ {
 	export class $mol_ton_wallet extends $mol_object2 {
 
 		static Wallet(type = 'v3R2') {
-			return $mol_ton.lib().Wallets.all[type]
+			const wallets = $mol_ton.lib().Wallets
+			return wallets.all[ type as keyof typeof wallets.all ]
 		}
 
 		@ $mol_action
@@ -26,7 +27,7 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		obj(): ReturnType<typeof $mol_ton_wallet.Wallet> {
+		obj(): InstanceType<ReturnType<typeof $mol_ton_wallet.Wallet>> {
 			const Wallet = $mol_ton_wallet.Wallet()
 
 			let keys: ReturnType<$mol_ton_wallet['keys']> | null = null
