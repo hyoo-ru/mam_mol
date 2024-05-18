@@ -1,11 +1,11 @@
 declare namespace $ {
 
-	type $mol_text_list_item__index__0BOPBXFK = $mol_type_enforce<
+	type $mol_text_list_item__index__9AQBSBEQ = $mol_type_enforce<
 		ReturnType< $mol_text_list['item_index'] >
 		,
 		ReturnType< $mol_text_list_item['index'] >
 	>
-	type $mol_text_list_item__sub__W9PYT478 = $mol_type_enforce<
+	type $mol_text_list_item__sub__DTC9HV5B = $mol_type_enforce<
 		ReturnType< $mol_text_list['block_content'] >
 		,
 		ReturnType< $mol_text_list_item['sub'] >
