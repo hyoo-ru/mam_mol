@@ -1,43 +1,43 @@
 declare namespace $ {
 
-	type $mol_link__uri__33BVLXC1 = $mol_type_enforce<
+	type $mol_link__uri__ZXRZ9YQW = $mol_type_enforce<
 		ReturnType< $mol_chat['standalone'] >
 		,
 		ReturnType< $mol_link['uri'] >
 	>
-	type $mol_link__sub__DU0B6N6F = $mol_type_enforce<
+	type $mol_link__sub__04XUPW30 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_link['sub'] >
 	>
-	type $mol_link__arg__0AQ8KOPV = $mol_type_enforce<
+	type $mol_link__arg__PD8X6FW1 = $mol_type_enforce<
 		({ 
 			'mol_chat': any,
 		}) 
 		,
 		ReturnType< $mol_link['arg'] >
 	>
-	type $mol_link__sub__HS3CGRGK = $mol_type_enforce<
+	type $mol_link__sub__77AYXT17 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_link['sub'] >
 	>
-	type $mol_frame__uri__SQCHGZG9 = $mol_type_enforce<
+	type $mol_frame__uri__RZUBN3Z2 = $mol_type_enforce<
 		ReturnType< $mol_chat['embed'] >
 		,
 		ReturnType< $mol_frame['uri'] >
 	>
-	type $mol_page__title__0S2JDHXJ = $mol_type_enforce<
+	type $mol_page__title__G10CJAMU = $mol_type_enforce<
 		ReturnType< $mol_chat['title'] >
 		,
 		ReturnType< $mol_page['title'] >
 	>
-	type $mol_page__tools__Z9UET37H = $mol_type_enforce<
+	type $mol_page__tools__G658OWQT = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['tools'] >
 	>
-	type $mol_page__Body__9YO886T1 = $mol_type_enforce<
+	type $mol_page__Body__WXHOUJSB = $mol_type_enforce<
 		ReturnType< $mol_chat['Embed'] >
 		,
 		ReturnType< $mol_page['Body'] >
