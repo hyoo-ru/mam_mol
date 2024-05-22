@@ -3026,7 +3026,7 @@ var $;
                         this.$mol_fail(err `Need a parent ${left.span}`);
                     add_inner(right.clone([
                         right.struct('=', [
-                            context.factory.clone([left.clone([])]),
+                            context.factory.struct(context.factory.type.replace(/\*.*/, '*'), [left.clone([])]),
                         ]),
                     ]));
                 }

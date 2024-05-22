@@ -59,7 +59,10 @@ namespace $ {
 
 					add_inner(right.clone([
 						right.struct('=', [
-							context.factory.clone([ left.clone([]) ]),
+							context.factory.struct(
+							context.factory.type.replace( /\*.*/, '*' ),
+								[ left.clone([]) ],
+							),
 						]),
 					]))
 				}
