@@ -12600,7 +12600,7 @@ var $;
 ;
 	($.$mol_view_tree2_to_js_test_ex_right_hierarchy_foo) = class $mol_view_tree2_to_js_test_ex_right_hierarchy_foo extends ($.$mol_object) {
 		indexed_title(id, next){
-			return (this?.Indexed("xxx")?.title(next));
+			return (this?.Indexed(id)?.title(next));
 		}
 		indexed_id(id){
 			return 0;

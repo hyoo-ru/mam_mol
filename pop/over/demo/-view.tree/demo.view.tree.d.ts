@@ -1,71 +1,71 @@
 declare namespace $ {
 
-	type $mol_button_minor__title__Q04KA9HP = $mol_type_enforce<
+	type $mol_button_minor__title__D3RHLBEA = $mol_type_enforce<
 		ReturnType< $mol_pop_over_demo['open_title'] >
 		,
 		ReturnType< $mol_button_minor['title'] >
 	>
-	type $mol_button_minor__title__9ZY9VFEK = $mol_type_enforce<
+	type $mol_button_minor__title__Q233FCMK = $mol_type_enforce<
 		ReturnType< $mol_pop_over_demo['export_title'] >
 		,
 		ReturnType< $mol_button_minor['title'] >
 	>
-	type $mol_button_minor__title__AA7WAWOK = $mol_type_enforce<
+	type $mol_button_minor__title__R1RELP50 = $mol_type_enforce<
 		ReturnType< $mol_pop_over_demo['save_title'] >
 		,
 		ReturnType< $mol_button_minor['title'] >
 	>
-	type $mol_list__rows__EILJDMWT = $mol_type_enforce<
+	type $mol_list__rows__PHQHN1N7 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_pop_over__align__N29L4QPZ = $mol_type_enforce<
+	type $mol_pop_over__align__KUTI9QHH = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_pop_over['align'] >
 	>
-	type $mol_pop_over__Anchor__KBSK5CFP = $mol_type_enforce<
+	type $mol_pop_over__Anchor__UT4K1C81 = $mol_type_enforce<
 		ReturnType< $mol_pop_over_demo['file_title'] >
 		,
 		ReturnType< $mol_pop_over['Anchor'] >
 	>
-	type $mol_pop_over__bubble_content__BWUG4Q2H = $mol_type_enforce<
+	type $mol_pop_over__bubble_content__WDADO0ZG = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_pop_over['bubble_content'] >
 	>
-	type $mol_button_minor__title__KV4HEI4Q = $mol_type_enforce<
+	type $mol_button_minor__title__COBVPLLE = $mol_type_enforce<
 		ReturnType< $mol_pop_over_demo['updates_title'] >
 		,
 		ReturnType< $mol_button_minor['title'] >
 	>
-	type $mol_button_minor__title__MGU0YX97 = $mol_type_enforce<
+	type $mol_button_minor__title__LF9JEP5J = $mol_type_enforce<
 		ReturnType< $mol_pop_over_demo['about_title'] >
 		,
 		ReturnType< $mol_button_minor['title'] >
 	>
-	type $mol_list__rows__WXTSQFPW = $mol_type_enforce<
+	type $mol_list__rows__7KICBTLK = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_pop_over__align__IPVIESIB = $mol_type_enforce<
+	type $mol_pop_over__align__ZJSHDCA9 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_pop_over['align'] >
 	>
-	type $mol_pop_over__Anchor__QW0VY9E5 = $mol_type_enforce<
+	type $mol_pop_over__Anchor__MFNG18LJ = $mol_type_enforce<
 		ReturnType< $mol_pop_over_demo['help_title'] >
 		,
 		ReturnType< $mol_pop_over['Anchor'] >
 	>
-	type $mol_pop_over__bubble_content__9QPE4VMW = $mol_type_enforce<
+	type $mol_pop_over__bubble_content__4D7FW27Y = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_pop_over['bubble_content'] >
 	>
-	type $mol_row__sub__25F3K2TQ = $mol_type_enforce<
+	type $mol_row__sub__CBQDS9CM = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_row['sub'] >
