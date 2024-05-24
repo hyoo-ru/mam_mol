@@ -1,51 +1,51 @@
 declare namespace $ {
 
-	type $mol_format__value__OIPFYM13 = $mol_type_enforce<
+	type $mol_format__value__VBZL6M76 = $mol_type_enforce<
 		ReturnType< $mol_pick_time['value'] >
 		,
 		ReturnType< $mol_format['value'] >
 	>
-	type $mol_format__mask__1GNUM1U0 = $mol_type_enforce<
+	type $mol_format__mask__FFZR4OSR = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_format['mask'] >
 	>
-	type $mol_format__allow__PEFO9OTK = $mol_type_enforce<
+	type $mol_format__allow__XY38TD6H = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_format['allow'] >
 	>
-	type $mol_format__enabled__4BGZDS4S = $mol_type_enforce<
+	type $mol_format__enabled__COTAHQEG = $mol_type_enforce<
 		ReturnType< $mol_pick_time['enabled'] >
 		,
 		ReturnType< $mol_format['enabled'] >
 	>
-	type $mol_switch__value__FIJBZDN6 = $mol_type_enforce<
+	type $mol_switch__value__XHDEKX4S = $mol_type_enforce<
 		ReturnType< $mol_pick_time['hour_selected'] >
 		,
 		ReturnType< $mol_switch['value'] >
 	>
-	type $mol_switch__options__7F5X6AZW = $mol_type_enforce<
+	type $mol_switch__options__6A1FQ7MQ = $mol_type_enforce<
 		ReturnType< $mol_pick_time['hour_options'] >
 		,
 		ReturnType< $mol_switch['options'] >
 	>
-	type $mol_paragraph__title__2Z5ZWSBV = $mol_type_enforce<
+	type $mol_paragraph__title__KEN13XES = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_switch__value__I92FS2GC = $mol_type_enforce<
+	type $mol_switch__value__UFWEL5V6 = $mol_type_enforce<
 		ReturnType< $mol_pick_time['minute_selected'] >
 		,
 		ReturnType< $mol_switch['value'] >
 	>
-	type $mol_switch__options__K0VXK7ZT = $mol_type_enforce<
+	type $mol_switch__options__803S0PSJ = $mol_type_enforce<
 		ReturnType< $mol_pick_time['minute_options'] >
 		,
 		ReturnType< $mol_switch['options'] >
 	>
-	type $mol_row__sub__JMG0QF7Z = $mol_type_enforce<
+	type $mol_row__sub__0SQ2YSMB = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_row['sub'] >
