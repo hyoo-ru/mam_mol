@@ -40,11 +40,11 @@ namespace $.$$ {
 		
 		"GET returns path and query"( $ ) {
 			
-			const crud = $mol_rest_demo_crud.make({ $ })
+			const test = $mol_rest_demo_test.make({ $ })
 			
 			const res = [] as any[]
 			
-			crud.GET( $mol_rest_message.make({
+			test.GET( $mol_rest_message.make({
 				uri: ()=> new URL( 'http://foo.bar:8080/xxx?foo=bar' ),
 				port: $mol_rest_port.make({
 					send_json: json => res.push( json ),
@@ -62,11 +62,11 @@ namespace $.$$ {
 		
 		"REQUEST nested path and query"( $ ) {
 			
-			const crud = $mol_rest_demo_crud.make({ $ })
+			const test = $mol_rest_demo_test.make({ $ })
 			
 			const res = [] as any[]
 			
-			crud.REQUEST( $mol_rest_message.make({
+			test.REQUEST( $mol_rest_message.make({
 				method: ()=> 'GET',
 				uri: ()=> new URL( 'http://foo.bar:8080/nested/xxx?foo=bar' ),
 				port: $mol_rest_port.make({
@@ -85,11 +85,11 @@ namespace $.$$ {
 		
 		"POST mirrors type and body"( $ ) {
 			
-			const crud = $mol_rest_demo_crud.make({ $ })
+			const test = $mol_rest_demo_test.make({ $ })
 			
 			const res = [] as any[]
 			
-			crud.POST( $mol_rest_message.make({
+			test.POST( $mol_rest_message.make({
 				type: ()=> 'text/foo',
 				data: ()=> 'bar',
 				port: $mol_rest_port.make({
@@ -104,11 +104,11 @@ namespace $.$$ {
 		
 		"PUT returns type in XML"( $ ) {
 			
-			const crud = $mol_rest_demo_crud.make({ $ })
+			const test = $mol_rest_demo_test.make({ $ })
 			
 			const res = [] as any[]
 			let x = new Response
-			crud.PUT( $mol_rest_message.make({
+			test.PUT( $mol_rest_message.make({
 				type: ()=> 'text/foo',
 				port: $mol_rest_port.make({
 					send_code: code => res.push( code ),
@@ -126,11 +126,11 @@ namespace $.$$ {
 		
 		"DELETE returns no body"( $ ) {
 			
-			const crud = $mol_rest_demo_crud.make({ $ })
+			const test = $mol_rest_demo_test.make({ $ })
 			
 			const res = [] as any[]
 			let x = new Response
-			crud.DELETE( $mol_rest_message.make({
+			test.DELETE( $mol_rest_message.make({
 				port: $mol_rest_port.make({
 					send_code: code => res.push( code ),
 					send_type: type => res.push( type ),

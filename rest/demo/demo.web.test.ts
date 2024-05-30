@@ -4,7 +4,7 @@ namespace $.$$ {
 		async "GET request and URI parse"( $ ) {
 			
 			$mol_assert_equal(
-				await fetch( './crud' ).then( r => r.json() ),
+				await fetch( './test' ).then( r => r.json() ),
 				{
 					path: "/",
 					query: [],
@@ -12,7 +12,7 @@ namespace $.$$ {
 			)
 			
 			$mol_assert_equal(
-				await fetch( './crud/user?id=777#show=all' ).then( r => r.json() ),
+				await fetch( './test/user?id=777#show=all' ).then( r => r.json() ),
 				{
 					path: "/user",
 					query: [
@@ -22,7 +22,7 @@ namespace $.$$ {
 			)
 			
 			$mol_assert_equal(
-				await fetch( './crud/nested/?user=jin' ).then( r => r.json() ),
+				await fetch( './test/nested/?user=jin' ).then( r => r.json() ),
 				{
 					path: "/",
 					query: [
@@ -35,7 +35,7 @@ namespace $.$$ {
 		
 		async "POST Binary and return it"( $ ) {
 			
-			const resp = await fetch( './crud', {
+			const resp = await fetch( './test', {
 				method: 'post',
 				body: new Uint8Array([ 1, 2, 3 ]),
 			} )
@@ -56,7 +56,7 @@ namespace $.$$ {
 		
 		async "POST Text and return it"( $ ) {
 			
-			const resp = await fetch( './crud', {
+			const resp = await fetch( './test', {
 				method: 'post',
 				body: 'hello',
 			} )
@@ -77,7 +77,7 @@ namespace $.$$ {
 		
 		async "POST JSON and return it"( $ ) {
 			
-			const resp = await fetch( './crud', {
+			const resp = await fetch( './test', {
 				method: 'post',
 				headers: { type: 'application/json' },
 				body: '{ "foo": 777 }',
@@ -99,7 +99,7 @@ namespace $.$$ {
 		
 		async "POST HTML and return it"( $ ) {
 			
-			const resp = await fetch( './crud', {
+			const resp = await fetch( './test', {
 				method: 'post',
 				headers: { 'content-type': 'text/html' },
 				body: '<body>hello</body>',
@@ -121,7 +121,7 @@ namespace $.$$ {
 		
 		async "PUT nothing and return HTML"( $ ) {
 			
-			const resp = await fetch( './crud', {
+			const resp = await fetch( './test', {
 				method: 'put',
 			} )
 			
@@ -141,7 +141,7 @@ namespace $.$$ {
 		
 		async "DELETE and return nothing"( $ ) {
 			
-			const resp = await fetch( './crud', {
+			const resp = await fetch( './test', {
 				method: 'delete',
 			} )
 			
@@ -157,7 +157,7 @@ namespace $.$$ {
 		
 		async "WebSocket conection"( $ ) {
 			
-			const url = new URL( './crud', document.location.href ) 
+			const url = new URL( './test', document.location.href ) 
 			url.protocol = 'ws:'
 			
 			const ws = new WebSocket( url )
