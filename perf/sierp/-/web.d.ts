@@ -845,27 +845,27 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_view__sub__SIWO7PCR = $mol_type_enforce<
+	type $mol_view__sub__VRH89ANQ = $mol_type_enforce<
 		ReturnType< $mol_perf_sierp['dots'] >
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_perf_sierp_dot__left__FZKAF9HF = $mol_type_enforce<
+	type $mol_perf_sierp_dot__left__Y3JMF3P2 = $mol_type_enforce<
 		ReturnType< $mol_perf_sierp['left'] >
 		,
 		ReturnType< $mol_perf_sierp_dot['left'] >
 	>
-	type $mol_perf_sierp_dot__top__ICLG20QD = $mol_type_enforce<
+	type $mol_perf_sierp_dot__top__1H7ILH09 = $mol_type_enforce<
 		ReturnType< $mol_perf_sierp['top'] >
 		,
 		ReturnType< $mol_perf_sierp_dot['top'] >
 	>
-	type $mol_perf_sierp_dot__size__2BYP3YG2 = $mol_type_enforce<
+	type $mol_perf_sierp_dot__size__A572K0RD = $mol_type_enforce<
 		ReturnType< $mol_perf_sierp['size'] >
 		,
 		ReturnType< $mol_perf_sierp_dot['size'] >
 	>
-	type $mol_perf_sierp_dot__text__LXTQITIM = $mol_type_enforce<
+	type $mol_perf_sierp_dot__text__DUPSTA7K = $mol_type_enforce<
 		ReturnType< $mol_perf_sierp['text'] >
 		,
 		ReturnType< $mol_perf_sierp_dot['text'] >
