@@ -1,36 +1,36 @@
 declare namespace $ {
 
-	type $mol_view__sub__P1R8LNSO = $mol_type_enforce<
+	type $mol_view__sub__ZFDM4T7H = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_text_code_token__type__YZVB01NI = $mol_type_enforce<
+	type $mol_text_code_token__type__X2MYD9GF = $mol_type_enforce<
 		ReturnType< $mol_text_code_row['token_type'] >
 		,
 		ReturnType< $mol_text_code_token['type'] >
 	>
-	type $mol_text_code_token__haystack__6QMRQPHH = $mol_type_enforce<
+	type $mol_text_code_token__haystack__ZOE2EZ0U = $mol_type_enforce<
 		ReturnType< $mol_text_code_row['token_text'] >
 		,
 		ReturnType< $mol_text_code_token['haystack'] >
 	>
-	type $mol_text_code_token__needle__8T5IKOCZ = $mol_type_enforce<
+	type $mol_text_code_token__needle__5FSPU9K5 = $mol_type_enforce<
 		ReturnType< $mol_text_code_row['highlight'] >
 		,
 		ReturnType< $mol_text_code_token['needle'] >
 	>
-	type $mol_text_code_token_link__haystack__6O55H0FU = $mol_type_enforce<
+	type $mol_text_code_token_link__haystack__Q1QFL7XE = $mol_type_enforce<
 		ReturnType< $mol_text_code_row['token_text'] >
 		,
 		ReturnType< $mol_text_code_token_link['haystack'] >
 	>
-	type $mol_text_code_token_link__needle__PIQSOLNJ = $mol_type_enforce<
+	type $mol_text_code_token_link__needle__VSMIMO1S = $mol_type_enforce<
 		ReturnType< $mol_text_code_row['highlight'] >
 		,
 		ReturnType< $mol_text_code_token_link['needle'] >
 	>
-	type $mol_text_code_token_link__uri__Q12Q6E73 = $mol_type_enforce<
+	type $mol_text_code_token_link__uri__0X91OE4G = $mol_type_enforce<
 		ReturnType< $mol_text_code_row['token_uri'] >
 		,
 		ReturnType< $mol_text_code_token_link['uri'] >
