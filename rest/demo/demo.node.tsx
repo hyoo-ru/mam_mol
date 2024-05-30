@@ -11,7 +11,7 @@ namespace $ {
 			}
 		}
 		
-		@ $mol_mem test() { return $mol_rest_demo_test.make({}) }
+		@ $mol_memo.method test() { return $mol_rest_demo_test.make({}) }
 		@ $mol_memo.method crud() { return $mol_rest_demo_crud.make({}) }
 		
 	}
@@ -42,7 +42,7 @@ namespace $ {
 			msg.reply( null )
 		}
 		
-		@ $mol_mem nested() { return $mol_rest_demo_test.make({}) }
+		@ $mol_memo.method nested() { return $mol_rest_demo_test.make({}) }
 		
 	}
 	
