@@ -1,76 +1,76 @@
 declare namespace $ {
 
-	type $mol_format__mask__DGHAAF2U = $mol_type_enforce<
+	type $mol_format__mask__NEWXCT7F = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_format['mask'] >
 	>
-	type $mol_format__value__SLZC2GH2 = $mol_type_enforce<
+	type $mol_format__value__H8926W30 = $mol_type_enforce<
 		ReturnType< $mol_format_demo['ip'] >
 		,
 		ReturnType< $mol_format['value'] >
 	>
-	type $mol_card__status__5QE88NX5 = $mol_type_enforce<
+	type $mol_card__status__MVJ5OGD5 = $mol_type_enforce<
 		ReturnType< $mol_format_demo['ip'] >
 		,
 		ReturnType< $mol_card['status'] >
 	>
-	type $mol_card__Content__DNPRNNDS = $mol_type_enforce<
+	type $mol_card__Content__6WVTKZ8Y = $mol_type_enforce<
 		ReturnType< $mol_format_demo['Ip'] >
 		,
 		ReturnType< $mol_card['Content'] >
 	>
-	type $mol_phone__value__OPNFLVZ0 = $mol_type_enforce<
+	type $mol_phone__value__JJVYWUE0 = $mol_type_enforce<
 		ReturnType< $mol_format_demo['phone'] >
 		,
 		ReturnType< $mol_phone['value'] >
 	>
-	type $mol_card__status__EOF6506C = $mol_type_enforce<
+	type $mol_card__status__PLWLDUQU = $mol_type_enforce<
 		ReturnType< $mol_format_demo['phone'] >
 		,
 		ReturnType< $mol_card['status'] >
 	>
-	type $mol_card__Content__YMOEXZ05 = $mol_type_enforce<
+	type $mol_card__Content__RRHN6DNP = $mol_type_enforce<
 		ReturnType< $mol_format_demo['Phone'] >
 		,
 		ReturnType< $mol_card['Content'] >
 	>
-	type $mol_format__mask__DJPGW7HU = $mol_type_enforce<
+	type $mol_format__mask__72SGOOJY = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_format['mask'] >
 	>
-	type $mol_format__value__D22BV5IZ = $mol_type_enforce<
+	type $mol_format__value__I3OHO85S = $mol_type_enforce<
 		ReturnType< $mol_format_demo['card'] >
 		,
 		ReturnType< $mol_format['value'] >
 	>
-	type $mol_card__status__N5TGC1N5 = $mol_type_enforce<
+	type $mol_card__status__QO13WZFR = $mol_type_enforce<
 		ReturnType< $mol_format_demo['card'] >
 		,
 		ReturnType< $mol_card['status'] >
 	>
-	type $mol_card__Content__58VOGPCD = $mol_type_enforce<
+	type $mol_card__Content__7CUZYN1D = $mol_type_enforce<
 		ReturnType< $mol_format_demo['Card'] >
 		,
 		ReturnType< $mol_card['Content'] >
 	>
-	type $mol_format__mask__CT652RZ6 = $mol_type_enforce<
+	type $mol_format__mask__V3NQWKCI = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_format['mask'] >
 	>
-	type $mol_format__value__01ZBLEI4 = $mol_type_enforce<
+	type $mol_format__value__MYZFHFGT = $mol_type_enforce<
 		ReturnType< $mol_format_demo['moment'] >
 		,
 		ReturnType< $mol_format['value'] >
 	>
-	type $mol_card__status__8HOVPUI4 = $mol_type_enforce<
+	type $mol_card__status__LY1ASMIX = $mol_type_enforce<
 		ReturnType< $mol_format_demo['moment'] >
 		,
 		ReturnType< $mol_card['status'] >
 	>
-	type $mol_card__Content__M5DDV7WN = $mol_type_enforce<
+	type $mol_card__Content__PSG88Z3X = $mol_type_enforce<
 		ReturnType< $mol_format_demo['Moment'] >
 		,
 		ReturnType< $mol_card['Content'] >

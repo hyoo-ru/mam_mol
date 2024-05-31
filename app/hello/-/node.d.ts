@@ -1206,12 +1206,12 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_hotkey__mod_ctrl__4D4LLBBC = $mol_type_enforce<
+	type $mol_hotkey__mod_ctrl__0GKBEH42 = $mol_type_enforce<
 		ReturnType< $mol_string['submit_with_ctrl'] >
 		,
 		ReturnType< $mol_hotkey['mod_ctrl'] >
 	>
-	type $mol_hotkey__key__4UKG4SIE = $mol_type_enforce<
+	type $mol_hotkey__key__U9QDNOD1 = $mol_type_enforce<
 		({ 
 			enter( next?: ReturnType< $mol_string['submit'] > ): ReturnType< $mol_string['submit'] >,
 		}) 
@@ -1287,17 +1287,17 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_string__hint__C0R6UW08 = $mol_type_enforce<
+	type $mol_string__hint__TLRZ5E32 = $mol_type_enforce<
 		ReturnType< $mol_app_hello['name_hint'] >
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__value__HJW58TJ7 = $mol_type_enforce<
+	type $mol_string__value__YU0IUCZZ = $mol_type_enforce<
 		ReturnType< $mol_app_hello['name'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_view__sub__Y1FSMORU = $mol_type_enforce<
+	type $mol_view__sub__0WAITVWQ = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
