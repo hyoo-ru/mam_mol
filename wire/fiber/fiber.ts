@@ -103,6 +103,7 @@ namespace $ {
 		plan() {
 			$mol_wire_fiber.planning.add( this )
 			$mol_wire_fiber.plan()
+			return this
 		}
 		
 		reap() {
@@ -224,7 +225,8 @@ namespace $ {
 			
 			this.track_off( bu )
 			this.put( result )
-
+			
+			return this
 		}
 		
 		refresh() {
