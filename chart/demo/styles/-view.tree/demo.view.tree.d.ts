@@ -1,131 +1,131 @@
 declare namespace $ {
 
-	type $mol_plot_bar__title__ZK66RI5P = $mol_type_enforce<
+	type $mol_plot_bar__title__7J7UI2WT = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_styles['receipts_title'] >
 		,
 		ReturnType< $mol_plot_bar['title'] >
 	>
-	type $mol_plot_bar__series_x__EAFK8WS8 = $mol_type_enforce<
+	type $mol_plot_bar__series_x__2GFJBXOJ = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_styles['series_x'] >
 		,
 		ReturnType< $mol_plot_bar['series_x'] >
 	>
-	type $mol_plot_bar__series_y__1Y8AZ2OW = $mol_type_enforce<
+	type $mol_plot_bar__series_y__J49KS9VY = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_styles['series_2_y'] >
 		,
 		ReturnType< $mol_plot_bar['series_y'] >
 	>
-	type $mol_plot_bar__title__N0FOMWNC = $mol_type_enforce<
+	type $mol_plot_bar__title__VTOW1P3D = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_styles['receipts_confirmed_title'] >
 		,
 		ReturnType< $mol_plot_bar['title'] >
 	>
-	type $mol_plot_bar__series_x__BOUGV37S = $mol_type_enforce<
+	type $mol_plot_bar__series_x__A3F35AWN = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_styles['series_x'] >
 		,
 		ReturnType< $mol_plot_bar['series_x'] >
 	>
-	type $mol_plot_bar__series_y__NOBOXQ1Y = $mol_type_enforce<
+	type $mol_plot_bar__series_y__ONJU60HV = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_styles['series_3_y'] >
 		,
 		ReturnType< $mol_plot_bar['series_y'] >
 	>
-	type $mol_plot_dot__title__Q7PIP36D = $mol_type_enforce<
+	type $mol_plot_dot__title__TPAAG9XI = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_styles['maximum_title'] >
 		,
 		ReturnType< $mol_plot_dot['title'] >
 	>
-	type $mol_plot_dot__series_x__Q6XLFZ8Y = $mol_type_enforce<
+	type $mol_plot_dot__series_x__W42XLGHG = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_styles['series_x'] >
 		,
 		ReturnType< $mol_plot_dot['series_x'] >
 	>
-	type $mol_plot_dot__series_y__S3VDU5T3 = $mol_type_enforce<
+	type $mol_plot_dot__series_y__ZFUOPICU = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_styles['series_1_y'] >
 		,
 		ReturnType< $mol_plot_dot['series_y'] >
 	>
-	type $mol_plot_line__type__6RNXMRK0 = $mol_type_enforce<
+	type $mol_plot_line__type__6XR7WOBH = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_plot_line['type'] >
 	>
-	type $mol_plot_line__title__1YAWRC64 = $mol_type_enforce<
+	type $mol_plot_line__title__Z4QSYCGY = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_styles['waste_title'] >
 		,
 		ReturnType< $mol_plot_line['title'] >
 	>
-	type $mol_plot_line__series_x__QQ88F4CX = $mol_type_enforce<
+	type $mol_plot_line__series_x__HIQ63BEA = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_styles['series_x'] >
 		,
 		ReturnType< $mol_plot_line['series_x'] >
 	>
-	type $mol_plot_line__series_y__GBKHF7HT = $mol_type_enforce<
+	type $mol_plot_line__series_y__9PRQMB8J = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_styles['series_4_y'] >
 		,
 		ReturnType< $mol_plot_line['series_y'] >
 	>
-	type $mol_plot_group__title__QTD5E5BP = $mol_type_enforce<
+	type $mol_plot_group__title__3CVKBPK6 = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_styles['purchases_title'] >
 		,
 		ReturnType< $mol_plot_group['title'] >
 	>
-	type $mol_plot_group__series_x__VOVB2QER = $mol_type_enforce<
+	type $mol_plot_group__series_x__OLF2MZM4 = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_styles['series_x'] >
 		,
 		ReturnType< $mol_plot_group['series_x'] >
 	>
-	type $mol_plot_group__series_y__6Y8QVG5U = $mol_type_enforce<
+	type $mol_plot_group__series_y__5Z44R5Y8 = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_styles['series_5_y'] >
 		,
 		ReturnType< $mol_plot_group['series_y'] >
 	>
-	type $mol_plot_group__graphs__RJ8WR09N = $mol_type_enforce<
+	type $mol_plot_group__graphs__1VCZ64U2 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_plot_group['graphs'] >
 	>
-	type $mol_plot_line__type__4QQVR0BP = $mol_type_enforce<
+	type $mol_plot_line__type__O3POVD77 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_plot_line['type'] >
 	>
-	type $mol_plot_group__title__DKVCAQLN = $mol_type_enforce<
+	type $mol_plot_group__title__B35TNBWE = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_styles['taxes_title'] >
 		,
 		ReturnType< $mol_plot_group['title'] >
 	>
-	type $mol_plot_group__series_x__SR1YOG1Z = $mol_type_enforce<
+	type $mol_plot_group__series_x__4K3G0N6Z = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_styles['series_x'] >
 		,
 		ReturnType< $mol_plot_group['series_x'] >
 	>
-	type $mol_plot_group__series_y__I6067O8T = $mol_type_enforce<
+	type $mol_plot_group__series_y__LZR0PPB2 = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_styles['series_6_y'] >
 		,
 		ReturnType< $mol_plot_group['series_y'] >
 	>
-	type $mol_plot_group__graphs__SJHBSYT7 = $mol_type_enforce<
+	type $mol_plot_group__graphs__D9JKM6C0 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_plot_group['graphs'] >
 	>
-	type $mol_plot_ruler_vert__title__72XHQF2V = $mol_type_enforce<
+	type $mol_plot_ruler_vert__title__7WOTC0L5 = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_styles['energy_title'] >
 		,
 		ReturnType< $mol_plot_ruler_vert['title'] >
 	>
-	type $mol_plot_mark_hor__title__60FTQNGS = $mol_type_enforce<
+	type $mol_plot_mark_hor__title__5HYUFCP2 = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_styles['day_title'] >
 		,
 		ReturnType< $mol_plot_mark_hor['title'] >
 	>
-	type $mol_plot_mark_hor__series_x__VMJH8CLX = $mol_type_enforce<
+	type $mol_plot_mark_hor__series_x__DLVV6FY3 = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_styles['series_x'] >
 		,
 		ReturnType< $mol_plot_mark_hor['series_x'] >
 	>
-	type $mol_chart__graphs__SIJNQD0F = $mol_type_enforce<
+	type $mol_chart__graphs__EZXE29J6 = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_styles['graphs'] >
 		,
 		ReturnType< $mol_chart['graphs'] >
