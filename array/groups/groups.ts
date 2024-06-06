@@ -12,7 +12,7 @@ namespace $ {
 			const list = ( res[ group( item ) ] ||= [] )
 			list.push( item )
 		}
-		return res as $mol_type_immutable_deep< typeof res >
+		return res as Readonly< typeof res >
 	}
 	
 }
