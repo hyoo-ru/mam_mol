@@ -1,101 +1,101 @@
 declare namespace $ {
 
-	type $mol_audio_demo_sample_room_status__DKS7LIOF = $mol_type_enforce<
+	type $mol_audio_demo_sample_room_status__3CXE5AFQ = $mol_type_enforce<
 		Parameters< $mol_audio_demo_sample['room_status'] >[0]
 		,
 		Parameters< ReturnType< $mol_audio_demo_sample['Room'] >['status'] >[0]
 	>
-	type $mol_audio_demo_sample_sample_active__QZDYC0EX = $mol_type_enforce<
+	type $mol_audio_demo_sample_sample_active__O1G16J4U = $mol_type_enforce<
 		Parameters< $mol_audio_demo_sample['sample_active'] >[0]
 		,
 		Parameters< ReturnType< $mol_audio_demo_sample['Sample'] >['active'] >[0]
 	>
-	type $mol_audio_demo_sample_loop__TU4EA7KC = $mol_type_enforce<
+	type $mol_audio_demo_sample_loop__FNG466N8 = $mol_type_enforce<
 		Parameters< $mol_audio_demo_sample['loop'] >[0]
 		,
 		Parameters< ReturnType< $mol_audio_demo_sample['Sample'] >['loop'] >[0]
 	>
-	type $mol_audio_sample__loop_default__TXPVA4G0 = $mol_type_enforce<
+	type $mol_audio_sample__loop_default__4H1HDADP = $mol_type_enforce<
 		boolean
 		,
 		ReturnType< $mol_audio_sample['loop_default'] >
 	>
-	type $mol_audio_sample__buffer__POXLXZS7 = $mol_type_enforce<
+	type $mol_audio_sample__buffer__NVYLZZSN = $mol_type_enforce<
 		ReturnType< $mol_audio_demo_sample['sample_buffer'] >
 		,
 		ReturnType< $mol_audio_sample['buffer'] >
 	>
-	type $mol_string__value__B5RLPIYB = $mol_type_enforce<
+	type $mol_string__value__L07FE90A = $mol_type_enforce<
 		ReturnType< $mol_audio_demo_sample['sample_url'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_form_field__name__T347FYVU = $mol_type_enforce<
+	type $mol_form_field__name__S38NJZEN = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__control__R52BNITQ = $mol_type_enforce<
+	type $mol_form_field__control__OP7FZ5PD = $mol_type_enforce<
 		ReturnType< $mol_audio_demo_sample['Sample_url'] >
 		,
 		ReturnType< $mol_form_field['control'] >
 	>
-	type $mol_check_icon__checked__B59N70WB = $mol_type_enforce<
+	type $mol_check_icon__checked__EBQEO8BR = $mol_type_enforce<
 		ReturnType< $mol_audio_demo_sample['sample_active'] >
 		,
 		ReturnType< $mol_check_icon['checked'] >
 	>
-	type $mol_check_icon__title__S70L4SEJ = $mol_type_enforce<
+	type $mol_check_icon__title__KCBDINEI = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_check_icon['title'] >
 	>
-	type $mol_check_icon__Icon__KCV12AQP = $mol_type_enforce<
+	type $mol_check_icon__Icon__VWMHZV3J = $mol_type_enforce<
 		ReturnType< $mol_audio_demo_sample['Active_icon'] >
 		,
 		ReturnType< $mol_check_icon['Icon'] >
 	>
-	type $mol_button_minor__click__QNSMJEEC = $mol_type_enforce<
+	type $mol_button_minor__click__DY0HTKHV = $mol_type_enforce<
 		ReturnType< $mol_audio_demo_sample['start_click'] >
 		,
 		ReturnType< $mol_button_minor['click'] >
 	>
-	type $mol_button_minor__title__XJAIA9RY = $mol_type_enforce<
+	type $mol_button_minor__title__MWFRJ52T = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_minor['title'] >
 	>
-	type $mol_check_icon__checked__6QVFWTS5 = $mol_type_enforce<
+	type $mol_check_icon__checked__5JZGI4TZ = $mol_type_enforce<
 		ReturnType< $mol_audio_demo_sample['loop'] >
 		,
 		ReturnType< $mol_check_icon['checked'] >
 	>
-	type $mol_check_icon__title__U5UATODX = $mol_type_enforce<
+	type $mol_check_icon__title__59N04J2X = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_check_icon['title'] >
 	>
-	type $mol_check_icon__Icon__9Y7VRNNT = $mol_type_enforce<
+	type $mol_check_icon__Icon__SA2D3EUT = $mol_type_enforce<
 		ReturnType< $mol_audio_demo_sample['Loop_icon'] >
 		,
 		ReturnType< $mol_check_icon['Icon'] >
 	>
-	type $mol_row__sub__LTXATFZM = $mol_type_enforce<
+	type $mol_row__sub__XF599V97 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_row['sub'] >
 	>
-	type $mol_audio_status__status__B3U3D6UL = $mol_type_enforce<
+	type $mol_audio_status__status__CUXULC75 = $mol_type_enforce<
 		ReturnType< $mol_audio_demo_sample['room_status'] >
 		,
 		ReturnType< $mol_audio_status['status'] >
 	>
-	type $mol_list__rows__8H8FR2VR = $mol_type_enforce<
+	type $mol_list__rows__ZSSQQ9OU = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_audio_room__input__9AOT9GLD = $mol_type_enforce<
+	type $mol_audio_room__input__II02JL0S = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_audio_room['input'] >
