@@ -1,46 +1,46 @@
 declare namespace $ {
 
-	type $mol_number__value__PMKBJ93L = $mol_type_enforce<
+	type $mol_number__value__MSUIC83S = $mol_type_enforce<
 		ReturnType< $mol_list_demo['items_count'] >
 		,
 		ReturnType< $mol_number['value'] >
 	>
-	type $mol_number__value_min__CWZMIPZH = $mol_type_enforce<
+	type $mol_number__value_min__ONPHZV9R = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_number['value_min'] >
 	>
-	type $mol_number__value_max__W8RO4V9E = $mol_type_enforce<
+	type $mol_number__value_max__YHDZKEOC = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_number['value_max'] >
 	>
-	type $mol_labeler__title__KRRJNXNG = $mol_type_enforce<
+	type $mol_labeler__title__QVCERVTA = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content__FPVGDFYS = $mol_type_enforce<
+	type $mol_labeler__content__FEON8935 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_link__title__HSUV27SV = $mol_type_enforce<
+	type $mol_link__title__SVI23DO8 = $mol_type_enforce<
 		ReturnType< $mol_list_demo['item_title'] >
 		,
 		ReturnType< $mol_link['title'] >
 	>
-	type $mol_paragraph__title__18IY3SKQ = $mol_type_enforce<
+	type $mol_paragraph__title__YKS373IA = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_list__rows__WSHSHIGG = $mol_type_enforce<
+	type $mol_list__rows__W5W2AKGO = $mol_type_enforce<
 		ReturnType< $mol_list_demo['list_items'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_list__Empty__5J9G0TFC = $mol_type_enforce<
+	type $mol_list__Empty__CMS7TRX3 = $mol_type_enforce<
 		ReturnType< $mol_list_demo['List_empty'] >
 		,
 		ReturnType< $mol_list['Empty'] >
