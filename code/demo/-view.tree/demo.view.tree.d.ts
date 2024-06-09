@@ -1,46 +1,46 @@
 declare namespace $ {
 
-	type $mol_code__format__SL9SSM5I = $mol_type_enforce<
+	type $mol_code__format__VM32TLEJ = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_code['format'] >
 	>
-	type $mol_code__format__9512T574 = $mol_type_enforce<
+	type $mol_code__format__5J5ESCQO = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_code['format'] >
 	>
-	type $mol_code__format__RBZPL4FW = $mol_type_enforce<
+	type $mol_code__format__JM8FZDDY = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_code['format'] >
 	>
-	type $mol_code__format__BJ03SBIZ = $mol_type_enforce<
+	type $mol_code__format__S1SJBRG3 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_code['format'] >
 	>
-	type $mol_code__format__FKWQHTMN = $mol_type_enforce<
+	type $mol_code__format__ILR15FBQ = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_code['format'] >
 	>
-	type $mol_code__format__K8PYXIE2 = $mol_type_enforce<
+	type $mol_code__format__X98ERMEQ = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_code['format'] >
 	>
-	type $mol_code__format__G9T70E9K = $mol_type_enforce<
+	type $mol_code__format__JK9T161Q = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_code['format'] >
 	>
-	type $mol_code__format__S8701I2C = $mol_type_enforce<
+	type $mol_code__format__UDTTFGHU = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_code['format'] >
 	>
-	type $mol_code__format__EYKNT8WJ = $mol_type_enforce<
+	type $mol_code__format__WXCOT37G = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_code['format'] >

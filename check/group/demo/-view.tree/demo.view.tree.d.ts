@@ -1,91 +1,91 @@
 declare namespace $ {
 
-	type $mol_check_group__title__UWGBN5RT = $mol_type_enforce<
+	type $mol_check_group__title__RZB20IZG = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_check_group['title'] >
 	>
-	type $mol_check_group__checks__TRQCKK2A = $mol_type_enforce<
+	type $mol_check_group__checks__OMR83W2S = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_check_group['checks'] >
 	>
-	type $mol_check_box__title__4OD24S7Z = $mol_type_enforce<
+	type $mol_check_box__title__MIQTNAEA = $mol_type_enforce<
 		ReturnType< $mol_check_group_demo['strength_title'] >
 		,
 		ReturnType< $mol_check_box['title'] >
 	>
-	type $mol_check_box__checked__PUT4UEDJ = $mol_type_enforce<
+	type $mol_check_box__checked__UMJ868F3 = $mol_type_enforce<
 		ReturnType< $mol_check_group_demo['strength'] >
 		,
 		ReturnType< $mol_check_box['checked'] >
 	>
-	type $mol_check_box__title__CMOQSHKZ = $mol_type_enforce<
+	type $mol_check_box__title__XA336XO7 = $mol_type_enforce<
 		ReturnType< $mol_check_group_demo['perception_title'] >
 		,
 		ReturnType< $mol_check_box['title'] >
 	>
-	type $mol_check_box__checked__1ELFJD12 = $mol_type_enforce<
+	type $mol_check_box__checked__XJUNQ0UU = $mol_type_enforce<
 		ReturnType< $mol_check_group_demo['perception'] >
 		,
 		ReturnType< $mol_check_box['checked'] >
 	>
-	type $mol_check_box__title__YL4V6G01 = $mol_type_enforce<
+	type $mol_check_box__title__J729NKN1 = $mol_type_enforce<
 		ReturnType< $mol_check_group_demo['endurance_title'] >
 		,
 		ReturnType< $mol_check_box['title'] >
 	>
-	type $mol_check_box__checked__SSGDGBQQ = $mol_type_enforce<
+	type $mol_check_box__checked__ZPTNNAH2 = $mol_type_enforce<
 		ReturnType< $mol_check_group_demo['endurance'] >
 		,
 		ReturnType< $mol_check_box['checked'] >
 	>
-	type $mol_check_box__title__8YQ3CAII = $mol_type_enforce<
+	type $mol_check_box__title__SE6GP2A3 = $mol_type_enforce<
 		ReturnType< $mol_check_group_demo['charisma_title'] >
 		,
 		ReturnType< $mol_check_box['title'] >
 	>
-	type $mol_check_box__checked__TT7JKECC = $mol_type_enforce<
+	type $mol_check_box__checked__ZF61B7EU = $mol_type_enforce<
 		ReturnType< $mol_check_group_demo['charisma'] >
 		,
 		ReturnType< $mol_check_box['checked'] >
 	>
-	type $mol_check_box__title__OW1ZGMCV = $mol_type_enforce<
+	type $mol_check_box__title__NC0USZMI = $mol_type_enforce<
 		ReturnType< $mol_check_group_demo['intelligence_title'] >
 		,
 		ReturnType< $mol_check_box['title'] >
 	>
-	type $mol_check_box__checked__TNQVHSRC = $mol_type_enforce<
+	type $mol_check_box__checked__69O4CVRA = $mol_type_enforce<
 		ReturnType< $mol_check_group_demo['intelligence'] >
 		,
 		ReturnType< $mol_check_box['checked'] >
 	>
-	type $mol_check_box__title__XCTMZM6L = $mol_type_enforce<
+	type $mol_check_box__title__LVNM5JG9 = $mol_type_enforce<
 		ReturnType< $mol_check_group_demo['agility_title'] >
 		,
 		ReturnType< $mol_check_box['title'] >
 	>
-	type $mol_check_box__checked__O8A7YGW0 = $mol_type_enforce<
+	type $mol_check_box__checked__A5ORC2WN = $mol_type_enforce<
 		ReturnType< $mol_check_group_demo['agility'] >
 		,
 		ReturnType< $mol_check_box['checked'] >
 	>
-	type $mol_check_box__title__3P21YQ2J = $mol_type_enforce<
+	type $mol_check_box__title__BE1XW1JC = $mol_type_enforce<
 		ReturnType< $mol_check_group_demo['luck_title'] >
 		,
 		ReturnType< $mol_check_box['title'] >
 	>
-	type $mol_check_box__checked__QGHTP3FS = $mol_type_enforce<
+	type $mol_check_box__checked__657HSB8O = $mol_type_enforce<
 		ReturnType< $mol_check_group_demo['luck'] >
 		,
 		ReturnType< $mol_check_box['checked'] >
 	>
-	type $mol_list__rows__NXTEJUZL = $mol_type_enforce<
+	type $mol_list__rows__XCGBGCLV = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_list__rows__01U0WC4N = $mol_type_enforce<
+	type $mol_list__rows__4X88N18M = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >
