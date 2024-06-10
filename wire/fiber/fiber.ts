@@ -25,7 +25,7 @@ namespace $ {
 			
 			if( this.plan_task ) return
 			
-			this.plan_task = new $mol_after_tick( ()=> {
+			this.plan_task = new $mol_after_frame( ()=> {
 				
 				try {
 					this.sync()
