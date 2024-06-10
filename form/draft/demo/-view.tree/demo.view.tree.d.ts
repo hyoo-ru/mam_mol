@@ -9,77 +9,77 @@ declare namespace $ {
 		hobbies( next?: Record<string, any> ): Record<string, any>
 	}
 	
-	type $mol_form_draft_demo_publish__AW4XO46L = $mol_type_enforce<
+	type $mol_form_draft_demo_publish__AQXTHYST = $mol_type_enforce<
 		Parameters< $mol_form_draft_demo['publish'] >[0]
 		,
 		Parameters< ReturnType< $mol_form_draft_demo['Form'] >['submit'] >[0]
 	>
-	type $mol_form_draft_demo_value_str__HCLY6OF1 = $mol_type_enforce<
+	type $mol_form_draft_demo_value_str__DR7NQI18 = $mol_type_enforce<
 		Parameters< $mol_form_draft_demo['value_str'] >[0]
 		,
 		Parameters< ReturnType< $mol_form_draft_demo['Form'] >['value_str'] >[0]
 	>
-	type $mol_form_draft_demo_value_str__QA8IUNAA = $mol_type_enforce<
+	type $mol_form_draft_demo_value_str__BXRBOOR7 = $mol_type_enforce<
 		Parameters< $mol_form_draft_demo['value_str'] >[1]
 		,
 		Parameters< ReturnType< $mol_form_draft_demo['Form'] >['value_str'] >[1]
 	>
-	type $mol_form_draft_demo_list_string__UGQTRH66 = $mol_type_enforce<
+	type $mol_form_draft_demo_list_string__4W88TFQS = $mol_type_enforce<
 		Parameters< $mol_form_draft_demo['list_string'] >[0]
 		,
 		Parameters< ReturnType< $mol_form_draft_demo['Form'] >['list_string'] >[0]
 	>
-	type $mol_form_draft_demo_list_string__0W9U93Y2 = $mol_type_enforce<
+	type $mol_form_draft_demo_list_string__CZ0QW29B = $mol_type_enforce<
 		Parameters< $mol_form_draft_demo['list_string'] >[1]
 		,
 		Parameters< ReturnType< $mol_form_draft_demo['Form'] >['list_string'] >[1]
 	>
-	type $mol_form_draft_demo_dictionary_bool__AW3I1Z8E = $mol_type_enforce<
+	type $mol_form_draft_demo_dictionary_bool__1UZA73FP = $mol_type_enforce<
 		Parameters< $mol_form_draft_demo['dictionary_bool'] >[0]
 		,
 		Parameters< ReturnType< $mol_form_draft_demo['Form'] >['dictionary_bool'] >[0]
 	>
-	type $mol_form_draft_demo_dictionary_bool__JW1F0D06 = $mol_type_enforce<
+	type $mol_form_draft_demo_dictionary_bool__HNUE2E9T = $mol_type_enforce<
 		Parameters< $mol_form_draft_demo['dictionary_bool'] >[1]
 		,
 		Parameters< ReturnType< $mol_form_draft_demo['Form'] >['dictionary_bool'] >[1]
 	>
-	type $mol_form_draft_demo_reset__PLR88ZLI = $mol_type_enforce<
+	type $mol_form_draft_demo_reset__8ZIPRD48 = $mol_type_enforce<
 		Parameters< $mol_form_draft_demo['reset'] >[0]
 		,
 		Parameters< ReturnType< $mol_form_draft_demo['Form'] >['reset'] >[0]
 	>
-	type $mol_string__hint__L07034WC = $mol_type_enforce<
+	type $mol_string__hint__U74QLV7B = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__value__1JW24M76 = $mol_type_enforce<
+	type $mol_string__value__N1UCGOIE = $mol_type_enforce<
 		ReturnType< $mol_form_draft_demo['value_str'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_form_field__name__QI3I22TS = $mol_type_enforce<
+	type $mol_form_field__name__3F461OX2 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__bids__VJM7148C = $mol_type_enforce<
+	type $mol_form_field__bids__KXY4PCRH = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_form_field['bids'] >
 	>
-	type $mol_form_field__Content__92W1G33B = $mol_type_enforce<
+	type $mol_form_field__Content__7BGLUPPZ = $mol_type_enforce<
 		ReturnType< $mol_form_draft_demo['Title'] >
 		,
 		ReturnType< $mol_form_field['Content'] >
 	>
-	type $mol_switch__value__NK1GLZG0 = $mol_type_enforce<
+	type $mol_switch__value__Y9556NZ9 = $mol_type_enforce<
 		ReturnType< $mol_form_draft_demo['value_str'] >
 		,
 		ReturnType< $mol_switch['value'] >
 	>
-	type $mol_switch__options__6GB0B68O = $mol_type_enforce<
+	type $mol_switch__options__G69HBNIO = $mol_type_enforce<
 		({ 
 			'article': string,
 			'news': string,
@@ -88,27 +88,27 @@ declare namespace $ {
 		,
 		ReturnType< $mol_switch['options'] >
 	>
-	type $mol_form_field__name__NIWXPOKF = $mol_type_enforce<
+	type $mol_form_field__name__PJA30ASF = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__bids__I2Y4BEMQ = $mol_type_enforce<
+	type $mol_form_field__bids__GUPKL15W = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_form_field['bids'] >
 	>
-	type $mol_form_field__Content__SR74K8T9 = $mol_type_enforce<
+	type $mol_form_field__Content__RKS36HA3 = $mol_type_enforce<
 		ReturnType< $mol_form_draft_demo['Type'] >
 		,
 		ReturnType< $mol_form_field['Content'] >
 	>
-	type $mol_switch__value__ZJIB151M = $mol_type_enforce<
+	type $mol_switch__value__3VURREJB = $mol_type_enforce<
 		ReturnType< $mol_form_draft_demo['value_str'] >
 		,
 		ReturnType< $mol_switch['value'] >
 	>
-	type $mol_switch__options__A2CIQWI1 = $mol_type_enforce<
+	type $mol_switch__options__GTMIE2S4 = $mol_type_enforce<
 		({ 
 			'false': string,
 			'true': string,
@@ -116,47 +116,47 @@ declare namespace $ {
 		,
 		ReturnType< $mol_switch['options'] >
 	>
-	type $mol_form_field__name__AG7CP3BF = $mol_type_enforce<
+	type $mol_form_field__name__ZAAEJ9VF = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__Content__O7NUUZE6 = $mol_type_enforce<
+	type $mol_form_field__Content__VAI03P03 = $mol_type_enforce<
 		ReturnType< $mol_form_draft_demo['Adult'] >
 		,
 		ReturnType< $mol_form_field['Content'] >
 	>
-	type $mol_textarea__hint__QTS5ZB43 = $mol_type_enforce<
+	type $mol_textarea__hint__Z3PDKEI5 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_textarea['hint'] >
 	>
-	type $mol_textarea__value__WW877R9H = $mol_type_enforce<
+	type $mol_textarea__value__TW8HR6BO = $mol_type_enforce<
 		ReturnType< $mol_form_draft_demo['value_str'] >
 		,
 		ReturnType< $mol_textarea['value'] >
 	>
-	type $mol_form_field__name__TY2LR2JX = $mol_type_enforce<
+	type $mol_form_field__name__ICC3D9ZL = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__bids__VVR19WCF = $mol_type_enforce<
+	type $mol_form_field__bids__PDHR20AG = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_form_field['bids'] >
 	>
-	type $mol_form_field__Content__2F8CC8LW = $mol_type_enforce<
+	type $mol_form_field__Content__SSIUB7O0 = $mol_type_enforce<
 		ReturnType< $mol_form_draft_demo['Content'] >
 		,
 		ReturnType< $mol_form_field['Content'] >
 	>
-	type $mol_check_list__dictionary__MBTGG6CL = $mol_type_enforce<
+	type $mol_check_list__dictionary__32IFMGID = $mol_type_enforce<
 		ReturnType< $mol_form_draft_demo['dictionary_bool'] >
 		,
 		ReturnType< $mol_check_list['dictionary'] >
 	>
-	type $mol_check_list__options__HMPORNSW = $mol_type_enforce<
+	type $mol_check_list__options__AYI96F03 = $mol_type_enforce<
 		({ 
 			'programming': string,
 			'bikinkg': string,
@@ -165,17 +165,17 @@ declare namespace $ {
 		,
 		ReturnType< $mol_check_list['options'] >
 	>
-	type $mol_form_field__name__SAJC9AGK = $mol_type_enforce<
+	type $mol_form_field__name__EUIL5MTH = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__Content__LTQFKEX8 = $mol_type_enforce<
+	type $mol_form_field__Content__E4AJ1A65 = $mol_type_enforce<
 		ReturnType< $mol_form_draft_demo['Hobbies'] >
 		,
 		ReturnType< $mol_form_field['Content'] >
 	>
-	type $mol_select_list__dictionary__GEK82K5T = $mol_type_enforce<
+	type $mol_select_list__dictionary__TQOOMINP = $mol_type_enforce<
 		({ 
 			'jocker': string,
 			'harley': string,
@@ -189,77 +189,77 @@ declare namespace $ {
 		,
 		ReturnType< $mol_select_list['dictionary'] >
 	>
-	type $mol_select_list__value__5T5FVL62 = $mol_type_enforce<
+	type $mol_select_list__value__AQWZD278 = $mol_type_enforce<
 		ReturnType< $mol_form_draft_demo['list_string'] >
 		,
 		ReturnType< $mol_select_list['value'] >
 	>
-	type $mol_form_field__name__6439EL94 = $mol_type_enforce<
+	type $mol_form_field__name__NWYOC377 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__Content__FD5P1Y5L = $mol_type_enforce<
+	type $mol_form_field__Content__DZYCJR4Y = $mol_type_enforce<
 		ReturnType< $mol_form_draft_demo['Friends'] >
 		,
 		ReturnType< $mol_form_field['Content'] >
 	>
-	type $mol_form_group__sub__EF3WTKKH = $mol_type_enforce<
+	type $mol_form_group__sub__YUEUGIQM = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_form_group['sub'] >
 	>
-	type $mol_button_major__title__PICHQ0TC = $mol_type_enforce<
+	type $mol_button_major__title__HREITESY = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_major['title'] >
 	>
-	type $mol_button_major__click__WAX84BFM = $mol_type_enforce<
+	type $mol_button_major__click__OTE5JKBS = $mol_type_enforce<
 		ReturnType< $mol_form_draft_demo['publish'] >
 		,
 		ReturnType< $mol_button_major['click'] >
 	>
-	type $mol_button_major__enabled__JA6Z3CD3 = $mol_type_enforce<
+	type $mol_button_major__enabled__4LK5L8HW = $mol_type_enforce<
 		ReturnType< $mol_form_draft_demo['publish_allowed'] >
 		,
 		ReturnType< $mol_button_major['enabled'] >
 	>
-	type $mol_status__message__0VW03H33 = $mol_type_enforce<
+	type $mol_status__message__EDA5PVQT = $mol_type_enforce<
 		ReturnType< $mol_form_draft_demo['result'] >
 		,
 		ReturnType< $mol_status['message'] >
 	>
-	type $mol_button_minor__title__16NQGMQ2 = $mol_type_enforce<
+	type $mol_button_minor__title__1REOCC56 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_minor['title'] >
 	>
-	type $mol_button_minor__click__1H1VR1UE = $mol_type_enforce<
+	type $mol_button_minor__click__82O2QSJN = $mol_type_enforce<
 		ReturnType< $mol_form_draft_demo['reset'] >
 		,
 		ReturnType< $mol_button_minor['click'] >
 	>
-	type $mol_button_minor__enabled__LCM6MI7P = $mol_type_enforce<
+	type $mol_button_minor__enabled__PL06CXAV = $mol_type_enforce<
 		ReturnType< $mol_form_draft_demo['changed'] >
 		,
 		ReturnType< $mol_button_minor['enabled'] >
 	>
-	type $mol_form_draft__model__7NCFTBPX = $mol_type_enforce<
+	type $mol_form_draft__model__HPWITWZU = $mol_type_enforce<
 		ReturnType< $mol_form_draft_demo['model'] >
 		,
 		ReturnType< $mol_form_draft['model'] >
 	>
-	type $mol_form_draft__form_fields__AOBC5AOF = $mol_type_enforce<
+	type $mol_form_draft__form_fields__U2FUGGGW = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_form_draft['form_fields'] >
 	>
-	type $mol_form_draft__body__SKAC0ONG = $mol_type_enforce<
+	type $mol_form_draft__body__3XVNXL7K = $mol_type_enforce<
 		ReturnType< $mol_form_draft_demo['form_body'] >
 		,
 		ReturnType< $mol_form_draft['body'] >
 	>
-	type $mol_form_draft__buttons__UKM82NDE = $mol_type_enforce<
+	type $mol_form_draft__buttons__2O51I2F0 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_form_draft['buttons'] >
