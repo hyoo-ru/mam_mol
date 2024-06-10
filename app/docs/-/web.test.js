@@ -726,7 +726,7 @@ var $;
 var $;
 (function ($_1) {
     $mol_test_mocks.push($ => {
-        $.$mol_after_frame = $mol_after_mock_commmon;
+        $.$mol_after_timeout = $mol_after_mock_timeout;
     });
 })($ || ($ = {}));
 
@@ -814,15 +814,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
-var $;
-(function ($_1) {
-    $mol_test_mocks.push($ => {
-        $.$mol_after_timeout = $mol_after_mock_timeout;
-    });
-})($ || ($ = {}));
 
 ;
 "use strict";
@@ -1567,6 +1558,15 @@ var $;
             $mol_assert_equal($mol_key(/./), '"/./"');
             $mol_assert_equal($mol_key(/\./gimsu), '"/\\\\./gimsu"');
         },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
+    $mol_test_mocks.push($ => {
+        $.$mol_after_frame = $mol_after_mock_commmon;
     });
 })($ || ($ = {}));
 
