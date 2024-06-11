@@ -63,9 +63,10 @@ namespace $.$$ {
 
 			next.x.max = this.repos_x( next.x.max )
 			next.x.min = this.repos_x( next.x.min )
-			
+			if( next.x.max < next.x.min ) next.x = next.x.inversed
 			next.y.max = this.repos_y( next.y.max )
 			next.y.min = this.repos_y( next.y.min )
+			if( next.y.max < next.y.min ) next.y = next.y.inversed
 			
 			return next
 		}
