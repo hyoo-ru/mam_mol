@@ -1,31 +1,31 @@
 declare namespace $ {
 
-	type $mol_plot_map_heat_level__hint__5BTCQG1T = $mol_type_enforce<
+	type $mol_plot_map_heat_level__hint__P07BYYQ6 = $mol_type_enforce<
 		ReturnType< $mol_plot_map_heat['level_hint'] >
 		,
 		ReturnType< $mol_plot_map_heat_level['hint'] >
 	>
-	type $mol_plot_map_heat_level__points__X2EJIIV8 = $mol_type_enforce<
+	type $mol_plot_map_heat_level__points__5496EAE5 = $mol_type_enforce<
 		ReturnType< $mol_plot_map_heat['level_points'] >
 		,
 		ReturnType< $mol_plot_map_heat_level['points'] >
 	>
-	type $mol_plot_map_heat_level__opacity__KKUOSPFP = $mol_type_enforce<
+	type $mol_plot_map_heat_level__opacity__L28PQSNW = $mol_type_enforce<
 		ReturnType< $mol_plot_map_heat['level_opacity'] >
 		,
 		ReturnType< $mol_plot_map_heat_level['opacity'] >
 	>
-	type $mol_plot_map_heat_level__diameter__55LL63U4 = $mol_type_enforce<
+	type $mol_plot_map_heat_level__diameter__WMV20088 = $mol_type_enforce<
 		ReturnType< $mol_plot_map_heat['level_diameter'] >
 		,
 		ReturnType< $mol_plot_map_heat_level['diameter'] >
 	>
-	type $mol_plot_map_heat_level__aspect__SGGRZL2A = $mol_type_enforce<
+	type $mol_plot_map_heat_level__aspect__IV19K83W = $mol_type_enforce<
 		ReturnType< $mol_plot_map_heat['level_aspect'] >
 		,
 		ReturnType< $mol_plot_map_heat_level['aspect'] >
 	>
-	type $mol_plot_graph_sample__color__GRB6SOJO = $mol_type_enforce<
+	type $mol_plot_graph_sample__color__DTMB70A2 = $mol_type_enforce<
 		ReturnType< $mol_plot_map_heat['color'] >
 		,
 		ReturnType< $mol_plot_graph_sample['color'] >
