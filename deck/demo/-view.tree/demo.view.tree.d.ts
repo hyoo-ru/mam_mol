@@ -1,56 +1,56 @@
 declare namespace $ {
 
-	type $mol_card__title__LVZK9TFV = $mol_type_enforce<
+	type $mol_card__title__00AY4XCB = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_card['title'] >
 	>
-	type $mol_card__content__FD6X3IEO = $mol_type_enforce<
+	type $mol_card__content__POQBU6G2 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_card['content'] >
 	>
-	type $mol_card__title__EO3J9D3R = $mol_type_enforce<
+	type $mol_card__title__R7HDTXR9 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_card['title'] >
 	>
-	type $mol_card__content__DV5QBDMD = $mol_type_enforce<
+	type $mol_card__content__VJ3WJEG7 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_card['content'] >
 	>
-	type $mol_card__title__RPQ7YXHL = $mol_type_enforce<
+	type $mol_card__title__RZ196XF2 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_card['title'] >
 	>
-	type $mol_card__content__68YVYB72 = $mol_type_enforce<
+	type $mol_card__content__7DW3OBUL = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_card['content'] >
 	>
-	type $mol_card__title__XQ63E2NW = $mol_type_enforce<
+	type $mol_card__title__9ENC5E0Q = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_card['title'] >
 	>
-	type $mol_card__content__X6DQAJB6 = $mol_type_enforce<
+	type $mol_card__content__C16UFN0B = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_card['content'] >
 	>
-	type $mol_card__title__UEMU12QP = $mol_type_enforce<
+	type $mol_card__title__ZXSGCOBY = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_card['title'] >
 	>
-	type $mol_card__Content__OSKE6XN3 = $mol_type_enforce<
+	type $mol_card__Content__D8ELRLAA = $mol_type_enforce<
 		ReturnType< $mol_deck_demo['Spam_content'] >
 		,
 		ReturnType< $mol_card['Content'] >
 	>
-	type $mol_deck__items__7HFUIRMG = $mol_type_enforce<
+	type $mol_deck__items__W8RGKNG6 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_deck['items'] >

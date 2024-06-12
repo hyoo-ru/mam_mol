@@ -1,151 +1,151 @@
 declare namespace $ {
 
-	type $mol_audio_demo_sequencer_room_status__UZQNSA5F = $mol_type_enforce<
+	type $mol_audio_demo_sequencer_room_status__NQ6N6SKW = $mol_type_enforce<
 		Parameters< $mol_audio_demo_sequencer['room_status'] >[0]
 		,
 		Parameters< ReturnType< $mol_audio_demo_sequencer['Room'] >['status'] >[0]
 	>
-	type $mol_audio_demo_sequencer_room_active__HOC89Q8M = $mol_type_enforce<
+	type $mol_audio_demo_sequencer_room_active__8J8XFZXB = $mol_type_enforce<
 		Parameters< $mol_audio_demo_sequencer['room_active'] >[0]
 		,
 		Parameters< ReturnType< $mol_audio_demo_sequencer['Room'] >['active'] >[0]
 	>
-	type $mol_audio_demo_sequencer_beep_track_active__TAVKFK3U = $mol_type_enforce<
+	type $mol_audio_demo_sequencer_beep_track_active__GSRB652J = $mol_type_enforce<
 		Parameters< $mol_audio_demo_sequencer['beep_track_active'] >[0]
 		,
 		Parameters< ReturnType< $mol_audio_demo_sequencer['Beep_track'] >['active'] >[0]
 	>
-	type $mol_audio_melody__notes__9IXJNQKG = $mol_type_enforce<
+	type $mol_audio_melody__notes__5OBGQHRS = $mol_type_enforce<
 		ReturnType< $mol_audio_demo_sequencer['notes'] >
 		,
 		ReturnType< $mol_audio_melody['notes'] >
 	>
-	type $mol_audio_melody__note_length__R94YF5LX = $mol_type_enforce<
+	type $mol_audio_melody__note_length__C0OQH8WM = $mol_type_enforce<
 		ReturnType< $mol_audio_demo_sequencer['note_length'] >
 		,
 		ReturnType< $mol_audio_melody['note_length'] >
 	>
-	type $mol_audio_melody__note_off_part__VK8NJUMY = $mol_type_enforce<
+	type $mol_audio_melody__note_off_part__FNVHG1OC = $mol_type_enforce<
 		ReturnType< $mol_audio_demo_sequencer['note_off_part'] >
 		,
 		ReturnType< $mol_audio_melody['note_off_part'] >
 	>
-	type $mol_number__precision__BYVU4KMG = $mol_type_enforce<
+	type $mol_number__precision__GV2NFR89 = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_number['precision'] >
 	>
-	type $mol_number__value_min__XIWXUPKP = $mol_type_enforce<
+	type $mol_number__value_min__FJL3NL3E = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_number['value_min'] >
 	>
-	type $mol_number__value__U975EARK = $mol_type_enforce<
+	type $mol_number__value__M1JZO02B = $mol_type_enforce<
 		ReturnType< $mol_audio_demo_sequencer['note_length'] >
 		,
 		ReturnType< $mol_number['value'] >
 	>
-	type $mol_form_field__name__FGLWVKHG = $mol_type_enforce<
+	type $mol_form_field__name__4MBTOW97 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__control__10KXTJS6 = $mol_type_enforce<
+	type $mol_form_field__control__VG3U3YUS = $mol_type_enforce<
 		ReturnType< $mol_audio_demo_sequencer['Note_length'] >
 		,
 		ReturnType< $mol_form_field['control'] >
 	>
-	type $mol_number__precision__AIY2535M = $mol_type_enforce<
+	type $mol_number__precision__1K6FB3Y4 = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_number['precision'] >
 	>
-	type $mol_number__value_min__V53P26GX = $mol_type_enforce<
+	type $mol_number__value_min__RTY3SDTY = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_number['value_min'] >
 	>
-	type $mol_number__value__H08JB7H0 = $mol_type_enforce<
+	type $mol_number__value__WWNVA8NH = $mol_type_enforce<
 		ReturnType< $mol_audio_demo_sequencer['note_off_part'] >
 		,
 		ReturnType< $mol_number['value'] >
 	>
-	type $mol_form_field__name__6LJDQ4AO = $mol_type_enforce<
+	type $mol_form_field__name__GESQNOVM = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__control__NS3SE4VN = $mol_type_enforce<
+	type $mol_form_field__control__5JO1062Y = $mol_type_enforce<
 		ReturnType< $mol_audio_demo_sequencer['Note_off_part'] >
 		,
 		ReturnType< $mol_form_field['control'] >
 	>
-	type $mol_row__sub__USCU6T2Z = $mol_type_enforce<
+	type $mol_row__sub__85RSAP95 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_row['sub'] >
 	>
-	type $mol_textarea__hint__PBLDGIC1 = $mol_type_enforce<
+	type $mol_textarea__hint__WYTNLUQI = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_textarea['hint'] >
 	>
-	type $mol_textarea__value__Z1NCPFD7 = $mol_type_enforce<
+	type $mol_textarea__value__TOWNNK86 = $mol_type_enforce<
 		ReturnType< $mol_audio_demo_sequencer['notes'] >
 		,
 		ReturnType< $mol_textarea['value'] >
 	>
-	type $mol_form_field__name__0Y8YPZRT = $mol_type_enforce<
+	type $mol_form_field__name__3WJ1UBVR = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__control__7DA9QFDE = $mol_type_enforce<
+	type $mol_form_field__control__CE9HMNJ5 = $mol_type_enforce<
 		ReturnType< $mol_audio_demo_sequencer['Notes'] >
 		,
 		ReturnType< $mol_form_field['control'] >
 	>
-	type $mol_check_icon__hint__XAVNEQQX = $mol_type_enforce<
+	type $mol_check_icon__hint__UHBXPZMD = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_check_icon['hint'] >
 	>
-	type $mol_check_icon__Icon__9YKZ9VKJ = $mol_type_enforce<
+	type $mol_check_icon__Icon__N5QP4RB6 = $mol_type_enforce<
 		ReturnType< $mol_audio_demo_sequencer['Beep_active_icon'] >
 		,
 		ReturnType< $mol_check_icon['Icon'] >
 	>
-	type $mol_check_icon__checked__6B69KLGX = $mol_type_enforce<
+	type $mol_check_icon__checked__YOJTCLOG = $mol_type_enforce<
 		ReturnType< $mol_audio_demo_sequencer['beep_track_active'] >
 		,
 		ReturnType< $mol_check_icon['checked'] >
 	>
-	type $mol_button_minor__click__JVKUYOPT = $mol_type_enforce<
+	type $mol_button_minor__click__FWZRDZ3K = $mol_type_enforce<
 		ReturnType< $mol_audio_demo_sequencer['beep_track_start'] >
 		,
 		ReturnType< $mol_button_minor['click'] >
 	>
-	type $mol_button_minor__title__GVWJ5RES = $mol_type_enforce<
+	type $mol_button_minor__title__RGDAZC3P = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_minor['title'] >
 	>
-	type $mol_audio_status__status__3FN8IRNS = $mol_type_enforce<
+	type $mol_audio_status__status__IMDBJHQM = $mol_type_enforce<
 		ReturnType< $mol_audio_demo_sequencer['room_status'] >
 		,
 		ReturnType< $mol_audio_status['status'] >
 	>
-	type $mol_row__sub__QQFCDNSR = $mol_type_enforce<
+	type $mol_row__sub__WJPB8IWZ = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_row['sub'] >
 	>
-	type $mol_list__rows__RJHUDKBX = $mol_type_enforce<
+	type $mol_list__rows__TVY2HG92 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_audio_room__input__WIV60AXX = $mol_type_enforce<
+	type $mol_audio_room__input__D8Y924RP = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_audio_room['input'] >
