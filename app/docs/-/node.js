@@ -21846,22 +21846,14 @@ var $;
                 const series_y = this.series_y();
                 for (let i = 0; i < series_x.length; i++) {
                     if (series_x[i] > next.x.max)
-                        next.x.max = series_x[i];
+                        next.x.max = this.repos_x(series_x[i]);
                     if (series_x[i] < next.x.min)
-                        next.x.min = series_x[i];
+                        next.x.min = this.repos_x(series_x[i]);
                     if (series_y[i] > next.y.max)
-                        next.y.max = series_y[i];
+                        next.y.max = this.repos_y(series_y[i]);
                     if (series_y[i] < next.y.min)
-                        next.y.min = series_y[i];
+                        next.y.min = this.repos_y(series_y[i]);
                 }
-                next.x.max = this.repos_x(next.x.max);
-                next.x.min = this.repos_x(next.x.min);
-                if (next.x.max < next.x.min)
-                    next.x = next.x.inversed;
-                next.y.max = this.repos_y(next.y.max);
-                next.y.min = this.repos_y(next.y.min);
-                if (next.y.max < next.y.min)
-                    next.y = next.y.inversed;
                 return next;
             }
             color() {
