@@ -1,46 +1,46 @@
 declare namespace $ {
 
-	type $mol_plot_line__type__RXNBQILT = $mol_type_enforce<
+	type $mol_plot_line__type__Y1NRRNE1 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_plot_line['type'] >
 	>
-	type $mol_plot_group__series_y__LMAZU08Y = $mol_type_enforce<
+	type $mol_plot_group__series_y__MTP88UNA = $mol_type_enforce<
 		ReturnType< $mol_plot_demo['saturation_series'] >
 		,
 		ReturnType< $mol_plot_group['series_y'] >
 	>
-	type $mol_plot_group__graphs__GFJMIG8E = $mol_type_enforce<
+	type $mol_plot_group__graphs__K97VVC4A = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_plot_group['graphs'] >
 	>
-	type $mol_plot_group__series_y__5U5AQCK6 = $mol_type_enforce<
+	type $mol_plot_group__series_y__RC2F85UR = $mol_type_enforce<
 		ReturnType< $mol_plot_demo['input_series'] >
 		,
 		ReturnType< $mol_plot_group['series_y'] >
 	>
-	type $mol_plot_group__graphs__DZA8WWMG = $mol_type_enforce<
+	type $mol_plot_group__graphs__M08W7LJ1 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_plot_group['graphs'] >
 	>
-	type $mol_plot_bar__series_y__2OYN03B9 = $mol_type_enforce<
+	type $mol_plot_bar__series_y__HREQV9IB = $mol_type_enforce<
 		ReturnType< $mol_plot_demo['output_series'] >
 		,
 		ReturnType< $mol_plot_bar['series_y'] >
 	>
-	type $mol_plot_ruler_vert__title__XBWONUEY = $mol_type_enforce<
+	type $mol_plot_ruler_vert__title__IOT0QN8V = $mol_type_enforce<
 		ReturnType< $mol_plot_demo['Voltage_title'] >
 		,
 		ReturnType< $mol_plot_ruler_vert['title'] >
 	>
-	type $mol_plot_ruler_hor__title__2PBWNMN8 = $mol_type_enforce<
+	type $mol_plot_ruler_hor__title__YKES7ABK = $mol_type_enforce<
 		ReturnType< $mol_plot_demo['Time_title'] >
 		,
 		ReturnType< $mol_plot_ruler_hor['title'] >
 	>
-	type $mol_plot_pane__graphs__Y4IBR8BU = $mol_type_enforce<
+	type $mol_plot_pane__graphs__4Q52RGUU = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_plot_pane['graphs'] >
