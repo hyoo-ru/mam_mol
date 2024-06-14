@@ -1,156 +1,156 @@
 declare namespace $ {
 
-	type $mol_attach__items__G67UJDM1 = $mol_type_enforce<
+	type $mol_attach__items__ETWH7292 = $mol_type_enforce<
 		ReturnType< $mol_form_demo['avatars'] >
 		,
 		ReturnType< $mol_attach['items'] >
 	>
-	type $mol_form_field__name__NJ0VN6H5 = $mol_type_enforce<
+	type $mol_form_field__name__KY1JQYYG = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__bid__LRRA3ONH = $mol_type_enforce<
+	type $mol_form_field__bid__R7IAF7E9 = $mol_type_enforce<
 		ReturnType< $mol_form_demo['avatars_bid'] >
 		,
 		ReturnType< $mol_form_field['bid'] >
 	>
-	type $mol_form_field__Content__MN6IP1JD = $mol_type_enforce<
+	type $mol_form_field__Content__98I8UM57 = $mol_type_enforce<
 		ReturnType< $mol_form_demo['Avatars_control'] >
 		,
 		ReturnType< $mol_form_field['Content'] >
 	>
-	type $mol_string__hint__QCXPL5SB = $mol_type_enforce<
+	type $mol_string__hint__SSH6WP8S = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__value__0YA8QJ8W = $mol_type_enforce<
+	type $mol_string__value__JHZR4NNE = $mol_type_enforce<
 		ReturnType< $mol_form_demo['name_first'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_form_field__name__4MUYTRZV = $mol_type_enforce<
+	type $mol_form_field__name__4XUU21VV = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__bid__WM67O81K = $mol_type_enforce<
+	type $mol_form_field__bid__D8TAKD0Z = $mol_type_enforce<
 		ReturnType< $mol_form_demo['name_first_bid'] >
 		,
 		ReturnType< $mol_form_field['bid'] >
 	>
-	type $mol_form_field__Content__A96D5CPS = $mol_type_enforce<
+	type $mol_form_field__Content__6BSZGBET = $mol_type_enforce<
 		ReturnType< $mol_form_demo['Name_first_control'] >
 		,
 		ReturnType< $mol_form_field['Content'] >
 	>
-	type $mol_string__hint__VKR8W3X9 = $mol_type_enforce<
+	type $mol_string__hint__X62GQ1GD = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__value__AHX3E4OM = $mol_type_enforce<
+	type $mol_string__value__1D465LFS = $mol_type_enforce<
 		ReturnType< $mol_form_demo['name_nick'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_form_field__name__X636HFPW = $mol_type_enforce<
+	type $mol_form_field__name__RLHV9297 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__bid__PN0U86UB = $mol_type_enforce<
+	type $mol_form_field__bid__VHZVEQDB = $mol_type_enforce<
 		ReturnType< $mol_form_demo['name_nick_bid'] >
 		,
 		ReturnType< $mol_form_field['bid'] >
 	>
-	type $mol_form_field__Content__MAHFRLIM = $mol_type_enforce<
+	type $mol_form_field__Content__GQC0J7N0 = $mol_type_enforce<
 		ReturnType< $mol_form_demo['Name_nick_control'] >
 		,
 		ReturnType< $mol_form_field['Content'] >
 	>
-	type $mol_string__hint__0F5RZRJC = $mol_type_enforce<
+	type $mol_string__hint__L4OUKLAJ = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__value__YYIHHEWW = $mol_type_enforce<
+	type $mol_string__value__QAI0EAEZ = $mol_type_enforce<
 		ReturnType< $mol_form_demo['name_second'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_form_field__name__A6JAWYEJ = $mol_type_enforce<
+	type $mol_form_field__name__3DECAPXP = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__bid__UI37ZMXP = $mol_type_enforce<
+	type $mol_form_field__bid__5AH4BVZQ = $mol_type_enforce<
 		ReturnType< $mol_form_demo['name_second_bid'] >
 		,
 		ReturnType< $mol_form_field['bid'] >
 	>
-	type $mol_form_field__Content__E8UT8XFZ = $mol_type_enforce<
+	type $mol_form_field__Content__EWB8M45V = $mol_type_enforce<
 		ReturnType< $mol_form_demo['Name_second_control'] >
 		,
 		ReturnType< $mol_form_field['Content'] >
 	>
-	type $mol_form_group__sub__DDTSVMFK = $mol_type_enforce<
+	type $mol_form_group__sub__T1GQACXZ = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_form_group['sub'] >
 	>
-	type $mol_number__value__YLAPND4P = $mol_type_enforce<
+	type $mol_number__value__UTIC3JLE = $mol_type_enforce<
 		ReturnType< $mol_form_demo['age'] >
 		,
 		ReturnType< $mol_number['value'] >
 	>
-	type $mol_form_field__name__UXB6G23P = $mol_type_enforce<
+	type $mol_form_field__name__KGSW3WJG = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__bid__YRTCDSZ5 = $mol_type_enforce<
+	type $mol_form_field__bid__78KHDJMG = $mol_type_enforce<
 		ReturnType< $mol_form_demo['age_bid'] >
 		,
 		ReturnType< $mol_form_field['bid'] >
 	>
-	type $mol_form_field__Content__9DDWUPX4 = $mol_type_enforce<
+	type $mol_form_field__Content__TX2VHNR2 = $mol_type_enforce<
 		ReturnType< $mol_form_demo['Age_control'] >
 		,
 		ReturnType< $mol_form_field['Content'] >
 	>
-	type $mol_switch__value__EM0G9206 = $mol_type_enforce<
+	type $mol_switch__value__HXALD461 = $mol_type_enforce<
 		ReturnType< $mol_form_demo['sex'] >
 		,
 		ReturnType< $mol_switch['value'] >
 	>
-	type $mol_switch__options__QVXARI8S = $mol_type_enforce<
+	type $mol_switch__options__24RFJ7SB = $mol_type_enforce<
 		ReturnType< $mol_form_demo['sex_options'] >
 		,
 		ReturnType< $mol_switch['options'] >
 	>
-	type $mol_form_field__name__NL42GZXG = $mol_type_enforce<
+	type $mol_form_field__name__0BNUC3R6 = $mol_type_enforce<
 		ReturnType< $mol_form_demo['sex_label'] >
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__bid__KN10TAN4 = $mol_type_enforce<
+	type $mol_form_field__bid__AU8QH8XL = $mol_type_enforce<
 		ReturnType< $mol_form_demo['sex_bid'] >
 		,
 		ReturnType< $mol_form_field['bid'] >
 	>
-	type $mol_form_field__Content__W4G8S42Y = $mol_type_enforce<
+	type $mol_form_field__Content__A7NKF0U0 = $mol_type_enforce<
 		ReturnType< $mol_form_demo['Sex_control'] >
 		,
 		ReturnType< $mol_form_field['Content'] >
 	>
-	type $mol_select__value__0NC8ELSJ = $mol_type_enforce<
+	type $mol_select__value__DRG9HSMP = $mol_type_enforce<
 		ReturnType< $mol_form_demo['color'] >
 		,
 		ReturnType< $mol_select['value'] >
 	>
-	type $mol_select__dictionary__Q7K4APMQ = $mol_type_enforce<
+	type $mol_select__dictionary__7BSVFH2W = $mol_type_enforce<
 		({ 
 			'': string,
 			'white': string,
@@ -161,82 +161,82 @@ declare namespace $ {
 		,
 		ReturnType< $mol_select['dictionary'] >
 	>
-	type $mol_form_field__name__XMVIU2GT = $mol_type_enforce<
+	type $mol_form_field__name__2LFEF709 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__bid__B2H3OMOM = $mol_type_enforce<
+	type $mol_form_field__bid__GV5UKJ4C = $mol_type_enforce<
 		ReturnType< $mol_form_demo['color_bid'] >
 		,
 		ReturnType< $mol_form_field['bid'] >
 	>
-	type $mol_form_field__Content__N7W1UJ6N = $mol_type_enforce<
+	type $mol_form_field__Content__PAUCZ15K = $mol_type_enforce<
 		ReturnType< $mol_form_demo['Color_control'] >
 		,
 		ReturnType< $mol_form_field['Content'] >
 	>
-	type $mol_form_group__sub__PM74OC9R = $mol_type_enforce<
+	type $mol_form_group__sub__NUZBVSKT = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_form_group['sub'] >
 	>
-	type $mol_string__hint__D76AFROM = $mol_type_enforce<
+	type $mol_string__hint__MCGBE8W9 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__value__GEMD9382 = $mol_type_enforce<
+	type $mol_string__value__F6ORKXXC = $mol_type_enforce<
 		ReturnType< $mol_form_demo['mail'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_form_field__name__1DX2LCLK = $mol_type_enforce<
+	type $mol_form_field__name__JGJFHXYD = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__bid__2H42JLAJ = $mol_type_enforce<
+	type $mol_form_field__bid__E4IS0WKK = $mol_type_enforce<
 		ReturnType< $mol_form_demo['mail_bid'] >
 		,
 		ReturnType< $mol_form_field['bid'] >
 	>
-	type $mol_form_field__Content__Q9E11382 = $mol_type_enforce<
+	type $mol_form_field__Content__Y0QU2IXD = $mol_type_enforce<
 		ReturnType< $mol_form_demo['Mail_control'] >
 		,
 		ReturnType< $mol_form_field['Content'] >
 	>
-	type $mol_button_major__title__5WCYWY6E = $mol_type_enforce<
+	type $mol_button_major__title__RUOTIWAY = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_major['title'] >
 	>
-	type $mol_button_major__click__C44ONOTE = $mol_type_enforce<
+	type $mol_button_major__click__7C2Y0OEJ = $mol_type_enforce<
 		ReturnType< $mol_form_demo['signup'] >
 		,
 		ReturnType< $mol_button_major['click'] >
 	>
-	type $mol_button_major__enabled__J4NG0J1J = $mol_type_enforce<
+	type $mol_button_major__enabled__V7JX60OV = $mol_type_enforce<
 		ReturnType< $mol_form_demo['signup_allowed'] >
 		,
 		ReturnType< $mol_button_major['enabled'] >
 	>
-	type $mol_status__message__NL8TGL1M = $mol_type_enforce<
+	type $mol_status__message__IZYINCO9 = $mol_type_enforce<
 		ReturnType< $mol_form_demo['result'] >
 		,
 		ReturnType< $mol_status['message'] >
 	>
-	type $mol_form__body__LAM4XDGJ = $mol_type_enforce<
+	type $mol_form__body__IDHQ3A6Z = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_form['body'] >
 	>
-	type $mol_form__submit__HZM9WKEZ = $mol_type_enforce<
+	type $mol_form__submit__3ZWXS930 = $mol_type_enforce<
 		ReturnType< $mol_form_demo['signup'] >
 		,
 		ReturnType< $mol_form['submit'] >
 	>
-	type $mol_form__buttons__YLA432U7 = $mol_type_enforce<
+	type $mol_form__buttons__D2WHON69 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_form['buttons'] >

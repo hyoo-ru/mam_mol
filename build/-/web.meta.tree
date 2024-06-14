@@ -1,13 +1,14 @@
 \/
+	pack bun git \https://github.com/spleekz/mam_bun.git
 	pack hyoo git \https://github.com/hyoo-ru/mam_hyoo.git
 	pack jin git \https://github.com/nin-jin/mam_jin.git
-	pack node git \https://github.com/hyoo-ru/mam_node.git
-	pack mol git \https://github.com/hyoo-ru/mam_mol.git
 	pack lib git \https://github.com/hyoo-ru/mam_lib.git
+	pack mol git \https://github.com/hyoo-ru/mam_mol.git
+	pack mpds git \https://github.com/mpds-io/mam_mpds.git
+	pack node git \https://github.com/hyoo-ru/mam_node.git
+	pack optimade git \https://github.com/mpds-io/mam_optimade.git
 	pack piterjs git \https://github.com/piterjs/piterjs.git
 	pack psb git \https://github.com/MolDevHack/psb.git
-	pack mpds git \https://github.com/mpds-io/mam_mpds
-	pack bun git \https://github.com/spleekz/mam_bun
 	pack yuf git \https://github.com/zerkalica/yuf.git
 \/mol
 	pack icon git \https://github.com/nin-jin/mol_icon.git
