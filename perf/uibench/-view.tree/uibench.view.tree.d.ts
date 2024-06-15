@@ -1,16 +1,16 @@
 declare namespace $ {
 
-	type $mol_perf_uibench_table__state__ZZSVQIU3 = $mol_type_enforce<
+	type $mol_perf_uibench_table__state__CERV6VEK = $mol_type_enforce<
 		ReturnType< $mol_perf_uibench['table_state'] >
 		,
 		ReturnType< $mol_perf_uibench_table['state'] >
 	>
-	type $mol_perf_uibench_anim__state__AXJ2TUVY = $mol_type_enforce<
+	type $mol_perf_uibench_anim__state__DTI3O1H8 = $mol_type_enforce<
 		ReturnType< $mol_perf_uibench['anim_state'] >
 		,
 		ReturnType< $mol_perf_uibench_anim['state'] >
 	>
-	type $mol_perf_uibench_tree__state__PUHX50L9 = $mol_type_enforce<
+	type $mol_perf_uibench_tree__state__ETJRYWBV = $mol_type_enforce<
 		ReturnType< $mol_perf_uibench['tree_state'] >
 		,
 		ReturnType< $mol_perf_uibench_tree['state'] >
