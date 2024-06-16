@@ -1,98 +1,98 @@
 declare namespace $ {
 
-	type $mol_hotkey__key__ACWETJ0K = $mol_type_enforce<
+	type $mol_hotkey__key__HX3DCBME = $mol_type_enforce<
 		({ 
 			escape( next?: ReturnType< $mol_search['clear'] > ): ReturnType< $mol_search['clear'] >,
 		}) 
 		,
 		ReturnType< $mol_hotkey['key'] >
 	>
-	type $mol_nav__keys_y__2DZ6AT8E = $mol_type_enforce<
+	type $mol_nav__keys_y__6HUFN2GX = $mol_type_enforce<
 		ReturnType< $mol_search['nav_components'] >
 		,
 		ReturnType< $mol_nav['keys_y'] >
 	>
-	type $mol_nav__current_y__K47QKMN4 = $mol_type_enforce<
+	type $mol_nav__current_y__HJZJ11AW = $mol_type_enforce<
 		ReturnType< $mol_search['nav_focused'] >
 		,
 		ReturnType< $mol_nav['current_y'] >
 	>
-	type $mol_string__value__1XCMAAJR = $mol_type_enforce<
+	type $mol_string__value__6FTECOL7 = $mol_type_enforce<
 		ReturnType< $mol_search['query'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_string__hint__S137GVLB = $mol_type_enforce<
+	type $mol_string__hint__J44L81JG = $mol_type_enforce<
 		ReturnType< $mol_search['hint'] >
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__submit__2M1SN78W = $mol_type_enforce<
+	type $mol_string__submit__0X0D6Q2F = $mol_type_enforce<
 		ReturnType< $mol_search['submit'] >
 		,
 		ReturnType< $mol_string['submit'] >
 	>
-	type $mol_string__enabled__P37ZCG6J = $mol_type_enforce<
+	type $mol_string__enabled__SS6GO98Y = $mol_type_enforce<
 		ReturnType< $mol_search['enabled'] >
 		,
 		ReturnType< $mol_string['enabled'] >
 	>
-	type $mol_string__keyboard__ID6KANF1 = $mol_type_enforce<
+	type $mol_string__keyboard__7XB1TWLM = $mol_type_enforce<
 		ReturnType< $mol_search['keyboard'] >
 		,
 		ReturnType< $mol_string['keyboard'] >
 	>
-	type $mol_string__enter__OHPLJNW2 = $mol_type_enforce<
+	type $mol_string__enter__5UJPQIDX = $mol_type_enforce<
 		ReturnType< $mol_search['enter'] >
 		,
 		ReturnType< $mol_string['enter'] >
 	>
-	type $mol_button_minor__hint__SL2P7JCV = $mol_type_enforce<
+	type $mol_button_minor__hint__Z51HJ0J6 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_minor['hint'] >
 	>
-	type $mol_button_minor__click__IJQLFKXG = $mol_type_enforce<
+	type $mol_button_minor__click__DRGCCVWO = $mol_type_enforce<
 		ReturnType< $mol_search['clear'] >
 		,
 		ReturnType< $mol_button_minor['click'] >
 	>
-	type $mol_button_minor__sub__TBQWC1IE = $mol_type_enforce<
+	type $mol_button_minor__sub__B3GRVMMB = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_minor['sub'] >
 	>
-	type $mol_list__rows__5X1G45SY = $mol_type_enforce<
+	type $mol_list__rows__W6VAZ8IZ = $mol_type_enforce<
 		ReturnType< $mol_search['menu_items'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_dimmer__haystack__9B3W1VRH = $mol_type_enforce<
+	type $mol_dimmer__haystack__MHEQS27J = $mol_type_enforce<
 		ReturnType< $mol_search['suggest_label'] >
 		,
 		ReturnType< $mol_dimmer['haystack'] >
 	>
-	type $mol_dimmer__needle__QNUASM1W = $mol_type_enforce<
+	type $mol_dimmer__needle__Z94RFEQD = $mol_type_enforce<
 		ReturnType< $mol_search['query'] >
 		,
 		ReturnType< $mol_dimmer['needle'] >
 	>
-	type $mol_search_plugins__OC80GPFC = $mol_type_enforce<
+	type $mol_search_plugins__9H7RZTKB = $mol_type_enforce<
 		ReturnType< $mol_pop['plugins'] >[number]
 		,
 		$mol_plugin
 	>
-	type $mol_view__sub__8VDOA7SE = $mol_type_enforce<
+	type $mol_view__sub__8F9OLJRS = $mol_type_enforce<
 		ReturnType< $mol_search['anchor_content'] >
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_button_minor__click__VO6HBNBM = $mol_type_enforce<
+	type $mol_button_minor__click__EKWXI99F = $mol_type_enforce<
 		ReturnType< $mol_search['suggest_select'] >
 		,
 		ReturnType< $mol_button_minor['click'] >
 	>
-	type $mol_button_minor__sub__WH4466UM = $mol_type_enforce<
+	type $mol_button_minor__sub__J40QVCWR = $mol_type_enforce<
 		ReturnType< $mol_search['suggest_content'] >
 		,
 		ReturnType< $mol_button_minor['sub'] >
