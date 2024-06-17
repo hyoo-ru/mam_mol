@@ -1,66 +1,66 @@
 declare namespace $ {
 
-	type $mol_dimmer__haystack__R0JZT0YG = $mol_type_enforce<
+	type $mol_dimmer__haystack__HTJYRQP3 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_dimmer['haystack'] >
 	>
-	type $mol_dimmer__needle__REPF4CHE = $mol_type_enforce<
+	type $mol_dimmer__needle__VVWTXYDR = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_dimmer['needle'] >
 	>
-	type $mol_dimmer__haystack__H9XSEDA0 = $mol_type_enforce<
+	type $mol_dimmer__haystack__62GI2ILF = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_dimmer['haystack'] >
 	>
-	type $mol_dimmer__needle__0TQAEM1P = $mol_type_enforce<
+	type $mol_dimmer__needle__JIOF6E3G = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_dimmer['needle'] >
 	>
-	type $mol_dimmer__haystack__RX9LKL1J = $mol_type_enforce<
+	type $mol_dimmer__haystack__KAJPI0YI = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_dimmer['haystack'] >
 	>
-	type $mol_dimmer__needle__0Y8ZM92H = $mol_type_enforce<
+	type $mol_dimmer__needle__Z1PAUES9 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_dimmer['needle'] >
 	>
-	type $mol_dimmer__haystack__SRJIAH6I = $mol_type_enforce<
+	type $mol_dimmer__haystack__UX64OX0A = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_dimmer['haystack'] >
 	>
-	type $mol_dimmer__needle__UY9ZDZ4V = $mol_type_enforce<
+	type $mol_dimmer__needle__1QK0H50T = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_dimmer['needle'] >
 	>
-	type $mol_dimmer__haystack__M6X1WTMZ = $mol_type_enforce<
+	type $mol_dimmer__haystack__K4PH70TJ = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_dimmer['haystack'] >
 	>
-	type $mol_dimmer__needle__XBWGV5XY = $mol_type_enforce<
+	type $mol_dimmer__needle__SBWFVJOS = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_dimmer['needle'] >
 	>
-	type $mol_dimmer__haystack__F3O9IWVY = $mol_type_enforce<
+	type $mol_dimmer__haystack__T324F7IZ = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_dimmer['haystack'] >
 	>
-	type $mol_dimmer__needle__6BJEJ7DC = $mol_type_enforce<
+	type $mol_dimmer__needle__EPFFRND6 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_dimmer['needle'] >
 	>
-	type $mol_list__rows__FX2A3SXY = $mol_type_enforce<
+	type $mol_list__rows__XN7YXM5R = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >
