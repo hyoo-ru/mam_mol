@@ -1,21 +1,21 @@
 declare namespace $ {
 
-	type $mol_search__query__5C5T8EYX = $mol_type_enforce<
+	type $mol_search__query__1OZPILKG = $mol_type_enforce<
 		ReturnType< $mol_code['value'] >
 		,
 		ReturnType< $mol_search['query'] >
 	>
-	type $mol_search__hint__IADRWZGT = $mol_type_enforce<
+	type $mol_search__hint__L7BGM6T1 = $mol_type_enforce<
 		ReturnType< $mol_code['hint'] >
 		,
 		ReturnType< $mol_search['hint'] >
 	>
-	type $mol_button__event_click__N9DW16B4 = $mol_type_enforce<
+	type $mol_button__event_click__2IE38I90 = $mol_type_enforce<
 		ReturnType< $mol_code['event_scan'] >
 		,
 		ReturnType< $mol_button['event_click'] >
 	>
-	type $mol_button__sub__HC209SIT = $mol_type_enforce<
+	type $mol_button__sub__VBJ00C7B = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button['sub'] >
