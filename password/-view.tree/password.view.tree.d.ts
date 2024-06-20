@@ -1,36 +1,36 @@
 declare namespace $ {
 
-	type $mol_string__type__2KCNYJKS = $mol_type_enforce<
+	type $mol_string__type__YUSFWRJO = $mol_type_enforce<
 		ReturnType< $mol_password['type'] >
 		,
 		ReturnType< $mol_string['type'] >
 	>
-	type $mol_string__hint__WI7I7PIF = $mol_type_enforce<
+	type $mol_string__hint__X762ASA1 = $mol_type_enforce<
 		ReturnType< $mol_password['hint'] >
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__value__290Q7I9U = $mol_type_enforce<
+	type $mol_string__value__JFU0A3NK = $mol_type_enforce<
 		ReturnType< $mol_password['value'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_string__submit__1DU0FXFT = $mol_type_enforce<
+	type $mol_string__submit__BGTZHR28 = $mol_type_enforce<
 		ReturnType< $mol_password['submit'] >
 		,
 		ReturnType< $mol_string['submit'] >
 	>
-	type $mol_string__enabled__NUAP4V4O = $mol_type_enforce<
+	type $mol_string__enabled__XGSMBPTQ = $mol_type_enforce<
 		ReturnType< $mol_password['enabled'] >
 		,
 		ReturnType< $mol_string['enabled'] >
 	>
-	type $mol_check_icon__checked__4YOPW6B3 = $mol_type_enforce<
+	type $mol_check_icon__checked__OP9E2N3D = $mol_type_enforce<
 		ReturnType< $mol_password['checked'] >
 		,
 		ReturnType< $mol_check_icon['checked'] >
 	>
-	type $mol_check_icon__Icon__85J2LMP0 = $mol_type_enforce<
+	type $mol_check_icon__Icon__9PNZX8KJ = $mol_type_enforce<
 		ReturnType< $mol_password['Show_icon'] >
 		,
 		ReturnType< $mol_check_icon['Icon'] >
