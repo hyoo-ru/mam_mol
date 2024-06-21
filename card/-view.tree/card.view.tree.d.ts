@@ -1,16 +1,16 @@
 declare namespace $ {
 
-	type $mol_view__sub__7DX9RW5R = $mol_type_enforce<
+	type $mol_view__sub__F5FHZFV0 = $mol_type_enforce<
 		ReturnType< $mol_card['content'] >
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_view__minimal_height__A1UFATSZ = $mol_type_enforce<
+	type $mol_view__minimal_height__VQ6GBW8Q = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_view['minimal_height'] >
 	>
-	type $mol_view__sub__WRN48JTL = $mol_type_enforce<
+	type $mol_view__sub__84KY0KC3 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
