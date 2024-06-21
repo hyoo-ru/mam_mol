@@ -167,7 +167,7 @@ namespace $ {
 		}
 
 		// Lazy
-		every< Narrow extends Item, Context = null >( check: ( value: Item, index: number, array: Item[] )=> value is Narrow, context?: Context): this is Narrow[];
+		every< Narrow extends Item, Context = null >( check: ( value: Item, index: number, array: Item[] )=> value is Narrow, context?: Context ): this is Narrow[]
 		every< Context = null > (
 			check : ( this : Context , val : Item , index : number , list : Item[] )=> boolean ,
 			context? : Context ,
