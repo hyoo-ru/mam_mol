@@ -6101,7 +6101,7 @@ var $;
         'code-comment-block': /(?:\/\*[^]*?\*\/|\/\+[^]*?\+\/|<![^]*?>)/,
         'code-link': /(?:\w+:\/\/|#)\S+?(?=\s|\\\\|""|$)/,
         'code-comment-inline': /\/\/.*?(?:$|\/\/)/,
-        'code-string': /(?:".*?"|'.*?'|`.*?`|\/.+?\/[dygimsu]*(?!\p{Letter})|(?:^|[ \t])\\[^\n]*\n)/,
+        'code-string': /(?:".*?"|'.*?'|`.*?`|\/.+?\/[dygimsu]*(?!\p{Letter})|(?:^|[ \t])\\[^\n]*\n)/u,
         'code-number': /[+-]?(?:\d*\.)?\d+\w*/,
         'code-call': /\.?\w+ *(?=\()/,
         'code-sexpr': /\((\w+ )/,
@@ -12120,7 +12120,7 @@ var $;
             const check = (input, right) => {
                 const tokens = [];
                 $mol_syntax2_md_flow.tokenize(input, (...token) => tokens.push(token));
-                $mol_assert_like(tokens, right);
+                $mol_assert_equal(tokens, right);
             };
             check('Hello,\nWorld..\r\n\r\n\nof Love!', [
                 ['block', 'Hello,\n', ['Hello,', '\n'], 0],

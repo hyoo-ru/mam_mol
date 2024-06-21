@@ -1,11 +1,11 @@
 declare namespace $ {
 
-	type $mol_switch__value__T3FMWDFR = $mol_type_enforce<
+	type $mol_switch__value__3H2496LD = $mol_type_enforce<
 		ReturnType< $mol_transit_demo['align'] >
 		,
 		ReturnType< $mol_switch['value'] >
 	>
-	type $mol_switch__options__4S70D7DU = $mol_type_enforce<
+	type $mol_switch__options__WW147OVN = $mol_type_enforce<
 		({ 
 			'flex-start': string,
 			'center': string,
@@ -14,12 +14,12 @@ declare namespace $ {
 		,
 		ReturnType< $mol_switch['options'] >
 	>
-	type $mol_switch__value__THQI7UJB = $mol_type_enforce<
+	type $mol_switch__value__O7JL17M3 = $mol_type_enforce<
 		ReturnType< $mol_transit_demo['justify'] >
 		,
 		ReturnType< $mol_switch['value'] >
 	>
-	type $mol_switch__options__VHWFW1JN = $mol_type_enforce<
+	type $mol_switch__options__I0E6BVW0 = $mol_type_enforce<
 		({ 
 			'flex-start': string,
 			'center': string,
@@ -28,12 +28,12 @@ declare namespace $ {
 		,
 		ReturnType< $mol_switch['options'] >
 	>
-	type $mol_list__rows__SS6ACW8X = $mol_type_enforce<
+	type $mol_list__rows__27BEKFCL = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_transit__Sub__O2QUOVQF = $mol_type_enforce<
+	type $mol_transit__Sub__X2KXL2KO = $mol_type_enforce<
 		ReturnType< $mol_transit_demo['Float'] >
 		,
 		ReturnType< $mol_transit['Sub'] >

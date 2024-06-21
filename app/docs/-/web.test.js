@@ -2698,7 +2698,7 @@ var $;
             const check = (input, right) => {
                 const tokens = [];
                 $mol_syntax2_md_flow.tokenize(input, (...token) => tokens.push(token));
-                $mol_assert_like(tokens, right);
+                $mol_assert_equal(tokens, right);
             };
             check('Hello,\nWorld..\r\n\r\n\nof Love!', [
                 ['block', 'Hello,\n', ['Hello,', '\n'], 0],

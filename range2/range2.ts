@@ -167,12 +167,13 @@ namespace $ {
 		}
 
 		// Lazy
+		every< Narrow extends Item, Context = null >( check: ( value: Item, index: number, array: Item[] )=> value is Narrow, context?: Context ): this is Narrow[]
 		every< Context = null > (
 			check : ( this : Context , val : Item , index : number , list : Item[] )=> boolean ,
 			context? : Context ,
 		) {
 			for( let index = 0 ; index < this.length ; ++ index ) {
-				if( !check.call( context as Context , this[ index ] , index , this ) ) return false
+				if( !check.call( context as Context , this[ index ] , index , this as any as Item[] ) ) return false
 			}
 			return true
 		}
