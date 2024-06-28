@@ -2,6 +2,7 @@ $mol_html_view $mol_list
 	html \
 	dom null
 	safe_link* \
+	views* /
 	xss_uri \https://en.wikipedia.org/wiki/XSS#
 	Heading* $mol_html_view_heading
 		level <= heading_level* 1
