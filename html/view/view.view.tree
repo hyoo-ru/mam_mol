@@ -21,6 +21,10 @@ $mol_html_view $mol_list
 		sub <= content* /
 	Inserted* $mol_paragraph
 		sub <= content* /
+	Subscript* $mol_view
+		sub <= content*
+	Superscript* $mol_view
+		sub <= content*
 	Code* $mol_paragraph
 		sub <= content* /
 	Link* $mol_link_iconed
