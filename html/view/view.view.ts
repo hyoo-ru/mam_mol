@@ -77,6 +77,12 @@ namespace $.$$ {
 				case 'U':
 					return [ this.Inserted( node ) ]
 				
+				case 'SUB':
+					return [ this.Subscript( node ) ]
+				
+				case 'SUP':
+					return [ this.Superscript( node ) ]
+
 				case 'A':
 					return [ this.Link( node ) ]
 

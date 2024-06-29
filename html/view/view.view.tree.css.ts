@@ -108,6 +108,22 @@ namespace $ {
 			color: $mol_theme.special,
 		},
 
+		Subscript: {
+			font: {
+				size: '.75em',
+			},
+			position: 'relative',
+			bottom: '-0.5em',
+		},
+
+		Superscript: {
+			font: {
+				size: '.75em',
+			},
+			position: 'relative',
+			top: '-0.25em',
+		},
+
 		Link: {
 			margin: rem(-.5),
 		},
