@@ -1,81 +1,91 @@
 declare namespace $ {
 
-	type $mol_html_view_heading__level__VJ8TUKDF = $mol_type_enforce<
+	type $mol_html_view_heading__level__6K0OAH0X = $mol_type_enforce<
 		ReturnType< $mol_html_view['heading_level'] >
 		,
 		ReturnType< $mol_html_view_heading['level'] >
 	>
-	type $mol_html_view_heading__sub__PTTTUI7O = $mol_type_enforce<
+	type $mol_html_view_heading__sub__OEW54DY1 = $mol_type_enforce<
 		ReturnType< $mol_html_view['content'] >
 		,
 		ReturnType< $mol_html_view_heading['sub'] >
 	>
-	type $mol_paragraph__sub__U0O95J8H = $mol_type_enforce<
+	type $mol_paragraph__sub__HJ3RAWNB = $mol_type_enforce<
 		ReturnType< $mol_html_view['content'] >
 		,
 		ReturnType< $mol_paragraph['sub'] >
 	>
-	type $mol_list__rows__K0ZCV51Z = $mol_type_enforce<
+	type $mol_list__rows__Y82QL5D7 = $mol_type_enforce<
 		ReturnType< $mol_html_view['content'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_list__rows__KK2RY5SI = $mol_type_enforce<
+	type $mol_list__rows__YHYG3KV9 = $mol_type_enforce<
 		ReturnType< $mol_html_view['content'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_paragraph__sub__Z07XH81Y = $mol_type_enforce<
+	type $mol_paragraph__sub__8FTSRBO1 = $mol_type_enforce<
 		ReturnType< $mol_html_view['content'] >
 		,
 		ReturnType< $mol_paragraph['sub'] >
 	>
-	type $mol_paragraph__sub__1R5OEDWW = $mol_type_enforce<
+	type $mol_paragraph__sub__9XHE97EZ = $mol_type_enforce<
 		ReturnType< $mol_html_view['content'] >
 		,
 		ReturnType< $mol_paragraph['sub'] >
 	>
-	type $mol_paragraph__sub__XQPX0FJY = $mol_type_enforce<
+	type $mol_paragraph__sub__H5HRT6OD = $mol_type_enforce<
 		ReturnType< $mol_html_view['content'] >
 		,
 		ReturnType< $mol_paragraph['sub'] >
 	>
-	type $mol_paragraph__sub__U2QZJ0SP = $mol_type_enforce<
+	type $mol_paragraph__sub__IG17S89F = $mol_type_enforce<
 		ReturnType< $mol_html_view['content'] >
 		,
 		ReturnType< $mol_paragraph['sub'] >
 	>
-	type $mol_paragraph__sub__FT8Q4W37 = $mol_type_enforce<
+	type $mol_view__sub__9LV03QQD = $mol_type_enforce<
+		ReturnType< $mol_html_view['content'] >
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub__X3XGWTUG = $mol_type_enforce<
+		ReturnType< $mol_html_view['content'] >
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_paragraph__sub__FEQ6EUON = $mol_type_enforce<
 		ReturnType< $mol_html_view['content'] >
 		,
 		ReturnType< $mol_paragraph['sub'] >
 	>
-	type $mol_link_iconed__uri__50F4MORW = $mol_type_enforce<
+	type $mol_link_iconed__uri__HQ0E6YCM = $mol_type_enforce<
 		ReturnType< $mol_html_view['link_uri'] >
 		,
 		ReturnType< $mol_link_iconed['uri'] >
 	>
-	type $mol_link_iconed__content__QIBNJRKJ = $mol_type_enforce<
+	type $mol_link_iconed__content__569B3P3B = $mol_type_enforce<
 		ReturnType< $mol_html_view['content'] >
 		,
 		ReturnType< $mol_link_iconed['content'] >
 	>
-	type $mol_image__uri__LP6VOYRB = $mol_type_enforce<
+	type $mol_image__uri__6750NU1F = $mol_type_enforce<
 		ReturnType< $mol_html_view['image_uri'] >
 		,
 		ReturnType< $mol_image['uri'] >
 	>
-	type $mol_paragraph__sub__MR21560T = $mol_type_enforce<
+	type $mol_paragraph__sub__1X4TUY3L = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_paragraph['sub'] >
 	>
-	type $mol_dimmer__needle__QB99BZUO = $mol_type_enforce<
+	type $mol_dimmer__needle__10J0F9U5 = $mol_type_enforce<
 		ReturnType< $mol_html_view['highlight'] >
 		,
 		ReturnType< $mol_dimmer['needle'] >
 	>
-	type $mol_dimmer__haystack__3JIO784B = $mol_type_enforce<
+	type $mol_dimmer__haystack__FAF81QXQ = $mol_type_enforce<
 		ReturnType< $mol_html_view['text'] >
 		,
 		ReturnType< $mol_dimmer['haystack'] >
@@ -90,6 +100,7 @@ declare namespace $ {
 		html( ): string
 		dom( ): any
 		safe_link( id: any): string
+		views( id: any): readonly(any)[]
 		xss_uri( ): string
 		Heading( id: any): $mol_html_view_heading
 		Paragraph( id: any): $mol_paragraph
@@ -99,6 +110,8 @@ declare namespace $ {
 		Emphasis( id: any): $mol_paragraph
 		Deleted( id: any): $mol_paragraph
 		Inserted( id: any): $mol_paragraph
+		Subscript( id: any): $mol_view
+		Superscript( id: any): $mol_view
 		Code( id: any): $mol_paragraph
 		Link( id: any): $mol_link_iconed
 		Image( id: any): $mol_image

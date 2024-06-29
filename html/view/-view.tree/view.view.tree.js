@@ -26,6 +26,9 @@
 		safe_link(id){
 			return "";
 		}
+		views(id){
+			return [];
+		}
 		xss_uri(){
 			return "https://en.wikipedia.org/wiki/XSS#";
 		}
@@ -70,6 +73,16 @@
 			(obj.sub) = () => ((this?.content(id)));
 			return obj;
 		}
+		Subscript(id){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this?.content(id)));
+			return obj;
+		}
+		Superscript(id){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this?.content(id)));
+			return obj;
+		}
 		Code(id){
 			const obj = new this.$.$mol_paragraph();
 			(obj.sub) = () => ((this?.content(id)));
@@ -106,6 +119,8 @@
 	($mol_mem_key(($.$mol_html_view.prototype), "Emphasis"));
 	($mol_mem_key(($.$mol_html_view.prototype), "Deleted"));
 	($mol_mem_key(($.$mol_html_view.prototype), "Inserted"));
+	($mol_mem_key(($.$mol_html_view.prototype), "Subscript"));
+	($mol_mem_key(($.$mol_html_view.prototype), "Superscript"));
 	($mol_mem_key(($.$mol_html_view.prototype), "Code"));
 	($mol_mem_key(($.$mol_html_view.prototype), "Link"));
 	($mol_mem_key(($.$mol_html_view.prototype), "Image"));
