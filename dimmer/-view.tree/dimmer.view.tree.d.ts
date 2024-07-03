@@ -1,11 +1,11 @@
 declare namespace $ {
 
-	type $mol_paragraph__sub__7I7QGLPH = $mol_type_enforce<
+	type $mol_paragraph__sub__CLPEZB4R = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_paragraph['sub'] >
 	>
-	type $mol_paragraph__sub__SO34GXWS = $mol_type_enforce<
+	type $mol_paragraph__sub__ZOLKLPZ4 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_paragraph['sub'] >
