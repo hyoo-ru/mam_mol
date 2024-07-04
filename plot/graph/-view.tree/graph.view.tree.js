@@ -108,7 +108,8 @@
 			(obj.title) = () => ((this?.hint()));
 			return obj;
 		}
-		hue(){
+		hue(next){
+			if(next !== undefined) return next;
 			return +NaN;
 		}
 		Sample(){
@@ -130,6 +131,7 @@
 	($mol_mem(($.$mol_plot_graph.prototype), "size_real"));
 	($mol_mem(($.$mol_plot_graph.prototype), "gap"));
 	($mol_mem(($.$mol_plot_graph.prototype), "Hint"));
+	($mol_mem(($.$mol_plot_graph.prototype), "hue"));
 	($.$mol_plot_graph_sample) = class $mol_plot_graph_sample extends ($.$mol_view) {
 		type(){
 			return "solid";
