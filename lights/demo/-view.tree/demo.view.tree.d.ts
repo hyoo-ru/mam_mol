@@ -1,11 +1,11 @@
 declare namespace $ {
 
-	type $mol_view__plugins__XWY4HX0G = $mol_type_enforce<
+	type $mol_view__plugins__O5BDZPGR = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['plugins'] >
 	>
-	type $mol_view__sub__KS89WO4Q = $mol_type_enforce<
+	type $mol_view__sub__JS16IWIY = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
