@@ -58,7 +58,7 @@ $mol_plot_graph $mol_svg_group
 	back /$mol_svg
 	Hint $mol_svg_title
 		title <= hint <= title \
-	hue +NaN
+	hue? +NaN
 	Sample null
 
 $mol_plot_graph_sample $mol_view

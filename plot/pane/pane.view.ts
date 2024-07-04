@@ -38,7 +38,7 @@ namespace $.$$ {
 		graphs_colored() {
 			const graphs = this.graphs_visible()
 			for (let index = 0; index < graphs.length; index++) {
-				graphs[index].hue = () => this.graph_hue( index )
+				graphs[index].hue( this.graph_hue( index ) )
 			}
 			
 			return graphs
