@@ -1,41 +1,41 @@
 declare namespace $ {
 
-	type $mol_link_source__uri__HQGQ3S2A = $mol_type_enforce<
+	type $mol_link_source__uri__GO7UBTVK = $mol_type_enforce<
 		ReturnType< $mol_app_demo_readme['source_link'] >
 		,
 		ReturnType< $mol_link_source['uri'] >
 	>
-	type $mol_link_source__hint__74ME9505 = $mol_type_enforce<
+	type $mol_link_source__hint__TYQMFQU8 = $mol_type_enforce<
 		ReturnType< $mol_app_demo_readme['source_hint'] >
 		,
 		ReturnType< $mol_link_source['hint'] >
 	>
-	type $mol_button_minor__hint__CI9ARRKC = $mol_type_enforce<
+	type $mol_button_minor__hint__O6HZN2E3 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_minor['hint'] >
 	>
-	type $mol_button_minor__sub__LX3OFWMW = $mol_type_enforce<
+	type $mol_button_minor__sub__YLRE2K1E = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_minor['sub'] >
 	>
-	type $mol_button_minor__click__0EZN9GUT = $mol_type_enforce<
+	type $mol_button_minor__click__3CSSU1XN = $mol_type_enforce<
 		ReturnType< $mol_app_demo_readme['close'] >
 		,
 		ReturnType< $mol_button_minor['click'] >
 	>
-	type $mol_text__text__45R6SZJP = $mol_type_enforce<
+	type $mol_text__text__KGVH74HH = $mol_type_enforce<
 		ReturnType< $mol_app_demo_readme['readme'] >
 		,
 		ReturnType< $mol_text['text'] >
 	>
-	type $mol_text__uri_base__WWYK2XF8 = $mol_type_enforce<
+	type $mol_text__uri_base__EH53CC8U = $mol_type_enforce<
 		ReturnType< $mol_app_demo_readme['uri_base'] >
 		,
 		ReturnType< $mol_text['uri_base'] >
 	>
-	type $mol_view__sub__GT98TK4X = $mol_type_enforce<
+	type $mol_view__sub__O9PRT22F = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
