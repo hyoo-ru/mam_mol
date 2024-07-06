@@ -1,6 +1,6 @@
 declare namespace $ {
 
-	type $mol_filler__min_symbols__ZXFPZTGS = $mol_type_enforce<
+	type $mol_filler__min_symbols__3EC5RZ4S = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_filler['min_symbols'] >
