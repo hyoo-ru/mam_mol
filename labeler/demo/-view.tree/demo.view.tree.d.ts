@@ -1,31 +1,31 @@
 declare namespace $ {
 
-	type $mol_labeler__title__3YZV4BSV = $mol_type_enforce<
+	type $mol_labeler__title__CIR7YJDT = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content__02S484C5 = $mol_type_enforce<
+	type $mol_labeler__content__CXLOTUTV = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_string__hint__4OESF3E6 = $mol_type_enforce<
+	type $mol_string__hint__LLC2Z3ND = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__value__LAA5N04R = $mol_type_enforce<
+	type $mol_string__value__BTWL9WTO = $mol_type_enforce<
 		ReturnType< $mol_labeler_demo['user_name'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_labeler__title__QG8TJ4O5 = $mol_type_enforce<
+	type $mol_labeler__title__DQ213ZNB = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__Content__GKZWBKV5 = $mol_type_enforce<
+	type $mol_labeler__Content__P6P1UJFE = $mol_type_enforce<
 		ReturnType< $mol_labeler_demo['Name_control'] >
 		,
 		ReturnType< $mol_labeler['Content'] >
