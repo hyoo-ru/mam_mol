@@ -4,7 +4,7 @@ declare namespace $ {
 		rows( ): readonly(any)[]
 	}
 	
-	type $mol_view_tree2_to_js_test_ex_left_with_separate_default_and_comment_bar__rows__FO7GG4VB = $mol_type_enforce<
+	type $mol_view_tree2_to_js_test_ex_left_with_separate_default_and_comment_bar__rows__ETYJMWPY = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view_tree2_to_js_test_ex_left_with_separate_default_and_comment_bar['rows'] >
