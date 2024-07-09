@@ -1,56 +1,56 @@
 declare namespace $ {
 
-	type $mol_view__sub__5OCZEH33 = $mol_type_enforce<
+	type $mol_view__sub__BN7O0T3V = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_app_report_rower__cells__IRQ7R9ZE = $mol_type_enforce<
+	type $mol_app_report_rower__cells__EHK9MNG0 = $mol_type_enforce<
 		ReturnType< $mol_app_report['headCells'] >
 		,
 		ReturnType< $mol_app_report_rower['cells'] >
 	>
-	type $mol_app_report_tabler__rows__DKTTHTEC = $mol_type_enforce<
+	type $mol_app_report_tabler__rows__MIJ3OXPO = $mol_type_enforce<
 		ReturnType< $mol_app_report['rows'] >
 		,
 		ReturnType< $mol_app_report_tabler['rows'] >
 	>
-	type $mol_app_report_rower__cells__UF11A6L5 = $mol_type_enforce<
+	type $mol_app_report_rower__cells__XXIYS6NT = $mol_type_enforce<
 		ReturnType< $mol_app_report['rowerCells'] >
 		,
 		ReturnType< $mol_app_report_rower['cells'] >
 	>
-	type $mol_app_report_cell__content__4E05AG78 = $mol_type_enforce<
+	type $mol_app_report_cell__content__QOZUHZFH = $mol_type_enforce<
 		ReturnType< $mol_app_report['cell_content'] >
 		,
 		ReturnType< $mol_app_report_cell['content'] >
 	>
-	type $mol_app_report_cell__rows__AVIFZQHB = $mol_type_enforce<
+	type $mol_app_report_cell__rows__PG07JNCJ = $mol_type_enforce<
 		ReturnType< $mol_app_report['cellrows'] >
 		,
 		ReturnType< $mol_app_report_cell['rows'] >
 	>
-	type $mol_app_report_cell__cols__2HIQI9SW = $mol_type_enforce<
+	type $mol_app_report_cell__cols__5RFFMPNQ = $mol_type_enforce<
 		ReturnType< $mol_app_report['cellCols'] >
 		,
 		ReturnType< $mol_app_report_cell['cols'] >
 	>
-	type $mol_view__sub__35JT1CZM = $mol_type_enforce<
+	type $mol_view__sub__9PS1G8Z6 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_select__value__ICV2I8AZ = $mol_type_enforce<
+	type $mol_select__value__4RYG0HM5 = $mol_type_enforce<
 		ReturnType< $mol_app_report['cell_value'] >
 		,
 		ReturnType< $mol_select['value'] >
 	>
-	type $mol_select__dictionary__HFSAMUDK = $mol_type_enforce<
+	type $mol_select__dictionary__NL17LXIN = $mol_type_enforce<
 		ReturnType< $mol_app_report['cell_options'] >
 		,
 		ReturnType< $mol_select['dictionary'] >
 	>
-	type $mol_number__value__EAKQAHLJ = $mol_type_enforce<
+	type $mol_number__value__GY0828EC = $mol_type_enforce<
 		ReturnType< $mol_app_report['cell_value'] >
 		,
 		ReturnType< $mol_number['value'] >
