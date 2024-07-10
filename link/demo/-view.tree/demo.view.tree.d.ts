@@ -1,77 +1,77 @@
 declare namespace $ {
 
-	type $mol_link__sub__9KK1AF6G = $mol_type_enforce<
+	type $mol_link__sub__47Y76SUH = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_link['sub'] >
 	>
-	type $mol_link__arg__N0ZEBT2R = $mol_type_enforce<
+	type $mol_link__arg__DRWCQYIZ = $mol_type_enforce<
 		({ 
 			'color': string,
 		}) 
 		,
 		ReturnType< $mol_link['arg'] >
 	>
-	type $mol_link__sub__9CL0X9HK = $mol_type_enforce<
+	type $mol_link__sub__WRCAE7K9 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_link['sub'] >
 	>
-	type $mol_link__arg__B4SNE33X = $mol_type_enforce<
+	type $mol_link__arg__KSWZBZMM = $mol_type_enforce<
 		({ 
 			'color': string,
 		}) 
 		,
 		ReturnType< $mol_link['arg'] >
 	>
-	type $mol_link__sub__YP0E40GC = $mol_type_enforce<
+	type $mol_link__sub__ADI5EG6Y = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_link['sub'] >
 	>
-	type $mol_link__arg__5SP8DKNK = $mol_type_enforce<
+	type $mol_link__arg__AA3ZPSPS = $mol_type_enforce<
 		({ 
 			'color': string,
 		}) 
 		,
 		ReturnType< $mol_link['arg'] >
 	>
-	type $mol_link__sub__5XCBFUIX = $mol_type_enforce<
+	type $mol_link__sub__IGQ7YDTE = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_link['sub'] >
 	>
-	type $mol_link__uri__KFGIYENE = $mol_type_enforce<
+	type $mol_link__uri__LR2G3GCQ = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_link['uri'] >
 	>
-	type $mol_link__title__YR18J5QJ = $mol_type_enforce<
+	type $mol_link__title__VSC0P9YC = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_link['title'] >
 	>
-	type $mol_link__hint__PDI0UQU4 = $mol_type_enforce<
+	type $mol_link__hint__08DM52Z7 = $mol_type_enforce<
 		ReturnType< $mol_link_demo['external_hint'] >
 		,
 		ReturnType< $mol_link['hint'] >
 	>
-	type $mol_link__uri__9QDAQZU3 = $mol_type_enforce<
+	type $mol_link__uri__W0UJY9IF = $mol_type_enforce<
 		ReturnType< $mol_link_demo['object_uri'] >
 		,
 		ReturnType< $mol_link['uri'] >
 	>
-	type $mol_link__file_name__YFF33JIN = $mol_type_enforce<
+	type $mol_link__file_name__H4M31JWL = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_link['file_name'] >
 	>
-	type $mol_link__sub__0E74HRIZ = $mol_type_enforce<
+	type $mol_link__sub__GG8K9ZC4 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_link['sub'] >
 	>
-	type $mol_list__rows__IAL55ZP8 = $mol_type_enforce<
+	type $mol_list__rows__RWF2CG8V = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >

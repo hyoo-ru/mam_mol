@@ -3122,7 +3122,16 @@ var $;
             console.warn('Service Worker is not supported.');
         }
         else {
-            navigator.serviceWorker.register('web.js');
+            navigator.serviceWorker.register('web.js').then(reg => {
+                reg.addEventListener('updatefound', () => {
+                    const worker = reg.installing;
+                    worker.addEventListener('statechange', () => {
+                        if (worker.state !== 'activated')
+                            return;
+                        window.location.reload();
+                    });
+                });
+            });
         }
     }
     $.$mol_offline_web = $mol_offline_web;
