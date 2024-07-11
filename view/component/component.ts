@@ -20,7 +20,7 @@ namespace $ {
 					this.attachShadow({ mode: 'open' })
 					
 					const node = this.view.dom_node()
-					node.setAttribute( 'mol_view_root', '' )
+					// node.setAttribute( 'mol_view_root', '' )
 					
 					for( const style of $mol_dom_context.document.getElementsByTagName( 'style' )  ) {
 						this.shadowRoot!.append( style.cloneNode( true ) )
