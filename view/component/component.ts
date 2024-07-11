@@ -8,7 +8,7 @@ namespace $ {
 		class Component extends HTMLElement {
 			
 			static tag = $$.$mol_func_name( View ).replace( /\W/g , '' ).replace( /^(?=\d+)/ , '-' ).replace( /_/g , '-' )
-			static observedAttributes = new Set
+			static observedAttributes = new Set< string >()
 			
 			view = new View
 			root?: $mol_wire_sub | null
@@ -46,8 +46,9 @@ namespace $ {
 				this.root = undefined
 			}
 			
-			attributeChangedCallback( name: keyof this, prev: string, next: string ) {
-				( this.view as any )[ name ]( JSON.parse( next ) )
+			attributeChangedCallback( name: string, prev: string, next: string ) {
+				if( name[0] === '#' )  ( this.view as any )[ name.slice(1) ]( JSON.parse( next ) )
+				else ( this.view as any )[ name ]( next )
 			}
 			
 			toString() {
@@ -69,6 +70,8 @@ namespace $ {
 				// if( descr.value.length === 0 ) continue
 				
 				Component.observedAttributes.add( field )
+				Component.observedAttributes.add( '#' + field )
+				
 			}
 			
 			attributes_observe( Reflect.getPrototypeOf( proto ) )
