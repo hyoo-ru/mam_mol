@@ -1,0 +1,5 @@
+$mol_view_component_demo $mol_view
+	sub /
+		<= str? \foo
+		\-
+		<= num? +NaN
