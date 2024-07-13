@@ -1,36 +1,36 @@
 declare namespace $ {
 
-	type $mol_check__minimal_width__9531KBPR = $mol_type_enforce<
+	type $mol_check__minimal_width__PE6AWT09 = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_check['minimal_width'] >
 	>
-	type $mol_check__minimal_height__SG54AHQ4 = $mol_type_enforce<
+	type $mol_check__minimal_height__MGEJLBD2 = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_check['minimal_height'] >
 	>
-	type $mol_check__enabled__HR1TPKKY = $mol_type_enforce<
+	type $mol_check__enabled__H6T6LGXE = $mol_type_enforce<
 		ReturnType< $mol_pick['trigger_enabled'] >
 		,
 		ReturnType< $mol_check['enabled'] >
 	>
-	type $mol_check__checked__LKW18JAG = $mol_type_enforce<
+	type $mol_check__checked__TSFPUQ26 = $mol_type_enforce<
 		ReturnType< $mol_pick['showed'] >
 		,
 		ReturnType< $mol_check['checked'] >
 	>
-	type $mol_check__clicks__LXO4S46S = $mol_type_enforce<
+	type $mol_check__clicks__HGIWWEYC = $mol_type_enforce<
 		ReturnType< $mol_pick['clicks'] >
 		,
 		ReturnType< $mol_check['clicks'] >
 	>
-	type $mol_check__sub__SHJA7LD3 = $mol_type_enforce<
+	type $mol_check__sub__IH21YU5W = $mol_type_enforce<
 		ReturnType< $mol_pick['trigger_content'] >
 		,
 		ReturnType< $mol_check['sub'] >
 	>
-	type $mol_check__hint__W143VNH2 = $mol_type_enforce<
+	type $mol_check__hint__D4L4BIQG = $mol_type_enforce<
 		ReturnType< $mol_pick['hint'] >
 		,
 		ReturnType< $mol_check['hint'] >
