@@ -8850,11 +8850,6 @@ var $;
             Rows: {
                 padding: $mol_gap.text,
             },
-            Row: {
-                font: {
-                    family: 'inherit',
-                },
-            },
             Copy: {
                 alignSelf: 'flex-start',
                 justifySelf: 'flex-start',
