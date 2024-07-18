@@ -1,11 +1,11 @@
 declare namespace $ {
 
-	type $mol_svg_path__geometry__BDHZKUC1 = $mol_type_enforce<
+	type $mol_svg_path__geometry__SBJK0MNP = $mol_type_enforce<
 		ReturnType< $mol_plot_bar['curve'] >
 		,
 		ReturnType< $mol_svg_path['geometry'] >
 	>
-	type $mol_plot_graph_sample__color__AUEGXO8J = $mol_type_enforce<
+	type $mol_plot_graph_sample__color__MSDI5KTP = $mol_type_enforce<
 		ReturnType< $mol_plot_bar['color'] >
 		,
 		ReturnType< $mol_plot_graph_sample['color'] >

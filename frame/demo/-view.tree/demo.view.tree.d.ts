@@ -1,11 +1,11 @@
 declare namespace $ {
 
-	type $mol_frame__title__EZOTF8DZ = $mol_type_enforce<
+	type $mol_frame__title__UNTRB46G = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_frame['title'] >
 	>
-	type $mol_frame__uri__NXNE9E98 = $mol_type_enforce<
+	type $mol_frame__uri__YMJKALOU = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_frame['uri'] >
