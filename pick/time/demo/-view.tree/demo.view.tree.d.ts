@@ -1,11 +1,11 @@
 declare namespace $ {
 
-	type $mol_time_moment__TZNSS7RT = $mol_type_enforce<
+	type $mol_time_moment__T0E4WM6E = $mol_type_enforce<
 		[ string ]
 		,
 		ConstructorParameters< typeof $mol_time_moment >
 	>
-	type $mol_pick_time__value_moment__RBSD3GS1 = $mol_type_enforce<
+	type $mol_pick_time__value_moment__QRJ12AGF = $mol_type_enforce<
 		ReturnType< $mol_pick_time_demo['moment'] >
 		,
 		ReturnType< $mol_pick_time['value_moment'] >
