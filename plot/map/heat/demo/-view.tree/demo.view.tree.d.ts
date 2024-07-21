@@ -1,31 +1,31 @@
 declare namespace $ {
 
-	type $mol_plot_map_heat_demo_zoom__9EXJI1A9 = $mol_type_enforce<
+	type $mol_plot_map_heat_demo_zoom__O0B5IFKK = $mol_type_enforce<
 		Parameters< $mol_plot_map_heat_demo['zoom'] >[0]
 		,
 		Parameters< ReturnType< $mol_plot_map_heat_demo['Plot'] >['scale_y'] >[0]
 	>
-	type $mol_plot_map_heat__series_x__IOCF1HVI = $mol_type_enforce<
+	type $mol_plot_map_heat__series_x__07LS7J0N = $mol_type_enforce<
 		ReturnType< $mol_plot_map_heat_demo['terrain_x'] >
 		,
 		ReturnType< $mol_plot_map_heat['series_x'] >
 	>
-	type $mol_plot_map_heat__series_y__N865BY97 = $mol_type_enforce<
+	type $mol_plot_map_heat__series_y__ZHF5IDWX = $mol_type_enforce<
 		ReturnType< $mol_plot_map_heat_demo['terrain_y'] >
 		,
 		ReturnType< $mol_plot_map_heat['series_y'] >
 	>
-	type $mol_plot_map_heat__series_z__3OAE0LMP = $mol_type_enforce<
+	type $mol_plot_map_heat__series_z__NBGSJGST = $mol_type_enforce<
 		ReturnType< $mol_plot_map_heat_demo['terrain_z'] >
 		,
 		ReturnType< $mol_plot_map_heat['series_z'] >
 	>
-	type $mol_plot_pane__zoom__3LYZIHSV = $mol_type_enforce<
+	type $mol_plot_pane__zoom__0NSAUAU8 = $mol_type_enforce<
 		ReturnType< $mol_plot_map_heat_demo['zoom'] >
 		,
 		ReturnType< $mol_plot_pane['zoom'] >
 	>
-	type $mol_plot_pane__graphs__1PGJG69E = $mol_type_enforce<
+	type $mol_plot_pane__graphs__MU1HSXOO = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_plot_pane['graphs'] >

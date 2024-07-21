@@ -402,6 +402,19 @@ $mol_embed_any $mol_view
 		title <= title \
 		uri <= uri \
 
+$mol_expander $mol_list
+	rows /
+		<= Label $mol_view
+			sub /
+				<= Trigger $mol_check_expand
+					checked? <=> expanded? false
+					expandable <= expandable true
+					label <= label /
+						<= title
+				<= Tools null
+		<= Content $mol_list
+			rows <= content /
+
 $mol_text $mol_list
 	uri_base \
 	text \
@@ -480,6 +493,14 @@ $mol_text $mol_list
 	Embed* $mol_embed_any
 		uri <= link_uri* \
 		title <= line_text* \
+	- \Spoilers
+	Spoiler* $mol_expander
+		label /
+			<= Spoiler_label* $mol_text
+				text <= spoiler_label* \
+		content /
+			<= Spoiler_content* $mol_text
+				text <= spoiler_content* \
 
 $mol_text_header $mol_paragraph
 	level 1
