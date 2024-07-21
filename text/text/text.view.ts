@@ -308,25 +308,14 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem_key
-		spoiler_label_text( index: number ): string {
+		spoiler_label( index: number ): string {
 			return this.spoiler_text(index).split('\n')[0];
 		}
 	
 		@ $mol_mem_key
-		spoiler_content_text( index: number): string {
+		spoiler_content( index: number): string {
 			return this.spoiler_text(index).split('\n').slice(1).join('\n');
 		}
-
-		@ $mol_mem_key
-		spoiler_label( index: number ): any {
-			return this.Spoiler_label(index);
-		}
-
-		@ $mol_mem_key
-		spoiler_content( index: number ): any {
-			return this.Spoiler_content(index);
-		}
-
 	}
 	
 	export class $mol_text_header extends $.$mol_text_header {
