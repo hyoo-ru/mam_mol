@@ -18,6 +18,10 @@
 	max-width: 60rem;
 }
 
+[mol_text_spoiler_label_paragraph] {
+	padding: 0;
+}
+
 [mol_text_span] {
 	display: inline;
 }
