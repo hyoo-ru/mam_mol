@@ -8,6 +8,7 @@
 
 [mol_check_expand_icon] {
 	box-shadow: none;
+	margin-left: -0.375rem;
 }
 [mol_check_expand_icon] {
 	transform: rotateZ(0deg);
