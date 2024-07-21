@@ -303,18 +303,18 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem_key
-		spoiler_text( index: number ): string {
-			return this.flow_tokens()[ index ].chunks[0].replace( /^[\?] /mg , '' );
+		spoiler_rows( index: number ): string[] {
+			return this.flow_tokens()[ index ].chunks[0].replace( /^[\?] /mg , '' ).split('\n');
 		}
 
 		@ $mol_mem_key
 		spoiler_label( index: number ): string {
-			return this.spoiler_text(index).split('\n')[0];
+			return this.spoiler_rows(index)[0];
 		}
 	
 		@ $mol_mem_key
 		spoiler_content( index: number): string {
-			return this.spoiler_text(index).split('\n').slice(1).join('\n');
+			return this.spoiler_rows(index).slice(1).join('\n');
 		}
 	}
 	
