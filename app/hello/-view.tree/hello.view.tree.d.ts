@@ -1,16 +1,16 @@
 declare namespace $ {
 
-	type $mol_string__hint__P1INKHKJ = $mol_type_enforce<
+	type $mol_string__hint__OTPNO4R6 = $mol_type_enforce<
 		ReturnType< $mol_app_hello['name_hint'] >
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__value__7JEUU7MW = $mol_type_enforce<
+	type $mol_string__value__KDP5VNRO = $mol_type_enforce<
 		ReturnType< $mol_app_hello['name'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_view__sub__KUZ2JADL = $mol_type_enforce<
+	type $mol_view__sub__5WCYMBS1 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
