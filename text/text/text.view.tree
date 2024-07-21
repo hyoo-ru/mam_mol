@@ -77,10 +77,10 @@ $mol_text $mol_list
 		uri <= link_uri* \
 		title <= line_text* \
 	Spoiler* $mol_expander
-		label <= spoiler_label* \
-		content <= spoiler_content*
+		label <= spoiler_label* /
+		content <= spoiler_content* /
 	Spoiler_text* $mol_text
-		text <= spoiler_text*
+		text <= spoiler_text* \
 
 $mol_text_header $mol_paragraph
 	level 1
