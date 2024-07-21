@@ -26,6 +26,7 @@ namespace $.$$ {
 				
 				switch( name ) {
 					case 'quote': return this.Quote( index )
+					case 'spoiler': return this.Spoiler( index )
 					case 'header': return this.Header( index )
 					case 'list': return this.List( index )
 					case 'code': return this.Pre( index )
@@ -301,6 +302,20 @@ namespace $.$$ {
 			}
 		}
 
+		@ $mol_mem_key
+		spoiler_label( index: number ) {
+			return this.flow_tokens()[ index ].chunks[0].replace( /^[\?] /mg , '' ).split('\n')[0];
+		}
+	
+		@ $mol_mem_key
+		spoiler_content( index: number, next?: readonly any[] | undefined ): readonly any[] {
+			return [this.Spoiler_text(index)];
+		}
+
+		@ $mol_mem_key
+		spoiler_text(index: number): string {
+			return this.flow_tokens()[ index ].chunks[0].replace( /^[\?] /mg , '' ).split('\n').slice(1).join('\n');
+		}
 	}
 	
 	export class $mol_text_header extends $.$mol_text_header {

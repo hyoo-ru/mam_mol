@@ -9,6 +9,10 @@
 	tab-size: 4;
 }
 
+[mol_text_spoiler] {
+	width: 100vw;
+}
+
 [mol_text_paragraph] {
 	padding: var(--mol_gap_text);
 	overflow: auto;
