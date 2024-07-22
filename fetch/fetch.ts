@@ -50,7 +50,11 @@ namespace $ {
 			return $mol_wire_sync( this.native ).json() as unknown
 		}	
 
-		@ $mol_action
+		blob() {
+			return $mol_wire_sync( this.native ).blob()
+		}
+
+
 		buffer() {
 			return $mol_wire_sync( this.native ).arrayBuffer()
 		}
@@ -123,7 +127,12 @@ namespace $ {
 		@ $mol_action
 		static json( input: RequestInfo, init?: RequestInit ) {
 			return this.success( input , init ).json()
-		}	
+		}
+
+		@ $mol_action
+		static blob( input: RequestInfo, init?: RequestInit ) {
+			return this.success( input , init ).blob()
+		}
 
 		@ $mol_action
 		static buffer( input: RequestInfo, init?: RequestInit ) {
