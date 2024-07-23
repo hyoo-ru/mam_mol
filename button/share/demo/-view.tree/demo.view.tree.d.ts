@@ -1,51 +1,51 @@
 declare namespace $ {
 
-	type $mol_button_share__title__E9VJ0NEH = $mol_type_enforce<
+	type $mol_button_share__title__TJV9G01G = $mol_type_enforce<
 		ReturnType< $mol_button_share_demo['title'] >
 		,
 		ReturnType< $mol_button_share['title'] >
 	>
-	type $mol_button_share__hint__V709921O = $mol_type_enforce<
+	type $mol_button_share__hint__ELXZN17A = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_share['hint'] >
 	>
-	type $mol_button_share__title__WG4GJXZA = $mol_type_enforce<
+	type $mol_button_share__title__WWVZUZ3K = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_share['title'] >
 	>
-	type $mol_button_share__hint__3W1CQ0DR = $mol_type_enforce<
+	type $mol_button_share__hint__E32QZNSQ = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_share['hint'] >
 	>
-	type $mol_button_share__uri__XFOFNXA4 = $mol_type_enforce<
+	type $mol_button_share__uri__YRG7Z47X = $mol_type_enforce<
 		any
 		,
 		ReturnType< $mol_button_share['uri'] >
 	>
-	type $mol_button_share__capture__NOS2ELTD = $mol_type_enforce<
+	type $mol_button_share__capture__JEYJ3W1F = $mol_type_enforce<
 		ReturnType< $mol_button_share_demo['Share_hyoo'] >
 		,
 		ReturnType< $mol_button_share['capture'] >
 	>
-	type $mol_button_share__title__5ETM204H = $mol_type_enforce<
+	type $mol_button_share__title__BZWTDA72 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_share['title'] >
 	>
-	type $mol_button_share__hint__25DYF59V = $mol_type_enforce<
+	type $mol_button_share__hint__91J2CYPL = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_share['hint'] >
 	>
-	type $mol_button_share__uri__A5JL02CW = $mol_type_enforce<
+	type $mol_button_share__uri__4CL1W6C3 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_share['uri'] >
 	>
-	type $mol_button_share__capture__MTNRMFJH = $mol_type_enforce<
+	type $mol_button_share__capture__Q64LWWI9 = $mol_type_enforce<
 		any
 		,
 		ReturnType< $mol_button_share['capture'] >
