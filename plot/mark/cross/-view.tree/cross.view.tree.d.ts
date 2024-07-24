@@ -1,51 +1,51 @@
 declare namespace $ {
 
-	type $mol_vector_range__IRVNMXN3 = $mol_type_enforce<
+	type $mol_vector_range__JVFY6B6Z = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range__438GZ06E = $mol_type_enforce<
+	type $mol_vector_range__RD4BRDR0 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_svg_path__geometry__LGCWZ8HN = $mol_type_enforce<
+	type $mol_svg_path__geometry__ZMLAC884 = $mol_type_enforce<
 		ReturnType< $mol_plot_mark_cross['curve'] >
 		,
 		ReturnType< $mol_svg_path['geometry'] >
 	>
-	type $mol_svg_text_box__pos_x__V2TOOQ5N = $mol_type_enforce<
+	type $mol_svg_text_box__pos_x__GJRII4R3 = $mol_type_enforce<
 		ReturnType< $mol_plot_mark_cross['title_x_pos_x'] >
 		,
 		ReturnType< $mol_svg_text_box['pos_x'] >
 	>
-	type $mol_svg_text_box__pos_y__0IKZ7U8F = $mol_type_enforce<
+	type $mol_svg_text_box__pos_y__TEHEHH5Q = $mol_type_enforce<
 		ReturnType< $mol_plot_mark_cross['title_x_pos_y'] >
 		,
 		ReturnType< $mol_svg_text_box['pos_y'] >
 	>
-	type $mol_svg_text_box__text__X0YHRW8C = $mol_type_enforce<
+	type $mol_svg_text_box__text__PO5JVK7I = $mol_type_enforce<
 		ReturnType< $mol_plot_mark_cross['title_x'] >
 		,
 		ReturnType< $mol_svg_text_box['text'] >
 	>
-	type $mol_svg_text_box__pos_x__2U4S36H3 = $mol_type_enforce<
+	type $mol_svg_text_box__pos_x__12GDA9S3 = $mol_type_enforce<
 		ReturnType< $mol_plot_mark_cross['title_y_pos_x'] >
 		,
 		ReturnType< $mol_svg_text_box['pos_x'] >
 	>
-	type $mol_svg_text_box__pos_y__FNNCTCHS = $mol_type_enforce<
+	type $mol_svg_text_box__pos_y__OZ1WDD9D = $mol_type_enforce<
 		ReturnType< $mol_plot_mark_cross['title_y_pos_y'] >
 		,
 		ReturnType< $mol_svg_text_box['pos_y'] >
 	>
-	type $mol_svg_text_box__text__LWTNTL55 = $mol_type_enforce<
+	type $mol_svg_text_box__text__M1HPAWE8 = $mol_type_enforce<
 		ReturnType< $mol_plot_mark_cross['title_y'] >
 		,
 		ReturnType< $mol_svg_text_box['text'] >
 	>
-	type $mol_vector_2d__BKKRNHR9 = $mol_type_enforce<
+	type $mol_vector_2d__3T8U2304 = $mol_type_enforce<
 		[ ReturnType< $mol_plot_mark_cross['dimensions_x'] >, ReturnType< $mol_plot_mark_cross['dimensions_y'] > ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<$mol_vector_range<number>> >
