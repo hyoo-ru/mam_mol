@@ -1,6 +1,6 @@
 declare namespace $ {
 
-	type $mol_calendar__month_moment__D0WT5TK3 = $mol_type_enforce<
+	type $mol_calendar__month_moment__T6999C7K = $mol_type_enforce<
 		ReturnType< $mol_calendar_demo_simple['today'] >
 		,
 		ReturnType< $mol_calendar['month_moment'] >

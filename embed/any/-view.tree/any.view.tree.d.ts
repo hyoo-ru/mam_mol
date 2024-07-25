@@ -1,31 +1,31 @@
 declare namespace $ {
 
-	type $mol_image__title__Y14T3KF3 = $mol_type_enforce<
+	type $mol_image__title__K4U4T9WT = $mol_type_enforce<
 		ReturnType< $mol_embed_any['title'] >
 		,
 		ReturnType< $mol_image['title'] >
 	>
-	type $mol_image__uri__AH3N6BLI = $mol_type_enforce<
+	type $mol_image__uri__IBX7OS14 = $mol_type_enforce<
 		ReturnType< $mol_embed_any['uri'] >
 		,
 		ReturnType< $mol_image['uri'] >
 	>
-	type $mol_embed_native__title__6WUV2HJ3 = $mol_type_enforce<
+	type $mol_embed_native__title__Q2WURXJV = $mol_type_enforce<
 		ReturnType< $mol_embed_any['title'] >
 		,
 		ReturnType< $mol_embed_native['title'] >
 	>
-	type $mol_embed_native__uri__E6MG7U4C = $mol_type_enforce<
+	type $mol_embed_native__uri__B4H6VOPC = $mol_type_enforce<
 		ReturnType< $mol_embed_any['uri'] >
 		,
 		ReturnType< $mol_embed_native['uri'] >
 	>
-	type $mol_embed_youtube__title__EKAG7JCB = $mol_type_enforce<
+	type $mol_embed_youtube__title__H289CJNP = $mol_type_enforce<
 		ReturnType< $mol_embed_any['title'] >
 		,
 		ReturnType< $mol_embed_youtube['title'] >
 	>
-	type $mol_embed_youtube__uri__2EJUQ8WJ = $mol_type_enforce<
+	type $mol_embed_youtube__uri__KVSFN14M = $mol_type_enforce<
 		ReturnType< $mol_embed_any['uri'] >
 		,
 		ReturnType< $mol_embed_youtube['uri'] >
