@@ -169,7 +169,8 @@ namespace $ {
 			
 		}
 		
-		_ws_icome_partial = [] as Uint8Array[]
+		_ws_income_chunks = new WeakMap< InstanceType< typeof $node.stream.Duplex >, Uint8Array[] >
+		_ws_income_frames = new WeakMap< InstanceType< typeof $node.stream.Duplex >, ( string | Uint8Array )[] >
 		
 		async ws_income(
 			chunk: Buffer,
@@ -181,10 +182,13 @@ namespace $ {
 			
 			try {
 				
-				this._ws_icome_partial.push( chunk )
-				const patial_size = this._ws_icome_partial.reduce( ( sum, buf )=> sum + buf.byteLength, 0 )
+				let chunks = this._ws_income_chunks.get( sock )!
+				if( !chunks ) this._ws_income_chunks.set( sock, chunks = [] )
 				
-				let frame = $mol_websocket_frame.from( this._ws_icome_partial[0] )
+				chunks.push( chunk )
+				const patial_size = chunks.reduce( ( sum, buf )=> sum + buf.byteLength, 0 )
+				
+				let frame = $mol_websocket_frame.from( chunks[0] )
 				const msg_size = frame.size() + frame.data().size
 				
 				if( msg_size > patial_size ) {
@@ -194,7 +198,7 @@ namespace $ {
 				
 				chunk = Buffer.alloc( patial_size )
 				let offset = 0
-				for( const buf of this._ws_icome_partial.splice( 0 ) ) {
+				for( const buf of chunks.splice( 0 ) ) {
 					chunk.set( buf, offset )
 					offset += buf.byteLength
 				}
@@ -217,13 +221,38 @@ namespace $ {
 				const op = frame.kind().op
 				if( op === 'txt' ) data = $mol_charset_decode( data )
 				
-				const message = upgrade.derive( 'POST', data )
+				let frames = this._ws_income_frames.get( sock )!
+				if( !frames ) this._ws_income_frames.set( sock, frames = [] )
 				
-				if( op !== 'txt' && op !== 'bin' ) {
+				if( !frame.kind().fin ) {
+					frames.push( data )
+					setTimeout( ()=> sock.resume() )
+					return
+				}
+				
+				if( frames.length ) {
+					frames.push( data )
+					if( typeof frames[0] === 'string' ) {
+						data = ( frames as string[] ).join( '' )
+					} else {
+						const size = ( frames as Uint8Array[] ).reduce( ( s, f )=> s + f.byteLength, 0 )
+						data = new Uint8Array( size )
+						let offset = 0
+						for( const frame of ( frames as Uint8Array[] ) ) {
+							data.set( frame, offset )
+							offset += frame.byteLength
+						}
+					}
+					frames.length = 0
+				}
+				
+				if( op !== 'txt' && op !== 'bin' && op !== 'con' ) {
 					setTimeout( ()=> sock.resume() )
 					return
 				}
 			
+				const message = upgrade.derive( 'POST', data )
+				
 				if( data.length !== 0 ) {
 					this.$.$mol_log3_rise({
 						place: this,
@@ -247,7 +276,7 @@ namespace $ {
 					stack: error.stack,
 				})
 				
-				setTimeout( ()=> sock.resume() )
+				sock.end()
 				
 			}
 			

@@ -14,6 +14,7 @@ namespace $ {
 	
 	/**
 	 * WebSocket frame header.
+	 * https://datatracker.ietf.org/doc/html/rfc6455#section-5.2
 	 * Payload >= 2^32 isn't supported
 	 */
 	export class $mol_websocket_frame extends $mol_buffer {
