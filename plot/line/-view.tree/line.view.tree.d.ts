@@ -1,11 +1,11 @@
 declare namespace $ {
 
-	type $mol_plot_graph_sample__color__L76N3AB9 = $mol_type_enforce<
+	type $mol_plot_graph_sample__color__371X1BDE = $mol_type_enforce<
 		ReturnType< $mol_plot_line['color'] >
 		,
 		ReturnType< $mol_plot_graph_sample['color'] >
 	>
-	type $mol_plot_graph_sample__type__1L0J9V1V = $mol_type_enforce<
+	type $mol_plot_graph_sample__type__IJQD6GKX = $mol_type_enforce<
 		ReturnType< $mol_plot_line['type'] >
 		,
 		ReturnType< $mol_plot_graph_sample['type'] >

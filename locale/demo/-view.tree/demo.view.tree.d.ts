@@ -1,16 +1,16 @@
 declare namespace $ {
 
-	type $mol_labeler__title__BWQ9HK8U = $mol_type_enforce<
+	type $mol_labeler__title__3A36CKSK = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content__DK38HKIY = $mol_type_enforce<
+	type $mol_labeler__content__V3DKNKX9 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_locale_select__dictionary__692J7LJ8 = $mol_type_enforce<
+	type $mol_locale_select__dictionary__QLL60YRZ = $mol_type_enforce<
 		({ 
 			'ru': string,
 			'en': string,
@@ -18,12 +18,12 @@ declare namespace $ {
 		,
 		ReturnType< $mol_locale_select['dictionary'] >
 	>
-	type $mol_labeler__title__QJ0RYXF3 = $mol_type_enforce<
+	type $mol_labeler__title__8QYGGE1A = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content__R7F7TWTS = $mol_type_enforce<
+	type $mol_labeler__content__SB714XEN = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
