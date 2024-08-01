@@ -3513,7 +3513,8 @@ var $;
                 return this.pages()[0]?.title() || this.title();
             }
             sub() {
-                const next = [...this.pages(), this.Placeholder()];
+                const placeholder = this.Placeholder();
+                const next = [...this.pages(), placeholder];
                 const prev = $mol_mem_cached(() => this.sub()) ?? [];
                 for (let i = 1; i++;) {
                     const p = prev[prev.length - i];
@@ -3521,6 +3522,8 @@ var $;
                     if (!n)
                         break;
                     if (p === n)
+                        continue;
+                    if (n === placeholder)
                         continue;
                     n.bring();
                     new this.$.$mol_after_frame(() => {
