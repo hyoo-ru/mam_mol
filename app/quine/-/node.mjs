@@ -3002,8 +3002,7 @@ var $;
             const win = this.$.$mol_dom_context;
             if (win.parent !== win.self && !win.document.hasFocus())
                 return;
-            new this.$.$mol_after_frame(() => {
-                this.dom_node().scrollIntoView({ block: 'start', inline: 'nearest' });
+            new this.$.$mol_after_timeout(500, () => {
                 this.focused(true);
             });
         }

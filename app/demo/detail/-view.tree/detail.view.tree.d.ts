@@ -1,56 +1,56 @@
 declare namespace $ {
 
-	type $mol_check_icon__checked__YF0QP9HO = $mol_type_enforce<
+	type $mol_check_icon__checked__054VTVRM = $mol_type_enforce<
 		ReturnType< $mol_app_demo_detail['readme'] >
 		,
 		ReturnType< $mol_check_icon['checked'] >
 	>
-	type $mol_check_icon__hint__6D13ETJQ = $mol_type_enforce<
+	type $mol_check_icon__hint__4ELV7CA3 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_check_icon['hint'] >
 	>
-	type $mol_check_icon__Icon__UUNYHRO6 = $mol_type_enforce<
+	type $mol_check_icon__Icon__TUZPWK8B = $mol_type_enforce<
 		ReturnType< $mol_app_demo_detail['readme_icon'] >
 		,
 		ReturnType< $mol_check_icon['Icon'] >
 	>
-	type $mol_chat__seed__LHY5L7TZ = $mol_type_enforce<
+	type $mol_chat__seed__DQHQCHUQ = $mol_type_enforce<
 		ReturnType< $mol_app_demo_detail['chat_seed'] >
 		,
 		ReturnType< $mol_chat['seed'] >
 	>
-	type $mol_speck__value__CDX5MXHI = $mol_type_enforce<
+	type $mol_speck__value__LY39QBAZ = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_speck['value'] >
 	>
-	type $mol_link__hint__QAWA03A2 = $mol_type_enforce<
+	type $mol_link__hint__E2HZ31H0 = $mol_type_enforce<
 		ReturnType< $mol_app_demo_detail['edit_hint'] >
 		,
 		ReturnType< $mol_link['hint'] >
 	>
-	type $mol_link__sub__YZ4SBYAZ = $mol_type_enforce<
+	type $mol_link__sub__9VJAG17Y = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_link['sub'] >
 	>
-	type $mol_link__uri__4XR5PCKS = $mol_type_enforce<
+	type $mol_link__uri__DZ4V3IW3 = $mol_type_enforce<
 		ReturnType< $mol_app_demo_detail['edit_uri'] >
 		,
 		ReturnType< $mol_link['uri'] >
 	>
-	type $mol_link__hint__TVQYNY2V = $mol_type_enforce<
+	type $mol_link__hint__W3ZYB1QN = $mol_type_enforce<
 		ReturnType< $mol_app_demo_detail['close_hint'] >
 		,
 		ReturnType< $mol_link['hint'] >
 	>
-	type $mol_link__sub__J06ODPUQ = $mol_type_enforce<
+	type $mol_link__sub__3E9Y9BZA = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_link['sub'] >
 	>
-	type $mol_link__arg__W3XTT9GH = $mol_type_enforce<
+	type $mol_link__arg__LARDOGDF = $mol_type_enforce<
 		ReturnType< $mol_app_demo_detail['close_arg'] >
 		,
 		ReturnType< $mol_link['arg'] >
