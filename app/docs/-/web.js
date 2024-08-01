@@ -3115,8 +3115,10 @@ var $;
                         continue;
                     n.bring();
                     new this.$.$mol_after_frame(() => {
-                        this.dom_node().scroll({
-                            left: n.dom_node().offsetLeft,
+                        const b = this.dom_node();
+                        const p = n.dom_node();
+                        b.scroll({
+                            left: p.offsetLeft + p.offsetWidth - b.offsetWidth,
                             behavior: 'smooth',
                         });
                     });
