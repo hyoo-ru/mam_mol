@@ -41,8 +41,10 @@ namespace $.$$ {
 				n.bring()
 				
 				new this.$.$mol_after_frame( ()=> {
-					this.dom_node().scroll({
-						left: n.dom_node().getBoundingClientRect().left,
+					const b = this.dom_node() as HTMLElement
+					const p = n.dom_node() as HTMLElement
+					b.scroll({
+						left: p.offsetLeft + p.offsetWidth - b.offsetWidth,
 						behavior: 'smooth',
 					})
 				})

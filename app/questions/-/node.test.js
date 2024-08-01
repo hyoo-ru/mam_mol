@@ -3499,7 +3499,7 @@ var $;
                     n.bring();
                     new this.$.$mol_after_frame(() => {
                         this.dom_node().scroll({
-                            left: n.dom_node().getBoundingClientRect().left,
+                            left: n.dom_node().offsetLeft,
                             behavior: 'smooth',
                         });
                     });
