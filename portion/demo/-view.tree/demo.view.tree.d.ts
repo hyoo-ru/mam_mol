@@ -1,16 +1,16 @@
 declare namespace $ {
 
-	type $mol_portion__portion__FDAD6L1D = $mol_type_enforce<
+	type $mol_portion__portion__S5LIQSG0 = $mol_type_enforce<
 		ReturnType< $mol_portion_demo['fist'] >
 		,
 		ReturnType< $mol_portion['portion'] >
 	>
-	type $mol_portion__portion__16GDBD7B = $mol_type_enforce<
+	type $mol_portion__portion__721YBMQ5 = $mol_type_enforce<
 		ReturnType< $mol_portion_demo['second'] >
 		,
 		ReturnType< $mol_portion['portion'] >
 	>
-	type $mol_portion__portion__KP546R7B = $mol_type_enforce<
+	type $mol_portion__portion__YMTSXLLS = $mol_type_enforce<
 		ReturnType< $mol_portion_demo['third'] >
 		,
 		ReturnType< $mol_portion['portion'] >
