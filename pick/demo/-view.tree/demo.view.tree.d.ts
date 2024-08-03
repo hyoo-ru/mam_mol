@@ -1,86 +1,86 @@
 declare namespace $ {
 
-	type $mol_text__text__C84K25U3 = $mol_type_enforce<
+	type $mol_text__text__RL9DRKXA = $mol_type_enforce<
 		ReturnType< $mol_pick_demo['info_content_text'] >
 		,
 		ReturnType< $mol_text['text'] >
 	>
-	type $mol_pick__title__DD0VBR4J = $mol_type_enforce<
+	type $mol_pick__title__MCRVWOK7 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_pick['title'] >
 	>
-	type $mol_pick__bubble_content__Y8V2PG0Z = $mol_type_enforce<
+	type $mol_pick__bubble_content__HS3NA6NV = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_pick['bubble_content'] >
 	>
-	type $mol_button_copy__title__7FT86QPQ = $mol_type_enforce<
+	type $mol_button_copy__title__RZG61Q0P = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_copy['title'] >
 	>
-	type $mol_button_copy__text__XUSADL5R = $mol_type_enforce<
+	type $mol_button_copy__text__P0ZIEJPX = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_copy['text'] >
 	>
-	type $mol_button_download__title__QOF9Z3DE = $mol_type_enforce<
+	type $mol_button_download__title__06MKS3OD = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_download['title'] >
 	>
-	type $mol_button_download__blob__P2AVBIE1 = $mol_type_enforce<
+	type $mol_button_download__blob__1W0W6K25 = $mol_type_enforce<
 		ReturnType< $mol_pick_demo['Menu_item_download_blob'] >
 		,
 		ReturnType< $mol_button_download['blob'] >
 	>
-	type $mol_button_download__file_name__JY0CU555 = $mol_type_enforce<
+	type $mol_button_download__file_name__UT5A1EW7 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_download['file_name'] >
 	>
-	type $mol_button_major__title__E4JSU0BL = $mol_type_enforce<
+	type $mol_button_major__title__BRSV6RAD = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_major['title'] >
 	>
-	type $mol_button_major__click__U3ZH546C = $mol_type_enforce<
+	type $mol_button_major__click__XLGR6U2D = $mol_type_enforce<
 		ReturnType< $mol_pick_demo['delete_confirm'] >
 		,
 		ReturnType< $mol_button_major['click'] >
 	>
-	type $mol_pick__align__X0EJE5EK = $mol_type_enforce<
+	type $mol_pick__align__3LY5H86N = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_pick['align'] >
 	>
-	type $mol_pick__trigger_content__NVQR0ZSU = $mol_type_enforce<
+	type $mol_pick__trigger_content__456R1YU8 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_pick['trigger_content'] >
 	>
-	type $mol_pick__bubble_content__O56TATJD = $mol_type_enforce<
+	type $mol_pick__bubble_content__HGJ88NXN = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_pick['bubble_content'] >
 	>
-	type $mol_list__rows__Y3ID9VB5 = $mol_type_enforce<
+	type $mol_list__rows__KXS4EY9Z = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_pick__hint__4IN1TX83 = $mol_type_enforce<
+	type $mol_pick__hint__QJL82T4L = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_pick['hint'] >
 	>
-	type $mol_pick__trigger_content__8X1XA0ML = $mol_type_enforce<
+	type $mol_pick__trigger_content__4K07XSRM = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_pick['trigger_content'] >
 	>
-	type $mol_pick__bubble_content__8GF80EHT = $mol_type_enforce<
+	type $mol_pick__bubble_content__VSV66JM5 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_pick['bubble_content'] >
