@@ -1,10 +1,10 @@
 namespace $ {
 	
-	const algorithm = {
-		name: 'AES-CBC',
-		length: 128,
-		tagLength: 32,
-	}
+	//@ts-ignore
+	const curves = nobleCurves
+
+	//@ts-ignore
+	const ciphers = nobleCiphers
 	
 	/** Symmetric cipher with shortest payload */
 	export class $mol_crypto_secret extends Object {
@@ -12,140 +12,61 @@ namespace $ {
 		/** Key size in bytes. */
 		static size = 16
 		
+		stream: any
 		constructor(
-			readonly native: CryptoKey & { type: 'secret' }
+			readonly key: Uint8Array,
+			readonly nonce: Uint8Array,
 		) {
 			super()
+			this.stream = ciphers.cbc( key, nonce )
 		}
 		
 		static async generate() {
-			return new this(
-				await $mol_crypto_native.subtle.generateKey(
-					algorithm,
-					true,
-					[ 'encrypt', 'decrypt' ]
-				) as CryptoKey & { type: 'secret' }
-			)
+			const key = $mol_crypto_native.getRandomValues( new Uint8Array( 16 ) )
+			return new this( key, key )
 		}
 		
-		static async from( serial: BufferSource ) {
-			
-			return new this(
-				await $mol_crypto_native.subtle.importKey(
-					'raw',
-					serial,
-					algorithm,
-					true,
-					[ 'encrypt', 'decrypt' ],
-				) as CryptoKey & { type: 'secret' }
-			)
-			
-		}
-		
-		static async pass( pass: string, salt: Uint8Array ) {
-			
-			return new this(
-				await $mol_crypto_native.subtle.deriveKey(
-					
-					{
-						name: "PBKDF2",
-						salt,
-						iterations: 10_000,
-						hash: "SHA-256",
-					},
-					
-					await $mol_crypto_native.subtle.importKey(
-						"raw",
-						$mol_charset_encode( pass ),
-						"PBKDF2",
-						false,
-						[ "deriveKey" ],
-					),
-					
-					algorithm,
-					true,
-					[ 'encrypt', 'decrypt' ],
-					
-				) as CryptoKey & { type: 'secret' }
-			)
-			
-		}
-		
-		static async derive( private_serial: string, public_serial: string ) {
-			
-			const ecdh = { name: "ECDH", namedCurve: "P-256" }
-			const jwk = { crv: 'P-256', ext: true, kty: 'EC' }
-			
-			const private_key = await $mol_crypto_native.subtle.importKey(
-				'jwk',
-				{
-					... jwk,
-					key_ops: [ 'deriveKey' ],
-					x: private_serial.slice( 0, 43 ),
-					y: private_serial.slice( 43, 86 ),
-					d: private_serial.slice( 86, 129 ),
-				},
-				ecdh,
-				true,
-				[ 'deriveKey' ],
-			)
-		
-			const public_key = await $mol_crypto_native.subtle.importKey(
-				'jwk',
-				{
-					... jwk,
-					key_ops: [],
-					x: public_serial.slice( 0, 43 ),
-					y: public_serial.slice( 43, 86 ),
-				},
-				ecdh,
-				true,
-				[],
-			)
-			
-			const secret = await $mol_crypto_native.subtle.deriveKey(
-				{
-				  name: "ECDH",
-				  public: public_key,
-				},
-				private_key,
-				algorithm,
-				true,
-				[ "encrypt", "decrypt" ],
-			)
-		
-			return new this( secret as CryptoKey & { type: 'secret' } )
+		static async from( serial: Uint8Array ) {
+			const key = serial
+			return new this( serial, serial )
 		}
 		
 		/** 16 bytes */
 		async serial() {
-			return new Uint8Array( await $mol_crypto_native.subtle.exportKey(
-				'raw',
-				this.native,
-			) )
+			return this.key!
 		}
 
 		/** 16n bytes */
 		async encrypt( open: BufferSource, salt: BufferSource ) {
-			return new Uint8Array( await $mol_crypto_native.subtle.encrypt(
-				{
-					... algorithm,
-					iv: salt,
-				},
-				this.native,
-				open
-			) )
+			return this.stream.encrypt( open )
+		}
+
+		async decrypt( closed: BufferSource, salt : BufferSource ) {
+			return this.stream.decrypt( closed )
 		}
 		
-		async decrypt( closed: BufferSource, salt : BufferSource ) {
-			return new Uint8Array( await $mol_crypto_native.subtle.decrypt(
-				{
-					... algorithm,
-					iv: salt,
-				},
-				this.native,
-				closed
-			) )
+		static async pass( pass: string, salt: Uint8Array ) {
+			
+			return this.generate()
+
+			// const pack = $mol_charset_encode( pass )
+			// const hash = $mol_crypto_hash( pack ).slice( 0, $mol_crypto_secret.size )
+
+			// return this.from( hash )
+			
+		}
+		
+		static async derive( private_serial: string, public_serial: string ) {
+
+			const priv = new Uint8Array( $mol_base64_url_decode( private_serial.slice( 86, 129 ) ) )
+			const pub = new Uint8Array( $mol_base64_url_decode( public_serial.slice( 0, 43 ) ) )
+
+			const priv2 = curves.ed25519_edwardsToMontgomeryPriv(priv)
+			const pub2 = curves.ed25519_edwardsToMontgomeryPub(pub)
+
+			const shared = curves.x25519.getSharedSecret( priv2, pub2 ).slice( 0, 16 )
+			return this.from( shared )
+
 		}
 		
 	}
