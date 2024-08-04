@@ -1,11 +1,8 @@
 namespace $ {
-	
-	const algorithm = {
-		name: 'ECDSA',
-		hash: 'SHA-256',
-		namedCurve: "P-256",
-	}
-	
+
+	//@ts-ignore
+	const curves = nobleCurves
+
 	export class $mol_crypto_key extends $mol_buffer {
 		
 		static from< This extends typeof $mol_crypto_key >( this: This, serial: number | string | ArrayBufferView ) {
@@ -40,32 +37,11 @@ namespace $ {
 		static size_str = 86
 		static size_bin = 64
 		
-		@ $mol_memo.method
-		async native() {
-			const str = this.toString()
-			return $mol_crypto_native.subtle.importKey(
-				'jwk',
-				{
-					crv: "P-256",
-					ext: true,
-					key_ops: [ 'verify' ],
-					kty: "EC",
-					x: str.slice( 0, 43 ),
-					y: str.slice( 43, 86 ),
-				},
-				algorithm,
-				true,
-				[ 'verify' ],
-			)
-		}
-		
 		async verify( data: BufferSource, sign: BufferSource ) {
-			return await $mol_crypto_native.subtle.verify(
-				algorithm,
-				await this.native(),
-				sign,
-				data,
-			)
+
+			const pub = this.asArray().subarray( 0, 32 )
+			return curves.ed25519.verify( sign, data, pub )
+
 		}
 		
 	}
@@ -76,50 +52,32 @@ namespace $ {
 		static size_bin = 96
 		static size_sign = 64
 		
+
 		static async generate() {
 			
-			const pair = await $mol_crypto_native.subtle.generateKey(
-				algorithm,
-				true,
-				[ 'sign', 'verify' ]
-			)
-			
-			const { x, y, d } = await $mol_crypto_native.subtle.exportKey( 'jwk', pair.privateKey )
-			return this.from( x + y! + d! )
-			
+			const priv = curves.ed25519.utils.randomPrivateKey()
+			const pub = curves.ed25519.getPublicKey(priv)
+
+			const serial = new Uint8Array([
+				... pub,
+				... pub,
+				... priv,
+			])
+
+			return this.from( serial )
+
 		}
-		
-		@ $mol_memo.method
-		async native() {
-			const str = this.toString()
-			return await $mol_crypto_native.subtle.importKey(
-				'jwk',
-				{
-					crv: "P-256",
-					ext: true,
-					key_ops: [ 'sign' ],
-					kty: "EC",
-					x: str.slice( 0, 43 ),
-					y: str.slice( 43, 86 ),
-					d: str.slice( 86, 129 ),
-				},
-				algorithm,
-				true,
-				[ 'sign' ],
-			)
-		}
-		
+
 		@ $mol_memo.method
 		public() {
 			return new $mol_crypto_key_public( this.buffer, this.byteOffset, this.byteOffset + 64 )
 		}
 		
 		async sign( data: BufferSource ) {
-			return new Uint8Array( await $mol_crypto_native.subtle.sign(
-				algorithm,
-				await this.native(),
-				data
-			) )
+
+			const priv = this.asArray().subarray( 64 )
+			return curves.ed25519.sign( data, priv )
+
 		}
 		
 	}
