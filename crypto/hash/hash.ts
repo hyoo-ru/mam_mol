@@ -51,7 +51,7 @@ namespace $ {
 					
 				}
 				
-				const next = ( ( h1 & h2 | ~h1 & h3 ) + 1518500249 + h4 + ( sponge[j] >>> 0 ) + (( h0 << 5 )|( h0 >>> 27 )) )
+				const next = ( ( h1 & h2 | ~h1 & h3 ) + 1518500249 + h4 + ( sponge[j] >>> 0 ) + (( h0 << 5 )|( h0 >>> 27 )) )|0
 
 				h4 = h3
 				h3 = h2
@@ -66,7 +66,7 @@ namespace $ {
 				const shuffle = sponge[j-3] ^ sponge[j-8] ^ sponge[j-14] ^ sponge[j-16]
 				sponge[j] = shuffle << 1 | shuffle >>> 31
 				
-				const next = ( ( h1 & h2 | ~h1 & h3 ) + 1518500249 + h4 + ( sponge[j] >>> 0 ) + (( h0 << 5 )|( h0 >>> 27 )) )
+				const next = ( ( h1 & h2 | ~h1 & h3 ) + 1518500249 + h4 + ( sponge[j] >>> 0 ) + (( h0 << 5 )|( h0 >>> 27 )) )|0
 
 				h4 = h3
 				h3 = h2
@@ -81,7 +81,7 @@ namespace $ {
 				const shuffle = sponge[j-3] ^ sponge[j-8] ^ sponge[j-14] ^ sponge[j-16]
 				sponge[j] = shuffle << 1 | shuffle >>> 31
 				
-				const next = ( ( h1 ^ h2 ^ h3 ) + 1859775393 + h4 + ( sponge[j] >>> 0 ) + (( h0 << 5 )|( h0 >>> 27 )) )
+				const next = ( ( h1 ^ h2 ^ h3 ) + 1859775393 + h4 + ( sponge[j] >>> 0 ) + (( h0 << 5 )|( h0 >>> 27 )) )|0
 
 				h4 = h3
 				h3 = h2
@@ -96,7 +96,7 @@ namespace $ {
 				const shuffle = sponge[j-3] ^ sponge[j-8] ^ sponge[j-14] ^ sponge[j-16]
 				sponge[j] = shuffle << 1 | shuffle >>> 31
 				
-				const next = ( ( h1 & h2 | h1 & h3 | h2 & h3 ) - 1894007588 + h4 + ( sponge[j] >>> 0 ) + (( h0 << 5 )|( h0 >>> 27 )) )
+				const next = ( ( h1 & h2 | h1 & h3 | h2 & h3 ) - 1894007588 + h4 + ( sponge[j] >>> 0 ) + (( h0 << 5 )|( h0 >>> 27 )) )|0
 
 				h4 = h3
 				h3 = h2
@@ -111,7 +111,7 @@ namespace $ {
 				const shuffle = sponge[j-3] ^ sponge[j-8] ^ sponge[j-14] ^ sponge[j-16]
 				sponge[j] = shuffle << 1 | shuffle >>> 31
 				
-				const next = ( ( h1 ^ h2 ^ h3 ) - 899497514 + h4 + ( sponge[j] >>> 0 ) + (( h0 << 5 )|( h0 >>> 27 )) )
+				const next = ( ( h1 ^ h2 ^ h3 ) - 899497514 + h4 + ( sponge[j] >>> 0 ) + (( h0 << 5 )|( h0 >>> 27 )) )|0
 
 				h4 = h3
 				h3 = h2
