@@ -2,7 +2,7 @@ namespace $ {
 	
 	const algorithm = {
 		name: 'ECDSA',
-		hash: 'SHA-256',
+		hash: 'SHA-1',
 		namedCurve: "P-256",
 	}
 	
