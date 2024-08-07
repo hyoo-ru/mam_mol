@@ -29,7 +29,7 @@ namespace $.$$ {
 
 		'>': {
 			$mol_view: {
-				transform: 'translateZ(0)', // enforce gpu scroll in all agents
+				// transform: 'translateZ(0)', // enforce gpu scroll in all agents
 				gridArea: '1/1',
 			},
 		},
