@@ -19,12 +19,6 @@ namespace $ {
 				
 				el.removeAttribute( name )
 
-			} else if( val === true ) {
-
-				if( el.hasAttribute( name ) ) continue
-				
-				el.setAttribute( name , '' )
-
 			} else {
 				
 				const  str = String( val )
