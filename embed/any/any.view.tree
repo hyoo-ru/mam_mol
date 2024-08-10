@@ -8,3 +8,6 @@ $mol_embed_any $mol_view
 	Youtube $mol_embed_youtube
 		title <= title \
 		uri <= uri \
+	Rutube $mol_embed_rutube
+		title <= title \
+		uri <= uri \

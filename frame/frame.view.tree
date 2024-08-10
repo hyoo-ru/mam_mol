@@ -4,10 +4,9 @@ $mol_frame $mol_embed_native
 		^
 		data null
 		type null
+		allow <= allow \
 		src <= uri? \about:config
 		srcdoc <= html null
-		allow <= allow \
-		- allowfullscreen <=
 	fullscreen true
 	accelerometer true
 	autoplay true

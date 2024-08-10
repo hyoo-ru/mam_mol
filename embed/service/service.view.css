@@ -1,13 +1,18 @@
-[mol_embed_youtube] {
+[mol_embed_service] {
 	padding: 0;
 	max-width: 100%;
 }
 
-[mol_embed_youtube_image] {
+[mol_embed_service_image] {
 	flex: auto 1 1;
+	width: 100vw;
 }
 
-[mol_embed_youtube_hint] {
+[mol_embed_service_frame] {
+	width: 100vw;
+}
+
+[mol_embed_service_hint] {
 	position: absolute;
     left: 50%;
     top: 50%;
@@ -17,6 +22,6 @@
     transform: translate(-50%, -50%);
 }
 
-[mol_embed_youtube]:hover [mol_embed_youtube_hint] {
+[mol_embed_service]:hover [mol_embed_service_hint] {
 	opacity: .6;
 }
