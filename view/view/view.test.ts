@@ -93,7 +93,7 @@ namespace $ {
 			var node = x.dom_tree()
 			
 			$mol_assert_equal( node.getAttribute( 'href' ) , '#haha' )
-			$mol_assert_equal( node.getAttribute( 'required' ) , 'true' )
+			$mol_assert_equal( node.getAttribute( 'required' ) , '' )
 			$mol_assert_equal( node.getAttribute( 'hidden' ) , null )
 			
 		} ,
