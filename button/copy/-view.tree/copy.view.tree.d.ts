@@ -1,13 +1,13 @@
 declare namespace $ {
 
-	type $mol_blob__OUOV20MB = $mol_type_enforce<
+	type $mol_blob__9AKE71BL = $mol_type_enforce<
 		[ readonly(BlobPart)[], ({ 
 			'type': string,
 		})  ]
 		,
 		ConstructorParameters< typeof $mol_blob >
 	>
-	type $mol_blob__MA3A9Q4N = $mol_type_enforce<
+	type $mol_blob__BWNMFR0Q = $mol_type_enforce<
 		[ readonly(BlobPart)[], ({ 
 			'type': string,
 		})  ]
