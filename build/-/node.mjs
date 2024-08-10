@@ -6353,7 +6353,7 @@ var $;
                 }
             }
             const internal = Object.values(results).at(-1);
-            return internal[0];
+            return internal?.[0] ?? '0.0.0.0';
         }
         http() {
             const server = $node.http.createServer(this.express());

@@ -363,10 +363,9 @@ $mol_frame $mol_embed_native
 		^
 		data null
 		type null
+		allow <= allow \
 		src <= uri? \about:config
 		srcdoc <= html null
-		allow <= allow \
-		- allowfullscreen <=
 	fullscreen true
 	accelerometer true
 	autoplay true
@@ -376,7 +375,7 @@ $mol_frame $mol_embed_native
 	clipboard_read true
 	clipboard_write true
 
-$mol_embed_youtube $mol_check
+$mol_embed_service $mol_check
 	uri \
 	video_preview \
 	video_id \
@@ -391,6 +390,10 @@ $mol_embed_youtube $mol_check
 			uri <= video_embed \
 
 
+$mol_embed_youtube $mol_embed_service
+
+$mol_embed_rutube $mol_embed_service
+
 $mol_embed_any $mol_view
 	Image $mol_image
 		title <= title \
@@ -399,6 +402,9 @@ $mol_embed_any $mol_view
 		title <= title \
 		uri <= uri \
 	Youtube $mol_embed_youtube
+		title <= title \
+		uri <= uri \
+	Rutube $mol_embed_rutube
 		title <= title \
 		uri <= uri \
 

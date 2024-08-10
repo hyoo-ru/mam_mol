@@ -2268,10 +2268,15 @@ var $;
             if (val === undefined) {
                 continue;
             }
-            if (val === null || val === false) {
+            else if (val === null || val === false) {
                 if (!el.hasAttribute(name))
                     continue;
                 el.removeAttribute(name);
+            }
+            else if (val === true) {
+                if (el.hasAttribute(name))
+                    continue;
+                el.setAttribute(name, '');
             }
             else {
                 const str = String(val);
@@ -7782,15 +7787,15 @@ var $;
 
 ;
 	($.$mol_frame) = class $mol_frame extends ($.$mol_embed_native) {
+		allow(){
+			return "";
+		}
 		uri(next){
 			if(next !== undefined) return next;
 			return "about:config";
 		}
 		html(){
 			return null;
-		}
-		allow(){
-			return "";
 		}
 		dom_name(){
 			return "iframe";
@@ -7800,9 +7805,9 @@ var $;
 				...(super.attr()), 
 				"data": null, 
 				"type": null, 
+				"allow": (this?.allow()), 
 				"src": (this?.uri()), 
-				"srcdoc": (this?.html()), 
-				"allow": (this?.allow())
+				"srcdoc": (this?.html())
 			};
 		}
 		fullscreen(){
@@ -9392,7 +9397,7 @@ var $;
 "use strict";
 
 ;
-	($.$mol_embed_youtube) = class $mol_embed_youtube extends ($.$mol_check) {
+	($.$mol_embed_service) = class $mol_embed_service extends ($.$mol_check) {
 		active(next){
 			if(next !== undefined) return next;
 			return false;
@@ -9439,10 +9444,44 @@ var $;
 			];
 		}
 	};
-	($mol_mem(($.$mol_embed_youtube.prototype), "active"));
-	($mol_mem(($.$mol_embed_youtube.prototype), "Image"));
-	($mol_mem(($.$mol_embed_youtube.prototype), "Hint"));
-	($mol_mem(($.$mol_embed_youtube.prototype), "Frame"));
+	($mol_mem(($.$mol_embed_service.prototype), "active"));
+	($mol_mem(($.$mol_embed_service.prototype), "Image"));
+	($mol_mem(($.$mol_embed_service.prototype), "Hint"));
+	($mol_mem(($.$mol_embed_service.prototype), "Frame"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_embed_service extends $.$mol_embed_service {
+            sub() {
+                return this.active()
+                    ? [this.Frame()]
+                    : [this.Image(), this.Hint()];
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_embed_service.prototype, "sub", null);
+        $$.$mol_embed_service = $mol_embed_service;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/embed/service/service.view.css", "[mol_embed_service] {\n\tpadding: 0;\n\tmax-width: 100%;\n}\n\n[mol_embed_service_image] {\n\tflex: auto 1 1;\n\twidth: 100vw;\n}\n\n[mol_embed_service_frame] {\n\twidth: 100vw;\n}\n\n[mol_embed_service_hint] {\n\tposition: absolute;\n    left: 50%;\n    top: 50%;\n    width: 50%;\n    height: 50%;\n    opacity: 0.3;\n    transform: translate(-50%, -50%);\n}\n\n[mol_embed_service]:hover [mol_embed_service_hint] {\n\topacity: .6;\n}\n");
+})($ || ($ = {}));
+
+;
+	($.$mol_embed_youtube) = class $mol_embed_youtube extends ($.$mol_embed_service) {};
 
 
 ;
@@ -9466,11 +9505,6 @@ var $;
             video_preview() {
                 return `https://i.ytimg.com/vi/${this.video_id()}/sddefault.jpg`;
             }
-            sub() {
-                return this.active()
-                    ? [this.Frame()]
-                    : [this.Image(), this.Hint()];
-            }
         }
         __decorate([
             $mol_mem
@@ -9481,18 +9515,45 @@ var $;
         __decorate([
             $mol_mem
         ], $mol_embed_youtube.prototype, "video_preview", null);
-        __decorate([
-            $mol_mem
-        ], $mol_embed_youtube.prototype, "sub", null);
         $$.$mol_embed_youtube = $mol_embed_youtube;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
 ;
+	($.$mol_embed_rutube) = class $mol_embed_rutube extends ($.$mol_embed_service) {};
+
+
+;
+"use strict";
+
+;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/embed/youtube/youtube.view.css", "[mol_embed_youtube] {\n\tpadding: 0;\n\tmax-width: 100%;\n}\n\n[mol_embed_youtube_image] {\n\tflex: auto 1 1;\n}\n\n[mol_embed_youtube_hint] {\n\tposition: absolute;\n    left: 50%;\n    top: 50%;\n    width: 50%;\n    height: 50%;\n    opacity: 0.3;\n    transform: translate(-50%, -50%);\n}\n\n[mol_embed_youtube]:hover [mol_embed_youtube_hint] {\n\topacity: .6;\n}\n");
+    var $$;
+    (function ($$) {
+        class $mol_embed_rutube extends $.$mol_embed_rutube {
+            video_embed() {
+                return `https://rutube.ru/play/embed/${encodeURIComponent(this.video_id())}`;
+            }
+            video_id() {
+                return this.uri().match(/^https:\/\/rutube.ru\/video\/([^\/&?#]+)/)?.[1] ?? 'about:blank';
+            }
+            video_preview() {
+                return `https://rutube.ru/api/video/${this.video_id()}/thumbnail/?redirect=1`;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_embed_rutube.prototype, "video_embed", null);
+        __decorate([
+            $mol_mem
+        ], $mol_embed_rutube.prototype, "video_id", null);
+        __decorate([
+            $mol_mem
+        ], $mol_embed_rutube.prototype, "video_preview", null);
+        $$.$mol_embed_rutube = $mol_embed_rutube;
+    })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
 ;
@@ -9521,10 +9582,17 @@ var $;
 			(obj.uri) = () => ((this?.uri()));
 			return obj;
 		}
+		Rutube(){
+			const obj = new this.$.$mol_embed_rutube();
+			(obj.title) = () => ((this?.title()));
+			(obj.uri) = () => ((this?.uri()));
+			return obj;
+		}
 	};
 	($mol_mem(($.$mol_embed_any.prototype), "Image"));
 	($mol_mem(($.$mol_embed_any.prototype), "Object"));
 	($mol_mem(($.$mol_embed_any.prototype), "Youtube"));
+	($mol_mem(($.$mol_embed_any.prototype), "Rutube"));
 
 
 ;
@@ -9546,6 +9614,8 @@ var $;
                         return 'youtube';
                     if (/^https:\/\/youtu\.be\//.test(uri))
                         return 'youtube';
+                    if (/^https:\/\/rutube\.ru\//.test(uri))
+                        return 'rutube';
                 }
                 catch (error) {
                     $mol_fail_log(error);
@@ -9557,6 +9627,7 @@ var $;
                 switch (this.type()) {
                     case 'image': return [this.Image()];
                     case 'youtube': return [this.Youtube()];
+                    case 'rutube': return [this.Rutube()];
                     default: return [this.Object()];
                 }
             }
@@ -41296,7 +41367,7 @@ var $;
             x.$ = $;
             var node = x.dom_tree();
             $mol_assert_equal(node.getAttribute('href'), '#haha');
-            $mol_assert_equal(node.getAttribute('required'), 'true');
+            $mol_assert_equal(node.getAttribute('required'), '');
             $mol_assert_equal(node.getAttribute('hidden'), null);
         },
         'render custom fields'($) {

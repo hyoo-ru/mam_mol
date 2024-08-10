@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/embed/rutube/rutube.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_embed_rutube $mol_embed_service\n"
+	],
+	"mappings": "AAAA,AAAA,iDAAkB,+BAAlB,EAAA;"
+}

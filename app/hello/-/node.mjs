@@ -2257,10 +2257,15 @@ var $;
             if (val === undefined) {
                 continue;
             }
-            if (val === null || val === false) {
+            else if (val === null || val === false) {
                 if (!el.hasAttribute(name))
                     continue;
                 el.removeAttribute(name);
+            }
+            else if (val === true) {
+                if (el.hasAttribute(name))
+                    continue;
+                el.setAttribute(name, '');
             }
             else {
                 const str = String(val);

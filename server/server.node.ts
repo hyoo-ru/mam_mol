@@ -29,7 +29,7 @@ namespace $ {
 				}
 			}
 			const internal = Object.values( results ).at( -1 ) as string[]
-			return internal[0]
+			return internal?.[0] ?? '0.0.0.0'
 		}
 
 		@ $mol_mem

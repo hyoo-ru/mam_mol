@@ -1,13 +1,13 @@
 	($.$mol_frame) = class $mol_frame extends ($.$mol_embed_native) {
+		allow(){
+			return "";
+		}
 		uri(next){
 			if(next !== undefined) return next;
 			return "about:config";
 		}
 		html(){
 			return null;
-		}
-		allow(){
-			return "";
 		}
 		dom_name(){
 			return "iframe";
@@ -17,9 +17,9 @@
 				...(super.attr()), 
 				"data": null, 
 				"type": null, 
+				"allow": (this?.allow()), 
 				"src": (this?.uri()), 
-				"srcdoc": (this?.html()), 
-				"allow": (this?.allow())
+				"srcdoc": (this?.html())
 			};
 		}
 		fullscreen(){
