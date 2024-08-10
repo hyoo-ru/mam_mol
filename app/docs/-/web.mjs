@@ -1866,11 +1866,6 @@ var $;
                     continue;
                 el.removeAttribute(name);
             }
-            else if (val === true) {
-                if (el.hasAttribute(name))
-                    continue;
-                el.setAttribute(name, '');
-            }
             else {
                 const str = String(val);
                 if (el.getAttribute(name) === str)
