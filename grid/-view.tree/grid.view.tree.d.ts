@@ -1,71 +1,71 @@
 declare namespace $ {
 
-	type $mol_grid_table__sub__CTG3X1L4 = $mol_type_enforce<
+	type $mol_grid_table__sub__J033FWSD = $mol_type_enforce<
 		ReturnType< $mol_grid['rows'] >
 		,
 		ReturnType< $mol_grid_table['sub'] >
 	>
-	type $mol_dimmer__needle__G32FGW5J = $mol_type_enforce<
+	type $mol_dimmer__needle__BHW2NPDU = $mol_type_enforce<
 		ReturnType< $mol_grid['needle'] >
 		,
 		ReturnType< $mol_dimmer['needle'] >
 	>
-	type $mol_dimmer__haystack__V2EVT3YO = $mol_type_enforce<
+	type $mol_dimmer__haystack__39G68AI7 = $mol_type_enforce<
 		ReturnType< $mol_grid['cell_value'] >
 		,
 		ReturnType< $mol_dimmer['haystack'] >
 	>
-	type $mol_grid_row__cells__M74QJX9S = $mol_type_enforce<
+	type $mol_grid_row__cells__Y18P40WV = $mol_type_enforce<
 		ReturnType< $mol_grid['head_cells'] >
 		,
 		ReturnType< $mol_grid_row['cells'] >
 	>
-	type $mol_grid_row__minimal_height__SKJSRO3O = $mol_type_enforce<
+	type $mol_grid_row__minimal_height__WJ1QR8KG = $mol_type_enforce<
 		ReturnType< $mol_grid['row_height'] >
 		,
 		ReturnType< $mol_grid_row['minimal_height'] >
 	>
-	type $mol_grid_row__minimal_width__S0DVWEEQ = $mol_type_enforce<
+	type $mol_grid_row__minimal_width__ZNBZV6CE = $mol_type_enforce<
 		ReturnType< $mol_grid['minimal_width'] >
 		,
 		ReturnType< $mol_grid_row['minimal_width'] >
 	>
-	type $mol_grid_row__cells__68BRQAH8 = $mol_type_enforce<
+	type $mol_grid_row__cells__P4JNBY58 = $mol_type_enforce<
 		ReturnType< $mol_grid['cells'] >
 		,
 		ReturnType< $mol_grid_row['cells'] >
 	>
-	type $mol_grid_cell__sub__S4IJG6NF = $mol_type_enforce<
+	type $mol_grid_cell__sub__41YZFP0N = $mol_type_enforce<
 		ReturnType< $mol_grid['cell_content_text'] >
 		,
 		ReturnType< $mol_grid_cell['sub'] >
 	>
-	type $mol_grid_number__sub__VCEVOGTF = $mol_type_enforce<
+	type $mol_grid_number__sub__QVUMCJAL = $mol_type_enforce<
 		ReturnType< $mol_grid['cell_content_number'] >
 		,
 		ReturnType< $mol_grid_number['sub'] >
 	>
-	type $mol_float__dom_name__WMLLQU46 = $mol_type_enforce<
+	type $mol_float__dom_name__KHCRNGHA = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_float['dom_name'] >
 	>
-	type $mol_float__sub__JH82Y386 = $mol_type_enforce<
+	type $mol_float__sub__8S9N3ZQH = $mol_type_enforce<
 		ReturnType< $mol_grid['col_head_content'] >
 		,
 		ReturnType< $mol_float['sub'] >
 	>
-	type $mol_check_expand__level__OQ1MYQUG = $mol_type_enforce<
+	type $mol_check_expand__level__T6J3GR93 = $mol_type_enforce<
 		ReturnType< $mol_grid['cell_level'] >
 		,
 		ReturnType< $mol_check_expand['level'] >
 	>
-	type $mol_check_expand__label__OSS54CNR = $mol_type_enforce<
+	type $mol_check_expand__label__SFR2HS5H = $mol_type_enforce<
 		ReturnType< $mol_grid['cell_content'] >
 		,
 		ReturnType< $mol_check_expand['label'] >
 	>
-	type $mol_check_expand__expanded__GCEORYRA = $mol_type_enforce<
+	type $mol_check_expand__expanded__GXVLZ2QU = $mol_type_enforce<
 		ReturnType< $mol_grid['cell_expanded'] >
 		,
 		ReturnType< $mol_check_expand['expanded'] >
