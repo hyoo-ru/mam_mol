@@ -4202,7 +4202,7 @@ var $;
     class $mol_state_local_node extends $mol_state_local {
         static dir() {
             const base = process.env.XDG_DATA_HOME || ($node.os.homedir() + '/.local/share');
-            return $mol_file.absolute(base).resolve('./hyoo_state_local');
+            return $mol_file.absolute(base).resolve('./mol_state_local');
         }
         static value(key, next) {
             const file = this.dir().resolve(encodeURIComponent(key) + '.json');

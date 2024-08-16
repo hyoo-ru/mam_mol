@@ -4,7 +4,7 @@ namespace $ {
 		@ $mol_mem
 		static dir() {
 			const base = process.env.XDG_DATA_HOME || ( $node.os.homedir() + '/.local/share' )
-			return $mol_file.absolute( base ).resolve( './hyoo_state_local' )
+			return $mol_file.absolute( base ).resolve( './mol_state_local' )
 		}
 		
 		@ $mol_mem_key
