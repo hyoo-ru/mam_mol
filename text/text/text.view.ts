@@ -68,7 +68,7 @@ namespace $.$$ {
 		@ $mol_mem_key
 		pre_text( index : number ) {
 			const token = this.flow_tokens()[ index ]
-			return ( token.chunks[2] ?? token.chunks[0].replace( /^(\t|  (?:\+\+|--|\*\*|  ))/gm , '' ) ).replace( /[\n\r]*$/ , '' )
+			return ( token.chunks[2] ?? token.chunks[0].replace( /^(\t| (?:\+\+|--|\*\*|  ) )/gm , '' ) ).replace( /[\n\r]*$/ , '' )
 		}
 		
 		@ $mol_mem_key

@@ -5456,12 +5456,12 @@ var $;
         'script'() {
             const text = `
 			    foo
-			  ++bar
-			  --lol
-			  **777
+			 ++ bar
+			 -- lol
+			 ** 777
 			`.slice(1).replace(/^\t+/gm, '');
             const res = [...text.matchAll($hyoo_marked_flow)][0].groups;
-            $mol_assert_equal(res.script, '    foo\n  ++bar\n  --lol\n  **777\n');
+            $mol_assert_equal(res.script, '    foo\n ++ bar\n -- lol\n ** 777\n');
         },
     });
 })($ || ($ = {}));
