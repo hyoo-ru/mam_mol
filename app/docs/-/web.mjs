@@ -106,8 +106,7 @@ var $;
                 self.skipWaiting();
             });
             self.addEventListener('activate', (event) => {
-                caches.delete('v1');
-                caches.delete('$mol_offline');
+                ;
                 self.clients.claim();
                 $$.$mol_log3_done({
                     place: '$mol_offline',
@@ -156,10 +155,7 @@ var $;
                         : fresh)
                     : (cached || fresh || fetch_data())));
             });
-            self.addEventListener('beforeinstallprompt', (event) => {
-                console.log(event);
-                event.prompt();
-            });
+            self.addEventListener('beforeinstallprompt', (event) => event.prompt());
         }
         else if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
             console.warn('HTTPS or localhost is required for service workers.');
@@ -169,14 +165,6 @@ var $;
         }
         else {
             navigator.serviceWorker.register('web.js').then(reg => {
-                reg.addEventListener('updatefound', () => {
-                    const worker = reg.installing;
-                    worker.addEventListener('statechange', () => {
-                        if (worker.state !== 'activated')
-                            return;
-                        window.location.reload();
-                    });
-                });
             });
         }
     }

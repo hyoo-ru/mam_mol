@@ -15,8 +15,7 @@ namespace $ {
 
 			self.addEventListener( 'activate' , ( event : any )=> {
 				
-				caches.delete( 'v1' )
-				caches.delete( '$mol_offline' )
+				// caches.delete( '$mol_offline' )
 				
 				;( self as any ).clients.claim()
 				
@@ -46,8 +45,8 @@ namespace $ {
 				if( request.method !== 'GET' ) return
 				if( !/^https?:/.test( request.url ) ) return
 				if( /\?/.test( request.url ) ) return
-				if (request.cache === 'no-store') return
-
+				if( request.cache === 'no-store' ) return
+				
 				const fetch_data = () => fetch( request ).then( response => {
 					if (response.status !== 200) return response
 					event.waitUntil(
@@ -78,7 +77,7 @@ namespace $ {
 									.catch((err: Error) => {
 										const cloned = cached.clone()
 										const message = `${err.cause instanceof Response ? '' : '500 '}${err.message} $mol_offline fallback to cache`
-										cloned.headers.set('$mol_offline_remote_status', message)
+										cloned.headers.set( '$mol_offline_remote_status', message )
 										return cloned
 									})
 								: fresh
@@ -89,10 +88,7 @@ namespace $ {
 				
 			})
 
-			self.addEventListener( 'beforeinstallprompt' , ( event : any )=> {
-				console.log( event )
-				event.prompt()
-			} )
+			self.addEventListener( 'beforeinstallprompt' , ( event : any )=> event.prompt() )
 
 		} else if( location.protocol !== 'https:' && location.hostname !== 'localhost' ) {
 			console.warn( 'HTTPS or localhost is required for service workers.' )
@@ -100,13 +96,13 @@ namespace $ {
 			console.warn( 'Service Worker is not supported.' )
 		} else {
 			navigator.serviceWorker.register( 'web.js' ).then( reg => {
-				reg.addEventListener( 'updatefound', ()=> {
-					const worker = reg.installing!
-					worker.addEventListener( 'statechange', ()=> {
-						if( worker.state !== 'activated' ) return
-						window.location.reload()
-					} )
-				} )
+				// reg.addEventListener( 'updatefound', ()=> {
+				// 	const worker = reg.installing!
+				// 	worker.addEventListener( 'statechange', ()=> {
+				// 		if( worker.state !== 'activated' ) return
+				// 		window.location.reload()
+				// 	} )
+				// } )
 			} )
 		}
 

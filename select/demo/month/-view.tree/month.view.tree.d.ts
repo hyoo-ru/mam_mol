@@ -1,16 +1,16 @@
 declare namespace $ {
 
-	type $mol_select__no_options_message__F3MRSHU3 = $mol_type_enforce<
+	type $mol_select__no_options_message__AD5NWRFY = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_select['no_options_message'] >
 	>
-	type $mol_select__value__GGCSMKFZ = $mol_type_enforce<
+	type $mol_select__value__875EFE4M = $mol_type_enforce<
 		ReturnType< $mol_select_demo_month['month'] >
 		,
 		ReturnType< $mol_select['value'] >
 	>
-	type $mol_select__dictionary__EWSFQCOH = $mol_type_enforce<
+	type $mol_select__dictionary__8C9SDF1H = $mol_type_enforce<
 		ReturnType< $mol_select_demo_month['months'] >
 		,
 		ReturnType< $mol_select['dictionary'] >
