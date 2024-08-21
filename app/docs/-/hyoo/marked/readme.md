@@ -61,6 +61,12 @@ Nevertheless, it is a useful exercise in design.
 - \\Article about MarkedText\https://page.hyoo.ru/#!=6lqg5m_deygy0\\
 - TypeScript API: \\https://github.com/hyoo-ru/marked.hyoo.ru/\\
 
+== Spoilers
+
+? It's **title** of spoiler
+? And this is the spoiler content
+? " The //content// supports ++any++ markup
+
 == Online sandbox
 
 ""https://marked.hyoo.ru/""

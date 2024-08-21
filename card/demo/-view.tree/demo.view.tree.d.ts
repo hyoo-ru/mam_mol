@@ -1,16 +1,16 @@
 declare namespace $ {
 
-	type $mol_card__content__XLBT330L = $mol_type_enforce<
+	type $mol_card__content__XO5GMHPN = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_card['content'] >
 	>
-	type $mol_card__title__DB57YWB8 = $mol_type_enforce<
+	type $mol_card__title__NMGT0L60 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_card['title'] >
 	>
-	type $mol_card__status__1X2X4JIP = $mol_type_enforce<
+	type $mol_card__status__NO0R75TZ = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_card['status'] >
