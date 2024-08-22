@@ -1,76 +1,76 @@
 declare namespace $ {
 
-	type $mol_vector_range__Z7SORJFQ = $mol_type_enforce<
+	type $mol_vector_range__MEZWOV35 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range__UXHM8QEA = $mol_type_enforce<
+	type $mol_vector_range__PAFBY7K8 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range__TLU9K55Y = $mol_type_enforce<
+	type $mol_vector_range__3IYE7SA9 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range__VO9NQSAF = $mol_type_enforce<
+	type $mol_vector_range__DWTLTM7A = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range__VRR30PE0 = $mol_type_enforce<
+	type $mol_vector_range__CP4278MW = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range__ILG597FC = $mol_type_enforce<
+	type $mol_vector_range__AYWIJ7XV = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range__V5OPQTIS = $mol_type_enforce<
+	type $mol_vector_range__3342M9NQ = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range__A2X03XH5 = $mol_type_enforce<
+	type $mol_vector_range__BN8RFDIT = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_2d__519MIBKD = $mol_type_enforce<
+	type $mol_vector_2d__ZDSEOIS9 = $mol_type_enforce<
 		[ ReturnType< $mol_plot_graph['viewport_x'] >, ReturnType< $mol_plot_graph['viewport_y'] > ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<$mol_vector_range<number>> >
 	>
-	type $mol_vector_2d__3EA2FQ0I = $mol_type_enforce<
+	type $mol_vector_2d__ND3CV12G = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<number> >
 	>
-	type $mol_vector_2d__NP343GBG = $mol_type_enforce<
+	type $mol_vector_2d__HBLRRR4Q = $mol_type_enforce<
 		[ ReturnType< $mol_plot_graph['dimensions_pane_x'] >, ReturnType< $mol_plot_graph['dimensions_pane_y'] > ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<$mol_vector_range<number>> >
 	>
-	type $mol_vector_2d__ES3JR4T4 = $mol_type_enforce<
+	type $mol_vector_2d__J3C5RSND = $mol_type_enforce<
 		[ ReturnType< $mol_plot_graph['dimensions_x'] >, ReturnType< $mol_plot_graph['dimensions_y'] > ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<$mol_vector_range<number>> >
 	>
-	type $mol_vector_2d__LHF0E8EH = $mol_type_enforce<
+	type $mol_vector_2d__AHRPQMCW = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<number> >
 	>
-	type $mol_vector_2d__E7RTL7I1 = $mol_type_enforce<
+	type $mol_vector_2d__1CXKA2DK = $mol_type_enforce<
 		[ ReturnType< $mol_plot_graph['gap_x'] >, ReturnType< $mol_plot_graph['gap_y'] > ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<$mol_vector_range<number>> >
 	>
-	type $mol_svg_title__title__FGOLFK7T = $mol_type_enforce<
+	type $mol_svg_title__title__NZOW2C06 = $mol_type_enforce<
 		ReturnType< $mol_plot_graph['hint'] >
 		,
 		ReturnType< $mol_svg_title['title'] >
