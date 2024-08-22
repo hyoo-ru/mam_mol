@@ -70,6 +70,35 @@ namespace $ {
 			
 		},
 		
+		'append items'() {
+			
+			const list = <body>
+				<p data-rev="old">a</p>
+			</body>
+			
+			$mol_reconcile({
+				prev: [ ... list.children ],
+				from: 2,
+				to: 3,
+				next: 'bc',
+				equal: ( next, prev )=> prev.textContent === next,
+				drop: ( prev, lead )=> list.removeChild( prev ),
+				insert: ( next, lead )=> list.insertBefore( <p data-rev="new">{ next }</p>, lead ? lead.nextSibling : list.firstChild ),
+				update: ( next, prev, lead )=> {
+					prev.textContent = next
+					prev.setAttribute( 'data-rev', 'up' )
+					return prev
+				},
+			})
+			
+			$mol_assert_equal( list, <body>
+				<p data-rev="old">a</p>
+				<p data-rev="new">b</p>
+				<p data-rev="new">c</p>
+			</body> )
+			
+		},
+		
 		'split item'() {
 			
 			const list = <body>

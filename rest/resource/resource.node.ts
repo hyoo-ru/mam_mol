@@ -94,6 +94,8 @@ namespace $ {
 		POST( msg: $mol_rest_message ) {}
 		DELETE( msg: $mol_rest_message ) {}
 		
+		_auto() {}
+		
 		@ $mol_mem_key
 		static port( port: number ) {
 			
@@ -103,6 +105,13 @@ namespace $ {
 			
 			server.root( this.make({}) )
 			server.start()
+			new $mol_wire_atom( `${ server.root() }._auto<>`, ()=> {
+				try {
+					server.root()._auto()
+				} catch( error ) {
+					$mol_fail_log( error )
+				}
+			} ).fresh()
 			
 			return server
 		}
