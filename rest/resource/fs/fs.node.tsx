@@ -39,9 +39,12 @@ namespace $ {
 						
 						{ resources.map( res => {
 							if( res === 'constructor' ) return null
+							if( !/^[a-z][a-z_-]*$/.test( res ) ) return null
 							const uri = root.resolve( res )
 							return <a href={ uri.relate( file ) + '/' }>/{res}/<br/></a>
 						} ) }
+						
+						<a href="../">../<br/></a>
 						
 						{ file.sub().map( kid => {
 							const uri = kid.name() + ( kid.type() === 'dir' ? '/' : '' )
