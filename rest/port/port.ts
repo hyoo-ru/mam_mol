@@ -34,7 +34,7 @@ namespace $ {
 		@ $mol_action
 		send_text( data: string ) {
 			this.send_code( 200 )
-			this.send_type( 'text/plain' )
+			this.send_type( 'text/plain;charset=utf-8' )
 			this.send_bin( $mol_charset_encode( data ) )
 		}
 		
@@ -48,7 +48,7 @@ namespace $ {
 		@ $mol_action
 		send_dom( data: Element ) {
 			this.send_code( 200 )
-			this.send_type( 'text/html' )
+			this.send_type( 'text/html;charset=utf-8' )
 			this.send_text( $mol_dom_serialize( data ) )
 		}
 		
