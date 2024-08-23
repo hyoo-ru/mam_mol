@@ -1,11 +1,11 @@
 declare namespace $ {
 
-	type $mol_calendar__month_string__AV8PSW4D = $mol_type_enforce<
+	type $mol_calendar__month_string__HXI3FVBK = $mol_type_enforce<
 		ReturnType< $mol_calendar_demo_selection['month'] >
 		,
 		ReturnType< $mol_calendar['month_string'] >
 	>
-	type $mol_calendar__day_selected__B5AB5FNM = $mol_type_enforce<
+	type $mol_calendar__day_selected__CIAMZ3XT = $mol_type_enforce<
 		ReturnType< $mol_calendar_demo_selection['selected'] >
 		,
 		ReturnType< $mol_calendar['day_selected'] >

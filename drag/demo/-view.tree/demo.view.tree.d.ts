@@ -1,81 +1,81 @@
 declare namespace $ {
 
-	type $mol_view__sub__08T7YV9V = $mol_type_enforce<
+	type $mol_view__sub__Q0TH4IQZ = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_drop__adopt__GWLXR430 = $mol_type_enforce<
+	type $mol_drop__adopt__QS3HY43U = $mol_type_enforce<
 		ReturnType< $mol_drag_demo['transfer_adopt'] >
 		,
 		ReturnType< $mol_drop['adopt'] >
 	>
-	type $mol_drop__receive__FNDJBJEZ = $mol_type_enforce<
+	type $mol_drop__receive__RTY3BR1F = $mol_type_enforce<
 		ReturnType< $mol_drag_demo['receive_trash'] >
 		,
 		ReturnType< $mol_drop['receive'] >
 	>
-	type $mol_drop__Sub__CIK69BQX = $mol_type_enforce<
+	type $mol_drop__Sub__QMZAQ2WP = $mol_type_enforce<
 		ReturnType< $mol_drag_demo['Trash'] >
 		,
 		ReturnType< $mol_drop['Sub'] >
 	>
-	type $mol_list__rows__MU9O90RZ = $mol_type_enforce<
+	type $mol_list__rows__X8F5RBMX = $mol_type_enforce<
 		ReturnType< $mol_drag_demo['task_rows'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_page__head__BI81M6C4 = $mol_type_enforce<
+	type $mol_page__head__3RW43H6I = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['head'] >
 	>
-	type $mol_page__Body_content__LKFA06KJ = $mol_type_enforce<
+	type $mol_page__Body_content__5AO8OE82 = $mol_type_enforce<
 		ReturnType< $mol_drag_demo['List'] >
 		,
 		ReturnType< $mol_page['Body_content'] >
 	>
-	type $mol_drop__adopt__9KNTIF05 = $mol_type_enforce<
+	type $mol_drop__adopt__D5HOLCC4 = $mol_type_enforce<
 		ReturnType< $mol_drag_demo['transfer_adopt'] >
 		,
 		ReturnType< $mol_drop['adopt'] >
 	>
-	type $mol_drop__receive__O3HV4WFP = $mol_type_enforce<
+	type $mol_drop__receive__GX6Y2P88 = $mol_type_enforce<
 		ReturnType< $mol_drag_demo['receive'] >
 		,
 		ReturnType< $mol_drop['receive'] >
 	>
-	type $mol_drop__Sub__25O0I45Z = $mol_type_enforce<
+	type $mol_drop__Sub__4R52KBTN = $mol_type_enforce<
 		ReturnType< $mol_drag_demo['Page'] >
 		,
 		ReturnType< $mol_drop['Sub'] >
 	>
-	type $mol_link__uri__A0PO1IFQ = $mol_type_enforce<
+	type $mol_link__uri__ZI7IX9LH = $mol_type_enforce<
 		ReturnType< $mol_drag_demo['task_uri'] >
 		,
 		ReturnType< $mol_link['uri'] >
 	>
-	type $mol_link__sub__JR7KY7GB = $mol_type_enforce<
+	type $mol_link__sub__YVWR888E = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_link['sub'] >
 	>
-	type $mol_drop__adopt__8A5ALK9V = $mol_type_enforce<
+	type $mol_drop__adopt__B58LREHJ = $mol_type_enforce<
 		ReturnType< $mol_drag_demo['transfer_adopt'] >
 		,
 		ReturnType< $mol_drop['adopt'] >
 	>
-	type $mol_drop__receive__F6YDO4UD = $mol_type_enforce<
+	type $mol_drop__receive__QZE5PX32 = $mol_type_enforce<
 		ReturnType< $mol_drag_demo['receive_before'] >
 		,
 		ReturnType< $mol_drop['receive'] >
 	>
-	type $mol_drop__Sub__1EC6USZZ = $mol_type_enforce<
+	type $mol_drop__Sub__T33B0GEK = $mol_type_enforce<
 		ReturnType< $mol_drag_demo['Task_link'] >
 		,
 		ReturnType< $mol_drop['Sub'] >
 	>
-	type $mol_drag__transfer__SFUGISSF = $mol_type_enforce<
+	type $mol_drag__transfer__OQMKTUKJ = $mol_type_enforce<
 		({ 
 			'text/plain': ReturnType< $mol_drag_demo['task_title'] >,
 			'text/html': ReturnType< $mol_drag_demo['task_html'] >,
@@ -84,7 +84,7 @@ declare namespace $ {
 		,
 		ReturnType< $mol_drag['transfer'] >
 	>
-	type $mol_drag__Sub__3KEL2B79 = $mol_type_enforce<
+	type $mol_drag__Sub__NUJHWT6Z = $mol_type_enforce<
 		ReturnType< $mol_drag_demo['Task_drop'] >
 		,
 		ReturnType< $mol_drag['Sub'] >

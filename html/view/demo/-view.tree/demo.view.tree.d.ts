@@ -1,6 +1,6 @@
 declare namespace $ {
 
-	type $mol_html_view__html__WAVBEF6P = $mol_type_enforce<
+	type $mol_html_view__html__SUUREGTE = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_html_view['html'] >
