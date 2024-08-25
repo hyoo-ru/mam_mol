@@ -1,36 +1,36 @@
 declare namespace $ {
 
-	type $mol_speck__value__VRLCYS1F = $mol_type_enforce<
+	type $mol_speck__value__6MRH74DE = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_speck['value'] >
 	>
-	type $mol_link__sub__TNC3QP94 = $mol_type_enforce<
+	type $mol_link__sub__57OCGVGT = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_link['sub'] >
 	>
-	type $mol_speck__value__CIN804QX = $mol_type_enforce<
+	type $mol_speck__value__1EIY23ZF = $mol_type_enforce<
 		ReturnType< $mol_speck_demo['string_speck'] >
 		,
 		ReturnType< $mol_speck['value'] >
 	>
-	type $mol_view__sub__G268BS4D = $mol_type_enforce<
+	type $mol_view__sub__2DT4VKFD = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_speck__value__JMQ2KBE8 = $mol_type_enforce<
+	type $mol_speck__value__SI64JPK5 = $mol_type_enforce<
 		ReturnType< $mol_speck_demo['notification_count'] >
 		,
 		ReturnType< $mol_speck['value'] >
 	>
-	type $mol_button_minor__sub__ICJJ8AX5 = $mol_type_enforce<
+	type $mol_button_minor__sub__D3L0167I = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_minor['sub'] >
 	>
-	type $mol_paragraph__sub__X79LJ94M = $mol_type_enforce<
+	type $mol_paragraph__sub__BH5M9YL4 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_paragraph['sub'] >
