@@ -1,61 +1,61 @@
 declare namespace $ {
 
-	type $mol_check_box__checked__NASUT0L0 = $mol_type_enforce<
+	type $mol_check_box__checked__B830Y79O = $mol_type_enforce<
 		ReturnType< $mol_check_box_demo['base_checked'] >
 		,
 		ReturnType< $mol_check_box['checked'] >
 	>
-	type $mol_check_box__title__JIQXOTNJ = $mol_type_enforce<
+	type $mol_check_box__title__K4XWHW41 = $mol_type_enforce<
 		ReturnType< $mol_check_box_demo['c1Label'] >
 		,
 		ReturnType< $mol_check_box['title'] >
 	>
-	type $mol_check_box__title__JK4CRFNM = $mol_type_enforce<
+	type $mol_check_box__title__E83ZWA7D = $mol_type_enforce<
 		ReturnType< $mol_check_box_demo['c2Label'] >
 		,
 		ReturnType< $mol_check_box['title'] >
 	>
-	type $mol_check_box__checked__HBPO710U = $mol_type_enforce<
+	type $mol_check_box__checked__YERGK422 = $mol_type_enforce<
 		ReturnType< $mol_check_box_demo['checked_checked'] >
 		,
 		ReturnType< $mol_check_box['checked'] >
 	>
-	type $mol_check_box__title__OJM39Z4V = $mol_type_enforce<
+	type $mol_check_box__title__CH9ZVNB6 = $mol_type_enforce<
 		ReturnType< $mol_check_box_demo['c6Label'] >
 		,
 		ReturnType< $mol_check_box['title'] >
 	>
-	type $mol_check_box__checked__UBSWIR29 = $mol_type_enforce<
+	type $mol_check_box__checked__V46RP64S = $mol_type_enforce<
 		boolean
 		,
 		ReturnType< $mol_check_box['checked'] >
 	>
-	type $mol_check_box__enabled__UEWJ6EK8 = $mol_type_enforce<
+	type $mol_check_box__enabled__B6SJQCT8 = $mol_type_enforce<
 		boolean
 		,
 		ReturnType< $mol_check_box['enabled'] >
 	>
-	type $mol_check_box__checked__UDYZNPK4 = $mol_type_enforce<
+	type $mol_check_box__checked__LVAW89YV = $mol_type_enforce<
 		ReturnType< $mol_check_box_demo['base_checked'] >
 		,
 		ReturnType< $mol_check_box['checked'] >
 	>
-	type $mol_check_box__checked__XDA9XS0P = $mol_type_enforce<
+	type $mol_check_box__checked__NOWT0SBF = $mol_type_enforce<
 		ReturnType< $mol_check_box_demo['checked_checked'] >
 		,
 		ReturnType< $mol_check_box['checked'] >
 	>
-	type $mol_check_box__checked__XWZ2HHX3 = $mol_type_enforce<
+	type $mol_check_box__checked__7F08P395 = $mol_type_enforce<
 		boolean
 		,
 		ReturnType< $mol_check_box['checked'] >
 	>
-	type $mol_check_box__enabled__4GEC27S7 = $mol_type_enforce<
+	type $mol_check_box__enabled__AI8QGEDK = $mol_type_enforce<
 		boolean
 		,
 		ReturnType< $mol_check_box['enabled'] >
 	>
-	type $mol_list__rows__35X4PPQC = $mol_type_enforce<
+	type $mol_list__rows__GR977AZ6 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >
