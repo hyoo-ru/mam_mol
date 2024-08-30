@@ -89,8 +89,8 @@ namespace $.$$ {
 
 			if( next ) return next
 
-			let moment = $mol_try( ()=> new $mol_time_moment( this.value_changed().replace( /\D+$/, '' ) ) )
-			if( moment instanceof Error || !moment.year ) return new $mol_time_moment
+			let moment = $mol_try( ()=> new $mol_time_moment( this.value_changed().replace( /\D+$/, '' ) ).mask( '0000-00' ) )
+			if( moment instanceof Error || !moment.year ) return new $mol_time_moment().mask( '0000-00' )
 
 			if( moment.month === undefined ) {
 				moment = moment.merge( { month: 0 } )

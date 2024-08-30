@@ -458,8 +458,16 @@ var $;
         get native() {
             if (this._native)
                 return this._native;
-            const utc = this.toOffset('Z');
-            return this._native = new Date(Date.UTC(utc.year ?? 0, utc.month ?? 0, (utc.day ?? 0) + 1, utc.hour ?? 0, utc.minute ?? 0, utc.second != undefined ? Math.floor(utc.second) : 0, utc.second != undefined ? Math.floor((utc.second - Math.floor(utc.second)) * 1000) : 0));
+            const second = Math.floor(this.second ?? 0);
+            const native = new Date(this.year ?? 0, this.month ?? 0, (this.day ?? 0) + 1, this.hour ?? 0, this.minute ?? 0, second, Math.floor(((this.second ?? 0) - second) * 1000));
+            const offset = native.getTimezoneOffset();
+            shift: if (this.offset) {
+                const target = this.offset.count('PT1m');
+                if (target === offset)
+                    break shift;
+                native.setMinutes(native.getMinutes() - offset + target);
+            }
+            return this._native = native;
         }
         _normal;
         get normal() {
@@ -491,9 +499,9 @@ var $;
         shift(config) {
             const duration = new $mol_time_duration(config);
             const moment = new $mol_time_moment().merge({
-                year: this.year,
-                month: this.month,
-                day: this.day,
+                year: this.year ?? 0,
+                month: this.month ?? 0,
+                day: this.day ?? 0,
                 hour: this.hour ?? 0,
                 minute: this.minute ?? 0,
                 second: this.second ?? 0,
@@ -528,7 +536,7 @@ var $;
         toOffset(config = new $mol_time_moment().offset) {
             const duration = new $mol_time_duration(config);
             const offset = this.offset || new $mol_time_moment().offset;
-            let with_time = new $mol_time_moment('T00:00:00').merge(this);
+            let with_time = new $mol_time_moment('0001-01-01T00:00:00').merge(this);
             const moment = with_time.shift(duration.summ(offset.mult(-1)));
             return moment.merge({ offset: duration });
         }
@@ -3124,6 +3132,10 @@ var $;
         },
         'normalization'() {
             $mol_assert_equal(new $mol_time_moment({ year: 2015, month: 6, day: 34 }).normal.toString(), '2015-08-04');
+        },
+        'renormalization'() {
+            $mol_assert_equal(new $mol_time_moment('2024-08').normal.toString(), '2024-08');
+            $mol_assert_equal(new $mol_time_moment('2024-11').normal.toString(), '2024-11');
         },
         'iso week day'() {
             $mol_assert_equal(new $mol_time_moment('2017-09-17').weekday, $mol_time_moment_weekdays.sunday);
