@@ -1,91 +1,91 @@
 declare namespace $ {
 
-	type $mol_audio_demo_beep_status__0GFHQ4N8 = $mol_type_enforce<
+	type $mol_audio_demo_beep_status__XDBJWHZL = $mol_type_enforce<
 		Parameters< $mol_audio_demo['beep_status'] >[0]
 		,
 		Parameters< ReturnType< $mol_audio_demo['Beep_room'] >['status'] >[0]
 	>
-	type $mol_audio_melody__note_length__3QSEPQ3G = $mol_type_enforce<
+	type $mol_audio_melody__note_length__795O5LUC = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_audio_melody['note_length'] >
 	>
-	type $mol_audio_melody__notes__RCYDPHEF = $mol_type_enforce<
+	type $mol_audio_melody__notes__CIPCPOI1 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_audio_melody['notes'] >
 	>
-	type $mol_audio_demo_noise_status__EVLP1LSA = $mol_type_enforce<
+	type $mol_audio_demo_noise_status__LDVRCJ7E = $mol_type_enforce<
 		Parameters< $mol_audio_demo['noise_status'] >[0]
 		,
 		Parameters< ReturnType< $mol_audio_demo['Noise_room'] >['status'] >[0]
 	>
-	type $mol_audio_demo_noise_active__9T0HE9S9 = $mol_type_enforce<
+	type $mol_audio_demo_noise_active__LQAJYZC1 = $mol_type_enforce<
 		Parameters< $mol_audio_demo['noise_active'] >[0]
 		,
 		Parameters< ReturnType< $mol_audio_demo['Noise'] >['active'] >[0]
 	>
-	type $mol_audio_demo_noise_stop_at__YH4JCX9S = $mol_type_enforce<
+	type $mol_audio_demo_noise_stop_at__OF4F6BNR = $mol_type_enforce<
 		Parameters< $mol_audio_demo['noise_stop_at'] >[0]
 		,
 		Parameters< ReturnType< $mol_audio_demo['Noise'] >['stop_at'] >[0]
 	>
-	type $mol_audio_vibe__freq_default__5VGIM582 = $mol_type_enforce<
+	type $mol_audio_vibe__freq_default__VFA4LVEG = $mol_type_enforce<
 		ReturnType< $mol_audio_demo['noise_freq'] >
 		,
 		ReturnType< $mol_audio_vibe['freq_default'] >
 	>
-	type $mol_button_minor__click__DBXO1BF9 = $mol_type_enforce<
+	type $mol_button_minor__click__JAY80X83 = $mol_type_enforce<
 		ReturnType< $mol_audio_demo['beep_play_click'] >
 		,
 		ReturnType< $mol_button_minor['click'] >
 	>
-	type $mol_button_minor__title__FRHX4SKC = $mol_type_enforce<
+	type $mol_button_minor__title__NDMZ8FGA = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_minor['title'] >
 	>
-	type $mol_audio_status__status__G9ZN8BKS = $mol_type_enforce<
+	type $mol_audio_status__status__U58GIHDV = $mol_type_enforce<
 		ReturnType< $mol_audio_demo['beep_status'] >
 		,
 		ReturnType< $mol_audio_status['status'] >
 	>
-	type $mol_row__sub__7KX7KWVQ = $mol_type_enforce<
+	type $mol_row__sub__123LSABB = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_row['sub'] >
 	>
-	type $mol_button_minor__click__95PK5GXS = $mol_type_enforce<
+	type $mol_button_minor__click__4YXZK21F = $mol_type_enforce<
 		ReturnType< $mol_audio_demo['noise_play_click'] >
 		,
 		ReturnType< $mol_button_minor['click'] >
 	>
-	type $mol_button_minor__title__7HMQZ9W0 = $mol_type_enforce<
+	type $mol_button_minor__title__HY5GDAVB = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_minor['title'] >
 	>
-	type $mol_audio_status__status__5KWTCD95 = $mol_type_enforce<
+	type $mol_audio_status__status__FGKVT271 = $mol_type_enforce<
 		ReturnType< $mol_audio_demo['noise_status'] >
 		,
 		ReturnType< $mol_audio_status['status'] >
 	>
-	type $mol_row__sub__AEK7Z8BC = $mol_type_enforce<
+	type $mol_row__sub__18V0E95P = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_row['sub'] >
 	>
-	type $mol_list__rows__I09ZE3H6 = $mol_type_enforce<
+	type $mol_list__rows__Z9GQXS2F = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_audio_room__input__Q4VMSOKN = $mol_type_enforce<
+	type $mol_audio_room__input__JCR1RA9I = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_audio_room['input'] >
 	>
-	type $mol_audio_room__input__6MUJJS3V = $mol_type_enforce<
+	type $mol_audio_room__input__N2DKJXTJ = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_audio_room['input'] >

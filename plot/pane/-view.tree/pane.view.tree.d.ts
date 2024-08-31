@@ -1,146 +1,146 @@
 declare namespace $ {
 
-	type $mol_vector_range__V5IFIFVI = $mol_type_enforce<
+	type $mol_vector_range__JQAFSE8N = $mol_type_enforce<
 		[ ReturnType< $mol_plot_pane['gap_left'] >, ReturnType< $mol_plot_pane['gap_right'] > ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range__E7UVZCWP = $mol_type_enforce<
+	type $mol_vector_range__FB6G183J = $mol_type_enforce<
 		[ ReturnType< $mol_plot_pane['gap_bottom'] >, ReturnType< $mol_plot_pane['gap_top'] > ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range__YC42X6UA = $mol_type_enforce<
+	type $mol_vector_range__464M8SZA = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range__UK1WFNTJ = $mol_type_enforce<
+	type $mol_vector_range__X9QW3R0L = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range__OXYIHRZK = $mol_type_enforce<
+	type $mol_vector_range__437SKP7U = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range__6KA48F7S = $mol_type_enforce<
+	type $mol_vector_range__OZ2AU55Z = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range__RF8B4W5S = $mol_type_enforce<
+	type $mol_vector_range__FLIQ53UP = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range__41SUPL45 = $mol_type_enforce<
+	type $mol_vector_range__VN2F97M5 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range__XYEQV835 = $mol_type_enforce<
+	type $mol_vector_range__VKBA9OGV = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range__FSUS194I = $mol_type_enforce<
+	type $mol_vector_range__XU08DT7B = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_touch__zoom__0BFK7OQE = $mol_type_enforce<
+	type $mol_touch__zoom__L83I09H0 = $mol_type_enforce<
 		ReturnType< $mol_plot_pane['zoom'] >
 		,
 		ReturnType< $mol_touch['zoom'] >
 	>
-	type $mol_touch__pan__BLH9O0Q2 = $mol_type_enforce<
+	type $mol_touch__pan__TG0NSVCX = $mol_type_enforce<
 		ReturnType< $mol_plot_pane['shift'] >
 		,
 		ReturnType< $mol_touch['pan'] >
 	>
-	type $mol_touch__allow_draw__3Z20KH3H = $mol_type_enforce<
+	type $mol_touch__allow_draw__IU6SVOGH = $mol_type_enforce<
 		ReturnType< $mol_plot_pane['allow_draw'] >
 		,
 		ReturnType< $mol_touch['allow_draw'] >
 	>
-	type $mol_touch__allow_pan__VU0QI6WZ = $mol_type_enforce<
+	type $mol_touch__allow_pan__3FXBLSZQ = $mol_type_enforce<
 		ReturnType< $mol_plot_pane['allow_pan'] >
 		,
 		ReturnType< $mol_touch['allow_pan'] >
 	>
-	type $mol_touch__allow_zoom__H1GXFKI4 = $mol_type_enforce<
+	type $mol_touch__allow_zoom__D3REJCAO = $mol_type_enforce<
 		ReturnType< $mol_plot_pane['allow_zoom'] >
 		,
 		ReturnType< $mol_touch['allow_zoom'] >
 	>
-	type $mol_touch__draw_start__LJKN2UV3 = $mol_type_enforce<
+	type $mol_touch__draw_start__I4HC3SGN = $mol_type_enforce<
 		ReturnType< $mol_plot_pane['draw_start'] >
 		,
 		ReturnType< $mol_touch['draw_start'] >
 	>
-	type $mol_touch__draw__WY6R3BDR = $mol_type_enforce<
+	type $mol_touch__draw__WPHW0T08 = $mol_type_enforce<
 		ReturnType< $mol_plot_pane['draw'] >
 		,
 		ReturnType< $mol_touch['draw'] >
 	>
-	type $mol_touch__draw_end__1UAPLVMK = $mol_type_enforce<
+	type $mol_touch__draw_end__7UXJUEBM = $mol_type_enforce<
 		ReturnType< $mol_plot_pane['draw_end'] >
 		,
 		ReturnType< $mol_touch['draw_end'] >
 	>
-	type $mol_vector_2d__47RU1OXH = $mol_type_enforce<
+	type $mol_vector_2d__QZ99E17T = $mol_type_enforce<
 		[ ReturnType< $mol_plot_pane['gap_x'] >, ReturnType< $mol_plot_pane['gap_y'] > ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<$mol_vector_range<number>> >
 	>
-	type $mol_vector_2d__5ED4R1FW = $mol_type_enforce<
+	type $mol_vector_2d__HFQ0CLX1 = $mol_type_enforce<
 		[ ReturnType< $mol_plot_pane['shift_limit_x'] >, ReturnType< $mol_plot_pane['shift_limit_y'] > ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<$mol_vector_range<number>> >
 	>
-	type $mol_vector_2d__ZPC3KF8P = $mol_type_enforce<
+	type $mol_vector_2d__NFTHWTLL = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<number> >
 	>
-	type $mol_vector_2d__LGM304FK = $mol_type_enforce<
+	type $mol_vector_2d__JECC1X69 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<number> >
 	>
-	type $mol_vector_2d__0CZ58YNU = $mol_type_enforce<
+	type $mol_vector_2d__3ROZZNDR = $mol_type_enforce<
 		[ ReturnType< $mol_plot_pane['scale_limit_x'] >, ReturnType< $mol_plot_pane['scale_limit_y'] > ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<$mol_vector_range<number>> >
 	>
-	type $mol_vector_2d__SFKSGDOH = $mol_type_enforce<
+	type $mol_vector_2d__MQLUMC7S = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<number> >
 	>
-	type $mol_vector_2d__MB9T175R = $mol_type_enforce<
+	type $mol_vector_2d__SLXHD5S2 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<number> >
 	>
-	type $mol_vector_2d__SZP0X3XJ = $mol_type_enforce<
+	type $mol_vector_2d__2H1X2G8E = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<number> >
 	>
-	type $mol_vector_2d__Q5M6YX31 = $mol_type_enforce<
+	type $mol_vector_2d__OUGN56LL = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<number> >
 	>
-	type $mol_vector_2d__4FYPWM8L = $mol_type_enforce<
+	type $mol_vector_2d__NWRVMKTJ = $mol_type_enforce<
 		[ ReturnType< $mol_plot_pane['dimensions_x'] >, ReturnType< $mol_plot_pane['dimensions_y'] > ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<$mol_vector_range<number>> >
 	>
-	type $mol_vector_2d__J98GRA6X = $mol_type_enforce<
+	type $mol_vector_2d__83XPK4JE = $mol_type_enforce<
 		[ ReturnType< $mol_plot_pane['dimensions_viewport_x'] >, ReturnType< $mol_plot_pane['dimensions_viewport_y'] > ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<$mol_vector_range<number>> >
