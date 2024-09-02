@@ -36,10 +36,12 @@ namespace $ {
 
 		} else {
 			
-			left_cache = new WeakMap< any , boolean >([[ right, true ]])
+			left_cache = new WeakMap< any , boolean >()
 			$mol_compare_deep_cache.set( left , left_cache )
 
 		}
+
+		left_cache.set(right, true);
 
 		let result!: boolean
 
