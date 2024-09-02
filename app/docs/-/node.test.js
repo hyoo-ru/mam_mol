@@ -30399,12 +30399,12 @@ var $;
         }
     }
     $.$mol_unit_money_usd = $mol_unit_money_usd;
-    class $mol_unit_money_rur extends $mol_unit_money {
+    class $mol_unit_money_rub extends $mol_unit_money {
         postfix() {
             return ' ₽';
         }
     }
-    $.$mol_unit_money_rur = $mol_unit_money_rur;
+    $.$mol_unit_money_rub = $mol_unit_money_rub;
 })($ || ($ = {}));
 
 ;
@@ -44560,7 +44560,7 @@ var $;
         'arithmetic'() {
             var usd1 = new $mol_unit_money_usd(2);
             var usd2 = new $mol_unit_money_usd(3);
-            var rur = new $mol_unit_money_rur(2);
+            var rur = new $mol_unit_money_rub(2);
             $mol_assert_equal($mol_unit.summ(usd1, usd2).toString(), '$5');
             $mol_assert_equal(usd1.mult(2).toString(), '$4');
         },

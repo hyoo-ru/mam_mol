@@ -1,21 +1,21 @@
 declare namespace $ {
 
-	type $mol_dump_value__value__N4H1E5AE = $mol_type_enforce<
+	type $mol_dump_value__value__FPI1MP8J = $mol_type_enforce<
 		ReturnType< $mol_dump_demo['value'] >
 		,
 		ReturnType< $mol_dump_value['value'] >
 	>
-	type $mol_dump_value__value__C3ZAESY9 = $mol_type_enforce<
+	type $mol_dump_value__value__KYX9K2YS = $mol_type_enforce<
 		ReturnType< $mol_dump_demo['value'] >
 		,
 		ReturnType< $mol_dump_value['value'] >
 	>
-	type $mol_dump_value__prototypes__87V10XTA = $mol_type_enforce<
+	type $mol_dump_value__prototypes__RNA4A1UV = $mol_type_enforce<
 		boolean
 		,
 		ReturnType< $mol_dump_value['prototypes'] >
 	>
-	type $mol_list__rows__16WU053U = $mol_type_enforce<
+	type $mol_list__rows__FW2N1HGI = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >

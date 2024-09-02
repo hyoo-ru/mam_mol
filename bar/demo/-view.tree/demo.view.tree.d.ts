@@ -1,46 +1,46 @@
 declare namespace $ {
 
-	type $mol_string__hint__WUYPPLCL = $mol_type_enforce<
+	type $mol_string__hint__OT3SBW28 = $mol_type_enforce<
 		ReturnType< $mol_bar_demo['mail_hint'] >
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__value__AHH1AXF3 = $mol_type_enforce<
+	type $mol_string__value__UGAK20F0 = $mol_type_enforce<
 		ReturnType< $mol_bar_demo['mail'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_button_minor__title__6QGEIIKR = $mol_type_enforce<
+	type $mol_button_minor__title__XBPKCQ9V = $mol_type_enforce<
 		ReturnType< $mol_bar_demo['submit_title'] >
 		,
 		ReturnType< $mol_button_minor['title'] >
 	>
-	type $mol_bar__sub__9MET6O30 = $mol_type_enforce<
+	type $mol_bar__sub__Z8O10BIW = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_bar['sub'] >
 	>
-	type $mol_string__hint__57K8MJR9 = $mol_type_enforce<
+	type $mol_string__hint__PHNXAXSA = $mol_type_enforce<
 		ReturnType< $mol_bar_demo['mail_hint'] >
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__value__RXQB1AZN = $mol_type_enforce<
+	type $mol_string__value__SQ5G5FZ0 = $mol_type_enforce<
 		ReturnType< $mol_bar_demo['mail'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_check_box__title__9DHL8QAV = $mol_type_enforce<
+	type $mol_check_box__title__UD5PFR03 = $mol_type_enforce<
 		ReturnType< $mol_bar_demo['confirm_title'] >
 		,
 		ReturnType< $mol_check_box['title'] >
 	>
-	type $mol_check_box__checked__ADQT2NV3 = $mol_type_enforce<
+	type $mol_check_box__checked__T499FLYU = $mol_type_enforce<
 		ReturnType< $mol_bar_demo['confirmed'] >
 		,
 		ReturnType< $mol_check_box['checked'] >
 	>
-	type $mol_bar__sub__M2S59UJW = $mol_type_enforce<
+	type $mol_bar__sub__54PF1CEI = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_bar['sub'] >

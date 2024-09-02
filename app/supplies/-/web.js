@@ -6780,12 +6780,12 @@ var $;
         }
     }
     $.$mol_unit_money_usd = $mol_unit_money_usd;
-    class $mol_unit_money_rur extends $mol_unit_money {
+    class $mol_unit_money_rub extends $mol_unit_money {
         postfix() {
             return ' ₽';
         }
     }
-    $.$mol_unit_money_rur = $mol_unit_money_rur;
+    $.$mol_unit_money_rub = $mol_unit_money_rub;
 })($ || ($ = {}));
 
 ;
