@@ -87,9 +87,9 @@ namespace $ {
 			obj1_copy.obj3 = obj3_copy
 
 			// warmup cache
-			$mol_assert_not( $mol_compare_deep( obj1 , {} ) )
-			$mol_assert_not( $mol_compare_deep( obj2 , {} ) )
-			$mol_assert_not( $mol_compare_deep( obj3 , {} ) )
+			$mol_assert_not( $mol_compare_deep( obj1 , {} as any ) )
+			$mol_assert_not( $mol_compare_deep( obj2 , {} as any ) )
+			$mol_assert_not( $mol_compare_deep( obj3 , {} as any ) )
 
 			$mol_assert_ok( $mol_compare_deep( obj3 , obj3_copy ) )
 
