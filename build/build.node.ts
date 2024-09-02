@@ -1710,7 +1710,7 @@ namespace $ {
 				var priority = -indent[ 0 ].replace( /\t/g , '    ' ).length / 4
 				
 				line.replace(
-					/\$([0-9]*[a-z])(?:((?:[\._A-Z0-9][a-z0-9]+)+)|\[\s*['"]([^'"]+?)['"]\s*\])?/g , ( str , pack , path , name )=> {
+					/\$([0-9]*[a-z][a-z0-9]*)(?:((?:[\._A-Z0-9][a-z0-9]+)+)|\[\s*['"]([^'"]+?)['"]\s*\])?/g , ( str , pack , path , name )=> {
 						if( path ) path = '/' + pack + path.replace( /(?=[A-Z])/g , '_' ).toLowerCase().replace( /[_.\[\]'"]+/g , '/' )
 						if( name ) name = '/' + pack + '/' + name
 						pack = '/' + pack
