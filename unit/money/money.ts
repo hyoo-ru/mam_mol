@@ -9,7 +9,7 @@ namespace $ {
 		}
 	}
 	
-	export class $mol_unit_money_rur extends $mol_unit_money {
+	export class $mol_unit_money_rub extends $mol_unit_money {
 		postfix() {
 			return ' ₽'
 		}
