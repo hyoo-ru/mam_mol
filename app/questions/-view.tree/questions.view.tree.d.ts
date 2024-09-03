@@ -1,113 +1,113 @@
 declare namespace $ {
 
-	type $mol_link_source__uri__BFKVPV8N = $mol_type_enforce<
+	type $mol_link_source__uri__DJO0NFAC = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_link_source['uri'] >
 	>
-	type $mol_list__rows__GFA9UC67 = $mol_type_enforce<
+	type $mol_list__rows__FNOQI48N = $mol_type_enforce<
 		ReturnType< $mol_app_questions['menu_rows'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_link__uri__F4R4XYB5 = $mol_type_enforce<
+	type $mol_link__uri__4NMBG89J = $mol_type_enforce<
 		ReturnType< $mol_app_questions['question_permalink'] >
 		,
 		ReturnType< $mol_link['uri'] >
 	>
-	type $mol_link__sub__MPKALRON = $mol_type_enforce<
+	type $mol_link__sub__F2O89PQZ = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_link['sub'] >
 	>
-	type $mol_link__sub__ZS54R7B9 = $mol_type_enforce<
+	type $mol_link__sub__K9LWUYTQ = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_link['sub'] >
 	>
-	type $mol_link__arg__RQ1MSI10 = $mol_type_enforce<
+	type $mol_link__arg__G5CE2PCC = $mol_type_enforce<
 		({ 
 			'question': any,
 		}) 
 		,
 		ReturnType< $mol_link['arg'] >
 	>
-	type $mol_text__text__Y8KT9136 = $mol_type_enforce<
+	type $mol_text__text__MAH4HY6U = $mol_type_enforce<
 		ReturnType< $mol_app_questions['question_descr'] >
 		,
 		ReturnType< $mol_text['text'] >
 	>
-	type $mol_list__rows__GPYLYD6L = $mol_type_enforce<
+	type $mol_list__rows__ZQN9CAMV = $mol_type_enforce<
 		ReturnType< $mol_app_questions['answers'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_view__sub__Z9TLU21M = $mol_type_enforce<
+	type $mol_view__sub__IG41BUTK = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_view__sub__QTH5WJYN = $mol_type_enforce<
+	type $mol_view__sub__HZOB4LC8 = $mol_type_enforce<
 		ReturnType< $mol_app_questions['question_tags_by_index'] >
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_page__title__0DREKJF1 = $mol_type_enforce<
+	type $mol_page__title__T36TQUQU = $mol_type_enforce<
 		ReturnType< $mol_app_questions['title_default'] >
 		,
 		ReturnType< $mol_page['title'] >
 	>
-	type $mol_page__tools__RBVGUSNO = $mol_type_enforce<
+	type $mol_page__tools__ET0RP9A7 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['tools'] >
 	>
-	type $mol_page__body__7DZ2DF3M = $mol_type_enforce<
+	type $mol_page__body__A3QOV6TH = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['body'] >
 	>
-	type $mol_page__title__W8GCVUJL = $mol_type_enforce<
+	type $mol_page__title__XFYJEWTX = $mol_type_enforce<
 		ReturnType< $mol_app_questions['question_title'] >
 		,
 		ReturnType< $mol_page['title'] >
 	>
-	type $mol_page__tools__O858JDJ4 = $mol_type_enforce<
+	type $mol_page__tools__P43FK750 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['tools'] >
 	>
-	type $mol_page__body__PN44XXNV = $mol_type_enforce<
+	type $mol_page__body__WXYLW7N0 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['body'] >
 	>
-	type $mol_text__text__LABMNZUJ = $mol_type_enforce<
+	type $mol_text__text__JHXCL8TG = $mol_type_enforce<
 		ReturnType< $mol_app_questions['question_answer'] >
 		,
 		ReturnType< $mol_text['text'] >
 	>
-	type $mol_link__minimal_width__HG4D7R9U = $mol_type_enforce<
+	type $mol_link__minimal_width__36WVGPQ3 = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_link['minimal_width'] >
 	>
-	type $mol_link__minimal_height__9TQPT7GJ = $mol_type_enforce<
+	type $mol_link__minimal_height__0V7AQALX = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_link['minimal_height'] >
 	>
-	type $mol_link__arg__J15BUKMC = $mol_type_enforce<
+	type $mol_link__arg__XWMY0LCR = $mol_type_enforce<
 		ReturnType< $mol_app_questions['question_arg_by_index'] >
 		,
 		ReturnType< $mol_link['arg'] >
 	>
-	type $mol_link__sub__NBXZ1T8Z = $mol_type_enforce<
+	type $mol_link__sub__HIS0JA11 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_link['sub'] >
 	>
-	type $mol_view__sub__64BCNC9P = $mol_type_enforce<
+	type $mol_view__sub__Q59MBG39 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
