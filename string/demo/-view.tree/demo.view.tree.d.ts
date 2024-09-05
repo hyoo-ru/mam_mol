@@ -1,46 +1,46 @@
 declare namespace $ {
 
-	type $mol_string__value__H55VGKON = $mol_type_enforce<
+	type $mol_string__value__W2O56G7E = $mol_type_enforce<
 		ReturnType< $mol_string_demo['name'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_string__hint__UTLMV9KI = $mol_type_enforce<
+	type $mol_string__hint__ADDL8U2W = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__value__XVQQ72GG = $mol_type_enforce<
+	type $mol_string__value__1FUW4T98 = $mol_type_enforce<
 		ReturnType< $mol_string_demo['name'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_string__hint__XYRP4KXY = $mol_type_enforce<
+	type $mol_string__hint__KK8W04YD = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__value__07I765SN = $mol_type_enforce<
+	type $mol_string__value__POVORD6M = $mol_type_enforce<
 		ReturnType< $mol_string_demo['broken'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_string__value__3RQEDZ6A = $mol_type_enforce<
+	type $mol_string__value__IWCM0IZV = $mol_type_enforce<
 		ReturnType< $mol_string_demo['name2'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_string__disabled__8I9UBI7M = $mol_type_enforce<
+	type $mol_string__disabled__I5R4Y6LI = $mol_type_enforce<
 		boolean
 		,
 		ReturnType< $mol_string['disabled'] >
 	>
-	type $mol_string__value__C4ZI1K1J = $mol_type_enforce<
+	type $mol_string__value__67DVYOBY = $mol_type_enforce<
 		ReturnType< $mol_string_demo['name2'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_string_button__value__KJ8LCYO7 = $mol_type_enforce<
+	type $mol_string_button__value__3SW3N2CC = $mol_type_enforce<
 		ReturnType< $mol_string_demo['name2'] >
 		,
 		ReturnType< $mol_string_button['value'] >
