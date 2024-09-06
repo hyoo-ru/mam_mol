@@ -87,7 +87,7 @@ namespace $ {
 			$mol_assert_like(
 				_foo.make({ $ }).bar(),
 				{
-					'$a': 1,
+					'a$': 1,
 					'b-t': {},
 				},
 			)
