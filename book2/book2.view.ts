@@ -38,16 +38,15 @@ namespace $.$$ {
 				if( p === n ) continue
 				if( n === placeholder ) continue
 
-				n.bring()
-				
-				new this.$.$mol_after_frame( ()=> {
+				new this.$.$mol_after_tick( ()=> {
 					const b = this.dom_node() as HTMLElement
 					const p = n.dom_node() as HTMLElement
 					b.scroll({
 						left: p.offsetLeft + p.offsetWidth - b.offsetWidth,
 						behavior: 'smooth',
 					})
-				})
+					new this.$.$mol_after_timeout( 1000, ()=> n.bring() )
+				} )
 				
 				break
 
