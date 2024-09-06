@@ -187,11 +187,11 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_after_timeout extends $mol_object2 {
-        delay: number;
+    class $mol_after_tick extends $mol_object2 {
         task: () => void;
-        id: any;
-        constructor(delay: number, task: () => void);
+        static promise: Promise<void> | null;
+        cancelled: boolean;
+        constructor(task: () => void);
         destructor(): void;
     }
 }
@@ -207,7 +207,7 @@ declare namespace $ {
         static warm: boolean;
         static planning: Set<$mol_wire_fiber<any, any, any>>;
         static reaping: Set<$mol_wire_fiber<any, any, any>>;
-        static plan_task: $mol_after_timeout | null;
+        static plan_task: $mol_after_tick | null;
         static plan(): void;
         static sync(): void;
         [Symbol.toStringTag]: string;
@@ -239,6 +239,16 @@ declare namespace $ {
 declare namespace $ {
     const $mol_key_store: WeakMap<object, string>;
     function $mol_key<Value>(value: Value): string;
+}
+
+declare namespace $ {
+    class $mol_after_timeout extends $mol_object2 {
+        delay: number;
+        task: () => void;
+        id: any;
+        constructor(delay: number, task: () => void);
+        destructor(): void;
+    }
 }
 
 declare namespace $ {
@@ -488,16 +498,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-}
-
-declare namespace $ {
-    class $mol_after_tick extends $mol_object2 {
-        task: () => void;
-        promise: any;
-        cancelled: boolean;
-        constructor(task: () => void);
-        destructor(): void;
-    }
 }
 
 declare namespace $ {
@@ -1054,14 +1054,14 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_view__style__K2R9RBWZ = $mol_type_enforce<
+	type $mol_view__style__WWVPGZT8 = $mol_type_enforce<
 		({ 
 			'paddingTop': ReturnType< $mol_list['gap_before'] >,
 		}) 
 		,
 		ReturnType< $mol_view['style'] >
 	>
-	type $mol_view__style__XFUUIPY5 = $mol_type_enforce<
+	type $mol_view__style__411W4HU9 = $mol_type_enforce<
 		({ 
 			'paddingTop': ReturnType< $mol_list['gap_after'] >,
 		}) 
@@ -1102,7 +1102,7 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_perf_uibench_table_row__state__7B4X6LRB = $mol_type_enforce<
+	type $mol_perf_uibench_table_row__state__CVR754TT = $mol_type_enforce<
 		ReturnType< $mol_perf_uibench_table['row_state'] >
 		,
 		ReturnType< $mol_perf_uibench_table_row['state'] >
@@ -1119,12 +1119,12 @@ declare namespace $ {
 		Row( id: any): $mol_perf_uibench_table_row
 	}
 	
-	type $mol_perf_uibench_table_cell__text__JSN7L1KP = $mol_type_enforce<
+	type $mol_perf_uibench_table_cell__text__468AR3RG = $mol_type_enforce<
 		ReturnType< $mol_perf_uibench_table_row['head_text'] >
 		,
 		ReturnType< $mol_perf_uibench_table_cell['text'] >
 	>
-	type $mol_perf_uibench_table_cell__text__EU4DWPUO = $mol_type_enforce<
+	type $mol_perf_uibench_table_cell__text__JF3WV71P = $mol_type_enforce<
 		ReturnType< $mol_perf_uibench_table_row['cell_state'] >
 		,
 		ReturnType< $mol_perf_uibench_table_cell['text'] >
@@ -1193,7 +1193,7 @@ declare namespace $.$$ {
 
 declare namespace $ {
 
-	type $mol_perf_uibench_anim_box__state__V7H5KEDZ = $mol_type_enforce<
+	type $mol_perf_uibench_anim_box__state__4HNXOXCD = $mol_type_enforce<
 		ReturnType< $mol_perf_uibench_anim['box_state'] >
 		,
 		ReturnType< $mol_perf_uibench_anim_box['state'] >
@@ -1249,7 +1249,7 @@ declare namespace $.$$ {
 
 declare namespace $ {
 
-	type $mol_perf_uibench_tree_branch__state__YR0H73NM = $mol_type_enforce<
+	type $mol_perf_uibench_tree_branch__state__1QQPQ1XY = $mol_type_enforce<
 		ReturnType< $mol_perf_uibench_tree['root_state'] >
 		,
 		ReturnType< $mol_perf_uibench_tree_branch['state'] >
@@ -1264,12 +1264,12 @@ declare namespace $ {
 		sub( ): readonly(any)[]
 	}
 	
-	type $mol_perf_uibench_tree_branch__state__WYKSSZ4W = $mol_type_enforce<
+	type $mol_perf_uibench_tree_branch__state__MH1UBM9B = $mol_type_enforce<
 		ReturnType< $mol_perf_uibench_tree_branch['branch_state'] >
 		,
 		ReturnType< $mol_perf_uibench_tree_branch['state'] >
 	>
-	type $mol_perf_uibench_tree_leaf__text__LIXQ90ZJ = $mol_type_enforce<
+	type $mol_perf_uibench_tree_leaf__text__2HNTRGNI = $mol_type_enforce<
 		ReturnType< $mol_perf_uibench_tree_branch['leaf_state'] >
 		,
 		ReturnType< $mol_perf_uibench_tree_leaf['text'] >
@@ -1318,17 +1318,17 @@ declare namespace $.$$ {
 
 declare namespace $ {
 
-	type $mol_perf_uibench_table__state__4N8RL377 = $mol_type_enforce<
+	type $mol_perf_uibench_table__state__Z8SNQOAY = $mol_type_enforce<
 		ReturnType< $mol_perf_uibench['table_state'] >
 		,
 		ReturnType< $mol_perf_uibench_table['state'] >
 	>
-	type $mol_perf_uibench_anim__state__A01DFFGC = $mol_type_enforce<
+	type $mol_perf_uibench_anim__state__MEV74161 = $mol_type_enforce<
 		ReturnType< $mol_perf_uibench['anim_state'] >
 		,
 		ReturnType< $mol_perf_uibench_anim['state'] >
 	>
-	type $mol_perf_uibench_tree__state__SFC1YZWO = $mol_type_enforce<
+	type $mol_perf_uibench_tree__state__K2J1XBGB = $mol_type_enforce<
 		ReturnType< $mol_perf_uibench['tree_state'] >
 		,
 		ReturnType< $mol_perf_uibench_tree['state'] >

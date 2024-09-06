@@ -1,66 +1,66 @@
 declare namespace $ {
 
-	type $mol_plot_dot__title__LMM8N3KA = $mol_type_enforce<
+	type $mol_plot_dot__title__A6N2P697 = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_forces['forces_left_title'] >
 		,
 		ReturnType< $mol_plot_dot['title'] >
 	>
-	type $mol_plot_dot__series_x__FUPX7UZG = $mol_type_enforce<
+	type $mol_plot_dot__series_x__4CYXUUQT = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_forces['forces_left_x'] >
 		,
 		ReturnType< $mol_plot_dot['series_x'] >
 	>
-	type $mol_plot_dot__series_y__LNZ7LTPR = $mol_type_enforce<
+	type $mol_plot_dot__series_y__B0Z032G1 = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_forces['forces_left_y'] >
 		,
 		ReturnType< $mol_plot_dot['series_y'] >
 	>
-	type $mol_plot_dot__points_max__6O7RONKD = $mol_type_enforce<
+	type $mol_plot_dot__points_max__MQK0W80P = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_forces['points_max'] >
 		,
 		ReturnType< $mol_plot_dot['points_max'] >
 	>
-	type $mol_plot_dot__title__9ZGTTZS4 = $mol_type_enforce<
+	type $mol_plot_dot__title__6MTJN3QA = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_forces['forces_right_title'] >
 		,
 		ReturnType< $mol_plot_dot['title'] >
 	>
-	type $mol_plot_dot__series_x__H8WWMENV = $mol_type_enforce<
+	type $mol_plot_dot__series_x__A5XMG92F = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_forces['forces_right_x'] >
 		,
 		ReturnType< $mol_plot_dot['series_x'] >
 	>
-	type $mol_plot_dot__series_y__7I8R11DD = $mol_type_enforce<
+	type $mol_plot_dot__series_y__M488NYWR = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_forces['forces_right_y'] >
 		,
 		ReturnType< $mol_plot_dot['series_y'] >
 	>
-	type $mol_plot_dot__points_max__B1TIAZQR = $mol_type_enforce<
+	type $mol_plot_dot__points_max__49D7QMT4 = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_forces['points_max'] >
 		,
 		ReturnType< $mol_plot_dot['points_max'] >
 	>
-	type $mol_plot_ruler_vert__title__4VFRB8HV = $mol_type_enforce<
+	type $mol_plot_ruler_vert__title__MOKV8SSK = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_forces['vert_title'] >
 		,
 		ReturnType< $mol_plot_ruler_vert['title'] >
 	>
-	type $mol_plot_ruler_hor__title__4DV91T2F = $mol_type_enforce<
+	type $mol_plot_ruler_hor__title__98A5I6HX = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_forces['hor_title'] >
 		,
 		ReturnType< $mol_plot_ruler_hor['title'] >
 	>
-	type $mol_plot_ruler_hor__series_x__ZGLEL38O = $mol_type_enforce<
+	type $mol_plot_ruler_hor__series_x__32MK3IJ9 = $mol_type_enforce<
 		ReturnType< $mol_chart_demo_forces['forces_left_x'] >
 		,
 		ReturnType< $mol_plot_ruler_hor['series_x'] >
 	>
-	type $mol_plot_mark_cross__graphs__FA7HRM6U = $mol_type_enforce<
+	type $mol_plot_mark_cross__graphs__4YGZRQYA = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_plot_mark_cross['graphs'] >
 	>
-	type $mol_chart__graphs__T54T81BL = $mol_type_enforce<
+	type $mol_chart__graphs__3AKBQHKD = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_chart['graphs'] >
