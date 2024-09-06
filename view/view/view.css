@@ -89,5 +89,5 @@
 }
 
 [mol_view][mol_view_error="Promise"] {
-	animation: mol_view_wait 1s steps( 20, end ) infinite;
+	animation: mol_view_wait 1s steps(20,end) infinite;
 }
