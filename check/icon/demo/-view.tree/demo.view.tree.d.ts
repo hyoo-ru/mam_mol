@@ -1,36 +1,36 @@
 declare namespace $ {
 
-	type $mol_check_icon__Icon__CNE0U6K5 = $mol_type_enforce<
+	type $mol_check_icon__Icon__11PM0NVX = $mol_type_enforce<
 		ReturnType< $mol_check_icon_demo['Base_icon'] >
 		,
 		ReturnType< $mol_check_icon['Icon'] >
 	>
-	type $mol_check_icon__checked__PJ1WWK7K = $mol_type_enforce<
+	type $mol_check_icon__checked__EEFT0AGC = $mol_type_enforce<
 		ReturnType< $mol_check_icon_demo['base_checked'] >
 		,
 		ReturnType< $mol_check_icon['checked'] >
 	>
-	type $mol_check_icon__Icon__GBPTEGUL = $mol_type_enforce<
+	type $mol_check_icon__Icon__BXP1XVG0 = $mol_type_enforce<
 		ReturnType< $mol_check_icon_demo['Checked_icon'] >
 		,
 		ReturnType< $mol_check_icon['Icon'] >
 	>
-	type $mol_check_icon__checked__0AMO399K = $mol_type_enforce<
+	type $mol_check_icon__checked__HV2X9QT3 = $mol_type_enforce<
 		ReturnType< $mol_check_icon_demo['checked_checked'] >
 		,
 		ReturnType< $mol_check_icon['checked'] >
 	>
-	type $mol_check_box__Icon__PGKUCB1O = $mol_type_enforce<
+	type $mol_check_box__Icon__NHZOBHOA = $mol_type_enforce<
 		ReturnType< $mol_check_icon_demo['Disabled_icon'] >
 		,
 		ReturnType< $mol_check_box['Icon'] >
 	>
-	type $mol_check_box__checked__F465LOOS = $mol_type_enforce<
+	type $mol_check_box__checked__BVP83B54 = $mol_type_enforce<
 		boolean
 		,
 		ReturnType< $mol_check_box['checked'] >
 	>
-	type $mol_check_box__enabled__L7Q77WBA = $mol_type_enforce<
+	type $mol_check_box__enabled__6N5CCBGY = $mol_type_enforce<
 		boolean
 		,
 		ReturnType< $mol_check_box['enabled'] >
