@@ -1,6 +1,6 @@
 declare namespace $ {
 
-	type $mol_view__sub__THD3CFV9 = $mol_type_enforce<
+	type $mol_view__sub__QUJIJ4AD = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
