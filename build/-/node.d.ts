@@ -735,11 +735,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    let $mol_view_tree2_prop_signature: $mol_regexp<{
-        readonly name: string;
-        readonly key: string;
-        readonly next: string;
-    }>;
+    let $mol_view_tree2_prop_signature: $mol_regexp<unknown>;
 }
 
 declare namespace $ {
