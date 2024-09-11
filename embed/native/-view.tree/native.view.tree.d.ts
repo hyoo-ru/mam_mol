@@ -1,11 +1,11 @@
 declare namespace $ {
 
-	type $mol_link__uri__RL44TF93 = $mol_type_enforce<
+	type $mol_link__uri__ONLDMTR0 = $mol_type_enforce<
 		ReturnType< $mol_embed_native['uri'] >
 		,
 		ReturnType< $mol_link['uri'] >
 	>
-	type $mol_link__sub__74A87JOA = $mol_type_enforce<
+	type $mol_link__sub__AG67RBDU = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_link['sub'] >

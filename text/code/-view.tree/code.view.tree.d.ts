@@ -1,51 +1,51 @@
 declare namespace $ {
 
-	type $mol_text_code_row__numb_showed__T5XA9ZIQ = $mol_type_enforce<
+	type $mol_text_code_row__numb_showed__21U0GMFW = $mol_type_enforce<
 		ReturnType< $mol_text_code['sidebar_showed'] >
 		,
 		ReturnType< $mol_text_code_row['numb_showed'] >
 	>
-	type $mol_text_code_row__numb__0K431B6P = $mol_type_enforce<
+	type $mol_text_code_row__numb__8JW7K3WN = $mol_type_enforce<
 		ReturnType< $mol_text_code['row_numb'] >
 		,
 		ReturnType< $mol_text_code_row['numb'] >
 	>
-	type $mol_text_code_row__text__A42LHENN = $mol_type_enforce<
+	type $mol_text_code_row__text__8P4EPN07 = $mol_type_enforce<
 		ReturnType< $mol_text_code['row_text'] >
 		,
 		ReturnType< $mol_text_code_row['text'] >
 	>
-	type $mol_text_code_row__syntax__Q0MPHWS9 = $mol_type_enforce<
+	type $mol_text_code_row__syntax__OE7OUEGV = $mol_type_enforce<
 		ReturnType< $mol_text_code['syntax'] >
 		,
 		ReturnType< $mol_text_code_row['syntax'] >
 	>
-	type $mol_text_code_row__uri_resolve__U1U1ZDGO = $mol_type_enforce<
+	type $mol_text_code_row__uri_resolve__YP1GMYPV = $mol_type_enforce<
 		ReturnType< $mol_text_code['uri_resolve'] >
 		,
 		ReturnType< $mol_text_code_row['uri_resolve'] >
 	>
-	type $mol_text_code_row__highlight__WKE588FN = $mol_type_enforce<
+	type $mol_text_code_row__highlight__0JYEU7C9 = $mol_type_enforce<
 		ReturnType< $mol_text_code['highlight'] >
 		,
 		ReturnType< $mol_text_code_row['highlight'] >
 	>
-	type $mol_list__render_visible_only__Z4ZTU6X3 = $mol_type_enforce<
+	type $mol_list__render_visible_only__0G9GYQDF = $mol_type_enforce<
 		ReturnType< $mol_text_code['render_visible_only'] >
 		,
 		ReturnType< $mol_list['render_visible_only'] >
 	>
-	type $mol_list__rows__KO3QL5G0 = $mol_type_enforce<
+	type $mol_list__rows__Q0POD5N9 = $mol_type_enforce<
 		ReturnType< $mol_text_code['rows'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_button_copy__hint__VNTYFL55 = $mol_type_enforce<
+	type $mol_button_copy__hint__3FJIB7R9 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_copy['hint'] >
 	>
-	type $mol_button_copy__text__1PRE6E93 = $mol_type_enforce<
+	type $mol_button_copy__text__JLF0YMA9 = $mol_type_enforce<
 		ReturnType< $mol_text_code['text_export'] >
 		,
 		ReturnType< $mol_button_copy['text'] >
