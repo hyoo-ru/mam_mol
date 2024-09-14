@@ -1,71 +1,71 @@
 declare namespace $ {
 
-	type $mol_select_list_filter_pattern__QFWYTEBW = $mol_type_enforce<
+	type $mol_select_list_filter_pattern__BFR0Y1V0 = $mol_type_enforce<
 		Parameters< $mol_select_list['filter_pattern'] >[0]
 		,
 		Parameters< ReturnType< $mol_select_list['Pick'] >['filter_pattern'] >[0]
 	>
-	type $mol_select__event_select__2GO0T8CY = $mol_type_enforce<
+	type $mol_select__event_select__X2TWXQ67 = $mol_type_enforce<
 		ReturnType< $mol_select_list['event_select'] >
 		,
 		ReturnType< $mol_select['event_select'] >
 	>
-	type $mol_select__align_hor__YISGW46U = $mol_type_enforce<
+	type $mol_select__align_hor__TMMSLYHH = $mol_type_enforce<
 		ReturnType< $mol_select_list['align_hor'] >
 		,
 		ReturnType< $mol_select['align_hor'] >
 	>
-	type $mol_select__options__JFXFSIY6 = $mol_type_enforce<
+	type $mol_select__options__HGCMXL1P = $mol_type_enforce<
 		ReturnType< $mol_select_list['options_pickable'] >
 		,
 		ReturnType< $mol_select['options'] >
 	>
-	type $mol_select__value__IEBVJM19 = $mol_type_enforce<
+	type $mol_select__value__YUA5AEWB = $mol_type_enforce<
 		ReturnType< $mol_select_list['pick'] >
 		,
 		ReturnType< $mol_select['value'] >
 	>
-	type $mol_select__option_label__4S3HZPAY = $mol_type_enforce<
+	type $mol_select__option_label__J26177KU = $mol_type_enforce<
 		ReturnType< $mol_select_list['option_title'] >
 		,
 		ReturnType< $mol_select['option_label'] >
 	>
-	type $mol_select__trigger_enabled__6NNVTZ34 = $mol_type_enforce<
+	type $mol_select__trigger_enabled__3GWMNSU5 = $mol_type_enforce<
 		ReturnType< $mol_select_list['pick_enabled'] >
 		,
 		ReturnType< $mol_select['trigger_enabled'] >
 	>
-	type $mol_select__hint__T0ALTQ9M = $mol_type_enforce<
+	type $mol_select__hint__G8ROCW07 = $mol_type_enforce<
 		ReturnType< $mol_select_list['pick_hint'] >
 		,
 		ReturnType< $mol_select['hint'] >
 	>
-	type $mol_select__Trigger_icon__FD6V4GWY = $mol_type_enforce<
+	type $mol_select__Trigger_icon__ACJG6H0Z = $mol_type_enforce<
 		ReturnType< $mol_select_list['Pick_icon'] >
 		,
 		ReturnType< $mol_select['Trigger_icon'] >
 	>
-	type $mol_button_minor__title__0B19208V = $mol_type_enforce<
+	type $mol_button_minor__title__L74B7IHQ = $mol_type_enforce<
 		ReturnType< $mol_select_list['badge_title'] >
 		,
 		ReturnType< $mol_button_minor['title'] >
 	>
-	type $mol_button_minor__click__RVNO7G6G = $mol_type_enforce<
+	type $mol_button_minor__click__CSAKBTSF = $mol_type_enforce<
 		ReturnType< $mol_select_list['remove'] >
 		,
 		ReturnType< $mol_button_minor['click'] >
 	>
-	type $mol_button_minor__hint__UYRPPJUK = $mol_type_enforce<
+	type $mol_button_minor__hint__EUSCUDTF = $mol_type_enforce<
 		ReturnType< $mol_select_list['badge_hint'] >
 		,
 		ReturnType< $mol_button_minor['hint'] >
 	>
-	type $mol_button_minor__enabled__SITOI1X4 = $mol_type_enforce<
+	type $mol_button_minor__enabled__A9A4VW98 = $mol_type_enforce<
 		ReturnType< $mol_select_list['drop_enabled'] >
 		,
 		ReturnType< $mol_button_minor['enabled'] >
 	>
-	type $mol_select_list_sub__57V11KNC = $mol_type_enforce<
+	type $mol_select_list_sub__VYU9YV9N = $mol_type_enforce<
 		ReturnType< $mol_select_list['badges_list'] >[number]
 		,
 		$mol_view
