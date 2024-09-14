@@ -13,7 +13,7 @@ namespace $ {
 				}
 			}>( '$mol_db_test',
 				mig => mig.store_make( 'users' ),
-				mig => mig.stores.users.index_make( 'names', [ 'name' ], !!'unique' ),
+				mig => mig.stores.users.index_make( 'names', [ 'name' ], true ),
 			)
 			const trans = db.change( 'users' )
 			
@@ -101,7 +101,7 @@ namespace $ {
 				}
 			}>( '$mol_db_test',
 				mig => mig.store_make( 'users' ),
-				mig => mig.stores.users.index_make( 'names', [ 'name' ], !!'unique' ),
+				mig => mig.stores.users.index_make( 'names', [ 'name' ], true ),
 				mig => mig.stores.users.index_make( 'ages', [ 'age' ] ),
 			)
 			const trans = db.change( 'users' )

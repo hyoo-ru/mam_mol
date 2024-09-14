@@ -1,21 +1,21 @@
 declare namespace $ {
 
-	type $mol_button_minor__title__RJD4RHBL = $mol_type_enforce<
+	type $mol_button_minor__title__W5V5V3NP = $mol_type_enforce<
 		ReturnType< $mol_tag_tree_demo['item_title'] >
 		,
 		ReturnType< $mol_button_minor['title'] >
 	>
-	type $mol_tag_tree__Item__TI8AHO80 = $mol_type_enforce<
+	type $mol_tag_tree__Item__T9IDQ12Y = $mol_type_enforce<
 		ReturnType< $mol_tag_tree_demo['Item'] >
 		,
 		ReturnType< $mol_tag_tree['Item'] >
 	>
-	type $mol_tag_tree__levels_expanded__1Q7958DV = $mol_type_enforce<
+	type $mol_tag_tree__levels_expanded__ZMPIJ2B1 = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_tag_tree['levels_expanded'] >
 	>
-	type $mol_tag_tree__ids_tags__NAGOHZA9 = $mol_type_enforce<
+	type $mol_tag_tree__ids_tags__A2487860 = $mol_type_enforce<
 		({ 
 			'Batman': readonly(any)[],
 			'Superman': readonly(any)[],

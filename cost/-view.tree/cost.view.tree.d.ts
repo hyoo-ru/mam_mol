@@ -1,16 +1,16 @@
 declare namespace $ {
 
-	type $mol_view__sub__FPPI5QZR = $mol_type_enforce<
+	type $mol_view__sub__1XBR5LDX = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_view__sub__N6F730JN = $mol_type_enforce<
+	type $mol_view__sub__MT64SB9L = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_view__sub__2ROBGUGU = $mol_type_enforce<
+	type $mol_view__sub__5EDVG2GE = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
