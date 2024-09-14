@@ -1,21 +1,21 @@
 declare namespace $ {
 
-	type $mol_gallery__items__6GS3HQJV = $mol_type_enforce<
+	type $mol_gallery__items__CXH0E365 = $mol_type_enforce<
 		ReturnType< $mol_chart_legend['graph_legends'] >
 		,
 		ReturnType< $mol_gallery['items'] >
 	>
-	type $mol_view__sub__OJ62JQHN = $mol_type_enforce<
+	type $mol_view__sub__CDTWRN3D = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_view__sub__6226H680 = $mol_type_enforce<
+	type $mol_view__sub__ORWDNL46 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_view__sub__LQAGIRH4 = $mol_type_enforce<
+	type $mol_view__sub__WCGTY2J2 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >

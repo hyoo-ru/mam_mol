@@ -5688,7 +5688,7 @@ var $;
                 return { destructor() { } };
             const watcher = $node.chokidar.watch(this.path(), {
                 persistent: true,
-                ignored: /(^\.|___$)/,
+                ignored: path => /([\/\\]\.|___$)/.test(path),
                 depth: 0,
                 ignoreInitial: true,
                 awaitWriteFinish: {
