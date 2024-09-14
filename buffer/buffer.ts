@@ -47,55 +47,55 @@ namespace $ {
 		}
 		
 		int16( offset: number, next?: number ) {
-			if( next === undefined ) return this.getInt16( offset, !!'LE' )
-			if( next >= -(2**15) && next < 2**15 ) return this.setInt16( offset, next, !!'LE' ), next
+			if( next === undefined ) return this.getInt16( offset, true )
+			if( next >= -(2**15) && next < 2**15 ) return this.setInt16( offset, next, true ), next
 			$mol_fail( new Error( `Wrong int16 value ${ next }` ) )
 		}
 		
 		uint16( offset: number, next?: number ) {
-			if( next === undefined ) return this.getUint16( offset, !!'LE' )
-			if( next >= 0 && next < 2**16 ) return this.setUint16( offset, next, !!'LE' ), next
+			if( next === undefined ) return this.getUint16( offset, true )
+			if( next >= 0 && next < 2**16 ) return this.setUint16( offset, next, true ), next
 			$mol_fail( new Error( `Wrong uint16 value ${ next }` ) )
 		}
 		
 		int32( offset: number, next?: number ) {
-			if( next === undefined ) return this.getInt32( offset, !!'LE' )
-			if( next >= -(2**31) && next < 2**31 ) return this.setInt32( offset, next, !!'LE' ), next
+			if( next === undefined ) return this.getInt32( offset, true )
+			if( next >= -(2**31) && next < 2**31 ) return this.setInt32( offset, next, true ), next
 			$mol_fail( new Error( `Wrong int32 value ${ next }` ) )
 		}
 	
 		uint32( offset: number, next?: number ) {
-			if( next === undefined ) return this.getUint32( offset, !!'LE' )
-			if( next >= 0 && next < 2**32 ) return this.setUint32( offset, next, !!'LE' ), next
+			if( next === undefined ) return this.getUint32( offset, true )
+			if( next >= 0 && next < 2**32 ) return this.setUint32( offset, next, true ), next
 			$mol_fail( new Error( `Wrong uint32 value ${ next }` ) )
 		}
 		
 		uint48( offset: number, next?: number ) {
-			if( next === undefined ) return this.getUint48( offset, !!'LE' )
-			if( next >= 0 && next < 2**48 ) return this.setUint48( offset, next, !!'LE' ), next
+			if( next === undefined ) return this.getUint48( offset, true )
+			if( next >= 0 && next < 2**48 ) return this.setUint48( offset, next, true ), next
 			$mol_fail( new Error( `Wrong uint48 value ${ next }` ) )
 		}
 		
 		int64( offset: number, next?: bigint ) {
-			if( next === undefined ) return this.getBigInt64( offset, !!'LE' )
-			if( next >= -(2**63) && next < 2**63 ) return this.setBigInt64( offset, next, !!'LE' ), next
+			if( next === undefined ) return this.getBigInt64( offset, true )
+			if( next >= -(2**63) && next < 2**63 ) return this.setBigInt64( offset, next, true ), next
 			$mol_fail( new Error( `Wrong int64 value ${ next }` ) )
 		}
 		
 		uint64( offset: number, next?: bigint ) {
-			if( next === undefined ) return this.getBigUint64( offset, !!'LE' )
-			if( next >= 0 && next < 2**64 ) return this.setBigUint64( offset, next, !!'LE' ), next
+			if( next === undefined ) return this.getBigUint64( offset, true )
+			if( next >= 0 && next < 2**64 ) return this.setBigUint64( offset, next, true ), next
 			$mol_fail( new Error( `Wrong uint64 value ${ next }` ) )
 		}
 		
 		float32( offset: number, next?: number ) {
-			if( next !== undefined ) this.setFloat32( offset, next, !!'LE' )
-			return this.getFloat32( offset, !!'LE' )
+			if( next !== undefined ) this.setFloat32( offset, next, true )
+			return this.getFloat32( offset, true )
 		}
 		
 		float64( offset: number, next?: number ) {
-			if( next !== undefined ) this.setFloat64( offset, next, !!'LE' )
-			return this.getFloat64( offset, !!'LE' )
+			if( next !== undefined ) this.setFloat64( offset, next, true )
+			return this.getFloat64( offset, true )
 		}
 		
 		asArray() {
