@@ -1,11 +1,11 @@
 declare namespace $ {
 
-	type $mol_list__rows__LTA0DUOI = $mol_type_enforce<
+	type $mol_list__rows__LUXWKI5E = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_scroll__sub__GQTZ01F7 = $mol_type_enforce<
+	type $mol_scroll__sub__JLLJJ10L = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_scroll['sub'] >
