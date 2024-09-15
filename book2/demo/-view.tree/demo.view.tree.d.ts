@@ -1,31 +1,31 @@
 declare namespace $ {
 
-	type $mol_view__sub__M5XFWUWQ = $mol_type_enforce<
+	type $mol_view__sub__ZSMIAIS2 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_view__sub__WW07ZY2N = $mol_type_enforce<
+	type $mol_view__sub__GX9YMSYG = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_view__sub__9ZTM7BDG = $mol_type_enforce<
+	type $mol_view__sub__YI1D0FT4 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_view__sub__8APKY8EH = $mol_type_enforce<
+	type $mol_view__sub__XAJ6ELP9 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_book2__Placeholder__UI5OJCEZ = $mol_type_enforce<
+	type $mol_book2__Placeholder__BV5BFNBA = $mol_type_enforce<
 		ReturnType< $mol_book2_demo['Side'] >
 		,
 		ReturnType< $mol_book2['Placeholder'] >
 	>
-	type $mol_book2__pages__4FQ1GWA1 = $mol_type_enforce<
+	type $mol_book2__pages__8B4X5QYY = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_book2['pages'] >
