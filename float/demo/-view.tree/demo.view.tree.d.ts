@@ -1,26 +1,26 @@
 declare namespace $ {
 
-	type $mol_paragraph__title__UIBU5JVC = $mol_type_enforce<
+	type $mol_paragraph__title__TQYJ2IB3 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_row__sub__JVZLTZHW = $mol_type_enforce<
+	type $mol_row__sub__QN7K1VKM = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_row['sub'] >
 	>
-	type $mol_float__sub__IZTEX3F4 = $mol_type_enforce<
+	type $mol_float__sub__PY42L4ZQ = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_float['sub'] >
 	>
-	type $mol_list__rows__XVL2HXNM = $mol_type_enforce<
+	type $mol_list__rows__DO9I196F = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_scroll__sub__U1NMEX2J = $mol_type_enforce<
+	type $mol_scroll__sub__LLYSMJ2W = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_scroll['sub'] >
