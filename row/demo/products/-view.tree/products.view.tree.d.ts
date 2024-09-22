@@ -1,21 +1,21 @@
 declare namespace $ {
 
-	type $mol_row__sub__44FQQ34Z = $mol_type_enforce<
+	type $mol_row__sub__T6H9B0ZP = $mol_type_enforce<
 		ReturnType< $mol_row_demo_products['products'] >
 		,
 		ReturnType< $mol_row['sub'] >
 	>
-	type $mol_card__minimal_width__S80KTJ9T = $mol_type_enforce<
+	type $mol_card__minimal_width__2NY7AIZR = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_card['minimal_width'] >
 	>
-	type $mol_card__minimal_height__N60BS77F = $mol_type_enforce<
+	type $mol_card__minimal_height__6SJM8RQN = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_card['minimal_height'] >
 	>
-	type $mol_card__title__MD5T47Q8 = $mol_type_enforce<
+	type $mol_card__title__C9EWIOV3 = $mol_type_enforce<
 		ReturnType< $mol_row_demo_products['product_title'] >
 		,
 		ReturnType< $mol_card['title'] >
