@@ -3192,6 +3192,7 @@ var $;
         },
         'normalization'() {
             $mol_assert_equal(new $mol_time_moment({ year: 2015, month: 6, day: 34 }).normal.toString(), '2015-08-04');
+            $mol_assert_equal(new $mol_time_moment('2024-09-30 19:00+03:00').normal.month, 8);
         },
         'renormalization'() {
             $mol_assert_equal(new $mol_time_moment('2024-08').normal.toString(), '2024-08');

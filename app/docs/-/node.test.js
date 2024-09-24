@@ -20607,7 +20607,7 @@ var $;
                 return this._native;
             const second = Math.floor(this.second ?? 0);
             const native = new Date(this.year ?? 0, this.month ?? 0, (this.day ?? 0) + 1, this.hour ?? 0, this.minute ?? 0, second, Math.floor(((this.second ?? 0) - second) * 1000));
-            const offset = native.getTimezoneOffset();
+            const offset = -native.getTimezoneOffset();
             shift: if (this.offset) {
                 const target = this.offset.count('PT1m');
                 if (target === offset)
@@ -43984,6 +43984,7 @@ var $;
         },
         'normalization'() {
             $mol_assert_equal(new $mol_time_moment({ year: 2015, month: 6, day: 34 }).normal.toString(), '2015-08-04');
+            $mol_assert_equal(new $mol_time_moment('2024-09-30 19:00+03:00').normal.month, 8);
         },
         'renormalization'() {
             $mol_assert_equal(new $mol_time_moment('2024-08').normal.toString(), '2024-08');

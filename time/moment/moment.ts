@@ -117,7 +117,7 @@ namespace $ {
 				Math.floor( ( ( this.second ?? 0 ) - second ) * 1000 ),
 			)
 			
-			const offset = native.getTimezoneOffset()
+			const offset = - native.getTimezoneOffset()
 			shift: if( this.offset ) {
 				const target = this.offset.count( 'PT1m' )
 				if( target === offset ) break shift
