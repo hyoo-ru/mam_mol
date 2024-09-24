@@ -20621,7 +20621,7 @@ var $;
                 const target = this.offset.count('PT1m');
                 if (target === offset)
                     break shift;
-                native.setMinutes(native.getMinutes() - offset + target);
+                native.setMinutes(native.getMinutes() + offset - target);
             }
             return this._native = native;
         }

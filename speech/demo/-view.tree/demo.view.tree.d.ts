@@ -1,26 +1,26 @@
 declare namespace $ {
 
-	type $mol_check_icon__Icon__Q9LWKFEI = $mol_type_enforce<
+	type $mol_check_icon__Icon__W6UBZWIH = $mol_type_enforce<
 		ReturnType< $mol_speech_demo['Toggle_icon'] >
 		,
 		ReturnType< $mol_check_icon['Icon'] >
 	>
-	type $mol_check_icon__checked__QSU9YKNC = $mol_type_enforce<
+	type $mol_check_icon__checked__3EMJ1V5E = $mol_type_enforce<
 		ReturnType< $mol_speech_demo['hearing'] >
 		,
 		ReturnType< $mol_check_icon['checked'] >
 	>
-	type $mol_row__sub__6H55FAOP = $mol_type_enforce<
+	type $mol_row__sub__Y68WHZPH = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_row['sub'] >
 	>
-	type $mol_button_major__click__TM0DO3N7 = $mol_type_enforce<
+	type $mol_button_major__click__MLIAL4RG = $mol_type_enforce<
 		ReturnType< $mol_speech_demo['speak'] >
 		,
 		ReturnType< $mol_button_major['click'] >
 	>
-	type $mol_button_major__sub__LRFQ92JR = $mol_type_enforce<
+	type $mol_button_major__sub__GOXXUDW2 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_major['sub'] >
