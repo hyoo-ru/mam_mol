@@ -131,7 +131,7 @@ namespace $ {
 		get normal() {
 			if( this._normal ) return this._normal
 			
-			const moment = new $mol_time_moment( this.native )
+			const moment = new $mol_time_moment( this.native ).toOffset( this.offset )
 			
 			return this._normal = new $mol_time_moment({
 				year : this.year === undefined ? undefined : moment.year ,
