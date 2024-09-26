@@ -7,6 +7,7 @@ $mol_image $mol_view
 		loading <= loading \eager
 		decoding <= decoding \async
 		crossOrigin <= cors null
+		draggable <= draggable \auto
 	attr *any
 		^
 		width <= natural_width 0
