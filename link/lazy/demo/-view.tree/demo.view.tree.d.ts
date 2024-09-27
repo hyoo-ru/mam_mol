@@ -1,21 +1,21 @@
 declare namespace $ {
 
-	type $mol_link_lazy__hint__62YONF4P = $mol_type_enforce<
+	type $mol_link_lazy__hint__NFW7UW1I = $mol_type_enforce<
 		ReturnType< $mol_link_lazy_demo['title'] >
 		,
 		ReturnType< $mol_link_lazy['hint'] >
 	>
-	type $mol_link_lazy__uri_generated__XTRNVCJ5 = $mol_type_enforce<
+	type $mol_link_lazy__uri_generated__ZJ4BLIJE = $mol_type_enforce<
 		ReturnType< $mol_link_lazy_demo['uri_generated'] >
 		,
 		ReturnType< $mol_link_lazy['uri_generated'] >
 	>
-	type $mol_link_lazy__file_name__OOIT9PBP = $mol_type_enforce<
+	type $mol_link_lazy__file_name__SVCUZ566 = $mol_type_enforce<
 		ReturnType< $mol_link_lazy_demo['download_file'] >
 		,
 		ReturnType< $mol_link_lazy['file_name'] >
 	>
-	type $mol_link_lazy__sub__QLS7ZVRC = $mol_type_enforce<
+	type $mol_link_lazy__sub__MFNN3ZWI = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_link_lazy['sub'] >

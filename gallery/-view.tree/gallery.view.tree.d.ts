@@ -1,13 +1,13 @@
 declare namespace $ {
 
-	type $mol_gallery__style__40SDIVKO = $mol_type_enforce<
+	type $mol_gallery__style__U3JGALGL = $mol_type_enforce<
 		({ 
 			'flexGrow': ReturnType< $mol_gallery['side_size'] >,
 		}) 
 		,
 		ReturnType< $mol_gallery['style'] >
 	>
-	type $mol_gallery__items__5J1BBXJL = $mol_type_enforce<
+	type $mol_gallery__items__MMLL4QPY = $mol_type_enforce<
 		ReturnType< $mol_gallery['side_items'] >
 		,
 		ReturnType< $mol_gallery['items'] >
