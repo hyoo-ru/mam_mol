@@ -1,36 +1,36 @@
 declare namespace $ {
 
-	type $mol_row__sub__6P1NG4OZ = $mol_type_enforce<
+	type $mol_row__sub__N5VKA24W = $mol_type_enforce<
 		ReturnType< $mol_attach['content'] >
 		,
 		ReturnType< $mol_row['sub'] >
 	>
-	type $mol_image__title__SQM5D5S6 = $mol_type_enforce<
+	type $mol_image__title__8F3TGB86 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_image['title'] >
 	>
-	type $mol_image__uri__Q3K7GCEE = $mol_type_enforce<
+	type $mol_image__uri__W2B06EGO = $mol_type_enforce<
 		ReturnType< $mol_attach['item_uri'] >
 		,
 		ReturnType< $mol_image['uri'] >
 	>
-	type $mol_button_open__title__55IPN5IW = $mol_type_enforce<
+	type $mol_button_open__title__KGVCD69R = $mol_type_enforce<
 		ReturnType< $mol_attach['attach_title'] >
 		,
 		ReturnType< $mol_button_open['title'] >
 	>
-	type $mol_button_open__files__SSU78O9F = $mol_type_enforce<
+	type $mol_button_open__files__OPTBMYGV = $mol_type_enforce<
 		ReturnType< $mol_attach['attach_new'] >
 		,
 		ReturnType< $mol_button_open['files'] >
 	>
-	type $mol_button_minor__click__2STQZ6IZ = $mol_type_enforce<
+	type $mol_button_minor__click__LCK4R9IS = $mol_type_enforce<
 		ReturnType< $mol_attach['item_drop'] >
 		,
 		ReturnType< $mol_button_minor['click'] >
 	>
-	type $mol_button_minor__sub__5O2NW6ON = $mol_type_enforce<
+	type $mol_button_minor__sub__MKIB6P2M = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_minor['sub'] >
