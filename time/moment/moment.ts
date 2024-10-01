@@ -117,11 +117,11 @@ namespace $ {
 				Math.floor( ( ( this.second ?? 0 ) - second ) * 1000 ),
 			)
 			
-			const offset = native.getTimezoneOffset()
+			const offset = - native.getTimezoneOffset()
 			shift: if( this.offset ) {
 				const target = this.offset.count( 'PT1m' )
 				if( target === offset ) break shift
-				native.setMinutes( native.getMinutes() - offset + target )
+				native.setMinutes( native.getMinutes() + offset - target )
 			}
 			
 			return this._native = native
@@ -131,7 +131,7 @@ namespace $ {
 		get normal() {
 			if( this._normal ) return this._normal
 			
-			const moment = new $mol_time_moment( this.native )
+			const moment = new $mol_time_moment( this.native ).toOffset( this.offset )
 			
 			return this._normal = new $mol_time_moment({
 				year : this.year === undefined ? undefined : moment.year ,
