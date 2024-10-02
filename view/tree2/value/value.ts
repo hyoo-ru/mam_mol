@@ -16,7 +16,7 @@ namespace $ {
 		}
 
 		if (kids.length !== 0) return this.$mol_fail(
-			err`Kids are not allowed at ${value.span}, use ${example}`
+			err`Children are not allowed at ${value.span}, use ${example}`
 		)
 
 		if (type === 'false' || type === 'true') return value.data(type)
