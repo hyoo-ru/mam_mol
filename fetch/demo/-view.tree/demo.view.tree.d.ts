@@ -1,26 +1,26 @@
 declare namespace $ {
 
-	type $mol_string__value__3AHA5USQ = $mol_type_enforce<
+	type $mol_string__value__I81AWWSE = $mol_type_enforce<
 		ReturnType< $mol_fetch_demo['url'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_button_major__click__WJM3J85A = $mol_type_enforce<
+	type $mol_button_major__click__ZMPRZCGH = $mol_type_enforce<
 		ReturnType< $mol_fetch_demo['fetch_data'] >
 		,
 		ReturnType< $mol_button_major['click'] >
 	>
-	type $mol_view__sub__J2IRW8SV = $mol_type_enforce<
+	type $mol_view__sub__QTMKW71F = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_dump_value__value__DP1W459F = $mol_type_enforce<
+	type $mol_dump_value__value__OYS7U4CD = $mol_type_enforce<
 		ReturnType< $mol_fetch_demo['data'] >
 		,
 		ReturnType< $mol_dump_value['value'] >
 	>
-	type $mol_list__rows__5JMFQV3D = $mol_type_enforce<
+	type $mol_list__rows__J75EDNX7 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >
