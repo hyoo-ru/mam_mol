@@ -1,11 +1,11 @@
 declare namespace $ {
 
-	type $mol_section__title__IGRP5MQF = $mol_type_enforce<
+	type $mol_section__title__AN4AFH8X = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_section['title'] >
 	>
-	type $mol_section__content__ENSTRC7R = $mol_type_enforce<
+	type $mol_section__content__F0BS8YK8 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_section['content'] >
