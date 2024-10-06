@@ -52,8 +52,6 @@ namespace $ {
 		sub.stdout!.on('data', data => reset(undefined, data) )
 		sub.on('error', err => { error = err })
 
-		let destructed = false
-
 		const promise = new Promise<{
 			pid?: number
 			stdout: Buffer
@@ -62,7 +60,6 @@ namespace $ {
 			signal: NodeJS.Signals | null,
 		}>((done, fail) => {
 			sub.on('close', (status, signal) => {
-				if (destructed) return
 				clearTimeout(timer)
 				const stderr = Buffer.concat(error_data)
 				const stdout = Buffer.concat(std_data)
@@ -83,7 +80,6 @@ namespace $ {
 		})
 
 		return Object.assign(promise, { destructor: () => {
-			destructed = true
 			clearTimeout(timer)
 			sub.kill('SIGKILL')
 		} })
