@@ -596,9 +596,28 @@ namespace $ {
 			return process.stdout.isTTY
 		}
 
+		git(path: string, ...args: string[]) {
+			try {
+				return this.$.$mol_build.git_enabled
+					? this.$.$mol_exec( path , 'git', ...args ).stdout.toString().trim()
+					: ''
+			} catch (e) {
+				if ($mol_fail_catch(e) && e instanceof $mol_exec_error && e.cause.timeout) {
+					this.$.$mol_build.git_enabled = false
+					this.$.$mol_log3_warn({
+						place: `${this}.git()`,
+						message: `Timeout - git disabled`,
+						hint: 'Check internect connection',
+					})
+					return ''
+				}
+				$mol_fail_hidden(e)
+			}
+		}
+
 		@ $mol_mem
 		gitVersion() {
-			return this.$.$mol_exec('.', 'git', 'version').stdout?.toString().trim().match(/.*\s+([\d\.]+)$/)?.[1] ?? ''
+			return this.$.$mol_exec('.', 'git', 'version').stdout?.toString().match(/.*\s+([\d\.]+)$/)?.[1] ?? ''
 		}
 
 		gitDeepenSupported() {
@@ -606,7 +625,7 @@ namespace $ {
 		}
 
 		gitPull(path: string) {
-			const args = [ 'pull' ]
+			const args = [] as string[]
 
 			if ( ! this.interactive() ) {
 				// depth и deepen не годятся для локальной разработки, поэтому оставляем ограничение глубины пула только для CI
@@ -617,15 +636,17 @@ namespace $ {
 				args.push( this.gitDeepenSupported() ? '--deepen=1' : '--depth=1' )
 			}
 
-			return this.$.$mol_exec( path , 'git', ...args )
+			return this.git( path , 'pull', ...args )
 		}
+
+		static git_enabled = true
 
 		@ $mol_mem
 		gitSubmoduleDirs() {
 			if (! this.is_root_git()) return new Set<string>()
 
 			const root = this.root().path()
-			const output = this.$.$mol_exec( root , 'git', 'submodule', 'status', '--recursive' ).stdout.toString()
+			const output = this.git(root, 'submodule', 'status', '--recursive')
 
 			const dirs = output.trim()
 				.split('\n')
@@ -710,7 +731,7 @@ namespace $ {
 			}
 
 			for( let repo of mapping.select( 'pack' , mod.name() , 'git' ).kids ) {
-				this.$.$mol_exec( this.root().path() , 'git' , 'clone' , '--depth', '1' , repo.text() , mod.relate( this.root() ) )
+				this.git( this.root().path() , 'clone' , '--depth', '1' , repo.text() , mod.relate( this.root() ) )
 				mod.reset()
 				return true
 			}

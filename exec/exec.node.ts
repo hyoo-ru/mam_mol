@@ -1,5 +1,18 @@
 namespace $ {
-	export const $mol_exec_deadline = 5000
+	export let $mol_exec_deadline = 5000
+
+	export type $mol_exec_error_context = {
+		timeout?: boolean
+		pid?: number
+		stdout: Buffer
+		stderr: Buffer
+		status?: number | null
+		signal: NodeJS.Signals | null,
+	}
+
+	export class $mol_exec_error extends $mol_error_mix<$mol_exec_error_context> {}
+
+	export const $mol_exec_spawn = $node['child_process'].spawn
 
 	export function $mol_exec_async(
 		this : $ ,
@@ -17,14 +30,13 @@ namespace $ {
 			command: `${app} ${ args.join(' ') }` ,
 		})
 
-		const sub = $node['child_process'].spawn(app, args, {
-			stdio: 'inherit',
+		const sub = this.$mol_exec_spawn(app, args, {
 			shell: true,
 			cwd: dir,
 			env: this.$mol_env(),
 		})
 
-		let first = true
+		let timeout = false
 		let error = null as null | Error
 		let timer: undefined | ReturnType<typeof setTimeout>
 
@@ -38,44 +50,33 @@ namespace $ {
 			clearTimeout(timer)
 
 			timer = setTimeout(() => {
-				sub.kill(first ? 'SIGTERM' : 'SIGKILL')
-
-				if (first) reset()
-
-				first = false
+				const signal = timeout ? 'SIGKILL' : 'SIGTERM'
+				timeout = true
+				reset()
+				sub.kill(signal)
 			}, this.$mol_exec_deadline)
 		}
 
 		reset()
 
-		sub.stderr!.on('data', data => reset(data) )
-		sub.stdout!.on('data', data => reset(undefined, data) )
+		sub.stdout?.on('data', data => reset(data) )
+		sub.stderr?.on('data', data => reset(undefined, data) )
 		sub.on('error', err => { error = err })
 
-		const promise = new Promise<{
-			pid?: number
-			stdout: Buffer
-			stderr: Buffer
-			status?: number | null
-			signal: NodeJS.Signals | null,
-		}>((done, fail) => {
+		const promise = new Promise<$mol_exec_error_context>((done, fail) => {
 			sub.on('close', (status, signal) => {
 				clearTimeout(timer)
 				const stderr = Buffer.concat(error_data)
 				const stdout = Buffer.concat(std_data)
+				const res = { pid: sub.pid, stdout, stderr, status, signal, timeout }
 
-				if( status || error ) {
-					return fail( error || new Error( stderr.toString(), { cause: stdout } ) )
-				}
-				
-				done({
-					pid: sub.pid,
-					stdout,
-					stderr,
-					status,
-					signal,
-				})
+				if (error || status || timeout) return fail( new $mol_exec_error(
+					stderr.toString() || stdout.toString() || 'Exec timeout',
+					res,
+					...error ? [ error ] : []
+				) )
 
+				done(res)
 			})
 		})
 
