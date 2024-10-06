@@ -12,7 +12,8 @@ namespace $ {
 
 	export class $mol_exec_error extends $mol_error_mix<$mol_exec_error_context> {}
 
-	export const $mol_exec_spawn = $node['child_process'].spawn
+	const child_process = $node['child_process']
+	export const $mol_exec_spawn = child_process.spawn.bind(child_process)
 
 	export function $mol_exec_async(
 		this : $ ,
@@ -69,7 +70,6 @@ namespace $ {
 				const stderr = Buffer.concat(error_data)
 				const stdout = Buffer.concat(std_data)
 				const res = { pid: sub.pid, stdout, stderr, status, signal, timeout }
-
 				if (error || status || timeout) return fail( new $mol_exec_error(
 					stderr.toString() || stdout.toString() || 'Exec timeout',
 					res,
@@ -79,6 +79,8 @@ namespace $ {
 				done(res)
 			})
 		})
+
+		return promise
 
 		return Object.assign(promise, { destructor: () => {
 			clearTimeout(timer)

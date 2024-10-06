@@ -596,18 +596,19 @@ namespace $ {
 			return process.stdout.isTTY
 		}
 
+		@ $mol_action
 		git(path: string, ...args: string[]) {
 			try {
 				return this.$.$mol_build.git_enabled
 					? this.$.$mol_exec( path , 'git', ...args ).stdout.toString().trim()
 					: ''
 			} catch (e) {
-				if ($mol_fail_catch(e) && e instanceof $mol_exec_error && e.cause.timeout) {
+				if (e instanceof $mol_exec_error && e.cause.timeout) {
 					this.$.$mol_build.git_enabled = false
 					this.$.$mol_log3_warn({
 						place: `${this}.git()`,
 						message: `Timeout - git disabled`,
-						hint: 'Check internect connection',
+						hint: 'Check connection',
 					})
 					return ''
 				}
@@ -617,7 +618,7 @@ namespace $ {
 
 		@ $mol_mem
 		gitVersion() {
-			return this.$.$mol_exec('.', 'git', 'version').stdout?.toString().match(/.*\s+([\d\.]+)$/)?.[1] ?? ''
+			return this.git('.', 'version').match(/.*\s+([\d\.]+)$/)?.[1] ?? ''
 		}
 
 		gitDeepenSupported() {
@@ -635,7 +636,6 @@ namespace $ {
 				// fatal: unable to set up work tree using invalid config
 				args.push( this.gitDeepenSupported() ? '--deepen=1' : '--depth=1' )
 			}
-
 			return this.git( path , 'pull', ...args )
 		}
 
@@ -718,13 +718,15 @@ namespace $ {
 					}
 
 				} catch( error: any ) {
-
-					this.$.$mol_log3_fail({
-						place: `${this}.modEnsure()` ,
-						path ,
-						message: error.message ,
-					})
-
+					if ($mol_fail_catch(error)) {
+						this.$.$mol_log3_fail({
+							place: `${this}.modEnsure()` ,
+							path ,
+							message: error.message ,
+						})
+					} else {
+						$mol_fail_hidden(error)
+					}
 				}
 
 				return false

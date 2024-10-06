@@ -1,24 +1,25 @@
 namespace $ {
 	$mol_test( {
-		'git version'($) {
-			let close_cb = () => {}
+		async 'git version'($) {
+			let close_mock = () => {}
 
 			const context_mock = $.$mol_ambient({
 				$mol_exec_deadline: 100,
 				$mol_exec_spawn: () => ({
 					on(name: string, cb: () => void) {
-						if (name === 'close') close_cb = cb
+						if (name === 'close') close_mock = cb
 					},
-					kill() {
-						console.log('killed')
-						close_cb()
-					}
+					kill() { close_mock() }
 				} as any)
 			})
-
-			$mol_assert_fail(() => {
-				context_mock.$mol_exec('.', 'sleep', '10')
-			}, 'Exec timeout')
+			
+			let message = ''
+			try {
+				const res = await $mol_wire_async(context_mock).$mol_exec('.', 'sleep', '10')
+			} catch (e) {
+				message= (e as Error).message
+			}
+			$mol_assert_equal(message, 'Exec timeout')
 		}
 		
 	} )
