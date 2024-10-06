@@ -1,10 +1,10 @@
 namespace $ {
 	$mol_test( {
-		async 'git version'($) {
+		async 'exec timeout auto kill child process'($) {
 			let close_mock = () => {}
 
 			const context_mock = $.$mol_ambient({
-				$mol_exec_deadline: 100,
+				$mol_exec_deadline: 10,
 				$mol_exec_spawn: () => ({
 					on(name: string, cb: () => void) {
 						if (name === 'exit') close_mock = cb
