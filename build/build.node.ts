@@ -24,7 +24,7 @@ namespace $ {
 				process.exit(1)
 			}
 		} else {
-			Promise.resolve().then( ()=> build.server().start() )
+			Promise.resolve().then( ()=> $mol_wire_async(build.server()).start() )
 		}
 	}
 	
@@ -625,6 +625,7 @@ namespace $ {
 			return $mol_compare_text()(this.gitVersion(), '2.42.0') >= 0
 		}
 
+		@ $mol_action
 		gitPull(path: string) {
 			const args = [] as string[]
 
@@ -664,18 +665,25 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		modEnsure( path : string ) {
-
-			var mod = $mol_file.absolute( path )
-			var parent = mod.parent()
-			
-			if( mod !== this.root() ) this.modEnsure( parent.path() )
-			
-			var mapping = mod === this.root()
+		modMappedKids( path : string ) {
+			const mod = $mol_file.absolute( path )
+			const parent = mod.parent()
+			const mapping = mod === this.root()
 				? this.$.$mol_tree2_from_string( `pack ${ mod.name() } git \\https://github.com/hyoo-ru/mam.git
 ` )
 				: this.modMeta( parent.path() )
 
+			return mapping.select( 'pack' , mod.name() , 'git' ).kids
+		}
+
+		@ $mol_mem_key
+		modEnsure( path : string ) {
+
+			const mod = $mol_file.absolute( path )
+			const parent = mod.parent()
+			
+			if( mod !== this.root() ) this.modEnsure( parent.path() )
+			const repo = this.modMappedKids(path)?.[0]
 			if( mod.exists()) {
 
 				try {
@@ -698,10 +706,10 @@ namespace $ {
 						this.gitPull( mod.path() )
 						return false
 					}
-					
-					for( let repo of mapping.select( 'pack' , mod.name() , 'git' ).kids ) {
+
+					if (repo) {
 						this.$.$mol_exec( mod.path() , 'git' , 'init' )
-						
+				
 						const res = this.$.$mol_exec( mod.path() , 'git' , 'remote' , 'show' , repo.text() )
 						const matched = res.stdout.toString().match( /HEAD branch: (.*?)\n/ )
 						const head_branch_name = res instanceof Error || matched === null || !matched[1]
@@ -732,7 +740,7 @@ namespace $ {
 				return false
 			}
 
-			for( let repo of mapping.select( 'pack' , mod.name() , 'git' ).kids ) {
+			if( repo ) {
 				this.git( this.root().path() , 'clone' , '--depth', '1' , repo.text() , mod.relate( this.root() ) )
 				mod.reset()
 				return true
@@ -762,7 +770,7 @@ namespace $ {
 
 			return false
 		}
-		
+
 		@ $mol_mem_key
 		modMeta( path : string ) {
 

@@ -248,11 +248,13 @@ namespace $ {
 				for( const src of sources ) src.buffer()	
 				
 			} catch (error) {
-				this.$.$mol_log3_fail({
-					place: `${this}`,
-					message: (error as any)?.message,
-					path
-				})
+				if ($mol_fail_catch(error)) {
+					this.$.$mol_log3_fail({
+						place: `${this}.notify`,
+						message: (error as Error)?.message,
+						path,
+					})
+				}
 			}
 			
 
@@ -300,13 +302,13 @@ namespace $ {
 			
 			} catch( error: any ) {
 				
-				if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
-				
-				this.$.$mol_log3_fail({
-					place: this,
-					stack: error.stack,
-					message: error.message ?? error,
-				})
+				if ($mol_fail_catch(error)) {
+					this.$.$mol_log3_fail({
+						place: `${this}.slave_server`,
+						stack: error.stack,
+						message: error.message ?? error,
+					})
+				}
 				
 				return null
 			}
