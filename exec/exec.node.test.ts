@@ -7,7 +7,7 @@ namespace $ {
 				$mol_exec_deadline: 100,
 				$mol_exec_spawn: () => ({
 					on(name: string, cb: () => void) {
-						if (name === 'close') close_mock = cb
+						if (name === 'exit') close_mock = cb
 					},
 					kill() { close_mock() }
 				} as any)

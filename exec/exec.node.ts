@@ -38,7 +38,6 @@ namespace $ {
 		})
 
 		let timeout = false
-		let error = null as null | Error
 		let timer: undefined | ReturnType<typeof setTimeout>
 
 		const std_data = [] as Buffer[]
@@ -62,14 +61,18 @@ namespace $ {
 
 		sub.stdout?.on('data', data => reset(data) )
 		sub.stderr?.on('data', data => reset(undefined, data) )
-		sub.on('error', err => { error = err })
 
 		const promise = new Promise<$mol_exec_error_context>((done, fail) => {
-			sub.on('close', (status, signal) => {
+			const close = (error: Error | null, status: number | null = null, signal: NodeJS.Signals | null = null) => {
+				if (! timer) return
+
 				clearTimeout(timer)
+				timer = undefined
+
 				const stderr = Buffer.concat(error_data)
 				const stdout = Buffer.concat(std_data)
 				const res = { pid: sub.pid, stdout, stderr, status, signal, timeout }
+
 				if (error || status || timeout) return fail( new $mol_exec_error(
 					stderr.toString() || stdout.toString() || 'Exec timeout',
 					res,
@@ -77,10 +80,12 @@ namespace $ {
 				) )
 
 				done(res)
-			})
+			}
+	
+			sub.on('disconnect', () => close(new Error('Disconnected')) )
+			sub.on('error', err => close(err) )
+			sub.on('exit', (status, signal) => close(null, status, signal) )
 		})
-
-		return promise
 
 		return Object.assign(promise, { destructor: () => {
 			clearTimeout(timer)
