@@ -17,9 +17,10 @@ namespace $ {
 		}
 
 		safe_middleware(plugin: $mol_server_middleware): $mol_server_middleware {
+			const plugin_async = $mol_wire_async(plugin)
 			return async (req, res, next) => {
 				try {
-					await $mol_wire_async(plugin)(req, res, next)
+					await plugin_async(req, res, next)
 				} catch (e) {
 					next(e)
 				}

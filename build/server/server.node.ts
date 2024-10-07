@@ -5,11 +5,7 @@ namespace $ {
 		static trace = false
 
 		expressGenerator() {
-			const self = $mol_wire_async( this )
-
-			return function( req : any , res : any , next : () => void ) {
-				return self.handleRequest.call( self, req, res, next )
-			}
+			return this.handleRequest.bind(this)
 		}
 		
 		handleRequest(
