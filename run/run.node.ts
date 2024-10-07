@@ -15,20 +15,17 @@ namespace $ {
 	export const $mol_run_spawn = child_process.spawn.bind(child_process)
 
 	export type $mol_run_options = {
-		dir ?: string
+		command : readonly string[] | string,
+		dir : string
 		timeout?: number
 	}
 
 	export function $mol_run_async(
 		this : $ ,
-		command_args: readonly string[] | string,
-		opts?: $mol_run_options
+		{ dir, timeout, command }: $mol_run_options
 	) {
-		const args_raw = typeof command_args === 'string' ? command_args.split( ' ' ) : command_args
+		const args_raw = typeof command === 'string' ? command.split( ' ' ) : command
 		const [ app, ...args ] = args_raw
-
-		const timeout = opts?.timeout ?? null
-		const dir = opts?.dir ?? '.'
 
 		this.$mol_log3_come({
 			place: '$mol_run_async' ,
@@ -82,7 +79,7 @@ namespace $ {
 				const res = { pid: sub.pid, stdout, stderr, status, signal, timeout: killed }
 
 				if (error || status || killed) return fail( new $mol_run_error(
-					stderr.toString() || stdout.toString() || 'Exec timeout',
+					stderr.toString() || stdout.toString() || (killed ? 'Exec timeout' : 'Run error'),
 					res,
 					...error ? [ error ] : []
 				) )
@@ -103,9 +100,8 @@ namespace $ {
 
 	export function $mol_run(
 		this : $ ,
-		command_args: readonly string[] | string,
-		options?: $mol_run_options
+		options: $mol_run_options
 	) {
-		return $mol_wire_sync(this).$mol_run_async( command_args, options )
+		return $mol_wire_sync(this).$mol_run_async( options )
 	}
 }
