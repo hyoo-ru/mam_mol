@@ -65,7 +65,7 @@ namespace $ {
 			let content = ''
 			for( const step of tree.select( 'build' , null ).kids ) {
 
-				const res = this.$.$mol_exec( file.parent().path() , step.text() ).stdout.toString().trim()
+				const res = this.$.$mol_run( step.text(), { cwd: file.parent().path() } ).stdout.toString().trim()
 				if( step.type ) content += `let ${ step.type } = ${ JSON.stringify( res ) }`
 
 			}
@@ -600,10 +600,10 @@ namespace $ {
 		git(path: string, ...args: string[]) {
 			try {
 				return this.$.$mol_build.git_enabled
-					? this.$.$mol_exec2( 'git', { cwd: path , args, timeout: 5000 }).stdout.toString().trim()
+					? this.$.$mol_run( [ 'git', ...args ], { cwd: path, timeout: 5000 }).stdout.toString().trim()
 					: ''
 			} catch (e) {
-				if (e instanceof $mol_exec2_error && e.cause.timeout) {
+				if (e instanceof $mol_run_error && e.cause.timeout) {
 					this.$.$mol_build.git_enabled = false
 					this.$.$mol_log3_warn({
 						place: `${this}.git()`,
@@ -708,15 +708,15 @@ namespace $ {
 					}
 
 					if (repo) {
-						this.$.$mol_exec( mod.path() , 'git' , 'init' )
+						this.$.$mol_run( ['git', 'init'], { cwd: mod.path() } )
 				
-						const res = this.$.$mol_exec( mod.path() , 'git' , 'remote' , 'show' , repo.text() )
+						const res = this.$.$mol_run( ['git', 'remote', 'show', repo.text() ], { cwd: mod.path() } )
 						const matched = res.stdout.toString().match( /HEAD branch: (.*?)\n/ )
 						const head_branch_name = res instanceof Error || matched === null || !matched[1]
 							? 'master'
 							: matched[1]
 						
-						this.$.$mol_exec( mod.path() , 'git' , 'remote' , 'add' , '--track' , head_branch_name! , 'origin' , repo.text() )
+						this.$.$mol_run( ['git', 'remote', 'add', '--track', head_branch_name!, 'origin' , repo.text() ], { cwd: mod.path() } )
 						this.gitPull( mod.path() )
 						mod.reset()
 						for ( const sub of mod.sub() ) {
@@ -1180,7 +1180,7 @@ namespace $ {
 			}
 
 			if( bundle === 'node' ) {
-				this.$.$mol_exec( this.root().path() , 'node' , '--enable-source-maps', '--trace-uncaught', target.relate( this.root() ) )
+				this.$.$mol_run( ['node', '--enable-source-maps', '--trace-uncaught', target.relate( this.root() ) ],  { cwd: this.root().path() } )
 			}
 			
 			return [ target , targetMap ]
@@ -1386,7 +1386,7 @@ namespace $ {
 			try {
 				
 				const published = ( [] as string[] ).concat( JSON.parse(
-					this.$.$mol_exec( '' , 'npm' , 'view' , name , 'versions', '--json' ).stdout.toString()
+					this.$.$mol_run( ['npm', 'view' , name , 'versions', '--json'] ).stdout.toString()
 				) ).slice(-1)[0].split('.').map( Number )
 				
 				if( published[0] > version[0] ) {
