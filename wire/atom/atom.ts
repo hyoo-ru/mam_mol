@@ -22,7 +22,7 @@ namespace $ {
 			if( existen ) return existen
 			
 			const prefix = (host as any)?.[ Symbol.toStringTag ] ?? ( host instanceof Function ? $$.$mol_func_name( host ) : host )
-			const key = `${ prefix }.${ field }`
+			const key = prefix + ( '.' + field )
 			
 			const fiber = new $mol_wire_atom( key, task, host, [] as any as Args )
 			;( host as any ?? task )[ field ] = fiber
@@ -52,7 +52,7 @@ namespace $ {
 				dict = ( host as any ?? task )[ field ] = new Map<any,any>()
 			}
 			
-			const id = `${ prefix }.${ task.name }<${ key_str.replace( /^"|"$/g, "'" ) }>`
+			const id = prefix + ( '.' + task.name ) + ( '<' + key_str.replace( /^"|"$/g, "'" ) + '>' )
 			const fiber = new $mol_wire_atom( id, task, host, [ key ] as any as Args )
 			dict.set( key_str, fiber )
 			
