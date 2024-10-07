@@ -36,8 +36,6 @@ namespace $ {
 			args: args.join(' ')
 		})
 
-		if (! env) env = await $mol_wire_async(this).$mol_env()
-
 		const sub = this.$mol_run_spawn(app, args, {
 			shell: true,
 			cwd: dir,
@@ -105,6 +103,7 @@ namespace $ {
 		this : $ ,
 		options: $mol_run_options
 	) {
+		if (! options.env) options = { ...options, env: this.$mol_env() }
 		return $mol_wire_sync(this).$mol_run_async( options )
 	}
 }
