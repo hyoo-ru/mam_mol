@@ -4,7 +4,7 @@ namespace $ {
 			let close_mock = () => {}
 
 			const context_mock = $.$mol_ambient({
-				$mol_exec_spawn: () => ({
+				$mol_exec2_spawn: () => ({
 					on(name: string, cb: () => void) {
 						if (name === 'exit') close_mock = cb
 					},

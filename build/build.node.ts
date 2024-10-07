@@ -603,7 +603,7 @@ namespace $ {
 					? this.$.$mol_exec2( 'git', { cwd: path , args, timeout: 5000 }).stdout.toString().trim()
 					: ''
 			} catch (e) {
-				if (e instanceof $mol_exec_error && e.cause.timeout) {
+				if (e instanceof $mol_exec2_error && e.cause.timeout) {
 					this.$.$mol_build.git_enabled = false
 					this.$.$mol_log3_warn({
 						place: `${this}.git()`,
