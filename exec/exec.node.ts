@@ -6,6 +6,6 @@ namespace $ {
 		command : string ,
 		...args : readonly string[]
 	) {
-		return this.$mol_run( [ command, ...args ], { cwd } )
+		return this.$mol_run( [ command, ...args ], { dir: cwd } )
 	}
 }

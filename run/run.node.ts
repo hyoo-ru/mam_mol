@@ -15,7 +15,7 @@ namespace $ {
 	export const $mol_run_spawn = child_process.spawn.bind(child_process)
 
 	export type $mol_run_options = {
-		cwd ?: string
+		dir ?: string
 		timeout?: number
 	}
 
@@ -28,11 +28,11 @@ namespace $ {
 		const [ app, ...args ] = args_raw
 
 		const timeout = opts?.timeout ?? null
-		const cwd = opts?.cwd ?? '.'
+		const dir = opts?.dir ?? '.'
 
 		this.$mol_log3_come({
 			place: '$mol_run_async' ,
-			cwd: $node.path.relative( '' , cwd ) ,
+			cwd: $node.path.relative( '' , dir ) ,
 			message: 'Run',
 			command: app ,
 			args: args.join(' ')
@@ -40,7 +40,7 @@ namespace $ {
 
 		const sub = this.$mol_run_spawn(app, args, {
 			shell: true,
-			cwd,
+			cwd: dir,
 			env: this.$mol_env(),
 		})
 

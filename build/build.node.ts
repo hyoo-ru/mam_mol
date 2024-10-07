@@ -65,7 +65,7 @@ namespace $ {
 			let content = ''
 			for( const step of tree.select( 'build' , null ).kids ) {
 
-				const res = this.$.$mol_run( step.text(), { cwd: file.parent().path() } ).stdout.toString().trim()
+				const res = this.$.$mol_run( step.text(), { dir: file.parent().path() } ).stdout.toString().trim()
 				if( step.type ) content += `let ${ step.type } = ${ JSON.stringify( res ) }`
 
 			}
@@ -600,7 +600,7 @@ namespace $ {
 		git(path: string, ...args: string[]) {
 			try {
 				return this.$.$mol_build.git_enabled
-					? this.$.$mol_run( [ 'git', ...args ], { cwd: path, timeout: 5000 }).stdout.toString().trim()
+					? this.$.$mol_run( [ 'git', ...args ], { dir: path, timeout: 5000 }).stdout.toString().trim()
 					: ''
 			} catch (e) {
 				if (e instanceof $mol_run_error && e.cause.timeout) {
@@ -708,15 +708,15 @@ namespace $ {
 					}
 
 					if (repo) {
-						this.$.$mol_run( ['git', 'init'], { cwd: mod.path() } )
+						this.$.$mol_run( ['git', 'init'], { dir: mod.path() } )
 				
-						const res = this.$.$mol_run( ['git', 'remote', 'show', repo.text() ], { cwd: mod.path() } )
+						const res = this.$.$mol_run( ['git', 'remote', 'show', repo.text() ], { dir: mod.path() } )
 						const matched = res.stdout.toString().match( /HEAD branch: (.*?)\n/ )
 						const head_branch_name = res instanceof Error || matched === null || !matched[1]
 							? 'master'
 							: matched[1]
 						
-						this.$.$mol_run( ['git', 'remote', 'add', '--track', head_branch_name!, 'origin' , repo.text() ], { cwd: mod.path() } )
+						this.$.$mol_run( ['git', 'remote', 'add', '--track', head_branch_name!, 'origin' , repo.text() ], { dir: mod.path() } )
 						this.gitPull( mod.path() )
 						mod.reset()
 						for ( const sub of mod.sub() ) {
@@ -1180,7 +1180,7 @@ namespace $ {
 			}
 
 			if( bundle === 'node' ) {
-				this.$.$mol_run( ['node', '--enable-source-maps', '--trace-uncaught', target.relate( this.root() ) ],  { cwd: this.root().path() } )
+				this.$.$mol_run( ['node', '--enable-source-maps', '--trace-uncaught', target.relate( this.root() ) ],  { dir: this.root().path() } )
 			}
 			
 			return [ target , targetMap ]
