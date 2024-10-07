@@ -18,11 +18,12 @@ namespace $ {
 		command : readonly string[] | string,
 		dir : string
 		timeout?: number
+		env?: Record<string, string | undefined>
 	}
 
-	export function $mol_run_async(
+	export async function $mol_run_async(
 		this : $ ,
-		{ dir, timeout, command }: $mol_run_options
+		{ dir, timeout, command, env }: $mol_run_options
 	) {
 		const args_raw = typeof command === 'string' ? command.split( ' ' ) : command
 		const [ app, ...args ] = args_raw
@@ -35,10 +36,12 @@ namespace $ {
 			args: args.join(' ')
 		})
 
+		if (! env) env = await $mol_wire_async(this).$mol_env()
+
 		const sub = this.$mol_run_spawn(app, args, {
 			shell: true,
 			cwd: dir,
-			env: this.$mol_env(),
+			env
 		})
 
 		let killed = false
