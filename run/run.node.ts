@@ -30,10 +30,9 @@ namespace $ {
 
 		this.$mol_log3_come({
 			place: '$mol_run_async' ,
-			cwd: $node.path.relative( '' , dir ) ,
+			dir: $node.path.relative( '' , dir ) ,
 			message: 'Run',
-			command: app ,
-			args: args.join(' ')
+			command: args_raw.join(' ') ,
 		})
 
 		const sub = this.$mol_run_spawn(app, args, {

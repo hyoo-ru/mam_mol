@@ -101,7 +101,7 @@ namespace $ {
 		}
 		
 		expressIndex() {
-			return (
+			return async (
 				req : typeof $node.express.request ,
 				res : typeof $node.express.response ,
 				next : () => void
@@ -111,7 +111,7 @@ namespace $ {
 				const dir = root.resolve( req.path )				
 				const build = this.build()
 
-				build.modEnsure( dir.path() )
+				await $mol_wire_async(build).modEnsure( dir.path() )
 
 				const match =  req.url.match( /(\/|.*[^\-]\/)([\?#].*)?$/ )
 				if( !match) return next()				

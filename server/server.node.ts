@@ -1,14 +1,29 @@
 namespace $ {
-	
+	export type $mol_server_middleware = (
+		req : typeof $node.express.request ,
+		res : typeof $node.express.response ,
+		next: (error?: unknown) => void
+	) => void | Promise<void>
+
 	export class $mol_server extends $mol_object {
 		
 		@ $mol_mem
 		express() {
 			var express = $node['express']()
 			
-			this.expressHandlers().forEach( plugin => express.use( plugin ) )
+			this.expressHandlers().forEach( plugin => express.use( this.safe_middleware(plugin) ) )
 			
 			return express
+		}
+
+		safe_middleware(plugin: $mol_server_middleware): $mol_server_middleware {
+			return async (req, res, next) => {
+				try {
+					await $mol_wire_async(plugin)(req, res, next)
+				} catch (e) {
+					next(e)
+				}
+			}
 		}
 
 		internal_ip() {
@@ -40,7 +55,7 @@ namespace $ {
 			server.listen( this.port() )
 			
 			this.$.$mol_log3_done({
-				place: `${ this }` ,
+				place: `${ this }.http` ,
 				message: `Started` ,
 				network: `http://${ this.internal_ip() }:${ this.port() }/`,
 				loopback: `http://localhost:${ this.port() }/`,
@@ -88,7 +103,7 @@ namespace $ {
 
 		}
 
-		expressHandlers() : any[] {
+		expressHandlers() : readonly $mol_server_middleware[] {
 			return [
 				this.expressCors() ,
 				this.expressCompressor() ,
@@ -101,11 +116,11 @@ namespace $ {
 		}
 		
 		expressCompressor() {
-			return $node['compression']() as unknown
+			return $node['compression']() as $mol_server_middleware
 		}
 		
 		expressCors() {
-			return $node.cors() as unknown
+			return $node.cors() as $mol_server_middleware
 		}
 		
 		expressBodier() {
@@ -125,7 +140,7 @@ namespace $ {
 		}
 		
 		expressDirector() {
-			return $node['serve-index']( this.rootPublic() , { icons : true } ) as unknown
+			return $node['serve-index']( this.rootPublic() , { icons : true } )
 		}
 
 		expressIndex() {
@@ -137,7 +152,11 @@ namespace $ {
 		}
 		
 		expressGenerator() {
-			return ( req : any , res : any , next : () => void )=> next()
+			return (
+				req : typeof $node.express.request ,
+				res : typeof $node.express.response ,
+				next : () => void
+			)=> next()
 		}
 		
 		bodyLimit() {
