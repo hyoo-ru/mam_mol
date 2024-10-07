@@ -15,23 +15,23 @@ namespace $ {
 	export const $mol_exec_spawn = child_process.spawn.bind(child_process)
 
 	export type $mol_exec2_options = {
-		cwd ?: string ,
-		args ?: readonly string[],
-		timeout?: number | null,
+		cwd ?: string
+		args ?: readonly string[]
+		timeout?: number
 	}
 
 	export function $mol_exec2_async(
 		this : $ ,
 		command: string,
-		opts: $mol_exec2_options
+		opts?: $mol_exec2_options
 	) {
-		const cwd = opts.cwd ?? process.cwd()
-		let [ app , ... args0 ] = command.split( ' ' )
-		const args = [ ... args0 , ... opts.args ?? [] ]
-		const timeout = opts.timeout
+		const cwd = opts?.cwd ?? '.'
+		const [ app , ... args0 ] = command.split( ' ' )
+		const args = [ ... args0 , ... opts?.args ?? [] ]
+		const timeout = opts?.timeout ?? null
 
 		this.$mol_log3_come({
-			place: '$mol_exec2' ,
+			place: '$mol_exec2_async' ,
 			cwd: $node.path.relative( '' , cwd ) ,
 			message: 'Run',
 			command: `${app} ${ args.join(' ') }` ,
@@ -114,6 +114,6 @@ namespace $ {
 		command: string,
 		options?: $mol_exec2_options
 	) {
-		return $mol_wire_sync(this).$mol_exec2_async( command, options ?? {})
+		return $mol_wire_sync(this).$mol_exec2_async( command, options )
 	}
 }
