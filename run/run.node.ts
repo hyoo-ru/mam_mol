@@ -46,7 +46,7 @@ namespace $ {
 		const std_data = [] as Buffer[]
 		const error_data = [] as Buffer[]
 
-		const reset = (std_chunk?: Buffer, error_chunk?: Buffer) => {
+		const add = (std_chunk?: Buffer, error_chunk?: Buffer) => {
 			if (std_chunk) std_data.push(std_chunk)
 			if (error_chunk) error_data.push(error_chunk)
 			if (! timeout) return
@@ -56,15 +56,15 @@ namespace $ {
 			timer = setTimeout(() => {
 				const signal = killed ? 'SIGKILL' : 'SIGTERM'
 				killed = true
-				reset()
+				add()
 				sub.kill(signal)
 			}, timeout)
 		}
 
-		reset()
+		add()
 
-		sub.stdout?.on('data', data => reset(data) )
-		sub.stderr?.on('data', data => reset(undefined, data) )
+		sub.stdout?.on('data', data => add(data) )
+		sub.stderr?.on('data', data => add(undefined, data) )
 
 		const promise = new Promise<$mol_run_error_context>((done, fail) => {
 			const close = (error: Error | null, status: number | null = null, signal: NodeJS.Signals | null = null) => {

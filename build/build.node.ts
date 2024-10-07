@@ -665,7 +665,7 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		modMappedKids( path : string ) {
+		modMappedKid( path : string ) {
 			const mod = $mol_file.absolute( path )
 			const parent = mod.parent()
 			const mapping = mod === this.root()
@@ -673,7 +673,7 @@ namespace $ {
 ` )
 				: this.modMeta( parent.path() )
 
-			return mapping.select( 'pack' , mod.name() , 'git' ).kids
+			return mapping.select( 'pack' , mod.name() , 'git' ).kids.find($mol_guard_defined)
 		}
 
 		@ $mol_mem_key
@@ -683,7 +683,7 @@ namespace $ {
 			const parent = mod.parent()
 			
 			if( mod !== this.root() ) this.modEnsure( parent.path() )
-			const repo = this.modMappedKids(path).find($mol_guard_defined)
+			const repo = this.modMappedKid(path)
 			if( mod.exists()) {
 
 				try {
