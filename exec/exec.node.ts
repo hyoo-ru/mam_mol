@@ -98,7 +98,7 @@ namespace $ {
 		this : $ ,
 		dir : string ,
 		command : string ,
-		...args : string[]
+		...args : readonly string[]
 	) {
 		return this.$mol_exec2( dir, command, args )
 	}
@@ -107,9 +107,9 @@ namespace $ {
 		this : $ ,
 		dir : string ,
 		command : string ,
-		args : readonly string[],
+		args ?: readonly string[],
 		deadline?: number | null
 	) {
-		return $mol_wire_sync(this).$mol_exec_async( dir, command, args, deadline )
+		return $mol_wire_sync(this).$mol_exec_async( dir, command, args ?? [], deadline )
 	}
 }
