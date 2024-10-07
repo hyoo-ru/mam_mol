@@ -683,7 +683,7 @@ namespace $ {
 			const parent = mod.parent()
 			
 			if( mod !== this.root() ) this.modEnsure( parent.path() )
-			const repo = this.modMappedKids(path)?.[0]
+			const repo = this.modMappedKids(path).find($mol_guard_defined)
 			if( mod.exists()) {
 
 				try {
