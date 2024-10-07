@@ -73,16 +73,18 @@ namespace $ {
 				clearTimeout(timer)
 				timer = undefined
 
-				const stderr = Buffer.concat(error_data)
-				const stdout = Buffer.concat(std_data)
+				const res = Object.defineProperties({ pid: sub.pid, status, signal } as $mol_run_error_context, {
+					stdout: { get: () => Buffer.concat(std_data) },
+					stderr: { get: () => Buffer.concat(error_data) },
+				})
 
 				if (error || status || killed) return fail( new $mol_run_error(
-					(stderr.toString() || stdout.toString() || 'Run error') + (killed ? ', timeout' : ''),
+					(res.stderr.toString() || res.stdout.toString() || 'Run error') + (killed ? ', timeout' : ''),
 					{ signal, timeout: killed },
 					...error ? [ error ] : []
 				) )
 
-				done({ pid: sub.pid, stdout, stderr, status, signal })
+				done(res)
 			}
 	
 			sub.on('disconnect', () => close(new Error('Disconnected')) )
