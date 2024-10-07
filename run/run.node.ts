@@ -21,7 +21,7 @@ namespace $ {
 		env?: Record<string, string | undefined>
 	}
 
-	export async function $mol_run_async(
+	export function $mol_run_async(
 		this : $ ,
 		{ dir, timeout, command, env }: $mol_run_options
 	) {
