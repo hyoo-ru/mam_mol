@@ -600,7 +600,7 @@ namespace $ {
 		git(path: string, ...args: string[]) {
 			try {
 				return this.$.$mol_build.git_enabled
-					? this.$.$mol_exec( path , 'git', ...args ).stdout.toString().trim()
+					? this.$.$mol_exec2( path , 'git', args, 5000 ).stdout.toString().trim()
 					: ''
 			} catch (e) {
 				if (e instanceof $mol_exec_error && e.cause.timeout) {

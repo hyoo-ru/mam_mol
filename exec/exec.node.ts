@@ -1,5 +1,4 @@
 namespace $ {
-	export let $mol_exec_deadline = 5000
 
 	export type $mol_exec_error_context = {
 		timeout?: boolean
@@ -19,7 +18,8 @@ namespace $ {
 		this : $ ,
 		dir : string ,
 		command : string ,
-		...args : string[]
+		args : readonly string[],
+		deadline?: number | null,
 	) {
 		let [ app , ... args0 ] = command.split( ' ' )
 		args = [ ... args0 , ... args ]
@@ -46,6 +46,7 @@ namespace $ {
 		const reset = (std_chunk?: Buffer, error_chunk?: Buffer) => {
 			if (std_chunk) std_data.push(std_chunk)
 			if (error_chunk) error_data.push(error_chunk)
+			if (! deadline) return
 
 			clearTimeout(timer)
 
@@ -54,7 +55,7 @@ namespace $ {
 				timeout = true
 				reset()
 				sub.kill(signal)
-			}, this.$mol_exec_deadline)
+			}, deadline)
 		}
 
 		reset()
@@ -64,7 +65,7 @@ namespace $ {
 
 		const promise = new Promise<$mol_exec_error_context>((done, fail) => {
 			const close = (error: Error | null, status: number | null = null, signal: NodeJS.Signals | null = null) => {
-				if (! timer) return
+				if (! timer && deadline) return
 
 				clearTimeout(timer)
 				timer = undefined
@@ -99,6 +100,16 @@ namespace $ {
 		command : string ,
 		...args : string[]
 	) {
-		return $mol_wire_sync(this).$mol_exec_async( dir, command, ...args )
+		return this.$mol_exec2( dir, command, args )
+	}
+
+	export function $mol_exec2(
+		this : $ ,
+		dir : string ,
+		command : string ,
+		args : readonly string[],
+		deadline?: number | null
+	) {
+		return $mol_wire_sync(this).$mol_exec_async( dir, command, args, deadline )
 	}
 }
