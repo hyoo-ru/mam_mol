@@ -14,30 +14,36 @@ namespace $ {
 	const child_process = $node['child_process']
 	export const $mol_exec_spawn = child_process.spawn.bind(child_process)
 
-	export function $mol_exec_async(
+	export type $mol_exec2_options = {
+		cwd ?: string ,
+		args ?: readonly string[],
+		timeout?: number | null,
+	}
+
+	export function $mol_exec2_async(
 		this : $ ,
-		dir : string ,
-		command : string ,
-		args : readonly string[],
-		deadline?: number | null,
+		command: string,
+		opts: $mol_exec2_options
 	) {
+		const cwd = opts.cwd ?? process.cwd()
 		let [ app , ... args0 ] = command.split( ' ' )
-		args = [ ... args0 , ... args ]
+		const args = [ ... args0 , ... opts.args ?? [] ]
+		const timeout = opts.timeout
 
 		this.$mol_log3_come({
-			place: '$mol_exec' ,
-			dir: $node.path.relative( '' , dir ) ,
+			place: '$mol_exec2' ,
+			cwd: $node.path.relative( '' , cwd ) ,
 			message: 'Run',
 			command: `${app} ${ args.join(' ') }` ,
 		})
 
 		const sub = this.$mol_exec_spawn(app, args, {
 			shell: true,
-			cwd: dir,
+			cwd,
 			env: this.$mol_env(),
 		})
 
-		let timeout = false
+		let killed = false
 		let timer: undefined | ReturnType<typeof setTimeout>
 
 		const std_data = [] as Buffer[]
@@ -46,16 +52,16 @@ namespace $ {
 		const reset = (std_chunk?: Buffer, error_chunk?: Buffer) => {
 			if (std_chunk) std_data.push(std_chunk)
 			if (error_chunk) error_data.push(error_chunk)
-			if (! deadline) return
+			if (! timeout) return
 
 			clearTimeout(timer)
 
 			timer = setTimeout(() => {
-				const signal = timeout ? 'SIGKILL' : 'SIGTERM'
-				timeout = true
+				const signal = killed ? 'SIGKILL' : 'SIGTERM'
+				killed = true
 				reset()
 				sub.kill(signal)
-			}, deadline)
+			}, timeout)
 		}
 
 		reset()
@@ -65,16 +71,16 @@ namespace $ {
 
 		const promise = new Promise<$mol_exec_error_context>((done, fail) => {
 			const close = (error: Error | null, status: number | null = null, signal: NodeJS.Signals | null = null) => {
-				if (! timer && deadline) return
+				if (! timer && timeout) return
 
 				clearTimeout(timer)
 				timer = undefined
 
 				const stderr = Buffer.concat(error_data)
 				const stdout = Buffer.concat(std_data)
-				const res = { pid: sub.pid, stdout, stderr, status, signal, timeout }
+				const res = { pid: sub.pid, stdout, stderr, status, signal, timeout: killed }
 
-				if (error || status || timeout) return fail( new $mol_exec_error(
+				if (error || status || killed) return fail( new $mol_exec_error(
 					stderr.toString() || stdout.toString() || 'Exec timeout',
 					res,
 					...error ? [ error ] : []
@@ -96,20 +102,18 @@ namespace $ {
 
 	export function $mol_exec(
 		this : $ ,
-		dir : string ,
+		cwd : string ,
 		command : string ,
 		...args : readonly string[]
 	) {
-		return this.$mol_exec2( dir, command, args )
+		return this.$mol_exec2( command, { cwd, args } )
 	}
 
 	export function $mol_exec2(
 		this : $ ,
-		dir : string ,
-		command : string ,
-		args ?: readonly string[],
-		deadline?: number | null
+		command: string,
+		options?: $mol_exec2_options
 	) {
-		return $mol_wire_sync(this).$mol_exec_async( dir, command, args ?? [], deadline )
+		return $mol_wire_sync(this).$mol_exec2_async( command, options ?? {})
 	}
 }

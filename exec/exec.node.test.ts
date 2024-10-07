@@ -14,7 +14,7 @@ namespace $ {
 			
 			let message = ''
 			try {
-				const res = await $mol_wire_async(context_mock).$mol_exec2('.', 'sleep', ['10'], 10)
+				const res = await $mol_wire_async(context_mock).$mol_exec2('sleep 10', { cwd: '.', timeout: 10 })
 			} catch (e) {
 				message= (e as Error).message
 			}
