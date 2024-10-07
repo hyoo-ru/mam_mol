@@ -11,20 +11,9 @@ namespace $ {
 		express() {
 			var express = $node['express']()
 			
-			this.expressHandlers().forEach( plugin => express.use( this.safe_middleware(plugin) ) )
+			this.expressHandlers().forEach( plugin => express.use( plugin ) )
 			
 			return express
-		}
-
-		safe_middleware(plugin: $mol_server_middleware): $mol_server_middleware {
-			const plugin_async = $mol_wire_async(plugin)
-			return async (req, res, next) => {
-				try {
-					await plugin_async(req, res, next)
-				} catch (e) {
-					next(e)
-				}
-			}
 		}
 
 		internal_ip() {

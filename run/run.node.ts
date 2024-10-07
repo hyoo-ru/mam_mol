@@ -1,7 +1,6 @@
 namespace $ {
 
 	export type $mol_run_error_context = {
-		timeout?: boolean
 		pid?: number
 		stdout: Buffer
 		stderr: Buffer
@@ -9,7 +8,7 @@ namespace $ {
 		signal: NodeJS.Signals | null,
 	}
 
-	export class $mol_run_error extends $mol_error_mix<$mol_run_error_context> {}
+	export class $mol_run_error extends $mol_error_mix<{ timeout?: boolean, signal?: NodeJS.Signals | null}> {}
 
 	const child_process = $node['child_process']
 	export const $mol_run_spawn = child_process.spawn.bind(child_process)
@@ -76,15 +75,14 @@ namespace $ {
 
 				const stderr = Buffer.concat(error_data)
 				const stdout = Buffer.concat(std_data)
-				const res = { pid: sub.pid, stdout, stderr, status, signal, timeout: killed }
 
 				if (error || status || killed) return fail( new $mol_run_error(
-					stderr.toString() || stdout.toString() || (killed ? 'Exec timeout' : 'Run error'),
-					res,
+					(stderr.toString() || stdout.toString() || 'Run error') + (killed ? ', timeout' : ''),
+					{ signal, timeout: killed },
 					...error ? [ error ] : []
 				) )
 
-				done(res)
+				done({ pid: sub.pid, stdout, stderr, status, signal })
 			}
 	
 			sub.on('disconnect', () => close(new Error('Disconnected')) )

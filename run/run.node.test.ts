@@ -18,7 +18,7 @@ namespace $ {
 			} catch (e) {
 				message= (e as Error).message
 			}
-			$mol_assert_equal(message, 'Exec timeout')
+			$mol_assert_equal(message, 'Run error, timeout')
 		}
 		
 	} )

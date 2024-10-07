@@ -5,7 +5,23 @@ namespace $ {
 		static trace = false
 
 		expressGenerator() {
-			return this.handleRequest.bind(this)
+			const self = $mol_wire_async( this )
+
+			return $mol_func_name_from(async function( req : any , res : any , next : (e?: unknown) => void ) {
+				try {
+					return await self.handleRequest.call( self, req, res, next )
+				} catch (error) {
+					if ($mol_fail_catch(error)) {
+						self.$.$mol_log3_fail({
+							place: `${self}.expressGenerator`,
+							stack: (error as Error).stack,
+							message: (error as Error).message ?? error,
+						})
+						next(error)
+					}
+				}
+			}, this.handleRequest)
+
 		}
 		
 		handleRequest(
@@ -95,88 +111,107 @@ namespace $ {
 			return build.bundle( { path , bundle } )
 			
 		}
-		
-		expressIndex() {
-			return (
+
+		override expressIndex() {
+			const self = $mol_wire_async( this )
+			return $mol_func_name_from(async function(
 				req : typeof $node.express.request ,
 				res : typeof $node.express.response ,
-				next : () => void
-			) => {
-				
-				const root = $mol_file.absolute( this.rootPublic() )
-				const dir = root.resolve( req.path )				
-				const build = this.build()
+				next : (e?: unknown) => void
+			) {
+				try {
+					return await self.expressIndexRequest(req, res, next )
+				} catch (error) {
+					if ($mol_fail_catch(error)) {
+						self.$.$mol_log3_fail({
+							place: `${self}.expressIndex`,
+							stack: (error as Error).stack,
+							message: (error as Error).message ?? error,
+						})
+						next(error)
+					}
+				}
 
-				build.modEnsure( dir.path() )
+			}, self.expressIndexRequest)
+		}
+		
+		expressIndexRequest(
+			req : typeof $node.express.request ,
+			res : typeof $node.express.response ,
+			next : () => void
+		) {
+			const root = $mol_file.absolute( this.rootPublic() )
+			const dir = root.resolve( req.path )				
+			const build = this.build()
 
-				const match =  req.url.match( /(\/|.*[^\-]\/)([\?#].*)?$/ )
-				if( !match) return next()				
+			build.modEnsure( dir.path() )
 
-				const file = root.resolve( `${req.path}index.html` )
+			const match =  req.url.match( /(\/|.*[^\-]\/)([\?#].*)?$/ )
+			if( !match) return next()				
 
-				if( file.exists() ) {
-					return res.redirect( 301, `${match[1]}-/test.html${match[2] ?? ''}` )
-				}				
-				
-				if( dir.type() === 'dir' ) {
-					const files = [ {name: '-', type: 'dir'} ]
-					for( const file of dir.sub() ) {
-						if (!files.find(( {name} ) => name === file.name())) {
-							files.push( {name: file.name(), type: file.type()} )
-						}
-						if( /\.meta\.tree$/.test( file.name() ) ) {
-							const meta = $$.$mol_tree2_from_string( file.text() )
-							for( const pack of meta.select( 'pack', null ).kids ) {
-								if (!files.find(( {name} ) => name === pack.type))
-									files.push( {name: pack.type, type: 'dir'} )
-							}
+			const file = root.resolve( `${req.path}index.html` )
+
+			if( file.exists() ) {
+				return res.redirect( 301, `${match[1]}-/test.html${match[2] ?? ''}` )
+			}				
+			
+			if( dir.type() === 'dir' ) {
+				const files = [ {name: '-', type: 'dir'} ]
+				for( const file of dir.sub() ) {
+					if (!files.find(( {name} ) => name === file.name())) {
+						files.push( {name: file.name(), type: file.type()} )
+					}
+					if( /\.meta\.tree$/.test( file.name() ) ) {
+						const meta = $$.$mol_tree2_from_string( file.text() )
+						for( const pack of meta.select( 'pack', null ).kids ) {
+							if (!files.find(( {name} ) => name === pack.type))
+								files.push( {name: pack.type, type: 'dir'} )
 						}
 					}
-					const html = `
-						<style>
-							body {
-								display: flex;
-								flex-direction: column;
-								flex-wrap: wrap;
-								font: 1rem/1.5rem sans-serif;
-								height: 100%;
-								margin: 0;
-								padding: 0.75rem;
-								box-sizing: border-box;
-							}
-							a {
-								text-decoration: none;
-								color: rgb(57, 115, 172);
-								font-weight: bolder;
-							}
-							a:hover {
-								background: hsl( 0deg, 0%, 0%, .05 )
-							}
-							a[href^="."], a[href^="-"], a[href="node_modules"] {
-								opacity: 0.5;
-							}
-							a[href=".."], a[href="-"] {
-								opacity: 1;
-							}
-						</style>
-						<link href="/_logo.png" rel="icon" />
-						<a href="..">&#x1F4C1; ..</a>
-						` + files
-						.sort($mol_compare_text((item) => item.type))
-						.map( file => `<a href="${file.name}">${file.type === 'dir' ? '&#x1F4C1;' : '&#128196;'} ${file.name}</a>` )
-						.join( '\n' )
-					
-					res.writeHead( 200, {
-						'Content-Type': 'text/html',
-						'Access-Control-Allow-Origin': '*',
-					} )
-					
-					return res.end( html )
 				}
+				const html = `
+					<style>
+						body {
+							display: flex;
+							flex-direction: column;
+							flex-wrap: wrap;
+							font: 1rem/1.5rem sans-serif;
+							height: 100%;
+							margin: 0;
+							padding: 0.75rem;
+							box-sizing: border-box;
+						}
+						a {
+							text-decoration: none;
+							color: rgb(57, 115, 172);
+							font-weight: bolder;
+						}
+						a:hover {
+							background: hsl( 0deg, 0%, 0%, .05 )
+						}
+						a[href^="."], a[href^="-"], a[href="node_modules"] {
+							opacity: 0.5;
+						}
+						a[href=".."], a[href="-"] {
+							opacity: 1;
+						}
+					</style>
+					<link href="/_logo.png" rel="icon" />
+					<a href="..">&#x1F4C1; ..</a>
+					` + files
+					.sort($mol_compare_text((item) => item.type))
+					.map( file => `<a href="${file.name}">${file.type === 'dir' ? '&#x1F4C1;' : '&#128196;'} ${file.name}</a>` )
+					.join( '\n' )
 				
-				return next()
+				res.writeHead( 200, {
+					'Content-Type': 'text/html',
+					'Access-Control-Allow-Origin': '*',
+				} )
 				
+				return res.end( html )
 			}
+			
+			return next()
 		}
 		
 		port() {
