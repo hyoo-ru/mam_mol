@@ -1,7 +1,7 @@
 interface $node {
- 	"path" : typeof import( "path" ) // mol/server/server.node.ts
+ 	"jsdom" : typeof import( "jsdom" ) // mol/dom/context/context.node.ts
 	"child_process" : typeof import( "child_process" ) // mol/build/server/server.node.ts
-	"jsdom" : typeof import( "jsdom" ) // mol/dom/context/context.node.ts
+	"path" : typeof import( "path" ) // mol/server/server.node.ts
 	"util" : typeof import( "util" ) // mol/charset/encode/encode.ts
 	"fs" : typeof import( "fs" ) // mol/build/build.node.ts
 	"chokidar" : typeof import( "chokidar" ) // mol/file/file.node.ts

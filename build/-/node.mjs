@@ -2064,6 +2064,36 @@ require = (req => Object.assign(function require(name) {
 "use strict";
 var $;
 (function ($) {
+    class $mol_error_mix extends AggregateError {
+        cause;
+        name = $$.$mol_func_name(this.constructor).replace(/^\$/, '') + '_Error';
+        constructor(message, cause = {}, ...errors) {
+            super(errors, message, { cause });
+            this.cause = cause;
+            const stack_get = Object.getOwnPropertyDescriptor(this, 'stack')?.get ?? (() => super.stack);
+            Object.defineProperty(this, 'stack', {
+                get: () => (stack_get.call(this) ?? this.message) + '\n' + [JSON.stringify(this.cause, null, '  ') ?? 'no cause', ...this.errors.map(e => e.stack)].map(e => e.trim()
+                    .replace(/at /gm, '   at ')
+                    .replace(/^(?!    +at )(.*)/gm, '    at | $1 (#)')).join('\n')
+            });
+        }
+        static [Symbol.toPrimitive]() {
+            return this.toString();
+        }
+        static toString() {
+            return $$.$mol_func_name(this);
+        }
+        static make(...params) {
+            return new this(...params);
+        }
+    }
+    $.$mol_error_mix = $mol_error_mix;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
     function $mol_env() {
         return {};
     }
@@ -2083,26 +2113,114 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_exec(dir, command, ...args) {
-        let [app, ...args0] = command.split(' ');
-        args = [...args0, ...args];
+    function $mol_wire_sync(obj) {
+        return new Proxy(obj, {
+            get(obj, field) {
+                const val = obj[field];
+                if (typeof val !== 'function')
+                    return val;
+                const temp = $mol_wire_task.getter(val);
+                return function $mol_wire_sync(...args) {
+                    const fiber = temp(obj, args);
+                    return fiber.sync();
+                };
+            },
+            apply(obj, self, args) {
+                const temp = $mol_wire_task.getter(obj);
+                const fiber = temp(self, args);
+                return fiber.sync();
+            },
+        });
+    }
+    $.$mol_wire_sync = $mol_wire_sync;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_run_error extends $mol_error_mix {
+    }
+    $.$mol_run_error = $mol_run_error;
+    const child_process = $node['child_process'];
+    $.$mol_run_spawn = child_process.spawn.bind(child_process);
+    function $mol_run_async({ dir, timeout, command, env }) {
+        const args_raw = typeof command === 'string' ? command.split(' ') : command;
+        const [app, ...args] = args_raw;
         this.$mol_log3_come({
-            place: '$mol_exec',
+            place: '$mol_run_async',
             dir: $node.path.relative('', dir),
             message: 'Run',
-            command: `${app} ${args.join(' ')}`,
+            command: args_raw.join(' '),
         });
-        var res = $node['child_process'].spawnSync(app, args, {
-            cwd: $node.path.resolve(dir),
+        const sub = this.$mol_run_spawn(app, args, {
             shell: true,
-            env: this.$mol_env(),
+            cwd: dir,
+            env
         });
-        if (res.status || res.error) {
-            return $mol_fail(res.error || new Error(res.stderr.toString(), { cause: res.stdout }));
-        }
-        if (!res.stdout)
-            res.stdout = Buffer.from([]);
-        return res;
+        let killed = false;
+        let timer;
+        const std_data = [];
+        const error_data = [];
+        const add = (std_chunk, error_chunk) => {
+            if (std_chunk)
+                std_data.push(std_chunk);
+            if (error_chunk)
+                error_data.push(error_chunk);
+            if (!timeout)
+                return;
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                const signal = killed ? 'SIGKILL' : 'SIGTERM';
+                killed = true;
+                add();
+                sub.kill(signal);
+            }, timeout);
+        };
+        add();
+        sub.stdout?.on('data', data => add(data));
+        sub.stderr?.on('data', data => add(undefined, data));
+        const promise = new Promise((done, fail) => {
+            const close = (error, status = null, signal = null) => {
+                if (!timer && timeout)
+                    return;
+                clearTimeout(timer);
+                timer = undefined;
+                const res = {
+                    pid: sub.pid,
+                    status,
+                    signal,
+                    get stdout() { return Buffer.concat(std_data); },
+                    get stderr() { return Buffer.concat(error_data); }
+                };
+                if (error || status || killed)
+                    return fail(new $mol_run_error((res.stderr.toString() || res.stdout.toString() || 'Run error') + (killed ? ', timeout' : ''), { signal, timeout: killed }, ...error ? [error] : []));
+                done(res);
+            };
+            sub.on('disconnect', () => close(new Error('Disconnected')));
+            sub.on('error', err => close(err));
+            sub.on('exit', (status, signal) => close(null, status, signal));
+        });
+        return Object.assign(promise, { destructor: () => {
+                clearTimeout(timer);
+                sub.kill('SIGKILL');
+            } });
+    }
+    $.$mol_run_async = $mol_run_async;
+    function $mol_run(options) {
+        if (!options.env)
+            options = { ...options, env: this.$mol_env() };
+        return $mol_wire_sync(this).$mol_run_async(options);
+    }
+    $.$mol_run = $mol_run;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_exec(dir, command, ...args) {
+        return this.$mol_run({ command: [command, ...args], dir });
     }
     $.$mol_exec = $mol_exec;
 })($ || ($ = {}));
@@ -3384,32 +3502,6 @@ var $;
 var $;
 (function ($) {
     $.$mol_mem_persist = $mol_wire_solid;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_wire_sync(obj) {
-        return new Proxy(obj, {
-            get(obj, field) {
-                const val = obj[field];
-                if (typeof val !== 'function')
-                    return val;
-                const temp = $mol_wire_task.getter(val);
-                return function $mol_wire_sync(...args) {
-                    const fiber = temp(obj, args);
-                    return fiber.sync();
-                };
-            },
-            apply(obj, self, args) {
-                const temp = $mol_wire_task.getter(obj);
-                const fiber = temp(self, args);
-                return fiber.sync();
-            },
-        });
-    }
-    $.$mol_wire_sync = $mol_wire_sync;
 })($ || ($ = {}));
 
 ;
@@ -4758,36 +4850,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_error_mix extends AggregateError {
-        cause;
-        name = $$.$mol_func_name(this.constructor).replace(/^\$/, '') + '_Error';
-        constructor(message, cause = {}, ...errors) {
-            super(errors, message, { cause });
-            this.cause = cause;
-            const stack_get = Object.getOwnPropertyDescriptor(this, 'stack')?.get ?? (() => super.stack);
-            Object.defineProperty(this, 'stack', {
-                get: () => (stack_get.call(this) ?? this.message) + '\n' + [JSON.stringify(this.cause, null, '  ') ?? 'no cause', ...this.errors.map(e => e.stack)].map(e => e.trim()
-                    .replace(/at /gm, '   at ')
-                    .replace(/^(?!    +at )(.*)/gm, '    at | $1 (#)')).join('\n')
-            });
-        }
-        static [Symbol.toPrimitive]() {
-            return this.toString();
-        }
-        static toString() {
-            return $$.$mol_func_name(this);
-        }
-        static make(...params) {
-            return new this(...params);
-        }
-    }
-    $.$mol_error_mix = $mol_error_mix;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
     const mapping = {
         '<': '&lt;',
         '>': '&gt;',
@@ -4910,7 +4972,7 @@ var $;
             }
         }
         else {
-            Promise.resolve().then(() => build.server().start());
+            Promise.resolve().then(() => $mol_wire_async(build.server()).start());
         }
     }
     $.$mol_build_start = $mol_build_start;
@@ -4938,7 +5000,7 @@ var $;
             const tree = this.$.$mol_tree2_from_string(file.text(), file.path());
             let content = '';
             for (const step of tree.select('build', null).kids) {
-                const res = this.$.$mol_exec(file.parent().path(), step.text()).stdout.toString().trim();
+                const res = this.$.$mol_run({ command: step.text(), dir: file.parent().path() }).stdout.toString().trim();
                 if (step.type)
                     content += `let ${step.type} = ${JSON.stringify(res)}`;
             }
@@ -5304,24 +5366,44 @@ var $;
         interactive() {
             return process.stdout.isTTY;
         }
+        git(path, ...args) {
+            try {
+                return this.$.$mol_build.git_enabled
+                    ? this.$.$mol_run({ command: ['git', ...args], dir: path, timeout: 5000 }).stdout.toString().trim()
+                    : '';
+            }
+            catch (e) {
+                if (e instanceof $mol_run_error && e.cause.timeout) {
+                    this.$.$mol_build.git_enabled = false;
+                    this.$.$mol_log3_warn({
+                        place: `${this}.git()`,
+                        message: `Timeout - git disabled`,
+                        hint: 'Check connection',
+                    });
+                    return '';
+                }
+                $mol_fail_hidden(e);
+            }
+        }
         gitVersion() {
-            return this.$.$mol_exec('.', 'git', 'version').stdout?.toString().trim().match(/.*\s+([\d\.]+)$/)?.[1] ?? '';
+            return this.git('.', 'version').match(/.*\s+([\d\.]+)$/)?.[1] ?? '';
         }
         gitDeepenSupported() {
             return $mol_compare_text()(this.gitVersion(), '2.42.0') >= 0;
         }
         gitPull(path) {
-            const args = ['pull'];
+            const args = [];
             if (!this.interactive()) {
                 args.push(this.gitDeepenSupported() ? '--deepen=1' : '--depth=1');
             }
-            return this.$.$mol_exec(path, 'git', ...args);
+            return this.git(path, 'pull', ...args);
         }
+        static git_enabled = true;
         gitSubmoduleDirs() {
             if (!this.is_root_git())
                 return new Set();
             const root = this.root().path();
-            const output = this.$.$mol_exec(root, 'git', 'submodule', 'status', '--recursive').stdout.toString();
+            const output = this.git(root, 'submodule', 'status', '--recursive');
             const dirs = output.trim()
                 .split('\n')
                 .map(str => str.match(/^\s*[^ ]+\s+([^ ]*).*/)?.[1]?.trim())
@@ -5333,15 +5415,21 @@ var $;
             const git_dir = this.root().resolve('.git');
             return git_dir.exists() && git_dir.type() === 'dir';
         }
-        modEnsure(path) {
-            var mod = $mol_file.absolute(path);
-            var parent = mod.parent();
-            if (mod !== this.root())
-                this.modEnsure(parent.path());
-            var mapping = mod === this.root()
+        modMappedKid(path) {
+            const mod = $mol_file.absolute(path);
+            const parent = mod.parent();
+            const mapping = mod === this.root()
                 ? this.$.$mol_tree2_from_string(`pack ${mod.name()} git \\https://github.com/hyoo-ru/mam.git
 `)
                 : this.modMeta(parent.path());
+            return mapping.select('pack', mod.name(), 'git').kids.find($mol_guard_defined);
+        }
+        modEnsure(path) {
+            const mod = $mol_file.absolute(path);
+            const parent = mod.parent();
+            if (mod !== this.root())
+                this.modEnsure(parent.path());
+            const repo = this.modMappedKid(path);
             if (mod.exists()) {
                 try {
                     if (mod.type() !== 'dir')
@@ -5357,14 +5445,14 @@ var $;
                         this.gitPull(mod.path());
                         return false;
                     }
-                    for (let repo of mapping.select('pack', mod.name(), 'git').kids) {
-                        this.$.$mol_exec(mod.path(), 'git', 'init');
-                        const res = this.$.$mol_exec(mod.path(), 'git', 'remote', 'show', repo.text());
+                    if (repo) {
+                        this.$.$mol_run({ command: ['git', 'init'], dir: mod.path() });
+                        const res = this.$.$mol_run({ command: ['git', 'remote', 'show', repo.text()], dir: mod.path() });
                         const matched = res.stdout.toString().match(/HEAD branch: (.*?)\n/);
                         const head_branch_name = res instanceof Error || matched === null || !matched[1]
                             ? 'master'
                             : matched[1];
-                        this.$.$mol_exec(mod.path(), 'git', 'remote', 'add', '--track', head_branch_name, 'origin', repo.text());
+                        this.$.$mol_run({ command: ['git', 'remote', 'add', '--track', head_branch_name, 'origin', repo.text()], dir: mod.path() });
                         this.gitPull(mod.path());
                         mod.reset();
                         for (const sub of mod.sub()) {
@@ -5374,16 +5462,21 @@ var $;
                     }
                 }
                 catch (error) {
-                    this.$.$mol_log3_fail({
-                        place: `${this}.modEnsure()`,
-                        path,
-                        message: error.message,
-                    });
+                    if ($mol_fail_catch(error)) {
+                        this.$.$mol_log3_fail({
+                            place: `${this}.modEnsure()`,
+                            path,
+                            message: error.message,
+                        });
+                    }
+                    else {
+                        $mol_fail_hidden(error);
+                    }
                 }
                 return false;
             }
-            for (let repo of mapping.select('pack', mod.name(), 'git').kids) {
-                this.$.$mol_exec(this.root().path(), 'git', 'clone', '--depth', '1', repo.text(), mod.relate(this.root()));
+            if (repo) {
+                this.git(this.root().path(), 'clone', '--depth', '1', repo.text(), mod.relate(this.root()));
                 mod.reset();
                 return true;
             }
@@ -5709,7 +5802,7 @@ var $;
                 $mol_fail_hidden(error);
             }
             if (bundle === 'node') {
-                this.$.$mol_exec(this.root().path(), 'node', '--enable-source-maps', '--trace-uncaught', target.relate(this.root()));
+                this.$.$mol_run({ command: ['node', '--enable-source-maps', '--trace-uncaught', target.relate(this.root())], dir: this.root().path() });
             }
             return [target, targetMap];
         }
@@ -5856,7 +5949,7 @@ var $;
             let version = json.version.split('.').map(Number);
             name = json.name || name;
             try {
-                const published = [].concat(JSON.parse(this.$.$mol_exec('', 'npm', 'view', name, 'versions', '--json').stdout.toString())).slice(-1)[0].split('.').map(Number);
+                const published = [].concat(JSON.parse(this.$.$mol_run({ command: ['npm', 'view', name, 'versions', '--json'], dir: '' }).stdout.toString())).slice(-1)[0].split('.').map(Number);
                 if (published[0] > version[0]) {
                     version = published;
                 }
@@ -6141,14 +6234,23 @@ var $;
         $mol_mem_key
     ], $mol_build.prototype, "dependencies", null);
     __decorate([
+        $mol_action
+    ], $mol_build.prototype, "git", null);
+    __decorate([
         $mol_mem
     ], $mol_build.prototype, "gitVersion", null);
+    __decorate([
+        $mol_action
+    ], $mol_build.prototype, "gitPull", null);
     __decorate([
         $mol_mem
     ], $mol_build.prototype, "gitSubmoduleDirs", null);
     __decorate([
         $mol_mem
     ], $mol_build.prototype, "is_root_git", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_build.prototype, "modMappedKid", null);
     __decorate([
         $mol_mem_key
     ], $mol_build.prototype, "modEnsure", null);
@@ -6389,7 +6491,7 @@ var $;
             const server = $node.http.createServer(this.express());
             server.listen(this.port());
             this.$.$mol_log3_done({
-                place: `${this}`,
+                place: `${this}.http`,
                 message: `Started`,
                 network: `http://${this.internal_ip()}:${this.port()}/`,
                 loopback: `http://localhost:${this.port()}/`,
@@ -6482,9 +6584,21 @@ var $;
         static trace = false;
         expressGenerator() {
             const self = $mol_wire_async(this);
-            return function (req, res, next) {
-                return self.handleRequest.call(self, req, res, next);
-            };
+            return $mol_func_name_from(async function (req, res, next) {
+                try {
+                    return await self.handleRequest.call(self, req, res, next);
+                }
+                catch (error) {
+                    if ($mol_fail_catch(error)) {
+                        self.$.$mol_log3_fail({
+                            place: `${self}.expressGenerator`,
+                            stack: error.stack,
+                            message: error.message ?? error,
+                        });
+                        next(error);
+                    }
+                }
+            }, this.handleRequest);
         }
         handleRequest(req, res, next) {
             res.set('Cache-Control', 'must-revalidate, public, ');
@@ -6542,73 +6656,89 @@ var $;
             return build.bundle({ path, bundle });
         }
         expressIndex() {
-            return (req, res, next) => {
-                const root = $mol_file.absolute(this.rootPublic());
-                const dir = root.resolve(req.path);
-                const build = this.build();
-                build.modEnsure(dir.path());
-                const match = req.url.match(/(\/|.*[^\-]\/)([\?#].*)?$/);
-                if (!match)
-                    return next();
-                const file = root.resolve(`${req.path}index.html`);
-                if (file.exists()) {
-                    return res.redirect(301, `${match[1]}-/test.html${match[2] ?? ''}`);
+            const self = $mol_wire_async(this);
+            return $mol_func_name_from(async function (req, res, next) {
+                try {
+                    return await self.expressIndexRequest(req, res, next);
                 }
-                if (dir.type() === 'dir') {
-                    const files = [{ name: '-', type: 'dir' }];
-                    for (const file of dir.sub()) {
-                        if (!files.find(({ name }) => name === file.name())) {
-                            files.push({ name: file.name(), type: file.type() });
-                        }
-                        if (/\.meta\.tree$/.test(file.name())) {
-                            const meta = $$.$mol_tree2_from_string(file.text());
-                            for (const pack of meta.select('pack', null).kids) {
-                                if (!files.find(({ name }) => name === pack.type))
-                                    files.push({ name: pack.type, type: 'dir' });
-                            }
+                catch (error) {
+                    if ($mol_fail_catch(error)) {
+                        self.$.$mol_log3_fail({
+                            place: `${self}.expressIndex`,
+                            stack: error.stack,
+                            message: error.message ?? error,
+                        });
+                        next(error);
+                    }
+                }
+            }, self.expressIndexRequest);
+        }
+        expressIndexRequest(req, res, next) {
+            const root = $mol_file.absolute(this.rootPublic());
+            const dir = root.resolve(req.path);
+            const build = this.build();
+            build.modEnsure(dir.path());
+            const match = req.url.match(/(\/|.*[^\-]\/)([\?#].*)?$/);
+            if (!match)
+                return next();
+            const file = root.resolve(`${req.path}index.html`);
+            if (file.exists()) {
+                return res.redirect(301, `${match[1]}-/test.html${match[2] ?? ''}`);
+            }
+            if (dir.type() === 'dir') {
+                const files = [{ name: '-', type: 'dir' }];
+                for (const file of dir.sub()) {
+                    if (!files.find(({ name }) => name === file.name())) {
+                        files.push({ name: file.name(), type: file.type() });
+                    }
+                    if (/\.meta\.tree$/.test(file.name())) {
+                        const meta = $$.$mol_tree2_from_string(file.text());
+                        for (const pack of meta.select('pack', null).kids) {
+                            if (!files.find(({ name }) => name === pack.type))
+                                files.push({ name: pack.type, type: 'dir' });
                         }
                     }
-                    const html = `
-						<style>
-							body {
-								display: flex;
-								flex-direction: column;
-								flex-wrap: wrap;
-								font: 1rem/1.5rem sans-serif;
-								height: 100%;
-								margin: 0;
-								padding: 0.75rem;
-								box-sizing: border-box;
-							}
-							a {
-								text-decoration: none;
-								color: rgb(57, 115, 172);
-								font-weight: bolder;
-							}
-							a:hover {
-								background: hsl( 0deg, 0%, 0%, .05 )
-							}
-							a[href^="."], a[href^="-"], a[href="node_modules"] {
-								opacity: 0.5;
-							}
-							a[href=".."], a[href="-"] {
-								opacity: 1;
-							}
-						</style>
-						<link href="/_logo.png" rel="icon" />
-						<a href="..">&#x1F4C1; ..</a>
-						` + files
-                        .sort($mol_compare_text((item) => item.type))
-                        .map(file => `<a href="${file.name}">${file.type === 'dir' ? '&#x1F4C1;' : '&#128196;'} ${file.name}</a>`)
-                        .join('\n');
-                    res.writeHead(200, {
-                        'Content-Type': 'text/html',
-                        'Access-Control-Allow-Origin': '*',
-                    });
-                    return res.end(html);
                 }
-                return next();
-            };
+                const html = `
+					<style>
+						body {
+							display: flex;
+							flex-direction: column;
+							flex-wrap: wrap;
+							font: 1rem/1.5rem sans-serif;
+							height: 100%;
+							margin: 0;
+							padding: 0.75rem;
+							box-sizing: border-box;
+						}
+						a {
+							text-decoration: none;
+							color: rgb(57, 115, 172);
+							font-weight: bolder;
+						}
+						a:hover {
+							background: hsl( 0deg, 0%, 0%, .05 )
+						}
+						a[href^="."], a[href^="-"], a[href="node_modules"] {
+							opacity: 0.5;
+						}
+						a[href=".."], a[href="-"] {
+							opacity: 1;
+						}
+					</style>
+					<link href="/_logo.png" rel="icon" />
+					<a href="..">&#x1F4C1; ..</a>
+					` + files
+                    .sort($mol_compare_text((item) => item.type))
+                    .map(file => `<a href="${file.name}">${file.type === 'dir' ? '&#x1F4C1;' : '&#128196;'} ${file.name}</a>`)
+                    .join('\n');
+                res.writeHead(200, {
+                    'Content-Type': 'text/html',
+                    'Access-Control-Allow-Origin': '*',
+                });
+                return res.end(html);
+            }
+            return next();
         }
         port() {
             return 9080;
@@ -6650,11 +6780,13 @@ var $;
                     src.buffer();
             }
             catch (error) {
-                this.$.$mol_log3_fail({
-                    place: `${this}`,
-                    message: error?.message,
-                    path
-                });
+                if ($mol_fail_catch(error)) {
+                    this.$.$mol_log3_fail({
+                        place: `${this}.notify`,
+                        message: error?.message,
+                        path,
+                    });
+                }
             }
             if (!$mol_mem_cached(() => this.notify([line, path])))
                 return true;
@@ -6688,13 +6820,13 @@ var $;
                     file.stat();
             }
             catch (error) {
-                if ($mol_promise_like(error))
-                    $mol_fail_hidden(error);
-                this.$.$mol_log3_fail({
-                    place: this,
-                    stack: error.stack,
-                    message: error.message ?? error,
-                });
+                if ($mol_fail_catch(error)) {
+                    this.$.$mol_log3_fail({
+                        place: `${this}.slave_server`,
+                        stack: error.stack,
+                        message: error.message ?? error,
+                    });
+                }
                 return null;
             }
             this.$.$mol_log3_come({
