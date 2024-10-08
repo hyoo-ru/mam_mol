@@ -1,16 +1,16 @@
 declare namespace $ {
 
-	type $mol_string__value__161COHEA = $mol_type_enforce<
+	type $mol_string__value__QW2H86QC = $mol_type_enforce<
 		ReturnType< $mol_link_source_demo['uri'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_link_source__uri__O0OL2G7J = $mol_type_enforce<
+	type $mol_link_source__uri__5BFVBLT2 = $mol_type_enforce<
 		ReturnType< $mol_link_source_demo['uri'] >
 		,
 		ReturnType< $mol_link_source['uri'] >
 	>
-	type $mol_list__rows__N4QRUMDB = $mol_type_enforce<
+	type $mol_list__rows__HVFD3EW1 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >
