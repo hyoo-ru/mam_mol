@@ -73,10 +73,13 @@ namespace $ {
 				clearTimeout(timer)
 				timer = undefined
 
-				const res = Object.defineProperties({ pid: sub.pid, status, signal } as $mol_run_error_context, {
-					stdout: { get: () => Buffer.concat(std_data) },
-					stderr: { get: () => Buffer.concat(error_data) },
-				})
+				const res = {
+					pid: sub.pid,
+					status,
+					signal,
+					get stdout() { return Buffer.concat(std_data) },
+					get stderr() { return Buffer.concat(error_data) }
+				}
 
 				if (error || status || killed) return fail( new $mol_run_error(
 					(res.stderr.toString() || res.stdout.toString() || 'Run error') + (killed ? ', timeout' : ''),
