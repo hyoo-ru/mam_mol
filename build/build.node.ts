@@ -596,11 +596,17 @@ namespace $ {
 			return process.stdout.isTTY
 		}
 
+		git_timeout() {
+			const timeout = Number(this.$.$mol_env().MOL_BUILD_GIT_TIMEOUT)
+			return (Number.isNaN(timeout) ? null : timeout) || 10000
+		}
+
 		@ $mol_action
 		git(path: string, ...args: readonly string[]) {
+			const timeout = this.git_timeout()
 			try {
 				return this.$.$mol_build.git_enabled
-					? this.$.$mol_run( { command: [ 'git', ...args ], dir: path, timeout: 5000 }).stdout.toString().trim()
+					? this.$.$mol_run( { command: [ 'git', ...args ], dir: path, timeout }).stdout.toString().trim()
 					: ''
 			} catch (e) {
 				if (e instanceof $mol_run_error && e.cause.timeout) {

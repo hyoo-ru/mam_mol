@@ -1116,6 +1116,7 @@ declare namespace $ {
             [index: string]: number;
         };
         interactive(): boolean;
+        git_timeout(): number;
         git(path: string, ...args: readonly string[]): string;
         gitVersion(): string;
         gitDeepenSupported(): boolean;

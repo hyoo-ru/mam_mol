@@ -1,26 +1,26 @@
 declare namespace $ {
 
-	type $mol_button_minor__title__IJD368Q8 = $mol_type_enforce<
+	type $mol_button_minor__title__NE19N91P = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_minor['title'] >
 	>
-	type $mol_button_minor__title__H5R5Q51P = $mol_type_enforce<
+	type $mol_button_minor__title__OL4ANB6W = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_minor['title'] >
 	>
-	type $mol_page__tools__NHF995M7 = $mol_type_enforce<
+	type $mol_page__tools__MOG7YMA0 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['tools'] >
 	>
-	type $mol_page__body__HSP392EK = $mol_type_enforce<
+	type $mol_page__body__DGI0GXTZ = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['body'] >
 	>
-	type $mol_page__foot__2KU92CLI = $mol_type_enforce<
+	type $mol_page__foot__7EORS7ND = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['foot'] >

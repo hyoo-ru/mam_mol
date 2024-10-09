@@ -5366,10 +5366,15 @@ var $;
         interactive() {
             return process.stdout.isTTY;
         }
+        git_timeout() {
+            const timeout = Number(this.$.$mol_env().MOL_BUILD_GIT_TIMEOUT);
+            return (Number.isNaN(timeout) ? null : timeout) || 10000;
+        }
         git(path, ...args) {
+            const timeout = this.git_timeout();
             try {
                 return this.$.$mol_build.git_enabled
-                    ? this.$.$mol_run({ command: ['git', ...args], dir: path, timeout: 5000 }).stdout.toString().trim()
+                    ? this.$.$mol_run({ command: ['git', ...args], dir: path, timeout }).stdout.toString().trim()
                     : '';
             }
             catch (e) {
@@ -6583,15 +6588,16 @@ var $;
     class $mol_build_server extends $mol_server {
         static trace = false;
         expressGenerator() {
+            const t = this;
             const self = $mol_wire_async(this);
             return $mol_func_name_from(async function (req, res, next) {
                 try {
-                    return await self.handleRequest.call(self, req, res, next);
+                    return await self.handleRequest(req, res, next);
                 }
                 catch (error) {
                     if ($mol_fail_catch(error)) {
                         self.$.$mol_log3_fail({
-                            place: `${self}.expressGenerator`,
+                            place: `${t}.expressGenerator`,
                             stack: error.stack,
                             message: error.message ?? error,
                         });
@@ -6656,6 +6662,7 @@ var $;
             return build.bundle({ path, bundle });
         }
         expressIndex() {
+            const t = this;
             const self = $mol_wire_async(this);
             return $mol_func_name_from(async function (req, res, next) {
                 try {
@@ -6664,7 +6671,7 @@ var $;
                 catch (error) {
                     if ($mol_fail_catch(error)) {
                         self.$.$mol_log3_fail({
-                            place: `${self}.expressIndex`,
+                            place: `${t}.expressIndex`,
                             stack: error.stack,
                             message: error.message ?? error,
                         });
