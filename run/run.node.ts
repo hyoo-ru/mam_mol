@@ -27,17 +27,18 @@ namespace $ {
 		const args_raw = typeof command === 'string' ? command.split( ' ' ) : command
 		const [ app, ...args ] = args_raw
 
-		this.$mol_log3_come({
-			place: '$mol_run_async' ,
-			dir: $node.path.relative( '' , dir ) ,
-			message: 'Run',
-			command: args_raw.join(' ') ,
-		})
-
 		const sub = this.$mol_run_spawn(app, args, {
 			shell: true,
 			cwd: dir,
 			env
+		})
+
+		this.$mol_log3_come({
+			place: '$mol_run_async' ,
+			dir: $node.path.relative( '' , dir ) ,
+			pid: sub.pid,
+			message: 'Run',
+			command: args_raw.join(' ') ,
 		})
 
 		let killed = false
@@ -81,6 +82,14 @@ namespace $ {
 					get stderr() { return Buffer.concat(error_data) }
 				}
 
+				this.$mol_log3_done({
+					place: '$mol_run_async' ,
+					dir: $node.path.relative( '' , dir ) ,
+					pid: sub.pid,
+					message: status ? 'exit ' + status : 'done',
+					command: args_raw.join(' ') ,
+				})
+		
 				if (error || status || killed) return fail( new $mol_run_error(
 					(res.stderr.toString() || res.stdout.toString() || 'Run error') + (killed ? ', timeout' : ''),
 					{ signal, timeout: killed },
