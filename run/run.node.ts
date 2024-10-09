@@ -35,10 +35,10 @@ namespace $ {
 
 		this.$mol_log3_come({
 			place: '$mol_run_async' ,
-			dir: $node.path.relative( '' , dir ) ,
 			pid: sub.pid,
 			message: 'Run',
 			command: args_raw.join(' ') ,
+			dir: $node.path.relative( '' , dir ) ,
 		})
 
 		let killed = false
@@ -84,10 +84,11 @@ namespace $ {
 
 				this.$mol_log3_done({
 					place: '$mol_run_async' ,
-					dir: $node.path.relative( '' , dir ) ,
 					pid: sub.pid,
-					message: status ? 'exit ' + status : 'done',
+					message: 'Run',
+					status,
 					command: args_raw.join(' ') ,
+					dir: $node.path.relative( '' , dir ) ,
 				})
 		
 				if (error || status || killed) return fail( new $mol_run_error(
