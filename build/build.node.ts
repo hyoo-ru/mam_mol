@@ -598,7 +598,7 @@ namespace $ {
 
 		git_timeout() {
 			const timeout = Number(this.$.$mol_env().MOL_BUILD_GIT_TIMEOUT)
-			return (Number.isNaN(timeout) ? null : timeout) || 10000
+			return (Number.isNaN(timeout) ? null : timeout) || 120000
 		}
 
 		@ $mol_action
