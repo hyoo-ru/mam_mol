@@ -1,6 +1,6 @@
 declare namespace $ {
 
-	type $mol_text__text__SXTMJF2R = $mol_type_enforce<
+	type $mol_text__text__8S5GCN1Q = $mol_type_enforce<
 		ReturnType< $mol_app_quine['content'] >
 		,
 		ReturnType< $mol_text['text'] >
