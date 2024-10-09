@@ -5,15 +5,16 @@ namespace $ {
 		static trace = false
 
 		expressGenerator() {
+			const t = this
 			const self = $mol_wire_async( this )
 
 			return $mol_func_name_from(async function( req : any , res : any , next : (e?: unknown) => void ) {
 				try {
-					return await self.handleRequest.call( self, req, res, next )
+					return await self.handleRequest( req, res, next )
 				} catch (error) {
 					if ($mol_fail_catch(error)) {
 						self.$.$mol_log3_fail({
-							place: `${self}.expressGenerator`,
+							place: `${t}.expressGenerator`,
 							stack: (error as Error).stack,
 							message: (error as Error).message ?? error,
 						})
@@ -113,6 +114,7 @@ namespace $ {
 		}
 
 		override expressIndex() {
+			const t = this
 			const self = $mol_wire_async( this )
 			return $mol_func_name_from(async function(
 				req : typeof $node.express.request ,
@@ -124,7 +126,7 @@ namespace $ {
 				} catch (error) {
 					if ($mol_fail_catch(error)) {
 						self.$.$mol_log3_fail({
-							place: `${self}.expressIndex`,
+							place: `${t}.expressIndex`,
 							stack: (error as Error).stack,
 							message: (error as Error).message ?? error,
 						})
