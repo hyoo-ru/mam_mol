@@ -671,7 +671,7 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		repo( path : string ) {
+		modMappedKid( path : string ) {
 			const mod = $mol_file.absolute( path )
 			const parent = mod.parent()
 			const mapping = mod === this.root()
@@ -682,33 +682,18 @@ namespace $ {
 			return mapping.select( 'pack' , mod.name() , 'git' ).kids.find($mol_guard_defined)
 		}
 
-		modEnsure( path : string ) {
-			try {
-				return this.modEnsureInt(path)
-			} catch (error) {
-				if ($mol_fail_catch(error)) {
-					this.$.$mol_log3_fail({
-						place: `${this}.modEnsure()` ,
-						path ,
-						message: (error as Error).message ,
-					})
-					return false
-				}
-			}
-		}
-
 		@ $mol_mem_key
-		protected modEnsureInt( path : string ) {
+		modEnsure( path : string ) {
 
 			const mod = $mol_file.absolute( path )
 			const parent = mod.parent()
 			
-			if( mod !== this.root() ) this.modEnsureInt( parent.path() )
-			const repo = this.repo(path)
+			if( mod !== this.root() ) this.modEnsure( parent.path() )
+			const repo = this.modMappedKid(path)
 			if( mod.exists()) {
 
 				if( mod.type() !== 'dir' ) return false
-				
+					
 				const git_dir = mod.resolve( '.git' )
 				const git_dir_exists = git_dir.exists() && git_dir.type() === 'dir'
 				if( git_dir_exists) {
@@ -743,7 +728,6 @@ namespace $ {
 					}
 					return true
 				}
-
 
 				return false
 			}
