@@ -1405,7 +1405,9 @@ namespace $ {
 					version[2] = published[2]
 				}
 				
-			} catch {}
+			} catch (e) {
+				if ($mol_promise_like(e)) $mol_fail_hidden(e)
+			}
 
 			++ version[2]
 
