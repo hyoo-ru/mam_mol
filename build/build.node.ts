@@ -785,65 +785,13 @@ namespace $ {
 		
 		@ $mol_mem_key
 		graph( { path , exclude } : { path : string , exclude? : string[] } ) {
-			let graph = new $mol_graph< string , { priority : number } >()
-			let added : { [ path : string ] : boolean } = {}
-			var addMod = ( mod : $mol_file )=> {
-				if( added[ mod.path() ] ) return
-				added[ mod.path() ] = true
-				
-				graph.nodes.add( mod.relate( this.root() ) )
-				
-				const checkDep = ( p : string )=> {
-
-					const isFile = /\.\w+$/.test( p )
-
-					var dep = ( p[ 0 ] === '/' )
-						? this.root().resolve( p + ( isFile ? '' : '/' + p.replace( /.*\// , '' ) ) )
-						: ( p[ 0 ] === '.' )
-							? mod.resolve( p )
-							: this.root().resolve( 'node_modules' ).resolve( './' + p )
-
-					try {
-						this.modEnsure( dep.path() )
-					} catch( error: any ) {
-						error.message = `${ error.message }\nDependency "${p}" -> "${ dep.relate( this.root() ) }" from "${ mod.relate( this.root() ) }" `
-						$mol_fail_hidden(error)
-					}
-					
-					while( !dep.exists() ) dep = dep.parent()
-					
-					if( dep.type() === 'dir' && dep.name() !== 'index' ) {
-						let index = dep.resolve( 'index.js' )
-						if( index.exists() ) dep = index
-					}
-					
-					//if( dep.type() === 'file' ) dep = dep.parent()
-					if( mod === dep ) return
-					
-					const from = mod.relate( this.root() )
-					const to = dep.relate( this.root() )
-					const edge = graph.edges_out.get( from )?.get( to )
-					if( !edge || ( deps[ p ] > edge.priority ) ) {
-						graph.link( from , to , { priority : deps[ p ] } )
-					}
-					
-					addMod( dep )
-				}
-				
-				let deps = this.dependencies( { path : mod.path() , exclude } )
-				for( let p in deps ) {
-					checkDep( p )
-				}
-				
-			}
-			
-			this.modEnsure( path )
-
-			addMod( $mol_file.absolute( path ) )
-			
-			graph.acyclic( edge => edge.priority )
-
-			return graph
+			return this.$.$mol_build_graph.make({
+				root: () => this.root(),
+				mod_ensure: path => this.modEnsure(path),
+				dependencies: rec => this.dependencies(rec),
+				exclude: () => exclude ?? [],
+				path: () => path,
+			})
 		}
 
 		@ $mol_action
