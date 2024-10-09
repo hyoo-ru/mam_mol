@@ -2145,10 +2145,10 @@ var $;
         });
         this.$mol_log3_come({
             place: '$mol_run_async',
-            dir: $node.path.relative('', dir),
             pid: sub.pid,
             message: 'Run',
             command: args_raw.join(' '),
+            dir: $node.path.relative('', dir),
         });
         let killed = false;
         let timer;
@@ -2187,10 +2187,11 @@ var $;
                 };
                 this.$mol_log3_done({
                     place: '$mol_run_async',
-                    dir: $node.path.relative('', dir),
                     pid: sub.pid,
-                    message: status ? 'exit ' + status : 'done',
+                    message: 'Run',
+                    status,
                     command: args_raw.join(' '),
+                    dir: $node.path.relative('', dir),
                 });
                 if (error || status || killed)
                     return fail(new $mol_run_error((res.stderr.toString() || res.stdout.toString() || 'Run error') + (killed ? ', timeout' : ''), { signal, timeout: killed }, ...error ? [error] : []));
@@ -5964,7 +5965,10 @@ var $;
                     version[2] = published[2];
                 }
             }
-            catch { }
+            catch (e) {
+                if ($mol_promise_like(e))
+                    $mol_fail_hidden(e);
+            }
             ++version[2];
             json.version = version.join('.');
             for (let dep of this.nodeDeps({ path, exclude }).keys()) {
