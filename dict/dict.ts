@@ -34,7 +34,7 @@ namespace $ {
 		keys() {
 			const iterator = super.keys()
 			
-			return <MapIterator<Key>>{
+			return {
 				[Symbol.iterator]() {
 					return this
 				},
@@ -47,13 +47,13 @@ namespace $ {
 					return iteration
 					
 				}
-			}
+			} as MapIterator<Key>
 		}
 		
 		entries() {
 			const iterator = super.entries()
 			
-			return <MapIterator<[Key, Value]>>{
+			return {
 				[Symbol.iterator]() {
 					return this
 				},
@@ -67,7 +67,7 @@ namespace $ {
 					return iteration
 					
 				}
-			}
+			} as MapIterator<[Key, Value]>
 		}
 		
 		[Symbol.iterator]() {
