@@ -2138,9 +2138,19 @@ var $;
     $.$mol_run_error = $mol_run_error;
     const child_process = $node['child_process'];
     $.$mol_run_spawn = child_process.spawn.bind(child_process);
+    $.$mol_run_spawn_sync = child_process.spawnSync.bind(child_process);
     function $mol_run_async({ dir, timeout, command, env }) {
         const args_raw = typeof command === 'string' ? command.split(' ') : command;
         const [app, ...args] = args_raw;
+        if (!env?.MOL_RUN_ASYNC) {
+            this.$mol_log3_come({
+                place: '$mol_run_sync',
+                message: 'Run',
+                command: args_raw.join(' '),
+                dir: $node.path.relative('', dir),
+            });
+            return this.$mol_run_spawn_sync(app, args, { shell: true, cwd: dir, env });
+        }
         const sub = this.$mol_run_spawn(app, args, {
             shell: true,
             cwd: dir,
@@ -13469,9 +13479,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     var $$;
@@ -13591,6 +13598,9 @@ var $;
         $$.$hyoo_crowd_app_peer = $hyoo_crowd_app_peer;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -16370,9 +16380,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($_1) {
     var $$;
@@ -16605,6 +16612,9 @@ var $;
 (function ($) {
     $mol_style_attach("hyoo/js/eval/eval.view.css", "[hyoo_js_eval_menu_page] {\n\tflex: 0 0 auto;\n}\n\n[hyoo_js_eval_code_page] {\n\tflex: 1 0 auto;\n}\n\n[hyoo_js_eval_code] {\n\tflex: 0 0 auto;\n}\n\n[hyoo_js_eval_result] {\n\tpadding: var(--mol_gap_text);\n}\n\n[hyoo_js_eval_result_page] {\n\tflex: 1 0 40rem;\n}\n\n[hyoo_js_eval_error_icon] {\n\tcolor: var(--mol_theme_focus);\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 	($.$mol_example_code) = class $mol_example_code extends ($.$mol_example) {
@@ -32932,9 +32942,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     var $$;
@@ -32975,6 +32982,9 @@ var $;
 (function ($) {
     $mol_style_attach("hyoo/marked/app/app.view.css", "[hyoo_marked_app_marked] {\n\tflex: 1000 0 40rem;\n}\n\n[hyoo_marked_app_preview] {\n\tflex-grow: 0;\n}\n\n[hyoo_marked_app_html] {\n\tflex: 1000 0 40rem;\n}\n\n[hyoo_marked_app_view] {\n\tflex: 1000 0 40rem;\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 	($.$hyoo_marked_demo) = class $hyoo_marked_demo extends ($.$mol_example_large) {
@@ -33216,9 +33226,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     var $$;
@@ -33253,6 +33260,9 @@ var $;
 (function ($) {
     $mol_style_attach("hyoo/harp/app/app.view.css", "[hyoo_harp_app_content] {\n\tpadding: var(--mol_gap_block);\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 	($.$hyoo_harp_demo) = class $hyoo_harp_demo extends ($.$mol_example_large) {

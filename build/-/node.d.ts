@@ -533,20 +533,21 @@ declare namespace $ {
     }> {
     }
     const $mol_run_spawn: typeof import("child_process").spawn;
+    const $mol_run_spawn_sync: typeof import("child_process").spawnSync;
     type $mol_run_options = {
         command: readonly string[] | string;
         dir: string;
         timeout?: number;
         env?: Record<string, string | undefined>;
     };
-    function $mol_run_async(this: $, { dir, timeout, command, env }: $mol_run_options): Promise<$mol_run_error_context> & {
+    function $mol_run_async(this: $, { dir, timeout, command, env }: $mol_run_options): import("child_process").SpawnSyncReturns<Buffer> | (Promise<$mol_run_error_context> & {
         destructor: () => void;
-    };
-    function $mol_run(this: $, options: $mol_run_options): $mol_run_error_context;
+    });
+    function $mol_run(this: $, options: $mol_run_options): $mol_run_error_context | import("child_process").SpawnSyncReturns<Buffer>;
 }
 
 declare namespace $ {
-    function $mol_exec(this: $, dir: string, command: string, ...args: readonly string[]): $mol_run_error_context;
+    function $mol_exec(this: $, dir: string, command: string, ...args: readonly string[]): $mol_run_error_context | import("child_process").SpawnSyncReturns<Buffer>;
 }
 
 declare namespace $ {
@@ -1117,14 +1118,17 @@ declare namespace $ {
         };
         interactive(): boolean;
         git_timeout(): number;
-        git(path: string, ...args: readonly string[]): string;
+        run_safe({ command, dir }: {
+            command: readonly string[] | string;
+            dir: string;
+        }): string;
         gitVersion(): string;
         gitDeepenSupported(): boolean;
         gitPull(path: string): string;
         static git_enabled: boolean;
         gitSubmoduleDirs(): Set<string>;
         is_root_git(): boolean;
-        modMappedKid(path: string): $mol_tree2 | undefined;
+        repo(path: string): $mol_tree2 | undefined;
         modEnsure(path: string): boolean;
         modMeta(path: string): $mol_tree2;
         graph({ path, exclude }: {

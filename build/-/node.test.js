@@ -2135,9 +2135,19 @@ var $;
     $.$mol_run_error = $mol_run_error;
     const child_process = $node['child_process'];
     $.$mol_run_spawn = child_process.spawn.bind(child_process);
+    $.$mol_run_spawn_sync = child_process.spawnSync.bind(child_process);
     function $mol_run_async({ dir, timeout, command, env }) {
         const args_raw = typeof command === 'string' ? command.split(' ') : command;
         const [app, ...args] = args_raw;
+        if (!env?.MOL_RUN_ASYNC) {
+            this.$mol_log3_come({
+                place: '$mol_run_sync',
+                message: 'Run',
+                command: args_raw.join(' '),
+                dir: $node.path.relative('', dir),
+            });
+            return this.$mol_run_spawn_sync(app, args, { shell: true, cwd: dir, env });
+        }
         const sub = this.$mol_run_spawn(app, args, {
             shell: true,
             cwd: dir,
@@ -5370,11 +5380,11 @@ var $;
             const timeout = Number(this.$.$mol_env().MOL_BUILD_GIT_TIMEOUT);
             return (Number.isNaN(timeout) ? null : timeout) || 120000;
         }
-        git(path, ...args) {
+        run_safe({ command, dir }) {
             const timeout = this.git_timeout();
             try {
                 return this.$.$mol_build.git_enabled
-                    ? this.$.$mol_run({ command: ['git', ...args], dir: path, timeout }).stdout.toString().trim()
+                    ? this.$.$mol_run({ command, dir, timeout }).stdout.toString().trim()
                     : '';
             }
             catch (e) {
@@ -5391,7 +5401,7 @@ var $;
             }
         }
         gitVersion() {
-            return this.git('.', 'version').match(/.*\s+([\d\.]+)$/)?.[1] ?? '';
+            return this.$.$mol_run({ command: 'git version', dir: '.' }).stdout.toString().trim().match(/.*\s+([\d\.]+)$/)?.[1] ?? '';
         }
         gitDeepenSupported() {
             return $mol_compare_text()(this.gitVersion(), '2.42.0') >= 0;
@@ -5401,15 +5411,15 @@ var $;
             if (!this.interactive()) {
                 args.push(this.gitDeepenSupported() ? '--deepen=1' : '--depth=1');
             }
-            return this.git(path, 'pull', ...args);
+            return this.run_safe({ command: ['git', 'pull', ...args], dir: path });
         }
         static git_enabled = true;
         gitSubmoduleDirs() {
             if (!this.is_root_git())
                 return new Set();
             const root = this.root().path();
-            const output = this.git(root, 'submodule', 'status', '--recursive');
-            const dirs = output.trim()
+            const output = this.$.$mol_run({ command: 'git submodule status --recursive', dir: root }).stdout.toString().trim();
+            const dirs = output
                 .split('\n')
                 .map(str => str.match(/^\s*[^ ]+\s+([^ ]*).*/)?.[1]?.trim())
                 .filter($mol_guard_defined)
@@ -5420,7 +5430,7 @@ var $;
             const git_dir = this.root().resolve('.git');
             return git_dir.exists() && git_dir.type() === 'dir';
         }
-        modMappedKid(path) {
+        repo(path) {
             const mod = $mol_file.absolute(path);
             const parent = mod.parent();
             const mapping = mod === this.root()
@@ -5434,54 +5444,40 @@ var $;
             const parent = mod.parent();
             if (mod !== this.root())
                 this.modEnsure(parent.path());
-            const repo = this.modMappedKid(path);
+            const repo = this.repo(path);
             if (mod.exists()) {
-                try {
-                    if (mod.type() !== 'dir')
-                        return false;
-                    const git_dir = mod.resolve('.git');
-                    const git_dir_exists = git_dir.exists() && git_dir.type() === 'dir';
-                    if (git_dir_exists) {
-                        this.gitPull(mod.path());
-                        return false;
-                    }
-                    const is_submodule = this.gitSubmoduleDirs().has(mod.path());
-                    if (is_submodule) {
-                        this.gitPull(mod.path());
-                        return false;
-                    }
-                    if (repo) {
-                        this.$.$mol_run({ command: ['git', 'init'], dir: mod.path() });
-                        const res = this.$.$mol_run({ command: ['git', 'remote', 'show', repo.text()], dir: mod.path() });
-                        const matched = res.stdout.toString().match(/HEAD branch: (.*?)\n/);
-                        const head_branch_name = res instanceof Error || matched === null || !matched[1]
-                            ? 'master'
-                            : matched[1];
-                        this.$.$mol_run({ command: ['git', 'remote', 'add', '--track', head_branch_name, 'origin', repo.text()], dir: mod.path() });
-                        this.gitPull(mod.path());
-                        mod.reset();
-                        for (const sub of mod.sub()) {
-                            sub.reset();
-                        }
-                        return true;
-                    }
+                if (mod.type() !== 'dir')
+                    return false;
+                const git_dir = mod.resolve('.git');
+                const git_dir_exists = git_dir.exists() && git_dir.type() === 'dir';
+                if (git_dir_exists) {
+                    this.gitPull(mod.path());
+                    return false;
                 }
-                catch (error) {
-                    if ($mol_fail_catch(error)) {
-                        this.$.$mol_log3_fail({
-                            place: `${this}.modEnsure()`,
-                            path,
-                            message: error.message,
-                        });
+                const is_submodule = this.gitSubmoduleDirs().has(mod.path());
+                if (is_submodule) {
+                    this.gitPull(mod.path());
+                    return false;
+                }
+                if (repo) {
+                    this.$.$mol_run({ command: ['git', 'init'], dir: mod.path() });
+                    const res = this.$.$mol_run({ command: ['git', 'remote', 'show', repo.text()], dir: mod.path() });
+                    const matched = res.stdout.toString().match(/HEAD branch: (.*?)\n/);
+                    const head_branch_name = res instanceof Error || matched === null || !matched[1]
+                        ? 'master'
+                        : matched[1];
+                    this.$.$mol_run({ command: ['git', 'remote', 'add', '--track', head_branch_name, 'origin', repo.text()], dir: mod.path() });
+                    this.gitPull(mod.path());
+                    mod.reset();
+                    for (const sub of mod.sub()) {
+                        sub.reset();
                     }
-                    else {
-                        $mol_fail_hidden(error);
-                    }
+                    return true;
                 }
                 return false;
             }
             if (repo) {
-                this.git(this.root().path(), 'clone', '--depth', '1', repo.text(), mod.relate(this.root()));
+                this.$.$mol_run({ command: ['git', 'clone', '--depth', '1', repo.text(), mod.relate(this.root())], dir: this.root().path() });
                 mod.reset();
                 return true;
             }
@@ -6243,7 +6239,7 @@ var $;
     ], $mol_build.prototype, "dependencies", null);
     __decorate([
         $mol_action
-    ], $mol_build.prototype, "git", null);
+    ], $mol_build.prototype, "run_safe", null);
     __decorate([
         $mol_mem
     ], $mol_build.prototype, "gitVersion", null);
@@ -6258,7 +6254,7 @@ var $;
     ], $mol_build.prototype, "is_root_git", null);
     __decorate([
         $mol_mem_key
-    ], $mol_build.prototype, "modMappedKid", null);
+    ], $mol_build.prototype, "repo", null);
     __decorate([
         $mol_mem_key
     ], $mol_build.prototype, "modEnsure", null);
@@ -7936,7 +7932,7 @@ var $;
             });
             let message = '';
             try {
-                const res = await $mol_wire_async(context_mock).$mol_run({ command: 'sleep 10', dir: '.', timeout: 10 });
+                const res = await $mol_wire_async(context_mock).$mol_run({ command: 'sleep 10', dir: '.', timeout: 10, env: { 'MOL_RUN_ASYNC': '1' } });
             }
             catch (e) {
                 message = e.message;
