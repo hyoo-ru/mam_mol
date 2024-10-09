@@ -602,11 +602,11 @@ namespace $ {
 		}
 
 		@ $mol_action
-		git(path: string, ...args: readonly string[]) {
+		run_safe({ command, dir }: { command: readonly string[] | string, dir: string }) {
 			const timeout = this.git_timeout()
 			try {
 				return this.$.$mol_build.git_enabled
-					? this.$.$mol_run( { command: [ 'git', ...args ], dir: path, timeout }).stdout.toString().trim()
+					? this.$.$mol_run( { command, dir, timeout }).stdout.toString().trim()
 					: ''
 			} catch (e) {
 				if (e instanceof $mol_run_error && e.cause.timeout) {
@@ -624,7 +624,7 @@ namespace $ {
 
 		@ $mol_mem
 		gitVersion() {
-			return this.git('.', 'version').match(/.*\s+([\d\.]+)$/)?.[1] ?? ''
+			return this.$.$mol_run({ command: 'git version', dir: '.' }).stdout.toString().trim().match(/.*\s+([\d\.]+)$/)?.[1] ?? ''
 		}
 
 		gitDeepenSupported() {
@@ -643,7 +643,7 @@ namespace $ {
 				// fatal: unable to set up work tree using invalid config
 				args.push( this.gitDeepenSupported() ? '--deepen=1' : '--depth=1' )
 			}
-			return this.git( path , 'pull', ...args )
+			return this.run_safe( { command: ['git', 'pull', ...args], dir: path } )
 		}
 
 		static git_enabled = true
@@ -653,9 +653,9 @@ namespace $ {
 			if (! this.is_root_git()) return new Set<string>()
 
 			const root = this.root().path()
-			const output = this.git(root, 'submodule', 'status', '--recursive')
+			const output = this.$.$mol_run({ command: 'git submodule status --recursive', dir: root }).stdout.toString().trim()
 
-			const dirs = output.trim()
+			const dirs = output
 				.split('\n')
 				.map( str => str.match( /^\s*[^ ]+\s+([^ ]*).*/ )?.[1]?.trim() )
 				.filter($mol_guard_defined)
@@ -671,7 +671,7 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		modMappedKid( path : string ) {
+		repo( path : string ) {
 			const mod = $mol_file.absolute( path )
 			const parent = mod.parent()
 			const mapping = mod === this.root()
@@ -689,7 +689,7 @@ namespace $ {
 			const parent = mod.parent()
 			
 			if( mod !== this.root() ) this.modEnsure( parent.path() )
-			const repo = this.modMappedKid(path)
+			const repo = this.repo(path)
 			if( mod.exists()) {
 
 				if( mod.type() !== 'dir' ) return false
@@ -712,6 +712,7 @@ namespace $ {
 				}
 
 				if (repo) {
+
 					this.$.$mol_run( { command: ['git', 'init'], dir: mod.path() } )
 			
 					const res = this.$.$mol_run( { command: ['git', 'remote', 'show', repo.text() ],  dir: mod.path() } )
@@ -733,7 +734,7 @@ namespace $ {
 			}
 
 			if( repo ) {
-				this.git( this.root().path() , 'clone' , '--depth', '1' , repo.text() , mod.relate( this.root() ) )
+				this.$.$mol_run( { command: ['git', 'clone' , '--depth', '1' , repo.text() , mod.relate( this.root() ) ], dir: this.root().path() })
 				mod.reset()
 				return true
 			}
@@ -780,7 +781,6 @@ namespace $ {
 		graph( { path , exclude } : { path : string , exclude? : string[] } ) {
 			let graph = new $mol_graph< string , { priority : number } >()
 			let added : { [ path : string ] : boolean } = {}
-			
 			var addMod = ( mod : $mol_file )=> {
 				if( added[ mod.path() ] ) return
 				added[ mod.path() ] = true
@@ -792,10 +792,10 @@ namespace $ {
 					const isFile = /\.\w+$/.test( p )
 
 					var dep = ( p[ 0 ] === '/' )
-					? this.root().resolve( p + ( isFile ? '' : '/' + p.replace( /.*\// , '' ) ) )
-					: ( p[ 0 ] === '.' )
-					? mod.resolve( p )
-					: this.root().resolve( 'node_modules' ).resolve( './' + p )
+						? this.root().resolve( p + ( isFile ? '' : '/' + p.replace( /.*\// , '' ) ) )
+						: ( p[ 0 ] === '.' )
+							? mod.resolve( p )
+							: this.root().resolve( 'node_modules' ).resolve( './' + p )
 
 					try {
 						this.modEnsure( dep.path() )

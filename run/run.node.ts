@@ -12,6 +12,7 @@ namespace $ {
 
 	const child_process = $node['child_process']
 	export const $mol_run_spawn = child_process.spawn.bind(child_process)
+	export const $mol_run_spawn_sync = child_process.spawnSync.bind(child_process)
 
 	export type $mol_run_options = {
 		command : readonly string[] | string,
@@ -26,6 +27,16 @@ namespace $ {
 	) {
 		const args_raw = typeof command === 'string' ? command.split( ' ' ) : command
 		const [ app, ...args ] = args_raw
+
+		if (! env?.MOL_RUN_ASYNC) {
+			this.$mol_log3_come({
+				place: '$mol_run_sync' ,
+				message: 'Run',
+				command: args_raw.join(' ') ,
+				dir: $node.path.relative( '' , dir ) ,
+			})
+			return this.$mol_run_spawn_sync(app, args, { shell: true, cwd: dir, env })
+		}
 
 		const sub = this.$mol_run_spawn(app, args, {
 			shell: true,
