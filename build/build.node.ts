@@ -671,7 +671,7 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		modMappedKid( path : string ) {
+		repo( path : string ) {
 			const mod = $mol_file.absolute( path )
 			const parent = mod.parent()
 			const mapping = mod === this.root()
@@ -682,66 +682,68 @@ namespace $ {
 			return mapping.select( 'pack' , mod.name() , 'git' ).kids.find($mol_guard_defined)
 		}
 
-		@ $mol_mem_key
 		modEnsure( path : string ) {
+			try {
+				return this.modEnsureInt(path)
+			} catch (error) {
+				if ($mol_fail_catch(error)) {
+					this.$.$mol_log3_fail({
+						place: `${this}.modEnsure()` ,
+						path ,
+						message: (error as Error).message ,
+					})
+					return false
+				}
+			}
+		}
+
+		@ $mol_mem_key
+		protected modEnsureInt( path : string ) {
 
 			const mod = $mol_file.absolute( path )
 			const parent = mod.parent()
 			
-			if( mod !== this.root() ) this.modEnsure( parent.path() )
-			const repo = this.modMappedKid(path)
+			if( mod !== this.root() ) this.modEnsureInt( parent.path() )
+			const repo = this.repo(path)
 			if( mod.exists()) {
 
-				try {
-
-					if( mod.type() !== 'dir' ) return false
-					
-					const git_dir = mod.resolve( '.git' )
-					const git_dir_exists = git_dir.exists() && git_dir.type() === 'dir'
-					if( git_dir_exists) {
-						this.gitPull( mod.path() )
-						// mod.reset()
-						// for ( const sub of mod.sub() ) sub.reset()
-						
-						return false
-					}
-
-					const is_submodule = this.gitSubmoduleDirs().has( mod.path() )
-
-					if ( is_submodule ) {
-						this.gitPull( mod.path() )
-						return false
-					}
-
-					if (repo) {
-						this.$.$mol_run( { command: ['git', 'init'], dir: mod.path() } )
+				if( mod.type() !== 'dir' ) return false
 				
-						const res = this.$.$mol_run( { command: ['git', 'remote', 'show', repo.text() ],  dir: mod.path() } )
-						const matched = res.stdout.toString().match( /HEAD branch: (.*?)\n/ )
-						const head_branch_name = res instanceof Error || matched === null || !matched[1]
-							? 'master'
-							: matched[1]
-						
-						this.$.$mol_run( { command: ['git', 'remote', 'add', '--track', head_branch_name, 'origin' , repo.text() ], dir: mod.path() } )
-						this.gitPull( mod.path() )
-						mod.reset()
-						for ( const sub of mod.sub() ) {
-							sub.reset()
-						}
-						return true
-					}
-
-				} catch( error: any ) {
-					if ($mol_fail_catch(error)) {
-						this.$.$mol_log3_fail({
-							place: `${this}.modEnsure()` ,
-							path ,
-							message: error.message ,
-						})
-					} else {
-						$mol_fail_hidden(error)
-					}
+				const git_dir = mod.resolve( '.git' )
+				const git_dir_exists = git_dir.exists() && git_dir.type() === 'dir'
+				if( git_dir_exists) {
+					this.gitPull( mod.path() )
+					// mod.reset()
+					// for ( const sub of mod.sub() ) sub.reset()
+					
+					return false
 				}
+
+				const is_submodule = this.gitSubmoduleDirs().has( mod.path() )
+
+				if ( is_submodule ) {
+					this.gitPull( mod.path() )
+					return false
+				}
+
+				if (repo) {
+					this.$.$mol_run( { command: ['git', 'init'], dir: mod.path() } )
+			
+					const res = this.$.$mol_run( { command: ['git', 'remote', 'show', repo.text() ],  dir: mod.path() } )
+					const matched = res.stdout.toString().match( /HEAD branch: (.*?)\n/ )
+					const head_branch_name = res instanceof Error || matched === null || !matched[1]
+						? 'master'
+						: matched[1]
+					
+					this.$.$mol_run( { command: ['git', 'remote', 'add', '--track', head_branch_name, 'origin' , repo.text() ], dir: mod.path() } )
+					this.gitPull( mod.path() )
+					mod.reset()
+					for ( const sub of mod.sub() ) {
+						sub.reset()
+					}
+					return true
+				}
+
 
 				return false
 			}
