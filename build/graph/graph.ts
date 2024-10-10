@@ -41,24 +41,39 @@ namespace $ {
 
 			const deps = this.dependencies( path )
 			for( let dep_path in deps ) {
-				this.check_dep( deps, mod, dep_path )
+				this.check_dep( path, dep_path )
 			}
 
 			return null
 		}
 
 		@ $mol_action
-		protected check_dep(deps: Record<string, number>, mod: $mol_file, dep_path: string) {
-			// const deps = this.dependencies( path )
-			// const mod = this.$.$mol_file.absolute( path )
+		protected check_dep(path: string, dep_path: string) {
+			const deps = this.dependencies( path )
+			const mod = this.$.$mol_file.absolute( path )
 			const root = this.root()
+			let dep
+
 			const isFile = /\.\w+$/.test( dep_path )
 
-			let dep = ( dep_path[ 0 ] === '/' )
-				? root.resolve( dep_path + ( isFile ? '' : '/' + dep_path.replace( /.*\// , '' ) ) )
-				: ( dep_path[ 0 ] === '.' )
-					? mod.resolve( dep_path )
-					: root.resolve( 'node_modules' ).resolve( './' + dep_path )
+			if (dep_path[0] === '/' && isFile) {
+
+				dep = root.resolve(dep_path)
+
+			} else if (dep_path[0] === '/') {
+
+				const last_segment = dep_path.slice(dep_path.lastIndexOf('/') + 1)
+				dep = root.resolve(dep_path + '/' + last_segment)
+
+			} else if (dep_path[0] === '.') {
+
+				dep = mod.resolve( dep_path )
+
+			} else {
+
+				dep = root.resolve( 'node_modules' ).resolve( './' + dep_path )
+
+			}
 
 			try {
 				this.mod_ensure( dep.path() )
