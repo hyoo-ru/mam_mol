@@ -632,8 +632,8 @@ namespace $ {
 		}
 
 		@ $mol_action
-		gitPull(path: string) {
-			const args = [] as string[]
+		git_pull(path: string) {
+			const command = ['git', 'pull']
 
 			if ( ! this.interactive() ) {
 				// depth и deepen не годятся для локальной разработки, поэтому оставляем ограничение глубины пула только для CI
@@ -641,9 +641,9 @@ namespace $ {
 				// --deepen=1 в git-конфиге сабмодуля выставляет bare=true, после этого все команды падают с сообщением
 				// warning: core.bare and core.worktree do not make sense
 				// fatal: unable to set up work tree using invalid config
-				args.push( this.gitDeepenSupported() ? '--deepen=1' : '--depth=1' )
+				command.push( this.gitDeepenSupported() ? '--deepen=1' : '--depth=1' )
 			}
-			return this.run_safe( { command: ['git', 'pull', ...args], dir: path } )
+			return this.run_safe( { command, dir: path } )
 		}
 
 		static git_enabled = true
@@ -697,7 +697,7 @@ namespace $ {
 				const git_dir = mod.resolve( '.git' )
 				const git_dir_exists = git_dir.exists() && git_dir.type() === 'dir'
 				if( git_dir_exists) {
-					this.gitPull( mod.path() )
+					this.git_pull( mod.path() )
 					// mod.reset()
 					// for ( const sub of mod.sub() ) sub.reset()
 					
@@ -707,7 +707,7 @@ namespace $ {
 				const is_submodule = this.gitSubmoduleDirs().has( mod.path() )
 
 				if ( is_submodule ) {
-					this.gitPull( mod.path() )
+					this.git_pull( mod.path() )
 					return false
 				}
 
@@ -722,7 +722,7 @@ namespace $ {
 						: matched[1]
 					
 					this.$.$mol_run( { command: ['git', 'remote', 'add', '--track', head_branch_name, 'origin' , repo.text() ], dir: mod.path() } )
-					this.gitPull( mod.path() )
+					this.git_pull( mod.path() )
 					mod.reset()
 					for ( const sub of mod.sub() ) {
 						sub.reset()
@@ -779,65 +779,12 @@ namespace $ {
 		
 		@ $mol_mem_key
 		graph( { path , exclude } : { path : string , exclude? : string[] } ) {
-			let graph = new $mol_graph< string , { priority : number } >()
-			let added : { [ path : string ] : boolean } = {}
-			var addMod = ( mod : $mol_file )=> {
-				if( added[ mod.path() ] ) return
-				added[ mod.path() ] = true
-				
-				graph.nodes.add( mod.relate( this.root() ) )
-				
-				const checkDep = ( p : string )=> {
-
-					const isFile = /\.\w+$/.test( p )
-
-					var dep = ( p[ 0 ] === '/' )
-						? this.root().resolve( p + ( isFile ? '' : '/' + p.replace( /.*\// , '' ) ) )
-						: ( p[ 0 ] === '.' )
-							? mod.resolve( p )
-							: this.root().resolve( 'node_modules' ).resolve( './' + p )
-
-					try {
-						this.modEnsure( dep.path() )
-					} catch( error: any ) {
-						error.message = `${ error.message }\nDependency "${p}" -> "${ dep.relate( this.root() ) }" from "${ mod.relate( this.root() ) }" `
-						$mol_fail_hidden(error)
-					}
-					
-					while( !dep.exists() ) dep = dep.parent()
-					
-					if( dep.type() === 'dir' && dep.name() !== 'index' ) {
-						let index = dep.resolve( 'index.js' )
-						if( index.exists() ) dep = index
-					}
-					
-					//if( dep.type() === 'file' ) dep = dep.parent()
-					if( mod === dep ) return
-					
-					const from = mod.relate( this.root() )
-					const to = dep.relate( this.root() )
-					const edge = graph.edges_out.get( from )?.get( to )
-					if( !edge || ( deps[ p ] > edge.priority ) ) {
-						graph.link( from , to , { priority : deps[ p ] } )
-					}
-					
-					addMod( dep )
-				}
-				
-				let deps = this.dependencies( { path : mod.path() , exclude } )
-				for( let p in deps ) {
-					checkDep( p )
-				}
-				
-			}
-			
-			this.modEnsure( path )
-
-			addMod( $mol_file.absolute( path ) )
-			
-			graph.acyclic( edge => edge.priority )
-
-			return graph
+			return this.$.$mol_build_graph.make({
+				root: () => this.root(),
+				mod_ensure: path => this.modEnsure(path),
+				dependencies: path => this.dependencies({ path, exclude }),
+				path: () => path,
+			})
 		}
 
 		@ $mol_action
