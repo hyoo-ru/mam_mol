@@ -7,62 +7,65 @@ namespace $ {
 			return false
 		}
 
-		dependencies(rec: { path: string, exclude: string[] | undefined }) {
+		dependencies(path: string) {
 			return {} as Record<string, number>
 		}
 
 		path() { return '' }
 
-		exclude() { return [] as string[] }
-
 		protected graph = new $mol_graph< string , { priority : number } >()
+		protected added = new Set<string>()
 
 		@ $mol_action
-		protected add_node(path: string) {
+		protected clear() {
+			this.graph = new $mol_graph
+			this.added.clear()
+		}
+
+		@ $mol_action
+		protected file(path: string) {
+			if (this.added.has(path)) return null
+			this.added.add(path)
+
 			const mod = this.$.$mol_file.absolute( path )
 			const relative = mod.relate( this.root() )
 			this.graph.nodes.add(relative)
+
+			return mod
 		}
 
-		protected added = new $mol_wire_set<string>()
-
-		@ $mol_mem_key
+		@ $mol_action
 		protected add_module( path : string ) {
-			const added = this.added
+			const mod = this.file(path)
+			if (! mod) return null
 
-			if( added.has(path) ) return null
-			added.add(path)
-
-			this.add_node(path)
-
-			const deps = this.deps( path )
+			const deps = this.dependencies( path )
 			for( let dep_path in deps ) {
-				this.check_dep( [ path, dep_path ] )
+				this.check_dep( deps, mod, dep_path )
 			}
 
 			return null
 		}
 
-		@ $mol_mem_key
-		protected deps(path: string) { return this.dependencies( { path , exclude: this.exclude() } ) }
-
-		@ $mol_mem_key
-		protected check_dep([ path, dep_path ]: [string, string]) {
-			const deps = this.deps( path )
-			const mod = this.$.$mol_file.absolute( path )
-			const graph = this.graph
+		@ $mol_action
+		protected check_dep(deps: Record<string, number>, mod: $mol_file, dep_path: string) {
+			// const deps = this.dependencies( path )
+			// const mod = this.$.$mol_file.absolute( path )
+			const root = this.root()
 			const isFile = /\.\w+$/.test( dep_path )
 
 			let dep = ( dep_path[ 0 ] === '/' )
-				? this.root().resolve( dep_path + ( isFile ? '' : '/' + dep_path.replace( /.*\// , '' ) ) )
+				? root.resolve( dep_path + ( isFile ? '' : '/' + dep_path.replace( /.*\// , '' ) ) )
 				: ( dep_path[ 0 ] === '.' )
 					? mod.resolve( dep_path )
-					: this.root().resolve( 'node_modules' ).resolve( './' + dep_path )
+					: root.resolve( 'node_modules' ).resolve( './' + dep_path )
 
 			try {
 				this.mod_ensure( dep.path() )
-			} catch( error: any ) {
-				error.message = `${ error.message }\nDependency "${dep_path}" -> "${ dep.relate( this.root() ) }" from "${ mod.relate( this.root() ) }" `
+			} catch( error ) {
+				if (error instanceof Error) {
+					error.message = `${ error.message }\nDependency "${dep_path}" -> "${ dep.relate( root ) }" from "${ mod.relate( root ) }" `
+				}
 				$mol_fail_hidden(error)
 			}
 			
@@ -76,11 +79,11 @@ namespace $ {
 			//if( dep.type() === 'file' ) dep = dep.parent()
 			if( mod === dep ) return null
 			
-			const from = mod.relate( this.root() )
-			const to = dep.relate( this.root() )
-			const edge = graph.edges_out.get( from )?.get( to )
+			const from = mod.relate( root )
+			const to = dep.relate( root )
+			const edge = this.graph.edges_out.get( from )?.get( to )
 			if( !edge || ( deps[ dep_path ] > edge.priority ) ) {
-				graph.link( from , to , { priority : deps[ dep_path ] } )
+				this.graph.link( from , to , { priority : deps[ dep_path ] } )
 			}
 			
 			this.add_module( dep.path() )
@@ -88,26 +91,21 @@ namespace $ {
 			return null
 		}
 
-		@ $mol_action
-		protected graph_clear() {
-			this.graph = new $mol_graph
-			this.added.clear()
-		}
-
 		@ $mol_mem
-		result() {
-			this.graph_clear()
+		protected out() {
+			this.clear()
 			const path = this.path()
 			this.mod_ensure( path )
 			this.add_module( path )
 
 			this.graph.acyclic( edge => edge.priority )
+			this.added.clear()
 			return this.graph
 		}
 
-		get sorted() { return this.result().sorted }
-		get nodes() { return this.result().nodes }
-		get edges_out() { return this.result().edges_out }
-		get edges_in() { return this.result().edges_in }
+		get sorted() { return this.out().sorted }
+		get nodes() { return this.out().nodes }
+		get edges_out() { return this.out().edges_out }
+		get edges_in() { return this.out().edges_in }
 	}
 }
