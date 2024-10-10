@@ -12,7 +12,7 @@ namespace $ {
 			'speck',
 			'float',
 			'popup',
-		]
+		] as const
 	)
 
 }
