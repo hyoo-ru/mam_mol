@@ -638,8 +638,8 @@ namespace $ {
 		}
 
 		@ $mol_action
-		gitPull(path: string) {
-			const args = [] as string[]
+		git_pull(path: string) {
+			const command = ['git', 'pull']
 
 			if ( ! this.interactive() ) {
 				// depth и deepen не годятся для локальной разработки, поэтому оставляем ограничение глубины пула только для CI
@@ -647,9 +647,9 @@ namespace $ {
 				// --deepen=1 в git-конфиге сабмодуля выставляет bare=true, после этого все команды падают с сообщением
 				// warning: core.bare and core.worktree do not make sense
 				// fatal: unable to set up work tree using invalid config
-				args.push( this.gitDeepenSupported() ? '--deepen=1' : '--depth=1' )
+				command.push( this.gitDeepenSupported() ? '--deepen=1' : '--depth=1' )
 			}
-			return this.run_safe( { command: ['git', 'pull', ...args], dir: path } )
+			return this.run_safe( { command, dir: path } )
 		}
 
 		static git_enabled = true
@@ -703,7 +703,7 @@ namespace $ {
 				const git_dir = mod.resolve( '.git' )
 				const git_dir_exists = git_dir.exists() && git_dir.type() === 'dir'
 				if( git_dir_exists) {
-					this.gitPull( mod.path() )
+					this.git_pull( mod.path() )
 					// mod.reset()
 					// for ( const sub of mod.sub() ) sub.reset()
 					
@@ -713,7 +713,7 @@ namespace $ {
 				const is_submodule = this.gitSubmoduleDirs().has( mod.path() )
 
 				if ( is_submodule ) {
-					this.gitPull( mod.path() )
+					this.git_pull( mod.path() )
 					return false
 				}
 
@@ -728,7 +728,7 @@ namespace $ {
 						: matched[1]
 					
 					this.$.$mol_run( { command: ['git', 'remote', 'add', '--track', head_branch_name, 'origin' , repo.text() ], dir: mod.path() } )
-					this.gitPull( mod.path() )
+					this.git_pull( mod.path() )
 					mod.reset()
 					for ( const sub of mod.sub() ) {
 						sub.reset()
@@ -788,8 +788,7 @@ namespace $ {
 			return this.$.$mol_build_graph.make({
 				root: () => this.root(),
 				mod_ensure: path => this.modEnsure(path),
-				dependencies: rec => this.dependencies(rec),
-				exclude: () => exclude ?? [],
+				dependencies: path => this.dependencies({ path, exclude }),
 				path: () => path,
 			})
 		}
