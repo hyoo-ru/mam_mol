@@ -43,7 +43,8 @@ namespace $ {
 				return $mol_fail_hidden(error)
 			}
 		}
-		
+
+		@ $mol_mem
 		version() {
 			return this.stat()?.mtime.getTime().toString( 36 ).toUpperCase() ?? ''
 		}
@@ -78,6 +79,7 @@ namespace $ {
 			return next
 		}
 		
+		@ $mol_mem
 		type() {
 			return this.stat()?.type ?? ''
 		}
@@ -146,6 +148,7 @@ namespace $ {
 			return found
 		}
 
+		@ $mol_mem
 		size() {
 			switch( this.type() ) {
 				case 'file': return this.stat()?.size ?? 0
