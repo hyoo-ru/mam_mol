@@ -1,21 +1,21 @@
 declare namespace $ {
 
-	type $hyoo_js_eval__Menu_page__NOCZHQTL = $mol_type_enforce<
+	type $hyoo_js_eval__Menu_page__EH0VEAV3 = $mol_type_enforce<
 		any
 		,
 		ReturnType< $hyoo_js_eval['Menu_page'] >
 	>
-	type $hyoo_js_eval__Perf__XQG5CZG1 = $mol_type_enforce<
+	type $hyoo_js_eval__Perf__V4BTQQ5V = $mol_type_enforce<
 		any
 		,
 		ReturnType< $hyoo_js_eval['Perf'] >
 	>
-	type $hyoo_js_eval__Bookmark__HJ14UCD4 = $mol_type_enforce<
+	type $hyoo_js_eval__Bookmark__M9FQB9DO = $mol_type_enforce<
 		any
 		,
 		ReturnType< $hyoo_js_eval['Bookmark'] >
 	>
-	type $hyoo_js_eval__code__FLZ0NCJ3 = $mol_type_enforce<
+	type $hyoo_js_eval__code__EEJILHPL = $mol_type_enforce<
 		ReturnType< $mol_example_code['code'] >
 		,
 		ReturnType< $hyoo_js_eval['code'] >
