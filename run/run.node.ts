@@ -15,16 +15,20 @@ namespace $ {
 	export const $mol_run_spawn_sync = child_process.spawnSync.bind(child_process)
 
 	export type $mol_run_options = {
-		command : readonly string[] | string,
+		command : readonly string[] | string
 		dir : string
 		timeout?: number
+		affects?: readonly string[]
 		env?: Record<string, string | undefined>
 	}
 
+	export const $mol_run_affected = {} as Record<string, number | undefined>
+
 	export function $mol_run_async(
 		this : $ ,
-		{ dir, timeout, command, env }: $mol_run_options
+		{ dir, timeout, command, env, affects }: $mol_run_options
 	) {
+		const affected = this.$mol_run_affected
 		const args_raw = typeof command === 'string' ? command.split( ' ' ) : command
 		const [ app, ...args ] = args_raw
 
@@ -80,8 +84,13 @@ namespace $ {
 		sub.stdout?.on('data', data => add(data) )
 		sub.stderr?.on('data', data => add(undefined, data) )
 
+		affects?.forEach(path => affected[path] = (affected[path] ?? 0) + 1)
+
 		const promise = new Promise<$mol_run_error_context>((done, fail) => {
 			const close = (error: Error | null, status: number | null = null, signal: NodeJS.Signals | null = null) => {
+				for (const path of affects ?? []) {
+					if (! --affected[path]! ) delete affected[path]
+				}
 				if (! timer && timeout) return
 
 				clearTimeout(timer)

@@ -608,11 +608,11 @@ namespace $ {
 		}
 
 		@ $mol_action
-		run_safe({ command, dir }: { command: readonly string[] | string, dir: string }) {
+		run_safe(opts: Parameters<typeof $mol_run>[0]) {
 			const timeout = this.git_timeout()
 			try {
 				return this.$.$mol_build.git_enabled
-					? this.$.$mol_run( { command, dir, timeout }).stdout.toString().trim()
+					? this.$.$mol_run( { ...opts, timeout }).stdout.toString().trim()
 					: ''
 			} catch (e) {
 				if (e instanceof $mol_run_error && e.cause.timeout) {
@@ -637,8 +637,14 @@ namespace $ {
 			return $mol_compare_text()(this.gitVersion(), '2.42.0') >= 0
 		}
 
+		protected _clone_stack = null as null | Error
+
 		@ $mol_action
 		git_pull(path: string) {
+			if (this._clone_stack) {
+				throw new $mol_error_mix('pull error', {path}, this._clone_stack)
+			}
+
 			const command = ['git', 'pull']
 
 			if ( ! this.interactive() ) {
@@ -649,7 +655,7 @@ namespace $ {
 				// fatal: unable to set up work tree using invalid config
 				command.push( this.gitDeepenSupported() ? '--deepen=1' : '--depth=1' )
 			}
-			return this.run_safe( { command, dir: path } )
+			return this.run_safe( { command, dir: path, affects: [ path ] } )
 		}
 
 		static git_enabled = true
@@ -740,7 +746,10 @@ namespace $ {
 			}
 
 			if( repo ) {
-				this.$.$mol_run( { command: ['git', 'clone' , '--depth', '1' , repo.text() , mod.relate( this.root() ) ], dir: this.root().path() })
+				this._clone_stack = new $mol_error_mix('clone stack', { path })
+				const command = ['git', 'clone' , '--depth', '1' , repo.text() , mod.relate( this.root() ) ]
+				this.$.$mol_run( { command, dir: this.root().path(), affects: [ path ] })
+				this._clone_stack = null
 				mod.reset()
 				return true
 			}

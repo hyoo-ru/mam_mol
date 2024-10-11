@@ -52,13 +52,11 @@ namespace $ {
 		}
 		
 		@ $mol_mem
-		watcher() {
-
-			if( /\/\./.test( this.path() ) ) return { destructor(){} }
+		override watcher() {
 			
 			const watcher = $node.chokidar.watch( this.path() , {
 				persistent : true ,
-				ignored: path => /([\/\\]\.|___$)/.test( path ) ,
+				ignored: path => /([\/\\]\.|___$)/.test( path ),
 				depth :  0 ,
 				ignoreInitial : true ,
 				awaitWriteFinish: {
@@ -67,20 +65,8 @@ namespace $ {
 			} )
 
 			watcher
-			.on( 'all' , ( type , path )=> {
-				
-				const file = $mol_file.relative( path.replace( /\\/g , '/' ) )
-
-				file.reset()
-				
-				if( type === 'change' ) {
-					this.stat( null )
-				} else {
-					file.parent().reset()
-				}
-
-			} )
-			.on( 'error' , $mol_fail_log )
+				.on( 'all' , (type, path) => this.watcher_event(type, path) )
+				.on( 'error' , $mol_fail_log )
 			
 			return {
 				destructor() {
@@ -88,6 +74,25 @@ namespace $ {
 				}
 			}
 
+		}
+
+		protected watcher_event(type: string, path: string) {
+			let part = path
+			const affected = this.$.$mol_run_affected
+			do {
+				if (affected[part]) return
+				part = part.slice(0, part.lastIndexOf('/'))
+			} while(part)
+
+			const file = $mol_file.relative( path.replace( /\\/g , '/' ) )
+
+			file.reset()
+			
+			if( type === 'change' ) {
+				this.stat( null )
+			} else {
+				file.parent().reset()
+			}
 		}
 
 		@ $mol_mem
