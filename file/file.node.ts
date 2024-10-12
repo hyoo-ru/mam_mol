@@ -78,6 +78,7 @@ namespace $ {
 		protected watch_changed = null as null | Set<string>
 		protected watch_affected = null as null | Set<string>
 
+		@ $mol_action
 		protected watch_event(type: string, path: string) {
 			const locked = this.$.$mol_run_locks.locked()
 			if (locked) {
@@ -101,18 +102,19 @@ namespace $ {
 			}
 		}
 
-		override lock_sync(  ) {
-			if (! this.$.$mol_run_locks.locked()) {
+		@ $mol_mem
+		override stat(next? : $mol_file_stat | null, virt?: 'virt') {
+			if (! this.$.$mol_run_locks.locked() && next !== null) {
 				this.watch_changed?.forEach(path => this.watch_event('change', path))
 				this.watch_changed = null
 				this.watch_affected?.forEach(path => this.watch_event('', path))
 				this.watch_affected = null
 			}
-			return null
+			return this.stat_actual(next, virt)
 		}
 
 		@ $mol_mem
-		override stat_actual( next? : $mol_file_stat | null, virt?: 'virt' ) {
+		stat_actual( next? : $mol_file_stat | null, virt?: 'virt' ) {
 			let stat = next
 			const path = this.path()
 
@@ -185,7 +187,7 @@ namespace $ {
 			this.parent().exists( true )
 			
 			const now = new Date
-			this.stat_actual( {
+			this.stat( {
 				type: 'file',
 				size: next.length,
 				atime: now,
