@@ -23,32 +23,27 @@ namespace $ {
 		}
 
 		@ $mol_action
-		protected file(path: string) {
-			if (this.added.has(path)) return null
+		protected path_added(path: string) {
+			if (this.added.has(path)) return true
 			this.added.add(path)
-
-			const mod = this.$.$mol_file.absolute( path )
-			const relative = mod.relate( this.root() )
-			this.graph.nodes.add(relative)
-
-			return mod
+			return false
 		}
 
-		@ $mol_action
 		protected add_module( path : string ) {
-			const mod = this.file(path)
-			if (! mod) return null
+			if (this.path_added(path)) return null
+			const mod = this.$.$mol_file.absolute( path )
+			this.graph.nodes.add(mod.relate( this.root() ))
 
 			const deps = this.dependencies( path )
 			for( let dep_path in deps ) {
-				this.check_dep( path, dep_path )
+				this.check_dep( [ path, dep_path ])
 			}
 
 			return null
 		}
 
-		@ $mol_action
-		protected check_dep(path: string, dep_path: string) {
+		@ $mol_mem_key
+		protected check_dep([ path, dep_path ]: [ path: string, dep_path: string ]) {
 			const deps = this.dependencies( path )
 			const mod = this.$.$mol_file.absolute( path )
 			const root = this.root()
@@ -79,7 +74,11 @@ namespace $ {
 				this.mod_ensure( dep.path() )
 			} catch( error ) {
 				if (error instanceof Error) {
-					error.message = `${ error.message }\nDependency "${dep_path}" -> "${ dep.relate( root ) }" from "${ mod.relate( root ) }" `
+					error = $mol_wire_sync($mol_error_mix).make(
+						'Dependency',
+						{ src: dep_path, target: dep.relate(root), from: mod.relate(root) },
+						error
+					)
 				}
 				$mol_fail_hidden(error)
 			}
