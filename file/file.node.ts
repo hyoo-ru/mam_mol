@@ -53,7 +53,6 @@ namespace $ {
 		
 		@ $mol_mem
 		override watcher() {
-			
 			const watcher = $node.chokidar.watch( this.path() , {
 				persistent : true ,
 				ignored: path => /([\/\\]\.|___$)/.test( path ),
@@ -65,7 +64,7 @@ namespace $ {
 			} )
 
 			watcher
-				.on( 'all' , (type, path) => this.watcher_event(type, path) )
+				.on( 'all' , (type, path) => this.watch_event(type, path) )
 				.on( 'error' , $mol_fail_log )
 			
 			return {
@@ -76,34 +75,50 @@ namespace $ {
 
 		}
 
-		protected watcher_event(type: string, path: string) {
-			let part = path
-			const affected = this.$.$mol_run_affected
-			do {
-				if (affected[part]) return
-				part = part.slice(0, part.lastIndexOf('/'))
-			} while(part)
+		protected watch_changed = null as null | Set<string>
+		protected watch_affected = null as null | Set<string>
 
+		protected watch_event(type: string, path: string) {
+			const locked = this.$.$mol_run_locks.locked()
+			if (locked) {
+				if (type === 'change') {
+					( this.watch_changed = this.watch_changed ?? new Set() ).add(path)
+				} else {
+					( this.watch_affected = this.watch_changed ?? new Set() ).add(path)
+				}
+
+				return
+			}
+			
 			const file = $mol_file.relative( path.replace( /\\/g , '/' ) )
-
+			
 			file.reset()
 			
 			if( type === 'change' ) {
-				this.stat( null )
+				this.reset()
 			} else {
 				file.parent().reset()
 			}
 		}
 
+		override lock_sync(  ) {
+			if (! this.$.$mol_run_locks.locked()) {
+				this.watch_changed?.forEach(path => this.watch_event('change', path))
+				this.watch_changed = null
+				this.watch_affected?.forEach(path => this.watch_event('', path))
+				this.watch_affected = null
+			}
+			return null
+		}
+
 		@ $mol_mem
-		stat( next? : $mol_file_stat | null, virt?: 'virt' ) {
-			
+		override stat_actual( next? : $mol_file_stat | null, virt?: 'virt' ) {
 			let stat = next
 			const path = this.path()
 
 			this.parent().watcher()
 			
-			if( virt ) return next!
+			if( virt ) return next ?? null
 			
 			try {
 				stat = next ?? stat_convert($node.fs.statSync( path, { throwIfNoEntry: false } ))
@@ -170,7 +185,7 @@ namespace $ {
 			this.parent().exists( true )
 			
 			const now = new Date
-			this.stat( {
+			this.stat_actual( {
 				type: 'file',
 				size: next.length,
 				atime: now,

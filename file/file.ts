@@ -33,11 +33,19 @@ namespace $ {
 			return this.resolve( '..' )
 		}
 
-		abstract stat( next? : $mol_file_stat | null, virt?: 'virt' ): $mol_file_stat | null
+		abstract lock_sync(): void
 
-		reset(): void {
+		@ $mol_mem
+		stat() {
+			this.lock_sync()
+			return this.stat_actual()
+		}
+
+		abstract stat_actual( next? : $mol_file_stat | null, virt?: 'virt' ): $mol_file_stat | null
+
+		reset() {
 			try {
-				this.stat( null )
+				this.stat_actual( null )
 			} catch( error: any ) {
 				if (error instanceof $mol_file_not_found) return
 				return $mol_fail_hidden(error)
@@ -99,7 +107,7 @@ namespace $ {
 		text(next?: string, virt?: 'virt') {
 			if( virt ) {
 				const now = new Date
-				this.stat( {
+				this.stat_actual( {
 					type: 'file',
 					size: 0,
 					atime: now,

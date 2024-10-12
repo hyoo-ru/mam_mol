@@ -18,17 +18,30 @@ namespace $ {
 		command : readonly string[] | string
 		dir : string
 		timeout?: number
-		affects?: readonly string[]
+		dirty?: boolean
 		env?: Record<string, string | undefined>
 	}
 
-	export const $mol_run_affected = {} as Record<string, number | undefined>
+	export class $mol_run_locks extends $mol_object {
+		protected static counter = 0
+		static increase() {
+			this.counter++
+			this.locked(null)
+		}
+
+		static decrease() {
+			this.counter--
+			this.locked(null)
+		}
+
+		@ $mol_mem
+		static locked(reset?: null) { return this.counter > 0 }
+	}
 
 	export function $mol_run_async(
 		this : $ ,
-		{ dir, timeout, command, env, affects }: $mol_run_options
+		{ dir, timeout, command, env, dirty }: $mol_run_options
 	) {
-		const affected = this.$mol_run_affected
 		const args_raw = typeof command === 'string' ? command.split( ' ' ) : command
 		const [ app, ...args ] = args_raw
 
@@ -84,14 +97,12 @@ namespace $ {
 		sub.stdout?.on('data', data => add(data) )
 		sub.stderr?.on('data', data => add(undefined, data) )
 
-		affects?.forEach(path => affected[path] = (affected[path] ?? 0) + 1)
+		if (dirty) this.$mol_run_locks.increase()
 
 		const promise = new Promise<$mol_run_error_context>((done, fail) => {
 			const close = (error: Error | null, status: number | null = null, signal: NodeJS.Signals | null = null) => {
-				for (const path of affects ?? []) {
-					if (! --affected[path]! ) delete affected[path]
-				}
 				if (! timer && timeout) return
+				if (dirty) this.$mol_run_locks.decrease()
 
 				clearTimeout(timer)
 				timer = undefined

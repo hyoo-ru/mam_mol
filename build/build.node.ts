@@ -655,7 +655,7 @@ namespace $ {
 				// fatal: unable to set up work tree using invalid config
 				command.push( this.gitDeepenSupported() ? '--deepen=1' : '--depth=1' )
 			}
-			return this.run_safe( { command, dir: path, affects: [ path ] } )
+			return this.run_safe( { command, dir: path, dirty: true } )
 		}
 
 		static git_enabled = true
@@ -748,7 +748,7 @@ namespace $ {
 			if( repo ) {
 				this._clone_stack = new $mol_error_mix('clone stack', { path })
 				const command = ['git', 'clone' , '--depth', '1' , repo.text() , mod.relate( this.root() ) ]
-				this.$.$mol_run( { command, dir: this.root().path(), affects: [ path ] })
+				this.$.$mol_run( { command, dir: this.root().path(), dirty: true })
 				this._clone_stack = null
 				mod.reset()
 				return true
