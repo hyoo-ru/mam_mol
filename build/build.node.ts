@@ -1223,7 +1223,7 @@ namespace $ {
 			
 			var target = pack.resolve( `-/${bundle}.meta.tree` )
 			
-			const sortedPaths = this.graph( { path , exclude } ).sorted
+			const sortedPaths = this.graph( [path , exclude ] ).sorted
 			
 			const namedMetas: $mol_tree2[] = []
 			sortedPaths.forEach( path => {
@@ -1576,7 +1576,7 @@ namespace $ {
 			const start = Date.now()
 			const pack = $mol_file.absolute( path )
 			
-			const list = this.sourcesAll( { path , exclude } )
+			const list = this.sourcesAll( [ path , exclude ] )
 			if( !list.length ) return []
 
 			const origs = list.filter( src => !/\/-/.test( src.path() ) )
@@ -1588,7 +1588,7 @@ namespace $ {
 				sloc[ ext ] = ( sloc[ ext ] || 0 ) + count
 			}
 			
-			const graph = this.graph( { path , exclude } )
+			const graph = this.graph( [ path , exclude ] )
 			
 			const deps = {} as Record<string, Record<string, number>>
 			for( let dep of graph.nodes ) {
