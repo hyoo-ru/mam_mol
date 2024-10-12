@@ -109,7 +109,7 @@ namespace $ {
 			
 			const path = mod.path()
 
-			return build.bundle( { path , bundle } )
+			return build.bundle( [ path , bundle ] )
 			
 		}
 
@@ -276,7 +276,7 @@ namespace $ {
 				const bundle = build.root().resolve( path )
 			
 				// watch changes
-				const sources = build.sourcesAll({ path: bundle.path() , exclude : [ 'node' ] })
+				const sources = build.sourcesAll([ bundle.path() , [ 'node' ] ])
 				
 				for( const src of sources ) src.buffer()	
 				
@@ -329,9 +329,9 @@ namespace $ {
 			
 			try {
 				
-				for( const file of build.bundle({ path, bundle: 'node.js' }) ) file.stat()
-				for( const file of build.bundle({ path, bundle: 'node.audit.js' }) ) file.stat()
-				for( const file of build.bundle({ path, bundle: 'node.test.js' }) ) file.stat()
+				for( const file of build.bundle([ path, 'node.js' ]) ) file.stat()
+				for( const file of build.bundle([ path, 'node.audit.js' ]) ) file.stat()
+				for( const file of build.bundle([ path, 'node.test.js' ]) ) file.stat()
 			
 			} catch( error: any ) {
 				

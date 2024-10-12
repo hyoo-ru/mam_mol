@@ -73,12 +73,9 @@ namespace $ {
 			try {
 				this.mod_ensure( dep.path() )
 			} catch( error ) {
-				if (error instanceof Error) {
-					error = $mol_wire_sync($mol_error_mix).make(
-						'Dependency',
-						{ src: dep_path, target: dep.relate(root), from: mod.relate(root) },
-						error
-					)
+				if ($mol_fail_catch(error)) {
+					(error as Error).message += `\nDependency "${
+						dep_path}" -> "${ dep.relate( root ) }" from "${ mod.relate( root ) }" `
 				}
 				$mol_fail_hidden(error)
 			}
