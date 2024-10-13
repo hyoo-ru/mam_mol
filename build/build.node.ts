@@ -637,13 +637,8 @@ namespace $ {
 			return $mol_compare_text()(this.gitVersion(), '2.42.0') >= 0
 		}
 
-		protected _clone_stack = null as null | Error
-
 		@ $mol_action
 		git_pull(path: string) {
-			if (this._clone_stack) {
-				throw new $mol_error_mix('pull error', {path}, this._clone_stack)
-			}
 
 			const command = ['git', 'pull']
 
@@ -735,10 +730,10 @@ namespace $ {
 					
 					this.$.$mol_run( { command: ['git', 'remote', 'add', '--track', head_branch_name, 'origin' , repo.text() ], dir: mod.path() } )
 					this.git_pull( mod.path() )
-					mod.reset()
-					for ( const sub of mod.sub() ) {
-						sub.reset()
-					}
+					// mod.reset()
+					// for ( const sub of mod.sub() ) {
+					// 	sub.reset()
+					// }
 					return true
 				}
 
@@ -746,11 +741,9 @@ namespace $ {
 			}
 
 			if( repo ) {
-				this._clone_stack = new $mol_error_mix('clone stack', path)
 				const command = ['git', 'clone' , '--depth', '1' , repo.text() , mod.relate( this.root() ) ]
 				this.$.$mol_run( { command, dir: this.root().path(), dirty: true })
-				this._clone_stack = null
-				mod.reset()
+				// mod.reset()
 				return true
 			}
 			

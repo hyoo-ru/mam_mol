@@ -22,26 +22,34 @@ namespace $ {
 		env?: Record<string, string | undefined>
 	}
 
-	export class $mol_run_locks extends $mol_object {
-		protected static counter = 0
-		static increase() {
-			this.counter++
-			this.locked(null)
+	export class $mol_run_lock extends $mol_object {
+		protected promise = null as null | ReturnType<typeof $mol_promise<null>>
+		async lock_async() {
+			let promise
+			do {
+				promise = this.promise
+				await promise
+			} while (promise !== this.promise)
+
+			this.promise = $mol_promise<null>()
+			return true
 		}
 
-		static decrease() {
-			this.counter--
-			this.locked(null)
+		unlock() {
+			this.promise?.done(null)
+			this.promise = null
 		}
 
-		@ $mol_mem
-		static locked(reset?: null) { return this.counter > 0 }
 	}
 
-	export function $mol_run_async(
+	export const $mol_run_lock_global = new $mol_run_lock
+
+
+	export async function $mol_run_async(
 		this : $ ,
 		{ dir, timeout, command, env, dirty }: $mol_run_options
 	) {
+		if (dirty) await this.$mol_run_lock_global.lock_async()
 		const args_raw = typeof command === 'string' ? command.split( ' ' ) : command
 		const [ app, ...args ] = args_raw
 
@@ -97,12 +105,9 @@ namespace $ {
 		sub.stdout?.on('data', data => add(data) )
 		sub.stderr?.on('data', data => add(undefined, data) )
 
-		if (dirty) this.$mol_run_locks.increase()
-
-		const promise = new Promise<$mol_run_error_context>((done, fail) => {
+		const result_promise = new Promise<$mol_run_error_context>((done, fail) => {
 			const close = (error: Error | null, status: number | null = null, signal: NodeJS.Signals | null = null) => {
 				if (! timer && timeout) return
-				if (dirty) this.$mol_run_locks.decrease()
 
 				clearTimeout(timer)
 				timer = undefined
@@ -123,6 +128,8 @@ namespace $ {
 					command: args_raw.join(' ') ,
 					dir: $node.path.relative( '' , dir ) ,
 				})
+
+				if (dirty) this.$mol_run_lock_global.unlock()
 		
 				if (error || status || killed) return fail( new $mol_run_error(
 					(res.stderr.toString() || res.stdout.toString() || 'Run error') + (killed ? ', timeout' : ''),
@@ -138,17 +145,15 @@ namespace $ {
 			sub.on('exit', (status, signal) => close(null, status, signal) )
 		})
 
-		return Object.assign(promise, { destructor: () => {
+		const result = await result_promise
+
+		return Object.assign(result_promise, { destructor: () => {
 			clearTimeout(timer)
 			sub.kill('SIGKILL')
 		} })
 	}
 
-	export function $mol_run(
-		this : $ ,
-		options: $mol_run_options
-	) {
-		if (! options.env) options = { ...options, env: this.$mol_env() }
-		return $mol_wire_sync(this).$mol_run_async( options )
+	export function $mol_run( this : $ , options: $mol_run_options ) {
+		return $mol_wire_sync(this).$mol_run_async( options.env ? options : { ...options, env: this.$mol_env() } )
 	}
 }

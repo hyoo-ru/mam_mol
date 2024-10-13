@@ -35,13 +35,34 @@ namespace $ {
 
 		abstract stat(next? : $mol_file_stat | null, virt?: 'virt'): null | $mol_file_stat
 
-		reset() {
-			try {
-				this.stat( null )
-			} catch( error: any ) {
-				if (error instanceof $mol_file_not_found) return
-				return $mol_fail_hidden(error)
-			}
+		reset() { $mol_wire_sync(this).reset_async() }
+		reset_async() { return this.$.$mol_file.reset_async(this.path()) }
+
+		protected static changed_paths = new Set<string>()
+
+		static reset_async(path: string) {
+			this.changed_paths.add(path)
+			if (! this.scheduled) this.scheduled = this.reset_task()
+			return this.scheduled
+		}
+
+		protected static scheduled = null as null | PromiseLike<unknown>
+
+		static async reset_task() {
+			await this.$.$mol_run_lock_global.lock_async()
+
+			do {
+				const promises = [...this.changed_paths]
+				this.changed_paths.clear()
+				await Promise.all( promises.map(
+					path => $mol_wire_async(this.absolute(path))
+						.stat(null)
+						.catch(error => error instanceof $mol_file_not_found ? null : this.$.$mol_fail_log(error))
+				) )
+			} while (this.changed_paths.size > 0)
+
+			this.$.$mol_run_lock_global.unlock()
+			this.scheduled = null
 		}
 
 		@ $mol_mem
