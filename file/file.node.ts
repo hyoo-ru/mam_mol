@@ -75,46 +75,16 @@ namespace $ {
 
 		}
 
-		protected watch_changed = null as null | Set<string>
-		protected watch_affected = null as null | Set<string>
-
 		@ $mol_action
 		protected watch_event(type: string, path: string) {
-			const locked = this.$.$mol_run_locks.locked()
-			if (locked) {
-				if (type === 'change') {
-					( this.watch_changed = this.watch_changed ?? new Set() ).add(path)
-				} else {
-					( this.watch_affected = this.watch_changed ?? new Set() ).add(path)
-				}
-
-				return
-			}
-			
 			const file = $mol_file.relative( path.replace( /\\/g , '/' ) )
-			
-			file.reset()
-			
-			if( type === 'change' ) {
-				this.reset()
-			} else {
-				file.parent().reset()
-			}
+			const parent = type === 'change' ? this : file.parent()
+			file.reset_async()
+			parent.reset_async()
 		}
 
 		@ $mol_mem
 		override stat(next? : $mol_file_stat | null, virt?: 'virt') {
-			if (! this.$.$mol_run_locks.locked() && next !== null) {
-				this.watch_changed?.forEach(path => this.watch_event('change', path))
-				this.watch_changed = null
-				this.watch_affected?.forEach(path => this.watch_event('', path))
-				this.watch_affected = null
-			}
-			return this.stat_actual(next, virt)
-		}
-
-		@ $mol_mem
-		stat_actual( next? : $mol_file_stat | null, virt?: 'virt' ) {
 			let stat = next
 			const path = this.path()
 
