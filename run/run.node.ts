@@ -8,7 +8,13 @@ namespace $ {
 		signal: NodeJS.Signals | null,
 	}
 
-	export class $mol_run_error extends $mol_error_mix<{ timeout?: boolean, signal?: NodeJS.Signals | null}> {}
+	export class $mol_run_error extends $mol_error_mix<{
+		timeout_kill?: boolean
+		signal?: NodeJS.Signals | null
+		status: number | null
+		command: string
+		dir: string
+	}> {}
 
 	const child_process = $node['child_process']
 	export const $mol_run_spawn = child_process.spawn.bind(child_process)
@@ -22,48 +28,13 @@ namespace $ {
 		env?: Record<string, string | undefined>
 	}
 
-	export class $mol_run_lock extends $mol_object {
-		protected promise = null as null | ReturnType<typeof $mol_promise<null>>
-		async lock_async() {
-			let promise
-			do {
-				promise = this.promise
-				await promise
-			} while (promise !== this.promise)
 
-			this.promise = $mol_promise<null>()
-			return true
-		}
-
-		unlock() {
-			this.promise?.done(null)
-			this.promise = null
-		}
-
-	}
-
-	export const $mol_run_lock_global = new $mol_run_lock
-
-
-	export async function $mol_run_async(
+	export function $mol_run_async(
 		this : $ ,
 		{ dir, timeout, command, env, dirty }: $mol_run_options
 	) {
-		if (dirty) await this.$mol_run_lock_global.lock_async()
 		const args_raw = typeof command === 'string' ? command.split( ' ' ) : command
 		const [ app, ...args ] = args_raw
-
-		if (! env?.MOL_RUN_ASYNC) {
-			this.$mol_log3_come({
-				place: '$mol_run_sync' ,
-				message: 'Run',
-				command: args_raw.join(' ') ,
-				dir: $node.path.relative( '' , dir ) ,
-			})
-			const res = this.$mol_run_spawn_sync(app, args, { shell: true, cwd: dir, env });
-			if( res.status ) $mol_fail( new Error( res.stderr.toString() || 'Exit(' + res.status + ')' ) )
-			return res
-		}
 
 		const sub = this.$mol_run_spawn(app, args, {
 			shell: true,
@@ -71,15 +42,20 @@ namespace $ {
 			env
 		})
 
-		this.$mol_log3_come({
-			place: '$mol_run_async' ,
+		const log_object = {
+			dirty,
 			pid: sub.pid,
-			message: 'Run',
 			command: args_raw.join(' ') ,
 			dir: $node.path.relative( '' , dir ) ,
+		}
+
+		this.$mol_log3_come({
+			place: '$mol_run_async',
+			message: 'Run',
+			...log_object
 		})
 
-		let killed = false
+		let timeout_kill = false
 		let timer: undefined | ReturnType<typeof setTimeout>
 
 		const std_data = [] as Buffer[]
@@ -93,8 +69,8 @@ namespace $ {
 			clearTimeout(timer)
 
 			timer = setTimeout(() => {
-				const signal = killed ? 'SIGKILL' : 'SIGTERM'
-				killed = true
+				const signal = timeout_kill ? 'SIGKILL' : 'SIGTERM'
+				timeout_kill = true
 				add()
 				sub.kill(signal)
 			}, timeout)
@@ -121,31 +97,27 @@ namespace $ {
 				}
 
 				this.$mol_log3_done({
-					place: '$mol_run_async' ,
-					pid: sub.pid,
+					place: '$mol_run_async',
 					message: 'Run',
+					...log_object,
+					signal,
+					timeout_kill,
 					status,
-					command: args_raw.join(' ') ,
-					dir: $node.path.relative( '' , dir ) ,
 				})
 
-				if (dirty) this.$mol_run_lock_global.unlock()
-		
-				if (error || status || killed) return fail( new $mol_run_error(
-					(res.stderr.toString() || res.stdout.toString() || 'Run error') + (killed ? ', timeout' : ''),
-					{ signal, timeout: killed },
+				if (error || status || timeout_kill) return fail( new $mol_run_error(
+					(res.stderr.toString() || res.stdout.toString() || 'Run error') + (timeout_kill ? ', timeout' : ''),
+					{ ...log_object, status, signal, timeout_kill },
 					...error ? [ error ] : []
 				) )
 
 				done(res)
 			}
-	
+
 			sub.on('disconnect', () => close(new Error('Disconnected')) )
 			sub.on('error', err => close(err) )
 			sub.on('exit', (status, signal) => close(null, status, signal) )
 		})
-
-		const result = await result_promise
 
 		return Object.assign(result_promise, { destructor: () => {
 			clearTimeout(timer)
@@ -153,7 +125,66 @@ namespace $ {
 		} })
 	}
 
+	// export function $mol_run_lock_async( this : $ , options: $mol_run_options ) {
+	// 	let spawn_promise: null | undefined | ReturnType<typeof $mol_run_async>
+
+	// 	const promise = (options.dirty ? this.$mol_run_lock.main.lock_async() : Promise.resolve())
+	// 		.then(() => spawn_promise === null ? null as unknown as $mol_run_error_context : (spawn_promise = this.$mol_run_async(options)))
+	// 		.finally(() => options.dirty ? this.$mol_run_lock.main.unlock() : null)
+
+	// 	return Object.assign(promise, { destructor: () => {
+	// 		spawn_promise?.destructor()
+	// 		spawn_promise = null
+	// 	} })
+	// }
+
+	// export function $mol_run( this : $ , options: $mol_run_options ) {
+	// 	let result
+
+	// 	if (options.env?.MOL_RUN_SYNC) {
+	// 		const args_raw = typeof options.command === 'string' ? options.command.split( ' ' ) : options.command
+	// 		const [ app, ...args ] = args_raw
+	// 		this.$mol_log3_come({
+	// 			place: '$mol_run_sync' ,
+	// 			message: 'Run',
+	// 			command: args_raw.join(' ') ,
+	// 			dir: $node.path.relative( '' , options.dir ) ,
+	// 		})
+	// 		result = this.$mol_run_spawn_sync(app, args, { shell: true, cwd: options.dir, env: options.env })
+	// 		if (result.error) $mol_fail(result.error)
+	// 	} else {
+	// 		result = $mol_wire_sync(this).$mol_run_lock_async( { ...options, env: options.env ?? this.$mol_env() } )
+	// 	}
+
+	// 	return result
+	// }
+
 	export function $mol_run( this : $ , options: $mol_run_options ) {
-		return $mol_wire_sync(this).$mol_run_async( options.env ? options : { ...options, env: this.$mol_env() } )
+		const locks = this.$mol_run_lock.main
+		try {
+			if (options.dirty) locks.lock()
+
+			let result
+			// const args_raw = typeof options.command === 'string' ? options.command.split( ' ' ) : options.command
+			// const [ app, ...args ] = args_raw
+			// this.$mol_log3_come({
+			// 	place: '$mol_run_sync' ,
+			// 	message: 'Run',
+			// 	dirty: options.dirty,
+			// 	command: args_raw.join(' ') ,
+			// 	dir: $node.path.relative( '' , options.dir ) ,
+			// })
+			// result = this.$mol_run_spawn_sync(app, args, { shell: true, cwd: options.dir, env: options.env })
+			// if (result.error) $mol_fail(result.error)
+
+			result = $mol_wire_sync(this).$mol_run_async( { ...options, env: options.env ?? this.$mol_env() } )
+
+			if (options.dirty) locks.unlock()
+			return result
+		} catch (e) {
+			if (options.dirty && ! $mol_promise_like(e)) locks.unlock()
+			$mol_fail_hidden(e)
+		}
 	}
+
 }

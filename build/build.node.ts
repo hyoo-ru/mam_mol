@@ -607,27 +607,6 @@ namespace $ {
 			return (Number.isNaN(timeout) ? null : timeout) || 120000
 		}
 
-		@ $mol_action
-		run_safe(opts: Parameters<typeof $mol_run>[0]) {
-			const timeout = this.git_timeout()
-			try {
-				return this.$.$mol_build.git_enabled
-					? this.$.$mol_run( { ...opts, timeout }).stdout.toString().trim()
-					: ''
-			} catch (e) {
-				if (e instanceof $mol_run_error && e.cause.timeout) {
-					this.$.$mol_build.git_enabled = false
-					this.$.$mol_log3_warn({
-						place: `${this}.git()`,
-						message: `Timeout - git disabled`,
-						hint: 'Check connection',
-					})
-					return ''
-				}
-				$mol_fail_hidden(e)
-			}
-		}
-
 		@ $mol_mem
 		gitVersion() {
 			return this.$.$mol_run({ command: 'git version', dir: '.' }).stdout.toString().trim().match(/.*\s+([\d\.]+)$/)?.[1] ?? ''
@@ -638,7 +617,7 @@ namespace $ {
 		}
 
 		@ $mol_action
-		git_pull(path: string) {
+		git_pull(dir: string) {
 
 			const command = ['git', 'pull']
 
@@ -650,7 +629,28 @@ namespace $ {
 				// fatal: unable to set up work tree using invalid config
 				command.push( this.gitDeepenSupported() ? '--deepen=1' : '--depth=1' )
 			}
-			return this.run_safe( { command, dir: path, dirty: true } )
+
+			const timeout = this.git_timeout()
+			try {
+				return this.$.$mol_build.git_enabled
+					? this.$.$mol_run( { command, dir, timeout }).stdout.toString().trim()
+					: ''
+			} catch (e) {
+				if (e instanceof $mol_run_error && e.cause.timeout_kill) {
+					this.$.$mol_build.git_enabled = false
+					this.$.$mol_log3_warn({
+						place: `${this}.git()`,
+						message: `Timeout - git disabled`,
+						hint: 'Check connection',
+					})
+					return ''
+				}
+				if (e instanceof Error) {
+					this.$.$mol_fail_log(e)
+					return
+				}
+				$mol_fail_hidden(e)
+			}
 		}
 
 		static git_enabled = true
@@ -891,7 +891,7 @@ namespace $ {
 						res = res.concat( this.bundleMJS( { path , exclude , bundle : env } ) )
 					}
 					if( !type || type === 'test.js' ) {
-						res = res.concat( this.bundleTestJS( { path , exclude , bundle : env } ) )
+						res = res.concat( this.bundleAndRunTestJS( { path , exclude , bundle : env } ) )
 					}
 					if( !type || type === 'audit.js' ) {
 						res = res.concat( this.bundleAuditJS( { path , exclude , bundle : env } ) )
@@ -949,7 +949,7 @@ namespace $ {
 			this.$.$mol_log3_done({
 				place: this ,
 				duration: `${duration}ms` ,
-				message: `Built` , 
+				message: 'Built' , 
 				path ,
 			})
 
@@ -1075,21 +1075,21 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		bundleTestJS( { path , exclude , bundle } : { path : string , exclude : readonly string[] , bundle : string } ) : $mol_file[] {
+		bundle_test_js([ path , exclude , bundle ] : [ path : string , exclude : readonly string[] , bundle : string ]) {
 			const start = Date.now()
-			var pack = $mol_file.absolute( path )
+			const pack = $mol_file.absolute( path )
 			
-			var root = this.root()
-			var target = pack.resolve( `-/${bundle}.test.js` )
-			var targetMap = pack.resolve( `-/${bundle}.test.js.map` )
+			const root = this.root()
+			const target = pack.resolve( `-/${bundle}.test.js` )
+			const targetMap = pack.resolve( `-/${bundle}.test.js.map` )
 			
-			var concater = new $mol_sourcemap_builder( this.root().relate( target.parent() ), ';')
+			const concater = new $mol_sourcemap_builder( this.root().relate( target.parent() ), ';')
 			concater.add( '"use strict"' )
 			
-			var exclude_ext = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
-			var sources = this.sources_js( [ path , exclude_ext ] )
-			var sourcesNoTest = new Set( this.sources_js( [ path , exclude ] ) )
-			var sourcesTest = sources.filter( src => !sourcesNoTest.has( src ) )
+			const exclude_ext = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
+			const sources = this.sources_js( [ path , exclude_ext ] )
+			const sourcesNoTest = new Set( this.sources_js( [ path , exclude ] ) )
+			let sourcesTest = sources.filter( src => !sourcesNoTest.has( src ) )
 			if( bundle === 'node' ) {
 				sourcesTest = [ ... sourcesNoTest , ... sourcesTest ]
 			} else {
@@ -1126,6 +1126,12 @@ namespace $ {
 				$mol_fail_hidden( error )
 			}
 
+			return [ target, targetMap ]
+		}
+
+		@ $mol_mem_key
+		bundleAndRunTestJS( { path , exclude , bundle } : { path : string , exclude : readonly string[] , bundle : string } ) : $mol_file[] {
+			const [ target , targetMap ] = this.bundle_test_js([ path, exclude, bundle ])
 			if( bundle === 'node' ) {
 				this.$.$mol_run( { command: ['node', '--enable-source-maps', '--trace-uncaught', target.relate( this.root() ) ],  dir: this.root().path() } )
 			}
