@@ -52,7 +52,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem
-		override watcher() {
+		override watcher(reset?: null) {
 			const watcher = $node.chokidar.watch( this.path() , {
 				persistent : true ,
 				ignored: path => /([\/\\]\.|___$)/.test( path ),
@@ -86,6 +86,7 @@ namespace $ {
 		@ $mol_mem
 		override stat(next? : $mol_file_stat | null, virt?: 'virt') {
 			let stat = next
+			this.stat_counter()
 			const path = this.path()
 
 			this.parent().watcher()

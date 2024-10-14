@@ -35,7 +35,20 @@ namespace $ {
 
 		abstract stat(next? : $mol_file_stat | null, virt?: 'virt'): null | $mol_file_stat
 
-		reset() { $mol_wire_sync(this).reset_async() }
+		@ $mol_mem
+		stat_counter(next?: number) { return next ?? 0 }
+
+		reset() { this.stat_counter( ($mol_mem_cached(() => this.stat_counter()) ?? 0) + 1 ) }
+
+		// reset() {
+		// 	try {
+		// 		this.stat(null)
+		// 	} catch(e) {
+		// 		if (e instanceof $mol_file_not_found) return
+		// 		$mol_fail_hidden(e)
+		// 	}
+		// }
+
 		reset_async() { return this.$.$mol_file.reset_async(this.path()) }
 
 		protected static changed_paths = new Set<string>()
@@ -49,19 +62,9 @@ namespace $ {
 		protected static scheduled = null as null | PromiseLike<unknown>
 
 		static async reset_task() {
-			await this.$.$mol_run_lock_global.lock_async()
-
-			do {
-				const promises = [...this.changed_paths]
-				this.changed_paths.clear()
-				await Promise.all( promises.map(
-					path => $mol_wire_async(this.absolute(path))
-						.stat(null)
-						.catch(error => error instanceof $mol_file_not_found ? null : this.$.$mol_fail_log(error))
-				) )
-			} while (this.changed_paths.size > 0)
-
-			this.$.$mol_run_lock_global.unlock()
+			await this.$.$mol_run_lock.main.lock_async()
+			this.changed_paths.forEach(path => this.absolute(path).reset())
+			this.$.$mol_run_lock.main.unlock()
 			this.scheduled = null
 		}
 
@@ -73,7 +76,7 @@ namespace $ {
 		abstract ensure(): void
 		abstract drop(): void
 
-		watcher() {
+		watcher(reset?: null) {
 			console.warn('$mol_file_web.watcher() not implemented')
 
 			return {
