@@ -1,30 +1,41 @@
 namespace $ {
+	// class $mol_run_lock_atom extends $mol_object {
+	// 	locking = false
+	// 	unlock() {}
+	// 	override destructor() {
+	// 		if (! this.locking) return this.unlock()
+	// 		this.locking = false
+	// 	}
+	// }
+
 	export class $mol_run_lock extends $mol_object {
 		protected promise = null as null | ReturnType<typeof $mol_promise<null>>
 
-		protected locking = false
-
-		protected async lock_promise() {
+		protected async lock_promise(obj: { locking: boolean }) {
 			let promise
-			this.locking = true
 
 			do {
 				promise = this.promise
 				await promise
-				if (! this.locking) return
+				if (! obj.locking) return
 			} while (promise !== this.promise)
 
-			this.locking = false
+			obj.locking = false
 
 			this.promise = $mol_promise<null>()
 			return null
 		}
 
 		lock_async() {
-			return Object.assign(this.lock_promise(), { destructor: () => {
-				if (! this.locking) return this.unlock()
-				this.locking = false
-			} } )
+			const obj = {
+				locking: true,
+				destructor: () => {
+					if (! obj.locking) return this.unlock()
+					obj.locking = false
+				}
+			}
+
+			return Object.assign(this.lock_promise(obj),  obj)
 		}
 
 		lock() { return $mol_wire_sync(this).lock_async() }
