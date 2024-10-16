@@ -3,15 +3,15 @@ namespace $ {
 		protected promise = null as null | Promise<void>
 
 		async lock_async() {
-            let next = null as null | (() => void)
+            let next = () => {}
 			let destructed = false
             const task = $mol_wire_auto()
-			if (! task) return null
+			if (! task) return next
 
 			const destructor = task.destructor.bind(task)
             task.destructor = ()=> {
 				destructor()
-                next?.()
+                next()
 				destructed = true
             }
 
@@ -22,7 +22,7 @@ namespace $ {
 				await promise
 			} while (promise !== this.promise)
 
-            if (destructed) return null
+            if (destructed) return next
 
 			this.promise = new Promise(done => { next = done })
 			return next

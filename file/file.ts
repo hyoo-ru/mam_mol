@@ -59,7 +59,7 @@ namespace $ {
 				}
 			}
 			this.changed_paths.clear()
-			unlock?.()
+			unlock()
 		}
 
 		@ $mol_mem
