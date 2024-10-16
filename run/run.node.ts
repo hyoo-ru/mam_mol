@@ -37,9 +37,14 @@ namespace $ {
 		@ $mol_action
 		static spawn(options: $mol_run_options) {
 			const unlock = options.dirty ? this.grab() : null
-			const result = $mol_wire_sync(this).spawn_async( { ...options, env: options.env ?? this.$.$mol_env() } )
-			unlock?.()
-			return result
+			try {
+				const result = $mol_wire_sync(this).spawn_async( { ...options, env: options.env ?? this.$.$mol_env() } )
+				unlock?.()
+				return result
+			} catch (e) {
+				if (! $mol_promise_like(e)) unlock?.()
+				$mol_fail_hidden(e)
+			}
 		}
 
 		static spawn_async(

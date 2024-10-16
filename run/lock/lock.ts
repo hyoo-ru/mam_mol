@@ -7,14 +7,13 @@ namespace $ {
 			let destructed = false
             const task = $mol_wire_auto()
 			if (! task) return null
-            const destructor = task.destructor.bind(task)
+
+			const destructor = task.destructor.bind(task)
             task.destructor = ()=> {
 				destructor()
-                console.log('destructed')
                 next?.()
 				destructed = true
             }
-			task.complete = task.destructor
 
 			let promise
 

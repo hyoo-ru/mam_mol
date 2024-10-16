@@ -58,10 +58,15 @@ namespace $ {
 
 		static reset_task() {
 			const unlock = this.$.$mol_run.grab()
-			this.changed_paths.forEach(path => this.absolute(path).reset())
-			this.changed_paths.clear()
-			this.scheduled = null
-			unlock?.()
+			try {
+				this.changed_paths.forEach(path => this.absolute(path).reset())
+				this.changed_paths.clear()
+				this.scheduled = null
+				unlock?.()
+			} catch (e) {
+				if (! $mol_promise_like(e)) unlock?.()
+				$mol_fail_hidden(e)
+			}
 		}
 
 		@ $mol_mem
