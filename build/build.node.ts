@@ -71,7 +71,7 @@ namespace $ {
 			let content = ''
 			for( const step of tree.select( 'build' , null ).kids ) {
 
-				const res = this.$.$mol_run( { command: step.text(), dir: file.parent().path() } ).stdout.toString().trim()
+				const res = this.$.$mol_run.spawn( { command: step.text(), dir: file.parent().path() } ).stdout.toString().trim()
 				if( step.type ) content += `let ${ step.type } = ${ JSON.stringify( res ) }`
 
 			}
@@ -609,7 +609,7 @@ namespace $ {
 
 		@ $mol_mem
 		gitVersion() {
-			return this.$.$mol_run({ command: 'git version', dir: '.' }).stdout.toString().trim().match(/.*\s+([\d\.]+)$/)?.[1] ?? ''
+			return this.$.$mol_run.spawn({ command: 'git version', dir: '.' }).stdout.toString().trim().match(/.*\s+([\d\.]+)$/)?.[1] ?? ''
 		}
 
 		gitDeepenSupported() {
@@ -633,7 +633,7 @@ namespace $ {
 			const timeout = this.git_timeout()
 			try {
 				return this.$.$mol_build.git_enabled
-					? this.$.$mol_run( { command, dir, timeout }).stdout.toString().trim()
+					? this.$.$mol_run.spawn( { command, dir, timeout }).stdout.toString().trim()
 					: ''
 			} catch (e) {
 				if (e instanceof $mol_run_error && e.cause.timeout_kill) {
@@ -660,7 +660,7 @@ namespace $ {
 			if (! this.is_root_git()) return new Set<string>()
 
 			const root = this.root().path()
-			const output = this.$.$mol_run({ command: 'git submodule status --recursive', dir: root }).stdout.toString().trim()
+			const output = this.$.$mol_run.spawn({ command: 'git submodule status --recursive', dir: root }).stdout.toString().trim()
 
 			const dirs = output
 				.split('\n')
@@ -720,15 +720,15 @@ namespace $ {
 
 				if (repo) {
 
-					this.$.$mol_run( { command: ['git', 'init'], dir: mod.path() } )
+					this.$.$mol_run.spawn( { command: ['git', 'init'], dir: mod.path() } )
 			
-					const res = this.$.$mol_run( { command: ['git', 'remote', 'show', repo.text() ],  dir: mod.path() } )
+					const res = this.$.$mol_run.spawn( { command: ['git', 'remote', 'show', repo.text() ],  dir: mod.path() } )
 					const matched = res.stdout.toString().match( /HEAD branch: (.*?)\n/ )
 					const head_branch_name = res instanceof Error || matched === null || !matched[1]
 						? 'master'
 						: matched[1]
 					
-					this.$.$mol_run( { command: ['git', 'remote', 'add', '--track', head_branch_name, 'origin' , repo.text() ], dir: mod.path() } )
+					this.$.$mol_run.spawn( { command: ['git', 'remote', 'add', '--track', head_branch_name, 'origin' , repo.text() ], dir: mod.path() } )
 					this.git_pull( mod.path() )
 					// mod.reset()
 					// for ( const sub of mod.sub() ) {
@@ -742,7 +742,7 @@ namespace $ {
 
 			if( repo ) {
 				const command = ['git', 'clone' , '--depth', '1' , repo.text() , mod.relate( this.root() ) ]
-				this.$.$mol_run( { command, dir: this.root().path(), dirty: true })
+				this.$.$mol_run.spawn( { command, dir: this.root().path(), dirty: true })
 				// mod.reset()
 				return true
 			}
@@ -1133,7 +1133,7 @@ namespace $ {
 		bundleAndRunTestJS( { path , exclude , bundle } : { path : string , exclude : readonly string[] , bundle : string } ) : $mol_file[] {
 			const [ target , targetMap ] = this.bundle_test_js([ path, exclude, bundle ])
 			if( bundle === 'node' ) {
-				this.$.$mol_run( { command: ['node', '--enable-source-maps', '--trace-uncaught', target.relate( this.root() ) ],  dir: this.root().path() } )
+				this.$.$mol_run.spawn( { command: ['node', '--enable-source-maps', '--trace-uncaught', target.relate( this.root() ) ],  dir: this.root().path() } )
 			}
 			
 			return [ target , targetMap ]
@@ -1338,7 +1338,7 @@ namespace $ {
 			
 			try {
 
-				const result = this.$.$mol_run( { command: ['npm', 'view' , name , 'versions', '--json'], dir: '.' } )
+				const result = this.$.$mol_run.spawn( { command: ['npm', 'view' , name , 'versions', '--json'], dir: '.' } )
 				const versions = ( [] as string[] ).concat( JSON.parse( result.stdout.toString() ) )
 				const published = versions.at(-1)?.split('.').map( Number ) ?? [ 0, 0, 0 ]
 				

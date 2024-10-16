@@ -22,7 +22,8 @@ namespace $ {
 			if (next !== undefined) throw new Error(`Saving content not supported: ${this.path}`)
 
 			const response = $mol_fetch.response(this.path())
-			if (response.native.status === 404) throw new $mol_file_not_found(`File not found: ${this.path()}`)
+			if (response.native.status === 404) return new Uint8Array
+			// throw new $mol_file_not_found(`File not found: ${this.path()}`)
 
 			return new Uint8Array(response.buffer())
 		}

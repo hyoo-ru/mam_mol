@@ -10,7 +10,7 @@ namespace $ {
 		ctime: Date
 	}
 
-	export class $mol_file_not_found extends Error {}
+	// export class $mol_file_not_found extends Error {}
 
 	export abstract class $mol_file extends $mol_object {
 			
@@ -35,37 +35,33 @@ namespace $ {
 
 		abstract stat(next? : $mol_file_stat | null, virt?: 'virt'): null | $mol_file_stat
 
-		@ $mol_mem
-		stat_counter(next?: number) { return next ?? 0 }
+		// @ $mol_mem
+		// stat_counter(next?: number) { return next ?? 0 }
 
-		reset() { this.stat_counter( ($mol_mem_cached(() => this.stat_counter()) ?? 0) + 1 ) }
+		// reset() { this.stat_counter( ($mol_mem_cached(() => this.stat_counter()) ?? 0) + 1 ) }
 
-		// reset() {
-		// 	try {
-		// 		this.stat(null)
-		// 	} catch(e) {
-		// 		if (e instanceof $mol_file_not_found) return
-		// 		$mol_fail_hidden(e)
-		// 	}
-		// }
+		reset() {
+			this.stat(null)
+		}
 
-		reset_async() { return this.$.$mol_file.reset_async(this.path()) }
+		reset_schedule() { return this.$.$mol_file.reset_schedule(this.path()) }
 
 		protected static changed_paths = new Set<string>()
 
-		static reset_async(path: string) {
+		static reset_schedule(path: string) {
 			this.changed_paths.add(path)
-			if (! this.scheduled) this.scheduled = this.reset_task()
+			if (! this.scheduled) this.scheduled = new this.$.$mol_after_timeout(300, ()=> $mol_wire_async(this).reset_task())
 			return this.scheduled
 		}
 
-		protected static scheduled = null as null | PromiseLike<unknown>
+		protected static scheduled = null as null | $mol_after_timeout
 
-		static async reset_task() {
-			await this.$.$mol_run_lock.main.lock_async()
+		static reset_task() {
+			const unlock = this.$.$mol_run.grab()
 			this.changed_paths.forEach(path => this.absolute(path).reset())
-			this.$.$mol_run_lock.main.unlock()
+			this.changed_paths.clear()
 			this.scheduled = null
+			unlock?.()
 		}
 
 		@ $mol_mem

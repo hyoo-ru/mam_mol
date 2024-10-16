@@ -79,14 +79,14 @@ namespace $ {
 		protected watch_event(type: string, path: string) {
 			const file = $mol_file.relative( path.replace( /\\/g , '/' ) )
 			const parent = type === 'change' ? this : file.parent()
-			file.reset_async()
-			parent.reset_async()
+			file.reset_schedule()
+			parent.reset_schedule()
 		}
 
 		@ $mol_mem
 		override stat(next? : $mol_file_stat | null, virt?: 'virt') {
 			let stat = next
-			this.stat_counter()
+			// this.stat_counter()
 			const path = this.path()
 
 			this.parent().watcher()
@@ -96,7 +96,8 @@ namespace $ {
 			try {
 				stat = next ?? stat_convert($node.fs.statSync( path, { throwIfNoEntry: false } ))
 			} catch( error: any ) {
-				if (error.code === 'ENOENT') error = new $mol_file_not_found(`File not found`)
+				// For node < 14.7.0 compatible with throwIfNoEntry: false above
+				if (error.code === 'ENOENT') return null
 				error.message += '\n' + path
 				return this.$.$mol_fail_hidden(error)
 			}
