@@ -816,7 +816,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    let $mol_layer: Record<string, $mol_style_func<"var", unknown>>;
+    let $mol_layer: Record<"focus" | "float" | "hover" | "speck" | "popup", $mol_style_func<"var", unknown>>;
 }
 
 declare namespace $ {
@@ -953,7 +953,7 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_speck__value__ZCCMOLJA = $mol_type_enforce<
+	type $mol_speck__value__NHCJCMMO = $mol_type_enforce<
 		ReturnType< $mol_button['error'] >
 		,
 		ReturnType< $mol_speck['value'] >
@@ -1064,37 +1064,37 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_view__sub__63S57Y2N = $mol_type_enforce<
+	type $mol_view__sub__MLZI2WAX = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_button_major__title__G53ZRL1U = $mol_type_enforce<
+	type $mol_button_major__title__ENPSQ2ZN = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_major['title'] >
 	>
-	type $mol_button_major__click__X4277J9G = $mol_type_enforce<
+	type $mol_button_major__click__I6VRPUDT = $mol_type_enforce<
 		ReturnType< $mol_perf_dopes['start'] >
 		,
 		ReturnType< $mol_button_major['click'] >
 	>
-	type $mol_button_major__title__49VTN4Y1 = $mol_type_enforce<
+	type $mol_button_major__title__21LBCP9O = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_major['title'] >
 	>
-	type $mol_button_major__click__RVT2J84H = $mol_type_enforce<
+	type $mol_button_major__click__W41N3WWO = $mol_type_enforce<
 		ReturnType< $mol_perf_dopes['stop'] >
 		,
 		ReturnType< $mol_button_major['click'] >
 	>
-	type $mol_view__sub__0UHBQ8NP = $mol_type_enforce<
+	type $mol_view__sub__ESI0H2BV = $mol_type_enforce<
 		ReturnType< $mol_perf_dopes['labels'] >
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_view__style__9PKX3HCB = $mol_type_enforce<
+	type $mol_view__style__GX2LOU1J = $mol_type_enforce<
 		({ 
 			'color': ReturnType< $mol_perf_dopes['label_color'] >,
 			'transform': ReturnType< $mol_perf_dopes['label_transform'] >,
@@ -1102,7 +1102,7 @@ declare namespace $ {
 		,
 		ReturnType< $mol_view['style'] >
 	>
-	type $mol_view__sub__ZGFNCLTJ = $mol_type_enforce<
+	type $mol_view__sub__Q24D7K2W = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >

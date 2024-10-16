@@ -970,7 +970,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    let $mol_layer: Record<string, $mol_style_func<"var", unknown>>;
+    let $mol_layer: Record<"focus" | "float" | "hover" | "speck" | "popup", $mol_style_func<"var", unknown>>;
 }
 
 declare namespace $ {
@@ -982,12 +982,12 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_hotkey__mod_ctrl__T0VW03RJ = $mol_type_enforce<
+	type $mol_hotkey__mod_ctrl__YIZP5B69 = $mol_type_enforce<
 		ReturnType< $mol_string['submit_with_ctrl'] >
 		,
 		ReturnType< $mol_hotkey['mod_ctrl'] >
 	>
-	type $mol_hotkey__key__232ZYPXR = $mol_type_enforce<
+	type $mol_hotkey__key__N6SBB10V = $mol_type_enforce<
 		({ 
 			enter( next?: ReturnType< $mol_string['submit'] > ): ReturnType< $mol_string['submit'] >,
 		}) 
@@ -1063,17 +1063,17 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_string__hint__7OXMT4QF = $mol_type_enforce<
+	type $mol_string__hint__QYRY7MP7 = $mol_type_enforce<
 		ReturnType< $mol_app_hello['name_hint'] >
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__value__B4EW6II3 = $mol_type_enforce<
+	type $mol_string__value__X9BRXNTV = $mol_type_enforce<
 		ReturnType< $mol_app_hello['name'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_view__sub__T95CY7FN = $mol_type_enforce<
+	type $mol_view__sub__6WUOTXSR = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >

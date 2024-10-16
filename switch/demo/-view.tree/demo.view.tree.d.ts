@@ -1,11 +1,11 @@
 declare namespace $ {
 
-	type $mol_switch__value__62BN2WBS = $mol_type_enforce<
+	type $mol_switch__value__GBS469UE = $mol_type_enforce<
 		ReturnType< $mol_switch_demo['color'] >
 		,
 		ReturnType< $mol_switch['value'] >
 	>
-	type $mol_switch__options__WLW46U44 = $mol_type_enforce<
+	type $mol_switch__options__V2MH75B8 = $mol_type_enforce<
 		({ 
 			'red': ReturnType< $mol_switch_demo['option_red'] >,
 			'green': ReturnType< $mol_switch_demo['option_green'] >,
@@ -15,27 +15,27 @@ declare namespace $ {
 		,
 		ReturnType< $mol_switch['options'] >
 	>
-	type $mol_labeler__title__7W06J291 = $mol_type_enforce<
+	type $mol_labeler__title__IK30E230 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__Content__QUZGY1JF = $mol_type_enforce<
+	type $mol_labeler__Content__7WNA5N9M = $mol_type_enforce<
 		ReturnType< $mol_switch_demo['Enabled'] >
 		,
 		ReturnType< $mol_labeler['Content'] >
 	>
-	type $mol_switch__value__BC33A1OM = $mol_type_enforce<
+	type $mol_switch__value__K8U5LQ4X = $mol_type_enforce<
 		ReturnType< $mol_switch_demo['color'] >
 		,
 		ReturnType< $mol_switch['value'] >
 	>
-	type $mol_switch__enabled__6K0FC3FJ = $mol_type_enforce<
+	type $mol_switch__enabled__PTCS2C27 = $mol_type_enforce<
 		boolean
 		,
 		ReturnType< $mol_switch['enabled'] >
 	>
-	type $mol_switch__options__VXLKQ37M = $mol_type_enforce<
+	type $mol_switch__options__D91FZE18 = $mol_type_enforce<
 		({ 
 			'red': ReturnType< $mol_switch_demo['option_red'] >,
 			'green': ReturnType< $mol_switch_demo['option_green'] >,
@@ -44,17 +44,17 @@ declare namespace $ {
 		,
 		ReturnType< $mol_switch['options'] >
 	>
-	type $mol_labeler__title__YNHPXWBQ = $mol_type_enforce<
+	type $mol_labeler__title__B0WD385H = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__Content__29T2ZGM4 = $mol_type_enforce<
+	type $mol_labeler__Content__H94FLHJP = $mol_type_enforce<
 		ReturnType< $mol_switch_demo['Disabled'] >
 		,
 		ReturnType< $mol_labeler['Content'] >
 	>
-	type $mol_list__sub__0WJJCDHA = $mol_type_enforce<
+	type $mol_list__sub__FAGCOM13 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['sub'] >
