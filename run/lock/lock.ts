@@ -28,7 +28,7 @@ namespace $ {
 			return next
 		}
 
-		grab() { return $mol_wire_sync(this).lock_async() }
+		lock() { return $mol_wire_sync(this).lock_async() }
 
 	}
 }

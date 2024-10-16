@@ -37,36 +37,29 @@ namespace $ {
 
 		// @ $mol_mem
 		// stat_counter(next?: number) { return next ?? 0 }
-
 		// reset() { this.stat_counter( ($mol_mem_cached(() => this.stat_counter()) ?? 0) + 1 ) }
 
-		reset() {
-			this.stat(null)
-		}
-
+		reset() { this.stat(null) }
 		reset_schedule() { return this.$.$mol_file.reset_schedule(this.path()) }
 
 		protected static changed_paths = new Set<string>()
 
 		static reset_schedule(path: string) {
+			if (! this.changed_paths.size) new this.$.$mol_after_tick(()=> $mol_wire_async(this).reset_changed())
 			this.changed_paths.add(path)
-			if (! this.scheduled) this.scheduled = new this.$.$mol_after_timeout(300, ()=> $mol_wire_async(this).reset_task())
-			return this.scheduled
 		}
 
-		protected static scheduled = null as null | $mol_after_timeout
-
-		static reset_task() {
-			const unlock = this.$.$mol_run.grab()
-			try {
-				this.changed_paths.forEach(path => this.absolute(path).reset())
-				this.changed_paths.clear()
-				this.scheduled = null
-				unlock?.()
-			} catch (e) {
-				if (! $mol_promise_like(e)) unlock?.()
-				$mol_fail_hidden(e)
+		static reset_changed() {
+			const unlock = this.$.$mol_run.lock()
+			for (const path of this.changed_paths) {
+				try {
+					this.absolute(path).reset()
+				} catch (e) {
+					if ($mol_fail_catch(e)) $mol_fail_log(e)
+				}
 			}
+			this.changed_paths.clear()
+			unlock?.()
 		}
 
 		@ $mol_mem
@@ -99,7 +92,7 @@ namespace $ {
 			} else {
 				this.drop()
 			}
-			this.reset()
+			this.reset_schedule()
 			
 			return next
 		}
