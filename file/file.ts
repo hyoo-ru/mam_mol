@@ -10,7 +10,7 @@ namespace $ {
 		ctime: Date
 	}
 
-	export class $mol_file_not_found extends Error {}
+	// export class $mol_file_not_found extends Error {}
 
 	export abstract class $mol_file extends $mol_object {
 			
@@ -33,17 +33,36 @@ namespace $ {
 			return this.resolve( '..' )
 		}
 
-		abstract stat( next? : $mol_file_stat | null, virt?: 'virt' ): $mol_file_stat | null
+		abstract stat(next? : $mol_file_stat | null, virt?: 'virt'): null | $mol_file_stat
 
-		reset(): void {
-			try {
-				this.stat( null )
-			} catch( error: any ) {
-				if (error instanceof $mol_file_not_found) return
-				return $mol_fail_hidden(error)
-			}
+		// @ $mol_mem
+		// stat_counter(next?: number) { return next ?? 0 }
+		// reset() { this.stat_counter( ($mol_mem_cached(() => this.stat_counter()) ?? 0) + 1 ) }
+
+		reset() { this.stat(null) }
+		reset_schedule() { return this.$.$mol_file.reset_schedule(this.path()) }
+
+		protected static changed_paths = new Set<string>()
+
+		static reset_schedule(path: string) {
+			if (! this.changed_paths.size) new this.$.$mol_after_tick(()=> $mol_wire_async(this).reset_changed())
+			this.changed_paths.add(path)
 		}
-		
+
+		static reset_changed() {
+			const unlock = this.$.$mol_run.lock()
+			for (const path of this.changed_paths) {
+				try {
+					this.absolute(path).reset()
+				} catch (e) {
+					if ($mol_fail_catch(e)) $mol_fail_log(e)
+				}
+			}
+			this.changed_paths.clear()
+			unlock()
+		}
+
+		@ $mol_mem
 		version() {
 			return this.stat()?.mtime.getTime().toString( 36 ).toUpperCase() ?? ''
 		}
@@ -51,7 +70,7 @@ namespace $ {
 		abstract ensure(): void
 		abstract drop(): void
 
-		watcher() {
+		watcher(reset?: null) {
 			console.warn('$mol_file_web.watcher() not implemented')
 
 			return {
@@ -73,11 +92,12 @@ namespace $ {
 			} else {
 				this.drop()
 			}
-			this.reset()
+			this.reset_schedule()
 			
 			return next
 		}
 		
+		@ $mol_mem
 		type() {
 			return this.stat()?.type ?? ''
 		}
@@ -146,6 +166,7 @@ namespace $ {
 			return found
 		}
 
+		@ $mol_mem
 		size() {
 			switch( this.type() ) {
 				case 'file': return this.stat()?.size ?? 0
