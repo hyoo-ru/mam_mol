@@ -30,13 +30,13 @@ namespace $ {
 
 	export class $mol_run extends $mol_object {
 
-		protected static lock = new $mol_run_lock
+		protected static locker = new $mol_run_lock
 
-		static grab() { return this.lock.grab() }
+		static lock() { return this.locker.lock() }
 
 		@ $mol_action
 		static spawn(options: $mol_run_options) {
-			const unlock = options.dirty ? this.grab() : null
+			const unlock = options.dirty ? this.lock() : null
 			try {
 				const result = $mol_wire_sync(this).spawn_async( { ...options, env: options.env ?? this.$.$mol_env() } )
 				unlock?.()
