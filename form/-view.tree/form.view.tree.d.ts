@@ -1,11 +1,11 @@
 declare namespace $ {
 
-	type $mol_list__sub__PQ7E4M32 = $mol_type_enforce<
+	type $mol_list__sub__OF4EN936 = $mol_type_enforce<
 		ReturnType< $mol_form['body'] >
 		,
 		ReturnType< $mol_list['sub'] >
 	>
-	type $mol_row__sub__BPKZYUH3 = $mol_type_enforce<
+	type $mol_row__sub__2V4ILA1C = $mol_type_enforce<
 		ReturnType< $mol_form['foot'] >
 		,
 		ReturnType< $mol_row['sub'] >
