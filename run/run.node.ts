@@ -30,21 +30,14 @@ namespace $ {
 
 	export class $mol_run extends $mol_object {
 
-		protected static locker = new $mol_run_lock
+		protected static lock = new $mol_run_lock
 
-		static lock() { return this.locker.lock() }
+		static lock_run<Result>(cb: () => Result) { return this.lock.run(cb) }
 
 		@ $mol_action
 		static spawn(options: $mol_run_options) {
-			const unlock = options.dirty ? this.lock() : null
-			try {
-				const result = $mol_wire_sync(this).spawn_async( { ...options, env: options.env ?? this.$.$mol_env() } )
-				unlock?.()
-				return result
-			} catch (e) {
-				if (! $mol_promise_like(e)) unlock?.()
-				$mol_fail_hidden(e)
-			}
+			const cb = () => $mol_wire_sync(this).spawn_async( { ...options, env: options.env ?? this.$.$mol_env() } )
+			return options.dirty ? this.lock_run(cb) : cb()
 		}
 
 		static spawn_async(
@@ -62,6 +55,7 @@ namespace $ {
 			const log_object = {
 				dirty,
 				pid: sub.pid,
+				timeout,
 				command: args_raw.join(' ') ,
 				dir: $node.path.relative( '' , dir ) ,
 			}

@@ -23,59 +23,49 @@ namespace $ {
 		}
 
 		@ $mol_action
-		protected path_added(path: string) {
-			if (this.added.has(path)) return true
-			this.added.add(path)
-			return false
-		}
+		path_added(path: string) { return this.added.has(path) }
 
 		protected add_module( path : string ) {
-			if (this.path_added(path)) return null
+			this.added.add(path)
 			const mod = this.$.$mol_file.absolute( path )
 			this.graph.nodes.add(mod.relate( this.root() ))
 
 			const deps = this.dependencies( path )
-			for( let dep_path in deps ) {
-				this.check_dep( [ path, dep_path ])
+			for( let target in deps ) {
+				this.check_dep( [ path, target ])
 			}
 
 			return null
 		}
 
+		path_resolved(target: string) {
+			const isFile = /\.\w+$/.test( target )
+			const root = this.root()
+
+			if (target[0] === '/' && isFile) return root.resolve(target)
+		
+			if (target[0] === '/') {
+				const last_segment = target.slice(target.lastIndexOf('/') + 1)
+				return root.resolve(target + '/' + last_segment)
+			}
+
+			return root.resolve( 'node_modules' ).resolve( './' + target )
+		}
+
 		@ $mol_mem_key
-		protected check_dep([ path, dep_path ]: [ path: string, dep_path: string ]) {
+		protected check_dep([ path, target ]: [ path: string, target: string ]) {
+			const root = this.root()
 			const deps = this.dependencies( path )
 			const mod = this.$.$mol_file.absolute( path )
-			const root = this.root()
-			let dep
 
-			const isFile = /\.\w+$/.test( dep_path )
-
-			if (dep_path[0] === '/' && isFile) {
-
-				dep = root.resolve(dep_path)
-
-			} else if (dep_path[0] === '/') {
-
-				const last_segment = dep_path.slice(dep_path.lastIndexOf('/') + 1)
-				dep = root.resolve(dep_path + '/' + last_segment)
-
-			} else if (dep_path[0] === '.') {
-
-				dep = mod.resolve( dep_path )
-
-			} else {
-
-				dep = root.resolve( 'node_modules' ).resolve( './' + dep_path )
-
-			}
+			let dep = target[0] === '.' ? mod.resolve( target ) : this.path_resolved( target )
 
 			try {
 				this.mod_ensure( dep.path() )
 			} catch( error ) {
 				if ($mol_fail_catch(error)) {
 					(error as Error).message += `\nDependency "${
-						dep_path}" -> "${ dep.relate( root ) }" from "${ mod.relate( root ) }" `
+						target}" -> "${ dep.relate( root ) }" from "${ mod.relate( root ) }" `
 				}
 				$mol_fail_hidden(error)
 			}
@@ -93,10 +83,10 @@ namespace $ {
 			const from = mod.relate( root )
 			const to = dep.relate( root )
 			const edge = this.graph.edges_out.get( from )?.get( to )
-			if( !edge || ( deps[ dep_path ] > edge.priority ) ) {
-				this.graph.link( from , to , { priority : deps[ dep_path ] } )
+			if( !edge || ( deps[ target ] > edge.priority ) ) {
+				this.graph.link( from , to , { priority : deps[ target ] } )
 			}
-			
+			if (this.path_added(dep.path())) return null
 			this.add_module( dep.path() )
 
 			return null

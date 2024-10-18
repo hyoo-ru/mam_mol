@@ -83,6 +83,10 @@ namespace $ {
 			parent.reset_schedule()
 		}
 
+		static reset_changed() {
+			this.$.$mol_run.lock_run(() => super.reset_changed())
+		}
+
 		@ $mol_mem
 		override stat(next? : $mol_file_stat | null, virt?: 'virt') {
 			let stat = next

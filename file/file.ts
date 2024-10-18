@@ -45,12 +45,16 @@ namespace $ {
 		protected static changed_paths = new Set<string>()
 
 		static reset_schedule(path: string) {
-			if (! this.changed_paths.size) new this.$.$mol_after_tick(()=> $mol_wire_async(this).reset_changed())
+			if (! this.changed_paths.size) new this.$.$mol_after_frame(()=> $mol_wire_async(this).reset_changed())
 			this.changed_paths.add(path)
 		}
 
 		static reset_changed() {
-			const unlock = this.$.$mol_run.lock()
+			this.$.$mol_log3_rise({
+				place: `${this}.reset_changed`,
+				message: 'Watch reset',
+				paths: [... this.changed_paths],
+			})
 			for (const path of this.changed_paths) {
 				try {
 					this.absolute(path).reset()
@@ -59,7 +63,6 @@ namespace $ {
 				}
 			}
 			this.changed_paths.clear()
-			unlock()
 		}
 
 		@ $mol_mem
@@ -92,7 +95,7 @@ namespace $ {
 			} else {
 				this.drop()
 			}
-			this.reset_schedule()
+			this.reset()
 			
 			return next
 		}
