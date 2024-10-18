@@ -47,7 +47,7 @@ namespace $ {
 					return iteration
 					
 				}
-			}
+			} as MapIterator<Key>
 		}
 		
 		entries() {
@@ -67,7 +67,7 @@ namespace $ {
 					return iteration
 					
 				}
-			}
+			} as MapIterator<[Key, Value]>
 		}
 		
 		[Symbol.iterator]() {

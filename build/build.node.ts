@@ -24,7 +24,7 @@ namespace $ {
 				process.exit(1)
 			}
 		} else {
-			Promise.resolve().then( ()=> build.server().start() )
+			Promise.resolve().then( ()=> $mol_wire_async(build.server()).start() )
 		}
 	}
 	
@@ -65,7 +65,7 @@ namespace $ {
 			let content = ''
 			for( const step of tree.select( 'build' , null ).kids ) {
 
-				const res = this.$.$mol_exec( file.parent().path() , step.text() ).stdout.toString().trim()
+				const res = this.$.$mol_run( { command: step.text(), dir: file.parent().path() } ).stdout.toString().trim()
 				if( step.type ) content += `let ${ step.type } = ${ JSON.stringify( res ) }`
 
 			}
@@ -596,17 +596,44 @@ namespace $ {
 			return process.stdout.isTTY
 		}
 
+		git_timeout() {
+			const timeout = Number(this.$.$mol_env().MOL_BUILD_GIT_TIMEOUT)
+			return (Number.isNaN(timeout) ? null : timeout) || 120000
+		}
+
+		@ $mol_action
+		run_safe({ command, dir }: { command: readonly string[] | string, dir: string }) {
+			const timeout = this.git_timeout()
+			try {
+				return this.$.$mol_build.git_enabled
+					? this.$.$mol_run( { command, dir, timeout }).stdout.toString().trim()
+					: ''
+			} catch (e) {
+				if (e instanceof $mol_run_error && e.cause.timeout) {
+					this.$.$mol_build.git_enabled = false
+					this.$.$mol_log3_warn({
+						place: `${this}.git()`,
+						message: `Timeout - git disabled`,
+						hint: 'Check connection',
+					})
+					return ''
+				}
+				$mol_fail_hidden(e)
+			}
+		}
+
 		@ $mol_mem
 		gitVersion() {
-			return this.$.$mol_exec('.', 'git', 'version').stdout?.toString().trim().match(/.*\s+([\d\.]+)$/)?.[1] ?? ''
+			return this.$.$mol_run({ command: 'git version', dir: '.' }).stdout.toString().trim().match(/.*\s+([\d\.]+)$/)?.[1] ?? ''
 		}
 
 		gitDeepenSupported() {
 			return $mol_compare_text()(this.gitVersion(), '2.42.0') >= 0
 		}
 
+		@ $mol_action
 		gitPull(path: string) {
-			const args = [ 'pull' ]
+			const args = [] as string[]
 
 			if ( ! this.interactive() ) {
 				// depth и deepen не годятся для локальной разработки, поэтому оставляем ограничение глубины пула только для CI
@@ -616,18 +643,19 @@ namespace $ {
 				// fatal: unable to set up work tree using invalid config
 				args.push( this.gitDeepenSupported() ? '--deepen=1' : '--depth=1' )
 			}
-
-			return this.$.$mol_exec( path , 'git', ...args )
+			return this.run_safe( { command: ['git', 'pull', ...args], dir: path } )
 		}
+
+		static git_enabled = true
 
 		@ $mol_mem
 		gitSubmoduleDirs() {
 			if (! this.is_root_git()) return new Set<string>()
 
 			const root = this.root().path()
-			const output = this.$.$mol_exec( root , 'git', 'submodule', 'status', '--recursive' ).stdout.toString()
+			const output = this.$.$mol_run({ command: 'git submodule status --recursive', dir: root }).stdout.toString().trim()
 
-			const dirs = output.trim()
+			const dirs = output
 				.split('\n')
 				.map( str => str.match( /^\s*[^ ]+\s+([^ ]*).*/ )?.[1]?.trim() )
 				.filter($mol_guard_defined)
@@ -643,74 +671,70 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		modEnsure( path : string ) {
-
-			var mod = $mol_file.absolute( path )
-			var parent = mod.parent()
-			
-			if( mod !== this.root() ) this.modEnsure( parent.path() )
-			
-			var mapping = mod === this.root()
+		repo( path : string ) {
+			const mod = $mol_file.absolute( path )
+			const parent = mod.parent()
+			const mapping = mod === this.root()
 				? this.$.$mol_tree2_from_string( `pack ${ mod.name() } git \\https://github.com/hyoo-ru/mam.git
 ` )
 				: this.modMeta( parent.path() )
 
+			return mapping.select( 'pack' , mod.name() , 'git' ).kids.find($mol_guard_defined)
+		}
+
+		@ $mol_mem_key
+		modEnsure( path : string ) {
+
+			const mod = $mol_file.absolute( path )
+			const parent = mod.parent()
+			
+			if( mod !== this.root() ) this.modEnsure( parent.path() )
+			const repo = this.repo(path)
 			if( mod.exists()) {
 
-				try {
-
-					if( mod.type() !== 'dir' ) return false
+				if( mod.type() !== 'dir' ) return false
 					
-					const git_dir = mod.resolve( '.git' )
-					const git_dir_exists = git_dir.exists() && git_dir.type() === 'dir'
-					if( git_dir_exists) {
-						this.gitPull( mod.path() )
-						// mod.reset()
-						// for ( const sub of mod.sub() ) sub.reset()
-						
-						return false
-					}
-
-					const is_submodule = this.gitSubmoduleDirs().has( mod.path() )
-
-					if ( is_submodule ) {
-						this.gitPull( mod.path() )
-						return false
-					}
+				const git_dir = mod.resolve( '.git' )
+				const git_dir_exists = git_dir.exists() && git_dir.type() === 'dir'
+				if( git_dir_exists) {
+					this.gitPull( mod.path() )
+					// mod.reset()
+					// for ( const sub of mod.sub() ) sub.reset()
 					
-					for( let repo of mapping.select( 'pack' , mod.name() , 'git' ).kids ) {
-						this.$.$mol_exec( mod.path() , 'git' , 'init' )
-						
-						const res = this.$.$mol_exec( mod.path() , 'git' , 'remote' , 'show' , repo.text() )
-						const matched = res.stdout.toString().match( /HEAD branch: (.*?)\n/ )
-						const head_branch_name = res instanceof Error || matched === null || !matched[1]
-							? 'master'
-							: matched[1]
-						
-						this.$.$mol_exec( mod.path() , 'git' , 'remote' , 'add' , '--track' , head_branch_name! , 'origin' , repo.text() )
-						this.gitPull( mod.path() )
-						mod.reset()
-						for ( const sub of mod.sub() ) {
-							sub.reset()
-						}
-						return true
+					return false
+				}
+
+				const is_submodule = this.gitSubmoduleDirs().has( mod.path() )
+
+				if ( is_submodule ) {
+					this.gitPull( mod.path() )
+					return false
+				}
+
+				if (repo) {
+
+					this.$.$mol_run( { command: ['git', 'init'], dir: mod.path() } )
+			
+					const res = this.$.$mol_run( { command: ['git', 'remote', 'show', repo.text() ],  dir: mod.path() } )
+					const matched = res.stdout.toString().match( /HEAD branch: (.*?)\n/ )
+					const head_branch_name = res instanceof Error || matched === null || !matched[1]
+						? 'master'
+						: matched[1]
+					
+					this.$.$mol_run( { command: ['git', 'remote', 'add', '--track', head_branch_name, 'origin' , repo.text() ], dir: mod.path() } )
+					this.gitPull( mod.path() )
+					mod.reset()
+					for ( const sub of mod.sub() ) {
+						sub.reset()
 					}
-
-				} catch( error: any ) {
-
-					this.$.$mol_log3_fail({
-						place: `${this}.modEnsure()` ,
-						path ,
-						message: error.message ,
-					})
-
+					return true
 				}
 
 				return false
 			}
 
-			for( let repo of mapping.select( 'pack' , mod.name() , 'git' ).kids ) {
-				this.$.$mol_exec( this.root().path() , 'git' , 'clone' , '--depth', '1' , repo.text() , mod.relate( this.root() ) )
+			if( repo ) {
+				this.$.$mol_run( { command: ['git', 'clone' , '--depth', '1' , repo.text() , mod.relate( this.root() ) ], dir: this.root().path() })
 				mod.reset()
 				return true
 			}
@@ -739,7 +763,7 @@ namespace $ {
 
 			return false
 		}
-		
+
 		@ $mol_mem_key
 		modMeta( path : string ) {
 
@@ -757,7 +781,6 @@ namespace $ {
 		graph( { path , exclude } : { path : string , exclude? : string[] } ) {
 			let graph = new $mol_graph< string , { priority : number } >()
 			let added : { [ path : string ] : boolean } = {}
-			
 			var addMod = ( mod : $mol_file )=> {
 				if( added[ mod.path() ] ) return
 				added[ mod.path() ] = true
@@ -769,10 +792,10 @@ namespace $ {
 					const isFile = /\.\w+$/.test( p )
 
 					var dep = ( p[ 0 ] === '/' )
-					? this.root().resolve( p + ( isFile ? '' : '/' + p.replace( /.*\// , '' ) ) )
-					: ( p[ 0 ] === '.' )
-					? mod.resolve( p )
-					: this.root().resolve( 'node_modules' ).resolve( './' + p )
+						? this.root().resolve( p + ( isFile ? '' : '/' + p.replace( /.*\// , '' ) ) )
+						: ( p[ 0 ] === '.' )
+							? mod.resolve( p )
+							: this.root().resolve( 'node_modules' ).resolve( './' + p )
 
 					try {
 						this.modEnsure( dep.path() )
@@ -1149,7 +1172,7 @@ namespace $ {
 			}
 
 			if( bundle === 'node' ) {
-				this.$.$mol_exec( this.root().path() , 'node' , '--enable-source-maps', '--trace-uncaught', target.relate( this.root() ) )
+				this.$.$mol_run( { command: ['node', '--enable-source-maps', '--trace-uncaught', target.relate( this.root() ) ],  dir: this.root().path() } )
 			}
 			
 			return [ target , targetMap ]
@@ -1355,7 +1378,7 @@ namespace $ {
 			try {
 				
 				const published = ( [] as string[] ).concat( JSON.parse(
-					this.$.$mol_exec( '' , 'npm' , 'view' , name , 'versions', '--json' ).stdout.toString()
+					this.$.$mol_run( { command: ['npm', 'view' , name , 'versions', '--json'], dir: '' } ).stdout.toString()
 				) ).slice(-1)[0].split('.').map( Number )
 				
 				if( published[0] > version[0] ) {
@@ -1368,7 +1391,9 @@ namespace $ {
 					version[2] = published[2]
 				}
 				
-			} catch {}
+			} catch (e) {
+				if ($mol_promise_like(e)) $mol_fail_hidden(e)
+			}
 
 			++ version[2]
 
