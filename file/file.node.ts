@@ -75,7 +75,6 @@ namespace $ {
 
 		}
 
-		@ $mol_action
 		protected watch_event(type: string, path: string) {
 			const file = $mol_file.relative( path.replace( /\\/g , '/' ) )
 			const parent = type === 'change' ? this : file.parent()
@@ -143,7 +142,7 @@ namespace $ {
 
 					if( prev !== undefined && !$mol_compare_array( prev, next ) ) {
 						this.$.$mol_log3_rise({
-							place: `$mol_file_node..buffer()`,
+							place: `$mol_file_node.buffer()`,
 							message: 'Changed' ,
 							path: this.relate() ,
 						})
