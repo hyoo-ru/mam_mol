@@ -692,6 +692,7 @@ namespace $ {
 			if( mod !== this.root() ) this.modEnsure( parent.path() )
 			const repo = this.repo(path)
 			if( mod.exists()) {
+				mod.stat()
 
 				if( mod.type() !== 'dir' ) return false
 					

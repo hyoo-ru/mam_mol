@@ -11,8 +11,8 @@ namespace $ {
 			const destructor = task.destructor.bind(task)
             task.destructor = ()=> {
 				destructor()
-                next()
 				destructed = true
+                next()
             }
 
 			let promise
@@ -20,9 +20,9 @@ namespace $ {
 			do {
 				promise = this.promise
 				await promise
+				if (destructed) return next
 			} while (promise !== this.promise)
 
-            if (destructed) return next
 
 			this.promise = new Promise(done => { next = done })
 			return next
@@ -30,5 +30,16 @@ namespace $ {
 
 		lock() { return $mol_wire_sync(this).lock_async() }
 
+		run<Result>(cb: () => Result) {
+			const unlock = this.lock()
+			try {
+				const result = cb()
+				unlock()
+				return result
+			} catch(e) {
+			   if (! $mol_promise_like(e)) unlock()
+			   $mol_fail_hidden(e)
+			}
+		 }
 	}
 }
