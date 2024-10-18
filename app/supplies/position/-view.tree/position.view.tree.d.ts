@@ -1,111 +1,111 @@
 declare namespace $ {
 
-	type $mol_labeler__title__Q8PVOQMA = $mol_type_enforce<
+	type $mol_labeler__title__V7JZP7NX = $mol_type_enforce<
 		ReturnType< $mol_app_supplies_position['product_title'] >
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content__QLGWRURY = $mol_type_enforce<
+	type $mol_labeler__content__UKS52VQ3 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_unit_money__valueOf__8HGY5U5L = $mol_type_enforce<
+	type $mol_unit_money__valueOf__D0ZO7FAQ = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_unit_money['valueOf'] >
 	>
-	type $mol_cost__value__1U6C8OKM = $mol_type_enforce<
+	type $mol_cost__value__IKRSKBKC = $mol_type_enforce<
 		ReturnType< $mol_app_supplies_position['cost'] >
 		,
 		ReturnType< $mol_cost['value'] >
 	>
-	type $mol_labeler__title__S0CQBXUS = $mol_type_enforce<
+	type $mol_labeler__title__J64NN7S6 = $mol_type_enforce<
 		ReturnType< $mol_app_supplies_position['cost_title'] >
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content__JIYBDL3J = $mol_type_enforce<
+	type $mol_labeler__content__MNHFJV8P = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_row__sub__HG3SRB81 = $mol_type_enforce<
+	type $mol_row__sub__HAUHHWDP = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_row['sub'] >
 	>
-	type $mol_labeler__title__T4LI0CFH = $mol_type_enforce<
+	type $mol_labeler__title__M766MM2N = $mol_type_enforce<
 		ReturnType< $mol_app_supplies_position['division_title'] >
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content__RBWBVOWM = $mol_type_enforce<
+	type $mol_labeler__content__AGEDBTAX = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_unit_money__valueOf__EULEPLIG = $mol_type_enforce<
+	type $mol_unit_money__valueOf__BYLNXAM2 = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_unit_money['valueOf'] >
 	>
-	type $mol_cost__value__XC3EV8W5 = $mol_type_enforce<
+	type $mol_cost__value__7XZ691RQ = $mol_type_enforce<
 		ReturnType< $mol_app_supplies_position['price'] >
 		,
 		ReturnType< $mol_cost['value'] >
 	>
-	type $mol_labeler__title__N796XWKF = $mol_type_enforce<
+	type $mol_labeler__title__GNXXDHM2 = $mol_type_enforce<
 		ReturnType< $mol_app_supplies_position['price_label'] >
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content__OIJZU55N = $mol_type_enforce<
+	type $mol_labeler__content__Z75QL0X4 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_row__sub__4UVU2BVD = $mol_type_enforce<
+	type $mol_row__sub__EKG6SBQW = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_row['sub'] >
 	>
-	type $mol_labeler__title__AH8JDFQC = $mol_type_enforce<
+	type $mol_labeler__title__EX5TKT91 = $mol_type_enforce<
 		ReturnType< $mol_app_supplies_position['quantity_title'] >
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content__OL49CVWG = $mol_type_enforce<
+	type $mol_labeler__content__Q96CQFTT = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_labeler__title__QHRYMQBV = $mol_type_enforce<
+	type $mol_labeler__title__O4TH9UG2 = $mol_type_enforce<
 		ReturnType< $mol_app_supplies_position['supply_date_title'] >
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content__TENZMVQ7 = $mol_type_enforce<
+	type $mol_labeler__content__AXUED6IY = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_labeler__title__GUNMSD15 = $mol_type_enforce<
+	type $mol_labeler__title__GXWCFGMP = $mol_type_enforce<
 		ReturnType< $mol_app_supplies_position['store_title'] >
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content__588B1MO4 = $mol_type_enforce<
+	type $mol_labeler__content__PP3TK0YO = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_row__sub__ERJV12BK = $mol_type_enforce<
+	type $mol_row__sub__0URZCEZS = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_row['sub'] >
 	>
-	type $mol_view__sub__3M21RUVF = $mol_type_enforce<
+	type $mol_view__sub__PKL2G6YE = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
