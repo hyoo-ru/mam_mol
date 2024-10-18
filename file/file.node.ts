@@ -52,13 +52,10 @@ namespace $ {
 		}
 		
 		@ $mol_mem
-		watcher() {
-
-			if( /\/\./.test( this.path() ) ) return { destructor(){} }
-			
+		override watcher(reset?: null) {
 			const watcher = $node.chokidar.watch( this.path() , {
 				persistent : true ,
-				ignored: path => /([\/\\]\.|___$)/.test( path ) ,
+				ignored: path => /([\/\\]\.|___$)/.test( path ),
 				depth :  0 ,
 				ignoreInitial : true ,
 				awaitWriteFinish: {
@@ -67,20 +64,8 @@ namespace $ {
 			} )
 
 			watcher
-			.on( 'all' , ( type , path )=> {
-				
-				const file = $mol_file.relative( path.replace( /\\/g , '/' ) )
-
-				file.reset()
-				
-				if( type === 'change' ) {
-					this.stat( null )
-				} else {
-					file.parent().reset()
-				}
-
-			} )
-			.on( 'error' , $mol_fail_log )
+				.on( 'all' , (type, path) => this.watch_event(type, path) )
+				.on( 'error' , $mol_fail_log )
 			
 			return {
 				destructor() {
@@ -90,20 +75,33 @@ namespace $ {
 
 		}
 
+		@ $mol_action
+		protected watch_event(type: string, path: string) {
+			const file = $mol_file.relative( path.replace( /\\/g , '/' ) )
+			const parent = type === 'change' ? this : file.parent()
+			file.reset_schedule()
+			parent.reset_schedule()
+		}
+
+		static reset_changed() {
+			this.$.$mol_run.lock_run(() => super.reset_changed())
+		}
+
 		@ $mol_mem
-		stat( next? : $mol_file_stat | null, virt?: 'virt' ) {
-			
+		override stat(next? : $mol_file_stat | null, virt?: 'virt') {
 			let stat = next
+			// this.stat_counter()
 			const path = this.path()
 
 			this.parent().watcher()
 			
-			if( virt ) return next!
+			if( virt ) return next ?? null
 			
 			try {
 				stat = next ?? stat_convert($node.fs.statSync( path, { throwIfNoEntry: false } ))
 			} catch( error: any ) {
-				if (error.code === 'ENOENT') error = new $mol_file_not_found(`File not found`)
+				// For node < 14.7.0 compatible with throwIfNoEntry: false above
+				if (error.code === 'ENOENT') return null
 				error.message += '\n' + path
 				return this.$.$mol_fail_hidden(error)
 			}

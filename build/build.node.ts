@@ -10,7 +10,7 @@ namespace $ {
 				paths.forEach(
 					( path : string )=> {
 						path = build.root().resolve( path ).path()
-						return build.bundleAll( { path } )
+						return build.bundleAll( path )
 					}
 				)
 				process.exit(0)
@@ -65,7 +65,7 @@ namespace $ {
 			let content = ''
 			for( const step of tree.select( 'build' , null ).kids ) {
 
-				const res = this.$.$mol_run( { command: step.text(), dir: file.parent().path() } ).stdout.toString().trim()
+				const res = this.$.$mol_run.spawn( { command: step.text(), dir: file.parent().path() } ).stdout.toString().trim()
 				if( step.type ) content += `let ${ step.type } = ${ JSON.stringify( res ) }`
 
 			}
@@ -141,7 +141,7 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		mods( { path , exclude } : { path : string , exclude? : string[] } ) {
+		mods( [ path , exclude ] : [ path : string , exclude? : readonly string[] ] ) {
 
 			const parent = $mol_file.absolute( path )
 			const mods : $mol_file[] = []
@@ -178,14 +178,14 @@ namespace $ {
 		}
 		
 		// @ $mol_mem_key
-		// modsRecursive( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
+		// modsRecursive( [ path , exclude ] : [ path : string , exclude? : readonly string[] ] ) : $mol_file[] {
 		// 	var mod = $mol_file.absolute( path )
 		// 	switch( mod.type() ) {
 		// 		case 'file' :
 		// 			return [ mod ]
 		// 		case 'dir' :
 		// 			var mods = [ mod ]
-		// 			for( var m of this.mods( { path , exclude } ) ) {
+		// 			for( var m of this.mods( [ path , exclude ] ) ) {
 		// 				if( m.type() !== 'dir' ) continue
 		// 				for( var dep of this.modsRecursive( { path : m.path() , exclude } ) ) {
 		// 					if( mods.indexOf( dep ) !== -1 ) continue
@@ -199,24 +199,24 @@ namespace $ {
 		// }
 		
 		@ $mol_mem_key
-		sources( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
+		sources( [ path , exclude ] : [ path : string , exclude? : readonly string[] ] ) : $mol_file[] {
 			const mod = $mol_file.absolute( path )
 			if ( ! mod.exists() ) return []
 			switch( mod.type() ) {
 				case 'file' :
 					return [ mod ]
 				case 'dir' :
-					return this.mods( { path , exclude } ).filter( mod => mod.type() === 'file' )
+					return this.mods( [ path , exclude ] ).filter( mod => mod.type() === 'file' )
 				default:
 					return []
 			}
 		}
 		
 		@ $mol_mem_key
-		sourcesSorted( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
+		sourcesSorted( [ path , exclude ] : [ path : string , exclude? : readonly string[] ] ) : $mol_file[] {
 			const mod = $mol_file.absolute( path )
 			const graph = new $mol_graph< string , { priority : number } >()
-			const sources = this.sources( { path , exclude } )
+			const sources = this.sources( [ path , exclude ] )
 			for( let src of sources ) {
 				graph.nodes.add( src.relate( this.root() ) )
 			}
@@ -238,7 +238,7 @@ namespace $ {
 						let nextFiles : $mol_file[] = []
 						for( let file of files ) {
 							let validName = new RegExp( `^(${file.name()})?${name}(?![a-z0-9])` , 'i' )
-							for( let child of this.mods( { path : file.path() , exclude } ) ) {
+							for( let child of this.mods( [ file.path() , exclude ] ) ) {
 								if( !child.name().match( validName ) ) continue
 								nextFiles.push( child )
 							}
@@ -268,13 +268,13 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		sourcesAll( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
-			const sortedPaths = this.graph( { path , exclude } ).sorted
+		sourcesAll( [ path , exclude ] : [ path : string , exclude? : readonly string[] ] ) : $mol_file[] {
+			const sortedPaths = this.graph( [ path , exclude ] ).sorted
 			
 			const sources = new Set< $mol_file >()
 			sortedPaths.forEach( path => {
 				const mod = this.root().resolve( path )
-				this.sourcesSorted( { path : mod.path() , exclude } ).forEach( src => {
+				this.sourcesSorted( [ mod.path() , exclude ] ).forEach( src => {
 					sources.add( src )
 				} )
 			} )
@@ -297,14 +297,14 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		tsPaths( { path , exclude , bundle } : { path : string , bundle : string , exclude : string[] } ) {
+		tsPaths( { path , exclude , bundle } : { path : string , bundle : string , exclude : readonly string[] } ) {
 
-			const sources = this.sourcesAll( { path , exclude } ).filter( src => /tsx?$/.test( src.ext() ) )
+			const sources = this.sourcesAll( [ path , exclude ] ).filter( src => /tsx?$/.test( src.ext() ) )
 
 			if( sources.length && bundle === 'node' ) {
 				const types = [] as string[]
 				
-				for( let [ dep, src ] of this.nodeDeps({ path , exclude }) ) {
+				for( let [ dep, src ] of this.nodeDeps([ path , exclude ]) ) {
 					types.push( '\t' + JSON.stringify( dep ) + ' : typeof import\( ' + JSON.stringify( dep ) + ' ) // ' + src )
 				}
 				
@@ -317,7 +317,7 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		tsHost( { path , exclude , bundle } : { path : string , bundle : string , exclude : string[] } ) {
+		tsHost( { path , exclude , bundle } : { path : string , bundle : string , exclude : readonly string[] } ) {
 			
 			const host = $node.typescript.createCompilerHost( this.tsOptions() )
 			
@@ -329,7 +329,7 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		tsTranspiler( { path , exclude , bundle } : { path : string , bundle : string , exclude : string[] } ) {
+		tsTranspiler( { path , exclude , bundle } : { path : string , bundle : string , exclude : readonly string[] } ) {
 			return $node.typescript.createProgram(
 				this.tsPaths({ path , exclude , bundle }) ,
 				this.tsOptions() ,
@@ -338,13 +338,13 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		tsTranspile( { path , exclude , bundle } : { path : string , bundle : string , exclude : string[] } ) {
+		tsTranspile( { path , exclude , bundle } : { path : string , bundle : string , exclude : readonly string[] } ) {
 			const res = this.tsTranspiler({ path , exclude , bundle }).emit()
 			return res
 		}
 
 		@ $mol_mem_key
-		tsService( { path , exclude , bundle } : { path : string , bundle : string , exclude : string[] } ) {
+		tsService( { path , exclude , bundle } : { path : string , bundle : string , exclude : readonly string[] } ) {
 
 			const paths = this.tsPaths({ path , exclude , bundle })
 			if( !paths.length ) return null
@@ -485,8 +485,8 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		sources_js( { path , exclude } : { path : string , exclude : string[] } ) : $mol_file[] {
-			var sources = this.sourcesAll( { path , exclude } )
+		sources_js( [ path , exclude ] : [ path : string , exclude : readonly string[] ] ) : $mol_file[] {
+			var sources = this.sourcesAll( [ path , exclude ] )
 			
 			const types = {
 				'svg' : 'image/svg+xml' ,
@@ -527,9 +527,9 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		sourcesDTS( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
+		sourcesDTS( [ path , exclude ] : [ path : string , exclude? : readonly string[] ] ) : $mol_file[] {
 			
-			let sources = this.sourcesAll( { path , exclude } )
+			let sources = this.sourcesAll( [ path , exclude ] )
 			
 			sources = sources.filter( src => /(tsx?)$/.test( src.ext() ) )
 			
@@ -541,8 +541,8 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		sourcesCSS( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
-			return this.sourcesAll( { path , exclude } ).filter( src => /(css)$/.test( src.ext() ) )
+		sourcesCSS( [ path , exclude ] : [ path : string , exclude? : readonly string[] ] ) : $mol_file[] {
+			return this.sourcesAll( [ path , exclude ] ).filter( src => /(css)$/.test( src.ext() ) )
 		}
 		
 		static dependors : { [ index : string ] : undefined | ( ( source : $mol_file )=> { [ index : string ] : number } ) } = {}
@@ -567,26 +567,26 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		modDeps( { path , exclude } : { path : string , exclude? : string[] } ) {
+		modDeps( [ path , exclude ] : [ path : string , exclude? : readonly string[] ] ) {
 			const mod = $mol_file.absolute( path )
 			const depends : { [ index : string ] : number } = mod === this.root()
 				? {}
 				: { '..' : Number.MIN_SAFE_INTEGER }
-			for( var src of this.sources( { path , exclude } ) ) {
+			for( var src of this.sources( [ path , exclude ] ) ) {
 				$mol_build_depsMerge( depends , this.srcDeps( src.path() ) )
 			}
 			return depends
 		}
 		
 		@ $mol_mem_key
-		dependencies( { path , exclude } : { path : string , exclude? : string[] } ) {
+		dependencies( [ path , exclude ] : [ path : string , exclude? : readonly string[] ] ) {
 			var mod = $mol_file.absolute( path )
 			if ( ! mod.exists() ) return {}
 			switch( mod.type() ) {
 				case 'file' :
 					return this.srcDeps( path )
 				case 'dir' :
-					return this.modDeps( { path , exclude } )
+					return this.modDeps( [ path , exclude ] )
 				default :
 					return {}
 			}
@@ -601,15 +601,36 @@ namespace $ {
 			return (Number.isNaN(timeout) ? null : timeout) || 120000
 		}
 
+		@ $mol_mem
+		gitVersion() {
+			return this.$.$mol_run.spawn({ command: 'git version', dir: '.' }).stdout.toString().trim().match(/.*\s+([\d\.]+)$/)?.[1] ?? ''
+		}
+
+		gitDeepenSupported() {
+			return $mol_compare_text()(this.gitVersion(), '2.42.0') >= 0
+		}
+
 		@ $mol_action
-		run_safe({ command, dir }: { command: readonly string[] | string, dir: string }) {
+		git_pull(dir: string) {
+
+			const command = ['git', 'pull']
+
+			if ( ! this.interactive() ) {
+				// depth и deepen не годятся для локальной разработки, поэтому оставляем ограничение глубины пула только для CI
+				// --depth=1 в сочетании с сабмодулями обрезает историю, кроме первого коммита
+				// --deepen=1 в git-конфиге сабмодуля выставляет bare=true, после этого все команды падают с сообщением
+				// warning: core.bare and core.worktree do not make sense
+				// fatal: unable to set up work tree using invalid config
+				command.push( this.gitDeepenSupported() ? '--deepen=1' : '--depth=1' )
+			}
+
 			const timeout = this.git_timeout()
 			try {
 				return this.$.$mol_build.git_enabled
-					? this.$.$mol_run( { command, dir, timeout }).stdout.toString().trim()
+					? this.$.$mol_run.spawn( { command, dir, timeout }).stdout.toString().trim()
 					: ''
 			} catch (e) {
-				if (e instanceof $mol_run_error && e.cause.timeout) {
+				if (e instanceof $mol_run_error && e.cause.timeout_kill) {
 					this.$.$mol_build.git_enabled = false
 					this.$.$mol_log3_warn({
 						place: `${this}.git()`,
@@ -618,42 +639,22 @@ namespace $ {
 					})
 					return ''
 				}
+				if (e instanceof Error) {
+					this.$.$mol_fail_log(e)
+					return
+				}
 				$mol_fail_hidden(e)
 			}
-		}
-
-		@ $mol_mem
-		gitVersion() {
-			return this.$.$mol_run({ command: 'git version', dir: '.' }).stdout.toString().trim().match(/.*\s+([\d\.]+)$/)?.[1] ?? ''
-		}
-
-		gitDeepenSupported() {
-			return $mol_compare_text()(this.gitVersion(), '2.42.0') >= 0
-		}
-
-		@ $mol_action
-		gitPull(path: string) {
-			const args = [] as string[]
-
-			if ( ! this.interactive() ) {
-				// depth и deepen не годятся для локальной разработки, поэтому оставляем ограничение глубины пула только для CI
-				// --depth=1 в сочетании с сабмодулями обрезает историю, кроме первого коммита
-				// --deepen=1 в git-конфиге сабмодуля выставляет bare=true, после этого все команды падают с сообщением
-				// warning: core.bare and core.worktree do not make sense
-				// fatal: unable to set up work tree using invalid config
-				args.push( this.gitDeepenSupported() ? '--deepen=1' : '--depth=1' )
-			}
-			return this.run_safe( { command: ['git', 'pull', ...args], dir: path } )
 		}
 
 		static git_enabled = true
 
 		@ $mol_mem
-		gitSubmoduleDirs() {
+		git_submodules() {
 			if (! this.is_root_git()) return new Set<string>()
 
 			const root = this.root().path()
-			const output = this.$.$mol_run({ command: 'git submodule status --recursive', dir: root }).stdout.toString().trim()
+			const output = this.$.$mol_run.spawn({ command: 'git submodule status --recursive', dir: root }).stdout.toString().trim()
 
 			const dirs = output
 				.split('\n')
@@ -691,42 +692,43 @@ namespace $ {
 			if( mod !== this.root() ) this.modEnsure( parent.path() )
 			const repo = this.repo(path)
 			if( mod.exists()) {
+				mod.stat()
 
 				if( mod.type() !== 'dir' ) return false
 					
 				const git_dir = mod.resolve( '.git' )
 				const git_dir_exists = git_dir.exists() && git_dir.type() === 'dir'
 				if( git_dir_exists) {
-					this.gitPull( mod.path() )
+					this.git_pull( mod.path() )
 					// mod.reset()
 					// for ( const sub of mod.sub() ) sub.reset()
 					
 					return false
 				}
 
-				const is_submodule = this.gitSubmoduleDirs().has( mod.path() )
+				const is_submodule = this.git_submodules().has( mod.path() )
 
 				if ( is_submodule ) {
-					this.gitPull( mod.path() )
+					this.git_pull( mod.path() )
 					return false
 				}
 
 				if (repo) {
 
-					this.$.$mol_run( { command: ['git', 'init'], dir: mod.path() } )
+					this.$.$mol_run.spawn( { command: ['git', 'init'], dir: mod.path() } )
 			
-					const res = this.$.$mol_run( { command: ['git', 'remote', 'show', repo.text() ],  dir: mod.path() } )
+					const res = this.$.$mol_run.spawn( { command: ['git', 'remote', 'show', repo.text() ],  dir: mod.path() } )
 					const matched = res.stdout.toString().match( /HEAD branch: (.*?)\n/ )
 					const head_branch_name = res instanceof Error || matched === null || !matched[1]
 						? 'master'
 						: matched[1]
 					
-					this.$.$mol_run( { command: ['git', 'remote', 'add', '--track', head_branch_name, 'origin' , repo.text() ], dir: mod.path() } )
-					this.gitPull( mod.path() )
-					mod.reset()
-					for ( const sub of mod.sub() ) {
-						sub.reset()
-					}
+					this.$.$mol_run.spawn( { command: ['git', 'remote', 'add', '--track', head_branch_name, 'origin' , repo.text() ], dir: mod.path() } )
+					this.git_pull( mod.path() )
+					// mod.reset()
+					// for ( const sub of mod.sub() ) {
+					// 	sub.reset()
+					// }
 					return true
 				}
 
@@ -734,8 +736,9 @@ namespace $ {
 			}
 
 			if( repo ) {
-				this.$.$mol_run( { command: ['git', 'clone' , '--depth', '1' , repo.text() , mod.relate( this.root() ) ], dir: this.root().path() })
-				mod.reset()
+				const command = ['git', 'clone' , '--depth', '1' , repo.text() , mod.relate( this.root() ) ]
+				this.$.$mol_run.spawn( { command, dir: this.root().path(), dirty: true })
+				// mod.reset()
 				return true
 			}
 			
@@ -778,126 +781,73 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		graph( { path , exclude } : { path : string , exclude? : string[] } ) {
-			let graph = new $mol_graph< string , { priority : number } >()
-			let added : { [ path : string ] : boolean } = {}
-			var addMod = ( mod : $mol_file )=> {
-				if( added[ mod.path() ] ) return
-				added[ mod.path() ] = true
-				
-				graph.nodes.add( mod.relate( this.root() ) )
-				
-				const checkDep = ( p : string )=> {
-
-					const isFile = /\.\w+$/.test( p )
-
-					var dep = ( p[ 0 ] === '/' )
-						? this.root().resolve( p + ( isFile ? '' : '/' + p.replace( /.*\// , '' ) ) )
-						: ( p[ 0 ] === '.' )
-							? mod.resolve( p )
-							: this.root().resolve( 'node_modules' ).resolve( './' + p )
-
-					try {
-						this.modEnsure( dep.path() )
-					} catch( error: any ) {
-						error.message = `${ error.message }\nDependency "${p}" -> "${ dep.relate( this.root() ) }" from "${ mod.relate( this.root() ) }" `
-						$mol_fail_hidden(error)
-					}
-					
-					while( !dep.exists() ) dep = dep.parent()
-					
-					if( dep.type() === 'dir' && dep.name() !== 'index' ) {
-						let index = dep.resolve( 'index.js' )
-						if( index.exists() ) dep = index
-					}
-					
-					//if( dep.type() === 'file' ) dep = dep.parent()
-					if( mod === dep ) return
-					
-					const from = mod.relate( this.root() )
-					const to = dep.relate( this.root() )
-					const edge = graph.edges_out.get( from )?.get( to )
-					if( !edge || ( deps[ p ] > edge.priority ) ) {
-						graph.link( from , to , { priority : deps[ p ] } )
-					}
-					
-					addMod( dep )
-				}
-				
-				let deps = this.dependencies( { path : mod.path() , exclude } )
-				for( let p in deps ) {
-					checkDep( p )
-				}
-				
-			}
-			
-			this.modEnsure( path )
-
-			addMod( $mol_file.absolute( path ) )
-			
-			graph.acyclic( edge => edge.priority )
-
-			return graph
+		graph( [ path , exclude ] : [ path : string , exclude? : readonly string[] ] ) {
+			return this.$.$mol_build_graph.make({
+				root: () => this.root(),
+				mod_ensure: path => this.modEnsure(path),
+				dependencies: path => this.dependencies([ path, exclude ]),
+				path: () => path,
+			})
 		}
 
 		@ $mol_action
-		bundleAllWeb( { path } : { path : string } ) {
-			this.bundle({ path , bundle : 'web.deps.json' })
-			this.bundle({ path , bundle : 'web.css' })
-			this.bundle({ path , bundle : 'web.js' })
-			this.bundle({ path , bundle : 'web.test.js' })
-			this.bundle({ path , bundle : 'web.test.html' })
-			this.bundle({ path , bundle : 'web.view.tree' })
-			this.bundle({ path , bundle : 'web.meta.tree' })
-			this.bundle({ path , bundle : 'web.locale=en.json' })
+		bundleAllWeb( path: string ) {
+			this.bundle([ path , 'web.deps.json' ])
+			this.bundle([ path , 'web.css' ])
+			this.bundle([ path , 'web.js' ])
+			this.bundle([ path , 'web.test.js' ])
+			this.bundle([ path , 'web.test.html' ])
+			this.bundle([ path , 'web.view.tree' ])
+			this.bundle([ path , 'web.meta.tree' ])
+			this.bundle([ path , 'web.locale=en.json' ])
 			return null
 		}
 		
 		@ $mol_action
-		bundleAllWebAudit( { path } : { path : string } ) {
-			this.bundle({ path , bundle : 'web.audit.js' })
-			this.bundle({ path , bundle : 'web.d.ts' })
+		bundleAllWebAudit( path: string ) {
+			this.bundle([ path , 'web.audit.js' ])
+			this.bundle([ path , 'web.d.ts' ])
 		}
 		
 		@ $mol_action
-		bundleAllNode( { path } : { path : string } ) {
-			this.bundle({ path , bundle : 'node.deps.json' })
-			this.bundle({ path , bundle : 'node.js' })
-			this.bundle({ path , bundle : 'node.test.js' })
-			this.bundle({ path , bundle : 'node.view.tree' })
-			this.bundle({ path , bundle : 'node.meta.tree' })
-			this.bundle({ path , bundle : 'node.locale=en.json' })
+		bundleAllNode( path: string ) {
+			this.bundle([ path , 'node.deps.json' ])
+			this.bundle([ path , 'node.js' ])
+			this.bundle([ path , 'node.test.js' ])
+			this.bundle([ path , 'node.view.tree' ])
+			this.bundle([ path , 'node.meta.tree' ])
+			this.bundle([ path , 'node.locale=en.json' ])
 			return null
 		}
 		
 		@ $mol_action
-		bundleAllNodeAudit( { path } : { path : string } ) {
-			this.bundle({ path , bundle : 'node.audit.js' })
-			this.bundle({ path , bundle : 'node.d.ts' })
+		bundleAllNodeAudit( path: string ) {
+			this.bundle([ path , 'node.audit.js' ])
+			this.bundle([ path , 'node.d.ts' ])
 		}
 		
 		@ $mol_action
-		bundleAll( { path } : { path : string } ) {
+		bundleAll( path: string ) {
 
-			this.bundle({ path , bundle : 'index.html' })
-			this.bundle({ path , bundle : 'test.html' })
+			this.bundle([ path , 'index.html' ])
+			this.bundle([ path , 'test.html' ])
 			
-			this.bundleAllWeb({ path })
-			this.bundleAllWebAudit({ path })
-			this.bundleAllNode({ path })
-			this.bundleAllNodeAudit({ path })
+			this.bundleAllWeb(path)
+			this.bundleAllWebAudit(path)
+			this.bundleAllNode(path)
+			this.bundleAllNodeAudit(path)
 			
-			this.bundle({ path , bundle : 'package.json' })
-			this.bundle({ path , bundle : 'readme.md' })
+			this.bundle([ path , 'package.json' ])
+			this.bundle([ path , 'readme.md' ])
 
-			this.bundleFiles( { path , exclude : [ 'node' ] } )
-			this.bundleCordova( { path , exclude : [ 'node' ] } )
+			this.bundleFiles( [ path , [ 'node' ] ] )
+			this.bundleCordova( [ path , [ 'node' ] ] )
 
 			return null
 		}
 		
 		@ $mol_mem_key
-		bundle( { path , bundle = '' } : { path : string , bundle? : string } ) {
+		bundle( [ path , bundle = '' ] : [ path : string , bundle? : string ] ) {
 			
 			bundle = bundle && bundle.replace( /\.map$/ , '' )
 			
@@ -936,7 +886,7 @@ namespace $ {
 						res = res.concat( this.bundleMJS( { path , exclude , bundle : env } ) )
 					}
 					if( !type || type === 'test.js' ) {
-						res = res.concat( this.bundleTestJS( { path , exclude , bundle : env } ) )
+						res = res.concat( this.bundleAndRunTestJS( { path , exclude , bundle : env } ) )
 					}
 					if( !type || type === 'audit.js' ) {
 						res = res.concat( this.bundleAuditJS( { path , exclude , bundle : env } ) )
@@ -965,23 +915,23 @@ namespace $ {
 			)
 			
 			if( !bundle || bundle === 'package.json' ) {
-				res = res.concat( this.bundlePackageJSON( { path , exclude : [ 'web', 'test' ] } ) )
+				res = res.concat( this.bundlePackageJSON( [ path , [ 'web', 'test' ] ] ) )
 			}
 			
 			if( !bundle || bundle === 'readme.md' ) {
-				res = res.concat( this.bundleReadmeMd( { path , exclude : [ 'web' ] } ) )
+				res = res.concat( this.bundleReadmeMd( [ path , [ 'web' ] ] ) )
 			}
 
 			if( !bundle || bundle === 'index.html' ) {
-				res = res.concat( this.bundleIndexHtml( { path } ) )
+				res = res.concat( this.bundleIndexHtml( [ path ] ) )
 			}
 			
 			if( !bundle || bundle === 'test.html' ) {
-				res = res.concat( this.bundleTestHtml( { path } ) )
+				res = res.concat( this.bundleTestHtml( path ) )
 			}
 
 			if( !bundle || /\//.test( bundle ) ) {
-				res = res.concat( this.bundleFiles( { path , exclude : [ 'node' ] } ) )
+				res = res.concat( this.bundleFiles( [ path , [ 'node' ] ] ) )
 			}
 			
 			return res
@@ -994,19 +944,19 @@ namespace $ {
 			this.$.$mol_log3_done({
 				place: this ,
 				duration: `${duration}ms` ,
-				message: `Built` , 
+				message: 'Built' , 
 				path ,
 			})
 
 		}
 
 		@ $mol_mem_key
-		bundleJS( { path , exclude , bundle } : { path : string , exclude : string[] , bundle : string } ) : $mol_file[] {
+		bundleJS( { path , exclude , bundle } : { path : string , exclude : readonly string[] , bundle : string } ) : $mol_file[] {
 			const start = Date.now()
 			var pack = $mol_file.absolute( path )
 			var targetJS = pack.resolve( `-/${bundle}.js` )
 			
-			var sources = this.sources_js( { path , exclude } )
+			var sources = this.sources_js( [ path , exclude ] )
 			if( sources.length === 0 ) return []
 			
 			var concater = new $mol_sourcemap_builder( this.root().relate( targetJS.parent() ), ';')
@@ -1066,7 +1016,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		bundleMJS( { path , exclude , bundle } : { path : string , exclude : string[] , bundle : string } ) : $mol_file[] {
+		bundleMJS( { path , exclude , bundle } : { path : string , exclude : readonly string[] , bundle : string } ) : $mol_file[] {
 			const start = Date.now()
 			const [ targetJS, targetJSMap ] = this.bundleJS({ path, exclude, bundle })
 			if (! targetJS) return []
@@ -1080,7 +1030,7 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		bundleAuditJS( { path , exclude , bundle } : { path : string , exclude : string[] , bundle : string } ) : $mol_file[] {
+		bundleAuditJS( { path , exclude , bundle } : { path : string , exclude : readonly string[] , bundle : string } ) : $mol_file[] {
 
 			const start = Date.now()
 			var pack = $mol_file.absolute( path )
@@ -1120,21 +1070,21 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		bundleTestJS( { path , exclude , bundle } : { path : string , exclude : string[] , bundle : string } ) : $mol_file[] {
+		bundle_test_js([ path , exclude , bundle ] : [ path : string , exclude : readonly string[] , bundle : string ]) {
 			const start = Date.now()
-			var pack = $mol_file.absolute( path )
+			const pack = $mol_file.absolute( path )
 			
-			var root = this.root()
-			var target = pack.resolve( `-/${bundle}.test.js` )
-			var targetMap = pack.resolve( `-/${bundle}.test.js.map` )
+			const root = this.root()
+			const target = pack.resolve( `-/${bundle}.test.js` )
+			const targetMap = pack.resolve( `-/${bundle}.test.js.map` )
 			
-			var concater = new $mol_sourcemap_builder( this.root().relate( target.parent() ), ';')
+			const concater = new $mol_sourcemap_builder( this.root().relate( target.parent() ), ';')
 			concater.add( '"use strict"' )
 			
-			var exclude_ext = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
-			var sources = this.sources_js( { path , exclude : exclude_ext } )
-			var sourcesNoTest = new Set( this.sources_js( { path , exclude } ) )
-			var sourcesTest = sources.filter( src => !sourcesNoTest.has( src ) )
+			const exclude_ext = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
+			const sources = this.sources_js( [ path , exclude_ext ] )
+			const sourcesNoTest = new Set( this.sources_js( [ path , exclude ] ) )
+			let sourcesTest = sources.filter( src => !sourcesNoTest.has( src ) )
 			if( bundle === 'node' ) {
 				sourcesTest = [ ... sourcesNoTest , ... sourcesTest ]
 			} else {
@@ -1171,15 +1121,21 @@ namespace $ {
 				$mol_fail_hidden( error )
 			}
 
+			return [ target, targetMap ]
+		}
+
+		@ $mol_mem_key
+		bundleAndRunTestJS( { path , exclude , bundle } : { path : string , exclude : readonly string[] , bundle : string } ) : $mol_file[] {
+			const [ target , targetMap ] = this.bundle_test_js([ path, exclude, bundle ])
 			if( bundle === 'node' ) {
-				this.$.$mol_run( { command: ['node', '--enable-source-maps', '--trace-uncaught', target.relate( this.root() ) ],  dir: this.root().path() } )
+				this.$.$mol_run.spawn( { command: ['node', '--enable-source-maps', '--trace-uncaught', target.relate( this.root() ) ],  dir: this.root().path() } )
 			}
 			
 			return [ target , targetMap ]
 		}
 		
 		@ $mol_mem_key
-		bundleTestHtml( { path } : { path : string } ) : $mol_file[] {
+		bundleTestHtml( path: string ) : $mol_file[] {
 			
 			const start = Date.now()
 			
@@ -1214,14 +1170,14 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		bundleDTS( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
+		bundleDTS( { path , exclude , bundle } : { path : string , exclude? : readonly string[] , bundle : string } ) : $mol_file[] {
 			const start = Date.now()
 			var pack = $mol_file.absolute( path )
 			
 			var target = pack.resolve( `-/${bundle}.d.ts` )
 			var targetMap = pack.resolve( `-/${bundle}.d.ts.map` )
 			
-			var sources = this.sourcesDTS( { path , exclude } )
+			var sources = this.sourcesDTS( [ path , exclude ] )
 			if( sources.length === 0 ) return []
 			
 			var concater = new $mol_sourcemap_builder( target.parent().path() )
@@ -1242,13 +1198,13 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		bundleViewTree( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
+		bundleViewTree( { path , exclude , bundle } : { path : string , exclude? : readonly string[] , bundle : string } ) : $mol_file[] {
 			const start = Date.now()
 			var pack = $mol_file.absolute( path )
 			
 			var target = pack.resolve( `-/${bundle}.view.tree` )
 			
-			var sources = this.sourcesAll({ path , exclude })
+			var sources = this.sourcesAll([ path , exclude ])
 			.filter( src => /view.tree$/.test( src.ext() ) )
 			
 			if( sources.length === 0 ) return []
@@ -1261,13 +1217,13 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		bundleMetaTree( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
+		bundleMetaTree( { path , exclude , bundle } : { path : string , exclude? : readonly string[] , bundle : string } ) : $mol_file[] {
 			const start = Date.now()
 			var pack = $mol_file.absolute( path )
 			
 			var target = pack.resolve( `-/${bundle}.meta.tree` )
 			
-			const sortedPaths = this.graph( { path , exclude } ).sorted
+			const sortedPaths = this.graph( [path , exclude ] ).sorted
 			
 			const namedMetas: $mol_tree2[] = []
 			sortedPaths.forEach( path => {
@@ -1287,10 +1243,10 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		nodeDeps( { path , exclude } : { path : string , exclude : string[] } ) {
+		nodeDeps( [ path , exclude ] : [ path : string , exclude : readonly string[] ] ) {
 			
 			var res = new Map<string,string>()
-			var sources = this.sourcesAll( { path , exclude } )
+			var sources = this.sourcesAll( [ path , exclude ] )
 			
 			for( let src of sources ) {
 				let deps = this.srcDeps( src.path() )
@@ -1308,7 +1264,7 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		bundleReadmeMd( { path , exclude } : { path : string , exclude : string[] } ) : $mol_file[] {
+		bundleReadmeMd( [ path , exclude ] : [ path : string , exclude : readonly string[] ] ) : $mol_file[] {
 			
 			const start = Date.now()
 			
@@ -1339,7 +1295,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		bundlePackageJSON( { path , exclude } : { path : string , exclude : string[] } ) : $mol_file[] {
+		bundlePackageJSON( [ path , exclude ] : [ path : string , exclude : readonly string[] ] ) : $mol_file[] {
 			const start = Date.now()
 			var pack = $mol_file.absolute( path )
 			
@@ -1378,7 +1334,7 @@ namespace $ {
 			try {
 				
 				const published = ( [] as string[] ).concat( JSON.parse(
-					this.$.$mol_run( { command: ['npm', 'view' , name , 'versions', '--json'], dir: '' } ).stdout.toString()
+					this.$.$mol_run.spawn( { command: ['npm', 'view' , name , 'versions', '--json'], dir: '' } ).stdout.toString()
 				) ).slice(-1)[0].split('.').map( Number )
 				
 				if( published[0] > version[0] ) {
@@ -1399,12 +1355,12 @@ namespace $ {
 
 			json.version = version.join( '.' )
 
-			for( let dep of this.nodeDeps({ path , exclude }).keys() ) {
+			for( let dep of this.nodeDeps([ path , exclude ]).keys() ) {
 				if( require('module').builtinModules.includes(dep) ) continue
 				json.dependencies[ dep ] = `*`
 			}
 			
-			json.keywords = [ ... this.graph( { path , exclude } ).nodes ]
+			json.keywords = [ ... this.graph( [ path , exclude ] ).nodes ]
 				.filter( Boolean )
 				.filter( path => !/[.-]/.test( path ) )
 				.map( path => '$' + path.replaceAll( '/', '_' ) )
@@ -1417,7 +1373,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		bundleIndexHtml( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
+		bundleIndexHtml( [ path , exclude ] : [ path : string , exclude? : readonly string[] ] ) : $mol_file[] {
 
 			const pack = $mol_file.absolute( path )
 			
@@ -1446,11 +1402,11 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		bundleFiles( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
+		bundleFiles( [ path , exclude ] : [ path : string , exclude? : readonly string[] ] ) : $mol_file[] {
 			const root = this.root()
 			const pack = $mol_file.absolute( path )
 			
-			var sources = this.sourcesAll( { path , exclude } )
+			var sources = this.sourcesAll( [ path , exclude ] )
 			.filter( src => /meta.tree$/.test( src.ext() ) )
 			
 			const targets : $mol_file[] = []
@@ -1488,7 +1444,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		bundleCordova( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
+		bundleCordova( [ path , exclude ] : [ path : string , exclude? : readonly string[] ] ) : $mol_file[] {
 			const start = Date.now()
 			const pack = $mol_file.absolute( path )
 			const cordovaOut = pack.resolve( '-' )
@@ -1516,12 +1472,12 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		bundleCSS( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
+		bundleCSS( { path , exclude , bundle } : { path : string , exclude? : readonly string[] , bundle : string } ) : $mol_file[] {
 			if( bundle === 'node' ) return []
 
 			const start = Date.now()
 			var pack = $mol_file.absolute( path )
-			var sources = [] as $mol_file[] // this.sourcesCSS( { path , exclude } )
+			var sources = [] as $mol_file[] // this.sourcesCSS( [ path , exclude ] )
 			
 			var target = pack.resolve( `-/${bundle}.css` )
 			var targetMap = pack.resolve( `-/${bundle}.css.map` )
@@ -1556,10 +1512,10 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		bundleLocale( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
+		bundleLocale( { path , exclude , bundle } : { path : string , exclude? : readonly string[] , bundle : string } ) : $mol_file[] {
 			const pack = $mol_file.absolute( path )
 			
-			const sources = this.sourcesAll( { path , exclude } ).filter( src => /(locale=(\w+)\.json)$/.test( src.name() ) )
+			const sources = this.sourcesAll( [ path , exclude ] ).filter( src => /(locale=(\w+)\.json)$/.test( src.name() ) )
 			if( !sources.length ) return []
 			
 			const locales = {} as { [ key : string ] : { [ key : string ] : string } }
@@ -1616,11 +1572,11 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		bundleDepsJSON( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
+		bundleDepsJSON( { path , exclude , bundle } : { path : string , exclude? : readonly string[] , bundle : string } ) : $mol_file[] {
 			const start = Date.now()
 			const pack = $mol_file.absolute( path )
 			
-			const list = this.sourcesAll( { path , exclude } )
+			const list = this.sourcesAll( [ path , exclude ] )
 			if( !list.length ) return []
 
 			const origs = list.filter( src => !/\/-/.test( src.path() ) )
@@ -1632,11 +1588,11 @@ namespace $ {
 				sloc[ ext ] = ( sloc[ ext ] || 0 ) + count
 			}
 			
-			const graph = this.graph( { path , exclude } )
+			const graph = this.graph( [ path , exclude ] )
 			
 			const deps = {} as Record<string, Record<string, number>>
 			for( let dep of graph.nodes ) {
-				deps[ dep ] = this.dependencies( { path : this.root().resolve( dep ).path() , exclude } )
+				deps[ dep ] = this.dependencies( [ this.root().resolve( dep ).path() , exclude ] )
 			}
 			
 			const deps_in = {} as Record< string , Record< string , number > >
