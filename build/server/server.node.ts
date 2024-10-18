@@ -5,24 +5,8 @@ namespace $ {
 		static trace = false
 
 		expressGenerator() {
-			const t = this
 			const self = $mol_wire_async( this )
-
-			return $mol_func_name_from(async function( req : any , res : any , next : (e?: unknown) => void ) {
-				try {
-					return await self.handleRequest( req, res, next )
-				} catch (error) {
-					if ($mol_fail_catch(error)) {
-						self.$.$mol_log3_fail({
-							place: `${t}.expressGenerator`,
-							stack: (error as Error).stack,
-							message: (error as Error).message ?? error,
-						})
-						next(error)
-					}
-				}
-			}, this.handleRequest)
-
+			return self.handleRequest.bind(self)
 		}
 		
 		handleRequest(
@@ -114,27 +98,8 @@ namespace $ {
 		}
 
 		override expressIndex() {
-			const t = this
 			const self = $mol_wire_async( this )
-			return $mol_func_name_from(async function(
-				req : typeof $node.express.request ,
-				res : typeof $node.express.response ,
-				next : (e?: unknown) => void
-			) {
-				try {
-					return await self.expressIndexRequest(req, res, next )
-				} catch (error) {
-					if ($mol_fail_catch(error)) {
-						self.$.$mol_log3_fail({
-							place: `${t}.expressIndex`,
-							stack: (error as Error).stack,
-							message: (error as Error).message ?? error,
-						})
-						next(error)
-					}
-				}
-
-			}, self.expressIndexRequest)
+			return self.expressIndexRequest.bind(self)
 		}
 		
 		expressIndexRequest(
@@ -149,7 +114,7 @@ namespace $ {
 			build.modEnsure( dir.path() )
 
 			const match =  req.url.match( /(\/|.*[^\-]\/)([\?#].*)?$/ )
-			if( !match) return next()				
+			if( !match) return Promise.resolve().then(next)
 
 			const file = root.resolve( `${req.path}index.html` )
 
