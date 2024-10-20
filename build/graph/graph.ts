@@ -52,7 +52,6 @@ namespace $ {
 			return root.resolve( 'node_modules' ).resolve( './' + target )
 		}
 
-		@ $mol_mem_key
 		protected check_dep([ path, target ]: [ path: string, target: string ]) {
 			const root = this.root()
 			const deps = this.dependencies( path )

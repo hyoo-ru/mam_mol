@@ -2,7 +2,7 @@ namespace $ {
 	
 	export function $mol_build_start(
 		this: $,
-		paths : string[],
+		paths : readonly string[],
 	) {
 		var build = $mol_build.relative( '.' )
 		if( paths.length > 0 ) {
@@ -71,7 +71,7 @@ namespace $ {
 			let content = ''
 			for( const step of tree.select( 'build' , null ).kids ) {
 
-				const res = this.$.$mol_run.spawn( { command: step.text(), dir: file.parent().path() } ).stdout.toString().trim()
+				const res = this.$.$mol_run.spawn( { command: step.text(), dir: file.parent().path(), dirty: true } ).stdout.toString().trim()
 				if( step.type ) content += `let ${ step.type } = ${ JSON.stringify( res ) }`
 
 			}
@@ -618,7 +618,6 @@ namespace $ {
 
 		@ $mol_action
 		git_pull(dir: string) {
-
 			const command = ['git', 'pull']
 
 			if ( ! this.interactive() ) {
@@ -633,7 +632,7 @@ namespace $ {
 			const timeout = this.git_timeout()
 			try {
 				return this.$.$mol_build.git_enabled
-					? this.$.$mol_run.spawn( { command, dir, timeout }).stdout.toString().trim()
+					? this.$.$mol_run.spawn( { command, dir, timeout, dirty: true }).stdout.toString().trim()
 					: ''
 			} catch (e) {
 				if (e instanceof $mol_run_error && e.cause.timeout_kill) {
@@ -697,31 +696,25 @@ namespace $ {
 			
 			if( mod !== this.root() ) this.modEnsure( parent.path() )
 			const repo = this.repo(path)
+
 			if( mod.exists()) {
-				mod.stat()
 
 				if( mod.type() !== 'dir' ) return false
 					
 				const git_dir = mod.resolve( '.git' )
 				const git_dir_exists = git_dir.exists() && git_dir.type() === 'dir'
-				if( git_dir_exists) {
+				const is_submodule = this.git_submodules().has( mod.path() )
+
+				if( git_dir_exists || is_submodule) {
 					this.git_pull( mod.path() )
 					// mod.reset()
 					// for ( const sub of mod.sub() ) sub.reset()
-					
-					return false
-				}
-
-				const is_submodule = this.git_submodules().has( mod.path() )
-
-				if ( is_submodule ) {
-					this.git_pull( mod.path() )
 					return false
 				}
 
 				if (repo) {
 
-					this.$.$mol_run.spawn( { command: ['git', 'init'], dir: mod.path() } )
+					this.$.$mol_run.spawn( { command: ['git', 'init'], dir: mod.path(), dirty: true } )
 			
 					const res = this.$.$mol_run.spawn( { command: ['git', 'remote', 'show', repo.text() ],  dir: mod.path() } )
 					const matched = res.stdout.toString().match( /HEAD branch: (.*?)\n/ )
@@ -729,15 +722,10 @@ namespace $ {
 						? 'master'
 						: matched[1]
 					
-					this.$.$mol_run.spawn( { command: ['git', 'remote', 'add', '--track', head_branch_name, 'origin' , repo.text() ], dir: mod.path() } )
+					this.$.$mol_run.spawn( { command: ['git', 'remote', 'add', '--track', head_branch_name, 'origin' , repo.text() ], dir: mod.path(), dirty: true } )
 					this.git_pull( mod.path() )
-					// mod.reset()
-					// for ( const sub of mod.sub() ) {
-					// 	sub.reset()
-					// }
 					return true
 				}
-
 				return false
 			}
 
@@ -758,7 +746,7 @@ namespace $ {
 			if(
 				[ node, node_modules ].includes( parent )
 				&& mod.name() !== 'node'
-				&& !mod.name().startsWith('@')
+				&& ! mod.name().startsWith('@')
 			) {
 				$node [ mod.name() ] // force autoinstall through npm
 			}

@@ -92,9 +92,14 @@ namespace $ {
 			}
 			
 			const path = mod.path()
-
 			return build.bundle( [ path , bundle ] )
 			
+		}
+		@ $mol_mem_key
+		ensure_index(path: string) {
+			$mol_wire_solid()
+
+			return this.build().modEnsure( path )
 		}
 
 		override expressIndex() {
@@ -108,10 +113,9 @@ namespace $ {
 			next : () => void
 		) {
 			const root = $mol_file.absolute( this.rootPublic() )
-			const dir = root.resolve( req.path )				
-			const build = this.build()
+			const dir = root.resolve( req.path )
 
-			build.modEnsure( dir.path() )
+			this.ensure_index( dir.path() )
 
 			const match =  req.url.match( /(\/|.*[^\-]\/)([\?#].*)?$/ )
 			if( !match) return Promise.resolve().then(next)
