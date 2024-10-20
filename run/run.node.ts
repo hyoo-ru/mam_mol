@@ -55,6 +55,7 @@ namespace $ {
 			const log_object = {
 				dirty,
 				pid: sub.pid,
+				timeout,
 				command: args_raw.join(' ') ,
 				dir: $node.path.relative( '' , dir ) ,
 			}
@@ -110,8 +111,6 @@ namespace $ {
 						place: '$mol_run_async',
 						message: 'Run',
 						...log_object,
-						signal,
-						timeout_kill,
 						status,
 					})
 	

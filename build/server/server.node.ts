@@ -223,10 +223,8 @@ namespace $ {
 
 		@ $mol_mem
 		start() {
-
 			this.slave_servers()
 			this.repl()
-			
 			const socket = this.socket()
 
 			for( const [ line, path ] of this.lines() ) {

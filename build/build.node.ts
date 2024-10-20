@@ -4,25 +4,9 @@ namespace $ {
 		this: $,
 		paths : readonly string[],
 	) {
-		var build = $mol_build.relative( '.' )
+		const build = $mol_build.relative( '.', paths )
 		if( paths.length > 0 ) {
-			try {
-				paths.forEach(
-					( path : string )=> {
-						path = build.root().resolve( path ).path()
-						return build.bundleAll( path )
-					}
-				)
-				process.exit(0)
-			} catch( error: any ) {
-				if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
-				this.$mol_log3_fail({
-					place: '$mol_build_start' , 
-					message: error.message,
-					trace: error.stack,
-				})
-				process.exit(1)
-			}
+			process.exit(build.start() ? 1 : 0)
 		} else {
 			Promise.resolve().then( ()=> {
 				try {
@@ -39,14 +23,15 @@ namespace $ {
 	export class $mol_build extends $mol_object {
 		
 		@ $mol_mem_key
-		static root( path : string ) {
+		static root( [ root, paths ] : [root: string, paths: readonly string[] ] ) {
 			return this.make({
-				root : ()=> $mol_file.absolute( path ) ,
+				root : ()=> $mol_file.absolute( root ) ,
+				paths: $mol_const(paths)
 			})
 		}
 		
-		static relative( path : string ) {
-			return $mol_build.root( $mol_file.relative( path ).path() )
+		static relative( root : string, paths: readonly string[] ) {
+			return $mol_build.root( [ $mol_file.relative( root ).path(), paths ])
 		}
 
 		@ $mol_mem
@@ -58,6 +43,25 @@ namespace $ {
 		
 		root() {
 			return $mol_file.relative( '.' )
+		}
+
+		paths() {
+			return [] as readonly string[]
+		}
+
+		start() {
+			try {
+				return this.paths().map( path => this.bundleAll( this.root().resolve( path ).path() ) )
+			} catch (error: any) {
+				if ($mol_fail_catch(error)) {
+					this.$.$mol_log3_fail({
+						place: `${this}.start()` , 
+						message: error.message,
+						trace: error.stack,
+					})
+				}
+				return null
+			}
 		}
 
 		@ $mol_mem_key
@@ -598,22 +602,23 @@ namespace $ {
 			}
 		}
 
+		watching() { return this.paths().length === 0 }
 		interactive() {
 			return process.stdout.isTTY
 		}
 
 		git_timeout() {
 			const timeout = Number(this.$.$mol_env().MOL_BUILD_GIT_TIMEOUT)
-			return (Number.isNaN(timeout) ? null : timeout) || 120000
+			return (Number.isNaN(timeout) ? null : timeout) || (this.watching() ? 5000 : 120000)
 		}
 
 		@ $mol_mem
-		gitVersion() {
+		git_version() {
 			return this.$.$mol_run.spawn({ command: 'git version', dir: '.' }).stdout.toString().trim().match(/.*\s+([\d\.]+)$/)?.[1] ?? ''
 		}
 
-		gitDeepenSupported() {
-			return $mol_compare_text()(this.gitVersion(), '2.42.0') >= 0
+		git_deepen_supported() {
+			return $mol_compare_text()(this.git_version(), '2.42.0') >= 0
 		}
 
 		@ $mol_action
@@ -626,7 +631,7 @@ namespace $ {
 				// --deepen=1 в git-конфиге сабмодуля выставляет bare=true, после этого все команды падают с сообщением
 				// warning: core.bare and core.worktree do not make sense
 				// fatal: unable to set up work tree using invalid config
-				command.push( this.gitDeepenSupported() ? '--deepen=1' : '--depth=1' )
+				command.push( this.git_deepen_supported() ? '--deepen=1' : '--depth=1' )
 			}
 
 			const timeout = this.git_timeout()
@@ -717,12 +722,11 @@ namespace $ {
 					this.$.$mol_run.spawn( { command: ['git', 'init'], dir: mod.path(), dirty: true } )
 			
 					const res = this.$.$mol_run.spawn( { command: ['git', 'remote', 'show', repo.text() ],  dir: mod.path() } )
-					const matched = res.stdout.toString().match( /HEAD branch: (.*?)\n/ )
-					const head_branch_name = res instanceof Error || matched === null || !matched[1]
-						? 'master'
-						: matched[1]
-					
-					this.$.$mol_run.spawn( { command: ['git', 'remote', 'add', '--track', head_branch_name, 'origin' , repo.text() ], dir: mod.path(), dirty: true } )
+					const head_branch_name = res.stdout.toString().match( /HEAD branch: (.*?)\n/ )?.[1] ?? 'master'
+					const command = ['git', 'remote', 'add', '--track', head_branch_name, 'origin' , repo.text() ]
+
+					this.$.$mol_run.spawn( { command, dir: mod.path(), dirty: true } )
+
 					this.git_pull( mod.path() )
 					return true
 				}
