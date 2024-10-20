@@ -623,6 +623,13 @@ namespace $ {
 
 		@ $mol_action
 		git_pull(dir: string) {
+			if (! this.$.$mol_build.git_enabled) return false
+
+			const out = this.$.$mol_run.spawn({ command: 'git rev-parse --abbrev-ref --symbolic-full-name HEAD', dir })
+			const current_branch = out.stdout.toString().trim()
+			// когда не на ветке - не надо пулить, например сборка во время git bisect
+			if (! current_branch) return false
+
 			const command = ['git', 'pull']
 
 			if ( ! this.interactive() ) {
@@ -636,9 +643,8 @@ namespace $ {
 
 			const timeout = this.git_timeout()
 			try {
-				return this.$.$mol_build.git_enabled
-					? this.$.$mol_run.spawn( { command, dir, timeout, dirty: true }).stdout.toString().trim()
-					: ''
+				this.$.$mol_run.spawn( { command, dir, timeout, dirty: true }).stdout.toString().trim()
+				return true
 			} catch (e) {
 				if (e instanceof $mol_run_error && e.cause.timeout_kill) {
 					this.$.$mol_build.git_enabled = false
@@ -647,7 +653,7 @@ namespace $ {
 						message: `Timeout - git disabled`,
 						hint: 'Check connection',
 					})
-					return ''
+					return true
 				}
 				if (e instanceof Error) {
 					this.$.$mol_fail_log(e)
@@ -705,13 +711,13 @@ namespace $ {
 			if( mod.exists()) {
 
 				if( mod.type() !== 'dir' ) return false
-					
+
 				const git_dir = mod.resolve( '.git' )
 				const git_dir_exists = git_dir.exists() && git_dir.type() === 'dir'
-				const is_submodule = this.git_submodules().has( mod.path() )
+				const is_submodule = this.git_submodules().has( path )
 
 				if( git_dir_exists || is_submodule) {
-					this.git_pull( mod.path() )
+					this.git_pull( path )
 					// mod.reset()
 					// for ( const sub of mod.sub() ) sub.reset()
 					return false
@@ -719,15 +725,15 @@ namespace $ {
 
 				if (repo) {
 
-					this.$.$mol_run.spawn( { command: ['git', 'init'], dir: mod.path(), dirty: true } )
+					this.$.$mol_run.spawn( { command: ['git', 'init'], dir: path, dirty: true } )
 			
-					const res = this.$.$mol_run.spawn( { command: ['git', 'remote', 'show', repo.text() ],  dir: mod.path() } )
+					const res = this.$.$mol_run.spawn( { command: ['git', 'remote', 'show', repo.text() ],  dir: path } )
 					const head_branch_name = res.stdout.toString().match( /HEAD branch: (.*?)\n/ )?.[1] ?? 'master'
 					const command = ['git', 'remote', 'add', '--track', head_branch_name, 'origin' , repo.text() ]
 
-					this.$.$mol_run.spawn( { command, dir: mod.path(), dirty: true } )
+					this.$.$mol_run.spawn( { command, dir: path, dirty: true } )
 
-					this.git_pull( mod.path() )
+					this.git_pull( path )
 					return true
 				}
 				return false
