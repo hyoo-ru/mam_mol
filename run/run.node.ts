@@ -34,9 +34,9 @@ namespace $ {
 
 		static lock_run<Result>(cb: () => Result) { return this.lock.run(cb) }
 
-		@ $mol_action
 		static spawn(options: $mol_run_options) {
 			const cb = () => $mol_wire_sync(this).spawn_async( { ...options, env: options.env ?? this.$.$mol_env() } )
+
 			return options.dirty ? this.lock_run(cb) : cb()
 		}
 
@@ -55,7 +55,6 @@ namespace $ {
 			const log_object = {
 				dirty,
 				pid: sub.pid,
-				timeout,
 				command: args_raw.join(' ') ,
 				dir: $node.path.relative( '' , dir ) ,
 			}

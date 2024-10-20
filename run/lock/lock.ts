@@ -23,7 +23,6 @@ namespace $ {
 				if (destructed) return next
 			} while (promise !== this.promise)
 
-
 			this.promise = new Promise(done => { next = done })
 			return next
 		}

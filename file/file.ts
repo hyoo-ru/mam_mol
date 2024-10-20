@@ -35,10 +35,6 @@ namespace $ {
 
 		abstract stat(next? : $mol_file_stat | null, virt?: 'virt'): null | $mol_file_stat
 
-		// @ $mol_mem
-		// stat_counter(next?: number) { return next ?? 0 }
-		// reset() { this.stat_counter( ($mol_mem_cached(() => this.stat_counter()) ?? 0) + 1 ) }
-
 		reset() { this.stat(null) }
 		reset_schedule() { return this.$.$mol_file.reset_schedule(this.path()) }
 
