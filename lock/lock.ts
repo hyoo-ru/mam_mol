@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_run_lock extends $mol_object {
+	export class $mol_lock extends $mol_object {
 		protected promise = null as null | Promise<void>
 
 		async lock_async() {
