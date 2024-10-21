@@ -6,7 +6,7 @@ namespace $ {
 	) {
 		const build = $mol_build.relative( '.', paths )
 		if( paths.length > 0 ) {
-			process.exit(build.start() ? 1 : 0)
+			process.exit(build.start() ? 0 : 1)
 		} else {
 			Promise.resolve().then( ()=> {
 				try {
