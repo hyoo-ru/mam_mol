@@ -88,6 +88,7 @@ namespace $ {
 
 		@ $mol_mem
 		override stat(next? : $mol_file_stat | null, virt?: 'virt') {
+			this.copy_sync()
 			let stat = next
 			const path = this.path()
 
@@ -108,7 +109,7 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		ensure() {
+		override ensure() {
 			const path = this.path()
 
 			try {
@@ -121,12 +122,12 @@ namespace $ {
 		}
 		
 		@ $mol_action
-		drop() {
+		override drop() {
 			$node.fs.unlinkSync( this.path() )
 		}
 		
 		@ $mol_mem
-		buffer( next? : Uint8Array ) {
+		override buffer( next? : Uint8Array ) {
 
 			const path = this.path()
 			if( next === undefined ) {
@@ -184,7 +185,7 @@ namespace $ {
 
 		}
 		@ $mol_mem
-		sub() : $mol_file[] {
+		override sub() : $mol_file[] {
 			if (! this.exists() ) return []
 			if ( this.type() !== 'dir') return []
 
@@ -201,15 +202,15 @@ namespace $ {
 			}
 		}
 		
-		resolve( path : string ) {
+		override resolve( path : string ) {
 			return ( this.constructor as typeof $mol_file ).relative( $node.path.join( this.path() , path ) )
 		}
 		
-		relate( base = ( this.constructor as typeof $mol_file ).relative( '.' )) {
+		override relate( base = ( this.constructor as typeof $mol_file ).relative( '.' )) {
 			return $node.path.relative( base.path() , this.path() ).replace( /\\/g , '/' )
 		}
 		
-		append( next : Uint8Array | string ) {
+		override append( next : Uint8Array | string ) {
 			const path = this.path()
 			try {
 				$node.fs.appendFileSync( path , next )
@@ -219,7 +220,7 @@ namespace $ {
 			}
 		}
 		
-		open( ... modes: readonly ( keyof typeof $mol_file_mode_open )[] ) {
+		override open( ... modes: readonly ( keyof typeof $mol_file_mode_open )[] ) {
 			return $node.fs.openSync(
 				this.path(),
 				modes.reduce( ( res, mode )=> res | $mol_file_mode_open[ mode ], 0 ),
