@@ -72,6 +72,16 @@ namespace $ {
 
 		ensure() {}
 		drop() {}
+		copy(to: string) {}
+
+		@ $mol_mem_key
+		clone(to: string) {
+			this.stat()
+			this.copy(to)
+			const file = this.$.$mol_file.absolute(to)
+			file.reset()
+			return file
+		}
 
 		watcher(reset?: null) {
 			console.warn('$mol_file_web.watcher() not implemented')
@@ -116,11 +126,6 @@ namespace $ {
 
 		@ $mol_mem
 		buffer( next? : Uint8Array ) { return next ?? new Uint8Array }
-
-		@ $mol_mem_key
-		copy(to: string): $mol_file {
-			throw new Error('not implemented')
-		}
 
 		@ $mol_mem
 		text(next?: string, virt?: 'virt') {
