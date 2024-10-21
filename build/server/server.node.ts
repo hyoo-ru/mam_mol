@@ -248,7 +248,7 @@ namespace $ {
 					...build.bundleFiles([ bundle.path() , [ 'node' ] ])
 				]
 				
-				for( const src of sources ) src.buffer()	
+				for( const src of sources ) src.stat()
 			} catch (error) {
 				if ($mol_fail_catch(error)) {
 					this.$.$mol_log3_fail({
