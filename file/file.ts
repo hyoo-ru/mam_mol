@@ -126,19 +126,19 @@ namespace $ {
 		buffer( next? : Uint8Array ) { return next ?? new Uint8Array }
 
 		@ $mol_mem
-		copy_src(path?: string) {
-			return path ?? null
-		}
+		copy_src(path?: string) { return path ?? null }
+
+		copy(to: string) {}
 
 		@ $mol_mem
 		copy_sync() {
 			const src_path = this.copy_src()
-			if (! src_path) return null
+			if (! src_path) return false
 			const src = this.$.$mol_file.absolute(src_path)
 			src.stat()
-			$node.fs.copyFileSync(src.path(), this.path())
+			src.copy(this.path())
 
-			return null
+			return true
 		}
 
 		@ $mol_mem
