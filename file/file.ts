@@ -35,14 +35,6 @@ namespace $ {
 			return this.resolve( '..' )
 		}
 
-		@ $mol_mem_key
-		clone(path: string) {
-			return ( this.constructor as typeof $mol_file ).make({
-				path: $mol_const(path),
-				copy_src: () => this.path()
-			})
-		}
-
 		stat(next? : $mol_file_stat | null, virt?: 'virt'): null | $mol_file_stat {
 			return null
 		}
@@ -125,20 +117,9 @@ namespace $ {
 		@ $mol_mem
 		buffer( next? : Uint8Array ) { return next ?? new Uint8Array }
 
-		@ $mol_mem
-		copy_src(path?: string) { return path ?? null }
-
-		copy(to: string) {}
-
-		@ $mol_mem
-		copy_sync() {
-			const src_path = this.copy_src()
-			if (! src_path) return false
-			const src = this.$.$mol_file.absolute(src_path)
-			src.stat()
-			src.copy(this.path())
-
-			return true
+		@ $mol_mem_key
+		copy(to: string): $mol_file {
+			throw new Error('not implemented')
 		}
 
 		@ $mol_mem

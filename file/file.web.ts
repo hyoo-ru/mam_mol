@@ -23,7 +23,6 @@ namespace $ {
 
 		@ $mol_mem
 		override stat( next? : $mol_file_stat, virt?: 'virt' ) {
-			this.copy_sync()
 			let stat = next
 			if (next === undefined) {
 				const content = this.text()
