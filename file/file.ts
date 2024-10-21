@@ -12,11 +12,13 @@ namespace $ {
 
 	// export class $mol_file_not_found extends Error {}
 
-	export abstract class $mol_file extends $mol_object {
-			
+	export class $mol_file extends $mol_object {
+		
 		@ $mol_mem_key
-		static absolute( path : string ): $mol_file {
-			throw new Error( 'Not implemented yet' )
+		static absolute( path : string ) {
+			return this.make({
+				path : $mol_const( path )
+			})
 		}
 
 		static relative( path : string ) : $mol_file {
@@ -33,7 +35,17 @@ namespace $ {
 			return this.resolve( '..' )
 		}
 
-		abstract stat(next? : $mol_file_stat | null, virt?: 'virt'): null | $mol_file_stat
+		@ $mol_mem_key
+		clone(path: string) {
+			return ( this.constructor as typeof $mol_file ).make({
+				path: $mol_const(path),
+				copy_src: () => this.path()
+			})
+		}
+
+		stat(next? : $mol_file_stat | null, virt?: 'virt'): null | $mol_file_stat {
+			return null
+		}
 
 		reset() { this.stat(null) }
 		reset_schedule() { return this.$.$mol_file.reset_schedule(this.path()) }
@@ -66,8 +78,8 @@ namespace $ {
 			return this.stat()?.mtime.getTime().toString( 36 ).toUpperCase() ?? ''
 		}
 
-		abstract ensure(): void
-		abstract drop(): void
+		ensure() {}
+		drop() {}
 
 		watcher(reset?: null) {
 			console.warn('$mol_file_web.watcher() not implemented')
@@ -110,7 +122,8 @@ namespace $ {
 			return match ? match[ 1 ].substring( 1 ) : ''
 		}
 
-		abstract buffer( next? : Uint8Array ): Uint8Array
+		@ $mol_mem
+		buffer( next? : Uint8Array ) { return next ?? new Uint8Array }
 
 		@ $mol_mem
 		copy_src(path?: string) {
@@ -150,13 +163,17 @@ namespace $ {
 			}
 		}
 
-		abstract sub(): $mol_file[]
+		sub() { return [] as $mol_file[] }
 
-		abstract resolve(path: string): $mol_file
+		resolve(path: string): $mol_file {
+			throw new Error('implement')
+		}
 
-		abstract relate( base?: $mol_file ): string
-		
-		abstract append( next : Uint8Array | string ): void
+		relate( base?: $mol_file ): string {
+			throw new Error('implement')
+		}
+
+		append( next : Uint8Array | string ) {}
 		
 		find(
 			include? : RegExp ,

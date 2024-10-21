@@ -39,13 +39,6 @@ namespace $ {
 	}
 
 	export class $mol_file_node extends $mol_file {
-		
-		@ $mol_mem_key
-		static absolute( path : string ) {
-			return this.make({
-				path : $mol_const( path )
-			})
-		}
 
 		static relative( path : string ) {
 			return this.absolute( $node.path.resolve( this.base, path ).replace( /\\/g , '/' ) )
@@ -209,7 +202,7 @@ namespace $ {
 		override relate( base = ( this.constructor as typeof $mol_file ).relative( '.' )) {
 			return $node.path.relative( base.path() , this.path() ).replace( /\\/g , '/' )
 		}
-		
+
 		override append( next : Uint8Array | string ) {
 			const path = this.path()
 			try {

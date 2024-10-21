@@ -1420,10 +1420,10 @@ namespace $ {
 
 				const pushFile = (file:$mol_file) => {
 					const start = Date.now()
-					const target = pack.resolve( `-/${ file.relate( root ) }` )
-					// target.buffer( file.buffer() )
-					target.copy_src(file.path())
+
+					const target = file.clone(pack.resolve( `-/${ file.relate( root ) }` ).path())
 					target.stat()
+
 					targets.push( target )
 					this.logBundle( target , Date.now() - start )
 				}
