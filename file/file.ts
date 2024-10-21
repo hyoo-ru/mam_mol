@@ -113,6 +113,22 @@ namespace $ {
 		abstract buffer( next? : Uint8Array ): Uint8Array
 
 		@ $mol_mem
+		copy_src(path?: string) {
+			return path ?? null
+		}
+
+		@ $mol_mem
+		copy_sync() {
+			const src_path = this.copy_src()
+			if (! src_path) return null
+			const src = this.$.$mol_file.absolute(src_path)
+			src.stat()
+			$node.fs.copyFileSync(src.path(), this.path())
+
+			return null
+		}
+
+		@ $mol_mem
 		text(next?: string, virt?: 'virt') {
 			if( virt ) {
 				const now = new Date

@@ -1414,7 +1414,9 @@ namespace $ {
 				const pushFile = (file:$mol_file) => {
 					const start = Date.now()
 					const target = pack.resolve( `-/${ file.relate( root ) }` )
-					target.buffer( file.buffer() )
+					// target.buffer( file.buffer() )
+					target.copy_src(file.path())
+					target.stat()
 					targets.push( target )
 					this.logBundle( target , Date.now() - start )
 				}
