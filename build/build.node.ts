@@ -696,7 +696,7 @@ namespace $ {
 ` )
 				: this.modMeta( parent.path() )
 
-			return mapping.select( 'pack' , mod.name() , 'git' ).kids.find($mol_guard_defined)
+			return mapping.select( 'pack' , mod.name() , 'git' ).kids.find($mol_guard_defined)?.text()
 		}
 
 		@ $mol_mem_key
@@ -727,10 +727,10 @@ namespace $ {
 
 					this.$.$mol_run.spawn( { command: ['git', 'init'], dir: path, dirty: true } )
 			
-					const res = this.$.$mol_run.spawn( { command: ['git', 'remote', 'show', repo.text() ],  dir: path } )
+					const res = this.$.$mol_run.spawn( { command: ['git', 'remote', 'show', repo ],  dir: path } )
 					const head_branch_name = res.stdout.toString().match( /HEAD branch: (.*?)\n/ )?.[1] ?? 'master'
-					const command = ['git', 'remote', 'add', '--track', head_branch_name, 'origin' , repo.text() ]
 
+					const command = ['git', 'remote', 'add', '--track', head_branch_name, 'origin' , repo ]
 					this.$.$mol_run.spawn( { command, dir: path, dirty: true } )
 
 					this.git_pull( path )
@@ -740,7 +740,7 @@ namespace $ {
 			}
 
 			if( repo ) {
-				const command = ['git', 'clone' , '--depth', '1' , repo.text() , mod.relate( this.root() ) ]
+				const command = ['git', 'clone' , '--depth', '1' , repo , mod.relate( this.root() ) ]
 				this.$.$mol_run.spawn( { command, dir: this.root().path(), dirty: true })
 				// mod.reset()
 				return true
