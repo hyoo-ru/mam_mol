@@ -30,7 +30,7 @@ namespace $ {
 
 	export class $mol_run extends $mol_object {
 
-		protected static lock = new $mol_run_lock
+		protected static lock = new $mol_lock
 
 		static lock_run<Result>(cb: () => Result) { return this.lock.run(cb) }
 
