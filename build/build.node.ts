@@ -1411,14 +1411,23 @@ namespace $ {
 			const root = this.root()
 			const pack = $mol_file.absolute( path )
 			
-			var sources = this.sourcesAll( [ path , exclude ] )
-			.filter( src => /meta.tree$/.test( src.ext() ) )
+			const sources = this.sourcesAll( [ path , exclude ] )
+				.filter( src => /meta.tree$/.test( src.ext() ) )
 			
 			const targets : $mol_file[] = []
-			sources.forEach( source => {
-				const tree = this.$.$mol_tree2_from_string( source.text() , source.path() )
 
-				const pushFile = (file:$mol_file) => {
+			for (const source of sources) {
+
+				const addFilesRecursive = (file:$mol_file) =>{
+					
+					if ( ! file.exists() ) return
+
+					if( file.type() === 'dir') {
+						for (const sub of file.sub()) {
+							addFilesRecursive(sub)
+						}
+						return
+					}
 					const start = Date.now()
 
 					const target = file.clone(pack.resolve( `-/${ file.relate( root ) }` ).path())
@@ -1428,24 +1437,13 @@ namespace $ {
 					this.logBundle( target , Date.now() - start )
 				}
 
-				const addFilesRecursive = (file:$mol_file) =>{
-					
-					if ( ! file.exists() ) return
-					if( file.type() === 'dir') {
-						file.sub().forEach(sub => {
-							addFilesRecursive(sub)
-						})
-					}
-					else {
-						pushFile(file)
-					}
-					
-				}
+				const tree = this.$.$mol_tree2_from_string( source.text() , source.path() )
+
 				tree.select( 'deploy' ).kids.forEach( deploy => {
 					addFilesRecursive(root.resolve(deploy.text().replace( /^\// , '' )))
 				} )
 				
-			} )
+			}
 			
 			return targets
 		}
