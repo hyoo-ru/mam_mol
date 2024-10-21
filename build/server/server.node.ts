@@ -5,24 +5,8 @@ namespace $ {
 		static trace = false
 
 		expressGenerator() {
-			const t = this
 			const self = $mol_wire_async( this )
-
-			return $mol_func_name_from(async function( req : any , res : any , next : (e?: unknown) => void ) {
-				try {
-					return await self.handleRequest( req, res, next )
-				} catch (error) {
-					if ($mol_fail_catch(error)) {
-						self.$.$mol_log3_fail({
-							place: `${t}.expressGenerator`,
-							stack: (error as Error).stack,
-							message: (error as Error).message ?? error,
-						})
-						next(error)
-					}
-				}
-			}, this.handleRequest)
-
+			return self.handleRequest.bind(self)
 		}
 		
 		handleRequest(
@@ -108,33 +92,19 @@ namespace $ {
 			}
 			
 			const path = mod.path()
-
-			return build.bundle( { path , bundle } )
+			return build.bundle( [ path , bundle ] )
 			
+		}
+		@ $mol_mem_key
+		ensure_index(path: string) {
+			$mol_wire_solid()
+
+			return this.build().modEnsure( path )
 		}
 
 		override expressIndex() {
-			const t = this
 			const self = $mol_wire_async( this )
-			return $mol_func_name_from(async function(
-				req : typeof $node.express.request ,
-				res : typeof $node.express.response ,
-				next : (e?: unknown) => void
-			) {
-				try {
-					return await self.expressIndexRequest(req, res, next )
-				} catch (error) {
-					if ($mol_fail_catch(error)) {
-						self.$.$mol_log3_fail({
-							place: `${t}.expressIndex`,
-							stack: (error as Error).stack,
-							message: (error as Error).message ?? error,
-						})
-						next(error)
-					}
-				}
-
-			}, self.expressIndexRequest)
+			return self.expressIndexRequest.bind(self)
 		}
 		
 		expressIndexRequest(
@@ -143,13 +113,12 @@ namespace $ {
 			next : () => void
 		) {
 			const root = $mol_file.absolute( this.rootPublic() )
-			const dir = root.resolve( req.path )				
-			const build = this.build()
+			const dir = root.resolve( req.path )
 
-			build.modEnsure( dir.path() )
+			this.ensure_index( dir.path() )
 
 			const match =  req.url.match( /(\/|.*[^\-]\/)([\?#].*)?$/ )
-			if( !match) return next()				
+			if( !match) return Promise.resolve().then(next)
 
 			const file = root.resolve( `${req.path}index.html` )
 
@@ -254,10 +223,8 @@ namespace $ {
 
 		@ $mol_mem
 		start() {
-
 			this.slave_servers()
 			this.repl()
-			
 			const socket = this.socket()
 
 			for( const [ line, path ] of this.lines() ) {
@@ -276,10 +243,12 @@ namespace $ {
 				const bundle = build.root().resolve( path )
 			
 				// watch changes
-				const sources = build.sourcesAll({ path: bundle.path() , exclude : [ 'node' ] })
+				const sources = [
+					...build.sourcesAll([ bundle.path() , [ 'node' ] ]),
+					...build.bundleFiles([ bundle.path() , [ 'node' ] ])
+				]
 				
-				for( const src of sources ) src.buffer()	
-				
+				for( const src of sources ) src.stat()
 			} catch (error) {
 				if ($mol_fail_catch(error)) {
 					this.$.$mol_log3_fail({
@@ -329,9 +298,9 @@ namespace $ {
 			
 			try {
 				
-				for( const file of build.bundle({ path, bundle: 'node.js' }) ) file.stat()
-				for( const file of build.bundle({ path, bundle: 'node.audit.js' }) ) file.stat()
-				for( const file of build.bundle({ path, bundle: 'node.test.js' }) ) file.stat()
+				for( const file of build.bundle([ path, 'node.js' ]) ) file.stat()
+				for( const file of build.bundle([ path, 'node.audit.js' ]) ) file.stat()
+				for( const file of build.bundle([ path, 'node.test.js' ]) ) file.stat()
 			
 			} catch( error: any ) {
 				
