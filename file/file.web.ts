@@ -2,14 +2,7 @@ namespace $ {
 	
 	export class $mol_file_web extends $mol_file {
 
-		@ $mol_mem_key
-		static absolute( path : string ) {
-			return this.make({
-				path : $mol_const( path )
-			})
-		}
-
-		static relative( path : string ) {
+		static override relative( path : string ) {
 			return this.absolute( new URL( path , this.base ).toString() )
 		}
 
@@ -18,7 +11,7 @@ namespace $ {
 			: ''
 		
 		@ $mol_mem
-		buffer( next? : Uint8Array ) {
+		override buffer( next? : Uint8Array ) {
 			if (next !== undefined) throw new Error(`Saving content not supported: ${this.path}`)
 
 			const response = $mol_fetch.response(this.path())
@@ -29,7 +22,8 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		stat( next? : $mol_file_stat, virt?: 'virt' ) {
+		override stat( next? : $mol_file_stat, virt?: 'virt' ) {
+			this.copy_sync()
 			let stat = next
 			if (next === undefined) {
 				const content = this.text()
@@ -49,7 +43,7 @@ namespace $ {
 			return stat!
 		}
 
-		resolve( path : string ) {
+		override resolve( path : string ) {
 			let res = this.path() + '/' + path
 			
 			while( true ) {
@@ -61,24 +55,24 @@ namespace $ {
 			return ( this.constructor as typeof $mol_file_web ).absolute( res )
 		}
 
-		ensure() {
+		override ensure() {
 			throw new Error('$mol_file_web.ensure() not implemented')
 		} 
 
-		drop() {
+		override drop() {
 			throw new Error('$mol_file_web.drop() not implemented')
 		} 
 
 		@ $mol_mem
-		sub() : $mol_file[] {
+		override sub() : $mol_file[] {
 			throw new Error('$mol_file_web.sub() not implemented')
 		}
 		
-		relate( base = ( this.constructor as typeof $mol_file ).relative( '.' )): string {
+		override relate( base = ( this.constructor as typeof $mol_file ).relative( '.' )): string {
 			throw new Error('$mol_file_web.relate() not implemented')
 		}
 		
-		append( next : Uint8Array | string ) {
+		override append( next : Uint8Array | string ) {
 			throw new Error('$mol_file_web.append() not implemented')
 		}
 	}
