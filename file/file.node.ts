@@ -112,14 +112,12 @@ namespace $ {
 			}
 
 		}
-		
-		@ $mol_mem_key
-		override copy(to: string) {
-			this.stat()
-			$node.fs.copyFileSync(this.path(), to)
-			return this.$.$mol_file.absolute(to)
-		}
 
+		@ $mol_action
+		override copy(to: string) {
+			$node.fs.copyFileSync(this.path(), to)
+		}
+		
 		@ $mol_action
 		override drop() {
 			$node.fs.unlinkSync( this.path() )

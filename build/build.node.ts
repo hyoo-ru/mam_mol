@@ -1423,7 +1423,7 @@ namespace $ {
 					}
 					const start = Date.now()
 
-					const target = file.copy(pack.resolve( `-/${ file.relate( root ) }` ).path())
+					const target = file.clone(pack.resolve( `-/${ file.relate( root ) }` ).path())
 
 					targets.push( target )
 					this.logBundle( target , Date.now() - start )
