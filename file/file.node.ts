@@ -81,7 +81,6 @@ namespace $ {
 
 		@ $mol_mem
 		override stat(next? : $mol_file_stat | null, virt?: 'virt') {
-			if (next === undefined) this.copy_sync()
 			let stat = next
 			const path = this.path()
 
@@ -114,8 +113,11 @@ namespace $ {
 
 		}
 		
+		@ $mol_mem_key
 		override copy(to: string) {
+			this.stat()
 			$node.fs.copyFileSync(this.path(), to)
+			return this.$.$mol_file.absolute(to)
 		}
 
 		@ $mol_action

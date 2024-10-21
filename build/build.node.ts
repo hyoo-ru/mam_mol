@@ -1398,7 +1398,7 @@ namespace $ {
 
 			return targets
 		}
-		
+
 		@ $mol_mem_key
 		bundleFiles( [ path , exclude ] : [ path : string , exclude? : readonly string[] ] ) : $mol_file[] {
 			const root = this.root()
@@ -1423,8 +1423,7 @@ namespace $ {
 					}
 					const start = Date.now()
 
-					const target = file.clone(pack.resolve( `-/${ file.relate( root ) }` ).path())
-					target.stat()
+					const target = file.copy(pack.resolve( `-/${ file.relate( root ) }` ).path())
 
 					targets.push( target )
 					this.logBundle( target , Date.now() - start )
