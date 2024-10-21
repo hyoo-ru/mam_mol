@@ -243,10 +243,12 @@ namespace $ {
 				const bundle = build.root().resolve( path )
 			
 				// watch changes
-				const sources = build.sourcesAll([ bundle.path() , [ 'node' ] ])
+				const sources = [
+					...build.sourcesAll([ bundle.path() , [ 'node' ] ]),
+					...build.bundleFiles([ bundle.path() , [ 'node' ] ])
+				]
 				
 				for( const src of sources ) src.buffer()	
-				
 			} catch (error) {
 				if ($mol_fail_catch(error)) {
 					this.$.$mol_log3_fail({
