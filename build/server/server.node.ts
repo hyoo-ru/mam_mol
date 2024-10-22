@@ -1,21 +1,41 @@
 namespace $ {
-	
+
+	function sync_middleware(mdl: (
+		req : typeof $node.express.request ,
+		res : typeof $node.express.response ,
+	) => Promise<boolean | void>) {
+		return async (
+			req : typeof $node.express.request ,
+			res : typeof $node.express.response ,
+			next : (err?: unknown) => any
+		) => {
+			try {
+				const call_next = await mdl(req, res)
+				if (! call_next) return
+				await Promise.resolve()
+				next()
+			} catch (err) {
+				next(err)
+			}
+		}
+	}
+
+
 	export class $mol_build_server extends $mol_server {
 
 		static trace = false
 
 		expressGenerator() {
-			const self = $mol_wire_async( this )
-			return self.handleRequest.bind(self)
+			return sync_middleware((req, res) => $mol_wire_async( this ).handleRequest(req, res))
 		}
 		
 		handleRequest(
 			req : typeof $node.express.request ,
-			res : typeof $node.express.response ,
-			next : () => any
+			res : typeof $node.express.response,
 		) {
-			res.set( 'Cache-Control', 'must-revalidate, public, ' )
 			
+			res.set( 'Cache-Control', 'must-revalidate, public, ' )
+
 			try {
 				
 				// if( req.query._escaped_fragment_ ) {
@@ -28,8 +48,8 @@ namespace $ {
 				// 	return
 				// }
 
-				return this.generate( req.url ) && Promise.resolve().then( next )
-			
+				this.generate( req.url )
+				return true
 			} catch( error: any ) {
 
 				if( $mol_fail_catch( error ) ) {
@@ -74,12 +94,12 @@ namespace $ {
 		generate( url : string ) {
 			
 			$mol_wire_solid()
-
+	
 			const matched = url.match( /^(.*)\/-\/(\w+(?:.\w+)+)$/ )
 			if( !matched ) return [] as $mol_file[]
 			
 			const build = this.build()
-			
+
 			const [ , rawpath , bundle ] = matched
 			const mod = build.root().resolve( rawpath )
 
@@ -103,14 +123,12 @@ namespace $ {
 		}
 
 		override expressIndex() {
-			const self = $mol_wire_async( this )
-			return self.expressIndexRequest.bind(self)
+			return sync_middleware((req, res) => $mol_wire_async( this ).expressIndexRequest(req, res))
 		}
 		
 		expressIndexRequest(
 			req : typeof $node.express.request ,
 			res : typeof $node.express.response ,
-			next : () => void
 		) {
 			const root = $mol_file.absolute( this.rootPublic() )
 			const dir = root.resolve( req.path )
@@ -118,7 +136,7 @@ namespace $ {
 			this.ensure_index( dir.path() )
 
 			const match =  req.url.match( /(\/|.*[^\-]\/)([\?#].*)?$/ )
-			if( !match) return Promise.resolve().then(next)
+			if( !match) return true
 
 			const file = root.resolve( `${req.path}index.html` )
 
@@ -179,10 +197,11 @@ namespace $ {
 					'Access-Control-Allow-Origin': '*',
 				} )
 				
-				return res.end( html )
+				res.end( html )
+				return false
 			}
 			
-			return next()
+			return true
 		}
 		
 		port() {

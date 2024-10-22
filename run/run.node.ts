@@ -36,7 +36,8 @@ namespace $ {
 
 		static spawn(options: $mol_run_options) {
 			const cb = () => $mol_wire_sync(this).spawn_async( { ...options, env: options.env ?? this.$.$mol_env() } )
-
+			// return cb()
+			// return this.lock_run(cb)
 			return options.dirty ? this.lock_run(cb) : cb()
 		}
 

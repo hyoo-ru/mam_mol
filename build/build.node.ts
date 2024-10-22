@@ -151,36 +151,38 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
+		sorted_sub(path: string) {
+			const parent = $mol_file.absolute( path )
+			return parent.sub().slice().sort( ( a, b )=> a.name().length - b.name().length )
+		}
+
+		@ $mol_mem_key
 		mods( [ path , exclude ] : [ path : string , exclude? : readonly string[] ] ) {
 
-			const parent = $mol_file.absolute( path )
 			const mods : $mol_file[] = []
-			
-			parent.sub().slice().sort( ( a, b )=> a.name().length - b.name().length ).forEach(
-				child => {
-					
-					const name = child.name()
+			for (const child of this.sorted_sub(path)) {
+				
+				const name = child.name()
 
-					if( !/^[a-z0-9]/i.test( name ) ) return false
-					if( exclude && RegExp( '[.=](' + exclude.join( '|' ) + ')[.]' , 'i' ).test( name ) ) return false
+				if( !/^[a-z0-9]/i.test( name ) ) continue
+				if( exclude && RegExp( '[.=](' + exclude.join( '|' ) + ')[.]' , 'i' ).test( name ) ) continue
 
-					// if (! child.exists()) return false
-					
-					if( /(meta\.tree)$/.test( name ) ) {
-						mods.push( ... this.metaTreeTranspile( child.path() ) )
-					} else if( /(view\.tree)$/.test( name ) ) {
-						mods.push( ... this.viewTreeTranspile( child.path() ) )
-					} else if( /(\.css)$/.test( name ) ) {
-						mods.push( ... this.cssTranspile( child.path() ) )
-					} else if( /(\.glsl)$/.test( name ) ) {
-						mods.push( ... this.glslTranspile( child.path() ) )
-					}
+				// if (! child.exists()) return false
+				const child_path = child.path()
+				let files = [] as $mol_file[]
 
-					mods.push( child )
-					
-					return true
+				if( /(meta\.tree)$/.test( name ) ) {
+					files = this.metaTreeTranspile( child_path )
+				} else if( /(view\.tree)$/.test( name ) ) {
+					files = this.viewTreeTranspile( child_path )
+				} else if( /(\.css)$/.test( name ) ) {
+					files = this.cssTranspile( child_path )
+				} else if( /(\.glsl)$/.test( name ) ) {
+					files = this.glslTranspile( child_path )
 				}
-			)
+
+				mods.push( ...files, child )
+			}
 			
 			//mods.sort( ( a , b )=> a.name().length - b.name().length )
 			
@@ -973,35 +975,30 @@ namespace $ {
 			}
 
 			const errors = [] as Error[]
-			sources.forEach(
-				( src )=> {
-					if( bundle === 'node' ) {
-						if( /node_modules\//.test( src.relate( this.root() ) ) ) {
-							return
-						}
-					}
-					try {
-						const content = this.js_content( src.path() )
-						
-						const isCommonJs = /typeof +exports|module\.exports|\bexports\.\w+\s*=/.test( content.text )
+			for (const src of sources) {
+				if( bundle === 'node' && /node_modules\//.test( src.relate( this.root() ) ) ) continue
+
+				try {
+					const content = this.js_content( src.path() )
 					
-						if( isCommonJs ) {
-							concater.add( `\nvar $node = $node || {}\nvoid function( module ) { var exports = module.${''}exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "` + src.parent().relate( this.root().resolve( 'node_modules' ) ) + `/" ) ] }; \n`, '-' )
-						}
-
-						concater.add( content.text , '' , content.map )
-						
-						if( isCommonJs ) {
-							const idFull = src.relate( this.root().resolve( 'node_modules' ) )
-							const idShort = idFull.replace( /\/index\.js$/ , '' ).replace( /\.js$/ , '' )
-							concater.add( `\n$${''}node[ "${ idShort }" ] = $${''}node[ "${ idFull }" ] = module.${''}exports }.call( {} , {} )\n`, '-' )
-						}
-
-					} catch( error: any ) {
-						errors.push( error )
+					const isCommonJs = /typeof +exports|module\.exports|\bexports\.\w+\s*=/.test( content.text )
+				
+					if( isCommonJs ) {
+						concater.add( `\nvar $node = $node || {}\nvoid function( module ) { var exports = module.${''}exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "` + src.parent().relate( this.root().resolve( 'node_modules' ) ) + `/" ) ] }; \n`, '-' )
 					}
+
+					concater.add( content.text , '' , content.map )
+					
+					if( isCommonJs ) {
+						const idFull = src.relate( this.root().resolve( 'node_modules' ) )
+						const idShort = idFull.replace( /\/index\.js$/ , '' ).replace( /\.js$/ , '' )
+						concater.add( `\n$${''}node[ "${ idShort }" ] = $${''}node[ "${ idFull }" ] = module.${''}exports }.call( {} , {} )\n`, '-' )
+					}
+
+				} catch( error ) {
+					if ($mol_fail_catch(error)) errors.push( error as Error)
 				}
-			)
+			}
 			
 			if( errors.length ) {
 				const messages = errors.map( e => '  ' + e.message ).join( '\n' )
@@ -1087,32 +1084,33 @@ namespace $ {
 			
 			const exclude_ext = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
 			const sources = this.sources_js( [ path , exclude_ext ] )
+
 			const sourcesNoTest = new Set( this.sources_js( [ path , exclude ] ) )
+
 			let sourcesTest = sources.filter( src => !sourcesNoTest.has( src ) )
+
 			if( bundle === 'node' ) {
 				sourcesTest = [ ... sourcesNoTest , ... sourcesTest ]
 			} else {
 				concater.add( 'function require'+'( path ){ return $node[ path ] }' )
 			}
+
 			if( sources.length === 0 ) return []
 			
 			const errors = [] as Error[]
 
-			sourcesTest.forEach(
-				( src )=> {
-					if( bundle === 'node' ) {
-						if( /node_modules\//.test( src.relate( root ) ) ) {
-							return
-						}
-					}
-					try {
-						const content = this.js_content( src.path() )
-						concater.add( content.text, '', content.map)
-					} catch( error: any ) {
-						errors.push( error )
-					}
+			for (const src of sourcesTest) {
+				if( bundle === 'node' && /node_modules\//.test( src.relate( root ) ) ) {
+					continue
 				}
-			)
+
+				try {
+					const content = this.js_content( src.path() )
+					concater.add( content.text, '', content.map)
+				} catch( error ) {
+					if ($mol_fail_catch(error)) errors.push( error as Error)
+				}
+			}
 			
 			target.text( concater.content + '\n//# sourceMappingURL=' + targetMap.relate( target.parent() )+'\n' )
 			targetMap.text( concater.toString() )
