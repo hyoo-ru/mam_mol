@@ -1,37 +1,41 @@
 namespace $ {
-	
+
+	function sync_middleware(mdl: (
+		req : typeof $node.express.request ,
+		res : typeof $node.express.response ,
+	) => Promise<boolean | void>) {
+		return async (
+			req : typeof $node.express.request ,
+			res : typeof $node.express.response ,
+			next : (err?: unknown) => any
+		) => {
+			try {
+				const call_next = await mdl(req, res)
+				if (! call_next) return
+				await Promise.resolve()
+				next()
+			} catch (err) {
+				next(err)
+			}
+		}
+	}
+
+
 	export class $mol_build_server extends $mol_server {
 
 		static trace = false
 
 		expressGenerator() {
-			const t = this
-			const self = $mol_wire_async( this )
-
-			return $mol_func_name_from(async function( req : any , res : any , next : (e?: unknown) => void ) {
-				try {
-					return await self.handleRequest( req, res, next )
-				} catch (error) {
-					if ($mol_fail_catch(error)) {
-						self.$.$mol_log3_fail({
-							place: `${t}.expressGenerator`,
-							stack: (error as Error).stack,
-							message: (error as Error).message ?? error,
-						})
-						next(error)
-					}
-				}
-			}, this.handleRequest)
-
+			return sync_middleware((req, res) => $mol_wire_async( this ).handleRequest(req, res))
 		}
 		
 		handleRequest(
 			req : typeof $node.express.request ,
-			res : typeof $node.express.response ,
-			next : () => any
+			res : typeof $node.express.response,
 		) {
-			res.set( 'Cache-Control', 'must-revalidate, public, ' )
 			
+			res.set( 'Cache-Control', 'must-revalidate, public, ' )
+
 			try {
 				
 				// if( req.query._escaped_fragment_ ) {
@@ -44,8 +48,8 @@ namespace $ {
 				// 	return
 				// }
 
-				return this.generate( req.url ) && Promise.resolve().then( next )
-			
+				this.generate( req.url )
+				return true
 			} catch( error: any ) {
 
 				if( $mol_fail_catch( error ) ) {
@@ -90,12 +94,12 @@ namespace $ {
 		generate( url : string ) {
 			
 			$mol_wire_solid()
-
+	
 			const matched = url.match( /^(.*)\/-\/(\w+(?:.\w+)+)$/ )
 			if( !matched ) return [] as $mol_file[]
 			
 			const build = this.build()
-			
+
 			const [ , rawpath , bundle ] = matched
 			const mod = build.root().resolve( rawpath )
 
@@ -108,48 +112,31 @@ namespace $ {
 			}
 			
 			const path = mod.path()
-
-			return build.bundle( { path , bundle } )
+			return build.bundle( [ path , bundle ] )
 			
+		}
+		@ $mol_mem_key
+		ensure_index(path: string) {
+			$mol_wire_solid()
+
+			return this.build().modEnsure( path )
 		}
 
 		override expressIndex() {
-			const t = this
-			const self = $mol_wire_async( this )
-			return $mol_func_name_from(async function(
-				req : typeof $node.express.request ,
-				res : typeof $node.express.response ,
-				next : (e?: unknown) => void
-			) {
-				try {
-					return await self.expressIndexRequest(req, res, next )
-				} catch (error) {
-					if ($mol_fail_catch(error)) {
-						self.$.$mol_log3_fail({
-							place: `${t}.expressIndex`,
-							stack: (error as Error).stack,
-							message: (error as Error).message ?? error,
-						})
-						next(error)
-					}
-				}
-
-			}, self.expressIndexRequest)
+			return sync_middleware((req, res) => $mol_wire_async( this ).expressIndexRequest(req, res))
 		}
 		
 		expressIndexRequest(
 			req : typeof $node.express.request ,
 			res : typeof $node.express.response ,
-			next : () => void
 		) {
 			const root = $mol_file.absolute( this.rootPublic() )
-			const dir = root.resolve( req.path )				
-			const build = this.build()
+			const dir = root.resolve( req.path )
 
-			build.modEnsure( dir.path() )
+			this.ensure_index( dir.path() )
 
 			const match =  req.url.match( /(\/|.*[^\-]\/)([\?#].*)?$/ )
-			if( !match) return next()				
+			if( !match) return true
 
 			const file = root.resolve( `${req.path}index.html` )
 
@@ -210,10 +197,11 @@ namespace $ {
 					'Access-Control-Allow-Origin': '*',
 				} )
 				
-				return res.end( html )
+				res.end( html )
+				return false
 			}
 			
-			return next()
+			return true
 		}
 		
 		port() {
@@ -254,10 +242,8 @@ namespace $ {
 
 		@ $mol_mem
 		start() {
-
 			this.slave_servers()
 			this.repl()
-			
 			const socket = this.socket()
 
 			for( const [ line, path ] of this.lines() ) {
@@ -269,17 +255,19 @@ namespace $ {
 		
 		@ $mol_mem_key
 		notify( [ line, path ]: [ InstanceType<$node['ws']>, string ] ) {
-			
+
 			try {
 			
 				const build = this.build()
 				const bundle = build.root().resolve( path )
 			
 				// watch changes
-				const sources = build.sourcesAll({ path: bundle.path() , exclude : [ 'node' ] })
+				const sources = [
+					...build.sourcesAll([ bundle.path() , [ 'node' ] ]),
+					...build.bundleFiles([ bundle.path() , [ 'node' ] ])
+				]
 				
-				for( const src of sources ) src.buffer()	
-				
+				for( const src of sources ) src.stat()
 			} catch (error) {
 				if ($mol_fail_catch(error)) {
 					this.$.$mol_log3_fail({
@@ -329,9 +317,9 @@ namespace $ {
 			
 			try {
 				
-				for( const file of build.bundle({ path, bundle: 'node.js' }) ) file.stat()
-				for( const file of build.bundle({ path, bundle: 'node.audit.js' }) ) file.stat()
-				for( const file of build.bundle({ path, bundle: 'node.test.js' }) ) file.stat()
+				for( const file of build.bundle([ path, 'node.js' ]) ) file.stat()
+				for( const file of build.bundle([ path, 'node.audit.js' ]) ) file.stat()
+				for( const file of build.bundle([ path, 'node.test.js' ]) ) file.stat()
 			
 			} catch( error: any ) {
 				

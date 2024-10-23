@@ -39,26 +39,16 @@ namespace $ {
 	}
 
 	export class $mol_file_node extends $mol_file {
-		
-		@ $mol_mem_key
-		static absolute( path : string ) {
-			return this.make({
-				path : $mol_const( path )
-			})
-		}
 
 		static relative( path : string ) {
 			return this.absolute( $node.path.resolve( this.base, path ).replace( /\\/g , '/' ) )
 		}
 		
 		@ $mol_mem
-		watcher() {
-
-			if( /\/\./.test( this.path() ) ) return { destructor(){} }
-			
+		override watcher(reset?: null) {
 			const watcher = $node.chokidar.watch( this.path() , {
 				persistent : true ,
-				ignored: path => /([\/\\]\.|___$)/.test( path ) ,
+				ignored: path => /([\/\\]\.|___$)/.test( path ),
 				depth :  0 ,
 				ignoreInitial : true ,
 				awaitWriteFinish: {
@@ -67,20 +57,8 @@ namespace $ {
 			} )
 
 			watcher
-			.on( 'all' , ( type , path )=> {
-				
-				const file = $mol_file.relative( path.replace( /\\/g , '/' ) )
-
-				file.reset()
-				
-				if( type === 'change' ) {
-					this.stat( null )
-				} else {
-					file.parent().reset()
-				}
-
-			} )
-			.on( 'error' , $mol_fail_log )
+				.on( 'all' , (type, path) => this.watch_event(type, path) )
+				.on( 'error' , $mol_fail_log )
 			
 			return {
 				destructor() {
@@ -90,21 +68,34 @@ namespace $ {
 
 		}
 
+		protected watch_event(type: string, path: string) {
+			const file = $mol_file.relative( path.replace( /\\/g , '/' ) )
+			const parent = type === 'change' ? this : file.parent()
+			file.reset_schedule()
+			parent.reset_schedule()
+		}
+
+		static reset_changed() {
+			this.$.$mol_run.lock_run(() => super.reset_changed())
+		}
+
 		@ $mol_mem
-		stat( next? : $mol_file_stat | null, virt?: 'virt' ) {
-			
+		override stat(next? : $mol_file_stat | null, virt?: 'virt') {
 			let stat = next
 			const path = this.path()
 
 			this.parent().watcher()
 			
-			if( virt ) return next!
+			if( virt ) return next ?? null
 			
 			try {
 				stat = next ?? stat_convert($node.fs.statSync( path, { throwIfNoEntry: false } ))
 			} catch( error: any ) {
-				if (error.code === 'ENOENT') error = new $mol_file_not_found(`File not found`)
-				error.message += '\n' + path
+				if (this.$.$mol_fail_catch(error)) {
+					// For node < 14.7.0 compatible with throwIfNoEntry: false above
+					if (error.code === 'ENOENT') return null
+					error.message += '\n' + path
+				}
 				return this.$.$mol_fail_hidden(error)
 			}
 
@@ -112,25 +103,33 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		ensure() {
+		override ensure() {
 			const path = this.path()
 
 			try {
-				$node.fs.mkdirSync( path )
+				$node.fs.mkdirSync( path, { recursive: true } )
 			} catch( e: any ) {
-				e.message += '\n' + path
+				if (this.$.$mol_fail_catch(e)) {
+					if (e.code === 'EEXIST') return null
+					e.message += '\n' + path
+				}
 				this.$.$mol_fail_hidden(e)
 			}
 
 		}
+
+		@ $mol_action
+		override copy(to: string) {
+			$node.fs.copyFileSync(this.path(), to)
+		}
 		
 		@ $mol_action
-		drop() {
+		override drop() {
 			$node.fs.unlinkSync( this.path() )
 		}
 		
 		@ $mol_mem
-		buffer( next? : Uint8Array ) {
+		override buffer( next? : Uint8Array ) {
 
 			const path = this.path()
 			if( next === undefined ) {
@@ -145,7 +144,7 @@ namespace $ {
 
 					if( prev !== undefined && !$mol_compare_array( prev, next ) ) {
 						this.$.$mol_log3_rise({
-							place: `$mol_file_node..buffer()`,
+							place: `$mol_file_node.buffer()`,
 							message: 'Changed' ,
 							path: this.relate() ,
 						})
@@ -154,8 +153,10 @@ namespace $ {
 					return next
 
 				} catch( error: any ) {
+					if (this.$.$mol_fail_catch(error)) {
+						error.message += '\n' + path
+					}
 
-					error.message += '\n' + path
 					return this.$.$mol_fail_hidden( error )
 
 				}
@@ -178,8 +179,9 @@ namespace $ {
 				$node.fs.writeFileSync( path, next )
 
 			} catch( error: any ) {
-
-				error.message += '\n' + path
+				if (this.$.$mol_fail_catch(error)) {
+					error.message += '\n' + path
+				}
 				return this.$.$mol_fail_hidden( error )
 
 			}
@@ -188,7 +190,7 @@ namespace $ {
 
 		}
 		@ $mol_mem
-		sub() : $mol_file[] {
+		override sub() : $mol_file[] {
 			if (! this.exists() ) return []
 			if ( this.type() !== 'dir') return []
 
@@ -200,30 +202,34 @@ namespace $ {
 					.filter( name => !/^\.+$/.test( name ) )
 					.map( name => this.resolve( name ) )
 			} catch( e: any ) {
-				e.message += '\n' + path
+				if (this.$.$mol_fail_catch(e)) {
+					e.message += '\n' + path
+				}
 				return this.$.$mol_fail_hidden(e)
 			}
 		}
 		
-		resolve( path : string ) {
+		override resolve( path : string ) {
 			return ( this.constructor as typeof $mol_file ).relative( $node.path.join( this.path() , path ) )
 		}
 		
-		relate( base = ( this.constructor as typeof $mol_file ).relative( '.' )) {
+		override relate( base = ( this.constructor as typeof $mol_file ).relative( '.' )) {
 			return $node.path.relative( base.path() , this.path() ).replace( /\\/g , '/' )
 		}
-		
-		append( next : Uint8Array | string ) {
+
+		override append( next : Uint8Array | string ) {
 			const path = this.path()
 			try {
 				$node.fs.appendFileSync( path , next )
 			} catch( e: any ) {
-				e.message += '\n' + path
+				if (this.$.$mol_fail_catch(e)) {
+					e.message += '\n' + path
+				}
 				return this.$.$mol_fail_hidden(e)
 			}
 		}
 		
-		open( ... modes: readonly ( keyof typeof $mol_file_mode_open )[] ) {
+		override open( ... modes: readonly ( keyof typeof $mol_file_mode_open )[] ) {
 			return $node.fs.openSync(
 				this.path(),
 				modes.reduce( ( res, mode )=> res | $mol_file_mode_open[ mode ], 0 ),

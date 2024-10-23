@@ -10,13 +10,15 @@ namespace $ {
 		ctime: Date
 	}
 
-	export class $mol_file_not_found extends Error {}
+	// export class $mol_file_not_found extends Error {}
 
-	export abstract class $mol_file extends $mol_object {
-			
+	export class $mol_file extends $mol_object {
+		
 		@ $mol_mem_key
-		static absolute( path : string ): $mol_file {
-			throw new Error( 'Not implemented yet' )
+		static absolute( path : string ) {
+			return this.make({
+				path : $mol_const( path )
+			})
 		}
 
 		static relative( path : string ) : $mol_file {
@@ -33,25 +35,56 @@ namespace $ {
 			return this.resolve( '..' )
 		}
 
-		abstract stat( next? : $mol_file_stat | null, virt?: 'virt' ): $mol_file_stat | null
-
-		reset(): void {
-			try {
-				this.stat( null )
-			} catch( error: any ) {
-				if (error instanceof $mol_file_not_found) return
-				return $mol_fail_hidden(error)
-			}
+		stat(next? : $mol_file_stat | null, virt?: 'virt'): null | $mol_file_stat {
+			return null
 		}
-		
+
+		reset() { this.stat(null) }
+		reset_schedule() { return this.$.$mol_file.reset_schedule(this.path()) }
+
+		protected static changed_paths = new Set<string>()
+
+		static reset_schedule(path: string) {
+			if (! this.changed_paths.size) new this.$.$mol_after_frame(()=> $mol_wire_async(this).reset_changed())
+			this.changed_paths.add(path)
+		}
+
+		static reset_changed() {
+			this.$.$mol_log3_rise({
+				place: `${this}.reset_changed`,
+				message: 'Watch reset',
+				paths: [... this.changed_paths],
+			})
+			for (const path of this.changed_paths) {
+				try {
+					this.absolute(path).reset()
+				} catch (e) {
+					if ($mol_fail_catch(e)) $mol_fail_log(e)
+				}
+			}
+			this.changed_paths.clear()
+		}
+
+		@ $mol_mem
 		version() {
 			return this.stat()?.mtime.getTime().toString( 36 ).toUpperCase() ?? ''
 		}
 
-		abstract ensure(): void
-		abstract drop(): void
+		ensure() {}
+		drop() {}
+		copy(to: string) {}
 
-		watcher() {
+		@ $mol_mem_key
+		clone(to: string) {
+			this.stat()
+			const file = this.$.$mol_file.absolute(to)
+			file.parent().ensure()
+			this.copy(to)
+			file.reset()
+			return file
+		}
+
+		watcher(reset?: null) {
 			console.warn('$mol_file_web.watcher() not implemented')
 
 			return {
@@ -78,6 +111,7 @@ namespace $ {
 			return next
 		}
 		
+		@ $mol_mem
 		type() {
 			return this.stat()?.type ?? ''
 		}
@@ -91,7 +125,8 @@ namespace $ {
 			return match ? match[ 1 ].substring( 1 ) : ''
 		}
 
-		abstract buffer( next? : Uint8Array ): Uint8Array
+		@ $mol_mem
+		buffer( next? : Uint8Array ) { return next ?? new Uint8Array }
 
 		@ $mol_mem
 		text(next?: string, virt?: 'virt') {
@@ -115,13 +150,17 @@ namespace $ {
 			}
 		}
 
-		abstract sub(): $mol_file[]
+		sub() { return [] as $mol_file[] }
 
-		abstract resolve(path: string): $mol_file
+		resolve(path: string): $mol_file {
+			throw new Error('implement')
+		}
 
-		abstract relate( base?: $mol_file ): string
-		
-		abstract append( next : Uint8Array | string ): void
+		relate( base?: $mol_file ): string {
+			throw new Error('implement')
+		}
+
+		append( next : Uint8Array | string ) {}
 		
 		find(
 			include? : RegExp ,
@@ -146,6 +185,7 @@ namespace $ {
 			return found
 		}
 
+		@ $mol_mem
 		size() {
 			switch( this.type() ) {
 				case 'file': return this.stat()?.size ?? 0
