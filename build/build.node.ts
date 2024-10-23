@@ -606,97 +606,26 @@ namespace $ {
 
 		watching() { return this.paths().length === 0 }
 		interactive() { return process.stdout.isTTY }
-
-		// @ $mol_mem_key
-		// modEnsure( path : string ) {
-
-		// 	const mod = $mol_file.absolute( path )
-		// 	const parent = mod.parent()
-			
-		// 	if( mod !== this.root() ) this.modEnsure( parent.path() )
-		// 	const repo = this.repo(path)
-
-		// 	if( mod.exists()) {
-
-		// 		if( mod.type() !== 'dir' ) return false
-
-		// 		const git_dir = mod.resolve( '.git' )
-		// 		const git_dir_exists = git_dir.exists() && git_dir.type() === 'dir'
-		// 		const is_submodule = this.git_submodules().has( path )
-
-		// 		if( git_dir_exists || is_submodule) {
-		// 			this.git_pull( path )
-		// 			// mod.reset()
-		// 			// for ( const sub of mod.sub() ) sub.reset()
-		// 			return false
-		// 		}
-
-		// 		if (repo) {
-
-		// 			this.$.$mol_run.spawn( { command: ['git', 'init'], dir: path, dirty: true } )
-			
-		// 			const res = this.$.$mol_run.spawn( { command: ['git', 'remote', 'show', repo ],  dir: path } )
-		// 			const head_branch_name = res.stdout.toString().match( /HEAD branch: (.*?)\n/ )?.[1] ?? 'master'
-
-		// 			const command = ['git', 'remote', 'add', '--track', head_branch_name, 'origin' , repo ]
-		// 			this.$.$mol_run.spawn( { command, dir: path, dirty: true } )
-
-		// 			this.git_pull( path )
-		// 			return true
-		// 		}
-		// 		return false
-		// 	}
-
-		// 	if( repo ) {
-		// 		const command = ['git', 'clone' , '--depth', '1' , repo , mod.relate( this.root() ) ]
-		// 		this.$.$mol_run.spawn( { command, dir: this.root().path(), dirty: true })
-		// 		// mod.reset()
-		// 		return true
-		// 	}
-			
-		// 	if( parent === this.root() ) {
-		// 		throw new Error( `Root package "${ mod.relate( this.root() ) }" not found` )
-		// 	}
-			
-		// 	const node = this.root().resolve( 'node' )
-		// 	const node_modules = this.root().resolve( 'node_modules' )
-			
-		// 	if(
-		// 		[ node, node_modules ].includes( parent )
-		// 		&& mod.name() !== 'node'
-		// 		&& ! mod.name().startsWith('@')
-		// 	) {
-		// 		$node [ mod.name() ] // force autoinstall through npm
-		// 	}
-			
-		// 	if(
-		// 		[ node, node_modules ].includes( parent.parent() )
-		// 		&& parent.name().startsWith('@')
-		// 	) {
-		// 		$node [ `${parent.name()}/${mod.name()}` ] // force autoinstall through npm
-		// 	}
-
-		// 	return false
-		// }
-
-		modEnsure( path : string ) { return this.ensurer().ensure(path) }
-
-		// @ $mol_mem_key
-		modMeta( path : string ) {
-			return this.ensurer().meta(path)
+		pull_timeout() {
+			let timeout = Number(this.$.$mol_env().MOL_BUILD_PULL_TIMEOUT)
+			if ( Number.isNaN(timeout) ) {
+				timeout = this.watching() ? 5000 : 120000
+			}
+			return timeout
 		}
-
-		ensurer_timeout() { return this.watching() ? 5000 : 120000 }
 
 		@ $mol_mem
 		ensurer() {
-			return this.$.$mol_build_ensure_git.make({
+			return this.$.$mol_build_ensure.make({
 				root: () => this.root(),
 				interactive: () => this.interactive(),
-				timeout_default: () => this.ensurer_timeout(),
+				pull_timeout: () => this.pull_timeout(),
 			})
 		}
 		
+		modEnsure( path : string ) { return this.ensurer().ensure(path) }
+		modMeta( path : string ) { return this.ensurer().meta(path) }
+
 		@ $mol_mem_key
 		graph( [ path , exclude ] : [ path : string , exclude? : readonly string[] ] ) {
 			return this.$.$mol_build_graph.make({
@@ -1141,7 +1070,7 @@ namespace $ {
 			const namedMetas: $mol_tree2[] = []
 			sortedPaths.forEach( path => {
 				const meta = this.modMeta( this.root().resolve( path ).path() )
-				if( meta.kids.length > 0 ) {
+				if( meta && meta.kids.length > 0 ) {
 					namedMetas.push( meta.data( '/' + path, meta.kids ) )
 				}
 			} )

@@ -91,9 +91,11 @@ namespace $ {
 			try {
 				stat = next ?? stat_convert($node.fs.statSync( path, { throwIfNoEntry: false } ))
 			} catch( error: any ) {
-				// For node < 14.7.0 compatible with throwIfNoEntry: false above
-				if (error.code === 'ENOENT') return null
-				error.message += '\n' + path
+				if (this.$.$mol_fail_catch(error)) {
+					// For node < 14.7.0 compatible with throwIfNoEntry: false above
+					if (error.code === 'ENOENT') return null
+					error.message += '\n' + path
+				}
 				return this.$.$mol_fail_hidden(error)
 			}
 
@@ -105,9 +107,12 @@ namespace $ {
 			const path = this.path()
 
 			try {
-				$node.fs.mkdirSync( path )
+				$node.fs.mkdirSync( path, { recursive: true } )
 			} catch( e: any ) {
-				e.message += '\n' + path
+				if (this.$.$mol_fail_catch(e)) {
+					if (e.code === 'EEXIST') return null
+					e.message += '\n' + path
+				}
 				this.$.$mol_fail_hidden(e)
 			}
 
@@ -148,8 +153,10 @@ namespace $ {
 					return next
 
 				} catch( error: any ) {
+					if (this.$.$mol_fail_catch(error)) {
+						error.message += '\n' + path
+					}
 
-					error.message += '\n' + path
 					return this.$.$mol_fail_hidden( error )
 
 				}
@@ -172,8 +179,9 @@ namespace $ {
 				$node.fs.writeFileSync( path, next )
 
 			} catch( error: any ) {
-
-				error.message += '\n' + path
+				if (this.$.$mol_fail_catch(error)) {
+					error.message += '\n' + path
+				}
 				return this.$.$mol_fail_hidden( error )
 
 			}
@@ -194,7 +202,9 @@ namespace $ {
 					.filter( name => !/^\.+$/.test( name ) )
 					.map( name => this.resolve( name ) )
 			} catch( e: any ) {
-				e.message += '\n' + path
+				if (this.$.$mol_fail_catch(e)) {
+					e.message += '\n' + path
+				}
 				return this.$.$mol_fail_hidden(e)
 			}
 		}
@@ -212,7 +222,9 @@ namespace $ {
 			try {
 				$node.fs.appendFileSync( path , next )
 			} catch( e: any ) {
-				e.message += '\n' + path
+				if (this.$.$mol_fail_catch(e)) {
+					e.message += '\n' + path
+				}
 				return this.$.$mol_fail_hidden(e)
 			}
 		}

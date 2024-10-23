@@ -77,8 +77,9 @@ namespace $ {
 		@ $mol_mem_key
 		clone(to: string) {
 			this.stat()
-			this.copy(to)
 			const file = this.$.$mol_file.absolute(to)
+			file.parent().ensure()
+			this.copy(to)
 			file.reset()
 			return file
 		}

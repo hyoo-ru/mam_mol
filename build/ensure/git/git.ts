@@ -1,14 +1,12 @@
 namespace $ {
-	export class $mol_build_ensure_git extends $mol_build_ensure {
-
-		protected timeout() {
-			const timeout = Number(this.$.$mol_env().MOL_BUILD_GIT_TIMEOUT)
-			return (Number.isNaN(timeout) ? null : timeout) || this.timeout_default()
-		}
+	export class $mol_build_ensure_git extends $mol_build_ensure_vcs {
+		override vcs_type() { return 'git' }
+		override root_repo() { return 'https://github.com/hyoo-ru/mam.git' }
 
 		@ $mol_mem
 		protected version() {
-			return this.$.$mol_run.spawn({ command: 'git version', dir: '.' }).stdout.toString().trim().match(/.*\s+([\d\.]+)$/)?.[1] ?? ''
+			return this.$.$mol_run.spawn({ command: 'git version', dir: '.' })
+				.stdout.toString().trim().match(/.*\s+([\d\.]+)$/)?.[1] ?? ''
 		}
 
 		protected deepen_supported() {
@@ -33,13 +31,13 @@ namespace $ {
 				command.push( this.deepen_supported() ? '--deepen=1' : '--depth=1' )
 			}
 
-			const timeout = this.timeout()
+			const timeout = this.pull_timeout()
 			this.$.$mol_run.spawn( { command, dir, timeout, dirty: true }).stdout.toString().trim()
 			return true
 		}
 
 		protected is_git(path: string) {
-			const mod = $mol_file.absolute( path )
+			const mod = this.$.$mol_file.absolute( path )
 			const git_dir = mod.resolve( '.git' )
 
 			return git_dir.exists() && git_dir.type() === 'dir'
@@ -61,11 +59,11 @@ namespace $ {
 			return new Set(dirs)
 		}
 
-		protected inited(path: string) {
+		protected override inited(path: string) {
 			return this.is_git(path) || this.submodules().has(path)
 		}
 
-		protected init(path: string) {
+		protected override init(path: string) {
 			const repo = this.repo(path)
 			if (! repo) throw new Error(`"${path}" not a repo`)
 
@@ -79,8 +77,8 @@ namespace $ {
 			return null
 		}
 
-		protected clone(path: string) {
-			const mod = $mol_file.absolute( path )
+		protected override clone(path: string) {
+			const mod = this.$.$mol_file.absolute( path )
 			const repo = this.repo(path)
 			if (! repo) throw new Error(`"${path}" not a repo`)
 
@@ -89,28 +87,5 @@ namespace $ {
 			return null
 		}
 
-		@ $mol_mem_key
-		ensure( path : string ) {
-			const mod = $mol_file.absolute( path )
-
-			if( mod.exists()) {
-				if( mod.type() !== 'dir' ) return true
-
-				if (! this.inited(path)) {
-					if (! this.repo(path) ) return true
-					this.init(path)
-				}
-				this.pull( path )
-
-				return true
-			}
-
-			if( this.repo(path) ) {
-				this.clone(path)
-				// mod.reset()
-				return true
-			}
-			return false
-		}
 	}
 }
