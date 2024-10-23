@@ -42,8 +42,6 @@ namespace $ {
 
 			try {
 				return this.pull_run(dir)
-				// mod.reset()
-				// for ( const sub of mod.sub() ) sub.reset()
 			} catch (e) {
 				if (e instanceof $mol_run_error && e.cause.timeout_kill) {
 					this.pull_disabled = true
@@ -59,7 +57,7 @@ namespace $ {
 
 				if (e instanceof Error) {
 					this.$.$mol_fail_log(e)
-					return
+					return false
 				}
 
 				$mol_fail_hidden(e)
@@ -78,13 +76,15 @@ namespace $ {
 					this.init(path)
 				}
 				this.pull( path )
+				// mod.reset()
+				// for ( const sub of mod.sub() ) sub.reset()
 
 				return true
 			}
 
 			if( this.repo(path) ) {
 				this.clone(path)
-				// mod.reset()
+				mod.reset()
 				return true
 			}
 			return false
