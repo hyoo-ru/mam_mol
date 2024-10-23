@@ -61,8 +61,6 @@ namespace $ {
 				dir: $node.path.relative( '' , dir ) ,
 			}
 
-			let pid = 0
-
 			if (sync) {
 
 				this.$.$mol_log3_warn({
@@ -85,22 +83,34 @@ namespace $ {
 				if (! res || error || res.status) {
 					throw new $mol_run_error(
 						this.error_message(res),
-						{ ...log_object, pid, status: res?.status, signal: res?.signal },
+						{ ...log_object, status: res?.status, signal: res?.signal },
 						...(error ? [error] : [])
 					)
 				}
 
 				return res
 			}
+
+			let sub
+
+			try {
+				sub = this.$.$mol_run_spawn(app, args, opts)
+			} catch (error) {
+				throw new $mol_run_error(
+					this.error_message(undefined),
+					log_object,
+					error as Error
+				)
+			}
 	
-			const sub = this.$.$mol_run_spawn(app, args, opts)
-			pid = sub.pid ?? 0
-	
-			// this.$.$mol_log3_come({
-			// 	place: '$mol_run_async',
-			// 	message: 'Run',
-			// 	...log_object
-			// })
+			const pid = sub.pid ?? 0
+
+			this.$.$mol_log3_come({
+				place: '$mol_run_async',
+				message: 'Run',
+				pid,
+				...log_object,
+			})
 	
 			let timeout_kill = false
 			let timer: undefined | ReturnType<typeof setTimeout>
@@ -142,15 +152,7 @@ namespace $ {
 						get stdout() { return Buffer.concat(std_data) },
 						get stderr() { return Buffer.concat(error_data) }
 					}
-	
-					this.$.$mol_log3_done({
-						place: '$mol_run_async',
-						message: 'Run',
-						pid,
-						status,
-						...log_object,
-					})
-	
+		
 					if (error || status || timeout_kill) return fail( new $mol_run_error(
 						this.error_message(res) + (timeout_kill ? ', timeout' : ''),
 						{ ...log_object, pid, status, signal, timeout_kill },
