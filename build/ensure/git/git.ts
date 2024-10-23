@@ -5,7 +5,8 @@ namespace $ {
 
 		@ $mol_mem
 		protected version() {
-			return this.$.$mol_run.spawn({ command: 'git version', dir: '.' })
+			$mol_wire_solid()
+			return this.$.$mol_run.spawn({ command: 'git version', dir: this.root().path() })
 				.stdout.toString().trim().match(/.*\s+([\d\.]+)$/)?.[1] ?? ''
 		}
 
@@ -13,9 +14,8 @@ namespace $ {
 			return $mol_compare_text()(this.version(), '2.42.0') >= 0
 		}
 
-		@ $mol_action
 		protected override pull_run(dir: string) {
-			const out = this.$.$mol_run.spawn({ command: 'git rev-parse --abbrev-ref --symbolic-full-name HEAD', dir })
+			const out = this.$.$mol_run.spawn({ command: 'git rev-parse --abbrev-ref --symbolic-full-name HEAD', dir, dirty: true })
 			const current_branch = out.stdout.toString().trim()
 			// когда не на ветке - не надо пулить, например сборка во время git bisect
 			if (! current_branch) return false

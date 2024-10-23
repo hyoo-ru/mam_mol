@@ -12,12 +12,13 @@ namespace $ {
 		@ $mol_mem_key
 		meta( path : string ) {
 
-			const decls = [] as $mol_tree2[]
+			let decls = [] as $mol_tree2[]
 
 			const pack = this.$.$mol_file.absolute( path )
+
 			for( const file of pack.sub() ) {
 				if( !/\.meta\.tree$/.test( file.name() ) ) continue
-				decls.push( ... this.$.$mol_tree2_from_string( file.text() , file.path() ).kids )
+				decls = decls.concat( this.$.$mol_tree2_from_string( file.text() , file.path() ).kids )
 			}
 
 			return decls.length ? this.$.$mol_tree2.list(decls, decls[0]?.span) : null

@@ -4,8 +4,6 @@ namespace $ {
 		pid?: number
 		stdout: Buffer | string
 		stderr: Buffer | string
-		status?: number | null
-		signal: NodeJS.Signals | null,
 	}
 
 	export class $mol_run_error extends $mol_error_mix<{
@@ -144,7 +142,6 @@ namespace $ {
 	
 					const res = {
 						pid,
-						status,
 						signal,
 						get stdout() { return Buffer.concat(std_data) },
 						get stderr() { return Buffer.concat(error_data) }
