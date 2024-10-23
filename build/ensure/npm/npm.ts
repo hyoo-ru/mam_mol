@@ -1,7 +1,9 @@
 namespace $ {
-	export class $mol_build_ensure_npm extends $mol_build_ensure {
+	export class $mol_build_ensure_npm extends $mol_object {
+		root() { return $mol_file.absolute('') }
+
 		@ $mol_mem_key
-		override ensure( path : string ) {
+		ensure( path : string ) {
 			const mod = this.$.$mol_file.absolute( path )
 			const parent = mod.parent()
 			const node = this.root().resolve( 'node' )

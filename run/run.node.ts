@@ -54,9 +54,10 @@ namespace $ {
 			const args_raw = typeof command === 'string' ? command.split( ' ' ) : command
 			const [ app, ...args ] = args_raw
 			const opts = { shell: true, cwd: dir, env }
+
 			const log_object = {
-				dirty,
-				timeout,
+				place: `${this}.spawn()`,
+				message: 'Run',
 				command: args_raw.join(' ') ,
 				dir: $node.path.relative( '' , dir ) ,
 			}
@@ -64,8 +65,6 @@ namespace $ {
 			if (sync) {
 
 				this.$.$mol_log3_warn({
-					place: '$mol_run_async',
-					message: 'Run',
 					hint: 'Run inside fiber',
 					...log_object
 				})
@@ -106,10 +105,8 @@ namespace $ {
 			const pid = sub.pid ?? 0
 
 			this.$.$mol_log3_come({
-				place: '$mol_run_async',
-				message: 'Run',
-				pid,
 				...log_object,
+				pid,
 			})
 	
 			let timeout_kill = false
@@ -158,7 +155,12 @@ namespace $ {
 						{ ...log_object, pid, status, signal, timeout_kill },
 						...error ? [ error ] : []
 					) )
-	
+
+					this.$.$mol_log3_done({
+						...log_object,
+						pid,
+					})
+			
 					done(res)
 				}
 	
