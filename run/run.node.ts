@@ -36,8 +36,6 @@ namespace $ {
 
 		static spawn(options: $mol_run_options) {
 			const cb = () => $mol_wire_sync(this).spawn_async( { ...options, env: options.env ?? this.$.$mol_env() } )
-			// return cb()
-			// return this.lock_run(cb)
 			return options.dirty ? this.lock_run(cb) : cb()
 		}
 
@@ -61,11 +59,11 @@ namespace $ {
 				dir: $node.path.relative( '' , dir ) ,
 			}
 	
-			this.$.$mol_log3_come({
-				place: '$mol_run_async',
-				message: 'Run',
-				...log_object
-			})
+			// this.$.$mol_log3_come({
+			// 	place: '$mol_run_async',
+			// 	message: 'Run',
+			// 	...log_object
+			// })
 	
 			let timeout_kill = false
 			let timer: undefined | ReturnType<typeof setTimeout>
@@ -111,8 +109,8 @@ namespace $ {
 					this.$.$mol_log3_done({
 						place: '$mol_run_async',
 						message: 'Run',
-						...log_object,
 						status,
+						...log_object,
 					})
 	
 					if (error || status || timeout_kill) return fail( new $mol_run_error(
