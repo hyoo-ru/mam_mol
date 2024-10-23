@@ -10,8 +10,9 @@ namespace $ {
 
 	export class $mol_run_error extends $mol_error_mix<{
 		timeout_kill?: boolean
+		pid?: number
 		signal?: NodeJS.Signals | null
-		status: number | null
+		status?: number | null
 		command: string
 		dir: string
 	}> {}
@@ -35,29 +36,60 @@ namespace $ {
 		static lock_run<Result>(cb: () => Result) { return this.lock.run(cb) }
 
 		static spawn(options: $mol_run_options) {
-			const cb = () => $mol_wire_sync(this).spawn_async( { ...options, env: options.env ?? this.$.$mol_env() } )
-			return options.dirty ? this.lock_run(cb) : cb()
+			const sync = ! Boolean($mol_wire_auto())
+			const env = options.env ?? this.$.$mol_env()
+
+			const cb = () => $mol_wire_sync(this).spawn_async( { ...options, sync, env } )
+
+			return ! sync && options.dirty ? this.lock_run(cb) : cb()
 		}
 
 		static spawn_async(
-			{ dir, timeout, command, env, dirty }: $mol_run_options
+			{ dir, sync, timeout, command, env, dirty }: $mol_run_options & { sync?: boolean }
 		) {
 			const args_raw = typeof command === 'string' ? command.split( ' ' ) : command
 			const [ app, ...args ] = args_raw
-	
-			const sub = this.$.$mol_run_spawn(app, args, {
-				shell: true,
-				cwd: dir,
-				env
-			})
-	
+			const opts = { shell: true, cwd: dir, env }
 			const log_object = {
 				dirty,
-				pid: sub.pid,
 				timeout,
 				command: args_raw.join(' ') ,
 				dir: $node.path.relative( '' , dir ) ,
 			}
+
+			let pid = 0
+
+			if (sync) {
+				let error: Error | undefined
+				let res
+
+				this.$.$mol_log3_warn({
+					place: '$mol_run_async',
+					message: 'Run',
+					hint: 'Run inside fiber',
+					...log_object
+				})
+
+				try {
+					res = this.$.$mol_run_spawn_sync(app, args, opts)
+					error = res.error
+				} catch (err) {
+					error = err as Error
+				}
+
+				if (error || res?.status) {
+					throw new $mol_run_error(
+						this.error_message(res),
+						{ ...log_object, pid, status: res?.status, signal: res?.signal },
+						...(error ? [error] : [])
+					)
+				}
+
+				return res
+			}
+	
+			const sub = this.$.$mol_run_spawn(app, args, opts)
+			pid = sub.pid ?? 0
 	
 			// this.$.$mol_log3_come({
 			// 	place: '$mol_run_async',
@@ -99,7 +131,7 @@ namespace $ {
 					timer = undefined
 	
 					const res = {
-						pid: sub.pid,
+						pid,
 						status,
 						signal,
 						get stdout() { return Buffer.concat(std_data) },
@@ -109,13 +141,14 @@ namespace $ {
 					this.$.$mol_log3_done({
 						place: '$mol_run_async',
 						message: 'Run',
+						pid,
 						status,
 						...log_object,
 					})
 	
 					if (error || status || timeout_kill) return fail( new $mol_run_error(
-						(res.stderr.toString() || res.stdout.toString() || 'Run error') + (timeout_kill ? ', timeout' : ''),
-						{ ...log_object, status, signal, timeout_kill },
+						this.error_message(res) + (timeout_kill ? ', timeout' : ''),
+						{ ...log_object, pid, status, signal, timeout_kill },
 						...error ? [ error ] : []
 					) )
 	
@@ -131,6 +164,10 @@ namespace $ {
 				clearTimeout(timer)
 				sub.kill('SIGKILL')
 			} })
+		}
+
+		static error_message(res?: $mol_run_error_context) {
+			return res?.stderr.toString() || res?.stdout.toString() || 'Run error'
 		}
 	}
 
