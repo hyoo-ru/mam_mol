@@ -2,8 +2,8 @@ namespace $ {
 
 	export type $mol_run_error_context = {
 		pid?: number
-		stdout: Buffer
-		stderr: Buffer
+		stdout: Buffer | string
+		stderr: Buffer | string
 		status?: number | null
 		signal: NodeJS.Signals | null,
 	}
@@ -17,9 +17,13 @@ namespace $ {
 		dir: string
 	}> {}
 
-	const child_process = $node['child_process']
-	export const $mol_run_spawn = child_process.spawn.bind(child_process)
-	export const $mol_run_spawn_sync = child_process.spawnSync.bind(child_process)
+	export const $mol_run_spawn = (
+		...args: Parameters<typeof $node['child_process']['spawn']>
+	) => $node['child_process'].spawn(...args)
+
+	export const $mol_run_spawn_sync = (
+		...args: Parameters<typeof $node['child_process']['spawnSync']>
+	) => $node['child_process'].spawnSync(...args)
 
 	export type $mol_run_options = {
 		command : readonly string[] | string
@@ -60,8 +64,6 @@ namespace $ {
 			let pid = 0
 
 			if (sync) {
-				let error: Error | undefined
-				let res
 
 				this.$.$mol_log3_warn({
 					place: '$mol_run_async',
@@ -70,6 +72,9 @@ namespace $ {
 					...log_object
 				})
 
+				let error: Error | undefined
+				let res
+
 				try {
 					res = this.$.$mol_run_spawn_sync(app, args, opts)
 					error = res.error
@@ -77,7 +82,7 @@ namespace $ {
 					error = err as Error
 				}
 
-				if (error || res?.status) {
+				if (! res || error || res.status) {
 					throw new $mol_run_error(
 						this.error_message(res),
 						{ ...log_object, pid, status: res?.status, signal: res?.signal },
