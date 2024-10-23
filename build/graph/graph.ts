@@ -24,17 +24,19 @@ namespace $ {
 		@ $mol_action
 		path_added(path: string) { return this.added.has(path) }
 
+		@ $mol_mem_key
 		protected add_module( path : string ) {
 			this.added.add(path)
 			const mod = this.$.$mol_file.absolute( path )
-			this.graph().nodes.add(mod.relate( this.root() ))
+			const graph = this.graph()
+			graph.nodes.add(mod.relate( this.root() ))
 
 			const deps = this.dependencies( path )
 			for( let target in deps ) {
 				this.check_dep( [ path, target ])
 			}
 
-			return null
+			return graph
 		}
 
 		path_resolved(target: string) {
@@ -81,9 +83,10 @@ namespace $ {
 			
 			const from = mod.relate( root )
 			const to = dep.relate( root )
-			const edge = this.graph().edges_out.get( from )?.get( to )
+			const graph = this.graph()
+			const edge = graph.edges_out.get( from )?.get( to )
 			if( !edge || ( deps[ target ] > edge.priority ) ) {
-				this.graph().link( from , to , { priority : deps[ target ] } )
+				graph.link( from , to , { priority : deps[ target ] } )
 			}
 			if (this.path_added(dep.path())) return null
 			this.add_module( dep.path() )
@@ -96,11 +99,11 @@ namespace $ {
 			this.graph(null)
 			const path = this.path()
 			this.mod_ensure( path )
-			this.add_module( path )
+			const graph = this.add_module( path )
 
-			this.graph().acyclic( edge => edge.priority )
+			graph.acyclic( edge => edge.priority )
 			this.added.clear()
-			return this.graph()
+			return graph
 		}
 
 		get sorted() { return this.out().sorted }
