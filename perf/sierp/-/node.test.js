@@ -1994,7 +1994,11 @@ var $node = new Proxy({ require }, {
                 try {
                     $$.$mol_exec('.', 'npm', 'install', '--omit=dev', '@types/' + name);
                 }
-                catch { }
+                catch (e) {
+                    if ($$.$mol_fail_catch(e)) {
+                        $$.$mol_fail_log(e);
+                    }
+                }
                 break;
             }
             else {
@@ -2005,7 +2009,7 @@ var $node = new Proxy({ require }, {
             return target.require(name);
         }
         catch (error) {
-            if (error.code === 'ERR_REQUIRE_ESM') {
+            if ($.$mol_fail_catch(error) && error.code === 'ERR_REQUIRE_ESM') {
                 const module = cache.get(name);
                 if (module)
                     return module;

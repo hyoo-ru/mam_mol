@@ -64,8 +64,8 @@
     "$mol_promise",
     "$mol_compare_deep",
     "$mol_compare",
-    "$mol_fail_log",
-    "$mol_fail_catch"
+    "$mol_fail_catch",
+    "$mol_fail_log"
   ],
   "dependencies": {
     "jsdom": "*"
