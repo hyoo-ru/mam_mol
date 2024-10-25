@@ -151,18 +151,18 @@ namespace $ {
 
 		async respond(event: FetchEvent) {
 			const request = event.request
-			const fresh = request.cache === 'force-cache' ? null : this.fetch_data(event)
+			const fresh = request.cache === 'force-cache' ? null : this.fetch_and_cache(event)
 
 			const cached = this.ignore_cache ?  null : await caches.match( request )
 
 			if (request.cache !== 'no-cache' && request.cache !== 'reload') {
-				return cached || fresh || this.fetch_data(event)
+				return cached || fresh || this.fetch_and_cache(event)
 			}
 
-			if ( ! cached || ! fresh) return fresh
+			if ( ! cached) return fresh
 
 			try {
-				const actual = await fresh
+				const actual = await fresh!
 				if (actual.status === cached.status) return actual
 
 				throw new Error(
@@ -181,20 +181,20 @@ namespace $ {
 			}
 		}
 
-		async put_cache(request: Request, response: Response | Promise<Response>) {
+		async put_cache(request: Request, response: Response) {
 			const cache = await caches.open( '$mol_offline' )
-			return cache.put( request , await response )
+			return cache.put( request , response )
 		}
 
-		async fetch_data (event: FetchEvent) {
+		async fetch_and_cache (event: FetchEvent) {
 			const request = event.request
 			const response = await fetch( request )
 			if (response.status !== 200) return response
 
-			const cached = this.put_cache(request, response)
+			const cached = this.put_cache(request, response.clone())
 			event.waitUntil(cached)
 
-			return response.clone()
+			return response
 		}
 
 	}
