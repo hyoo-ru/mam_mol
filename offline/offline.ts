@@ -1,5 +1,9 @@
 namespace $ {
 
-	export function $mol_offline( ) {}
+	export class $mol_offline {
+		run() {
+			return false
+		}
+	}
 
 }

@@ -10,6 +10,7 @@ function $mol_build_client() {
 	
 	socket.onmessage = message => {
 		if( message.data !== '$mol_build_obsolete' ) return
+		sessionStorage.setItem('$mol_build_obsolete', '1')
 		location.reload()
 	}
 
