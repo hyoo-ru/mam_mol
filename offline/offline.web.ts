@@ -8,8 +8,6 @@ namespace $ {
 			'//cse.google.com/adsense/search/async-ads.js'
 		])
 
-		obsolete_key() { return '$mol_build_obsolete' }
-
 		in_worker() { return typeof window === 'undefined' }
 
 		is_supported() {
@@ -33,12 +31,18 @@ namespace $ {
 			if ( this.in_worker() ) return null
 			if ( ! this.is_supported() ) return null
 
+			window.addEventListener('message', this.window_message.bind(this))
+
 			navigator.serviceWorker.register(this.web_js())
 
 			return this._registration = navigator.serviceWorker.ready
 		}
 
-		async send(data: { message: string }) {
+		window_message(e: MessageEvent) {
+			if (e.data === 'mol_build_obsolete') return this.send(e.data)
+		}
+
+		async send(data: unknown) {
 			try {
 				const reg = await this.registration()
 				reg?.active?.postMessage(data)
@@ -47,21 +51,11 @@ namespace $ {
 			}
 		}
 
-		notify() {
-			const key = this.obsolete_key()
-			const ignore_cache = sessionStorage.getItem(key)
-			sessionStorage.removeItem(key)
-
-			if (ignore_cache) this.send({ message: key })
-		}
-
 		override run() {
 			if (! this.registration()) {
 				this.worker()
 				return false
 			}
-
-			this.notify()
 
 			// const reg = await this.registration()
 			// reg?.addEventListener( 'updatefound', ()=> {
@@ -91,12 +85,7 @@ namespace $ {
 		}
 
 		message(event: ExtendableMessageEvent) {
-			const data = event.data
-			if (! data || typeof data !== 'object') return
-			const message = (data as { message?: string }).message ?? ''
-			if (! message) return
-			if (message === this.obsolete_key()) return this.build_obsolete()
-
+			if (event.data === 'mol_build_obsolete') this.ignore_cache = true
 		}
 
 		beforeinstallprompt(event: Event & { prompt?(): void }) {
@@ -117,8 +106,6 @@ namespace $ {
 		}
 
 		protected ignore_cache = false
-
-		build_obsolete() { this.ignore_cache = true }
 
 		fetch_event(event: FetchEvent) {
 			const request = event.request
