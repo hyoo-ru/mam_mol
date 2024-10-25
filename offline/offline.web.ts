@@ -43,14 +43,21 @@ namespace $ {
 			return this._registration = navigator.serviceWorker.ready
 		}
 
-		async notify() {
-			const reg = await this.registration()
+		async send(data: { message: string }) {
+			try {
+				const reg = await this.registration()
+				reg?.active?.postMessage(data)
+			} catch (e) {
+				console.error(e)
+			}
+		}
 
+		notify() {
 			const key = this.obsolete_key()
 			const ignore_cache = sessionStorage.getItem(key)
 			sessionStorage.removeItem(key)
 
-			if (ignore_cache) reg?.active?.postMessage({ message: key })
+			if (ignore_cache) this.send({ message: key })
 		}
 
 		override run() {
