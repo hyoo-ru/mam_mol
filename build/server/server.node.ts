@@ -1,33 +1,44 @@
 namespace $ {
 
-	function sync_middleware(
-		mdl: (
-			req : typeof $node.express.request ,
-			res : typeof $node.express.response ,
-		) => boolean | void
-	) {
-		return async (
-			req : typeof $node.express.request ,
-			res : typeof $node.express.response ,
-			next : (err?: unknown) => any
-		) => {
-			try {
-				const call_next = await $mol_wire_async(mdl)(req, res)
-				if (! call_next) return
-				await Promise.resolve()
-				next()
-			} catch (err) {
-				next(err)
-			}
-		}
-	}
-
-
 	export class $mol_build_server extends $mol_server {
-
+		
 		static trace = false
+		
 
-		expressGenerator() { return sync_middleware(this.handleRequest.bind(this)) }
+		sync_middleware(
+			mdl: (
+				req : typeof $node.express.request ,
+				res : typeof $node.express.response ,
+			) => boolean | void
+		) {
+			const pending_urls = {} as Record<string, Promise<unknown> | undefined>
+
+			const cb = async (
+				req : typeof $node.express.request ,
+				res : typeof $node.express.response ,
+				next : (err?: unknown) => any
+			) => {
+				try {
+					const call_next = await $mol_wire_async(mdl)(req, res)
+					if (! call_next) return
+					await Promise.resolve()
+					delete pending_urls[req.url]
+					next()
+				} catch (err) {
+					delete pending_urls[req.url]
+					next(err)
+				}
+			}
+
+			return (
+				req : typeof $node.express.request ,
+				res : typeof $node.express.response ,
+				next : (err?: unknown) => any
+			) => pending_urls[req.url] = pending_urls[req.url] ?? cb(req, res, next)
+		}
+	
+	
+		expressGenerator() { return this.sync_middleware(this.handleRequest.bind(this)) }
 		
 		handleRequest(
 			req : typeof $node.express.request ,
@@ -122,7 +133,7 @@ namespace $ {
 			return this.build().modEnsure( path )
 		}
 
-		override expressIndex() { return sync_middleware(this.expressIndexRequest.bind(this)) }
+		override expressIndex() { return this.sync_middleware(this.expressIndexRequest.bind(this)) }
 		
 		expressIndexRequest(
 			req : typeof $node.express.request ,

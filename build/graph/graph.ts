@@ -24,7 +24,7 @@ namespace $ {
 		@ $mol_action
 		path_added(path: string) { return this.added.has(path) }
 
-		@ $mol_mem_key
+		// @ $mol_mem_key
 		protected add_module( path : string ) {
 			this.added.add(path)
 			const mod = this.$.$mol_file.absolute( path )
@@ -53,7 +53,7 @@ namespace $ {
 			return root.resolve( 'node_modules' ).resolve( './' + target )
 		}
 
-		@ $mol_mem_key
+		// @ $mol_mem_key
 		protected check_dep([ path, target ]: [ path: string, target: string ]) {
 			const root = this.root()
 			const deps = this.dependencies( path )
