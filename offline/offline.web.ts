@@ -151,13 +151,14 @@ namespace $ {
 
 		async respond(event: FetchEvent) {
 			const request = event.request
-			const cached = this.ignore_cache ?  null : await caches.match( request )
+			const cached = await caches.match( request )
 
 			if ( ! cached) return this.fetch_and_cache(event)
 
 			if (request.cache === 'force-cache') return cached
 
-			if (request.cache === 'no-cache' || request.cache === 'reload') {
+			if (this.ignore_cache || request.cache === 'no-cache' || request.cache === 'reload') {
+				// fetch with fallback to cache if statuses not match
 				try {
 					const actual = await this.fetch_and_cache(event)
 					if (actual.status === cached.status) return actual
