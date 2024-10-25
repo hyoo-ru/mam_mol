@@ -1,11 +1,6 @@
+/// <reference lib="webworker" />
+
 namespace $ {
-
-	interface FetchEvent extends Event {
-		request: Request
-		respondWith(response: Response | Promise<Response | null> | null): void
-		waitUntil(promise: Promise<unknown>): void
-	}
-
 	export class $mol_offline_web extends $mol_offline {
 		web_js() { return 'web.js' }
 
@@ -80,31 +75,25 @@ namespace $ {
 			return true
 		}
 
-		_worker = null as null | {
-			skipWaiting(): void
-			clients: {
-				claim(): void
-			}
-			addEventListener(name: string, cb: (e: Event) => void): void
-		}
+		_worker = null as null | ServiceWorkerGlobalScope
 
 		worker() {
 			if (this._worker) return this._worker
-			const worker = this._worker = self as unknown as NonNullable<typeof this['_worker']>
+			const worker = this._worker = self as unknown as ServiceWorkerGlobalScope
+			// as unknown as NonNullable<typeof this['_worker']>
 			worker.addEventListener( 'beforeinstallprompt' , this.beforeinstallprompt.bind(this) )
 			worker.addEventListener( 'install' , this.install.bind(this))
 			worker.addEventListener( 'activate' , this.activate.bind(this))
 			worker.addEventListener( 'message', this.message.bind(this))
-			worker.addEventListener( 'fetch',  this.fetch_event.bind(this) as any)
+			worker.addEventListener( 'fetch',  this.fetch_event.bind(this))
 
 			return worker
 		}
 
-		message(event: unknown) {
-			if (! event || typeof event !== 'object') return
-
-			const message = (event as { data: { message?: string }}).data?.message ?? ''
-
+		message(event: ExtendableMessageEvent) {
+			const data = event.data
+			if (! data || typeof data !== 'object') return
+			const message = (data as { message?: string }).message ?? ''
 			if (! message) return
 			if (message === this.obsolete_key()) return this.build_obsolete()
 
@@ -114,9 +103,9 @@ namespace $ {
 			event.prompt?.()
 		}
 
-		install(event: Event) { this.worker().skipWaiting() }
+		install(event: ExtendableEvent) { this.worker().skipWaiting() }
 
-		activate(event: Event) {
+		activate(event: ExtendableEvent) {
 			// caches.delete( '$mol_offline' )
 			
 			this.worker().clients.claim()
@@ -158,7 +147,12 @@ namespace $ {
 
 		async respond(event: FetchEvent) {
 			const request = event.request
-			const cached = await caches.match( request )
+			let cached
+			try {
+				cached = await caches.match( request )
+			} catch (e) {
+				console.error(e)
+			}
 
 			if ( ! cached) return this.fetch_and_cache(event)
 
@@ -176,10 +170,10 @@ namespace $ {
 					)
 
 				} catch (err) {
-					const cloned = cached.clone()
 					const message = `${(err as Error).cause instanceof Response ? '' : '500 '}${
 						(err as Error).message} $mol_offline fallback to cache`
 
+					const cloned = cached.clone()
 					cloned.headers.set( '$mol_offline_remote_status', message )
 
 					return cloned
@@ -194,13 +188,12 @@ namespace $ {
 			return cache.put( request , response )
 		}
 
-		async fetch_and_cache (event: FetchEvent) {
+		async fetch_and_cache(event: FetchEvent) {
 			const request = event.request
 			const response = await fetch( request )
-			if (response.status !== 200) return response
-
-			const cached = this.put_cache(request, response.clone())
-			event.waitUntil(cached)
+			if (response.status === 200) {
+				event.waitUntil(this.put_cache(request, response.clone()))
+			}
 
 			return response
 		}
