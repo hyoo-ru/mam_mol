@@ -45,16 +45,17 @@ namespace $ {
 
 		@ $mol_mem
 		protected submodules() {
-			const root = this.root().path()
-			if (! this.is_git( root ) ) return new Set<string>()
+			const dir = this.root().path()
+			if (! this.is_git( dir ) ) return new Set<string>()
 
-			const output = this.$.$mol_run.spawn({ command: 'git submodule status --recursive', dir: root }).stdout.toString().trim()
+			const command = 'git submodule status --recursive'
+			const output = this.$.$mol_run.spawn({ command, dir }).stdout.toString().trim()
 
 			const dirs = output
 				.split('\n')
 				.map( str => str.match( /^\s*[^ ]+\s+([^ ]*).*/ )?.[1]?.trim() )
 				.filter($mol_guard_defined)
-				.map(str => `${root}/${str}`)
+				.map(str => `${dir}/${str}`)
 
 			return new Set(dirs)
 		}
@@ -63,17 +64,27 @@ namespace $ {
 			return this.is_git(path) || this.submodules().has(path)
 		}
 
-		protected override init(path: string) {
-			const repo = this.repo(path)
-			if (! repo) throw new Error(`"${path}" not a repo`)
+		@ $mol_mem_key
+		protected branch_remote(dir: string) {
+			const repo = this.repo(dir)
+			if (! repo) return 'master'
 
-			this.$.$mol_run.spawn( { command: ['git', 'init'], dir: path, dirty: true } )
-			
-			const res = this.$.$mol_run.spawn( { command: ['git', 'remote', 'show', repo ],  dir: path } )
-			const head_branch_name = res.stdout.toString().match( /HEAD branch: (.*?)\n/ )?.[1] ?? 'master'
+			const res = this.$.$mol_run.spawn( { command: ['git', 'remote', 'show', repo.url ],  dir } )
 
-			const command = ['git', 'remote', 'add', '--track', head_branch_name, 'origin' , repo ]
-			this.$.$mol_run.spawn( { command, dir: path, dirty: true } )
+			return res.stdout.toString().match( /HEAD branch: (.*?)\n/ )?.[1] ?? 'master'
+		}
+
+		protected override init(dir: string) {
+			const repo = this.repo(dir)
+			if (! repo) throw new Error(`"${dir}" not a repo`)
+
+			this.$.$mol_run.spawn( { command: ['git', 'init'], dir, dirty: true } )
+			const branch = repo.branch ?? this.branch_remote(dir)
+
+			const command = ['git', 'remote', 'add', '--track', branch, 'origin' , repo.url ]
+			this.$.$mol_run.spawn( { command, dir, dirty: true } )
+			this.$.$mol_run.spawn( { command: [ 'git', 'checkout', branch ], dir, dirty: true } )
+
 			return null
 		}
 
@@ -82,8 +93,17 @@ namespace $ {
 			const repo = this.repo(path)
 			if (! repo) throw new Error(`"${path}" not a repo`)
 
-			const command = ['git', 'clone' , '--depth', '1' , repo , mod.relate( this.root() ) ]
-			this.$.$mol_run.spawn( { command, dir: this.root().path(), dirty: true })
+			const command = [
+				'git', 'clone' , '--depth', '1',
+				...( repo.branch ? [ '-b', repo.branch ] : [] ),
+				' --single-branch',
+				repo.url ,
+				mod.relate( this.root() )
+			]
+	
+			const dir = this.root().path()
+			this.$.$mol_run.spawn( { command, dir, dirty: true } )
+	
 			return null
 		}
 

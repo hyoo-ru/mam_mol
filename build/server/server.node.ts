@@ -1,16 +1,18 @@
 namespace $ {
 
-	function sync_middleware(mdl: (
-		req : typeof $node.express.request ,
-		res : typeof $node.express.response ,
-	) => Promise<boolean | void>) {
+	function sync_middleware(
+		mdl: (
+			req : typeof $node.express.request ,
+			res : typeof $node.express.response ,
+		) => boolean | void
+	) {
 		return async (
 			req : typeof $node.express.request ,
 			res : typeof $node.express.response ,
 			next : (err?: unknown) => any
 		) => {
 			try {
-				const call_next = await mdl(req, res)
+				const call_next = await $mol_wire_async(mdl)(req, res)
 				if (! call_next) return
 				await Promise.resolve()
 				next()
@@ -25,16 +27,14 @@ namespace $ {
 
 		static trace = false
 
-		expressGenerator() {
-			return sync_middleware((req, res) => $mol_wire_async( this ).handleRequest(req, res))
-		}
+		expressGenerator() { return sync_middleware(this.handleRequest.bind(this)) }
 		
 		handleRequest(
 			req : typeof $node.express.request ,
 			res : typeof $node.express.response,
 		) {
 			
-			res.set( 'Cache-Control', 'must-revalidate, public, ' )
+			res.set( 'Cache-Control', 'no-cache, public' )
 
 			try {
 				
@@ -112,8 +112,8 @@ namespace $ {
 			}
 			
 			const path = mod.path()
-			return build.bundle( [ path , bundle ] )
-			
+			build.bundle( [ path , bundle ] )
+			return new Date
 		}
 		@ $mol_mem_key
 		ensure_index(path: string) {
@@ -122,9 +122,7 @@ namespace $ {
 			return this.build().modEnsure( path )
 		}
 
-		override expressIndex() {
-			return sync_middleware((req, res) => $mol_wire_async( this ).expressIndexRequest(req, res))
-		}
+		override expressIndex() { return sync_middleware(this.expressIndexRequest.bind(this)) }
 		
 		expressIndexRequest(
 			req : typeof $node.express.request ,

@@ -1,24 +1,6 @@
 namespace $ {
 	
-	export function $mol_build_start(
-		this: $,
-		paths : readonly string[],
-	) {
-		const build = $mol_build.relative( '.', paths )
-		if( paths.length > 0 ) {
-			process.exit(build.start() ? 0 : 1)
-		} else {
-			Promise.resolve().then( ()=> {
-				try {
-					build.server().start() 
-				} catch (error) {
-					$mol_fail_log(error)
-				}
-			})
-		}
-	}
-	
-	setTimeout( ()=> $mol_wire_async( $mol_ambient({}) ).$mol_build_start( process.argv.slice( 2 ) ) )
+	setTimeout( ()=> $mol_wire_async( $mol_build ).start( process.argv.slice( 2 ) ) )
 
 	export class $mol_build extends $mol_object {
 		
@@ -49,6 +31,16 @@ namespace $ {
 			return [] as readonly string[]
 		}
 
+		static start( paths : readonly string[] ) {
+			const build = this.$.$mol_build.relative( '.', paths )
+
+			if( paths.length > 0 ) {
+				process.exit(build.start() ? 0 : 1)
+			} else {
+				Promise.resolve().then( ()=> build.server().start() )
+			}
+		}
+	
 		start() {
 			try {
 				return this.paths().map( path => this.bundleAll( this.root().resolve( path ).path() ) )

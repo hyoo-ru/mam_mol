@@ -55,9 +55,12 @@ namespace $ {
 
 			if( mod !== this.root() ) this.ensure( parent.path() )
 
+			if (mod.exists() && mod.type() !== 'dir') return false
+
 			for (const ensurer of this.ensurers()) {
 				if (ensurer?.ensure(path)) return true
 			}
+			if (mod.exists()) return false
 
 			if( parent === this.root() ) {
 				throw new Error( `Root package "${ mod.relate( this.root() ) }" not found` )

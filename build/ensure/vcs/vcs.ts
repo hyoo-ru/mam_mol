@@ -23,15 +23,19 @@ namespace $ {
 			if (! vcs_type) return null
 
 			const mod = $mol_file.absolute( path )
-			if (mod === this.root()) return this.root_repo()
+			const root_url = this.root_repo()
+			if (mod === this.root()) return ! root_url ? null : { url: root_url, branch: null as null | string }
 
 			const parent = mod.parent()
 			const mapping = this.meta( parent.path() )
 
-			const repo = mapping?.select( 'pack' , mod.name(), vcs_type).kids
-				.find($mol_guard_defined)?.text() ?? null
+			const url_branch = mapping?.select( 'pack' , mod.name(), vcs_type).kids
+				.find($mol_guard_defined)?.kids[0]
 
-			return repo
+			const url = url_branch?.value ?? null
+			const branch = url_branch?.kids[0]?.value ?? null
+
+			return url ? { url, branch } : null
 		}
 
 		protected pull_disabled = false
@@ -69,10 +73,8 @@ namespace $ {
 			const mod = $mol_file.absolute( path )
 
 			if( mod.exists()) {
-				if( mod.type() !== 'dir' ) return true
-
 				if (! this.inited(path)) {
-					if (! this.repo(path) ) return true
+					if (! this.repo(path) ) return false
 					this.init(path)
 				}
 				this.pull( path )
@@ -82,11 +84,12 @@ namespace $ {
 				return true
 			}
 
-			if( this.repo(path) ) {
+			if (this.repo(path)) {
 				this.clone(path)
 				mod.reset()
 				return true
 			}
+
 			return false
 		}
 	}
