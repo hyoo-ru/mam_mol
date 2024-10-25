@@ -151,34 +151,34 @@ namespace $ {
 
 		async respond(event: FetchEvent) {
 			const request = event.request
-			const fresh = request.cache === 'force-cache' ? null : this.fetch_and_cache(event)
-
 			const cached = this.ignore_cache ?  null : await caches.match( request )
 
-			if (request.cache !== 'no-cache' && request.cache !== 'reload') {
-				return cached || fresh || this.fetch_and_cache(event)
+			if ( ! cached) return this.fetch_and_cache(event)
+
+			if (request.cache === 'force-cache') return cached
+
+			if (request.cache === 'no-cache' || request.cache === 'reload') {
+				try {
+					const actual = await this.fetch_and_cache(event)
+					if (actual.status === cached.status) return actual
+
+					throw new Error(
+						`${actual.status}${actual.statusText ? ` ${actual.statusText}` : ''}`,
+						{ cause: actual }
+					)
+
+				} catch (err) {
+					const cloned = cached.clone()
+					const message = `${(err as Error).cause instanceof Response ? '' : '500 '}${
+						(err as Error).message} $mol_offline fallback to cache`
+
+					cloned.headers.set( '$mol_offline_remote_status', message )
+
+					return cloned
+				}
 			}
 
-			if ( ! cached) return fresh
-
-			try {
-				const actual = await fresh!
-				if (actual.status === cached.status) return actual
-
-				throw new Error(
-					`${actual.status}${actual.statusText ? ` ${actual.statusText}` : ''}`,
-					{ cause: actual }
-				)
-
-			} catch (err) {
-				const cloned = cached.clone()
-				const message = `${(err as Error).cause instanceof Response ? '' : '500 '}${
-					(err as Error).message} $mol_offline fallback to cache`
-
-				cloned.headers.set( '$mol_offline_remote_status', message )
-
-				return cloned
-			}
+			return cached
 		}
 
 		async put_cache(request: Request, response: Response) {
