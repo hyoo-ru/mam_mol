@@ -18,7 +18,7 @@ namespace $ {
 		}
 
 		protected window_message(e: MessageEvent) {
-			const data = typeof e.data === 'object' ? e.data : null
+			const data = e.data
 			if (data === 'mol_build_obsolete') return this.send({ ignore_cache: true })
 			if (! data || typeof data !== 'object' || ! ( 'offline_message' in data ) ) return null
 			this.send(data.offline_message as $mol_offline_web_message)
