@@ -5,9 +5,7 @@ namespace $ {
 		blacklist?: readonly string[]
 	}
 
-	export class $mol_offline {
-		async send(data: $mol_offline_web_message) {}
-
+	export class $mol_offline extends $mol_object {
 		run() {
 			return false
 		}

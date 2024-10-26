@@ -1,93 +1,30 @@
 /// <reference lib="webworker" />
 
 namespace $ {
-	export class $mol_offline_web extends $mol_offline {
-		web_js() { return 'web.js' }
+	export class $mol_offline_web extends $mol_worker_web {
+		override path() { return 'web.js' }
 
 		protected blacklist = new Set([
 			'//cse.google.com/adsense/search/async-ads.js'
 		])
 
-		in_worker() { return typeof window === 'undefined' }
-
-		is_supported() {
-			if( location.protocol !== 'https:' && location.hostname !== 'localhost' ) {
-				console.warn( 'HTTPS or localhost is required for service workers.' )
-				return false
-			}
-			
-			if( ! navigator.serviceWorker ) {
-				console.warn( 'Service Worker is not supported.' )
-				return false
-			}
-
-			return true
+		override ready(reg: $mol_worker_reg_active) {
+			reg.active.postMessage({ ignore_cache: false })
 		}
 
-		protected _registration = null as null | Promise<ServiceWorkerRegistration>
-
-		registration() {
-			if (this._registration) return this._registration
-			if ( this.in_worker() ) return null
-			if ( ! this.is_supported() ) return null
-
+		override async registration_init() {
 			window.addEventListener('message', this.window_message.bind(this))
-
-			navigator.serviceWorker.register(this.web_js())
-
-			return this._registration = navigator.serviceWorker.ready
+			return super.registration_init()
 		}
 
-		window_message(e: MessageEvent) {
+		protected window_message(e: MessageEvent) {
 			const data = typeof e.data === 'object' ? e.data : null
 			if (data === 'mol_build_obsolete') return this.send({ ignore_cache: true })
 			if (! data || typeof data !== 'object' || ! ( 'offline_message' in data ) ) return null
 			this.send(data.offline_message as $mol_offline_web_message)
 		}
 
-		override async send(data: $mol_offline_web_message) {
-			try {
-				const reg = await this.registration()
-				reg?.active?.postMessage(data)
-			} catch (e) {
-				console.error(e)
-			}
-		}
-
-		override run() {
-			if (! this.registration()) {
-				this.worker()
-				return false
-			}
-
-			// const reg = await this.registration()
-			// reg?.addEventListener( 'updatefound', ()=> {
-			// 	const worker = reg.installing!
-			// 	worker.addEventListener( 'statechange', ()=> {
-			// 		if( worker.state !== 'activated' ) return
-			// 		window.location.reload()
-			// 	} )
-			// } )
-
-			return true
-		}
-
-		_worker = null as null | ServiceWorkerGlobalScope
-
-		worker() {
-			if (this._worker) return this._worker
-			const worker = this._worker = self as unknown as ServiceWorkerGlobalScope
-
-			worker.addEventListener( 'beforeinstallprompt' , this.before_install.bind(this) )
-			worker.addEventListener( 'install' , this.install.bind(this))
-			worker.addEventListener( 'activate' , this.activate.bind(this))
-			worker.addEventListener( 'message', this.message.bind(this))
-			worker.addEventListener( 'fetch',  this.fetch_event.bind(this))
-
-			return worker
-		}
-
-		message(event: ExtendableMessageEvent) {
+		override message(event: ExtendableMessageEvent) {
 			const data = event.data as string | null | $mol_offline_web_message
 			if ( ! data || typeof data !== 'object' ) return
 
@@ -95,17 +32,8 @@ namespace $ {
 			if (data.blacklist) this.blacklist = new Set(data.blacklist)
 		}
 
-		before_install(event: Event & { prompt?(): void }) {
-			event.prompt?.()
-		}
-
-		install(event: ExtendableEvent) { this.worker().skipWaiting() }
-
-		activate(event: ExtendableEvent) {
-			// caches.delete( '$mol_offline' )
-			
-			event.waitUntil( this.worker().clients.claim() )
-
+		override activate(event: ExtendableEvent) {
+			super.activate(event)
 			$$.$mol_log3_done({
 				place: '$mol_offline',
 				message: 'Activated',
@@ -114,7 +42,7 @@ namespace $ {
 
 		protected ignore_cache = false
 
-		fetch_event(event: FetchEvent) {
+		override fetch_event(event: FetchEvent) {
 			const request = event.request
 			
 			if( this.blacklist.has( request.url.replace( /^https?:/, '' ) ) ) {
