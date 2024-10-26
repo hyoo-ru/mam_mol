@@ -1,10 +1,15 @@
 /// <reference lib="webworker" />
 
 namespace $ {
+	export type $mol_offline_web_message = {
+		ignore_cache?: boolean
+		blacklist?: readonly string[]
+	}
+
 	export class $mol_offline_web extends $mol_offline {
 		web_js() { return 'web.js' }
 
-		blacklist = new Set([
+		protected blacklist = new Set([
 			'//cse.google.com/adsense/search/async-ads.js'
 		])
 
@@ -39,10 +44,13 @@ namespace $ {
 		}
 
 		window_message(e: MessageEvent) {
-			if (e.data === 'mol_build_obsolete') return this.send(e.data)
+			const data = typeof e.data === 'object' ? e.data : null
+			if (data === 'mol_build_obsolete') return this.send({ ignore_cache: true })
+			if (! data || typeof data !== 'object' || ! ( 'offline_message' in data ) ) return null
+			this.send(data.offline_message as $mol_offline_web_message)
 		}
 
-		async send(data: unknown) {
+		async send(data: $mol_offline_web_message) {
 			try {
 				const reg = await this.registration()
 				reg?.active?.postMessage(data)
@@ -74,7 +82,7 @@ namespace $ {
 		worker() {
 			if (this._worker) return this._worker
 			const worker = this._worker = self as unknown as ServiceWorkerGlobalScope
-			// as unknown as NonNullable<typeof this['_worker']>
+
 			worker.addEventListener( 'beforeinstallprompt' , this.before_install.bind(this) )
 			worker.addEventListener( 'install' , this.install.bind(this))
 			worker.addEventListener( 'activate' , this.activate.bind(this))
@@ -85,7 +93,11 @@ namespace $ {
 		}
 
 		message(event: ExtendableMessageEvent) {
-			if (event.data === 'mol_build_obsolete') this.ignore_cache = true
+			const data = event.data as string | null | $mol_offline_web_message
+			if ( ! data || typeof data !== 'object' ) return
+
+			if (data.ignore_cache !== undefined) this.ignore_cache = data.ignore_cache
+			if (data.blacklist) this.blacklist = new Set(data.blacklist)
 		}
 
 		before_install(event: Event & { prompt?(): void }) {
@@ -97,8 +109,8 @@ namespace $ {
 		activate(event: ExtendableEvent) {
 			// caches.delete( '$mol_offline' )
 			
-			this.worker().clients.claim()
-			
+			event.waitUntil( this.worker().clients.claim() )
+
 			$$.$mol_log3_done({
 				place: '$mol_offline',
 				message: 'Activated',
@@ -127,18 +139,15 @@ namespace $ {
 			if( /\?/.test( request.url ) ) return
 			if( request.cache === 'no-store' ) return
 
-			const response = this.respond(event)
-			event.waitUntil( response )
-			event.respondWith( response )
+			event.respondWith( this.respond(event.request) )
 		}
 
-		async respond(event: FetchEvent) {
-			const request = event.request
+		async respond(request: Request) {
 			let fallback_header
 			if (this.ignore_cache || request.cache === 'no-cache' || request.cache === 'reload') {
 				// fetch with fallback to cache if statuses not match
 				try {
-					const actual = await this.fetch_and_cache(event)
+					const actual = await this.fetch_and_cache(request)
 					if (actual.status < 400) return actual
 
 					throw new Error(
@@ -159,7 +168,7 @@ namespace $ {
 				console.error(e)
 			}
 
-			if ( ! cached) return this.fetch_and_cache(event)
+			if ( ! cached) return this.fetch_and_cache(request)
 			if (fallback_header) {
 				cached = cached.clone()
 				cached.headers.set( '$mol_offline_remote_status', fallback_header )
@@ -168,16 +177,16 @@ namespace $ {
 			return cached
 		}
 
-		async put_cache(request: Request, response: Response) {
-			const cache = await caches.open( '$mol_offline' )
-			return cache.put( request , response )
-		}
+		cache() { return caches.open( '$mol_offline' ) }
 
-		async fetch_and_cache(event: FetchEvent) {
-			const request = event.request
+		async fetch_and_cache(request: Request) {
 			const response = await fetch( request )
-			if (response.status === 200) {
-				event.waitUntil(this.put_cache(request, response.clone()))
+			if (response.status !== 200) return response
+
+			try {
+				await (await this.cache()).put( request , response.clone() )
+			} catch (e) {
+				console.error(e)
 			}
 
 			return response
