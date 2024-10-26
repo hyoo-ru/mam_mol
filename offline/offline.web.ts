@@ -75,7 +75,7 @@ namespace $ {
 			if (this._worker) return this._worker
 			const worker = this._worker = self as unknown as ServiceWorkerGlobalScope
 			// as unknown as NonNullable<typeof this['_worker']>
-			worker.addEventListener( 'beforeinstallprompt' , this.beforeinstallprompt.bind(this) )
+			worker.addEventListener( 'beforeinstallprompt' , this.before_install.bind(this) )
 			worker.addEventListener( 'install' , this.install.bind(this))
 			worker.addEventListener( 'activate' , this.activate.bind(this))
 			worker.addEventListener( 'message', this.message.bind(this))
@@ -88,7 +88,7 @@ namespace $ {
 			if (event.data === 'mol_build_obsolete') this.ignore_cache = true
 		}
 
-		beforeinstallprompt(event: Event & { prompt?(): void }) {
+		before_install(event: Event & { prompt?(): void }) {
 			event.prompt?.()
 		}
 
@@ -134,6 +134,24 @@ namespace $ {
 
 		async respond(event: FetchEvent) {
 			const request = event.request
+			let fallback_header
+			if (this.ignore_cache || request.cache === 'no-cache' || request.cache === 'reload') {
+				// fetch with fallback to cache if statuses not match
+				try {
+					const actual = await this.fetch_and_cache(event)
+					if (actual.status < 400) return actual
+
+					throw new Error(
+						`${actual.status}${actual.statusText ? ` ${actual.statusText}` : ''}`,
+						{ cause: actual }
+					)
+
+				} catch (err) {
+					fallback_header = `${(err as Error).cause instanceof Response ? '' : '500 '}${
+						(err as Error).message} $mol_offline fallback to cache`
+				}
+			}
+
 			let cached
 			try {
 				cached = await caches.match( request )
@@ -142,29 +160,9 @@ namespace $ {
 			}
 
 			if ( ! cached) return this.fetch_and_cache(event)
-
-			if (request.cache === 'force-cache') return cached
-
-			if (this.ignore_cache || request.cache === 'no-cache' || request.cache === 'reload') {
-				// fetch with fallback to cache if statuses not match
-				try {
-					const actual = await this.fetch_and_cache(event)
-					if (actual.status === cached.status) return actual
-
-					throw new Error(
-						`${actual.status}${actual.statusText ? ` ${actual.statusText}` : ''}`,
-						{ cause: actual }
-					)
-
-				} catch (err) {
-					const message = `${(err as Error).cause instanceof Response ? '' : '500 '}${
-						(err as Error).message} $mol_offline fallback to cache`
-
-					const cloned = cached.clone()
-					cloned.headers.set( '$mol_offline_remote_status', message )
-
-					return cloned
-				}
+			if (fallback_header) {
+				cached = cached.clone()
+				cached.headers.set( '$mol_offline_remote_status', fallback_header )
 			}
 
 			return cached
