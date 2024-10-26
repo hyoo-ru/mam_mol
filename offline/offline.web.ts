@@ -1,11 +1,6 @@
 /// <reference lib="webworker" />
 
 namespace $ {
-	export type $mol_offline_web_message = {
-		ignore_cache?: boolean
-		blacklist?: readonly string[]
-	}
-
 	export class $mol_offline_web extends $mol_offline {
 		web_js() { return 'web.js' }
 
@@ -50,7 +45,7 @@ namespace $ {
 			this.send(data.offline_message as $mol_offline_web_message)
 		}
 
-		async send(data: $mol_offline_web_message) {
+		override async send(data: $mol_offline_web_message) {
 			try {
 				const reg = await this.registration()
 				reg?.active?.postMessage(data)
@@ -144,10 +139,13 @@ namespace $ {
 
 		async respond(request: Request) {
 			let fallback_header
+			let response
+
 			if (this.ignore_cache || request.cache === 'no-cache' || request.cache === 'reload') {
 				// fetch with fallback to cache if statuses not match
 				try {
-					const actual = await this.fetch_and_cache(request)
+					response = this.fetch_and_cache(request)
+					const actual = await response
 					if (actual.status < 400) return actual
 
 					throw new Error(
@@ -168,13 +166,14 @@ namespace $ {
 				console.error(e)
 			}
 
-			if ( ! cached) return this.fetch_and_cache(request)
-			if (fallback_header) {
-				cached = cached.clone()
-				cached.headers.set( '$mol_offline_remote_status', fallback_header )
-			}
+			if (! cached) return response ?? this.fetch_and_cache(request)
 
-			return cached
+			if (! fallback_header) return cached
+
+			const clone = cached.clone()
+			clone.headers.set( '$mol_offline_remote_status', fallback_header )
+
+			return clone
 		}
 
 		cache() { return caches.open( '$mol_offline' ) }
