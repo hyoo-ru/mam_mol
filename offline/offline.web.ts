@@ -72,7 +72,7 @@ namespace $ {
 			if (this.ignore_cache || request.cache === 'no-cache' || request.cache === 'reload') {
 				// fetch with fallback to cache if statuses not match
 				try {
-					response = this.fetch_and_cache(request)
+					response = fetch(request)
 					const actual = await response
 					if (actual.status < 400) return actual
 
@@ -87,36 +87,18 @@ namespace $ {
 				}
 			}
 
-			let cached
-			try {
-				cached = await caches.match( request )
-			} catch (e) {
-				console.error(e)
-			}
+			const forced = new Request(request, {
+				cache: 'force-cache',
+			})
 
-			if (! cached) return response ?? this.fetch_and_cache(request)
+			const cached = await fetch(forced)
 
-			if (! fallback_header) return cached
+			if (! fallback_header || cached.headers.get('$mol_offline_remote_status')) return cached
 
 			const clone = cached.clone()
 			clone.headers.set( '$mol_offline_remote_status', fallback_header )
 
 			return clone
-		}
-
-		cache() { return caches.open( '$mol_offline' ) }
-
-		async fetch_and_cache(request: Request) {
-			const response = await fetch( request )
-			if (response.status !== 200) return response
-
-			try {
-				await (await this.cache()).put( request , response.clone() )
-			} catch (e) {
-				console.error(e)
-			}
-
-			return response
 		}
 
 	}
