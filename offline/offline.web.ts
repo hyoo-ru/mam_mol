@@ -4,10 +4,6 @@ namespace $ {
 	export class $mol_offline_web extends $mol_worker_web {
 		override path() { return 'web.js' }
 
-		protected blacklist = new Set([
-			'//cse.google.com/adsense/search/async-ads.js'
-		])
-
 		override ready(reg: $mol_worker_reg_active) {
 			reg.active.postMessage({ ignore_cache: false })
 		}
@@ -20,8 +16,12 @@ namespace $ {
 		protected window_message(e: MessageEvent) {
 			const data = e.data
 			if (data === 'mol_build_obsolete') return this.send({ ignore_cache: true })
-			if (! data || typeof data !== 'object' || ! ( 'offline_message' in data ) ) return null
-			this.send(data.offline_message as $mol_offline_web_message)
+		}
+
+		rules(rules?: NonNullable<$mol_offline_web_message['url_rules']>) {
+			rules = rules ?? this.url_rules
+			this.send({ rules })
+			return rules
 		}
 
 		override message(event: ExtendableMessageEvent) {
@@ -29,8 +29,9 @@ namespace $ {
 			if ( ! data || typeof data !== 'object' ) return
 
 			if (data.ignore_cache !== undefined) this.ignore_cache = data.ignore_cache
-			if (data.blacklist) this.blacklist = new Set(data.blacklist)
+			if (data.url_rules) this.url_rules = data.url_rules
 		}
+
 
 		override activate(event: ExtendableEvent) {
 			super.activate(event)
@@ -40,12 +41,23 @@ namespace $ {
 			})
 		}
 
+		protected url_rules = {
+			'//cse.google.com/adsense/search/async-ads.js': 'block',
+			// '{origin}/mol/app/docs/-/index.html': 'force-cache',
+		} as NonNullable<$mol_offline_web_message['url_rules']>
+
 		protected ignore_cache = false
+
+		url_rule(url: string) {
+			const normalized = url.replace(location.origin, '{origin}').match( /(?:^https?:)?([^&?#]+).*/ )?.[1] ?? ''
+			return this.url_rules[ normalized ]
+		}
 
 		override fetch_event(event: FetchEvent) {
 			const request = event.request
-			
-			if( this.blacklist.has( request.url.replace( /^https?:/, '' ) ) ) {
+			const url_rule = this.url_rule(request.url)
+
+			if(url_rule === 'block' ) {
 				return event.respondWith(
 					new Response(
 						null,
@@ -67,13 +79,15 @@ namespace $ {
 
 		async respond(request: Request) {
 			let fallback_header
-			let response
 
-			if (this.ignore_cache || request.cache === 'no-cache' || request.cache === 'reload') {
+			const url_rule = this.url_rule(request.url)
+			let no_cache = url_rule === 'no-cache' || request.cache === 'no-cache' || request.cache === 'reload'
+			if (url_rule === 'force-cache') no_cache = false
+
+			if (this.ignore_cache || no_cache) {
 				// fetch with fallback to cache if statuses not match
 				try {
-					response = fetch(request)
-					const actual = await response
+					const actual = await fetch(request)
 					if (actual.status < 400) return actual
 
 					throw new Error(
@@ -88,15 +102,15 @@ namespace $ {
 			}
 
 			const forced = new Request(request, {
-				cache: 'force-cache',
+				cache: 'force-cache'
 			})
 
 			const cached = await fetch(forced)
 
 			if (! fallback_header || cached.headers.get('$mol_offline_remote_status')) return cached
 
-			const clone = cached.clone()
-			clone.headers.set( '$mol_offline_remote_status', fallback_header )
+			const clone = new Response(cached.body, cached)
+			clone.headers.set( '$mol_offline_remote_status', fallback_header ?? '')
 
 			return clone
 		}
