@@ -4,7 +4,7 @@ namespace $ {
 	export type $mol_worker_reg_active = ServiceWorkerRegistration & { active: ServiceWorker }
 	export type $mol_worker_reg_installing = ServiceWorkerRegistration & { installing: ServiceWorker }
 
-	export class $mol_worker_web extends $mol_object {
+	export class $mol_worker_web extends $mol_worker {
 		path() { return '' }
 
 		in_worker() { return typeof window === 'undefined' }
@@ -70,7 +70,7 @@ namespace $ {
 
 		ready(reg: $mol_worker_reg_active) {}
 
-		async send(data: unknown) {
+		override async send(data: unknown) {
 			try {
 				const reg = await this.registration()
 				reg?.active.postMessage(data)
@@ -79,7 +79,7 @@ namespace $ {
 			}
 		}
 
-		run() {
+		override run() {
 			if (this.registration()) return true
 			this.worker()
 			return false

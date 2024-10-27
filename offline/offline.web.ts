@@ -2,6 +2,8 @@
 
 namespace $ {
 	export class $mol_offline_web extends $mol_worker_web {
+		static main = new $mol_offline_web
+
 		override path() { return 'web.js' }
 
 		override ready(reg: $mol_worker_reg_active) {
@@ -18,10 +20,16 @@ namespace $ {
 			if (data === 'mol_build_obsolete') return this.send({ ignore_cache: true })
 		}
 
-		rules(rules?: NonNullable<$mol_offline_web_message['url_rules']>) {
-			rules = rules ?? this.url_rules
-			this.send({ rules })
-			return rules
+		blocked(urls?: readonly string[]) {
+			urls = urls ?? this.blocked_urls
+			this.send({ blocked_urls: urls })
+			return urls
+		}
+
+		cached(urls?: readonly string[]) {
+			urls = urls ?? this.cached_urls
+			this.send({ cached_urls: urls })
+			return urls
 		}
 
 		override message(event: ExtendableMessageEvent) {
@@ -29,7 +37,8 @@ namespace $ {
 			if ( ! data || typeof data !== 'object' ) return
 
 			if (data.ignore_cache !== undefined) this.ignore_cache = data.ignore_cache
-			if (data.url_rules) this.url_rules = data.url_rules
+			if (data.blocked_urls) this.blocked_regexp = this.url_regexp(data.blocked_urls)
+			if (data.cached_urls) this.cached_regexp = this.url_regexp(data.cached_urls)
 		}
 
 
@@ -41,23 +50,27 @@ namespace $ {
 			})
 		}
 
-		protected url_rules = {
-			'//cse.google.com/adsense/search/async-ads.js': 'block',
-			// '{origin}/mol/app/docs/-/index.html': 'force-cache',
-		} as NonNullable<$mol_offline_web_message['url_rules']>
+		protected blocked_urls = [
+			'//cse.google.com/adsense/search/async-ads.js'
+		] as readonly string[]
+
+		protected cached_urls = [
+			'.*/index.html'
+		] as readonly string[]
+
+		protected blocked_regexp = this.url_regexp(this.blocked_urls)
+		protected cached_regexp = this.url_regexp(this.cached_urls)
+
+		url_regexp(list: readonly string[]) {
+			return new RegExp(`#^https?:(?:(?:${list.map(url_reg => url_reg.replace('.', '\.')).join(')|(?:')}))#`)
+		}
 
 		protected ignore_cache = false
 
-		url_rule(url: string) {
-			const normalized = url.replace(location.origin, '{origin}').match( /(?:^https?:)?([^&?#]+).*/ )?.[1] ?? ''
-			return this.url_rules[ normalized ]
-		}
-
 		override fetch_event(event: FetchEvent) {
 			const request = event.request
-			const url_rule = this.url_rule(request.url)
 
-			if(url_rule === 'block' ) {
+			if( this.blocked_regexp.test(request.url) ) {
 				return event.respondWith(
 					new Response(
 						null,
@@ -80,11 +93,15 @@ namespace $ {
 		async respond(request: Request) {
 			let fallback_header
 
-			const url_rule = this.url_rule(request.url)
-			let no_cache = url_rule === 'no-cache' || request.cache === 'no-cache' || request.cache === 'reload'
-			if (url_rule === 'force-cache') no_cache = false
+			const force_cache = this.cached_regexp.test(request.url)
+			const no_cache = request.cache === 'no-cache' && ! force_cache
 
-			if (this.ignore_cache || no_cache) {
+			if (this.ignore_cache || request.cache === 'reload' || no_cache) {
+
+				if (request.cache !== 'no-cache' && request.cache !== 'reload') {
+					request = new Request(request, { cache: 'no-cache' })
+				}
+
 				// fetch with fallback to cache if statuses not match
 				try {
 					const actual = await fetch(request)
@@ -101,11 +118,7 @@ namespace $ {
 				}
 			}
 
-			const forced = new Request(request, {
-				cache: 'force-cache'
-			})
-
-			const cached = await fetch(forced)
+			const cached = await fetch(new Request(request, { cache: 'force-cache' }))
 
 			if (! fallback_header || cached.headers.get('$mol_offline_remote_status')) return cached
 

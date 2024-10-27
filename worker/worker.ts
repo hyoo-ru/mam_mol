@@ -3,5 +3,7 @@ namespace $ {
 		run() {
 			return false
 		}
+
+		async send(data: unknown) {}
 	}
 }

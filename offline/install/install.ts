@@ -1,6 +1,6 @@
 namespace $ {
 	try {
-		new $mol_offline().run()
+		$mol_offline.main.run()
 	} catch( error ) {
 		console.error( error )
 	}
