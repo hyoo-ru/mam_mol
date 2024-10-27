@@ -51,18 +51,18 @@ namespace $ {
 		}
 
 		protected blocked_urls = [
-			'//cse.google.com/adsense/search/async-ads.js'
+			'//cse\.google\.com/adsense/search/async-ads\.js'
 		] as readonly string[]
 
 		protected cached_urls = [
-			'.*/index.html'
+			'.*/index\.html'
 		] as readonly string[]
 
 		protected blocked_regexp = this.url_regexp(this.blocked_urls)
 		protected cached_regexp = this.url_regexp(this.cached_urls)
 
 		url_regexp(list: readonly string[]) {
-			return new RegExp(`#^https?:(?:(?:${list.map(url_reg => url_reg.replace('.', '\.')).join(')|(?:')}))#`)
+			return new RegExp(`#^https?:(?:(?:${list.join(')|(?:')}))#`)
 		}
 
 		protected ignore_cache = false
