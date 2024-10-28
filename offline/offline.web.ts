@@ -4,7 +4,10 @@ namespace $ {
 		override fetch_event(event: FetchEvent) {
 			const request = event.request
 
-			if( this.value('blocked_urls')?.includes(request.url.replace( /^https?:/, '' )) ) {
+			const blocked_urls = this.value('blocked_urls')
+			const normalized_url = request.url.replace( /^https?:/, '' )
+
+			if( blocked_urls?.includes(normalized_url) ) {
 				event.respondWith(
 					new Response(
 						null,
@@ -31,8 +34,9 @@ namespace $ {
 
 			const force_cache = /.+\/[^\/]+\.html/.test(request.url)
 			const no_cache = request.cache === 'no-cache' && ! force_cache
+			const ignore_cache = this.value('ignore_cache')
 
-			if (this.value('ignore_cache') || request.cache === 'reload' || no_cache) {
+			if (ignore_cache || request.cache === 'reload' || no_cache) {
 
 				if (request.cache !== 'no-cache' && request.cache !== 'reload') {
 					request = new Request(request, { cache: 'no-cache' })

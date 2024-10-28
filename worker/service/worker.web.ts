@@ -48,7 +48,6 @@ namespace $ {
 			return reg
 		}
 
-
 		static installing(reg: $mol_worker_service_reg_installing) {
 			reg.addEventListener( 'updatefound', this.update_found.bind(this, reg.installing))
 		}
