@@ -32,7 +32,7 @@ namespace $ {
 		async respond(request: Request) {
 			let fallback_header
 
-			const force_cache = /.+\/[^\/]+\.html/.test(request.url)
+			const force_cache = /.+\/index\.html/.test(request.url)
 			const no_cache = request.cache === 'no-cache' && ! force_cache
 			const ignore_cache = this.value('ignore_cache')
 

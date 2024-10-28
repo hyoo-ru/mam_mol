@@ -3,7 +3,7 @@ namespace $ {
 	export class $mol_worker_service_plugin extends $mol_object {
 		static attach_to< This extends typeof $mol_worker_service_plugin >(
 			this : This,
-			worker = $mol_worker_service,
+			worker: { attach(plugin: $mol_worker_service_plugin): void },
 			config?: Partial< InstanceType< This > >,
 		) {
 			const plugin = new this
