@@ -1,7 +1,3 @@
 namespace $ {
-	try {
-		$mol_offline.main.run()
-	} catch( error ) {
-		console.error( error )
-	}
+	$mol_offline.attach_to($mol_worker_service)
 }
