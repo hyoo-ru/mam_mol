@@ -19,9 +19,10 @@ namespace $ {
 			return true
 		}
 
-		static handler< E extends ExtendableEvent >( handle : ( event: E )=> Promise<unknown> ) {
+		static handler< E extends ExtendableEvent >( handle : ( event: E )=> null | undefined | Promise<unknown> ) {
 			return ( event: E )=> {
-				event.waitUntil( handle( event ) )
+				const result = handle( event )
+				if (result) event.waitUntil( result )
 			}
 		}
 
@@ -72,8 +73,8 @@ namespace $ {
 		}
 
 		static state_change(worker: ServiceWorker) {
-			for (let name in this.plugins) {
-				this.plugins[name].state_change()
+			for (const plugin of this.plugins) {
+				plugin.state_change()
 			}
 		}
 
@@ -84,26 +85,11 @@ namespace $ {
 				worker.addEventListener( 'install' , this.install.bind(this))
 				worker.addEventListener( 'activate' , this.activate.bind(this))
 				worker.addEventListener( 'message', this.message.bind(this))
-				worker.addEventListener( 'fetch',  this.fetch_event.bind(this))
-				worker.addEventListener( 'notificationclick', this.notification_click.bind(this))
 				this.inited = true
-				for (let name in this.plugins) this.plugins[name].init()
+				for (const plugin of this.plugins) plugin.init()
 			}
 
 			return worker
-		}
-
-		static notification_click(event: NotificationEvent) {
-			let promises = []
-
-			for (let name in this.plugins) {
-				const result = this.plugins[name].notification_click(event.notification)
-				if (result) promises.push(result)
-			}
-
-			if (promises.length > 0) {
-				event.waitUntil(Promise.all(promises))
-			}
 		}
 
 		protected static send_delayed = [] as {}[]
@@ -125,66 +111,41 @@ namespace $ {
 			}
 			if ( ! data || typeof data !== 'object' ) return false
 
-			let promises = []
-			for (let name in this.plugins) {
-				const result = this.plugins[name].message_data(data)
-				if (result) promises.push(result)
-			}
-
-			if (promises.length > 0) {
-				event.waitUntil(Promise.all(promises))
+			for (const plugin of this.plugins) {
+				const result = plugin.message_data(data)
+				if (result) event.waitUntil(result)
 			}
 		}
 
 		static before_install(event: Event & { prompt?(): void }) {
-			for (let name in this.plugins) {
-				this.plugins[name].before_install()
+			for (const plugin of this.plugins) {
+				plugin.before_install()
 			}
 
 			event.prompt?.()
 		}
 
 		static install(event: ExtendableEvent) {
-			const promises = []
-			for (let name in this.plugins) {
-				const result = this.plugins[name].install()
-				if (result) promises.push(result)
+			for (const plugin of this.plugins) {
+				const result = plugin.install()
+				if (result) event.waitUntil(result)
 			}
 
-			if (promises.length > 0) {
-				event.waitUntil(Promise.all(promises))
-			}
 			this.worker().skipWaiting()
 		}
 
 		static activate(event: ExtendableEvent) {
-			const promises = []
-			for (let name in this.plugins) {
-				const result = this.plugins[name].activate()
-				if (result) promises.push(result)
+			for (const plugin of this.plugins) {
+				const result = plugin.activate()
+				if (result) event.waitUntil(result)
 			}
 
-			event.waitUntil( Promise.all([ ...promises, this.worker().clients.claim() ]) )
+			event.waitUntil( this.worker().clients.claim() )
 
 			this.$.$mol_log3_done({
 				place: `${this}.activate()`,
 				message: 'Activated',
 			})
-		}
-
-		static fetch_event(event: FetchEvent) {
-			const request = event.request
-
-			for (let name in this.plugins) {
-				if (this.plugins[name].blocked(request)) {
-					return event.respondWith(this.blocked_response())
-				}
-			}
-
-			for (let name in this.plugins) {
-				const response = this.plugins[name].modify(request)
-				if (response) return event.respondWith(response)
-			}
 		}
 
 	}

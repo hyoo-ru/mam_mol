@@ -1,6 +1,6 @@
 namespace $ {
 
-	export class $mol_offline extends $mol_service {
+	export class $mol_offline extends $mol_fetch_service {
 		blocked_urls =  [
 			'//cse.google.com/adsense/search/async-ads.js'
 		]

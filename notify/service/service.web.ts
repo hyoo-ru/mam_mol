@@ -1,5 +1,14 @@
 namespace $ {
 	export class $mol_notify_service_web extends $mol_notify_service {
+		override init() {
+			const worker = this.$.$mol_service_web.worker()
+			worker.addEventListener( 'notificationclick', this.notification_click_event.bind(this))
+		}
+
+		protected notification_click_event(event: NotificationEvent) {
+			event.waitUntil(this.notification_click(event.notification))
+		}
+
 		override async info({ context: title, message: body, uri: data }: $mol_notify_info) {
 			const worker = this.$.$mol_service_web.worker()
 			const tag = data
@@ -19,7 +28,7 @@ namespace $ {
 
 		}
 
-		override async notification_click( notification: Notification ) {
+		async notification_click( notification: Notification ) {
 			const worker = this.$.$mol_service_web.worker()
 
 			const clients = await worker.clients.matchAll({ includeUncontrolled: true, type: 'window' })
