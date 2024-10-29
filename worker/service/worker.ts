@@ -5,22 +5,48 @@ namespace $ {
 
 		static path() { return 'web.js' }
 
-		static plugins = {} as Record<string, $mol_worker_service_plugin>
+		static plugins = {} as Record<string, $mol_worker_service>
 
-		@ $mol_mem_key
-		static data_actual<State extends {} | null>(plugin_name: string, next?: State) {
-			if (next && ! this.in_worker()) {
-				this.send({ [plugin_name]: next })
-			}
+		static inited = false
+		static init() {}
+		static ready() {}
 
+		static data(next?: unknown) {
 			return next ?? null
 		}
 
-		static attach(plugin: $mol_worker_service_plugin) {
+		static attach< This extends typeof $mol_worker_service >(
+			this : This,
+			config?: Partial< InstanceType< This > >,
+		) {
+			if ( ! this.inited ) {
+				this.init()
+				this.inited = true
+			}
+			const plugin = this.make(config ?? {})
 			this.plugins[plugin.id] = plugin
-			plugin.data_actual = state => this.data_actual(plugin.id, state)
+
+			return plugin
 		}
 
-		static send(data: unknown) {}
+		id = this.toString()
+
+		static blocked_response() {
+			return new Response(
+				null,
+				{
+					status: 418,
+					statusText: 'Blocked'
+				},
+			)
+		}
+
+		blocked(res: Request) { return false }
+		modify(res: Request) { return null as null | Response | PromiseLike<Response> }
+
+		before_install() {}
+		install() {}
+		activate() {}
+		state_change() {}
 	}
 }

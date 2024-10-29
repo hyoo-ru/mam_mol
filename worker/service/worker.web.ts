@@ -1,3 +1,5 @@
+/// <reference lib="webworker" />
+
 namespace $ {
 	export type $mol_worker_service_reg_active = ServiceWorkerRegistration & { active: ServiceWorker }
 	export type $mol_worker_service_reg_installing = ServiceWorkerRegistration & { installing: ServiceWorker }
@@ -8,7 +10,7 @@ namespace $ {
 				console.warn( 'HTTPS or localhost is required for service workers.' )
 				return false
 			}
-			
+
 			if( ! navigator.serviceWorker ) {
 				console.warn( 'Service Worker is not supported.' )
 				return false
@@ -19,33 +21,34 @@ namespace $ {
 
 		protected static registration = null as null | $mol_worker_service_reg_active
 
+		static override init() {
+			if ( this.in_worker() ) {
+				this.worker()
+				return
+			}
+
+			if ( ! this.is_supported() ) return
+			this.registration_init()
+		}
+
 		static async registration_init() {
-			let reg
-			let ready
 
 			try {
 				const reg_promise = navigator.serviceWorker.register(this.path())
-				ready = navigator.serviceWorker.ready as Promise<$mol_worker_service_reg_active>
-				reg = (await reg_promise) as $mol_worker_service_reg_active
+				const ready = navigator.serviceWorker.ready as Promise<$mol_worker_service_reg_active>
+				const reg = (await reg_promise) as $mol_worker_service_reg_active
 				if (reg.installing) this.installing(reg as $mol_worker_service_reg_installing)
 
 				await ready
 
 				this.registration = reg
+				this.ready()
+
+				return true
 			} catch (error) {
 				console.error(error)
-				return null
+				return false
 			}
-
-			let intial_state = {} as Record<string,  unknown>
-			for (let name in this.plugins) {
-				const data = this.plugins[name].data()
-				intial_state[name] = data
-			}
-
-			this.send(intial_state)
-
-			return reg
 		}
 
 		static installing(reg: $mol_worker_service_reg_installing) {
@@ -53,39 +56,18 @@ namespace $ {
 		}
 
 		static update_found(worker: ServiceWorker) {
-			worker.addEventListener( 'statechange', this.statechange.bind(this, worker))
+			worker.addEventListener( 'statechange', this.state_change.bind(this, worker))
 		}
 
-		static statechange(worker: ServiceWorker) {}
-
-		static override send(data: unknown) {
-			if (! this.registration?.active) {
-				throw new Error('Send called before worker ready')
+		static state_change(worker: ServiceWorker) {
+			for (let name in this.plugins) {
+				this.plugins[name].state_change()
 			}
-
-			this.registration.active.postMessage(data)
 		}
-
-		static override attach(plugin: $mol_worker_service_plugin) {
-			super.attach(plugin)
-
-			if ( this.in_worker() ) {
-				this.worker()
-				return
-			}
-
-			if (this.registration) return
-			if ( ! this.is_supported() ) return
-
-			this.registration_init()
-		}
-
-		protected static _worker = null as null | ServiceWorkerGlobalScope
 
 		static worker() {
-			if (this._worker) return this._worker
-
-			const worker = this._worker = self as unknown as ServiceWorkerGlobalScope
+			const worker = self as unknown as ServiceWorkerGlobalScope
+			if (this.inited) return worker
 
 			worker.addEventListener( 'beforeinstallprompt' , this.before_install.bind(this) )
 			worker.addEventListener( 'install' , this.install.bind(this))
@@ -93,7 +75,7 @@ namespace $ {
 			worker.addEventListener( 'message', this.message.bind(this))
 			worker.addEventListener( 'fetch',  this.fetch_event.bind(this))
 
-			for (let name in this.plugins) this.plugins[name].init(worker)
+			// for (let name in this.plugins) this.plugins[name].init(worker)
 
 			return worker
 		}
@@ -104,40 +86,30 @@ namespace $ {
 			}
 			if ( ! data || typeof data !== 'object' ) return false
 
-			for (let name in data) {
-				this.data_actual(name, data[name])
-			}
+			this.data(data)
 
 			return true
 		}
 
 		static before_install(event: Event & { prompt?(): void }) {
-			let handled
 			for (let name in this.plugins) {
-				if (this.plugins[name]?.before_install(event)) handled = true
+				this.plugins[name].before_install()
 			}
 
-			if (! handled) event.prompt?.()
-
-			return true
+			event.prompt?.()
 		}
 
 		static install(event: ExtendableEvent) {
-			let handled
 			for (let name in this.plugins) {
-				if (this.plugins[name]?.install(event)) handled = true
+				this.plugins[name].install()
 			}
-			if (! handled) this.worker().skipWaiting()
-			return true
+			this.worker().skipWaiting()
 		}
 
 		static activate(event: ExtendableEvent) {
-			let handled
 			for (let name in this.plugins) {
-				if (this.plugins[name]?.activate(event)) handled = true
+				this.plugins[name].activate()
 			}
-
-			if (handled) return true
 
 			event.waitUntil( this.worker().clients.claim() )
 
@@ -145,17 +117,23 @@ namespace $ {
 				place: `${this}.activate()`,
 				message: 'Activated',
 			})
-
-			return true
 		}
 
 		static fetch_event(event: FetchEvent) {
-			let handled
+			const request = event.request
+
 			for (let name in this.plugins) {
-				if (this.plugins[name]?.fetch_event(event)) handled = true
+				if (this.plugins[name]?.blocked(request)) {
+					return event.respondWith(this.blocked_response())
+				}
 			}
-			return handled
+
+			for (let name in this.plugins) {
+				const response = this.plugins[name]?.modify(request)
+				if (response) return event.respondWith(response)
+			}
 		}
+
 	}
 
 	$.$mol_worker_service = $mol_worker_service_web
