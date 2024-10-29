@@ -49,7 +49,6 @@ namespace $ {
 				await ready
 
 				this.registration = reg
-				this.ready()
 
 				for (const data of this.send_delayed) {
 					this.send(data)
@@ -87,9 +86,9 @@ namespace $ {
 				worker.addEventListener( 'message', this.message.bind(this))
 				worker.addEventListener( 'fetch',  this.fetch_event.bind(this))
 				worker.addEventListener( 'notificationclick', this.notification_click.bind(this))
+				this.inited = true
+				for (let name in this.plugins) this.plugins[name].init()
 			}
-
-			// for (let name in this.plugins) this.plugins[name].init(worker)
 
 			return worker
 		}
@@ -146,18 +145,26 @@ namespace $ {
 		}
 
 		static install(event: ExtendableEvent) {
+			const promises = []
 			for (let name in this.plugins) {
-				this.plugins[name].install()
+				const result = this.plugins[name].install()
+				if (result) promises.push(result)
+			}
+
+			if (promises.length > 0) {
+				event.waitUntil(Promise.all(promises))
 			}
 			this.worker().skipWaiting()
 		}
 
 		static activate(event: ExtendableEvent) {
+			const promises = []
 			for (let name in this.plugins) {
-				this.plugins[name].activate()
+				const result = this.plugins[name].activate()
+				if (result) promises.push(result)
 			}
 
-			event.waitUntil( this.worker().clients.claim() )
+			event.waitUntil( Promise.all([ ...promises, this.worker().clients.claim() ]) )
 
 			this.$.$mol_log3_done({
 				place: `${this}.activate()`,

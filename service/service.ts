@@ -8,8 +8,7 @@ namespace $ {
 		protected static plugins = {} as Record<string, $mol_service>
 
 		protected static inited = false
-		static init() {}
-		static ready() {}
+		protected static init() {}
 
 		@ $mol_action
 		static send(data: {}) {}
@@ -48,14 +47,17 @@ namespace $ {
 			)
 		}
 
+
+		init() {}
+		before_install() {}
+		install() { return null as undefined | null | Promise<unknown> }
+		activate() { return null as undefined | null | Promise<unknown> }
+		state_change() {}
+		message_data(data: {}) { return null as null | undefined | Promise<unknown> }
+
 		blocked(res: Request) { return false }
 		modify(res: Request) { return null as null | Response | PromiseLike<Response> }
 
-		before_install() {}
-		install() {}
-		activate() {}
-		state_change() {}
-		message_data(data: {}) { return null as null | undefined | Promise<unknown> }
 		notification_click(notification: Notification) { return null as null | undefined | Promise<unknown> }
 	}
 }
