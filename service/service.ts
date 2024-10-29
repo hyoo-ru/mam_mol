@@ -1,21 +1,61 @@
 namespace $ {
+
+	export class $mol_service extends $mol_object {
+		static in_worker() { return typeof window === 'undefined' }
+
+		static path() { return 'web.js' }
+
+		protected static plugins = {} as Record<string, $mol_service>
+
+		protected static inited = false
+		static init() {}
+		static ready() {}
+
+		@ $mol_action
+		static send(data: {}) {}
+
+		static attach< This extends typeof $mol_service >(
+			this : This,
+			config?: Partial< InstanceType< This > >,
+		) {
+			const plugin = this.make(config ?? {})
+
+			try {
+				const worker = this.$.$mol_service
 	
-	function worker() {
-		return navigator.serviceWorker.ready
-	}
+				worker.plugins[plugin.id] = plugin
 	
-	export function $mol_service() {
-		if( typeof window === 'undefined' ) {
-			return ( self as any ).registration as ServiceWorkerRegistration
-		} else {
-			return $mol_wire_sync( worker )()
+				if ( ! worker.inited ) {
+					worker.init()
+					worker.inited = true
+				}
+			} catch (error) {
+				console.error(error)
+			}
+
+			return plugin
 		}
-	}
-	
-	export function $mol_service_handler< E extends Event >( handle : ( event: E )=> Promise<any> ) {
-		return ( event: E )=> {
-			;( event as any ).waitUntil( handle( event ) )
+
+		id = this.toString()
+
+		static blocked_response() {
+			return new Response(
+				null,
+				{
+					status: 418,
+					statusText: 'Blocked'
+				},
+			)
 		}
+
+		blocked(res: Request) { return false }
+		modify(res: Request) { return null as null | Response | PromiseLike<Response> }
+
+		before_install() {}
+		install() {}
+		activate() {}
+		state_change() {}
+		message_data(data: {}) { return null as null | undefined | Promise<unknown> }
+		notification_click(notification: Notification) { return null as null | undefined | Promise<unknown> }
 	}
-	
 }

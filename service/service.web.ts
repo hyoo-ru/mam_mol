@@ -1,10 +1,10 @@
 /// <reference lib="webworker" />
 
 namespace $ {
-	export type $mol_worker_service_reg_active = ServiceWorkerRegistration & { active: ServiceWorker }
-	export type $mol_worker_service_reg_installing = ServiceWorkerRegistration & { installing: ServiceWorker }
+	export type $mol_service_reg_active = ServiceWorkerRegistration & { active: ServiceWorker }
+	export type $mol_service_reg_installing = ServiceWorkerRegistration & { installing: ServiceWorker }
 
-	export class $mol_worker_service_web extends $mol_worker_service {
+	export class $mol_service_web extends $mol_service {
 		static is_supported() {
 			if( location.protocol !== 'https:' && location.hostname !== 'localhost' ) {
 				console.warn( 'HTTPS or localhost is required for service workers.' )
@@ -19,7 +19,13 @@ namespace $ {
 			return true
 		}
 
-		protected static registration = null as null | $mol_worker_service_reg_active
+		static handler< E extends ExtendableEvent >( handle : ( event: E )=> Promise<unknown> ) {
+			return ( event: E )=> {
+				event.waitUntil( handle( event ) )
+			}
+		}
+
+		protected static registration = null as null | $mol_service_reg_active
 
 		static override init() {
 			if ( this.in_worker() ) {
@@ -31,18 +37,25 @@ namespace $ {
 			this.registration_init()
 		}
 
+
 		static async registration_init() {
 
 			try {
 				const reg_promise = navigator.serviceWorker.register(this.path())
-				const ready = navigator.serviceWorker.ready as Promise<$mol_worker_service_reg_active>
-				const reg = (await reg_promise) as $mol_worker_service_reg_active
-				if (reg.installing) this.installing(reg as $mol_worker_service_reg_installing)
+				const ready = navigator.serviceWorker.ready as Promise<$mol_service_reg_active>
+				const reg = (await reg_promise) as $mol_service_reg_active
+				if (reg.installing) this.installing(reg as $mol_service_reg_installing)
 
 				await ready
 
 				this.registration = reg
 				this.ready()
+
+				for (const data of this.send_delayed) {
+					this.send(data)
+				}
+
+				this.send_delayed = []
 
 				return true
 			} catch (error) {
@@ -51,7 +64,7 @@ namespace $ {
 			}
 		}
 
-		static installing(reg: $mol_worker_service_reg_installing) {
+		static installing(reg: $mol_service_reg_installing) {
 			reg.addEventListener( 'updatefound', this.update_found.bind(this, reg.installing))
 		}
 
@@ -67,17 +80,44 @@ namespace $ {
 
 		static worker() {
 			const worker = self as unknown as ServiceWorkerGlobalScope
-			if (this.inited) return worker
-
-			worker.addEventListener( 'beforeinstallprompt' , this.before_install.bind(this) )
-			worker.addEventListener( 'install' , this.install.bind(this))
-			worker.addEventListener( 'activate' , this.activate.bind(this))
-			worker.addEventListener( 'message', this.message.bind(this))
-			worker.addEventListener( 'fetch',  this.fetch_event.bind(this))
+			if (! this.inited) {
+				worker.addEventListener( 'beforeinstallprompt' , this.before_install.bind(this) )
+				worker.addEventListener( 'install' , this.install.bind(this))
+				worker.addEventListener( 'activate' , this.activate.bind(this))
+				worker.addEventListener( 'message', this.message.bind(this))
+				worker.addEventListener( 'fetch',  this.fetch_event.bind(this))
+				worker.addEventListener( 'notificationclick', this.notification_click.bind(this))
+			}
 
 			// for (let name in this.plugins) this.plugins[name].init(worker)
 
 			return worker
+		}
+
+		static notification_click(event: NotificationEvent) {
+			let promises = []
+
+			for (let name in this.plugins) {
+				const result = this.plugins[name].notification_click(event.notification)
+				if (result) promises.push(result)
+			}
+
+			if (promises.length > 0) {
+				event.waitUntil(Promise.all(promises))
+			}
+		}
+
+		protected static send_delayed = [] as {}[]
+
+		@ $mol_action
+		static override send(data: {}) {
+			const active = this.registration?.active
+
+			if (active) {
+				active.postMessage(data)
+			} else {
+				this.send_delayed.push(data)
+			}
 		}
 
 		static message(event: ExtendableMessageEvent) {
@@ -86,9 +126,15 @@ namespace $ {
 			}
 			if ( ! data || typeof data !== 'object' ) return false
 
-			this.data(data)
+			let promises = []
+			for (let name in this.plugins) {
+				const result = this.plugins[name].message_data(data)
+				if (result) promises.push(result)
+			}
 
-			return true
+			if (promises.length > 0) {
+				event.waitUntil(Promise.all(promises))
+			}
 		}
 
 		static before_install(event: Event & { prompt?(): void }) {
@@ -136,6 +182,6 @@ namespace $ {
 
 	}
 
-	$.$mol_worker_service = $mol_worker_service_web
+	$.$mol_service = $mol_service_web
 
 }
