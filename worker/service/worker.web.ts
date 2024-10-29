@@ -123,13 +123,13 @@ namespace $ {
 			const request = event.request
 
 			for (let name in this.plugins) {
-				if (this.plugins[name]?.blocked(request)) {
+				if (this.plugins[name].blocked(request)) {
 					return event.respondWith(this.blocked_response())
 				}
 			}
 
 			for (let name in this.plugins) {
-				const response = this.plugins[name]?.modify(request)
+				const response = this.plugins[name].modify(request)
 				if (response) return event.respondWith(response)
 			}
 		}

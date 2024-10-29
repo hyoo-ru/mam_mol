@@ -21,13 +21,17 @@ namespace $ {
 		) {
 			const plugin = this.make(config ?? {})
 
-			const worker = this.$.$mol_worker_service
-
-			worker.plugins[plugin.id] = plugin
-
-			if ( ! worker.inited ) {
-				worker.init()
-				worker.inited = true
+			try {
+				const worker = this.$.$mol_worker_service
+	
+				worker.plugins[plugin.id] = plugin
+	
+				if ( ! worker.inited ) {
+					worker.init()
+					worker.inited = true
+				}
+			} catch (error) {
+				console.error(error)
 			}
 
 			return plugin
