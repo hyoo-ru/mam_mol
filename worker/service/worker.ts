@@ -5,9 +5,9 @@ namespace $ {
 
 		static path() { return 'web.js' }
 
-		static plugins = {} as Record<string, $mol_worker_service>
+		protected static plugins = {} as Record<string, $mol_worker_service>
 
-		static inited = false
+		protected static inited = false
 		static init() {}
 		static ready() {}
 
@@ -19,12 +19,16 @@ namespace $ {
 			this : This,
 			config?: Partial< InstanceType< This > >,
 		) {
-			if ( ! this.inited ) {
-				this.init()
-				this.inited = true
-			}
 			const plugin = this.make(config ?? {})
-			this.plugins[plugin.id] = plugin
+
+			const worker = this.$.$mol_worker_service
+
+			worker.plugins[plugin.id] = plugin
+
+			if ( ! worker.inited ) {
+				worker.init()
+				worker.inited = true
+			}
 
 			return plugin
 		}
