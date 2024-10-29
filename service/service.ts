@@ -5,23 +5,13 @@ namespace $ {
 
 		static path() { return 'web.js' }
 
-		protected static inited = false
-		protected static init() {}
-
 		@ $mol_action
 		static send(data: {}) {}
 
 		protected static plugins = new Set<$mol_service>()
 
 		protected static add(plugin: $mol_service) {
-			const service = this.$.$mol_service
-
-			if ( ! service.inited ) {
-				service.init()
-				service.inited = true
-			}
-
-			service.plugins.add(plugin)
+			this.plugins.add(plugin)
 		}
 
 		static attach< This extends typeof $mol_service >(

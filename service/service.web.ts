@@ -28,7 +28,13 @@ namespace $ {
 
 		protected static registration = null as null | $mol_service_reg_active
 
-		static override init() {
+		protected static inited = false
+
+		protected static override add(plugin: $mol_service) {
+			super.add(plugin)
+
+			if (this.inited) return
+
 			if ( this.in_worker() ) {
 				this.worker()
 				return
@@ -36,6 +42,7 @@ namespace $ {
 
 			if ( ! this.is_supported() ) return
 			this.registration_init()
+			this.inited = true
 		}
 
 
