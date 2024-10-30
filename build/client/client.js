@@ -10,7 +10,6 @@ function $mol_build_client() {
 	
 	socket.onmessage = message => {
 		if( message.data !== '$mol_build_obsolete' ) return
-		postMessage('mol_build_obsolete')
 		location.reload()
 	}
 
