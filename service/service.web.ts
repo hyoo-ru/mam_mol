@@ -30,9 +30,7 @@ namespace $ {
 
 		protected static inited = false
 
-		protected static override add(plugin: $mol_service) {
-			super.add(plugin)
-
+		protected static override init() {
 			if (this.inited) return
 
 			if ( this.in_worker() ) {
@@ -44,7 +42,6 @@ namespace $ {
 			this.registration_init()
 			this.inited = true
 		}
-
 
 		static async registration_init() {
 
@@ -92,6 +89,7 @@ namespace $ {
 				worker.addEventListener( 'install' , this.install.bind(this))
 				worker.addEventListener( 'activate' , this.activate.bind(this))
 				worker.addEventListener( 'message', this.message.bind(this))
+				worker.addEventListener('fetch', this.fetch_event.bind(this))
 				this.inited = true
 				for (const plugin of this.plugins) plugin.init()
 			}
@@ -155,6 +153,20 @@ namespace $ {
 			})
 		}
 
+		static fetch_event(event: FetchEvent) {
+			const request = event.request
+
+			for (const plugin of this.plugins) {
+				if (plugin.blocked(request)) {
+					return event.respondWith(this.blocked_response())
+				}
+			}
+
+			for (const plugin of this.plugins) {
+				const response = plugin.modify(request)
+				if (response) return event.respondWith(response)
+			}
+		}
 	}
 
 	$.$mol_service = $mol_service_web

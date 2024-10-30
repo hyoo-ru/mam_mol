@@ -19,6 +19,6 @@ namespace $ {
 		
 	}
 
-	$mol_notify_service.attach()
+	$mol_service.attach($mol_notify_service)
 	
 }

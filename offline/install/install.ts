@@ -1,3 +1,3 @@
 namespace $ {
-	$mol_offline.attach()
+	$mol_service.attach($mol_offline)
 }

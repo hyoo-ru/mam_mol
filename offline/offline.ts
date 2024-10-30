@@ -1,17 +1,17 @@
 namespace $ {
 
-	export class $mol_offline extends $mol_fetch_service {
-		blocked_urls =  [
+	export class $mol_offline extends $mol_service_plugin {
+		static blocked_urls =  [
 			'//cse.google.com/adsense/search/async-ads.js'
 		]
 
-		override blocked( request: Request ) {
+		static override blocked( request: Request ) {
 			const normalized_url = request.url.replace( /^https?:/, '' )
 
 			return this.blocked_urls.includes(normalized_url)
 		}
 
-		override modify(request: Request) {
+		static override modify(request: Request) {
 
 			if( request.method !== 'GET' ) return null
 			if( !/^https?:/.test( request.url ) ) return null
@@ -21,7 +21,7 @@ namespace $ {
 			return this.respond(request)
 		}
 
-		async respond(request: Request) {
+		protected static async respond(request: Request) {
 			let fallback_header
 
 			const index_html = /.+\/index\.html/.test(request.url)

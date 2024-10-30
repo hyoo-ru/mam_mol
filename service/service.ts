@@ -8,28 +8,23 @@ namespace $ {
 		@ $mol_action
 		static send(data: {}) {}
 
-		protected static plugins = new Set<$mol_service>()
+		protected static plugins = new Set<typeof $mol_service_plugin>()
 
-		protected static add(plugin: $mol_service) {
+		static attach(plugin: typeof $mol_service_plugin) {
 			this.plugins.add(plugin)
+			this.init()
 		}
 
-		static attach< This extends typeof $mol_service >(
-			this : This,
-			config?: Partial< InstanceType< This > >,
-		) {
-			const plugin = this.make(config ?? {})
+		protected static init() {}
 
-			this.add(plugin)
-
-			return plugin
+		static blocked_response() {
+			return new Response(
+				null,
+				{
+					status: 418,
+					statusText: 'Blocked'
+				},
+			)
 		}
-
-		init() {}
-		before_install() {}
-		install() { return null as undefined | null | Promise<unknown> }
-		activate() { return null as undefined | null | Promise<unknown> }
-		state_change() {}
-		message_data(data: {}) { return null as null | undefined | Promise<unknown> }
 	}
 }
