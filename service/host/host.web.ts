@@ -74,7 +74,7 @@ namespace $ {
 			worker.addEventListener( 'statechange', this.state_change.bind(this, worker))
 		}
 
-		static plugins = [] as (typeof $mol_service.$mol_service_plugin)[]
+		static plugins = [] as (typeof $mol_service_plugin)[]
 
 		static state_change(worker: ServiceWorker) {
 			for (const plugin of this.plugins) {
