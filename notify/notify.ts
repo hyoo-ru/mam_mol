@@ -14,11 +14,11 @@ namespace $ {
 		}
 		
 		static show( info: $mol_notify_info ) {
-			this.$.$mol_service.send(info)
+			this.$.$mol_service_host.send(info)
 		}
 		
 	}
 
-	$mol_service.attach($mol_notify_service)
+	$mol_service.$mol_notify_service
 	
 }

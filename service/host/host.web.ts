@@ -4,7 +4,7 @@ namespace $ {
 	export type $mol_service_reg_active = ServiceWorkerRegistration & { active: ServiceWorker }
 	export type $mol_service_reg_installing = ServiceWorkerRegistration & { installing: ServiceWorker }
 
-	export class $mol_service_web extends $mol_service {
+	export class $mol_service_host_web extends $mol_service_host {
 		static is_supported() {
 			if( location.protocol !== 'https:' && location.hostname !== 'localhost' ) {
 				console.warn( 'HTTPS or localhost is required for service workers.' )
@@ -32,15 +32,13 @@ namespace $ {
 
 		static override init() {
 			if (this.inited) return
+			this.inited = true
 
 			if ( this.in_worker() ) {
-				this.worker()
-				return
+				this.worker_init()
+			} else if ( this.is_supported() ) {
+				this.registration_init()
 			}
-
-			if ( ! this.is_supported() ) return
-			this.registration_init()
-			this.inited = true
 		}
 
 		static async registration_init() {
@@ -76,25 +74,30 @@ namespace $ {
 			worker.addEventListener( 'statechange', this.state_change.bind(this, worker))
 		}
 
+		static plugins = [] as (typeof $mol_service.$mol_service_plugin)[]
+
 		static state_change(worker: ServiceWorker) {
 			for (const plugin of this.plugins) {
 				plugin.state_change()
 			}
 		}
 
-		static worker() {
-			const worker = self as unknown as ServiceWorkerGlobalScope
-			if (! this.inited) {
-				worker.addEventListener( 'beforeinstallprompt' , this.before_install.bind(this) )
-				worker.addEventListener( 'install' , this.install.bind(this))
-				worker.addEventListener( 'activate' , this.activate.bind(this))
-				worker.addEventListener( 'message', this.message.bind(this))
-				worker.addEventListener('fetch', this.fetch_event.bind(this))
-				this.inited = true
-				for (const plugin of this.plugins) plugin.init()
-			}
+		static async worker_init() {
+			await Promise.resolve()
+			const worker = this.worker()
+			worker.addEventListener( 'beforeinstallprompt' , this.before_install.bind(this) )
+			worker.addEventListener( 'install' , this.install.bind(this))
+			worker.addEventListener( 'activate' , this.activate.bind(this))
+			worker.addEventListener( 'message', this.message.bind(this))
+			worker.addEventListener('fetch', this.fetch_event.bind(this))
 
-			return worker
+			this.plugins = Object.values(this.$.$mol_service).filter(plug => plug !== $mol_service.$mol_service_plugin)
+
+			for (const plugin of this.plugins) plugin.init()
+		}
+
+		static worker() {
+			return self as unknown as ServiceWorkerGlobalScope
 		}
 
 		protected static send_delayed = [] as {}[]
@@ -169,8 +172,8 @@ namespace $ {
 		}
 	}
 
-	$.$mol_service = $mol_service_web
+	$.$mol_service_host = $mol_service_host_web
 
-	$mol_service_web.init()
+	$mol_service_host_web.init()
 
 }

@@ -1,7 +1,7 @@
-namespace $ {
+namespace $.$mol_service {
 	export class $mol_notify_service_web extends $mol_notify_service {
 		static override init() {
-			const worker = this.$.$mol_service_web.worker()
+			const worker = this.$.$mol_service_host_web.worker()
 			worker.addEventListener( 'notificationclick', this.notification_click_event.bind(this))
 		}
 
@@ -10,7 +10,7 @@ namespace $ {
 		}
 
 		static override async info({ context: title, message: body, uri: data }: $mol_notify_info) {
-			const worker = this.$.$mol_service_web.worker()
+			const worker = this.$.$mol_service_host_web.worker()
 			const tag = data
 			const existen = await worker.registration.getNotifications({ tag })
 			
@@ -29,7 +29,7 @@ namespace $ {
 		}
 
 		static async notification_click( notification: Notification ) {
-			const worker = this.$.$mol_service_web.worker()
+			const worker = this.$.$mol_service_host_web.worker()
 
 			const clients = await worker.clients.matchAll({ includeUncontrolled: true, type: 'window' })
 			const last = clients.at(-1)
@@ -45,5 +45,5 @@ namespace $ {
 		}
 	}
 
-	$.$mol_notify_service = $mol_notify_service_web
+	$.$mol_service.$mol_notify_service = $mol_notify_service_web
 }

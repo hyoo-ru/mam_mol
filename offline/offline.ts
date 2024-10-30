@@ -1,4 +1,4 @@
-namespace $ {
+namespace $.$mol_service {
 
 	export class $mol_offline extends $mol_service_plugin {
 		static blocked_urls =  [
@@ -64,6 +64,4 @@ namespace $ {
 			return clone
 		}
 	}
-
-	$mol_service.attach($mol_offline)
 }

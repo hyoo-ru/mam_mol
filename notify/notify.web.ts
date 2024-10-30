@@ -28,5 +28,4 @@ namespace $ {
 	}
 
 	$.$mol_notify = $mol_notify_web
-	
 }
