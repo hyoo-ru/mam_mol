@@ -1,4 +1,4 @@
-namespace $.$mol_service {
+namespace $ {
 
 	export class $mol_offline extends $mol_service_plugin {
 		static blocked_urls =  [

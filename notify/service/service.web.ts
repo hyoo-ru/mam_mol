@@ -1,4 +1,4 @@
-namespace $.$mol_service {
+namespace $ {
 	export class $mol_notify_service_web extends $mol_notify_service {
 		static override init() {
 			const worker = this.$.$mol_service_host_web.worker()
@@ -45,5 +45,9 @@ namespace $.$mol_service {
 		}
 	}
 
-	$.$mol_service.$mol_notify_service = $mol_notify_service_web
+	$.$mol_notify_service = $mol_notify_service_web
+
+	export namespace $mol_service {
+		export const $mol_notify_service = $mol_notify_service_web
+	}
 }

@@ -1,4 +1,4 @@
-namespace $.$mol_service {
+namespace $ {
 	export class $mol_notify_service extends $mol_service_plugin {
 		static override message_data(data: {}) {
 			if ('uri' in data && 'message' in data) {

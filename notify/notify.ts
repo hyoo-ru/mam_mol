@@ -19,6 +19,6 @@ namespace $ {
 		
 	}
 
-	$mol_service.$mol_notify_service
+	$mol_notify_service
 	
 }
