@@ -30,7 +30,7 @@ namespace $ {
 
 		protected static inited = false
 
-		protected static override init() {
+		static override init() {
 			if (this.inited) return
 
 			if ( this.in_worker() ) {
@@ -170,5 +170,7 @@ namespace $ {
 	}
 
 	$.$mol_service = $mol_service_web
+
+	$mol_service_web.init()
 
 }

@@ -12,10 +12,13 @@ namespace $ {
 
 		static attach(plugin: typeof $mol_service_plugin) {
 			this.plugins.add(plugin)
-			this.init()
 		}
 
-		protected static init() {}
+		static detach(plugin: typeof $mol_service_plugin) {
+			this.plugins.delete(plugin)
+		}
+
+		static init() {}
 
 		static blocked_response() {
 			return new Response(
@@ -27,4 +30,5 @@ namespace $ {
 			)
 		}
 	}
+
 }
