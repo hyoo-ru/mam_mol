@@ -89,9 +89,9 @@ namespace $ {
 			worker.addEventListener( 'install' , this.install.bind(this))
 			worker.addEventListener( 'activate' , this.activate.bind(this))
 			worker.addEventListener( 'message', this.message.bind(this))
-			worker.addEventListener('fetch', this.fetch_event.bind(this))
+			worker.addEventListener( 'fetch', this.fetch_event.bind(this))
 
-			this.plugins = Object.values(this.$.$mol_service).filter(plug => plug !== $mol_service.$mol_service_plugin)
+			this.plugins = Object.values(this.$.$mol_service)
 
 			for (const plugin of this.plugins) plugin.init()
 		}
