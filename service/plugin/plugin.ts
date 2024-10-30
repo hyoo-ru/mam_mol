@@ -7,7 +7,11 @@ namespace $ {
 		static state_change() {}
 		static message_data(data: {}) { return null as null | undefined | Promise<unknown> }
 
-		static blocked(res: Request) { return false }
-		static modify(res: Request) { return null as null | Response | PromiseLike<Response> }
+		static blocked(request: Request) { return false }
+		static modify(request: Request, waitUntil: (promise: Promise<unknown>) => void) {
+			return null as null | Response | PromiseLike<Response>
+		}
+
+		static service() { return this.$.$mol_service_host }
 	}
 }

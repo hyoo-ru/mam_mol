@@ -21,10 +21,16 @@ namespace $.$mol_service {
 			return this.respond(request)
 		}
 
+		protected static fetch(request: Request): Promise<Response> {
+			throw new Error('implement')
+		}
+
+		static force_cache_regexp = /.+\/(index|test)\.html/
+
 		protected static async respond(request: Request) {
 			let fallback_header
 
-			const index_html = /.+\/index\.html/.test(request.url)
+			const index_html = this.force_cache_regexp.test(request.url)
 
 			const cache = request.cache
 
@@ -36,7 +42,7 @@ namespace $.$mol_service {
 		
 				// fetch with fallback to cache if statuses not match
 				try {
-					const actual = await fetch(request)
+					const actual = await this.fetch(request)
 					if (actual.status < 400) return actual
 
 					throw new Error(
@@ -54,7 +60,7 @@ namespace $.$mol_service {
 				request = new Request(request, { cache: 'force-cache' })
 			}
 
-			const cached = await fetch(request)
+			const cached = await this.fetch(request)
 
 			if (! fallback_header || cached.headers.get('$mol_offline_remote_status')) return cached
 

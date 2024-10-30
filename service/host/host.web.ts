@@ -165,8 +165,10 @@ namespace $ {
 				}
 			}
 
+			const waitUntil = event.waitUntil.bind(event)
+
 			for (const plugin of this.plugins) {
-				const response = plugin.modify(request)
+				const response = plugin.modify(request, waitUntil)
 				if (response) return event.respondWith(response)
 			}
 		}
