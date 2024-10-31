@@ -1,9 +1,6 @@
 /// <reference lib="webworker" />
 
 namespace $ {
-	export type $mol_service_reg_active = ServiceWorkerRegistration & { active: ServiceWorker }
-	export type $mol_service_reg_installing = ServiceWorkerRegistration & { installing: ServiceWorker }
-
 	export class $mol_service_host_web extends $mol_service_host {
 		static is_supported() {
 			if( location.protocol !== 'https:' && location.hostname !== 'localhost' ) {
@@ -26,7 +23,14 @@ namespace $ {
 			}
 		}
 
-		protected static registration = null as null | $mol_service_reg_active
+		protected static _registration = null as null | ServiceWorkerRegistration
+
+		static registration() {
+			if (this.in_worker()) return this.scope().registration
+			if (! this._registration) throw new Error('Access before registration_init')
+
+			return this._registration
+		}
 
 		protected static inited = false
 
@@ -41,17 +45,26 @@ namespace $ {
 			}
 		}
 
+		static plugins = [] as (typeof $mol_service_plugin)[]
+
 		static async registration_init() {
+
+			const navigator = this.$.$mol_dom_context.navigator
 
 			try {
 				const reg_promise = navigator.serviceWorker.register(this.path())
-				const ready = navigator.serviceWorker.ready as Promise<$mol_service_reg_active>
-				const reg = (await reg_promise) as $mol_service_reg_active
-				if (reg.installing) this.installing(reg as $mol_service_reg_installing)
+				const ready = navigator.serviceWorker.ready
+				const reg = await reg_promise
+
+				this._registration = reg
+
+				if (reg.waiting) this.state_change(reg.waiting)
+				else if (reg.installing) this.update_found()
+				else {
+					reg.addEventListener( 'updatefound', this.update_found.bind(this))
+				}
 
 				await ready
-
-				this.registration = reg
 
 				for (const data of this.send_delayed) {
 					this.send(data)
@@ -66,15 +79,19 @@ namespace $ {
 			}
 		}
 
-		static installing(reg: $mol_service_reg_installing) {
-			reg.addEventListener( 'updatefound', this.update_found.bind(this, reg.installing))
-		}
-
-		static update_found(worker: ServiceWorker) {
+		static update_found() {
+			const worker = this.registration().installing
+			if (! worker) throw new Error('No installing worker in updatefound event')
 			worker.addEventListener( 'statechange', this.state_change.bind(this, worker))
 		}
 
-		static plugins = [] as (typeof $mol_service_plugin)[]
+		static worker() {
+			const reg = this.registration()
+			const worker = reg.installing ?? reg.waiting ?? reg.active
+			if (! worker) throw new Error('No worker available in registration')
+
+			return worker
+		}
 
 		static state_change(worker: ServiceWorker) {
 			for (const plugin of this.plugins) {
@@ -84,19 +101,19 @@ namespace $ {
 
 		static async worker_init() {
 			await Promise.resolve()
-			const worker = this.worker()
-			worker.addEventListener( 'beforeinstallprompt' , this.before_install.bind(this) )
-			worker.addEventListener( 'install' , this.install.bind(this))
-			worker.addEventListener( 'activate' , this.activate.bind(this))
-			worker.addEventListener( 'message', this.message.bind(this))
-			worker.addEventListener( 'fetch', this.fetch_event.bind(this))
+			const scope = this.scope()
+			scope.addEventListener( 'beforeinstallprompt' , this.before_install.bind(this) )
+			scope.addEventListener( 'install' , this.install.bind(this))
+			scope.addEventListener( 'activate' , this.activate.bind(this))
+			scope.addEventListener( 'message', this.message.bind(this))
+			scope.addEventListener( 'fetch', this.fetch_event.bind(this))
 
 			this.plugins = Object.values(this.$.$mol_service)
 
 			for (const plugin of this.plugins) plugin.init()
 		}
 
-		static worker() {
+		static scope() {
 			return self as unknown as ServiceWorkerGlobalScope
 		}
 
@@ -104,10 +121,10 @@ namespace $ {
 
 		@ $mol_action
 		static override send(data: {}) {
-			const active = this.registration?.active
+			const worker = this.worker()
 
-			if (active) {
-				active.postMessage(data)
+			if (worker) {
+				worker.postMessage(data)
 			} else {
 				this.send_delayed.push(data)
 			}
@@ -139,7 +156,7 @@ namespace $ {
 				if (result) event.waitUntil(result)
 			}
 
-			this.worker().skipWaiting()
+			this.scope().skipWaiting()
 		}
 
 		static activate(event: ExtendableEvent) {
@@ -148,7 +165,7 @@ namespace $ {
 				if (result) event.waitUntil(result)
 			}
 
-			event.waitUntil( this.worker().clients.claim() )
+			event.waitUntil( this.scope().clients.claim() )
 
 			this.$.$mol_log3_done({
 				place: `${this}.activate()`,

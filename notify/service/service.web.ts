@@ -1,8 +1,8 @@
 namespace $ {
 	export class $mol_notify_service_web extends $mol_notify_service {
 		static override init() {
-			const worker = this.$.$mol_service_host_web.worker()
-			worker.addEventListener( 'notificationclick', this.notification_click_event.bind(this))
+			const scope = this.$.$mol_service_host_web.scope()
+			scope.addEventListener( 'notificationclick', this.notification_click_event.bind(this))
 		}
 
 		protected static notification_click_event(event: NotificationEvent) {
@@ -10,9 +10,9 @@ namespace $ {
 		}
 
 		static override async info({ context: title, message: body, uri: data }: $mol_notify_info) {
-			const worker = this.$.$mol_service_host_web.worker()
+			const scope = this.$.$mol_service_host_web.scope()
 			const tag = data
-			const existen = await worker.registration.getNotifications({ tag })
+			const existen = await scope.registration.getNotifications({ tag })
 			
 			for( const not of existen ) {
 				
@@ -24,14 +24,14 @@ namespace $ {
 			
 			// const vibrate = [ 100, 200, 300, 400, 500 ]
 			
-			await worker.registration.showNotification( title, { body, data, /*vibrate,*/ tag } )
+			await scope.registration.showNotification( title, { body, data, /*vibrate,*/ tag } )
 
 		}
 
 		static async notification_click( notification: Notification ) {
-			const worker = this.$.$mol_service_host_web.worker()
+			const scope = this.$.$mol_service_host_web.scope()
 
-			const clients = await worker.clients.matchAll({ includeUncontrolled: true, type: 'window' })
+			const clients = await scope.clients.matchAll({ includeUncontrolled: true, type: 'window' })
 			const last = clients.at(-1)
 
 			if( last ) {
@@ -41,7 +41,7 @@ namespace $ {
 				return
 			}
 
-			await worker.clients.openWindow( notification.data )
+			await scope.clients.openWindow( notification.data )
 		}
 	}
 
