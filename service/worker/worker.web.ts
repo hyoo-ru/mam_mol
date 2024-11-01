@@ -1,7 +1,8 @@
 /// <reference lib="webworker" />
 
 namespace $ {
-	export class $mol_service_host_web extends $mol_service_host {
+
+	export class $mol_service_worker_web extends $mol_service_worker {
 		static is_supported() {
 			if( location.protocol !== 'https:' && location.hostname !== 'localhost' ) {
 				console.warn( 'HTTPS or localhost is required for service workers.' )
@@ -32,12 +33,7 @@ namespace $ {
 			return this._registration
 		}
 
-		protected static inited = false
-
 		static override init() {
-			if (this.inited) return
-			this.inited = true
-
 			if ( this.in_worker() ) {
 				this.worker_init()
 			} else if ( this.is_supported() ) {
@@ -48,6 +44,7 @@ namespace $ {
 		static plugins = [] as (typeof $mol_service_plugin)[]
 
 		static async registration_init() {
+			window.addEventListener( 'beforeinstallprompt' , this.prepare.bind(this) as unknown as (e: Event) => unknown )
 
 			const navigator = this.$.$mol_dom_context.navigator
 
@@ -102,15 +99,25 @@ namespace $ {
 		static async worker_init() {
 			await Promise.resolve()
 			const scope = this.scope()
-			scope.addEventListener( 'beforeinstallprompt' , this.before_install.bind(this) )
 			scope.addEventListener( 'install' , this.install.bind(this))
 			scope.addEventListener( 'activate' , this.activate.bind(this))
 			scope.addEventListener( 'message', this.message.bind(this))
-			scope.addEventListener( 'fetch', this.fetch_event.bind(this))
+			scope.addEventListener( 'fetch', this.fetch.bind(this))
 
 			this.plugins = Object.values(this.$.$mol_service)
 
-			for (const plugin of this.plugins) plugin.init()
+			for (const plugin of this.plugins) {
+				try {
+					plugin.init()
+				} catch (error) {
+					this.log_error(plugin, error)
+				}
+			}
+		}
+
+		protected static log_error(plugin: typeof $mol_service_plugin, error: unknown) {
+			;(error as Error).message = `${plugin.toString()}: ${(error as Error).message}`
+			console.error(error)
 		}
 
 		static scope() {
@@ -121,6 +128,7 @@ namespace $ {
 
 		@ $mol_action
 		static override send(data: {}) {
+			if ( this.in_worker() ) return
 			const worker = this.worker()
 
 			if (worker) {
@@ -130,6 +138,17 @@ namespace $ {
 			}
 		}
 
+		static prepare(event: $mol_service_prepare_event) {
+			for (const plugin of this.plugins) {
+				try {
+					if ( plugin.prepare(event) ) return
+				} catch (error) {
+					this.log_error(plugin, error)
+				}
+			}
+
+		}
+
 		static message(event: ExtendableMessageEvent) {
 			const data = event.data as string | null | {
 				[k: string]: unknown
@@ -137,23 +156,23 @@ namespace $ {
 			if ( ! data || typeof data !== 'object' ) return false
 
 			for (const plugin of this.plugins) {
-				const result = plugin.message_data(data)
-				if (result) event.waitUntil(result)
+				try {
+					const result = plugin.message_data(data)
+					if (result) event.waitUntil(result)
+				} catch (error) {
+					this.log_error(plugin, error)
+				}
 			}
-		}
-
-		static before_install(event: Event & { prompt?(): void }) {
-			for (const plugin of this.plugins) {
-				plugin.before_install()
-			}
-
-			event.prompt?.()
 		}
 
 		static install(event: ExtendableEvent) {
 			for (const plugin of this.plugins) {
-				const result = plugin.install()
-				if (result) event.waitUntil(result)
+				try {
+					const result = plugin.install()
+					if (result) event.waitUntil(result)
+				} catch (error) {
+					this.log_error(plugin, error)
+				}
 			}
 
 			this.scope().skipWaiting()
@@ -161,11 +180,13 @@ namespace $ {
 
 		static activate(event: ExtendableEvent) {
 			for (const plugin of this.plugins) {
-				const result = plugin.activate()
-				if (result) event.waitUntil(result)
+				try {
+					const result = plugin.activate()
+					if (result) event.waitUntil(result)
+				} catch (error) {
+					this.log_error(plugin, error)
+				}
 			}
-
-			event.waitUntil( this.scope().clients.claim() )
 
 			this.$.$mol_log3_done({
 				place: `${this}.activate()`,
@@ -173,26 +194,34 @@ namespace $ {
 			})
 		}
 
-		static fetch_event(event: FetchEvent) {
+		static fetch(event: FetchEvent) {
 			const request = event.request
 
 			for (const plugin of this.plugins) {
-				if (plugin.blocked(request)) {
-					return event.respondWith(this.blocked_response())
+				try {
+					if (plugin.blocked(request)) {
+						return event.respondWith(this.blocked_response())
+					}
+				} catch (error) {
+					this.log_error(plugin, error)
 				}
 			}
 
 			const waitUntil = event.waitUntil.bind(event)
 
 			for (const plugin of this.plugins) {
-				const response = plugin.modify(request, waitUntil)
-				if (response) return event.respondWith(response)
+				try {
+					const response = plugin.modify(request, waitUntil)
+					if (response) return event.respondWith(response)
+				} catch (error) {
+					this.log_error(plugin, error)
+				}
 			}
 		}
 	}
 
-	$.$mol_service_host = $mol_service_host_web
+	$.$mol_service_worker = $mol_service_worker_web
 
-	$mol_service_host_web.init()
+	$mol_service_worker_web.init()
 
 }

@@ -1,7 +1,7 @@
 namespace $ {
 	export class $mol_service_plugin extends $mol_object {
 		static init() {}
-		static before_install() {}
+		static prepare(event: $mol_service_prepare_event) { return null as null | undefined | boolean }
 		static install() { return null as undefined | null | Promise<unknown> }
 		static activate() { return null as undefined | null | Promise<unknown> }
 		static state_change() {}
@@ -12,6 +12,6 @@ namespace $ {
 			return null as null | Response | PromiseLike<Response>
 		}
 
-		static service() { return this.$.$mol_service_host }
+		static service() { return this.$.$mol_service_worker }
 	}
 }

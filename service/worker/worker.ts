@@ -1,6 +1,6 @@
 namespace $ {
-	export class $mol_service_host extends $mol_object {
-		static in_worker() { return typeof window === 'undefined' }
+	export class $mol_service_worker extends $mol_object {
+		protected static in_worker() { return typeof window === 'undefined' }
 
 		static path() { return 'web.js' }
 

@@ -3,6 +3,10 @@ namespace $ {
 		protected static override fetch(request: Request) {
 			return fetch(request)
 		}
+
+		static override activate() {
+			return this.$.$mol_service_worker_web.scope().clients.claim()
+		}
 	}
 
 	$.$mol_offline = $mol_offline_web
