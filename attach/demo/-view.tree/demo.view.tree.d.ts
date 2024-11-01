@@ -1,6 +1,6 @@
 declare namespace $ {
 
-	type $mol_attach__items__XXUMJH4L = $mol_type_enforce<
+	type $mol_attach__items__30G6W5KU = $mol_type_enforce<
 		ReturnType< $mol_attach_demo['filled_items'] >
 		,
 		ReturnType< $mol_attach['items'] >

@@ -1,46 +1,46 @@
 declare namespace $ {
 
-	type $mol_select_colors_color_preview__color__E45E249O = $mol_type_enforce<
+	type $mol_select_colors_color_preview__color__H4NBKOLZ = $mol_type_enforce<
 		ReturnType< $mol_select_demo_colors['option_color'] >
 		,
 		ReturnType< $mol_select_colors_color_preview['color'] >
 	>
-	type $mol_dimmer__haystack__BM93EJUE = $mol_type_enforce<
+	type $mol_dimmer__haystack__1U3L9X38 = $mol_type_enforce<
 		ReturnType< $mol_select_demo_colors['color_name'] >
 		,
 		ReturnType< $mol_dimmer['haystack'] >
 	>
-	type $mol_dimmer__needle__3R5WLVMM = $mol_type_enforce<
+	type $mol_dimmer__needle__LT3NSJH3 = $mol_type_enforce<
 		ReturnType< $mol_select_demo_colors['color_filter'] >
 		,
 		ReturnType< $mol_dimmer['needle'] >
 	>
-	type $mol_view__sub__GTF1EMB9 = $mol_type_enforce<
+	type $mol_view__sub__KNU3AFOV = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_view__minimal_height__KLN5A2Z6 = $mol_type_enforce<
+	type $mol_view__minimal_height__D8XTTP1A = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_view['minimal_height'] >
 	>
-	type $mol_select__value__UKPBKRCU = $mol_type_enforce<
+	type $mol_select__value__NDAOFI86 = $mol_type_enforce<
 		ReturnType< $mol_select_demo_colors['color'] >
 		,
 		ReturnType< $mol_select['value'] >
 	>
-	type $mol_select__dictionary__90VBVPN5 = $mol_type_enforce<
+	type $mol_select__dictionary__DUBIJ1IP = $mol_type_enforce<
 		ReturnType< $mol_select_demo_colors['colors'] >
 		,
 		ReturnType< $mol_select['dictionary'] >
 	>
-	type $mol_select__option_label__QEIEEZ7I = $mol_type_enforce<
+	type $mol_select__option_label__H2USP6L2 = $mol_type_enforce<
 		ReturnType< $mol_select_demo_colors['color_name'] >
 		,
 		ReturnType< $mol_select['option_label'] >
 	>
-	type $mol_select__option_content__N12BJAKI = $mol_type_enforce<
+	type $mol_select__option_content__XBY6ZQYO = $mol_type_enforce<
 		ReturnType< $mol_select_demo_colors['option_content'] >
 		,
 		ReturnType< $mol_select['option_content'] >
