@@ -3,7 +3,7 @@
 namespace $ {
 
 	export class $mol_service_worker_web extends $mol_service_worker {
-		static is_supported() {
+		protected static is_supported() {
 			if( location.protocol !== 'https:' && location.hostname !== 'localhost' ) {
 				console.warn( 'HTTPS or localhost is required for service workers.' )
 				return false
@@ -17,12 +17,7 @@ namespace $ {
 			return true
 		}
 
-		static handler< E extends ExtendableEvent >( handle : ( event: E )=> null | undefined | Promise<unknown> ) {
-			return ( event: E )=> {
-				const result = handle( event )
-				if (result) event.waitUntil( result )
-			}
-		}
+		protected static in_worker() { return typeof window === 'undefined' }
 
 		protected static _registration = null as null | ServiceWorkerRegistration
 
@@ -33,7 +28,7 @@ namespace $ {
 			return this._registration
 		}
 
-		static override init() {
+		static init() {
 			if ( this.in_worker() ) {
 				this.worker_init()
 			} else if ( this.is_supported() ) {
@@ -41,7 +36,11 @@ namespace $ {
 			}
 		}
 
-		static plugins = [] as (typeof $mol_service_plugin)[]
+		static plugins = [] as (
+			typeof $mol_service_plugin
+			| typeof $mol_service_plugin_notify
+			| typeof $mol_service_plugin_cache
+		)[]
 
 		static async registration_init() {
 			window.addEventListener( 'beforeinstallprompt' , this.prepare.bind(this) as unknown as (e: Event) => unknown )
@@ -55,7 +54,7 @@ namespace $ {
 
 				this._registration = reg
 
-				if (reg.waiting) this.state_change(reg.waiting)
+				if (reg.waiting) this.state(null)
 				else if (reg.installing) this.update_found()
 				else {
 					reg.addEventListener( 'updatefound', this.update_found.bind(this))
@@ -76,25 +75,18 @@ namespace $ {
 			}
 		}
 
-		static update_found() {
-			const worker = this.registration().installing
-			if (! worker) throw new Error('No installing worker in updatefound event')
-			worker.addEventListener( 'statechange', this.state_change.bind(this, worker))
+		protected static update_found() {
+			const worker = this.registration().installing!
+			worker.addEventListener( 'statechange', e => this.state(null))
 		}
 
-		static worker() {
+		protected static worker() {
 			const reg = this.registration()
-			const worker = reg.installing ?? reg.waiting ?? reg.active
-			if (! worker) throw new Error('No worker available in registration')
-
-			return worker
+			return reg.installing ?? reg.waiting ?? reg.active
 		}
 
-		static state_change(worker: ServiceWorker) {
-			for (const plugin of this.plugins) {
-				plugin.state_change()
-			}
-		}
+		@ $mol_mem
+		static state(reset?: null) { return this.worker()?.state ?? null }
 
 		static async worker_init() {
 			await Promise.resolve()
@@ -103,16 +95,9 @@ namespace $ {
 			scope.addEventListener( 'activate' , this.activate.bind(this))
 			scope.addEventListener( 'message', this.message.bind(this))
 			scope.addEventListener( 'fetch', this.fetch.bind(this))
+			scope.addEventListener( 'notificationclick', this.notification_click.bind(this))
 
 			this.plugins = Object.values(this.$.$mol_service)
-
-			for (const plugin of this.plugins) {
-				try {
-					plugin.init()
-				} catch (error) {
-					this.log_error(plugin, error)
-				}
-			}
 		}
 
 		protected static log_error(plugin: typeof $mol_service_plugin, error: unknown) {
@@ -120,33 +105,64 @@ namespace $ {
 			console.error(error)
 		}
 
-		static scope() {
+		protected static scope() {
 			return self as unknown as ServiceWorkerGlobalScope
+		}
+
+		static clients() {
+			return this.scope().clients
 		}
 
 		protected static send_delayed = [] as {}[]
 
 		@ $mol_action
 		static override send(data: {}) {
-			if ( this.in_worker() ) return
-			const worker = this.worker()
+			const worker = this.in_worker() ? this.worker() : null
 
 			if (worker) {
-				worker.postMessage(data)
-			} else {
-				this.send_delayed.push(data)
+				try {
+					worker.postMessage(data)
+				} catch (error) {
+					console.error(error)
+				}
+
+				return
+			}
+
+			this.send_delayed.push(data)
+
+			if (this.in_worker() && ! this.send_clients_promise) {
+				this.send_clients_promise = this.send_clients_async()
 			}
 		}
 
-		static prepare(event: $mol_service_prepare_event) {
-			for (const plugin of this.plugins) {
-				try {
-					if ( plugin.prepare(event) ) return
-				} catch (error) {
-					this.log_error(plugin, error)
+		protected static send_clients_promise = null as null | Promise<unknown>
+
+		protected static async send_clients_async() {
+
+			let clients = [] as readonly WindowClient[]
+
+			try {
+				clients = await this.clients().matchAll({ includeUncontrolled: true, type: 'window' })
+			} catch (error) {
+				console.error(error)
+			}
+
+			for (const client of clients) {
+				for (const data of this.send_delayed) {
+					try {
+						client.postMessage(data)
+					} catch (error) {
+						console.error(error)
+					}
 				}
 			}
 
+			this.send_delayed = []
+			this.send_clients_promise = null
+
+
+			return null
 		}
 
 		static message(event: ExtendableMessageEvent) {
@@ -194,12 +210,28 @@ namespace $ {
 			})
 		}
 
+		static notification_click(event: NotificationEvent) {
+			for (const plugin of this.plugins) {
+				if ( ! ( plugin.prototype instanceof $mol_service_plugin_notify ) ) continue
+
+				try {
+					const result = (plugin as typeof $mol_service_plugin_notify).notification(event.notification)
+					if ( result ) return event.waitUntil(result)
+				} catch (error) {
+					this.log_error(plugin, error)
+				}
+			}
+
+		}
+
 		static fetch(event: FetchEvent) {
 			const request = event.request
 
 			for (const plugin of this.plugins) {
+				if ( ! ( plugin.prototype instanceof $mol_service_plugin_cache ) ) continue
+
 				try {
-					if (plugin.blocked(request)) {
+					if ((plugin as typeof $mol_service_plugin_cache).blocked(request)) {
 						return event.respondWith(this.blocked_response())
 					}
 				} catch (error) {
@@ -210,8 +242,10 @@ namespace $ {
 			const waitUntil = event.waitUntil.bind(event)
 
 			for (const plugin of this.plugins) {
+				if ( ! ( plugin.prototype instanceof $mol_service_plugin_cache ) ) continue
+
 				try {
-					const response = plugin.modify(request, waitUntil)
+					const response = (plugin as typeof $mol_service_plugin_cache).modify(request, waitUntil)
 					if (response) return event.respondWith(response)
 				} catch (error) {
 					this.log_error(plugin, error)

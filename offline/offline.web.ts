@@ -5,7 +5,7 @@ namespace $ {
 		}
 
 		static override activate() {
-			return this.$.$mol_service_worker_web.scope().clients.claim()
+			return this.$.$mol_service_worker_web.clients().claim()
 		}
 	}
 

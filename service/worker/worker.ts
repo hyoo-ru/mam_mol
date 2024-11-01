@@ -1,13 +1,19 @@
 namespace $ {
 	export class $mol_service_worker extends $mol_object {
-		protected static in_worker() { return typeof window === 'undefined' }
-
 		static path() { return 'web.js' }
 
 		@ $mol_action
 		static send(data: {}) {}
 
-		static init() {}
+		@ $mol_mem
+		static prepare(next?: $mol_service_prepare_event) {
+			return next ? next : null
+		}
+
+		@ $mol_mem
+		static prepare_choise() { return $mol_wire_sync(this).choise_promise()?.outcome ?? null }
+
+		static choise_promise() { return this.prepare()?.userChoise }
 
 		static blocked_response() {
 			return new Response(

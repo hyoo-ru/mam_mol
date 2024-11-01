@@ -19,7 +19,7 @@ namespace $ {
 		
 	}
 
-	export class $mol_notify_service extends $mol_service_plugin {
+	export class $mol_notify_service extends $mol_service_plugin_notify {
 		static override message_data(data: {}) {
 			if ('uri' in data && 'message' in data) {
 				this.show(data as $mol_notify_info)
