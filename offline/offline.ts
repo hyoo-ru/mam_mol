@@ -25,16 +25,15 @@ namespace $ {
 			throw new Error('implement')
 		}
 
-		static force_cache_regexp = /.+\/(index|test)\.html/
-
 		protected static async respond(request: Request) {
 			let fallback_header
 
-			const index_html = this.force_cache_regexp.test(request.url)
+			const url = new URL(request.url)
+			const html = url.pathname.endsWith('.html')
 
 			const cache = request.cache
 
-			if (cache === 'reload' || ( cache === 'no-cache' && ! index_html ) ) {
+			if (cache === 'reload' || ( cache === 'no-cache' && ! html ) ) {
 				if (cache === 'reload') {
 					// F5 + Disable cache
 					request = new Request(request, { cache: 'no-cache' })
