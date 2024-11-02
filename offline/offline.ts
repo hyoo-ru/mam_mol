@@ -21,11 +21,11 @@ namespace $ {
 			return this.respond(request)
 		}
 
-		protected static fetch(request: Request): Promise<Response> {
-			throw new Error('implement')
+		protected static fetch(request: Request) {
+			return null as null | Response
 		}
 
-		protected static async respond(request: Request) {
+		protected static respond(request: Request) {
 			let fallback_header
 
 			const url = new URL(request.url)
@@ -41,7 +41,8 @@ namespace $ {
 		
 				// fetch with fallback to cache if statuses not match
 				try {
-					const actual = await this.fetch(request)
+					const actual = this.fetch(request)
+					if (! actual) return null
 					if (actual.status < 400) return actual
 
 					throw new Error(
@@ -59,8 +60,8 @@ namespace $ {
 				request = new Request(request, { cache: 'force-cache' })
 			}
 
-			const cached = await this.fetch(request)
-
+			const cached = this.fetch(request)
+			if (! cached) return null
 			if (! fallback_header || cached.headers.get('$mol_offline_remote_status')) return cached
 
 			const clone = new Response(cached.body, cached)

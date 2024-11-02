@@ -2,8 +2,10 @@ namespace $ {
 	export class $mol_service_worker extends $mol_object {
 		static path() { return 'web.js' }
 
+		static send_timeout() { return 20000 }
+
 		@ $mol_action
-		static send(data: {}) {}
+		static send(data: {}) { return null as unknown }
 
 		@ $mol_mem
 		static prepare(next?: $mol_service_prepare_event) {

@@ -23,11 +23,12 @@ namespace $ {
 		static override message_data(data: {}) {
 			if ('uri' in data && 'message' in data) {
 				this.show(data as $mol_notify_info)
+				return true
 			}
 			return null
 		}
 
-		static async show(info: $mol_notify_info) {}
+		static show(info: $mol_notify_info) {}
 
 	}
 	

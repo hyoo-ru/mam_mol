@@ -30,10 +30,10 @@ namespace $ {
 	$.$mol_notify = $mol_notify_web
 
 	export class $mol_notify_service_web extends $mol_notify_service {
-		static override async show({ context: title, message: body, uri: data }: $mol_notify_info) {
+		static override show({ context: title, message: body, uri: data }: $mol_notify_info) {
 			const registration = this.$.$mol_service_worker_web.registration()
 			const tag = data
-			const existen = await registration.getNotifications({ tag })
+			const existen = registration.getNotifications({ tag })
 			
 			for( const not of existen ) {
 				
@@ -45,24 +45,23 @@ namespace $ {
 			
 			// const vibrate = [ 100, 200, 300, 400, 500 ]
 			
-			await registration.showNotification( title, { body, data, /*vibrate,*/ tag } )
+			registration.showNotification( title, { body, data, /*vibrate,*/ tag } )
 
 		}
 
-		static override async notification( notification: Notification ) {
-			const clients = this.$.$mol_service_worker_web.clients()
-
-			const matched = await clients.matchAll({ includeUncontrolled: true, type: 'window' })
+		static override notification( notification: Notification ) {
+			const matched = this.$.$mol_service_worker_web.clients_filter({ includeUncontrolled: true, type: 'window' })
 			const last = matched.at(-1)
 
 			if( last ) {
-				await last.focus()
-				await last.navigate( notification.data )
+				last.focus()
+				last.navigate( notification.data )
 
-				return
+				return null
 			}
 
-			await clients.openWindow( notification.data )
+			this.$.$mol_service_worker_web.window_open( notification.data )
+			return null
 		}
 	}
 
