@@ -9,14 +9,10 @@ namespace $ {
 		}
 
 		static override activate() {
-			return this.$.$mol_service_worker_web.claim()
+			return this.$.$mol_service_web.claim()
 		}
 	}
 
 	$.$mol_offline = $mol_offline_web
-
-	export namespace $mol_service {
-		export const $mol_offline = $mol_offline_web
-	}
-
+	$mol_service_plugin.$mol_offline = $mol_offline_web
 }

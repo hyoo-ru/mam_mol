@@ -2,7 +2,7 @@
 
 namespace $ {
 
-	export class $mol_service_worker_web extends $mol_service_worker {
+	export class $mol_service_web extends $mol_service {
 		protected static in_worker() { return typeof window === 'undefined' }
 
 		@ $mol_mem
@@ -40,7 +40,7 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		static registration_events_attached() {
+		protected static registration_events_attached() {
 			const reg = this.registration()
 			if (reg.waiting) this.state(null)
 			else if (reg.installing) this.update_found()
@@ -85,14 +85,14 @@ namespace $ {
 
 		@ $mol_mem
 		static plugins() {
-			return Object.values(this.$.$mol_service) as (
-				typeof $mol_service_plugin
+			return Object.values(this.$.$mol_service_plugin) as (
+				typeof $mol_service_plugin_base
 				| typeof $mol_service_plugin_notify
 				| typeof $mol_service_plugin_cache
 			)[]
 		}
 
-		protected static log_plugin_error(plugin: typeof $mol_service_plugin, error: unknown) {
+		protected static log_plugin_error(plugin: typeof $mol_service_plugin_base, error: unknown) {
 			if ($mol_fail_catch(error)) {
 				;(error as Error).message = `${plugin.toString()}: ${(error as Error).message}`
 				console.error(error)
@@ -104,6 +104,7 @@ namespace $ {
 			const scope = self as unknown as ServiceWorkerGlobalScope
 
 			scope.addEventListener( 'install' , event => {
+				// https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope/skipWaiting#examples
 				scope.skipWaiting()
 				event.waitUntil($mol_wire_async(this).install(event))
 			})
@@ -158,43 +159,22 @@ namespace $ {
 		}
 
 		@ $mol_action
+		protected static post_message(data: unknown) {
+			const channel = this.$.$mol_service_channel.make({
+				timeout: () => this.send_timeout()
+			})
+
+			this.registration_ready().active!.postMessage(data, [ channel.out() ])
+
+			return channel
+		}
+
 		static override send(data: {}) {
 			if (this.in_worker()) {
 				throw new Error('Worker can\'t send messages, use clients api')
 			}
 
-			return $mol_wire_sync(this).send_async(data)
-		}
-
-		@ $mol_action
-		static send_async(data: Record<string, unknown>) {
-			const active = this.registration_ready().active!
-
-			// https://github.com/GoogleChrome/samples/blob/gh-pages/service-worker/post-message/demo.js
-			return new Promise<unknown>((reject, resolve) => {
-				const channel = new MessageChannel()
-
-				const handler = setTimeout(
-					() => reject(new Error('Service worker not responding', { cause: channel })),
-					this.send_timeout()
-				)
-
-				channel.port1.onmessage = event => {
-					clearTimeout(handler)
-					const data = event.data
-					const message = data?.error ?? (data?.result ? null : 'empty data')
-					if (message) return reject(new Error(message, { cause: event }))
-
-					resolve(event.data.result)
-				}
-
-				channel.port1.onmessageerror = event => {
-					clearTimeout(handler)
-					reject(new Error('Can\'t be deserialized: ' + event.data, { cause: event }))
-				}
-
-				active.postMessage(data, [ channel.port2 ])
-			})
+			return this.post_message(data).result()
 		}
 
 		static message(event: $mol_service_message_event) {
@@ -203,7 +183,7 @@ namespace $ {
 
 			for (const plugin of this.plugins()) {
 				try {
-					const result = plugin.message_data(data)
+					const result = plugin.data(data)
 					if (result) return event.result(result)
 				} catch (error) {
 					event.error(error as Error)
@@ -257,29 +237,30 @@ namespace $ {
 		}
 
 		@ $mol_action
-		static block(event: FetchEvent) {
+		static block(request: Request) {
 			for (const plugin of this.plugins()) {
 				if ( ! ( plugin.prototype instanceof $mol_service_plugin_cache ) ) continue
 
 				try {
-					if ((plugin as typeof $mol_service_plugin_cache).blocked(event.request)) {
-						return event.respondWith(this.blocked_response())
+					if ((plugin as typeof $mol_service_plugin_cache).blocked(request)) {
+						return this.blocked_response()
 					}
 				} catch (error) {
 					this.log_plugin_error(plugin, error)
 				}
 			}
+			return null
 		}
 
 		static fetch(event: FetchEvent) {
-			this.block(event)
-			const waitUntil = event.waitUntil.bind(event)
+			const response = this.block(event.request)
+			if (response) return event.respondWith(response)
 
 			for (const plugin of this.plugins()) {
 				if ( ! ( plugin.prototype instanceof $mol_service_plugin_cache ) ) continue
 
 				try {
-					const response = (plugin as typeof $mol_service_plugin_cache).modify(event.request, waitUntil)
+					const response = (plugin as typeof $mol_service_plugin_cache).modify(event.request)
 					if (response) return event.respondWith(response)
 				} catch (error) {
 					this.log_plugin_error(plugin, error)
@@ -288,8 +269,8 @@ namespace $ {
 		}
 	}
 
-	$.$mol_service_worker = $mol_service_worker_web
+	$.$mol_service = $mol_service_web
 
-	$mol_service_worker_web.init()
+	$mol_service_web.init()
 
 }

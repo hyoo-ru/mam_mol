@@ -70,4 +70,8 @@ namespace $ {
 			return clone
 		}
 	}
+
+	export namespace $mol_service_plugin {
+		export let $mol_offline = $.$mol_offline
+	}
 }
