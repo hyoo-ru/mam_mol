@@ -9,11 +9,12 @@ namespace $ {
 		static init() {
 			$mol_wire_solid()
 			try {
-				if ( this.in_worker() ) this.scope_inited()
-				else this.registration_inited()
+				if ( this.in_worker() ) this.scope_ready()
+				else this.registration_ready()
 			} catch (error) {
 				this.$.$mol_fail_log(error)
 			}
+			return null
 		}
 
 		@ $mol_mem
@@ -34,13 +35,12 @@ namespace $ {
 
 		@ $mol_mem
 		static registration() {
-			$mol_wire_solid()
 			const reg = this.in_worker() ? this.scope().registration : this.container().register( this.path() )
 			return $mol_wire_sync(reg)
 		}
 
 		@ $mol_mem
-		static registration_inited() {
+		static registration_events_attached() {
 			const reg = this.registration()
 			if (reg.waiting) this.state(null)
 			else if (reg.installing) this.update_found()
@@ -54,8 +54,7 @@ namespace $ {
 
 		@ $mol_mem
 		static registration_ready() {
-			$mol_wire_solid()
-			this.registration_inited()
+			this.registration_events_attached()
 			return $mol_wire_sync(this).registration_ready_async()
 		}
 
@@ -73,7 +72,7 @@ namespace $ {
 		static state(reset?: null) { return this.worker()?.state ?? null }
 
 		@ $mol_mem
-		static scope_inited() {
+		static scope_ready() {
 			const scope = this.scope()
 			$mol_wire_sync(this).plugins_add_wait()
 			this.plugins()
