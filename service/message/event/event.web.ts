@@ -11,14 +11,11 @@ namespace $ {
 		}
 
 		@ $mol_action
-		override result(result: {} | null) {
-			this.event.ports[0].postMessage({ error: null, result })
+		override result(result: {} | null, errors?: readonly Error[]) {
+			const error = errors?.length ? errors[0].toString() || errors[0].message : null
+			this.event.ports[0].postMessage({ error, result })
 		}
 
-		@ $mol_action
-		override error(error: Error) {
-			this.event.ports[0].postMessage({ error: error.toString(), result: null })
-		}
 	}
 
 	$.$mol_service_message_event = $mol_service_message_event_web

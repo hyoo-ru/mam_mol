@@ -4,8 +4,6 @@ namespace $ {
 			return null as null | Record<string, unknown>
 		}
 
-		result(result: {} | null) {}
-
-		error(error: Error) {}
+		result(result: {} | null, errors?: readonly Error[]) {}
 	}
 }

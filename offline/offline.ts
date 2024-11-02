@@ -11,63 +11,56 @@ namespace $ {
 			return this.blocked_urls.includes(normalized_url)
 		}
 
+		static override activate() {
+			return this.$.$mol_service_worker.claim()
+		}
+
+		static override need_modify(request: Request) {
+			if( request.method !== 'GET' ) return false
+			if( !/^https?:/.test( request.url ) ) return false
+			if( /\?/.test( request.url ) ) return false
+			if( request.cache === 'no-store' ) return false
+
+			return true
+		}
+
 		static override modify(request: Request) {
-
-			if( request.method !== 'GET' ) return null
-			if( !/^https?:/.test( request.url ) ) return null
-			if( /\?/.test( request.url ) ) return null
-			if( request.cache === 'no-store' ) return null
-
-			return this.respond(request)
-		}
-
-		protected static fetch(request: Request) {
-			return null as null | Response
-		}
-
-		protected static respond(request: Request) {
 			let fallback_header
 
-			const url = new URL(request.url)
-			const html = url.pathname.endsWith('.html')
 
+			const html = request.mode === 'navigate'
 			const cache = request.cache
 
 			if (cache === 'reload' || ( cache === 'no-cache' && ! html ) ) {
 				if (cache === 'reload') {
 					// F5 + Disable cache
-					request = new Request(request, { cache: 'no-cache' })
+					request = this.request_clone(request, { cache: 'no-cache' })
 				}
 		
 				// fetch with fallback to cache if statuses not match
 				try {
-					const actual = this.fetch(request)
-					if (! actual) return null
-					if (actual.status < 400) return actual
+					const actual = this.$.$mol_fetch.response(request)
+					if (actual.code() < 400) return actual.native
 
-					throw new Error(
-						`${actual.status}${actual.statusText ? ` ${actual.statusText}` : ''}`,
-						{ cause: actual }
-					)
-
+					fallback_header = actual.message()
 				} catch (err) {
-					fallback_header = `${(err as Error).cause instanceof Response ? '' : '500 '}${
-						(err as Error).message} $mol_offline fallback to cache`
+					if ( $mol_promise_like(err) ) $mol_fail_hidden(err)
+					fallback_header = (err as Error).message || 'Fetch error'
 				}
 			}
 
 			if (cache !== 'force-cache') {
-				request = new Request(request, { cache: 'force-cache' })
+				request = this.request_clone(request, { cache: 'force-cache' })
 			}
 
-			const cached = this.fetch(request)
-			if (! cached) return null
-			if (! fallback_header || cached.headers.get('$mol_offline_remote_status')) return cached
+			const cached = this.$.$mol_fetch.response(request)
 
-			const clone = new Response(cached.body, cached)
-			clone.headers.set( '$mol_offline_remote_status', fallback_header ?? '')
+			if (! fallback_header ) return cached.native
 
-			return clone
+			const clone = cached.clone()
+			clone.headers().set( '$mol_offline_remote_status', `${fallback_header} $mol_offline fallback to cache`)
+
+			return clone.native
 		}
 	}
 

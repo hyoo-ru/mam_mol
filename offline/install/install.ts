@@ -1,3 +1,3 @@
 namespace $ {
-	$.$mol_offline
+	$mol_offline
 }

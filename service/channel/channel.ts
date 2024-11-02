@@ -25,15 +25,23 @@ namespace $ {
 				channel.port1.onmessage = event => {
 					clearTimeout(handler)
 					const data = event.data
-					const message = data?.error ?? (data?.result ? null : 'empty data')
-					if (message) return reject(new Error(message, { cause: event }))
-	
-					resolve(event.data.result)
+					const result = data?.result
+					const error = data?.error
+
+					if (result) {
+						if (error) console.warn('Message result+error:', error)
+						resolve(result)
+						return
+					}
+
+					if (! error) return resolve(result ?? null)
+
+					reject(new Error(error, { cause: event }))
 				}
 	
 				channel.port1.onmessageerror = event => {
 					clearTimeout(handler)
-					reject(new Error('Can\'t be deserialized: ' + event.data, { cause: event }))
+					reject(new Error('Message fatal error: ' + event.data, { cause: event }))
 				}
 			})
 		}

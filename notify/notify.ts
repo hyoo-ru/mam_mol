@@ -14,7 +14,7 @@ namespace $ {
 		}
 		
 		static show( info: $mol_notify_info ) {
-			this.$.$mol_service.send(info)
+			this.$.$mol_service_worker.send(info)
 		}
 		
 	}

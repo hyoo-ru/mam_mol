@@ -2,7 +2,7 @@
 
 namespace $ {
 
-	export class $mol_service_web extends $mol_service {
+	export class $mol_service_worker_web extends $mol_service_worker {
 		protected static in_worker() { return typeof window === 'undefined' }
 
 		@ $mol_mem
@@ -39,28 +39,38 @@ namespace $ {
 			return $mol_wire_sync(reg)
 		}
 
+		@ $mol_mem_key
+		protected static registration_direct(key: 'active' | 'installing' | 'waiting') {
+			this.state()
+			return this.registration()[key] ?? null
+		}
+
 		@ $mol_mem
-		protected static registration_events_attached() {
-			const reg = this.registration()
-			if (reg.waiting) this.state(null)
-			else if (reg.installing) this.update_found()
-			else {
-				reg.addEventListener( 'updatefound', this.update_found.bind(this))
-			}
-			return reg
+		protected static registration_event_installing() {
+			const reg = this.registration_direct('installing')
+			reg?.addEventListener( 'statechange', e => this.state(null))
+			return null
+		}
+
+		@ $mol_mem
+		protected static registration_event_active() {
+			const reg = this.registration_direct('active')
+			reg?.addEventListener( 'updatefound', e => {
+				this.worker()!.addEventListener( 'statechange', e => this.state(null))
+			})
+
+			return null
 		}
 
 		static registration_ready_async() { return this.container().ready }
 
 		@ $mol_mem
 		static registration_ready() {
-			this.registration_events_attached()
+			this.state()
+			if (this.registration_direct('waiting')) this.state(null)
+			this.registration_event_installing()
+			this.registration_event_active()
 			return $mol_wire_sync(this).registration_ready_async()
-		}
-
-		protected static update_found() {
-			const worker = this.registration().installing!
-			worker.addEventListener( 'statechange', e => this.state(null))
 		}
 
 		protected static worker() {
@@ -84,22 +94,6 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		static plugins() {
-			return Object.values(this.$.$mol_service_plugin) as (
-				typeof $mol_service_plugin_base
-				| typeof $mol_service_plugin_notify
-				| typeof $mol_service_plugin_cache
-			)[]
-		}
-
-		protected static log_plugin_error(plugin: typeof $mol_service_plugin_base, error: unknown) {
-			if ($mol_fail_catch(error)) {
-				;(error as Error).message = `${plugin.toString()}: ${(error as Error).message}`
-				console.error(error)
-			}
-		}
-
-		@ $mol_mem
 		protected static scope() {
 			const scope = self as unknown as ServiceWorkerGlobalScope
 
@@ -120,7 +114,8 @@ namespace $ {
 			})
 
 			scope.addEventListener( 'fetch', event => {
-				event.waitUntil($mol_wire_async(this).fetch(event))
+				const response = this.fetch(event)
+				if (response) event.respondWith(response)
 			})
 
 			scope.addEventListener( 'notificationclick', event => {
@@ -134,7 +129,7 @@ namespace $ {
 			return $mol_wire_sync(this.scope().clients)
 		}
 
-		static claim() { return this.clients().claim() }
+		static override claim() { return this.clients().claim() }
 
 		@ $mol_mem_key
 		static client(id: string) { 
@@ -181,27 +176,42 @@ namespace $ {
 			const data = event.data()
 			if (! data) return
 
+			let errors = []
+			let result
+
 			for (const plugin of this.plugins()) {
 				try {
 					const result = plugin.data(data)
-					if (result) return event.result(result)
+					if (result) break
 				} catch (error) {
-					event.error(error as Error)
-					this.log_plugin_error(plugin, error)
-					return null
+					if ( $mol_fail_catch(error) ) {
+						this.$.$mol_log3_fail({
+							place: `${plugin}.data()`,
+							message: error.message,
+							error,
+						})
+						errors.push(error)
+					}
 				}
 			}
-			event.result(null)
+
+			event.result(result ?? null, errors)
+
 			return null
 		}
 
 		static install(event: ExtendableEvent) {
 			for (const plugin of this.plugins()) {
 				try {
-					const result = plugin.install()
-					if (result) return result
+					plugin.install()
 				} catch (error) {
-					this.log_plugin_error(plugin, error)
+					if ($mol_fail_catch(error)) {
+						this.$.$mol_log3_fail({
+							place: `${plugin}.install()`,
+							message: error.message,
+							error,
+						})
+					}
 				}
 			}
 		}
@@ -209,10 +219,15 @@ namespace $ {
 		static activate(event: ExtendableEvent) {
 			for (const plugin of this.plugins()) {
 				try {
-					const result = plugin.activate()
-					if (result) return result
+					plugin.activate()
 				} catch (error) {
-					this.log_plugin_error(plugin, error)
+					if ($mol_fail_catch(error)) {
+						this.$.$mol_log3_fail({
+							place: `${plugin}.activate()`,
+							message: error.message,
+							error,
+						})
+					}
 				}
 			}
 
@@ -222,31 +237,54 @@ namespace $ {
 			})
 		}
 
-		static notification_click(event: NotificationEvent) {
-			for (const plugin of this.plugins()) {
-				if ( ! ( plugin.prototype instanceof $mol_service_plugin_notify ) ) continue
+		@ $mol_mem
+		static plugins_raw() {
+			return Object.values(this.$.$mol_service_plugin) as readonly { prototype: unknown }[]
+		}
 
+		static plugins() {
+			return this.plugins_raw().filter(plugin => $mol_service_plugin_base.is(plugin))
+		}
+
+		static plugins_notify() {
+			return this.plugins_raw().filter(plugin => $mol_service_plugin_notify.is(plugin))
+		}
+
+		static plugins_cache() {
+			return this.plugins_raw().filter(plugin => $mol_service_plugin_cache.is(plugin))
+		}
+
+		static notification_click(event: NotificationEvent) {
+			for (const plugin of this.plugins_notify()) {
 				try {
-					const result = (plugin as typeof $mol_service_plugin_notify).notification(event.notification)
-					if ( result ) return result
+					plugin.notification(event.notification)
 				} catch (error) {
-					this.log_plugin_error(plugin, error)
+					if ($mol_fail_catch(error)) {
+						this.$.$mol_log3_fail({
+							place: `${plugin}.notification()`,
+							message: error.message,
+							error,
+						})
+					}
 				}
 			}
-
 		}
 
 		@ $mol_action
 		static block(request: Request) {
-			for (const plugin of this.plugins()) {
-				if ( ! ( plugin.prototype instanceof $mol_service_plugin_cache ) ) continue
-
+			for (const plugin of this.plugins_cache()) {
 				try {
-					if ((plugin as typeof $mol_service_plugin_cache).blocked(request)) {
+					if (plugin.blocked(request)) {
 						return this.blocked_response()
 					}
 				} catch (error) {
-					this.log_plugin_error(plugin, error)
+					if ($mol_fail_catch(error)) {
+						this.$.$mol_log3_fail({
+							place: `${plugin}.blocked()`,
+							message: error.message,
+							error,
+						})
+					}
 				}
 			}
 			return null
@@ -254,23 +292,28 @@ namespace $ {
 
 		static fetch(event: FetchEvent) {
 			const response = this.block(event.request)
-			if (response) return event.respondWith(response)
+			if (response) return response
 
-			for (const plugin of this.plugins()) {
-				if ( ! ( plugin.prototype instanceof $mol_service_plugin_cache ) ) continue
-
+			for (const plugin of this.plugins_cache()) {
 				try {
-					const response = (plugin as typeof $mol_service_plugin_cache).modify(event.request)
-					if (response) return event.respondWith(response)
+					if (plugin.need_modify(event.request)) {
+						return $mol_wire_async(plugin).modify(event.request)
+					}
 				} catch (error) {
-					this.log_plugin_error(plugin, error)
+					if ($mol_fail_catch(error)) {
+						this.$.$mol_log3_fail({
+							place: `${plugin}.modify()`,
+							message: error.message,
+							error,
+						})
+					}
 				}
 			}
+
+			return null
 		}
 	}
 
-	$.$mol_service = $mol_service_web
-
-	$mol_service_web.init()
+	$.$mol_service_worker = $mol_service_worker_web
 
 }
