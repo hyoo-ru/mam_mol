@@ -5,11 +5,6 @@ namespace $ {
 			'//cse.google.com/adsense/search/async-ads.js'
 		]
 
-		@ $mol_mem
-		static prompt() {
-			this.$.$mol_offline_prompt.last()?.prompt()
-		}
-
 		static override blocked( request: Request ) {
 			const normalized_url = request.url.replace( /^https?:/, '' )
 
@@ -67,8 +62,6 @@ namespace $ {
 			return clone.native
 		}
 	}
-
-	new $mol_after_tick(() => $mol_offline.prompt())
 
 	export namespace $mol_service_plugin {
 		export let $mol_offline = $.$mol_offline
