@@ -7,7 +7,7 @@ namespace $ {
 
 		@ $mol_mem
 		static prompt() {
-			this.$.$mol_service_prompt.last()?.prompt()
+			this.$.$mol_offline_prompt.last()?.prompt()
 		}
 
 		static override blocked( request: Request ) {
@@ -68,7 +68,7 @@ namespace $ {
 		}
 	}
 
-	$mol_offline.prompt()
+	new $mol_after_tick(() => $mol_offline.prompt())
 
 	export namespace $mol_service_plugin {
 		export let $mol_offline = $.$mol_offline

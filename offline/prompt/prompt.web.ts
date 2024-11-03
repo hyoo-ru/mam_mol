@@ -8,11 +8,11 @@ namespace $ {
 		}>
 	}
 
-	export class $mol_service_prompt extends $mol_object {
+	export class $mol_offline_prompt extends $mol_object {
 		@ $mol_mem
 		protected static event() {
 			const install = (event: Event) => {
-				this.last(new this.$.$mol_service_prompt(event as BeforeInstallEvent))
+				this.last(new this.$.$mol_offline_prompt(event as BeforeInstallEvent))
 			}
 
 			const win = this.$.$mol_dom_context
@@ -24,7 +24,7 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		static last(next?: $mol_service_prompt) {
+		static last(next?: $mol_offline_prompt) {
 			this.event()
 			return next ?? null
 		}
