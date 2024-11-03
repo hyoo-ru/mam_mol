@@ -1,6 +1,6 @@
 declare namespace $ {
 
-	type $mol_view__title__OU00IQQ1 = $mol_type_enforce<
+	type $mol_view__title__51QSKCW2 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_view['title'] >
