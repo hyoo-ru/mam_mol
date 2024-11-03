@@ -81,8 +81,8 @@ namespace $ {
 			scope.addEventListener( 'message', this.handle(this.message.bind(this)))
 			scope.addEventListener( 'messageerror', this.message_error.bind(this))
 
-			scope.addEventListener( 'notificationclick', this.handle(this.notify.bind(this, false)))
-			scope.addEventListener( 'notificationclose', this.handle(this.notify.bind(this, true)))
+			scope.addEventListener( 'notificationclick', this.handle(this.notify.bind(this, 'notification')))
+			scope.addEventListener( 'notificationclose', this.handle(this.notify.bind(this, 'notification_close')))
 
 			scope.addEventListener( 'push', this.handle(this.push.bind(this)))
 			scope.addEventListener( 'fetch', event => {
@@ -220,13 +220,13 @@ namespace $ {
 			}
 		}
 
-		static notify(closing: boolean, event: NotificationEvent) {
+		static notify(method: 'notification' | 'notification_close', event: NotificationEvent) {
 			for (const plugin of this.plugins_notify()) {
 				try {
-					closing ? plugin.notification_close(event.notification) : plugin.notification(event.notification)
+					plugin[method](event.notification)
 				} catch (error) {
 					if ( ! $mol_fail_catch(error) ) continue
-					this.plugin_error(error, `${plugin}.${closing ? 'notification_close' : 'notification'}()`)
+					this.plugin_error(error, `${plugin}.${method}()`)
 				}
 			}
 		}

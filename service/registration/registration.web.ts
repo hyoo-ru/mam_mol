@@ -32,10 +32,6 @@ namespace $ {
 			}))
 		}
 
-		protected container() {
-			return this.$.$mol_dom_context.navigator?.serviceWorker ?? $mol_fail(new Error('Service worker not found'))
-		}
-
 		@ $mol_mem
 		state(reset?: null) { return this.worker().state ?? null }
 
