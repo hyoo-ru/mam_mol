@@ -1,9 +1,22 @@
 namespace $ {
 	export class $mol_service_message_event extends $mol_object {
-		data() {
-			return null as null | Record<string, unknown>
+		readonly raw!: {
+			data: unknown
+			ports: readonly MessagePort[]
 		}
 
-		result(result: {} | null, errors?: readonly Error[]) {}
+		data() {
+			const data = this.raw.data as string | null | {
+				[k: string]: unknown
+			}
+			if ( ! data || typeof data !== 'object' ) return null
+			return data
+		}
+
+		@ $mol_action
+		result(result: {} | null, errors?: readonly Error[]) {
+			const error = errors?.length ? errors[0].toString() || errors[0].message : null
+			this.raw.ports[0].postMessage({ error, result })
+		}
 	}
 }

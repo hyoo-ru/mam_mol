@@ -65,36 +65,34 @@ namespace $ {
 
 		static send(data: {}) { return this.post_message(data).result() }
 
+		static handle<E extends { waitUntil(prom: Promise<unknown>): void }>( cb: (e: E) => void ) {
+
+			return $mol_func_name_from((event: E) => {
+				event.waitUntil($mol_wire_async(cb)(event))
+			}, cb)
+
+		}
+
 		@ $mol_mem
 		protected static scope() {
 			const scope = self as unknown as ServiceWorkerGlobalScope
 
-			scope.addEventListener( 'install' , event => {
-				// https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope/skipWaiting#examples
-				scope.skipWaiting()
-				event.waitUntil($mol_wire_async(this).install(event))
-			})
+			scope.addEventListener( 'install' , this.handle(this.install.bind(this)))
+			scope.addEventListener( 'activate' , this.handle(this.activate.bind(this)))
 
-			scope.addEventListener( 'activate' , event => {
-				event.waitUntil($mol_wire_async(this).activate(event))
-			})
+			scope.addEventListener( 'message', this.handle(this.message.bind(this)))
+			scope.addEventListener( 'messageerror', this.message_error.bind(this))
 
-			scope.addEventListener( 'message', event => {
-				event.waitUntil( $mol_wire_async(this).message(
-					$mol_service_message_event_web.make({ event })
-				) )
-			})
+			scope.addEventListener( 'notificationclick', this.handle(this.notify.bind(this, false)))
+			scope.addEventListener( 'notificationclose', this.handle(this.notify.bind(this, true)))
 
+			scope.addEventListener( 'push', this.handle(this.push.bind(this)))
 			scope.addEventListener( 'fetch', event => {
 				const response = this.fetch(event)
 				if (response) event.respondWith(response)
 			})
 
-			scope.addEventListener( 'notificationclick', event => {
-				event.waitUntil($mol_wire_async(this).notification_click(event))
-			})
-
-			return scope
+			return $mol_wire_sync(scope)
 		}
 
 		protected static clients() {
@@ -125,11 +123,22 @@ namespace $ {
 			return this.clients().openWindow(url)
 		}
 
-		static message(event: $mol_service_message_event) {
-			const data = event.data()
-			if (! data) return
 
-			let errors = []
+		static message_error(event: MessageEvent) {
+			const error = new $mol_error_mix('Message deserialization failed', { cause: event })
+			console.error(error)
+			const port = event.ports[0]
+			port?.postMessage({ result: null, error: error.toString() })
+		}
+
+		static message(event: ExtendableMessageEvent) {
+			const data = event.data as string | null | { [k: string]: unknown }
+			const port = event.ports[0]
+			if ( ! data || typeof data !== 'object' ) {
+				const error = data ? 'Message data empty' : 'Message data is not object'
+				return port?.postMessage({ error, result: null })
+			}
+
 			let result
 
 			for (const plugin of this.plugins()) {
@@ -143,17 +152,21 @@ namespace $ {
 							message: error.message,
 							error,
 						})
-						errors.push(error)
+						port?.postMessage({ error: error.toString(), result: null })
+						return null
 					}
 				}
 			}
 
-			event.result(result ?? null, errors)
-
+			port?.postMessage({ error: null, result })
 			return null
 		}
 
 		static install(event: ExtendableEvent) {
+			// https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope/skipWaiting#examples
+			// https://github.com/GoogleChrome/samples/blob/master/service-worker/prefetch-video/service-worker.js#L46
+			this.scope().skipWaiting()
+
 			for (const plugin of this.plugins()) {
 				try {
 					plugin.install()
@@ -207,10 +220,26 @@ namespace $ {
 			return this.plugins_raw().filter(plugin => $mol_service_plugin_cache.is(plugin))
 		}
 
-		static notification_click(event: NotificationEvent) {
+		static push(event: PushEvent) {
 			for (const plugin of this.plugins_notify()) {
 				try {
-					plugin.notification(event.notification)
+					plugin.push(event.data)
+				} catch (error) {
+					if ($mol_fail_catch(error)) {
+						this.$.$mol_log3_fail({
+							place: `${plugin}.push()`,
+							message: error.message,
+							error,
+						})
+					}
+				}
+			}
+		}
+
+		static notify(closing: boolean, event: NotificationEvent) {
+			for (const plugin of this.plugins_notify()) {
+				try {
+					closing ? plugin.notification_close(event.notification) : plugin.notification(event.notification)
 				} catch (error) {
 					if ($mol_fail_catch(error)) {
 						this.$.$mol_log3_fail({

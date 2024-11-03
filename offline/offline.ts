@@ -12,7 +12,7 @@ namespace $ {
 		}
 
 		static override activate() {
-			return this.$.$mol_service_worker.claim()
+			this.$.$mol_service_worker.claim()
 		}
 
 		static override need_modify(request: Request) {
@@ -26,7 +26,6 @@ namespace $ {
 
 		static override modify(request: Request) {
 			let fallback_header
-
 
 			const html = request.mode === 'navigate'
 			const cache = request.cache

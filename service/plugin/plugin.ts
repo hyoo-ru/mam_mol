@@ -31,6 +31,8 @@ namespace $ {
 
 	export class $mol_service_plugin_notify extends $mol_service_plugin_base {
 		static notification(e: unknown) { }
+		static notification_close(e: unknown) { }
+		static push(data: null | { json() : {}}) {}
 	}
 
 }
