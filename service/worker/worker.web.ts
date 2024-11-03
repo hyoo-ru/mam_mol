@@ -108,7 +108,7 @@ namespace $ {
 		@ $mol_action
 		static clients_grab<Query extends ClientQueryOptions>(query?: Query) {
 			return this.clients().matchAll(query)
-				.map(client => this.client(client.id, client as Query extends 'window' ? WindowClient : Client)!)
+				.map(client => this.client(client.id, client as Query['type'] extends 'window' ? WindowClient : Client)!)
 		}
 
 		static window_open(url: string | URL) {

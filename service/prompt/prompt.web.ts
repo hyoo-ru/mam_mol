@@ -28,7 +28,6 @@ namespace $ {
 			this.event()
 			return next ?? null
 		}
-		platforms() { return this.native.platforms }
 
 		constructor(readonly native: BeforeInstallEvent) { super() }
 
