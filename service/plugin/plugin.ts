@@ -24,7 +24,7 @@ namespace $ {
 		static need_modify(request: Request) { return false }
 		static modify(request: Request) { return new Response }
 		@ $mol_action
-		static request_clone(original: Request, options?: RequestInit) {
+		protected static request_clone(original: Request, options?: RequestInit) {
 			return new Request(original, options)
 		}
 	}

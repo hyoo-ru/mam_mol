@@ -19,6 +19,13 @@ namespace $ {
 				}
 				
 			},
+
+			construct(constr, args) {
+				const obj = (...args: unknown[]) => new (constr as new(...args: unknown[]) => any)(...args)
+				const temp = $mol_wire_task.getter( obj )
+				const fiber = temp( constr, args )
+				return fiber.sync()
+			},
 			
 			apply( obj, self, args ) {
 				const temp = $mol_wire_task.getter( obj as ( ... args: any[] )=> any )
@@ -37,8 +44,16 @@ namespace $ {
 		[K in keyof Host]: FunctionResultAwaited<Host[K]>
 	}
 
+	type ConstructorResultAwaited<Some> = Some extends (new (...args: infer Args) => infer Res)
+		? new (...args: Args) => Awaited<Res>
+		: Some
+
 	type ObjectOrFunctionResultAwaited<Some> = (
-		Some extends (...args: any) => unknown ? FunctionResultAwaited<Some> : {}
+		Some extends new (...args: unknown[]) => unknown
+			? ConstructorResultAwaited<Some>
+			: Some extends (...args: unknown[]) => unknown
+				? FunctionResultAwaited<Some>
+				: {}
 	) & ( Some extends Object ? MethodsResultAwaited<Some> : Some )
 
 }

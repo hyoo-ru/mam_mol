@@ -3,15 +3,14 @@ namespace $ {
 		static path() { return 'web.js' }
 
 		static send_timeout() { return 20000 }
-
-		@ $mol_action
 		static send(data: {}) { return null as unknown }
 
 		static init() {}
 
 		@ $mol_mem
 		static prepare(next?: $mol_service_prepare_event) {
-			return next ? next : null
+			next?.prompt()
+			return next ?? null
 		}
 
 		static claim() {}

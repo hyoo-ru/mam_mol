@@ -31,7 +31,7 @@ namespace $ {
 
 	export class $mol_notify_service_web extends $mol_notify_service {
 		static override show({ context: title, message: body, uri: data }: $mol_notify_info) {
-			const registration = this.$.$mol_service_worker_web.registration()
+			const registration = this.$.$mol_service_worker_web.registration().native()
 			const tag = data
 			const existen = registration.getNotifications({ tag })
 			

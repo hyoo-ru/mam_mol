@@ -3,14 +3,17 @@
 namespace $ {
 
 	export class $mol_service_worker_web extends $mol_service_worker {
-		protected static in_worker() { return typeof window === 'undefined' }
+		static plugins_add_wait() { return Promise.resolve() }
 
 		@ $mol_mem
 		static init() {
 			$mol_wire_solid()
 			try {
-				if ( this.in_worker() ) this.scope_ready()
-				else this.registration_ready()
+				if ( this.$.$mol_service_ensure() ) {
+					$mol_wire_sync(this).plugins_add_wait()
+					this.plugins()
+				}
+				this.registration().worker()
 			} catch (error) {
 				this.$.$mol_fail_log(error)
 			}
@@ -18,7 +21,7 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		static container() {
+		protected static container() {
 			const win = this.$.$mol_dom_context
 
 			if( ! win.navigator.serviceWorker ) {
@@ -35,63 +38,32 @@ namespace $ {
 
 		@ $mol_mem
 		static registration() {
-			const reg = this.in_worker() ? this.scope().registration : this.container().register( this.path() )
-			return $mol_wire_sync(reg)
+			const raw = this.$.$mol_service_ensure()
+				? this.scope().registration
+				: this.container().register( this.path() )
+
+			return new this.$.$mol_service_registration_web(raw)
 		}
 
-		@ $mol_mem_key
-		protected static registration_direct(key: 'active' | 'installing' | 'waiting') {
-			this.state()
-			return this.registration()[key] ?? null
-		}
+		static ready_async() { return this.container().ready }
+		static ready() { return $mol_wire_sync( this ).ready_async() }
 
-		@ $mol_mem
-		protected static registration_event_installing() {
-			const reg = this.registration_direct('installing')
-			reg?.addEventListener( 'statechange', e => this.state(null))
-			return null
-		}
+		@ $mol_action
+		protected static post_message(data: unknown) {
+			if (this.$.$mol_service_ensure()) {
+				throw new Error('Worker can\'t send messages, use clients api')
+			}
 
-		@ $mol_mem
-		protected static registration_event_active() {
-			const reg = this.registration_direct('active')
-			reg?.addEventListener( 'updatefound', e => {
-				this.worker()!.addEventListener( 'statechange', e => this.state(null))
+			const channel = this.$.$mol_service_channel.make({
+				timeout: () => this.send_timeout()
 			})
 
-			return null
+			this.ready().active?.postMessage(data, [ channel.out() ])
+
+			return channel
 		}
 
-		static registration_ready_async() { return this.container().ready }
-
-		@ $mol_mem
-		static registration_ready() {
-			this.state()
-			if (this.registration_direct('waiting')) this.state(null)
-			this.registration_event_installing()
-			this.registration_event_active()
-			return $mol_wire_sync(this).registration_ready_async()
-		}
-
-		protected static worker() {
-			const reg = this.registration()
-			return reg.installing ?? reg.waiting ?? reg.active
-		}
-
-		@ $mol_mem
-		static state(reset?: null) { return this.worker()?.state ?? null }
-
-		@ $mol_mem
-		static scope_ready() {
-			const scope = this.scope()
-			$mol_wire_sync(this).plugins_add_wait()
-			this.plugins()
-			return scope
-		}
-
-		static async plugins_add_wait() {
-			await Promise.resolve()
-		}
+		static send(data: {}) { return this.post_message(data).result() }
 
 		@ $mol_mem
 		protected static scope() {
@@ -151,25 +123,6 @@ namespace $ {
 
 		static window_open(url: string | URL) {
 			return this.clients().openWindow(url)
-		}
-
-		@ $mol_action
-		protected static post_message(data: unknown) {
-			const channel = this.$.$mol_service_channel.make({
-				timeout: () => this.send_timeout()
-			})
-
-			this.registration_ready().active!.postMessage(data, [ channel.out() ])
-
-			return channel
-		}
-
-		static override send(data: {}) {
-			if (this.in_worker()) {
-				throw new Error('Worker can\'t send messages, use clients api')
-			}
-
-			return this.post_message(data).result()
 		}
 
 		static message(event: $mol_service_message_event) {
@@ -300,13 +253,16 @@ namespace $ {
 						return $mol_wire_async(plugin).modify(event.request)
 					}
 				} catch (error) {
-					if ($mol_fail_catch(error)) {
-						this.$.$mol_log3_fail({
+					this.$.$mol_log3_fail($mol_promise_like(error) ? {
+							place: `${plugin}.need_modify()`,
+							message: 'Promise not allowed, FetchEvent.respondWith count not be called async',
+							promise: error,
+						} : {
 							place: `${plugin}.modify()`,
-							message: error.message,
+							message: (error as Error).message,
 							error,
-						})
-					}
+						}
+					)
 				}
 			}
 
