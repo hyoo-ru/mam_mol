@@ -50,7 +50,7 @@ namespace $ {
 		}
 
 		static override notification( notification: Notification ) {
-			const matched = this.$.$mol_service_worker_web.clients_filter({ includeUncontrolled: true, type: 'window' })
+			const matched = this.$.$mol_service_worker_web.clients_grab({ includeUncontrolled: true, type: 'window' })
 			const last = matched.at(-1)
 
 			if( last ) {

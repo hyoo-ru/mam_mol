@@ -6,19 +6,7 @@ namespace $ {
 		static send(data: {}) { return null as unknown }
 
 		static init() {}
-
-		@ $mol_mem
-		static prepare(next?: $mol_service_prepare_event) {
-			next?.prompt()
-			return next ?? null
-		}
-
 		static claim() {}
-
-		@ $mol_mem
-		static prepare_choise() { return $mol_wire_sync(this).choise_promise()?.outcome ?? null }
-
-		static choise_promise() { return this.prepare()?.userChoise }
 
 		static blocked_response() {
 			return new Response(

@@ -31,8 +31,6 @@ namespace $ {
 				throw new Error( 'HTTPS or localhost is required for service workers.' )
 			}
 
-			win.addEventListener( 'beforeinstallprompt' , this.prepare.bind(this) as unknown as (e: Event) => unknown )
-
 			return $mol_wire_sync(win.navigator.serviceWorker)
 		}
 
@@ -102,64 +100,65 @@ namespace $ {
 		static override claim() { return this.clients().claim() }
 
 		@ $mol_mem_key
-		static client(id: string) { 
-			const client = this.clients().get(id)
+		static client<Cli extends Client>(id: string, next?: Cli) {
+			const client = next ?? (this.clients().get(id) as Cli)
 			return client ? $mol_wire_sync(client) : null
 		}
 
 		@ $mol_action
-		static clients_filter<Query extends ClientQueryOptions>(
-			query?: Query
-		) {
+		static clients_grab<Query extends ClientQueryOptions>(query?: Query) {
 			return this.clients().matchAll(query)
-				.map(client => $mol_wire_sync(client)) as unknown as readonly (
-					Query['type'] extends 'window'
-						? WindowClient
-						: Client
-				)[]
+				.map(client => this.client(client.id, client as Query extends 'window' ? WindowClient : Client)!)
 		}
 
 		static window_open(url: string | URL) {
 			return this.clients().openWindow(url)
 		}
 
-
 		static message_error(event: MessageEvent) {
-			const error = new $mol_error_mix('Message deserialization failed', { cause: event })
-			console.error(error)
+			const message = 'Message deserialization failed'
+
+			this.$.$mol_log3_fail({ place: `${this}.message_error()`, message })
+
 			const port = event.ports[0]
-			port?.postMessage({ result: null, error: error.toString() })
+			port?.postMessage({ result: null, error: message })
 		}
 
 		static message(event: ExtendableMessageEvent) {
 			const data = event.data as string | null | { [k: string]: unknown }
 			const port = event.ports[0]
+
 			if ( ! data || typeof data !== 'object' ) {
 				const error = data ? 'Message data empty' : 'Message data is not object'
 				return port?.postMessage({ error, result: null })
 			}
 
-			let result
-
 			for (const plugin of this.plugins()) {
 				try {
 					const result = plugin.data(data)
-					if (result) break
+					if (! result) continue
+					port?.postMessage({ error: null, result })
+					return
 				} catch (error) {
-					if ( $mol_fail_catch(error) ) {
-						this.$.$mol_log3_fail({
-							place: `${plugin}.data()`,
-							message: error.message,
-							error,
-						})
-						port?.postMessage({ error: error.toString(), result: null })
-						return null
-					}
+					if ( ! $mol_fail_catch(error) ) continue
+					this.plugin_error(error, `${plugin}.data()`)
+					port?.postMessage({ error: error.toString(), result: null })
+					return
 				}
 			}
 
-			port?.postMessage({ error: null, result })
-			return null
+		}
+
+		static plugin_error(error: unknown, place: string) {
+			if ($mol_promise_like(error)) {
+				error = new Error('Promise not allowed', { cause: error })
+			}
+
+			this.$.$mol_log3_fail({
+				place,
+				message: (error as Error).message,
+				error,
+			})
 		}
 
 		static install(event: ExtendableEvent) {
@@ -171,13 +170,8 @@ namespace $ {
 				try {
 					plugin.install()
 				} catch (error) {
-					if ($mol_fail_catch(error)) {
-						this.$.$mol_log3_fail({
-							place: `${plugin}.install()`,
-							message: error.message,
-							error,
-						})
-					}
+					if ( ! $mol_fail_catch(error) ) continue
+					this.plugin_error(error, `${plugin}.install()`)
 				}
 			}
 		}
@@ -187,13 +181,8 @@ namespace $ {
 				try {
 					plugin.activate()
 				} catch (error) {
-					if ($mol_fail_catch(error)) {
-						this.$.$mol_log3_fail({
-							place: `${plugin}.activate()`,
-							message: error.message,
-							error,
-						})
-					}
+					if ( ! $mol_fail_catch(error) ) continue
+					this.plugin_error(error, `${plugin}.activate()`)
 				}
 			}
 
@@ -225,13 +214,8 @@ namespace $ {
 				try {
 					plugin.push(event.data)
 				} catch (error) {
-					if ($mol_fail_catch(error)) {
-						this.$.$mol_log3_fail({
-							place: `${plugin}.push()`,
-							message: error.message,
-							error,
-						})
-					}
+					if ( ! $mol_fail_catch(error) ) continue
+					this.plugin_error(error, `${plugin}.push()`)
 				}
 			}
 		}
@@ -241,57 +225,33 @@ namespace $ {
 				try {
 					closing ? plugin.notification_close(event.notification) : plugin.notification(event.notification)
 				} catch (error) {
-					if ($mol_fail_catch(error)) {
-						this.$.$mol_log3_fail({
-							place: `${plugin}.notification()`,
-							message: error.message,
-							error,
-						})
-					}
+					if ( ! $mol_fail_catch(error) ) continue
+					this.plugin_error(error, `${plugin}.${closing ? 'notification_close' : 'notification'}()`)
 				}
 			}
-		}
-
-		@ $mol_action
-		static block(request: Request) {
-			for (const plugin of this.plugins_cache()) {
-				try {
-					if (plugin.blocked(request)) {
-						return this.blocked_response()
-					}
-				} catch (error) {
-					if ($mol_fail_catch(error)) {
-						this.$.$mol_log3_fail({
-							place: `${plugin}.blocked()`,
-							message: error.message,
-							error,
-						})
-					}
-				}
-			}
-			return null
 		}
 
 		static fetch(event: FetchEvent) {
-			const response = this.block(event.request)
-			if (response) return response
+			for (const plugin of this.plugins_cache()) {
+				try {
+					if (! plugin.blocked(event.request)) continue
+					return this.blocked_response()
+				} catch (error) {
+					this.plugin_error(error, `${plugin}.blocked()`)
+				}
+			}
 
 			for (const plugin of this.plugins_cache()) {
 				try {
-					if (plugin.need_modify(event.request)) {
-						return $mol_wire_async(plugin).modify(event.request)
-					}
+					if (! plugin.need_modify(event.request)) continue
+
+					return $mol_wire_async(plugin).modify(event.request)
+						.catch(error => {
+							this.plugin_error(error, `${plugin}.need_modify()`)
+							throw error
+						})
 				} catch (error) {
-					this.$.$mol_log3_fail($mol_promise_like(error) ? {
-							place: `${plugin}.need_modify()`,
-							message: 'Promise not allowed, FetchEvent.respondWith count not be called async',
-							promise: error,
-						} : {
-							place: `${plugin}.modify()`,
-							message: (error as Error).message,
-							error,
-						}
-					)
+					this.plugin_error(error, `${plugin}.need_modify()`)
 				}
 			}
 
