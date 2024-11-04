@@ -26,26 +26,28 @@ namespace $ {
 				
 				let val = (obj as any)[ field ]
 				if( typeof val !== 'function' ) return val
-
+				const temp = $mol_wire_task.getter(val)
+	
 				return new Proxy( val, {
 					apply( target, self, args ) {
-						return $mol_wire_task.get(target, obj, args ).sync()
+						return temp( obj, args ).sync()
 					},
 					construct(target, args) {
-						const constr = $mol_wire_sync_factory(target)
-						return $mol_wire_task.get(constr , obj, args ).sync() as object
+						const temp = $mol_wire_task.getter($mol_wire_sync_factory(target))
+						return temp( obj, args ).sync() as object
 					},
 					
 				})
 			},
 
 			construct(obj, args) {
-				const constr = $mol_wire_sync_factory(obj as new ( ... args: unknown[] )=> unknown)
-				return $mol_wire_task.get( constr , obj, args ).sync() as object
+				const temp = $mol_wire_task.getter($mol_wire_sync_factory(obj as new ( ... args: unknown[] )=> unknown))
+				return temp( obj, args ).sync() as object
 			},
 
 			apply( obj, self, args ) {
-				return $mol_wire_task.get(obj as ( ... args: any[] )=> any, self, args).sync()
+				const temp = $mol_wire_task.getter(obj as ( ... args: any[] )=> any)
+				return temp(self, args).sync()
 			},
 			
 		} ) as unknown as ObjectOrFunctionResultAwaited<Host>
