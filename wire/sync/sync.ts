@@ -1,16 +1,15 @@
 namespace $ {
-	const constructors = new WeakMap<Function, Function>()
+	const factories = new WeakMap<Function, Function>()
 
-	function $mol_wire_sync_factory<Args extends unknown[], Result>(
+	function factory<Args extends unknown[], Result>(
 		val: new (...args: Args) => Result
 	) {
-		let make = constructors.get(val) as null | ((...args: Args) => Result)
+		let make = factories.get(val) as null | ((...args: Args) => Result)
 
-		if (! make) {
-			make = $mol_func_name_from((...args: Args) => new val(...args), val)
+		if ( make ) return make
 
-			constructors.set(val, make)
-		}
+		make = $mol_func_name_from((...args: Args) => new val(...args), val)
+		factories.set(val, make)
 
 		return make
 	}
@@ -33,7 +32,7 @@ namespace $ {
 						return temp( obj, args ).sync()
 					},
 					construct(target, args) {
-						const temp = $mol_wire_task.getter($mol_wire_sync_factory(target))
+						const temp = $mol_wire_task.getter(factory(target))
 						return temp( obj, args ).sync() as object
 					},
 					
@@ -41,7 +40,7 @@ namespace $ {
 			},
 
 			construct(obj, args) {
-				const temp = $mol_wire_task.getter($mol_wire_sync_factory(obj as new ( ... args: unknown[] )=> unknown))
+				const temp = $mol_wire_task.getter(factory(obj as new ( ... args: unknown[] )=> unknown))
 				return temp( obj, args ).sync() as object
 			},
 
@@ -53,15 +52,13 @@ namespace $ {
 		} ) as unknown as ObjectOrFunctionResultAwaited<Host>
 	}
 
-	export function $mol_wire_sync_make< Constructor extends (new (...args: any[]) => unknown) > (
-		obj: Constructor
-	) {
-		return $mol_wire_sync(obj) as typeof obj
-	}
-
 	type FunctionResultAwaited<Some> = Some extends (...args: infer Args) => infer Res
 		? (...args: Args) => Awaited<Res>
 		: Some
+
+	type ConstructorResultAwaited<Some> = Some extends new (...args: infer Args) => infer Res
+		? new (...args: Args) => Res
+		: {}
 
 	type MethodsResultAwaited<Host extends Object> = {
 		[K in keyof Host]: FunctionResultAwaited<Host[K]>
@@ -69,6 +66,6 @@ namespace $ {
 
 	type ObjectOrFunctionResultAwaited<Some> = (
 		Some extends (...args: any) => unknown ? FunctionResultAwaited<Some> : {}
-	) & ( Some extends Object ? MethodsResultAwaited<Some> : Some )
+	) & ( Some extends Object ? MethodsResultAwaited<Some> & ConstructorResultAwaited<Some> : Some )
 
 }

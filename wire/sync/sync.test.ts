@@ -12,7 +12,7 @@ namespace $ {
 					return $mol_wire_sync(this).a()
 				}
 			}
-		
+
 			type Check = $mol_type_assert<ReturnType<typeof A['b']>, string>
 		},
 
@@ -73,7 +73,7 @@ namespace $ {
 				static instances = [] as A[]
 
 				static a() {
-					const a = new ($mol_wire_sync_make(A))()
+					const a = new ($mol_wire_sync(A))()
 					this.instances.push( a )
 					$mol_wire_sync(this).b()
 				}
