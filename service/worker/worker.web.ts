@@ -3,20 +3,12 @@
 namespace $ {
 
 	export class $mol_service_worker_web extends $mol_service_worker {
-		static plugins_add_wait() { return Promise.resolve() }
 
 		@ $mol_mem
 		static init() {
 			$mol_wire_solid()
-			try {
-				if ( this.$.$mol_service_ensure() ) {
-					$mol_wire_sync(this).plugins_add_wait()
-					this.plugins()
-				}
-				this.registration().worker()
-			} catch (error) {
-				this.$.$mol_fail_log(error)
-			}
+			if ( this.$.$mol_service_ensure() ) this.plugins()
+			this.registration().worker()
 			return null
 		}
 

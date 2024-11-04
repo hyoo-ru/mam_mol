@@ -22,7 +22,9 @@ namespace $ {
 		@ $mol_mem
 		worker(reset?: null) {
 			const reg = this.native()
-			const worker = reg.installing ?? reg.waiting ?? reg.active ?? $mol_fail(new Error('No worker in registration'))
+			const worker = reg.installing ?? reg.waiting ?? reg.active
+				?? (self as unknown as ServiceWorkerGlobalScope).serviceWorker
+				?? $mol_fail(new Error('No worker in registration'))
 
 			const state_reset = () => this.state(null)
 			worker.addEventListener( 'statechange', state_reset)

@@ -6,6 +6,12 @@ namespace $ {
 		static send(data: {}) { return null as unknown }
 
 		static init() {}
+
+		static async start() {
+			await Promise.resolve()
+			await $mol_wire_async(this).init()
+		}
+
 		static claim() {}
 
 		static blocked_response() {

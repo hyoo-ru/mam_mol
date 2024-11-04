@@ -1,5 +1,5 @@
 namespace $ {
-	$mol_service_worker.init()
+	$mol_service_worker.start()
 
 	export namespace $mol_service_plugin {
 		let _
