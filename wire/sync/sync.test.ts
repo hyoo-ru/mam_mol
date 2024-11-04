@@ -46,28 +46,6 @@ namespace $ {
 
 		},
 
-		async 'test construct from scope'( $ ) {
-			class A {
-				static instances = [] as A[]
-
-				static a() {
-					const a = new ($mol_wire_sync(scope).A)()
-					this.instances.push( a )
-					$mol_wire_sync(this).b()
-				}
-
-				static b() { return Promise.resolve() }
-			}
-			const scope = { A }
-
-			await $mol_wire_async(A).a()
-			$mol_assert_equal(A.instances.length, 2)
-			$mol_assert_equal(A.instances[0] instanceof A)
-
-			$mol_assert_equal(A.instances[0], A.instances[1])
-
-		},
-
 		async 'test construct itself'( $ ) {
 			class A {
 				static instances = [] as A[]

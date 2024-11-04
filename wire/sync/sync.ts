@@ -18,7 +18,7 @@ namespace $ {
 	 * Convert asynchronous (promise-based) API to synchronous by wrapping function and method calls in a fiber.
 	 * @see https://mol.hyoo.ru/#!section=docs/=1fcpsq_1wh0h2
 	 */
-	export function $mol_wire_sync< Host extends object & (new ( ... args: unknown[] )=> unknown) >( obj: Host ) {
+	export function $mol_wire_sync< Host extends object >( obj: Host ) {
 		return new Proxy( obj, {
 			
 			get( obj, field ) {
@@ -26,21 +26,15 @@ namespace $ {
 				let val = (obj as any)[ field ]
 				if( typeof val !== 'function' ) return val
 				const temp = $mol_wire_task.getter(val)
-	
-				return new Proxy( val, {
-					apply( target, self, args ) {
-						return temp( obj, args ).sync()
-					},
-					construct(target, args) {
-						const temp = $mol_wire_task.getter(factory(target))
-						return temp( obj, args ).sync() as object
-					},
-					
-				})
+
+				return function $mol_wire_sync( this: Host, ... args: unknown[] ) {
+					const fiber = temp( obj, args )
+					return fiber.sync()
+				}
 			},
 
 			construct(obj, args) {
-				const temp = $mol_wire_task.getter(factory(obj))
+				const temp = $mol_wire_task.getter(factory(obj as (new ( ... args: unknown[] )=> unknown)))
 				return temp( obj, args ).sync() as object
 			},
 
