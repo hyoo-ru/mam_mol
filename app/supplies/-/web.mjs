@@ -3221,10 +3221,19 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    const factories = new WeakMap();
+    function factory(val) {
+        let make = factories.get(val);
+        if (make)
+            return make;
+        make = $mol_func_name_from((...args) => new val(...args), val);
+        factories.set(val, make);
+        return make;
+    }
     function $mol_wire_sync(obj) {
         return new Proxy(obj, {
             get(obj, field) {
-                const val = obj[field];
+                let val = obj[field];
                 if (typeof val !== 'function')
                     return val;
                 const temp = $mol_wire_task.getter(val);
@@ -3233,10 +3242,13 @@ var $;
                     return fiber.sync();
                 };
             },
+            construct(obj, args) {
+                const temp = $mol_wire_task.getter(factory(obj));
+                return temp(obj, args).sync();
+            },
             apply(obj, self, args) {
                 const temp = $mol_wire_task.getter(obj);
-                const fiber = temp(self, args);
-                return fiber.sync();
+                return temp(self, args).sync();
             },
         });
     }

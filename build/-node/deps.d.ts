@@ -1,10 +1,10 @@
 interface $node {
  	"jsdom" : typeof import( "jsdom" ) // mol/dom/context/context.node.ts
-	"child_process" : typeof import( "child_process" ) // mol/build/server/server.node.ts
-	"path" : typeof import( "path" ) // mol/server/server.node.ts
 	"util" : typeof import( "util" ) // mol/charset/encode/encode.ts
 	"fs" : typeof import( "fs" ) // mol/build/build.node.ts
+	"path" : typeof import( "path" ) // mol/server/server.node.ts
 	"chokidar" : typeof import( "chokidar" ) // mol/file/file.node.ts
+	"child_process" : typeof import( "child_process" ) // mol/build/server/server.node.ts
 	"os" : typeof import( "os" ) // mol/server/server.node.ts
 	"sourcemap-codec" : typeof import( "sourcemap-codec" ) // mol/sourcemap/builder/builder.ts
 	"typescript" : typeof import( "typescript" ) // mol/build/build.node.ts
