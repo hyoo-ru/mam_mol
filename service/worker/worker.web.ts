@@ -239,7 +239,7 @@ namespace $ {
 
 					return $mol_wire_async(plugin).modify(event.request)
 						.catch(error => {
-							this.plugin_error(error, `${plugin}.need_modify()`)
+							this.plugin_error(error, `${plugin}.modify()`)
 							throw error
 						})
 				} catch (error) {

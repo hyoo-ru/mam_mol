@@ -33,7 +33,7 @@ namespace $ {
 			if (cache === 'reload' || ( cache === 'no-cache' && ! html ) ) {
 				if (cache === 'reload') {
 					// F5 + Disable cache
-					request = this.request_clone(request, { cache: 'no-cache' })
+					request = new ($mol_wire_sync(Request))(request, { cache: 'no-cache' })
 				}
 		
 				// fetch with fallback to cache if statuses not match
@@ -49,7 +49,7 @@ namespace $ {
 			}
 
 			if (cache !== 'force-cache') {
-				request = this.request_clone(request, { cache: 'force-cache' })
+				request = new ($mol_wire_sync(Request))(request, { cache: 'force-cache' })
 			}
 
 			const cached = this.$.$mol_fetch.response(request)

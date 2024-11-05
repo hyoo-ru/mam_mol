@@ -23,10 +23,6 @@ namespace $ {
 		static blocked(request: Request) { return false }
 		static need_modify(request: Request) { return false }
 		static modify(request: Request) { return new Response }
-		@ $mol_action
-		protected static request_clone(original: Request, options?: RequestInit) {
-			return new Request(original, options)
-		}
 	}
 
 	export class $mol_service_plugin_notify extends $mol_service_plugin_base {
