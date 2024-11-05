@@ -80,10 +80,6 @@ namespace $ {
 		}
 
 	}
-	export function $mol_fetch_request_clone(this: typeof $, original: Request, options?: RequestInit) {
-		return new Request(original, options)
-	}
-	$.$mol_fetch_request_clone = $mol_wire_sync($).$mol_fetch_request_clone
 
 	export class $mol_fetch extends $mol_object2 {
 		
