@@ -68,20 +68,10 @@ namespace $ {
 		static override state(reset?: null) { return this.worker().state }
 
 		static ready_async() { return this.container().ready }
-		protected static ready() { return $mol_wire_sync( this ).ready_async() }
 
-		@ $mol_action
-		protected static post_message(data: unknown) {
-			const channel = this.$.$mol_service_channel.make({
-				timeout: () => this.send_timeout()
-			})
-
-			this.ready().active?.postMessage(data, [ channel.out() ])
-
-			return channel
+		protected static override post_message(data: {}) {
+			$mol_wire_sync( this ).ready_async().active!.postMessage(data)
 		}
-
-		static send(data: {}) { return this.post_message(data).result() }
 
 	}
 

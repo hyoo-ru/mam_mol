@@ -12,10 +12,10 @@ namespace $ {
 		static override init() {
 			try {
 				this.scope()
+				this.rpc_server().listener()
+				this.rpc_server().handlers()
 			} catch (error) {
-				if ($mol_fail_catch(error)) {
-					console.error(error)
-				}
+				$mol_fail_log( error )
 			}
 		}
 
@@ -26,7 +26,6 @@ namespace $ {
 			const handlers = {
 				install: this.handle(this.install.bind(this)),
 				activate: this.handle(this.activate.bind(this)),
-				message: this.handle(this.message.bind(this)),
 
 				messageerror: this.message_error.bind(this),
 
@@ -86,37 +85,30 @@ namespace $ {
 		}
 
 		protected static message_error(event: MessageEvent) {
-			const message = 'Message deserialization failed'
-
-			this.$.$mol_log3_fail({ place: `${this}.message_error()`, message })
-
-			const port = event.ports[0]
-			port?.postMessage({ result: null, error: message })
+			this.$.$mol_log3_fail({
+				place: `${this}.message_error()`,
+				message: 'Deserialization failed',
+				data: event.data
+			})
 		}
 
-		protected static message(event: ExtendableMessageEvent) {
-			const data = event.data as string | null | { [k: string]: unknown }
-			const port = event.ports[0]
+		@ $mol_mem
+		static rpc_server() {
+			return this.$.$mol_rpc_server_worker.make({
+				handlers: () => this.handlers()
+			})
+		}
 
-			if ( ! data || typeof data !== 'object' ) {
-				const error = data ? 'Message data empty' : 'Message data is not object'
-				return port?.postMessage({ error, result: null })
-			}
+		@ $mol_mem
+		static handlers() {
+			return new Proxy({}, {
+				get: (t, name) => {
+					const [klass, method] = (name as string).split('.') ?? ['', '']
+					const plugin = this.$.$mol_service_plugin[klass as keyof typeof $mol_service_plugin]
 
-			for (const plugin of this.plugins()) {
-				try {
-					const result = plugin.data(data)
-					if (! result) continue
-					port?.postMessage({ error: null, result })
-					return
-				} catch (error) {
-					if ( ! $mol_fail_catch(error) ) continue
-					this.plugin_error(error, `${plugin}.data()`)
-					port?.postMessage({ error: error.toString(), result: null })
-					return
+					return (...args: unknown[] ) => (plugin as any)[method as keyof typeof plugin](...args)
 				}
-			}
-
+			})
 		}
 
 		protected static plugin_error(error: unknown, place: string) {

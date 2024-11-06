@@ -20,7 +20,6 @@ namespace $ {
 
 		static install() { }
 		static activate() { }
-		static data(data: {}) { return null as null | unknown }
 	}
 
 	export class $mol_service_plugin_cache extends $mol_service_plugin_base {

@@ -33,7 +33,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		message_listener() {
-			return new $mol_dom_listener(
+			return new $mol_dom_listener<MessageEvent<[ string, string ]>>(
 				$mol_dom_context,
 				'message',
 				$mol_wire_async( this ).message_receive
