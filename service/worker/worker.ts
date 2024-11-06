@@ -11,7 +11,7 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		protected static rpc() {
+		static rpc() {
 			$mol_wire_solid()
 
 			const rpc = this.$.$mol_rpc_client.make<typeof $mol_rpc_client<{}>>({

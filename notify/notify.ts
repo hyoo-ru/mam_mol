@@ -14,20 +14,12 @@ namespace $ {
 		}
 		
 		static show( info: $mol_notify_info ) {
-			this.$.$mol_service_worker.send(info)
+			this.$.$mol_service_worker.rpc().$mol_notify_service.show(info)
 		}
 		
 	}
 
 	export class $mol_notify_service extends $mol_service_plugin_notify {
-		static override data(data: {}) {
-			if ('uri' in data && 'message' in data) {
-				this.show(data as $mol_notify_info)
-				return true
-			}
-			return null
-		}
-
 		static show(info: $mol_notify_info) {}
 
 	}
