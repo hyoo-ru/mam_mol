@@ -1,8 +1,8 @@
 namespace $ {
 	if ( $mol_service_process() ) {
-		Promise.resolve().then(() => $.$mol_service_self.init())
+		Promise.resolve().then(() => $mol_service_self.init())
 	} else {
-		$.$mol_service_worker.init()
+		$mol_service_worker.init()
 	}
 
 	export namespace $mol_service_plugin {

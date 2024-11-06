@@ -13,7 +13,7 @@ namespace $ {
 			try {
 				this.state()
 			} catch (error) {
-				if ($mol_fail_catch(error)) {
+				if (! $mol_promise_like(error)) {
 					console.error(error)
 				}
 			}
