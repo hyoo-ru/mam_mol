@@ -1,5 +1,9 @@
 namespace $ {
-	$mol_service_worker.start()
+	if ( $mol_service_process() ) {
+		Promise.resolve().then(() => $mol_wire_async($.$mol_service_self).init())
+	} else {
+		$mol_wire_async($.$mol_service_worker).init()
+	}
 
 	export namespace $mol_service_plugin {
 		let _

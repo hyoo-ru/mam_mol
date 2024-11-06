@@ -31,9 +31,8 @@ namespace $ {
 
 	export class $mol_notify_service_web extends $mol_notify_service {
 		static override show({ context: title, message: body, uri: data }: $mol_notify_info) {
-			const registration = this.$.$mol_service_worker_web.registration().native()
 			const tag = data
-			const existen = registration.getNotifications({ tag })
+			const existen = this.$.$mol_service_self_web.notifications({ tag })
 			
 			for( const not of existen ) {
 				
@@ -45,12 +44,12 @@ namespace $ {
 			
 			// const vibrate = [ 100, 200, 300, 400, 500 ]
 			
-			registration.showNotification( title, { body, data, /*vibrate,*/ tag } )
+			this.$.$mol_service_self_web.notification_show( title, { body, data, /*vibrate,*/ tag } )
 
 		}
 
 		static override notification( notification: Notification ) {
-			const matched = this.$.$mol_service_worker_web.clients_grab({ includeUncontrolled: true, type: 'window' })
+			const matched = this.$.$mol_service_self_web.clients_grab({ includeUncontrolled: true, type: 'window' })
 			const last = matched.at(-1)
 
 			if( last ) {
@@ -60,7 +59,7 @@ namespace $ {
 				return null
 			}
 
-			this.$.$mol_service_worker_web.window_open( notification.data )
+			this.$.$mol_service_self_web.window_open( notification.data )
 			return null
 		}
 	}
