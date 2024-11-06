@@ -4,8 +4,6 @@ namespace $ {
 
 	export class $mol_service_worker_web extends $mol_service_worker {
 
-		static override init() { this.state() }
-
 		@ $mol_mem
 		protected static container() {
 			if ( this.$.$mol_service_process()) throw new Error('Not for running in service worker')
@@ -39,7 +37,7 @@ namespace $ {
 		static update() { return this.reg().update() }
 		static unregister() { return this.reg().unregister() }
 		static update_status() { return this.reg().updateViaCache }
-		static path() { return this.reg().scope }
+		static scope() { return this.reg().scope }
 
 		static preload() { return $mol_wire_sync(this.reg().navigationPreload) }
 		static pushes() { return $mol_wire_sync(this.reg().pushManager) }

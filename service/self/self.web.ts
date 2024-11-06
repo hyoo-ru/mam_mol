@@ -8,7 +8,16 @@ namespace $ {
 
 		}
 
-		static override init() { this.scope() }
+		@ $mol_mem
+		static override init() {
+			try {
+				this.scope()
+			} catch (error) {
+				if ($mol_fail_catch(error)) {
+					console.error(error)
+				}
+			}
+		}
 
 		@ $mol_mem
 		protected static scope() {
@@ -76,7 +85,7 @@ namespace $ {
 			return this.clients().openWindow(url)
 		}
 
-		static message_error(event: MessageEvent) {
+		protected static message_error(event: MessageEvent) {
 			const message = 'Message deserialization failed'
 
 			this.$.$mol_log3_fail({ place: `${this}.message_error()`, message })
@@ -85,7 +94,7 @@ namespace $ {
 			port?.postMessage({ result: null, error: message })
 		}
 
-		static message(event: ExtendableMessageEvent) {
+		protected static message(event: ExtendableMessageEvent) {
 			const data = event.data as string | null | { [k: string]: unknown }
 			const port = event.ports[0]
 
@@ -110,7 +119,7 @@ namespace $ {
 
 		}
 
-		static plugin_error(error: unknown, place: string) {
+		protected static plugin_error(error: unknown, place: string) {
 			if ($mol_promise_like(error)) {
 				error = new Error('Promise not allowed', { cause: error })
 			}
@@ -154,19 +163,19 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		static plugins_raw() {
+		protected static plugins_raw() {
 			return Object.values(this.$.$mol_service_plugin) as readonly { prototype: unknown }[]
 		}
 
-		static plugins() {
+		protected static plugins() {
 			return this.plugins_raw().filter(plugin => $mol_service_plugin_base.is(plugin))
 		}
 
-		static plugins_notify() {
+		protected static plugins_notify() {
 			return this.plugins_raw().filter(plugin => $mol_service_plugin_notify.is(plugin))
 		}
 
-		static plugins_cache() {
+		protected static plugins_cache() {
 			return this.plugins_raw().filter(plugin => $mol_service_plugin_cache.is(plugin))
 		}
 

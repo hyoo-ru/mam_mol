@@ -8,7 +8,17 @@ namespace $ {
 		static send_timeout() { return 20000 }
 		static send(data: {}) { return null as unknown }
 
-		static init() {}
+		@ $mol_mem
+		static init() {
+			try {
+				this.state()
+			} catch (error) {
+				if ($mol_fail_catch(error)) {
+					console.error(error)
+				}
+			}
+		}
+
 		static state() {
 			return 'installing' as 'activated' | 'activating' | 'installed' | 'installing' | 'parsed' | 'redundant'
 		}
