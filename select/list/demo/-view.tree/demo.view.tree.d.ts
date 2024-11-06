@@ -1,56 +1,56 @@
 declare namespace $ {
 
-	type $mol_select_list__value__NLHP5T0T = $mol_type_enforce<
+	type $mol_select_list__value__UKKSR1OM = $mol_type_enforce<
 		ReturnType< $mol_select_list_demo['friends'] >
 		,
 		ReturnType< $mol_select_list['value'] >
 	>
-	type $mol_select_list__dictionary__PLABULJX = $mol_type_enforce<
+	type $mol_select_list__dictionary__JQ1EKIJN = $mol_type_enforce<
 		ReturnType< $mol_select_list_demo['suggestions'] >
 		,
 		ReturnType< $mol_select_list['dictionary'] >
 	>
-	type $mol_select_list__value__WRRI39MD = $mol_type_enforce<
+	type $mol_select_list__value__AKJ21Y21 = $mol_type_enforce<
 		ReturnType< $mol_select_list_demo['friends'] >
 		,
 		ReturnType< $mol_select_list['value'] >
 	>
-	type $mol_select_list__dictionary__LXZKP5U4 = $mol_type_enforce<
+	type $mol_select_list__dictionary__SRDPUSD4 = $mol_type_enforce<
 		ReturnType< $mol_select_list_demo['suggestions'] >
 		,
 		ReturnType< $mol_select_list['dictionary'] >
 	>
-	type $mol_select_list__enabled__DJDB542Z = $mol_type_enforce<
+	type $mol_select_list__enabled__XYO26MFS = $mol_type_enforce<
 		boolean
 		,
 		ReturnType< $mol_select_list['enabled'] >
 	>
-	type $mol_select_list_demo_filter_pattern__A33YFAA6 = $mol_type_enforce<
+	type $mol_select_list_demo_filter_pattern__WTW9SHQT = $mol_type_enforce<
 		Parameters< $mol_select_list_demo['filter_pattern'] >[0]
 		,
 		Parameters< ReturnType< $mol_select_list_demo['Friends_lazy'] >['filter_pattern'] >[0]
 	>
-	type $mol_select_list__value__4FBGIVF7 = $mol_type_enforce<
+	type $mol_select_list__value__LPY53J53 = $mol_type_enforce<
 		ReturnType< $mol_select_list_demo['friends_lazy'] >
 		,
 		ReturnType< $mol_select_list['value'] >
 	>
-	type $mol_select_list__option_title__TP22S4L7 = $mol_type_enforce<
+	type $mol_select_list__option_title__F9IG9GI1 = $mol_type_enforce<
 		ReturnType< $mol_select_list_demo['option_title'] >
 		,
 		ReturnType< $mol_select_list['option_title'] >
 	>
-	type $mol_select_list__pick_enabled__MAPE79T1 = $mol_type_enforce<
+	type $mol_select_list__pick_enabled__0N5D0YSZ = $mol_type_enforce<
 		boolean
 		,
 		ReturnType< $mol_select_list['pick_enabled'] >
 	>
-	type $mol_select_list__dictionary__AFJJQX4U = $mol_type_enforce<
+	type $mol_select_list__dictionary__9L3PVQUI = $mol_type_enforce<
 		ReturnType< $mol_select_list_demo['suggestions_lazy'] >
 		,
 		ReturnType< $mol_select_list['dictionary'] >
 	>
-	type $mol_list__rows__8PR4EKAW = $mol_type_enforce<
+	type $mol_list__rows__WN1AWYIQ = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >

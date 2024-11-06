@@ -1,108 +1,108 @@
 declare namespace $ {
 
-	type $mol_hotkey__key__YE5MK5MA = $mol_type_enforce<
+	type $mol_hotkey__key__NDS41076 = $mol_type_enforce<
 		({ 
 			F( next?: ReturnType< $mol_app_demo['search_start'] > ): ReturnType< $mol_app_demo['search_start'] >,
 		}) 
 		,
 		ReturnType< $mol_hotkey['key'] >
 	>
-	type $mol_hotkey__mod_ctrl__SBHVL791 = $mol_type_enforce<
+	type $mol_hotkey__mod_ctrl__1H1ML4SS = $mol_type_enforce<
 		boolean
 		,
 		ReturnType< $mol_hotkey['mod_ctrl'] >
 	>
-	type $mol_app_demo_search_start__SIQEZYTW = $mol_type_enforce<
+	type $mol_app_demo_search_start__HTUB5VS4 = $mol_type_enforce<
 		Parameters< $mol_app_demo['search_start'] >[0]
 		,
 		Parameters< ReturnType< $mol_app_demo['Menu'] >['search_start'] >[0]
 	>
-	type $mol_link_source__uri__AQXMUSAG = $mol_type_enforce<
+	type $mol_link_source__uri__RU41YDM3 = $mol_type_enforce<
 		ReturnType< $mol_app_demo['sources_uri'] >
 		,
 		ReturnType< $mol_link_source['uri'] >
 	>
-	type $mol_app_demo_chat_pages__RG2JY1MD = $mol_type_enforce<
+	type $mol_app_demo_chat_pages__M2D6Z90G = $mol_type_enforce<
 		Parameters< $mol_app_demo['chat_pages'] >[0]
 		,
 		Parameters< $mol_app_demo['Detail'] >[0]
 	>
-	type $mol_app_demo_menu__title__ZVARM6PJ = $mol_type_enforce<
+	type $mol_app_demo_menu__title__OIXZ7TR7 = $mol_type_enforce<
 		ReturnType< $mol_app_demo['menu_title'] >
 		,
 		ReturnType< $mol_app_demo_menu['title'] >
 	>
-	type $mol_app_demo_menu__names__3MBMIXQR = $mol_type_enforce<
+	type $mol_app_demo_menu__names__F4EK1GY9 = $mol_type_enforce<
 		ReturnType< $mol_app_demo['names'] >
 		,
 		ReturnType< $mol_app_demo_menu['names'] >
 	>
-	type $mol_app_demo_menu__widget_tags__C3161EY9 = $mol_type_enforce<
+	type $mol_app_demo_menu__widget_tags__WE5VUBFP = $mol_type_enforce<
 		ReturnType< $mol_app_demo['widget_tags'] >
 		,
 		ReturnType< $mol_app_demo_menu['widget_tags'] >
 	>
-	type $mol_app_demo_menu__widget_aspects__A9W9AI0D = $mol_type_enforce<
+	type $mol_app_demo_menu__widget_aspects__YDYAN8E4 = $mol_type_enforce<
 		ReturnType< $mol_app_demo['widget_aspects'] >
 		,
 		ReturnType< $mol_app_demo_menu['widget_aspects'] >
 	>
-	type $mol_app_demo_menu__widget_title__KCNZGVDY = $mol_type_enforce<
+	type $mol_app_demo_menu__widget_title__XNWJ9SY3 = $mol_type_enforce<
 		ReturnType< $mol_app_demo['widget_title'] >
 		,
 		ReturnType< $mol_app_demo_menu['widget_title'] >
 	>
-	type $mol_app_demo_menu__tools__MR07GHN0 = $mol_type_enforce<
+	type $mol_app_demo_menu__tools__8G0502WV = $mol_type_enforce<
 		ReturnType< $mol_app_demo['tools'] >
 		,
 		ReturnType< $mol_app_demo_menu['tools'] >
 	>
-	type $mol_app_demo_detail__chat_seed__I9U040SO = $mol_type_enforce<
+	type $mol_app_demo_detail__chat_seed__FS51SLIH = $mol_type_enforce<
 		ReturnType< $mol_app_demo['chat_seed'] >
 		,
 		ReturnType< $mol_app_demo_detail['chat_seed'] >
 	>
-	type $mol_app_demo_detail__title__70QIUH03 = $mol_type_enforce<
+	type $mol_app_demo_detail__title__9YR7M1DF = $mol_type_enforce<
 		ReturnType< $mol_app_demo['detail_title'] >
 		,
 		ReturnType< $mol_app_demo_detail['title'] >
 	>
-	type $mol_app_demo_detail__description__7UO1W1KS = $mol_type_enforce<
+	type $mol_app_demo_detail__description__M4A8HH93 = $mol_type_enforce<
 		ReturnType< $mol_app_demo['detail_description'] >
 		,
 		ReturnType< $mol_app_demo_detail['description'] >
 	>
-	type $mol_app_demo_detail__edit_uri__NWN7RHMT = $mol_type_enforce<
+	type $mol_app_demo_detail__edit_uri__N41JIQJY = $mol_type_enforce<
 		ReturnType< $mol_app_demo['edit_uri'] >
 		,
 		ReturnType< $mol_app_demo_detail['edit_uri'] >
 	>
-	type $mol_app_demo_detail__readme__OTKD6OTF = $mol_type_enforce<
+	type $mol_app_demo_detail__readme__MB8ONGFS = $mol_type_enforce<
 		ReturnType< $mol_app_demo['readme_page'] >
 		,
 		ReturnType< $mol_app_demo_detail['readme'] >
 	>
-	type $mol_app_demo_detail__Demo__S5YTPJLX = $mol_type_enforce<
+	type $mol_app_demo_detail__Demo__72NG8KHW = $mol_type_enforce<
 		ReturnType< $mol_app_demo['Demo'] >
 		,
 		ReturnType< $mol_app_demo_detail['Demo'] >
 	>
-	type $mol_app_demo_readme__repo__1K1KM01R = $mol_type_enforce<
+	type $mol_app_demo_readme__repo__A1XEF9RL = $mol_type_enforce<
 		ReturnType< $mol_app_demo['repo'] >
 		,
 		ReturnType< $mol_app_demo_readme['repo'] >
 	>
-	type $mol_app_demo_readme__opened__90VXED7H = $mol_type_enforce<
+	type $mol_app_demo_readme__opened__YUNL2F8L = $mol_type_enforce<
 		ReturnType< $mol_app_demo['readme_page'] >
 		,
 		ReturnType< $mol_app_demo_readme['opened'] >
 	>
-	type $mol_app_demo_readme__module__HBURJKCN = $mol_type_enforce<
+	type $mol_app_demo_readme__module__OCFFBNF6 = $mol_type_enforce<
 		ReturnType< $mol_app_demo['module'] >
 		,
 		ReturnType< $mol_app_demo_readme['module'] >
 	>
-	type $mol_status__sub__K6CDNPBG = $mol_type_enforce<
+	type $mol_status__sub__HJ1W22DZ = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_status['sub'] >

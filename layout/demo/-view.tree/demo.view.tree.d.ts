@@ -1,6 +1,6 @@
 declare namespace $ {
 
-	type $mol_canvas__paint__MAOTPDJJ = $mol_type_enforce<
+	type $mol_canvas__paint__U2VZYWS1 = $mol_type_enforce<
 		ReturnType< $mol_layout_demo['paint'] >
 		,
 		ReturnType< $mol_canvas['paint'] >
