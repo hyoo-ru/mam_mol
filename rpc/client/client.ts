@@ -8,7 +8,7 @@ namespace $ {
 		call_async(id: string) {
 			return new Promise<unknown>( ( done , fail )=> {
 				const timer = setTimeout(
-					() => fail(new Error('RPC call timeout', { cause: id })),
+					() => handle({ data: { id, error: 'RPC call timeout' } }),
 					this.timeout()
 				)
 
