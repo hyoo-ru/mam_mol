@@ -2145,7 +2145,10 @@ var $;
                 command: args_raw.join(' '),
                 dir: $node.path.relative('', dir),
             });
-            return this.$mol_run_spawn_sync(app, args, { shell: true, cwd: dir, env });
+            const res = this.$mol_run_spawn_sync(app, args, { shell: true, cwd: dir, env });
+            if (res.status)
+                $mol_fail(new Error(res.stderr.toString() || 'Exit(' + res.status + ')'));
+            return res;
         }
         const sub = this.$mol_run_spawn(app, args, {
             shell: true,
