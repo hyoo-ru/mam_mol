@@ -83,6 +83,7 @@ namespace $ {
 
 			const command = ['git', 'remote', 'add', '--track', branch, 'origin' , repo.url ]
 			this.$.$mol_run.spawn( { command, dir, dirty: true } )
+			// this.$.$mol_run.spawn( { command: [ 'git', 'pull', 'origin', branch ], dir, dirty: true } )
 			this.$.$mol_run.spawn( { command: [ 'git', 'checkout', branch ], dir, dirty: true } )
 
 			return null

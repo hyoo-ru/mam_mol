@@ -78,8 +78,8 @@ namespace $ {
 					this.init(path)
 				}
 				this.pull( path )
-				// mod.reset()
-				// for ( const sub of mod.sub() ) sub.reset()
+				mod.reset()
+				for ( const sub of mod.sub() ) sub.reset()
 
 				return true
 			}

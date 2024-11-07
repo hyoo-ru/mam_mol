@@ -38,7 +38,7 @@ namespace $ {
 		static lock_run<Result>(cb: () => Result) { return this.lock.run(cb) }
 
 		static spawn(options: $mol_run_options) {
-			const sync = ! Boolean($mol_wire_auto())
+			const sync = ! this.$.$mol_env()['MOL_RUN_ASYNC'] || ! Boolean($mol_wire_auto())
 			const env = options.env ?? this.$.$mol_env()
 
 			const cb = () => $mol_wire_sync(this).spawn_async( { ...options, sync, env } )
@@ -62,7 +62,7 @@ namespace $ {
 
 			if (sync) {
 
-				this.$.$mol_log3_warn({
+				this.$.$mol_log3_come({
 					hint: 'Run inside fiber',
 					...log_object
 				})
