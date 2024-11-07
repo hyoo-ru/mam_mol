@@ -1244,8 +1244,8 @@ declare namespace $ {
         express(): import("express-serve-static-core").Express;
         internal_ip(): string;
         http(): import("http").Server<typeof import("http").IncomingMessage, typeof import("http").ServerResponse>;
-        connections: Set<any>;
-        socket(): any;
+        connections: Set<import("ws")>;
+        socket(): import("ws").Server<typeof import("ws"), typeof import("http").IncomingMessage>;
         expressHandlers(): readonly $mol_server_middleware[];
         expressCompressor(): $mol_server_middleware;
         expressCors(): $mol_server_middleware;
@@ -1271,10 +1271,10 @@ declare namespace $ {
         expressIndex(): (req: typeof $node.express.request, res: typeof $node.express.response, next: (e?: unknown) => void) => Promise<void | import("express").Response<any, Record<string, any>>>;
         expressIndexRequest(req: typeof $node.express.request, res: typeof $node.express.response, next: () => void): void | import("express").Response<any, Record<string, any>>;
         port(): number;
-        lines(next?: Map<any, string>): Map<any, string>;
-        socket(): any;
-        start(): any;
-        notify([line, path]: [InstanceType<$node['ws']>, string]): boolean;
+        lines(next?: Map<import("ws"), string>): Map<import("ws"), string>;
+        socket(): import("ws").Server<typeof import("ws"), typeof import("http").IncomingMessage>;
+        start(): import("ws").Server<typeof import("ws"), typeof import("http").IncomingMessage>;
+        notify([line, path]: [InstanceType<$node['ws']['WebSocket']>, string]): boolean;
         slave_commands(next?: string[]): string[];
         slave_servers(): ((import("child_process").ChildProcessByStdio<import("stream").Writable, null, null> & {
             destructor: () => void;

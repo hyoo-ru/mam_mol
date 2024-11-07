@@ -1,6 +1,6 @@
 declare namespace $ {
 
-	type $mol_perf_uibench_table_row__state__I3QFUXOB = $mol_type_enforce<
+	type $mol_perf_uibench_table_row__state__MKCTBD1U = $mol_type_enforce<
 		ReturnType< $mol_perf_uibench_table['row_state'] >
 		,
 		ReturnType< $mol_perf_uibench_table_row['state'] >
@@ -17,12 +17,12 @@ declare namespace $ {
 		Row( id: any): $mol_perf_uibench_table_row
 	}
 	
-	type $mol_perf_uibench_table_cell__text__ONSBWBOQ = $mol_type_enforce<
+	type $mol_perf_uibench_table_cell__text__PUN4762D = $mol_type_enforce<
 		ReturnType< $mol_perf_uibench_table_row['head_text'] >
 		,
 		ReturnType< $mol_perf_uibench_table_cell['text'] >
 	>
-	type $mol_perf_uibench_table_cell__text__TUX68MWS = $mol_type_enforce<
+	type $mol_perf_uibench_table_cell__text__PV44YN97 = $mol_type_enforce<
 		ReturnType< $mol_perf_uibench_table_row['cell_state'] >
 		,
 		ReturnType< $mol_perf_uibench_table_cell['text'] >

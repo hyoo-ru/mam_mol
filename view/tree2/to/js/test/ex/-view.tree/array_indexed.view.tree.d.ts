@@ -1,6 +1,6 @@
 declare namespace $ {
 
-	type $mol_view_tree2_to_js_test_ex_array_indexed_foo_tags__56U0F57W = $mol_type_enforce<
+	type $mol_view_tree2_to_js_test_ex_array_indexed_foo_tags__7EUXDGFP = $mol_type_enforce<
 		ReturnType< $mol_view_tree2_to_js_test_ex_array_indexed_foo['slot'] >[number]
 		,
 		string

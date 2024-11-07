@@ -6520,7 +6520,7 @@ var $;
         }
         connections = new Set();
         socket() {
-            const socket = new $node.ws.Server({
+            const socket = new $node.ws.WebSocket.Server({
                 server: this.http(),
             });
             socket.on('connection', line => {
