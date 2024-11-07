@@ -69,7 +69,7 @@ namespace $ {
 			const repo = this.repo(dir)
 			if (! repo) return 'master'
 
-			const res = this.$.$mol_run.spawn( { command: ['git', 'remote', 'show', repo.url ],  dir } )
+			const res = this.$.$mol_run.spawn( { command: ['git', 'remote', 'show', repo.url ],  dir, dirty: true } )
 
 			return res.stdout.toString().match( /HEAD branch: (.*?)\n/ )?.[1] ?? 'master'
 		}
