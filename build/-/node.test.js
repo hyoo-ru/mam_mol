@@ -5980,6 +5980,7 @@ var $;
             catch (e) {
                 if ($mol_promise_like(e))
                     $mol_fail_hidden(e);
+                $mol_fail_log(e);
             }
             ++version[2];
             json.version = version.join('.');
