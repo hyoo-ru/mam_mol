@@ -1376,10 +1376,10 @@ namespace $ {
 			name = json.name || name
 			
 			try {
-				
-				const published = ( [] as string[] ).concat( JSON.parse(
-					this.$.$mol_run( { command: ['npm', 'view' , name , 'versions', '--json'], dir: '' } ).stdout.toString()
-				) ).slice(-1)[0].split('.').map( Number )
+
+				const result = this.$.$mol_run( { command: ['npm', 'view' , name , 'versions', '--json'], dir: '.' } )
+				const versions = ( [] as string[] ).concat( JSON.parse( result.stdout.toString() ) )
+				const published = versions.at(-1)?.split('.').map( Number ) ?? [ 0, 0, 0 ]
 				
 				if( published[0] > version[0] ) {
 					version = published
@@ -1391,9 +1391,8 @@ namespace $ {
 					version[2] = published[2]
 				}
 				
-			} catch (e) {
-				if ($mol_promise_like(e)) $mol_fail_hidden(e)
-				$mol_fail_log(e)
+			} catch( error ) {
+				$mol_fail_log( error )
 			}
 
 			++ version[2]
