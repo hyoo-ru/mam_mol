@@ -221,7 +221,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem
-		lines( next = new Map< InstanceType<$node['ws']>, string >() ) {
+		lines( next = new Map< InstanceType<$node['ws']['WebSocket']>, string >() ) {
 			return next
 		}
 		
@@ -268,7 +268,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		notify( [ line, path ]: [ InstanceType<$node['ws']>, string ] ) {
+		notify( [ line, path ]: [ InstanceType<$node['ws']['WebSocket']>, string ] ) {
 			
 			try {
 			
