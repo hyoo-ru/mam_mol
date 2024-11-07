@@ -24,6 +24,7 @@ namespace $ {
 				process.exit(1)
 			}
 		} else {
+
 			Promise.resolve().then( ()=> $mol_wire_async(build.server()).start() )
 		}
 	}
