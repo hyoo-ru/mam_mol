@@ -1103,14 +1103,14 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_view__style__PYURFA1W = $mol_type_enforce<
+	type $mol_view__style__9FIRIWSO = $mol_type_enforce<
 		({ 
 			'paddingTop': ReturnType< $mol_list['gap_before'] >,
 		}) 
 		,
 		ReturnType< $mol_view['style'] >
 	>
-	type $mol_view__style__ZY6AKYHV = $mol_type_enforce<
+	type $mol_view__style__D1QOVTA0 = $mol_type_enforce<
 		({ 
 			'paddingTop': ReturnType< $mol_list['gap_after'] >,
 		}) 
@@ -1158,17 +1158,17 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_pop_bubble__align__V9LON7KM = $mol_type_enforce<
+	type $mol_pop_bubble__align__6962KQ6K = $mol_type_enforce<
 		ReturnType< $mol_pop['align'] >
 		,
 		ReturnType< $mol_pop_bubble['align'] >
 	>
-	type $mol_pop_bubble__content__XREWYWLO = $mol_type_enforce<
+	type $mol_pop_bubble__content__NPARUZHQ = $mol_type_enforce<
 		ReturnType< $mol_pop['bubble_content'] >
 		,
 		ReturnType< $mol_pop_bubble['content'] >
 	>
-	type $mol_pop_bubble__height_max__PO9J55WT = $mol_type_enforce<
+	type $mol_pop_bubble__height_max__E65ZP739 = $mol_type_enforce<
 		ReturnType< $mol_pop['height_max'] >
 		,
 		ReturnType< $mol_pop_bubble['height_max'] >
@@ -1271,42 +1271,42 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_list__rows__16FJRW5K = $mol_type_enforce<
+	type $mol_list__rows__1IKS40ZY = $mol_type_enforce<
 		ReturnType< $mol_perf_dbmon['databases'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_view__sub__QCZJ8J07 = $mol_type_enforce<
+	type $mol_view__sub__8KTMRP80 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_perf_dbmon_query_count__label_mod__JZEEM5HW = $mol_type_enforce<
+	type $mol_perf_dbmon_query_count__label_mod__JQ4M5SQK = $mol_type_enforce<
 		ReturnType< $mol_perf_dbmon['query_count_label_mod'] >
 		,
 		ReturnType< $mol_perf_dbmon_query_count['label_mod'] >
 	>
-	type $mol_perf_dbmon_query_count__count__6OCAXNGT = $mol_type_enforce<
+	type $mol_perf_dbmon_query_count__count__CXFXC0HZ = $mol_type_enforce<
 		ReturnType< $mol_perf_dbmon['query_count'] >
 		,
 		ReturnType< $mol_perf_dbmon_query_count['count'] >
 	>
-	type $mol_view__sub__BJ5O1COC = $mol_type_enforce<
+	type $mol_view__sub__9SCEY2X1 = $mol_type_enforce<
 		ReturnType< $mol_perf_dbmon['database'] >
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_perf_dbmon_query__elapsed__7RVWKQ0X = $mol_type_enforce<
+	type $mol_perf_dbmon_query__elapsed__XOH4P6DS = $mol_type_enforce<
 		ReturnType< $mol_perf_dbmon['query_elapsed'] >
 		,
 		ReturnType< $mol_perf_dbmon_query['elapsed'] >
 	>
-	type $mol_perf_dbmon_query__elapsed_mod__QHM1W49A = $mol_type_enforce<
+	type $mol_perf_dbmon_query__elapsed_mod__SFVZ4DKW = $mol_type_enforce<
 		ReturnType< $mol_perf_dbmon['query_elapsed_mod'] >
 		,
 		ReturnType< $mol_perf_dbmon_query['elapsed_mod'] >
 	>
-	type $mol_perf_dbmon_query__value__O3G9SYLG = $mol_type_enforce<
+	type $mol_perf_dbmon_query__value__L0XPDF96 = $mol_type_enforce<
 		ReturnType< $mol_perf_dbmon['query_value'] >
 		,
 		ReturnType< $mol_perf_dbmon_query['value'] >
@@ -1330,14 +1330,14 @@ declare namespace $ {
 		Query( id: any): $mol_perf_dbmon_query
 	}
 	
-	type $mol_view__attr__PN82FFWD = $mol_type_enforce<
+	type $mol_view__attr__GU48T72O = $mol_type_enforce<
 		({ 
 			'mol_perf_dbmon_query_count_label': ReturnType< $mol_perf_dbmon_query_count['label_mod'] >,
 		}) 
 		,
 		ReturnType< $mol_view['attr'] >
 	>
-	type $mol_view__sub__K2YLVZL5 = $mol_type_enforce<
+	type $mol_view__sub__71TKDOYB = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
@@ -1349,14 +1349,14 @@ declare namespace $ {
 		sub( ): readonly(any)[]
 	}
 	
-	type $mol_view__attr__58UIGTI4 = $mol_type_enforce<
+	type $mol_view__attr__APBL1K1N = $mol_type_enforce<
 		({ 
 			'mol_perf_dbmon_query_elapsed': ReturnType< $mol_perf_dbmon_query['elapsed_mod'] >,
 		}) 
 		,
 		ReturnType< $mol_view['attr'] >
 	>
-	type $mol_view__sub__0ZSTV679 = $mol_type_enforce<
+	type $mol_view__sub__4MY6B3XM = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
