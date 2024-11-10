@@ -21,27 +21,6 @@ namespace $ {
 			return new Uint8Array(response.buffer())
 		}
 
-		@ $mol_mem
-		override stat( next? : $mol_file_stat, virt?: 'virt' ) {
-			let stat = next
-			if (next === undefined) {
-				const content = this.text()
-				// @todo взять дату из хедеров фетча, когда file.web будет переписан на webdav
-				const ctime = new Date()
-				stat = {
-					type: 'file',
-					size: content.length,
-					ctime,
-					atime: ctime,
-					mtime: ctime
-				}
-			}
-
-			this.parent().watcher()
-			
-			return stat!
-		}
-
 		override resolve( path : string ) {
 			let res = this.path() + '/' + path
 			
@@ -54,16 +33,16 @@ namespace $ {
 			return ( this.constructor as typeof $mol_file_web ).absolute( res )
 		}
 
-		override ensure() {
+		protected override ensure() {
 			throw new Error('$mol_file_web.ensure() not implemented')
 		} 
 
-		override drop() {
+		protected override drop() {
 			throw new Error('$mol_file_web.drop() not implemented')
-		} 
+		}
 
 		@ $mol_mem
-		override sub() : $mol_file[] {
+		protected override kids() : readonly $mol_file[] {
 			throw new Error('$mol_file_web.sub() not implemented')
 		}
 		

@@ -15,7 +15,9 @@ namespace $ {
 		}
 
 		protected override pull_run(dir: string) {
-			const out = this.$.$mol_run.spawn({ command: 'git rev-parse --abbrev-ref --symbolic-full-name HEAD', dir, dirty: true })
+			const out = this.$.$mol_run.spawn({
+				command: 'git rev-parse --abbrev-ref --symbolic-full-name HEAD', dir,
+			})
 			const current_branch = out.stdout.toString().trim()
 			// когда не на ветке - не надо пулить, например сборка во время git bisect
 			if (! current_branch) return false
@@ -32,7 +34,7 @@ namespace $ {
 			}
 
 			const timeout = this.pull_timeout()
-			this.$.$mol_run.spawn( { command, dir, timeout, dirty: true }).stdout.toString().trim()
+			this.$.$mol_run.spawn( { command, dir, timeout }).stdout.toString().trim()
 			return true
 		}
 
@@ -69,7 +71,7 @@ namespace $ {
 			const repo = this.repo(dir)
 			if (! repo) return 'master'
 
-			const res = this.$.$mol_run.spawn( { command: ['git', 'remote', 'show', repo.url ],  dir, dirty: true } )
+			const res = this.$.$mol_run.spawn( { command: ['git', 'remote', 'show', repo.url ],  dir } )
 
 			return res.stdout.toString().match( /HEAD branch: (.*?)\n/ )?.[1] ?? 'master'
 		}
@@ -77,15 +79,14 @@ namespace $ {
 		protected override init(dir: string) {
 			const repo = this.repo(dir)
 			if (! repo) throw new Error(`"${dir}" not a repo`)
+			const { url, branch } = repo
+			this.$.$mol_run.spawn( { command: ['git', 'init'], dir } )
 
-			this.$.$mol_run.spawn( { command: ['git', 'init'], dir, dirty: true } )
-			const branch = repo.branch ?? this.branch_remote(dir)
+			const branch_norm = branch ?? this.branch_remote(dir)
 
-			const command = ['git', 'remote', 'add', '--track', branch, 'origin' , repo.url ]
-			this.$.$mol_run.spawn( { command, dir, dirty: true } )
-			// this.$.$mol_run.spawn( { command: [ 'git', 'pull', 'origin', branch ], dir, dirty: true } )
-			this.$.$mol_run.spawn( { command: [ 'git', 'checkout', branch ], dir, dirty: true } )
-
+			this.$.$mol_run.spawn( { command: ['git', 'remote', 'add', '--track', branch_norm, 'origin' , url ], dir } )
+			this.$.$mol_run.spawn( { command: [ 'git', 'pull', 'origin', branch_norm ], dir } )
+	
 			return null
 		}
 
@@ -103,7 +104,7 @@ namespace $ {
 			]
 	
 			const dir = this.root().path()
-			this.$.$mol_run.spawn( { command, dir, dirty: true } )
+			this.$.$mol_run.spawn( { command, dir } )
 	
 			return null
 		}

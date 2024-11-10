@@ -45,10 +45,9 @@ namespace $ {
 			if (this.pull_disabled) return false
 
 			try {
-				return this.pull_run(dir)
+				return this.$.$mol_file.watch_off(() => this.pull_run(dir), dir)
 			} catch (e) {
 				if (e instanceof $mol_run_error && e.cause.timeout_kill) {
-					this.pull_disabled = true
 
 					this.$.$mol_log3_warn({
 						place: `${this}.pull()`,
@@ -56,6 +55,7 @@ namespace $ {
 						hint: 'Check connection',
 					})
 
+					this.pull_disabled = true
 					return true
 				}
 
@@ -75,18 +75,24 @@ namespace $ {
 			if( mod.exists()) {
 				if (! this.inited(path)) {
 					if (! this.repo(path) ) return false
-					this.init(path)
+
+					this.$.$mol_file.watch_off(() => this.init(path), path)
 				}
+
 				this.pull( path )
-				mod.reset()
-				for ( const sub of mod.sub() ) sub.reset()
+
+				// mod.reset()
+				// for ( const sub of mod.sub() ) sub.reset()
 
 				return true
 			}
 
 			if (this.repo(path)) {
-				this.clone(path)
-				mod.reset()
+
+				this.$.$mol_file.watch_off(() => this.clone(path), path)
+
+				// mod.reset()
+				// for ( const sub of mod.sub() ) sub.reset()
 				return true
 			}
 

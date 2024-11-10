@@ -43,10 +43,10 @@ namespace $ {
 		static relative( path : string ) {
 			return this.absolute( $node.path.resolve( this.base, path ).replace( /\\/g , '/' ) )
 		}
-		
-		@ $mol_mem
-		override watcher(reset?: null) {
-			const watcher = $node.chokidar.watch( this.path() , {
+
+		@ $mol_mem_key
+		static watcher(path: string) {
+			const watcher = $node.chokidar.watch( path , {
 				persistent : true ,
 				ignored: path => /([\/\\]\.|___$)/.test( path ),
 				depth :  0 ,
@@ -57,7 +57,7 @@ namespace $ {
 			} )
 
 			watcher
-				.on( 'all' , (type, path) => this.watch_event(type, path) )
+				.on( 'all' , (type, path) => this.changed_add(type, path) )
 				.on( 'error' , $mol_fail_log )
 			
 			return {
@@ -68,63 +68,47 @@ namespace $ {
 
 		}
 
-		protected watch_event(type: string, path: string) {
-			const file = $mol_file.relative( path.replace( /\\/g , '/' ) )
-			const parent = type === 'change' ? this : file.parent()
-			file.reset_schedule()
-			parent.reset_schedule()
-		}
+		override watcher() { return this.$.$mol_file_node.watcher(this.path()) }
 
-		static reset_changed() {
-			this.$.$mol_run.lock_run(() => super.reset_changed())
-		}
+		protected fs() { return $mol_wire_sync($node.fs.promises) }
 
-		@ $mol_mem
-		override stat(next? : $mol_file_stat | null, virt?: 'virt') {
-			let stat = next
-			const path = this.path()
-
-			this.parent().watcher()
-			
-			if( virt ) return next ?? null
-			
+		@ $mol_action
+		protected override info( path: string ) {
 			try {
-				stat = next ?? stat_convert($node.fs.statSync( path, { throwIfNoEntry: false } ))
+				return stat_convert($node.fs.statSync(path))
 			} catch( error: any ) {
 				if (this.$.$mol_fail_catch(error)) {
-					// For node < 14.7.0 compatible with throwIfNoEntry: false above
 					if (error.code === 'ENOENT') return null
 					error.message += '\n' + path
+					this.$.$mol_fail_hidden(error)
 				}
-				return this.$.$mol_fail_hidden(error)
 			}
-
-			return stat
+			return null
 		}
 
-		@ $mol_mem
-		override ensure() {
+		@ $mol_action
+		protected override ensure() {
 			const path = this.path()
-
 			try {
 				$node.fs.mkdirSync( path, { recursive: true } )
+				return null
 			} catch( e: any ) {
 				if (this.$.$mol_fail_catch(e)) {
 					if (e.code === 'EEXIST') return null
 					e.message += '\n' + path
+					this.$.$mol_fail_hidden(e)
 				}
-				this.$.$mol_fail_hidden(e)
 			}
 
 		}
 
 		@ $mol_action
-		override copy(to: string) {
+		protected override copy(to: string) {
 			$node.fs.copyFileSync(this.path(), to)
 		}
 		
 		@ $mol_action
-		override drop() {
+		protected override drop() {
 			$node.fs.unlinkSync( this.path() )
 		}
 		
@@ -156,7 +140,6 @@ namespace $ {
 					if (this.$.$mol_fail_catch(error)) {
 						error.message += '\n' + path
 					}
-
 					return this.$.$mol_fail_hidden( error )
 
 				}
@@ -189,23 +172,21 @@ namespace $ {
 			return next
 
 		}
-		@ $mol_mem
-		override sub() : $mol_file[] {
-			if (! this.exists() ) return []
-			if ( this.type() !== 'dir') return []
 
+		protected override kids() {
 			const path = this.path()
-			this.stat()
-
 			try {
-				return $node.fs.readdirSync( path )
+				const kids = $node.fs.readdirSync( path )
 					.filter( name => !/^\.+$/.test( name ) )
 					.map( name => this.resolve( name ) )
+
+				return kids
 			} catch( e: any ) {
 				if (this.$.$mol_fail_catch(e)) {
+					if (e.code === 'ENOENT') return []
 					e.message += '\n' + path
 				}
-				return this.$.$mol_fail_hidden(e)
+				$mol_fail_hidden(e)
 			}
 		}
 		
@@ -217,7 +198,7 @@ namespace $ {
 			return $node.path.relative( base.path() , this.path() ).replace( /\\/g , '/' )
 		}
 
-		override append( next : Uint8Array | string ) {
+		protected override append( next : Uint8Array | string ) {
 			const path = this.path()
 			try {
 				$node.fs.appendFileSync( path , next )

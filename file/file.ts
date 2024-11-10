@@ -35,56 +35,181 @@ namespace $ {
 			return this.resolve( '..' )
 		}
 
-		stat(next? : $mol_file_stat | null, virt?: 'virt'): null | $mol_file_stat {
-			return null
-		}
+		@ $mol_mem
+		stat(next? : $mol_file_stat | null, virt?: 'virt') {
 
-		reset() { this.stat(null) }
-		reset_schedule() { return this.$.$mol_file.reset_schedule(this.path()) }
+			const path = this.path()
+			const parent = this.parent()
+			parent.watcher()
 
-		protected static changed_paths = new Set<string>()
-
-		static reset_schedule(path: string) {
-			if (! this.changed_paths.size) new this.$.$mol_after_frame(()=> $mol_wire_async(this).reset_changed())
-			this.changed_paths.add(path)
-		}
-
-		static reset_changed() {
-			this.$.$mol_log3_rise({
-				place: `${this}.reset_changed`,
-				message: 'Watch reset',
-				paths: [... this.changed_paths],
-			})
-			for (const path of this.changed_paths) {
-				try {
-					this.absolute(path).reset()
-				} catch (e) {
-					if ($mol_fail_catch(e)) $mol_fail_log(e)
-				}
+			// Отслеживать проверку наличия родительской папки не стоит до корня диска
+			// Лучше ограничить mam-ом
+			const root = this.$.$mol_file.watch_root ?? this
+			if ( this !== root ) {
+				// Если родитель удалился, надо ресетнуть все дочерние на любой глубине
+				// Родитель может удалиться, потом создасться, а дочерняя папка только удалиться.
+				// Поэтому parent.exists() не запустит перевычисления
+				// parent.version() меняется не только при удалении, будет ложное срабатывание
+				// события вотчера addDir сбрасывает только parent.sub(), а parent.version() может остаться та же
+				// тогда дочерний не перзапустится
+				// Если addDir будет сбрасывать parent.version(), то будет лишний раз перевычислен parent, хоть и он сам не поменялся
+				parent.version()
+				// parent.sub_version()
 			}
-			this.changed_paths.clear()
+
+			if( virt ) return next ?? null
+			
+			return next ?? this.info(path)
+		}
+
+		protected static changed = new Set<$mol_file>
+		protected static added = new Set<$mol_file>
+
+		protected static frame = null as null | $mol_after_timeout
+
+		protected static changed_add(type: 'addDir' | 'unlinkDir' | 'add' | 'change' | 'unlink', path: string) {
+			const file = this.$.$mol_file.relative( path.at(-1) === '/' ? path.slice(0, -1) : path )
+
+			if (type === 'add') {
+				// добавился файл - у parent надо обновить список sub, если он был заюзан
+				this.added.add(file)
+			}
+
+			if (type === 'change' || type === 'unlink') {
+				// обновился или удалился файл - ресетим
+				this.changed.add(file)
+			}
+
+			if ( type === 'addDir' ) {
+				// добавилась папка, у parent обновляем список директорий в sub
+				// дочерние ресетим
+				// версию папки не меняем, т.к. иначе выполнится логика, связанная
+				this.added.add(file)
+			}
+
+			if ( type === 'unlinkDir') {
+				// удалилась папка, ресетим ее
+				// stat у всех дочерних обновится сам, т.к. связан с parent.version()
+				this.changed.add(file)
+			}
+
+			if (! this.watching) return
+
+			this.frame?.destructor()
+			this.frame = new this.$.$mol_after_timeout(500, () => {
+				if (! this.watching) return
+				this.watching = false
+				$mol_wire_async(this).flush()
+			} )
 		}
 
 		@ $mol_mem
-		version() {
-			return this.stat()?.mtime.getTime().toString( 36 ).toUpperCase() ?? ''
+		static flush_counter(reset?: null): number {
+			return 1 + ( $mol_wire_probe(() => this.flush_counter()) ?? 0 )
 		}
 
-		ensure() {}
-		drop() {}
-		copy(to: string) {}
+		@ $mol_mem
+		static flusher() {
+			try {
+				// this.flush()
+			} catch (e) {
+				this.$.$mol_fail_log(e)
+			}
+		}
+
+		@ $mol_action
+		static flush() {
+			// this.flush_counter()
+			// Пока flush работает, вотчер сюда не заходит, но может добавлять новые изменения
+			// на каждом перезапуске они применятся
+			// Пока run выполняется, изменения накапливаются, в конце run вызывается flush
+			// Пока применяются изменения, run должен ожидать конца flush
+
+			for (const file of this.added) {
+				const parent = file.parent()
+				if ($mol_wire_probe(() => parent.sub())) parent.sub(null)
+				file.reset()
+				// file.sub_version(null)
+			}
+
+			this.changed.forEach(file => file.reset())
+
+			this.added.clear()
+			this.changed.clear()
+
+			// Выставляем обратно в true, что б watch мог зайти сюда
+			this.watching = true
+		}
+
+		@ $mol_mem
+		protected sub_version(reset?: null): number {
+			return 1 + ( $mol_wire_probe(() => this.sub_version()) ?? 0 )
+		}
+
+		protected static watching = true
+
+		// @ $mol_action
+		static watch_off<Result>(cb: () => Result, path: string) {
+			try {
+				this.watching = false
+				const result = cb()
+				// this.flush_counter(null)
+				// watch запаздывает и событие может прилететь через 3 сек после окончания git pull
+				this.$.$mol_file.absolute(path).reset()
+				this.flush()
+				return result
+			} catch (e) {
+				if ( ! $mol_promise_like(e) ) this.flush()
+				$mol_fail_hidden(e)
+			}
+		}
+
+		reset() {
+			this.stat( null )
+		}
+
+		@ $mol_mem
+		modified() { return this.stat()?.mtime ?? null }
+
+		@ $mol_mem
+		version() {
+			return this.modified()?.getTime().toString( 36 ).toUpperCase() ?? ''
+		}
+
+		protected info( path: string ) { return null as null | $mol_file_stat }
+		protected ensure() {}
+		protected drop() {}
+		protected copy(to: string) {}
 
 		@ $mol_mem_key
 		clone(to: string) {
-			this.stat()
-			const file = this.$.$mol_file.absolute(to)
-			file.parent().ensure()
-			this.copy(to)
-			file.reset()
-			return file
+			if (! this.exists() ) return null
+
+			const target = this.$.$mol_file.absolute(to)
+
+			try {
+				this.version()
+				target.parent().exists(true)
+				this.copy(to)
+				target.reset()
+				return target
+			} catch (error) {
+				if ( $mol_fail_catch(error)) {
+					console.error(error)
+				}
+			}
+			return null
 		}
 
-		watcher(reset?: null) {
+		protected static watch_root = null as null | $mol_file
+
+		static root( path: string) {
+			this.watch_root = this.absolute( path )
+			return this.watch_root
+		}
+
+
+		watcher() {
 			console.warn('$mol_file_web.watcher() not implemented')
 
 			return {
@@ -95,7 +220,7 @@ namespace $ {
 		@ $mol_mem
 		exists( next? : boolean ) {
 			
-			let exists = Boolean( this.stat() )
+			const exists = Boolean( this.stat() )
 
 			if( next === undefined ) return exists
 			if( next === exists ) return exists
@@ -103,11 +228,14 @@ namespace $ {
 			if( next ) {
 				this.parent().exists( true )
 				this.ensure()
-			} else {
-				this.drop()
+				this.reset()
+				return next
 			}
+
+			this.drop()
+			// удалили директорию, все дочерние потеряли актуальность
 			this.reset()
-			
+
 			return next
 		}
 		
@@ -128,8 +256,13 @@ namespace $ {
 		@ $mol_mem
 		buffer( next? : Uint8Array ) { return next ?? new Uint8Array }
 
-		@ $mol_mem
 		text(next?: string, virt?: 'virt') {
+			if (next !== undefined) this.version()
+			return this.text_int(next, virt)
+		}
+
+		@ $mol_mem
+		text_int(next?: string, virt?: 'virt') {
 			if( virt ) {
 				const now = new Date
 				this.stat( {
@@ -137,20 +270,34 @@ namespace $ {
 					size: 0,
 					atime: now,
 					mtime: now,
-					ctime: now,			
+					ctime: now,
 				}, 'virt' )
 				return next!
 			}
+
 			if( next === undefined ) {
-				return $mol_charset_decode( this.buffer( undefined ) )	
+				return $mol_charset_decode( this.buffer( ) )	
 			} else {
-				const buffer = next === undefined ? undefined : $mol_charset_encode( next )
+				const buffer = $mol_charset_encode( next )
 				this.buffer( buffer )
 				return next
 			}
 		}
 
-		sub() { return [] as $mol_file[] }
+		@ $mol_mem
+		sub(reset?: null) {
+			if (! this.exists() ) return []
+			if ( this.type() !== 'dir') return []
+
+			this.stat()
+
+			// Если дочерний file удалился, список надо обновить
+			return this.kids().filter(file => file.exists())
+		}
+
+		protected kids() {
+			return [] as readonly $mol_file[]
+		}
 
 		resolve(path: string): $mol_file {
 			throw new Error('implement')
@@ -160,7 +307,7 @@ namespace $ {
 			throw new Error('implement')
 		}
 
-		append( next : Uint8Array | string ) {}
+		protected append( next : Uint8Array | string ) {}
 		
 		find(
 			include? : RegExp ,
@@ -202,4 +349,6 @@ namespace $ {
 		}
 		
 	}
+
+	$mol_file.flusher()
 }

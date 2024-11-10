@@ -12,6 +12,7 @@ namespace $ {
 			) => boolean | void
 		) {
 			const pending_urls = {} as Record<string, Promise<unknown> | undefined>
+			const wrapped = $mol_wire_async(mdl)
 
 			const cb = async (
 				req : typeof $node.express.request ,
@@ -19,13 +20,14 @@ namespace $ {
 				next : (err?: unknown) => any
 			) => {
 				try {
-					const call_next = await $mol_wire_async(mdl)(req, res)
+					const call_next = await wrapped(req, res)
 					if (! call_next) return
 					await Promise.resolve()
 					delete pending_urls[req.url]
 					next()
 				} catch (err) {
 					delete pending_urls[req.url]
+					console.error(err)
 					next(err)
 				}
 			}

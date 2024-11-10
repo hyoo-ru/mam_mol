@@ -27,27 +27,20 @@ namespace $ {
 		command : readonly string[] | string
 		dir : string
 		timeout?: number
-		dirty?: boolean
 		env?: Record<string, string | undefined>
 	}
 
 	export class $mol_run extends $mol_object {
 
-		protected static lock = new $mol_lock
-
-		static lock_run<Result>(cb: () => Result) { return this.lock.run(cb) }
-
 		static spawn(options: $mol_run_options) {
 			const sync = ! this.$.$mol_env()['MOL_RUN_ASYNC'] || ! Boolean($mol_wire_auto())
 			const env = options.env ?? this.$.$mol_env()
 
-			const cb = () => $mol_wire_sync(this).spawn_async( { ...options, sync, env } )
-
-			return ! sync && options.dirty ? this.lock_run(cb) : cb()
+			return $mol_wire_sync(this).spawn_async( { ...options, sync, env } )
 		}
 
 		static spawn_async(
-			{ dir, sync, timeout, command, env, dirty }: $mol_run_options & { sync?: boolean }
+			{ dir, sync, timeout, command, env }: $mol_run_options & { sync?: boolean }
 		) {
 			const args_raw = typeof command === 'string' ? command.split( ' ' ) : command
 			const [ app, ...args ] = args_raw
