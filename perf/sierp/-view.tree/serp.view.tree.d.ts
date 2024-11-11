@@ -1,26 +1,26 @@
 declare namespace $ {
 
-	type $mol_view__sub__J2N8JZHP = $mol_type_enforce<
+	type $mol_view__sub__0C0IFWDP = $mol_type_enforce<
 		ReturnType< $mol_perf_sierp['dots'] >
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_perf_sierp_dot__left__53EKV09D = $mol_type_enforce<
+	type $mol_perf_sierp_dot__left__ZP6FGOFN = $mol_type_enforce<
 		ReturnType< $mol_perf_sierp['left'] >
 		,
 		ReturnType< $mol_perf_sierp_dot['left'] >
 	>
-	type $mol_perf_sierp_dot__top__T9XL1Y2J = $mol_type_enforce<
+	type $mol_perf_sierp_dot__top__RO73M6G7 = $mol_type_enforce<
 		ReturnType< $mol_perf_sierp['top'] >
 		,
 		ReturnType< $mol_perf_sierp_dot['top'] >
 	>
-	type $mol_perf_sierp_dot__size__FKMVF10I = $mol_type_enforce<
+	type $mol_perf_sierp_dot__size__H1EDO8W4 = $mol_type_enforce<
 		ReturnType< $mol_perf_sierp['size'] >
 		,
 		ReturnType< $mol_perf_sierp_dot['size'] >
 	>
-	type $mol_perf_sierp_dot__text__LN1V6Y5O = $mol_type_enforce<
+	type $mol_perf_sierp_dot__text__T952W489 = $mol_type_enforce<
 		ReturnType< $mol_perf_sierp['text'] >
 		,
 		ReturnType< $mol_perf_sierp_dot['text'] >

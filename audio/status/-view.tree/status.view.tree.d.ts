@@ -1,21 +1,21 @@
 declare namespace $ {
 
-	type $mol_button_minor__click__3SGIWVCN = $mol_type_enforce<
+	type $mol_button_minor__click__WIPHXWF6 = $mol_type_enforce<
 		ReturnType< $mol_audio_status['wakeup'] >
 		,
 		ReturnType< $mol_button_minor['click'] >
 	>
-	type $mol_button_minor__enabled__BJJEQATL = $mol_type_enforce<
+	type $mol_button_minor__enabled__K1XKYVOB = $mol_type_enforce<
 		ReturnType< $mol_audio_status['wakeup_enabled'] >
 		,
 		ReturnType< $mol_button_minor['enabled'] >
 	>
-	type $mol_button_minor__hint__UZ4FX92J = $mol_type_enforce<
+	type $mol_button_minor__hint__WBHC04AZ = $mol_type_enforce<
 		ReturnType< $mol_audio_status['status_name'] >
 		,
 		ReturnType< $mol_button_minor['hint'] >
 	>
-	type $mol_button_minor__sub__7M1KPZ96 = $mol_type_enforce<
+	type $mol_button_minor__sub__XG31JSDL = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_minor['sub'] >
