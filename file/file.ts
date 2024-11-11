@@ -46,15 +46,18 @@ namespace $ {
 			// Лучше ограничить mam-ом
 			const root = this.$.$mol_file.watch_root ?? this
 			if ( this !== root ) {
-				// Если родитель удалился, надо ресетнуть все дочерние на любой глубине
-				// Родитель может удалиться, потом создасться, а дочерняя папка только удалиться.
-				// Поэтому parent.exists() не запустит перевычисления
-				// parent.version() меняется не только при удалении, будет ложное срабатывание
-				// события вотчера addDir сбрасывает только parent.sub(), а parent.version() может остаться та же
-				// тогда дочерний не перзапустится
-				// Если addDir будет сбрасывать parent.version(), то будет лишний раз перевычислен parent, хоть и он сам не поменялся
+				/*
+				Если родитель удалился, надо ресетнуть все дочерние на любой глубине
+				Родитель может удалиться, потом создасться, а дочерняя папка только удалиться.
+				Поэтому parent.exists() не запустит перевычисления
+
+				parent.version() меняется не только при удалении, будет ложное срабатывание
+				события вотчера addDir сбрасывает только parent.sub(), а parent.version() может остаться та же
+				тогда дочерний не перзапустится
+				Если addDir будет сбрасывать parent.version(), то будет лишний раз перевычислен parent, хоть и он сам не поменялся
+				*/
+
 				parent.version()
-				// parent.sub_version()
 			}
 
 			if( virt ) return next ?? null
@@ -96,26 +99,14 @@ namespace $ {
 			if (! this.watching) return
 
 			this.frame?.destructor()
-			this.frame = new this.$.$mol_after_timeout(500, () => {
+			this.frame = new this.$.$mol_after_timeout(this.watch_debounce(), () => {
 				if (! this.watching) return
 				this.watching = false
 				$mol_wire_async(this).flush()
 			} )
 		}
 
-		@ $mol_mem
-		static flush_counter(reset?: null): number {
-			return 1 + ( $mol_wire_probe(() => this.flush_counter()) ?? 0 )
-		}
-
-		@ $mol_mem
-		static flusher() {
-			try {
-				// this.flush()
-			} catch (e) {
-				this.$.$mol_fail_log(e)
-			}
-		}
+		static watch_debounce() { return 500 }
 
 		@ $mol_action
 		static flush() {
@@ -127,12 +118,22 @@ namespace $ {
 
 			for (const file of this.added) {
 				const parent = file.parent()
-				if ($mol_wire_probe(() => parent.sub())) parent.sub(null)
-				file.reset()
-				// file.sub_version(null)
+
+				try {
+					if ( $mol_wire_probe(() => parent.sub())) parent.sub(null)
+					file.reset()
+				} catch (error) {
+					if ($mol_fail_catch(error)) $mol_fail_log(error)
+				}
 			}
 
-			this.changed.forEach(file => file.reset())
+			for (const file of this.changed) {
+				try {
+					file.reset()
+				} catch (error) {
+					if ($mol_fail_catch(error)) $mol_fail_log(error)
+				}
+			}
 
 			this.added.clear()
 			this.changed.clear()
@@ -141,25 +142,42 @@ namespace $ {
 			this.watching = true
 		}
 
-		@ $mol_mem
-		protected sub_version(reset?: null): number {
-			return 1 + ( $mol_wire_probe(() => this.sub_version()) ?? 0 )
-		}
-
 		protected static watching = true
 
-		// @ $mol_action
-		static watch_off<Result>(cb: () => Result, path: string) {
+		protected static lock = new $mol_lock
+
+		@ $mol_action
+		protected static watching_off(path: string) {
+			this.watching = false
+			/*
+			watch запаздывает и событие может прилететь через 3 сек после окончания сайд эффекта
+			поэтому добавляем папку, которую меняет side_effect
+			Когда дойдет до выполнения flush, он ресетнет ее
+			
+			Иначе будут лишние срабатывания
+			Например, удалили hyoo/board, watch ресетит и exists начинает отдавать false, срабатывает git clone
+			Сразу после него событие addDir еще не успело прийти,
+			на следующем перезапуске вызывается git pull, т.к.
+			с точки зрения реактивной системы hyoo/board еще не существует.
+			*/
+			this.changed.add(this.$.$mol_file.absolute(path))
+		}
+	
+		static watch_off<Result>(side_effect: () => Result, affected_dir: string) {
+			// ждем, пока выполнится предыдущий watch_off
+			const unlock = this.lock.grab()
+			this.watching_off(affected_dir)
+
 			try {
-				this.watching = false
-				const result = cb()
-				// this.flush_counter(null)
-				// watch запаздывает и событие может прилететь через 3 сек после окончания git pull
-				this.$.$mol_file.absolute(path).reset()
+				const result = side_effect()
 				this.flush()
+				unlock()
 				return result
-			} catch (e) {
-				if ( ! $mol_promise_like(e) ) this.flush()
+			} catch(e) {
+				if (! $mol_promise_like(e)) {
+					this.flush()
+					unlock()
+				}
 				$mol_fail_hidden(e)
 			}
 		}
@@ -180,6 +198,58 @@ namespace $ {
 		protected ensure() {}
 		protected drop() {}
 		protected copy(to: string) {}
+		protected read() { return new Uint8Array }
+		protected write(buffer: Uint8Array) { }
+		protected kids() {
+			return [] as readonly $mol_file[]
+		}
+		stream_read() { return new ReadableStream }
+		stream_write() { return new WritableStream }
+
+		@ $mol_mem
+		buffer( next? : Uint8Array ) {
+
+			if( next === undefined ) {
+
+				if( !this.stat() ) return new Uint8Array
+				
+				const prev = $mol_mem_cached( ()=> this.buffer() )
+					
+				next = this.read()
+
+				if( prev !== undefined && !$mol_compare_array( prev, next ) ) {
+					this.$.$mol_log3_rise({
+						place: `$mol_file_node.buffer()`,
+						message: 'Changed' ,
+						path: this.relate() ,
+					})
+				}
+
+				return next
+			
+			}
+			
+			this.parent().exists( true )
+			
+			this.stat( this.stat_make(next.length), 'virt' )
+
+			this.write(next)
+
+			return next
+
+		}
+
+		@ $mol_action
+		stat_make(size: number) {
+			const now = new Date()
+			return {
+				type: 'file',
+				size,
+				atime: now,
+				mtime: now,
+				ctime: now,
+			} as const
+		}
 
 		@ $mol_mem_key
 		clone(to: string) {
@@ -253,10 +323,9 @@ namespace $ {
 			return match ? match[ 1 ].substring( 1 ) : ''
 		}
 
-		@ $mol_mem
-		buffer( next? : Uint8Array ) { return next ?? new Uint8Array }
-
 		text(next?: string, virt?: 'virt') {
+			// Если пушим в text, то при сбросе таргета надо перезапускать пуш
+			// Например файл удалили, потом снова создали, версия поменялась - перезаписываем
 			if (next !== undefined) this.version()
 			return this.text_int(next, virt)
 		}
@@ -264,14 +333,7 @@ namespace $ {
 		@ $mol_mem
 		text_int(next?: string, virt?: 'virt') {
 			if( virt ) {
-				const now = new Date
-				this.stat( {
-					type: 'file',
-					size: 0,
-					atime: now,
-					mtime: now,
-					ctime: now,
-				}, 'virt' )
+				this.stat( this.stat_make(0), 'virt' )
 				return next!
 			}
 
@@ -295,10 +357,6 @@ namespace $ {
 			return this.kids().filter(file => file.exists())
 		}
 
-		protected kids() {
-			return [] as readonly $mol_file[]
-		}
-
 		resolve(path: string): $mol_file {
 			throw new Error('implement')
 		}
@@ -307,8 +365,6 @@ namespace $ {
 			throw new Error('implement')
 		}
 
-		protected append( next : Uint8Array | string ) {}
-		
 		find(
 			include? : RegExp ,
 			exclude? : RegExp
@@ -340,15 +396,10 @@ namespace $ {
 			}
 		}
 		
-		open( ... modes: readonly ( 'create' | 'exists_truncate' | 'exists_fail' | 'read_only' | 'write_only' | 'read_write' | 'append' )[] ) {
-			return 0
-		}
-		
 		toJSON() {
 			return this.path()
 		}
 		
 	}
 
-	$mol_file.flusher()
 }

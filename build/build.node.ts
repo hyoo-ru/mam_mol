@@ -1194,8 +1194,11 @@ namespace $ {
 				}
 				
 			} catch( error ) {
-				if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
-				$mol_fail_log( error )
+				if ($mol_fail_catch(error)) {
+					if (! (error as Error).message.match(/code E404/)) {
+						console.error( error )
+					}
+				}
 			}
 
 			++ version[2]

@@ -278,7 +278,7 @@ namespace $ {
 					...build.bundleFiles([ bundle.path() , [ 'node' ] ])
 				]
 				
-				for( const src of sources ) src.stat()
+				for( const src of sources ) src.version()
 			} catch (error) {
 				if ($mol_fail_catch(error)) {
 					this.$.$mol_log3_fail({
@@ -328,9 +328,9 @@ namespace $ {
 			
 			try {
 				
-				for( const file of build.bundle([ path, 'node.js' ]) ) file.stat()
-				for( const file of build.bundle([ path, 'node.audit.js' ]) ) file.stat()
-				for( const file of build.bundle([ path, 'node.test.js' ]) ) file.stat()
+				for( const file of build.bundle([ path, 'node.js' ]) ) file.version()
+				for( const file of build.bundle([ path, 'node.audit.js' ]) ) file.version()
+				for( const file of build.bundle([ path, 'node.test.js' ]) ) file.version()
 			
 			} catch( error: any ) {
 				

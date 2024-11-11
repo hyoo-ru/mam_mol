@@ -32,8 +32,12 @@ namespace $ {
 
 	export class $mol_run extends $mol_object {
 
+		static async_enabled() {
+			return Boolean(this.$.$mol_env()['MOL_RUN_ASYNC'])
+		}
+
 		static spawn(options: $mol_run_options) {
-			const sync = ! this.$.$mol_env()['MOL_RUN_ASYNC'] || ! Boolean($mol_wire_auto())
+			const sync = ! this.async_enabled() || ! Boolean($mol_wire_auto())
 			const env = options.env ?? this.$.$mol_env()
 
 			return $mol_wire_sync(this).spawn_async( { ...options, sync, env } )

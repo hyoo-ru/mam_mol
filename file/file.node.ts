@@ -23,20 +23,6 @@ namespace $ {
 	function buffer_normalize(buf: Buffer): Uint8Array {
 		return new Uint8Array(buf.buffer, buf.byteOffset, buf.byteLength)
 	}
-	
-	export enum $mol_file_mode_open {
-		/** create if it doesn't already exist */
-		create = $node.fs.constants.O_CREAT,
-		/** truncate to zero size if it already exists */
-		exists_truncate = $node.fs.constants.O_TRUNC,
-		/** throw exception if it already exists */
-		exists_fail = $node.fs.constants.O_EXCL,
-		read_only = $node.fs.constants.O_RDONLY,
-		write_only = $node.fs.constants.O_WRONLY,
-		read_write = $node.fs.constants.O_RDWR,
-		/** data will be appended to the end */
-		append = $node.fs.constants.O_APPEND,
-	}
 
 	export class $mol_file_node extends $mol_file {
 
@@ -111,65 +97,36 @@ namespace $ {
 		protected override drop() {
 			$node.fs.unlinkSync( this.path() )
 		}
-		
-		@ $mol_mem
-		override buffer( next? : Uint8Array ) {
 
+		@ $mol_action
+		protected override read() {
 			const path = this.path()
-			if( next === undefined ) {
 
-				if( !this.stat() ) return new Uint8Array
-				
-				try {
-
-					const prev = $mol_mem_cached( ()=> this.buffer() )
-					
-					next = buffer_normalize( $node.fs.readFileSync( path ) )
-
-					if( prev !== undefined && !$mol_compare_array( prev, next ) ) {
-						this.$.$mol_log3_rise({
-							place: `$mol_file_node.buffer()`,
-							message: 'Changed' ,
-							path: this.relate() ,
-						})
-					}
-
-					return next
-
-				} catch( error: any ) {
-					if (this.$.$mol_fail_catch(error)) {
-						error.message += '\n' + path
-					}
-					return this.$.$mol_fail_hidden( error )
-
+			try {
+				return buffer_normalize($node.fs.readFileSync( path ))
+			} catch( error: any ) {
+				if (this.$.$mol_fail_catch(error)) {
+					error.message += '\n' + path
 				}
-				
+
+				return this.$.$mol_fail_hidden( error )
 			}
-			
-			this.parent().exists( true )
-			
-			const now = new Date
-			this.stat( {
-				type: 'file',
-				size: next.length,
-				atime: now,
-				mtime: now,
-				ctime: now,
-			}, 'virt' )
+		}
+
+		@ $mol_action
+		protected override write(buffer: Uint8Array) {
+			const path = this.path()
 
 			try {
 
-				$node.fs.writeFileSync( path, next )
+				$node.fs.writeFileSync( path, buffer )
 
 			} catch( error: any ) {
 				if (this.$.$mol_fail_catch(error)) {
 					error.message += '\n' + path
 				}
 				return this.$.$mol_fail_hidden( error )
-
 			}
-			
-			return next
 
 		}
 
@@ -198,23 +155,25 @@ namespace $ {
 			return $node.path.relative( base.path() , this.path() ).replace( /\\/g , '/' )
 		}
 
-		protected override append( next : Uint8Array | string ) {
-			const path = this.path()
-			try {
-				$node.fs.appendFileSync( path , next )
-			} catch( e: any ) {
-				if (this.$.$mol_fail_catch(e)) {
-					e.message += '\n' + path
-				}
-				return this.$.$mol_fail_hidden(e)
-			}
+		@ $mol_mem
+		override stream_read() {
+			const { Readable } = $node['node:stream'] as typeof import('stream')
+			const ctl = new AbortController
+			const stream = $node.fs.createReadStream(this.path(), { signal: ctl.signal })
+			const destructor = () => ctl.abort()
+
+			return Object.assign(Readable.toWeb(stream), { destructor }) as ReadableStream
 		}
-		
-		override open( ... modes: readonly ( keyof typeof $mol_file_mode_open )[] ) {
-			return $node.fs.openSync(
-				this.path(),
-				modes.reduce( ( res, mode )=> res | $mol_file_mode_open[ mode ], 0 ),
-			)
+
+		@ $mol_mem
+		override stream_write() {
+			const { Writable } = $node['node:stream'] as typeof import('stream')
+
+			const ctl = new AbortController
+			const stream = $node.fs.createWriteStream(this.path(), { signal: ctl.signal })
+			const destructor = () => ctl.abort()
+
+			return Object.assign(Writable.toWeb(stream), { destructor }) as WritableStream
 		}
 
 	}

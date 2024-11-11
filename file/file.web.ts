@@ -41,7 +41,6 @@ namespace $ {
 			throw new Error('$mol_file_web.drop() not implemented')
 		}
 
-		@ $mol_mem
 		protected override kids() : readonly $mol_file[] {
 			throw new Error('$mol_file_web.sub() not implemented')
 		}
@@ -49,10 +48,7 @@ namespace $ {
 		override relate( base = ( this.constructor as typeof $mol_file ).relative( '.' )): string {
 			throw new Error('$mol_file_web.relate() not implemented')
 		}
-		
-		override append( next : Uint8Array | string ) {
-			throw new Error('$mol_file_web.append() not implemented')
-		}
+
 	}
 
 	$.$mol_file = $mol_file_web
