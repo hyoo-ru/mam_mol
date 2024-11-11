@@ -55,12 +55,12 @@ namespace $ {
 
 		}
 
-		connections = new Set< InstanceType<$node['ws']> >()
+		connections = new Set< InstanceType<$node['ws']['WebSocket']> >()
 
 		@ $mol_mem
 		socket() {
 
-			const socket = new $node.ws.Server({
+			const socket = new $node.ws.WebSocket.Server({
 				server : this.http() ,
 				// perMessageDeflate: {
 				// 	zlibDeflateOptions: {
