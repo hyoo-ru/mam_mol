@@ -93,6 +93,7 @@ namespace $.$$ {
       }
   
       handle_touch_start(event: TouchEvent) {
+        event.preventDefault();
         this.status("drag");
   
         this.dragged_task = event.target as HTMLElement;
