@@ -24,10 +24,28 @@ namespace $ {
 		return new Uint8Array(buf.buffer, buf.byteOffset, buf.byteLength)
 	}
 
+	enum file_modes {
+		/** create if it doesn't already exist */
+		create = $node.fs.constants.O_CREAT,
+		/** truncate to zero size if it already exists */
+		exists_truncate = $node.fs.constants.O_TRUNC,
+		/** throw exception if it already exists */
+		exists_fail = $node.fs.constants.O_EXCL,
+		read_only = $node.fs.constants.O_RDONLY,
+		write_only = $node.fs.constants.O_WRONLY,
+		read_write = $node.fs.constants.O_RDWR,
+		/** data will be appended to the end */
+		append = $node.fs.constants.O_APPEND,
+	}
+
+	function mode_mask(modes: readonly $mol_file_mode[]) {
+		return modes.reduce( ( res, mode )=> res | file_modes[ mode ], 0 )
+	}
+
 	export class $mol_file_node extends $mol_file {
 
-		static relative( path : string ) {
-			return this.absolute( $node.path.resolve( this.base, path ).replace( /\\/g , '/' ) )
+		static relative<This extends typeof $mol_file>(this: This, path : string ) {
+			return this.absolute<This>( $node.path.resolve( this.base, path ).replace( /\\/g , '/' ) )
 		}
 
 		@ $mol_mem_key
@@ -148,32 +166,52 @@ namespace $ {
 		}
 		
 		override resolve( path : string ) {
-			return ( this.constructor as typeof $mol_file ).relative( $node.path.join( this.path() , path ) )
+			return ( this.constructor as typeof $mol_file )
+				.relative( $node.path.join( this.path() , path ) ) as this
 		}
 		
 		override relate( base = ( this.constructor as typeof $mol_file ).relative( '.' )) {
 			return $node.path.relative( base.path() , this.path() ).replace( /\\/g , '/' )
 		}
 
-		@ $mol_mem
-		override stream_read() {
-			const { Readable } = $node['node:stream'] as typeof import('stream')
-			const ctl = new AbortController
-			const stream = $node.fs.createReadStream(this.path(), { signal: ctl.signal })
-			const destructor = () => ctl.abort()
-
-			return Object.assign(Readable.toWeb(stream), { destructor }) as ReadableStream
+		@ $mol_mem_key
+		override readable({ modes }: { modes: readonly $mol_file_mode[] }) {
+			return this.handle(modes).readableWebStream({ type: 'bytes' }) as ReadableStream<Uint8Array>
 		}
 
-		@ $mol_mem
-		override stream_write() {
+		@ $mol_mem_key
+		override writable({ modes, start }: { modes: readonly $mol_file_mode[], start?: number }) {
 			const { Writable } = $node['node:stream'] as typeof import('stream')
+			const stream = this.handle(modes).createWriteStream({
+				start,
+				// encoding?: BufferEncoding | null | undefined;
+				// autoClose?: boolean | undefined;
+				// emitClose?: boolean | undefined;
+				// start?: number | undefined;
+				// highWaterMark?: number | undefined;
+				// flush?: boolean | undefined;		
+			})
 
-			const ctl = new AbortController
-			const stream = $node.fs.createWriteStream(this.path(), { signal: ctl.signal })
-			const destructor = () => ctl.abort()
+			const web = Writable.toWeb(stream)
 
-			return Object.assign(Writable.toWeb(stream), { destructor }) as WritableStream
+			return Object.assign(web, {
+				destructor: () => web.close()
+			})
+		}
+
+		protected handle(modes: readonly $mol_file_mode[]) {
+			const mode = mode_mask(modes)
+
+			const handle = $mol_wire_sync($node.fs.promises).open(this.path(), mode)
+
+			return $mol_wire_sync(handle)
+		}
+
+		open( ... modes: readonly $mol_file_mode[] ) {
+			return $node.fs.openSync(
+				this.path(),
+				mode_mask(modes)
+			)
 		}
 
 	}

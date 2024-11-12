@@ -6,8 +6,10 @@ namespace $ {
 		
 		@ $mol_mem_key
 		static root( [ root, paths ] : [root: string, paths: readonly string[] ] ) {
+			this.$.$mol_file.watch_root = root
+
 			return this.make({
-				root : ()=> this.$.$mol_file.root( root ) ,
+				root : ()=> this.$.$mol_file.absolute( root ) ,
 				paths: $mol_const(paths)
 			})
 		}

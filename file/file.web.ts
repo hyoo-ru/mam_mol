@@ -2,8 +2,8 @@ namespace $ {
 	
 	export class $mol_file_web extends $mol_file {
 
-		static override relative( path : string ) {
-			return this.absolute( new URL( path , this.base ).toString() )
+		static override relative<This extends typeof $mol_file>(this: This, path : string ) {
+			return this.absolute<This>( new URL( path , this.base ).toString() )
 		}
 
 		static base = $mol_dom_context.document?.currentScript
@@ -30,7 +30,7 @@ namespace $ {
 				if( prev === res ) break
 			}
 			
-			return ( this.constructor as typeof $mol_file_web ).absolute( res )
+			return ( this.constructor as typeof $mol_file ).absolute( res ) as this
 		}
 
 		protected override ensure() {
@@ -41,7 +41,7 @@ namespace $ {
 			throw new Error('$mol_file_web.drop() not implemented')
 		}
 
-		protected override kids() : readonly $mol_file[] {
+		protected override kids() : readonly this[] {
 			throw new Error('$mol_file_web.sub() not implemented')
 		}
 		

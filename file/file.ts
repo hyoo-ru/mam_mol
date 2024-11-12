@@ -10,18 +10,20 @@ namespace $ {
 		ctime: Date
 	}
 
+	export type $mol_file_mode = 'create' | 'exists_truncate' | 'exists_fail' | 'read_only' | 'write_only' | 'read_write' | 'append' 
+
 	// export class $mol_file_not_found extends Error {}
 
 	export class $mol_file extends $mol_object {
 		
 		@ $mol_mem_key
-		static absolute( path : string ) {
-			return this.make({
+		static absolute<This extends typeof $mol_file>(this: This, path : string ) {
+			return this.make<typeof $mol_file>({
 				path : $mol_const( path )
-			})
+			}) as InstanceType< This >
 		}
 
-		static relative( path : string ) : $mol_file {
+		static relative<This extends typeof $mol_file>(this: This, path : string ) : InstanceType<This> {
 			throw new Error( 'Not implemented yet' )
 		}
 		
@@ -36,7 +38,7 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		stat(next? : $mol_file_stat | null, virt?: 'virt') {
+		protected stat(next? : $mol_file_stat | null, virt?: 'virt') {
 
 			const path = this.path()
 			const parent = this.parent()
@@ -45,7 +47,7 @@ namespace $ {
 			// Отслеживать проверку наличия родительской папки не стоит до корня диска
 			// Лучше ограничить mam-ом
 			const root = this.$.$mol_file.watch_root ?? this
-			if ( this !== root ) {
+			if ( path !== root ) {
 				/*
 				Если родитель удалился, надо ресетнуть все дочерние на любой глубине
 				Родитель может удалиться, потом создасться, а дочерняя папка только удалиться.
@@ -201,10 +203,12 @@ namespace $ {
 		protected read() { return new Uint8Array }
 		protected write(buffer: Uint8Array) { }
 		protected kids() {
-			return [] as readonly $mol_file[]
+			return [] as readonly this[]
 		}
-		stream_read() { return new ReadableStream }
-		stream_write() { return new WritableStream }
+
+		readable(opts: { modes: readonly $mol_file_mode[] }) { return new ReadableStream<Uint8Array>() }
+		writable(opts: { modes: readonly $mol_file_mode[] }) { return new WritableStream<Uint8Array>() }
+		// open( ... modes: readonly $mol_file_mode[] ) { return 0 }
 
 		@ $mol_mem
 		buffer( next? : Uint8Array ) {
@@ -255,7 +259,7 @@ namespace $ {
 		clone(to: string) {
 			if (! this.exists() ) return null
 
-			const target = this.$.$mol_file.absolute(to)
+			const target = (this.constructor as typeof $mol_file).absolute(to) as this
 
 			try {
 				this.version()
@@ -271,13 +275,7 @@ namespace $ {
 			return null
 		}
 
-		protected static watch_root = null as null | $mol_file
-
-		static root( path: string) {
-			this.watch_root = this.absolute( path )
-			return this.watch_root
-		}
-
+		static watch_root = ''
 
 		watcher() {
 			console.warn('$mol_file_web.watcher() not implemented')
@@ -357,7 +355,7 @@ namespace $ {
 			return this.kids().filter(file => file.exists())
 		}
 
-		resolve(path: string): $mol_file {
+		resolve(path: string): this {
 			throw new Error('implement')
 		}
 
@@ -369,7 +367,7 @@ namespace $ {
 			include? : RegExp ,
 			exclude? : RegExp
 		) {
-			const found = [] as $mol_file[]
+			const found = [] as typeof this[]
 			const sub = this.sub()
 
 			for (const child of sub) {
