@@ -10,8 +10,6 @@ namespace $ {
 		ctime: Date
 	}
 
-	export type $mol_file_mode = 'create' | 'exists_truncate' | 'exists_fail' | 'read_only' | 'write_only' | 'read_write' | 'append' 
-
 	// export class $mol_file_not_found extends Error {}
 
 	export class $mol_file extends $mol_object {
@@ -46,8 +44,7 @@ namespace $ {
 
 			// Отслеживать проверку наличия родительской папки не стоит до корня диска
 			// Лучше ограничить mam-ом
-			const root = this.$.$mol_file.watch_root ?? this
-			if ( path !== root ) {
+			if ( path !== this.$.$mol_file.watch_root && path !== parent.path() ) {
 				/*
 				Если родитель удалился, надо ресетнуть все дочерние на любой глубине
 				Родитель может удалиться, потом создасться, а дочерняя папка только удалиться.
@@ -167,7 +164,7 @@ namespace $ {
 	
 		static watch_off<Result>(side_effect: () => Result, affected_dir: string) {
 			// ждем, пока выполнится предыдущий watch_off
-			const unlock = this.lock.grab()
+			const unlock = () => {} // this.lock.grab()
 			this.watching_off(affected_dir)
 
 			try {
@@ -205,9 +202,19 @@ namespace $ {
 		protected kids() {
 			return [] as readonly this[]
 		}
+		static headers() { return {} as Record<string, string> }
+		headers() { return (this.constructor as typeof $mol_file).headers() }
 
-		readable(opts: { modes: readonly $mol_file_mode[] }) { return new ReadableStream<Uint8Array>() }
-		writable(opts: { modes: readonly $mol_file_mode[] }) { return new WritableStream<Uint8Array>() }
+		@ $mol_mem_key
+		readable(opts: { start?: number, end?: number }) {
+			return new ReadableStream<Uint8Array>
+		}
+
+		@ $mol_mem_key
+		writable(opts: { start?: number }) {
+			return new WritableStream<Uint8Array>
+		}
+
 		// open( ... modes: readonly $mol_file_mode[] ) { return 0 }
 
 		@ $mol_mem
@@ -359,8 +366,10 @@ namespace $ {
 			throw new Error('implement')
 		}
 
-		relate( base?: $mol_file ): string {
-			throw new Error('implement')
+		relate( base = ( this.constructor as typeof $mol_file ).relative( '.' )): string {
+			const base_path = base.path()
+			const path = this.path()
+			return path.startsWith(base_path) ? path.slice(base_path.length) : path
 		}
 
 		find(

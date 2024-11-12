@@ -38,6 +38,8 @@ namespace $ {
 		append = $node.fs.constants.O_APPEND,
 	}
 
+	export type $mol_file_mode = keyof typeof file_modes
+
 	function mode_mask(modes: readonly $mol_file_mode[]) {
 		return modes.reduce( ( res, mode )=> res | file_modes[ mode ], 0 )
 	}
@@ -175,36 +177,30 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		override readable({ modes }: { modes: readonly $mol_file_mode[] }) {
-			return this.handle(modes).readableWebStream({ type: 'bytes' }) as ReadableStream<Uint8Array>
+		override readable(opts: { start?: number, end?: number }) {
+			const { Readable } = $node['node:stream'] as typeof import('stream')
+			const stream = $node.fs.createReadStream(this.path(), {
+				flags: 'r',
+				autoClose: true,
+				start: opts?.start,
+				end: opts?.end,
+				encoding: 'binary',
+			})
+
+			return Readable.toWeb(stream) as ReadableStream<Uint8Array>
 		}
 
-		@ $mol_mem_key
-		override writable({ modes, start }: { modes: readonly $mol_file_mode[], start?: number }) {
+		@ $mol_mem
+		override writable(opts?: { start?: number }) {
 			const { Writable } = $node['node:stream'] as typeof import('stream')
-			const stream = this.handle(modes).createWriteStream({
-				start,
-				// encoding?: BufferEncoding | null | undefined;
-				// autoClose?: boolean | undefined;
-				// emitClose?: boolean | undefined;
-				// start?: number | undefined;
-				// highWaterMark?: number | undefined;
-				// flush?: boolean | undefined;		
+			const stream = $node.fs.createWriteStream(this.path(), {
+				flags: 'w+',
+				autoClose: true,
+				start: opts?.start,
+				encoding: 'binary',
 			})
 
-			const web = Writable.toWeb(stream)
-
-			return Object.assign(web, {
-				destructor: () => web.close()
-			})
-		}
-
-		protected handle(modes: readonly $mol_file_mode[]) {
-			const mode = mode_mask(modes)
-
-			const handle = $mol_wire_sync($node.fs.promises).open(this.path(), mode)
-
-			return $mol_wire_sync(handle)
+			return Writable.toWeb(stream) as WritableStream<Uint8Array>
 		}
 
 		open( ... modes: readonly $mol_file_mode[] ) {
@@ -215,6 +211,7 @@ namespace $ {
 		}
 
 	}
+
 
 	$.$mol_file = $mol_file_node
 }
