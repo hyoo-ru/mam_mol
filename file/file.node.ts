@@ -125,11 +125,16 @@ namespace $ {
 			try {
 				return buffer_normalize($node.fs.readFileSync( path ))
 			} catch( error: any ) {
-				if (this.$.$mol_fail_catch(error)) {
-					error.message += '\n' + path
+
+				if (! $mol_promise_like(error)) {
+					error = new $mol_file_error(
+						error.message + '\n' + path,
+						{ code: error.code === 'ENOENT' ? 'not found' : null },
+						error
+					)
 				}
 
-				return this.$.$mol_fail_hidden( error )
+				$mol_fail_hidden( error )
 			}
 		}
 
@@ -152,6 +157,7 @@ namespace $ {
 
 		protected override kids() {
 			const path = this.path()
+
 			try {
 				const kids = $node.fs.readdirSync( path )
 					.filter( name => !/^\.+$/.test( name ) )
