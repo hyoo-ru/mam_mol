@@ -1,6 +1,6 @@
 declare namespace $ {
 
-	type $mol_chat__seed__4CBF42WO = $mol_type_enforce<
+	type $mol_chat__seed__H1VGOAG5 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_chat['seed'] >
