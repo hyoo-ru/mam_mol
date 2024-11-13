@@ -125,13 +125,8 @@ namespace $ {
 			try {
 				return buffer_normalize($node.fs.readFileSync( path ))
 			} catch( error: any ) {
-
 				if (! $mol_promise_like(error)) {
-					error = new $mol_file_error(
-						error.message + '\n' + path,
-						{ code: error.code === 'ENOENT' ? 'not found' : null },
-						error
-					)
+					error.message += '\n' + path
 				}
 
 				$mol_fail_hidden( error )

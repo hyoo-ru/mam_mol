@@ -4,14 +4,6 @@ namespace $ {
 			return this.absolute<This>( new URL( path , this.base ).toString() )
 		}
 
-		override watcher() {
-			console.warn('$mol_file_web.watcher() not implemented')
-
-			return {
-				destructor() {}
-			}
-		}
-
 		override resolve( path : string ) {
 			let res = this.path() + '/' + path
 
@@ -30,7 +22,8 @@ namespace $ {
 			return ( this.constructor as typeof $mol_file_base ).absolute( res ) as this
 		}
 
-		headers() { return {} as Record<string, string> }
+		static headers() { return {} as Record<string, string> }
+		headers() { return (this.constructor as typeof $mol_file_webdav).headers() }
 
 		protected fetch(init: RequestInit) {
 			return this.$.$mol_fetch.success(this.path(), {
@@ -43,12 +36,18 @@ namespace $ {
 		}
 
 		protected override read() {
-			const response = this.$.$mol_fetch.response(this.path(), {
-				headers: this.headers()
-			})
-			if (response.native.status === 404) return new Uint8Array
+			try {
+				const response = this.fetch({})
+				return new Uint8Array(response.buffer())
+			} catch (error) {
+				if (
+					error instanceof Error
+					&& error.cause instanceof $mol_fetch_response
+					&& error.cause.native.status === 404
+				)  return new Uint8Array
 
-			return new Uint8Array(response.buffer())
+				$mol_fail_hidden(error)
+			}
 		}
 
 		protected override write( body : Uint8Array ) { this.fetch({ method: 'PUT', body }) }
@@ -98,22 +97,8 @@ namespace $ {
 			}).stream() || $mol_fail(new Error('Not found'))
 		}
 
-		protected override info(): $mol_file_stat {
-			const response = this.fetch({ method: 'HEAD' })
-			const headers = response.headers()
-			let size = Number(headers.get('Content-Length'))
-			if (Number.isNaN(size)) size = 0
-			const last = headers.get('Last-Modified')
-
-			const mtime = last ? new Date(last) : new Date()
-
-			return {
-				type: 'file',
-				size,
-				mtime,
-				atime: mtime,
-				ctime: mtime,
-			}
+		protected override info() {
+			return this.kids().at(0)?.stat() ?? null
 		}
 	}
 

@@ -10,8 +10,6 @@ namespace $ {
 		ctime: Date
 	}
 
-	export class $mol_file_error extends $mol_error_mix<{ code: 'not found' | null }> {}
-
 	export class $mol_file extends $mol_file_base {}
 
 }

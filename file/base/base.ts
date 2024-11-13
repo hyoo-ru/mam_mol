@@ -178,7 +178,7 @@ namespace $ {
 
 		@ $mol_mem
 		version() {
-			return this.modified()?.getTime().toString( 36 ).toUpperCase() ?? ''
+			return this.stat()?.mtime.getTime().toString( 36 ).toUpperCase() ?? ''
 		}
 
 		protected info( path: string ) { return null as null | $mol_file_stat }
@@ -190,8 +190,6 @@ namespace $ {
 		protected kids() {
 			return [] as readonly this[]
 		}
-		static headers() { return {} as Record<string, string> }
-		headers() { return (this.constructor as typeof $mol_file_base).headers() }
 
 		@ $mol_mem_key
 		readable(opts: { start?: number, end?: number }) {
@@ -214,14 +212,6 @@ namespace $ {
 				if (! this.version() ) return new Uint8Array
 
 				next = this.read()
-				// try {
-				// } catch (error) {
-				// 	// Файл может удалиться между изменением version и read, обрабатываем эту ситуацию
-				// 	if (error instanceof $mol_file_error && error.cause.code === 'not found') {
-				// 		return new Uint8Array()
-				// 	}
-				// 	$mol_fail_hidden(error)
-				// }
 
 				const prev = $mol_mem_cached( ()=> this.buffer() )
 
@@ -281,8 +271,13 @@ namespace $ {
 
 		static watch_root = ''
 
+		// static watcher_warned = false
 		watcher() {
-			console.warn('$mol_file_web.watcher() not implemented')
+			// const constructor = this.constructor as typeof $mol_file_base
+			// if (! constructor.watcher_warned) {
+			// 	console.warn(`${constructor}.watcher() not implemented`)
+			// 	constructor.watcher_warned = true
+			// }
 
 			return {
 				destructor() {}
@@ -353,7 +348,7 @@ namespace $ {
 			if (! this.exists() ) return []
 			if ( this.type() !== 'dir') return []
 
-			this.stat()
+			this.version()
 
 			// Если дочерний file удалился, список надо обновить
 			return this.kids().filter(file => file.exists())

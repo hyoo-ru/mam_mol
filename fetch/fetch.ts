@@ -109,7 +109,7 @@ namespace $ {
 			const response = this.response( input , init )
 			if( response.status() === 'success' ) return response
 			
-			throw new Error( response.message() )
+			throw new Error( response.message(), { cause: response } )
 		}
 
 		@ $mol_action
