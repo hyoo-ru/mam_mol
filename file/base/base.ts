@@ -23,12 +23,14 @@ namespace $ {
 			return this.resolve( '..' )
 		}
 
+		@ $mol_action
+		exists_cut() { return this.exists() }
+
 		@ $mol_mem
 		protected stat(next? : $mol_file_stat | null, virt?: 'virt') {
 
 			const path = this.path()
 			const parent = this.parent()
-			parent.watcher()
 
 			// Отслеживать проверку наличия родительской папки не стоит до корня диска
 			// Лучше ограничить mam-ом
@@ -46,6 +48,16 @@ namespace $ {
 				*/
 
 				parent.version()
+
+				// родительской папки может не быть, например, из foo/bar/baz на диске есть только foo
+				// baz.stat запустит bar.watcher и node.fs.watch упадет с ошибкой, т.к. папки bar нет
+				if (parent.exists()) parent.watcher()
+			} else {
+				// watch_root - это корень mam или диска, считаем, что он всегда существует
+				// если тут делать exists проверку, как строчками выше,
+				// то будет выполнен stat во всех верхних папках до корня диска,
+				// что делать не стоит из-за прав доступа, к примеру
+				parent.watcher()
 			}
 
 			if( virt ) return next ?? null
@@ -54,36 +66,22 @@ namespace $ {
 		}
 
 		protected static changed = new Set<$mol_file_base>
-		protected static added = new Set<$mol_file_base>
 
 		protected static frame = null as null | $mol_after_timeout
 
-		protected static changed_add(type: 'addDir' | 'unlinkDir' | 'add' | 'change' | 'unlink', path: string) {
+		protected static changed_add(type: 'change' | 'rename', path: string) {
 			const file = this.relative( path.at(-1) === '/' ? path.slice(0, -1) : path )
 			console.log(type, path)
 
-			if (type === 'add') {
-				// добавился файл - у parent надо обновить список sub, если он был заюзан
-				this.added.add(file)
-			}
+			// add: добавился файл - у parent надо обновить список sub, если он был заюзан
+			// change, unlink: обновился или удалился файл - ресетим
+			// addDir, добавилась папка, у parent обновляем список директорий в sub
+			// дочерние ресетим
+			// версию папки не меняем, т.к. иначе выполнится логика, связанная
 
-			if (type === 'change' || type === 'unlink') {
-				// обновился или удалился файл - ресетим
-				this.changed.add(file)
-			}
-
-			if ( type === 'addDir' ) {
-				// добавилась папка, у parent обновляем список директорий в sub
-				// дочерние ресетим
-				// версию папки не меняем, т.к. иначе выполнится логика, связанная
-				this.added.add(file)
-			}
-
-			if ( type === 'unlinkDir') {
-				// удалилась папка, ресетим ее
-				// stat у всех дочерних обновится сам, т.к. связан с parent.version()
-				this.changed.add(file)
-			}
+			// unlinkDir, удалилась папка, ресетим ее
+			// stat у всех дочерних обновится сам, т.к. связан с parent.version()
+			this.changed.add(file)
 
 			if (! this.watching) return
 
@@ -105,7 +103,7 @@ namespace $ {
 			// Пока run выполняется, изменения накапливаются, в конце run вызывается flush
 			// Пока применяются изменения, run должен ожидать конца flush
 
-			for (const file of this.added) {
+			for (const file of this.changed) {
 				const parent = file.parent()
 
 				try {
@@ -116,15 +114,6 @@ namespace $ {
 				}
 			}
 
-			for (const file of this.changed) {
-				try {
-					file.reset()
-				} catch (error) {
-					if ($mol_fail_catch(error)) $mol_fail_log(error)
-				}
-			}
-
-			this.added.clear()
 			this.changed.clear()
 
 			// Выставляем обратно в true, что б watch мог зайти сюда
@@ -218,31 +207,43 @@ namespace $ {
 		// open( ... modes: readonly $mol_file_mode[] ) { return 0 }
 
 		@ $mol_mem
-		buffer( next? : Uint8Array ) {
+		buffer( next? : Uint8Array ): Uint8Array {
+
+			// Если версия пустая - возвращаем пустой буфер
+			let readed = new Uint8Array
 
 			if( next === undefined ) {
-
-				// Если меняется файл, буфер надо перечитать
-				if (! this.version() ) return new Uint8Array
-
-				next = this.read()
-
-				const prev = $mol_mem_cached( ()=> this.buffer() )
-
-				if( prev !== undefined && !$mol_compare_array( prev, next ) ) {
-					this.$.$mol_log3_rise({
-						place: `$mol_file_node.buffer()`,
-						message: 'Changed' ,
-						path: this.relate() ,
-					})
-				}
-
-				return next
-			
+				// Если меняется версия файла, буфер надо перечитать
+				if ( this.version() ) readed = this.read()
 			}
+
+			const prev = $mol_mem_cached( ()=> this.buffer() )
+			const changed = prev === undefined || ! $mol_compare_array( prev, next ?? readed)
+
+			if( prev !== undefined && changed ) {
+				// Логируем, если повторно читаем/пишем и буфер поменялся
+				this.$.$mol_log3_rise({
+					place: `$mol_file_node.buffer()`,
+					message: 'Changed' ,
+					path: this.relate() ,
+				})
+			}
+
+			if (next === undefined) return changed ? readed : prev
+
+			// Если буфер при записи не поменялся и файл не удаляли перед этим - не записываем новую версию.
+			// Если записывать, это приведет к смене mtime и вотчер снова триггернется, даже если содержимое файла не поменялось.
+
+			// В этом алгоритме есть изъян.
+			// Если файл записали, потом отключили вотчер, кто-то из вне его поменял, потом включили вотчер, снова записали тот же буфер,
+			// то буфер не запишется на диск, т.к. кэш не консистентен с диском.
+			
+			// Также это не поможет, т.к. всякие генерации view.tree используют не идемпотентные id-ки
+			// При первом старте, даже если есть уже сбилженый view.tree.d.ts, он будет перезаписан.
+			// watcher триггернется и снова запишет с новыми id и зациклится
+			if (! changed && this.exists()) return prev
 			
 			this.parent().exists( true )
-			
 			this.stat( this.stat_make(next.length), 'virt' )
 
 			this.write(next)
@@ -336,8 +337,10 @@ namespace $ {
 		}
 
 		text(next?: string, virt?: 'virt') {
-			// Если пушим в text, то при сбросе таргета надо перезапускать пуш
+			// Если записываем text, и вотчер ресетнул записанный файл,
+			// то надо снова его обновить, вызвать логику, которая делала пуш в text.
 			// Например файл удалили, потом снова создали, версия поменялась - перезаписываем
+			// Если использовать version, то вновь созданный файл, через вотчер запустит свое пересоздание
 			if (next !== undefined) this.version()
 			return this.text_int(next, virt)
 		}

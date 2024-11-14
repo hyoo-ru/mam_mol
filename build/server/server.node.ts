@@ -12,7 +12,7 @@ namespace $ {
 		) {
 			const wrapped = $mol_wire_async(mdl)
 
-			return async (
+			return $mol_func_name_from(async (
 				req : typeof $node.express.request ,
 				res : typeof $node.express.response ,
 				next : (err?: unknown) => any
@@ -36,7 +36,7 @@ namespace $ {
 						message: error.message,
 					})
 				}
-			}
+			}, mdl)
 		}
 	
 	

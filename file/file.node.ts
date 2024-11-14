@@ -50,9 +50,29 @@ namespace $ {
 			return this.absolute<This>( $node.path.resolve( this.base, path ).replace( /\\/g , '/' ) )
 		}
 
+
+		@ $mol_mem_key
+		static watcher2(base: string) {
+			const watcher = $node.fs.watch( base, (type, name) => {
+				if (! name) return
+				if (/([\/\\]\.|___$)/.test( name )) return
+				const path = base + '/' + name
+				this.changed_add(type, path)
+			})
+
+			watcher.on('error', e => this.$.$mol_fail_log(e) )
+
+			return {
+				destructor() {
+					watcher.close()
+				}
+			}
+		}
+
 		@ $mol_mem_key
 		static watcher(path: string) {
-			// const w = $node.fs.watch(path)
+			return this.watcher2(path)
+
 			const watcher = $node.chokidar.watch( path , {
 				persistent : true ,
 				ignored: path => /([\/\\]\.|___$)/.test( path ),
@@ -64,8 +84,11 @@ namespace $ {
 			} )
 
 			watcher
-				.on( 'all' , (type, path) => this.changed_add(type, path) )
-				.on( 'error' , $mol_fail_log )
+				.on( 'all' , (type: 'add' | 'change' | 'unlink' | 'addDir' | 'unlinkDir', path) => {
+					const normalized = type === 'unlink' || type === 'unlinkDir' ? 'rename' : 'change'
+					this.changed_add(normalized, path)
+				} )
+				.on( 'error' , e => this.$.$mol_fail_log(e) )
 			
 			return {
 				destructor() {
