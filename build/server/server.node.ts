@@ -8,23 +8,20 @@ namespace $ {
 			mdl: (
 				req : typeof $node.express.request ,
 				res : typeof $node.express.response ,
-			) => boolean | void
+			) => void | boolean
 		) {
-			// const wrapped = $mol_wire_async(mdl)
+			const wrapped = $mol_wire_async(mdl)
 
 			return async (
 				req : typeof $node.express.request ,
 				res : typeof $node.express.response ,
 				next : (err?: unknown) => any
 			) => {
-				const wrapped = $mol_wire_async(mdl)
+				// const wrapped = $mol_wire_async(mdl)
+
 				try {
-					const call_next = await wrapped(req, res)
-					if (! call_next) return
-
-					// await Promise.resolve()
-					next()
-
+					const stopped = await wrapped(req, res)
+					if (! stopped) Promise.resolve().then(next)
 				} catch (error: any) {
 					if (! this.$.$mol_build_server.trace) {
 						error.message += '\n' + 'Set $mol_build_server.trace = true for stacktraces'
@@ -49,7 +46,6 @@ namespace $ {
 			req : typeof $node.express.request ,
 			res : typeof $node.express.response,
 		) {
-			$mol_wire_sync(res).set( 'Cache-Control', 'no-cache, public' )
 
 			try {
 				
@@ -64,7 +60,7 @@ namespace $ {
 				// }
 
 				this.generate( req.url )
-				return true // next
+				res.set( 'Cache-Control', 'no-cache, public' )
 			} catch( error: any ) {
 				if ($mol_promise_like(error)) $mol_fail_hidden(error)
 
@@ -82,6 +78,7 @@ namespace $ {
 				} ).join( '\n' )
 				
 				res.send( script ).end()
+				return true
 			}
 		}
 		
@@ -114,35 +111,32 @@ namespace $ {
 			return build.bundle( [ path , bundle ] )
 		}
 
-		@ $mol_mem_key
-		ensure_index(path: string) {
-			$mol_wire_solid()
-
-			return this.build().modEnsure( path )
-		}
-
 		override expressIndex() { return this.sync_middleware(this.expressIndexRequest.bind(this)) }
 		
 		expressIndexRequest(
 			req : typeof $node.express.request ,
 			res : typeof $node.express.response ,
 		) {
+			// a/b/?c#d, a/b/-/
+			const match =  req.url.match( /(\/|.*[^\-]\/)([\?#].*)?$/ )
+			if( !match) return
+
 			const root = this.$.$mol_file.absolute( this.rootPublic() )
 			const dir = root.resolve( req.path )
 
-			this.ensure_index( dir.path() )
+			const path = dir.path()
 
-			const match =  req.url.match( /(\/|.*[^\-]\/)([\?#].*)?$/ )
-			if( !match) return true
+			// ensure загружает сорцы, делает git pull, это не стоит делать на build-папках
+			this.build().modEnsure( path )
 
 			const file = root.resolve( `${req.path}index.html` )
 
 			if( file.exists() ) {
 				res.redirect( 301, `${match[1]}-/test.html${match[2] ?? ''}` )
-				return
+				return true
 			}
 			
-			if( dir.type() !== 'dir' ) return true
+			if( dir.type() !== 'dir' ) return
 
 			const files = [ {name: '-', type: 'dir'} ]
 
@@ -153,7 +147,7 @@ namespace $ {
 				}
 
 				if( /\.meta\.tree$/.test( file.name() ) ) {
-					const meta = $$.$mol_tree2_from_string( file.text() )
+					const meta = this.$.$mol_tree2_from_string( file.text() )
 
 					for( const pack of meta.select( 'pack', null ).kids ) {
 						if ( files.find(( {name} ) => name === pack.type) ) continue
@@ -203,6 +197,7 @@ namespace $ {
 			} )
 			
 			res.end( html )
+			return true
 		}
 		
 		port() {

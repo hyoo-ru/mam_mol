@@ -60,6 +60,7 @@ namespace $ {
 
 		protected static changed_add(type: 'addDir' | 'unlinkDir' | 'add' | 'change' | 'unlink', path: string) {
 			const file = this.relative( path.at(-1) === '/' ? path.slice(0, -1) : path )
+			console.log(type, path)
 
 			if (type === 'add') {
 				// добавился файл - у parent надо обновить список sub, если он был заюзан
@@ -88,6 +89,7 @@ namespace $ {
 
 			this.frame?.destructor()
 			this.frame = new this.$.$mol_after_timeout(this.watch_debounce(), () => {
+				console.log('changed_add scheduled: ', this.watching ? 'yes' : 'no')
 				if (! this.watching) return
 				this.watching = false
 				$mol_wire_async(this).flush()
@@ -127,7 +129,9 @@ namespace $ {
 
 			// Выставляем обратно в true, что б watch мог зайти сюда
 			this.watching = true
-		}
+			this.watch_wd?.destructor()
+			this.watch_wd = null
+	}
 
 		protected static watching = true
 
@@ -148,8 +152,16 @@ namespace $ {
 			с точки зрения реактивной системы hyoo/board еще не существует.
 			*/
 			this.changed.add(this.absolute(path))
+			const stack = new Error().stack
+			this.watch_wd = new $mol_after_timeout(10000, () => {
+				console.error('Lock timeout')
+				console.error(stack)
+			})
+			
 		}
 	
+		protected static watch_wd = null as null | $mol_after_timeout
+
 		static watch_off<Result>(side_effect: () => Result, affected_dir: string) {
 			// ждем, пока выполнится предыдущий watch_off
 			const unlock = this.lock.grab()
@@ -178,7 +190,9 @@ namespace $ {
 
 		@ $mol_mem
 		version() {
-			return this.stat()?.mtime.getTime().toString( 36 ).toUpperCase() ?? ''
+			const next = this.stat()?.mtime.getTime().toString( 36 ).toUpperCase() ?? ''
+			console.log('version', next, this.path())
+			return next
 		}
 
 		protected info( path: string ) { return null as null | $mol_file_stat }
@@ -289,6 +303,7 @@ namespace $ {
 			
 			const exists = Boolean( this.stat() )
 
+			console.log('exists current', exists, 'next', next, this.path())
 			if( next === undefined ) return exists
 			if( next === exists ) return exists
 

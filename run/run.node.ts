@@ -88,7 +88,10 @@ namespace $ {
 			let sub
 
 			try {
-				sub = this.$.$mol_run_spawn(app, args, opts)
+				sub = this.$.$mol_run_spawn(app, args, {
+					...opts,
+					stdio: [ 'pipe', 'inherit', 'inherit' ],
+				})
 			} catch (error) {
 				throw new $mol_run_error(
 					this.error_message(undefined),

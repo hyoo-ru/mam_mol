@@ -52,6 +52,7 @@ namespace $ {
 
 		@ $mol_mem_key
 		static watcher(path: string) {
+			// const w = $node.fs.watch(path)
 			const watcher = $node.chokidar.watch( path , {
 				persistent : true ,
 				ignored: path => /([\/\\]\.|___$)/.test( path ),

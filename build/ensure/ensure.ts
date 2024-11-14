@@ -50,6 +50,9 @@ namespace $ {
 
 		@ $mol_mem_key
 		ensure( path : string ): boolean {
+			if (path.includes('/-/')) {
+				console.warn('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ensure build', new Error().stack)
+			}
 			const mod = $mol_file.absolute( path )
 			const parent = mod.parent()
 
