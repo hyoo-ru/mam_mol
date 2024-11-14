@@ -14,7 +14,7 @@ namespace $ {
 			return $mol_compare_text()(this.version(), '2.42.0') >= 0
 		}
 
-		protected override pull_run(dir: string) {
+		protected override update(dir: string) {
 			const out = this.$.$mol_run.spawn({
 				command: 'git rev-parse --abbrev-ref --symbolic-full-name HEAD', dir,
 			})
@@ -76,7 +76,7 @@ namespace $ {
 			return res.stdout.toString().match( /HEAD branch: (.*?)\n/ )?.[1] ?? 'master'
 		}
 
-		protected override init(dir: string) {
+		protected override init_existing(dir: string) {
 			const repo = this.repo(dir)
 			if (! repo) throw new Error(`"${dir}" not a repo`)
 			const { url, branch } = repo
@@ -90,7 +90,7 @@ namespace $ {
 			return null
 		}
 
-		protected override clone(path: string) {
+		protected override init(path: string) {
 			const mod = this.$.$mol_file.absolute( path )
 			const repo = this.repo(path)
 			if (! repo) throw new Error(`"${path}" not a repo`)

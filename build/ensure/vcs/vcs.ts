@@ -7,10 +7,10 @@ namespace $ {
 		root_repo() { return null as null | string }
 		vcs_type() { return null as null | string }
 
-		protected pull_run(path: string) { return false }
 		protected inited(path: string) { return false }
+		protected init_existing(path: string) { return null }
+		protected update(path: string) { return false }
 		protected init(path: string) { return null }
-		protected clone(path: string) { return null }
 
 		@ $mol_mem_key
 		meta( path : string )  {
@@ -38,24 +38,24 @@ namespace $ {
 			return url ? { url, branch } : null
 		}
 
-		protected pull_disabled = false
+		protected update_disabled = false
 
 		@ $mol_action
-		protected pull(dir: string) {
-			if (this.pull_disabled) return false
+		protected update_safe(dir: string) {
+			if (this.update_disabled) return false
 
 			try {
-				return this.$.$mol_file.watch_off(() => this.pull_run(dir), dir)
+				return this.$.$mol_file.watch_off(() => this.update(dir), dir)
 			} catch (e) {
 				if (e instanceof $mol_run_error && e.cause.timeout_kill) {
 
 					this.$.$mol_log3_warn({
-						place: `${this}.pull()`,
+						place: `${this}.update_safe()`,
 						message: `Timeout - pull disabled`,
 						hint: 'Check connection',
 					})
 
-					this.pull_disabled = true
+					this.update_disabled = true
 					return true
 				}
 
@@ -76,10 +76,11 @@ namespace $ {
 				if (! this.inited(path)) {
 					if (! this.repo(path) ) return false
 
-					this.$.$mol_file.watch_off(() => this.init(path), path)
+					this.$.$mol_file.watch_off(() => this.init_existing(path), path)
+					return true
 				}
 
-				this.pull( path )
+				this.update_safe( path )
 
 				// mod.reset()
 				// for ( const sub of mod.sub() ) sub.reset()
@@ -89,7 +90,7 @@ namespace $ {
 
 			if (this.repo(path)) {
 
-				this.$.$mol_file.watch_off(() => this.clone(path), path)
+				this.$.$mol_file.watch_off(() => this.init(path), path)
 
 				// mod.reset()
 				// for ( const sub of mod.sub() ) sub.reset()
