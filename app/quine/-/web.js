@@ -6324,7 +6324,7 @@ var $;
             return new URL('#' + this.prolog + chunks.join(this.separator), this.href_absolute()).toString();
         }
         static go(next) {
-            $mol_dom_context.location.href = this.make_link(next);
+            $mol_dom_context.location.href = this.link(next);
         }
         static encode(str) {
             return encodeURIComponent(str).replace(/\(/g, '%28').replace(/\)/g, '%29');

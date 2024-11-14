@@ -25,6 +25,7 @@ $mol_book2_catalog $mol_book2
 				<= Menu_filter $mol_search
 					query? <=> menu_filter? \
 				<= Menu_links $mol_list
+					Empty <= Menu_links_empty $mol_view
 					rows <= menu_links /
 						<= Menu_link*0 $mol_link
 							arg <= arg* *

@@ -8720,52 +8720,57 @@ declare namespace $ {
 		,
 		ReturnType< $mol_link['sub'] >
 	>
-	type $mol_list__rows_mol_book2_catalog_6 = $mol_type_enforce<
+	type $mol_list__Empty_mol_book2_catalog_6 = $mol_type_enforce<
+		ReturnType< $mol_book2_catalog['Menu_links_empty'] >
+		,
+		ReturnType< $mol_list['Empty'] >
+	>
+	type $mol_list__rows_mol_book2_catalog_7 = $mol_type_enforce<
 		ReturnType< $mol_book2_catalog['menu_links'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_page__title_mol_book2_catalog_7 = $mol_type_enforce<
+	type $mol_page__title_mol_book2_catalog_8 = $mol_type_enforce<
 		ReturnType< $mol_book2_catalog['menu_title'] >
 		,
 		ReturnType< $mol_page['title'] >
 	>
-	type $mol_page__Logo_mol_book2_catalog_8 = $mol_type_enforce<
+	type $mol_page__Logo_mol_book2_catalog_9 = $mol_type_enforce<
 		ReturnType< $mol_book2_catalog['Menu_logo'] >
 		,
 		ReturnType< $mol_page['Logo'] >
 	>
-	type $mol_page__tools_mol_book2_catalog_9 = $mol_type_enforce<
+	type $mol_page__tools_mol_book2_catalog_10 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['tools'] >
 	>
-	type $mol_page__head_mol_book2_catalog_10 = $mol_type_enforce<
+	type $mol_page__head_mol_book2_catalog_11 = $mol_type_enforce<
 		ReturnType< $mol_book2_catalog['menu_head'] >
 		,
 		ReturnType< $mol_page['head'] >
 	>
-	type $mol_page__body_mol_book2_catalog_11 = $mol_type_enforce<
+	type $mol_page__body_mol_book2_catalog_12 = $mol_type_enforce<
 		ReturnType< $mol_book2_catalog['menu_body'] >
 		,
 		ReturnType< $mol_page['body'] >
 	>
-	type $mol_page__foot_mol_book2_catalog_12 = $mol_type_enforce<
+	type $mol_page__foot_mol_book2_catalog_13 = $mol_type_enforce<
 		ReturnType< $mol_book2_catalog['menu_foot'] >
 		,
 		ReturnType< $mol_page['foot'] >
 	>
-	type $mol_link__arg_mol_book2_catalog_13 = $mol_type_enforce<
+	type $mol_link__arg_mol_book2_catalog_14 = $mol_type_enforce<
 		ReturnType< $mol_book2_catalog['spread_close_arg'] >
 		,
 		ReturnType< $mol_link['arg'] >
 	>
-	type $mol_link__hint_mol_book2_catalog_14 = $mol_type_enforce<
+	type $mol_link__hint_mol_book2_catalog_15 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_link['hint'] >
 	>
-	type $mol_link__sub_mol_book2_catalog_15 = $mol_type_enforce<
+	type $mol_link__sub_mol_book2_catalog_16 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_link['sub'] >
@@ -8778,6 +8783,7 @@ declare namespace $ {
 		menu_head( ): readonly(any)[]
 		menu_filter( next?: string ): string
 		Menu_filter( ): $mol_search
+		Menu_links_empty( ): $mol_view
 		arg( id: any): Record<string, any>
 		spread_title( id: any): string
 		Menu_link_title( id: any): $mol_dimmer

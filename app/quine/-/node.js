@@ -6914,7 +6914,7 @@ var $;
             return chunks.join(' ');
         }
         static go(next) {
-            this.href(this.make_link(next));
+            this.href(this.link(next));
         }
         constructor(prefix = '') {
             super();

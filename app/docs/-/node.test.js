@@ -3777,7 +3777,7 @@ var $;
             return chunks.join(' ');
         }
         static go(next) {
-            this.href(this.make_link(next));
+            this.href(this.link(next));
         }
         constructor(prefix = '') {
             super();
@@ -19279,6 +19279,10 @@ var $;
 			(obj.query) = (next) => ((this.menu_filter(next)));
 			return obj;
 		}
+		Menu_links_empty(){
+			const obj = new this.$.$mol_view();
+			return obj;
+		}
 		arg(id){
 			return {};
 		}
@@ -19305,6 +19309,7 @@ var $;
 		}
 		Menu_links(){
 			const obj = new this.$.$mol_list();
+			(obj.Empty) = () => ((this.Menu_links_empty()));
 			(obj.rows) = () => ((this.menu_links()));
 			return obj;
 		}
@@ -19376,6 +19381,7 @@ var $;
 	};
 	($mol_mem(($.$mol_book2_catalog.prototype), "menu_filter"));
 	($mol_mem(($.$mol_book2_catalog.prototype), "Menu_filter"));
+	($mol_mem(($.$mol_book2_catalog.prototype), "Menu_links_empty"));
 	($mol_mem_key(($.$mol_book2_catalog.prototype), "Menu_link_title"));
 	($mol_mem_key(($.$mol_book2_catalog.prototype), "Menu_link"));
 	($mol_mem(($.$mol_book2_catalog.prototype), "Menu_links"));
