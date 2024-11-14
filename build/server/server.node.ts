@@ -3,7 +3,6 @@ namespace $ {
 	export class $mol_build_server extends $mol_server {
 		
 		static trace = false
-		
 
 		sync_middleware(
 			mdl: (
@@ -11,32 +10,36 @@ namespace $ {
 				res : typeof $node.express.response ,
 			) => boolean | void
 		) {
-			const pending_urls = {} as Record<string, Promise<unknown> | undefined>
-			const wrapped = $mol_wire_async(mdl)
+			// const wrapped = $mol_wire_async(mdl)
 
-			const cb = async (
+			return async (
 				req : typeof $node.express.request ,
 				res : typeof $node.express.response ,
 				next : (err?: unknown) => any
 			) => {
+				const wrapped = $mol_wire_async(mdl)
 				try {
 					const call_next = await wrapped(req, res)
 					if (! call_next) return
-					await Promise.resolve()
-					delete pending_urls[req.url]
+
+					// await Promise.resolve()
 					next()
-				} catch (err) {
-					delete pending_urls[req.url]
-					console.error(err)
-					next(err)
+
+				} catch (error: any) {
+					if (! this.$.$mol_build_server.trace) {
+						error.message += '\n' + 'Set $mol_build_server.trace = true for stacktraces'
+					}
+	
+					res.status(500).send( error.toString() ).end()
+
+					this.$.$mol_log3_fail({
+						place: `${this}.${mdl.name}()`,
+						uri: req.path,
+						stack: this.$.$mol_build_server.trace ? error.stack : undefined,
+						message: error.message,
+					})
 				}
 			}
-
-			return (
-				req : typeof $node.express.request ,
-				res : typeof $node.express.response ,
-				next : (err?: unknown) => any
-			) => pending_urls[req.url] = pending_urls[req.url] ?? cb(req, res, next)
 		}
 	
 	
@@ -46,8 +49,7 @@ namespace $ {
 			req : typeof $node.express.request ,
 			res : typeof $node.express.response,
 		) {
-			
-			res.set( 'Cache-Control', 'no-cache, public' )
+			$mol_wire_sync(res).set( 'Cache-Control', 'no-cache, public' )
 
 			try {
 				
@@ -62,40 +64,24 @@ namespace $ {
 				// }
 
 				this.generate( req.url )
-				return true
+				return true // next
 			} catch( error: any ) {
+				if ($mol_promise_like(error)) $mol_fail_hidden(error)
 
-				if( $mol_fail_catch( error ) ) {
-					this.$.$mol_log3_fail({
-						place: `${this}.handleRequest()`,
-						uri: req.path,
-						message: error.message,
-						stack: error.stack,
-					})
-				}
+				if (! req.url.match( /\.js$/ ) ) $mol_fail_hidden(error)
+
+				this.$.$mol_log3_fail({
+					place: `${this}.handleRequest()`,
+					uri: req.path,
+					message: error.message,
+					stack: error.stack,
+				})
+
+				const script = ( error as Error ).message.split( '\n\n' ).map( msg => {
+					return `console.error( ${ JSON.stringify( msg ) } )`
+				} ).join( '\n' )
 				
-				if( req.url.match( /\.js$/ ) ) {
-
-					const script = ( error as Error ).message.split( '\n\n' ).map( msg => {
-						return `console.error( ${ JSON.stringify( msg ) } )`
-					} ).join( '\n' )
-					
-					res.send( script ).end()
-
-				} else {
-					if (! this.$.$mol_build_server.trace) {
-						error.message += '\n' + 'Set $mol_build_server.trace = true for stacktraces'
-					}
-
-					res.status(500).send( error.toString() ).end()
-					this.$.$mol_log3_fail({
-						place: `${this}.handleRequest()`,
-						uri: req.path,
-						stack: this.$.$mol_build_server.trace ? error.stack : undefined,
-						message: error.message,
-					})
-				}
-
+				res.send( script ).end()
 			}
 		}
 		
@@ -125,9 +111,9 @@ namespace $ {
 			}
 			
 			const path = mod.path()
-			build.bundle( [ path , bundle ] )
-			return new Date
+			return build.bundle( [ path , bundle ] )
 		}
+
 		@ $mol_mem_key
 		ensure_index(path: string) {
 			$mol_wire_solid()
@@ -141,7 +127,7 @@ namespace $ {
 			req : typeof $node.express.request ,
 			res : typeof $node.express.response ,
 		) {
-			const root = $mol_file.absolute( this.rootPublic() )
+			const root = this.$.$mol_file.absolute( this.rootPublic() )
 			const dir = root.resolve( req.path )
 
 			this.ensure_index( dir.path() )
@@ -152,67 +138,71 @@ namespace $ {
 			const file = root.resolve( `${req.path}index.html` )
 
 			if( file.exists() ) {
-				return res.redirect( 301, `${match[1]}-/test.html${match[2] ?? ''}` )
-			}				
-			
-			if( dir.type() === 'dir' ) {
-				const files = [ {name: '-', type: 'dir'} ]
-				for( const file of dir.sub() ) {
-					if (!files.find(( {name} ) => name === file.name())) {
-						files.push( {name: file.name(), type: file.type()} )
-					}
-					if( /\.meta\.tree$/.test( file.name() ) ) {
-						const meta = $$.$mol_tree2_from_string( file.text() )
-						for( const pack of meta.select( 'pack', null ).kids ) {
-							if (!files.find(( {name} ) => name === pack.type))
-								files.push( {name: pack.type, type: 'dir'} )
-						}
-					}
-				}
-				const html = `
-					<style>
-						body {
-							display: flex;
-							flex-direction: column;
-							flex-wrap: wrap;
-							font: 1rem/1.5rem sans-serif;
-							height: 100%;
-							margin: 0;
-							padding: 0.75rem;
-							box-sizing: border-box;
-						}
-						a {
-							text-decoration: none;
-							color: rgb(57, 115, 172);
-							font-weight: bolder;
-						}
-						a:hover {
-							background: hsl( 0deg, 0%, 0%, .05 )
-						}
-						a[href^="."], a[href^="-"], a[href="node_modules"] {
-							opacity: 0.5;
-						}
-						a[href=".."], a[href="-"] {
-							opacity: 1;
-						}
-					</style>
-					<link href="/_logo.png" rel="icon" />
-					<a href="..">&#x1F4C1; ..</a>
-					` + files
-					.sort($mol_compare_text((item) => item.type))
-					.map( file => `<a href="${file.name}">${file.type === 'dir' ? '&#x1F4C1;' : '&#128196;'} ${file.name}</a>` )
-					.join( '\n' )
-				
-				res.writeHead( 200, {
-					'Content-Type': 'text/html',
-					'Access-Control-Allow-Origin': '*',
-				} )
-				
-				res.end( html )
-				return false
+				res.redirect( 301, `${match[1]}-/test.html${match[2] ?? ''}` )
+				return
 			}
 			
-			return true
+			if( dir.type() !== 'dir' ) return true
+
+			const files = [ {name: '-', type: 'dir'} ]
+
+			for( const file of dir.sub() ) {
+
+				if (!files.find(( {name} ) => name === file.name())) {
+					files.push( {name: file.name(), type: file.type()} )
+				}
+
+				if( /\.meta\.tree$/.test( file.name() ) ) {
+					const meta = $$.$mol_tree2_from_string( file.text() )
+
+					for( const pack of meta.select( 'pack', null ).kids ) {
+						if ( files.find(( {name} ) => name === pack.type) ) continue
+
+						files.push( {name: pack.type, type: 'dir'} )
+					}
+				}
+			}
+
+			const html = `
+				<style>
+					body {
+						display: flex;
+						flex-direction: column;
+						flex-wrap: wrap;
+						font: 1rem/1.5rem sans-serif;
+						height: 100%;
+						margin: 0;
+						padding: 0.75rem;
+						box-sizing: border-box;
+					}
+					a {
+						text-decoration: none;
+						color: rgb(57, 115, 172);
+						font-weight: bolder;
+					}
+					a:hover {
+						background: hsl( 0deg, 0%, 0%, .05 )
+					}
+					a[href^="."], a[href^="-"], a[href="node_modules"] {
+						opacity: 0.5;
+					}
+					a[href=".."], a[href="-"] {
+						opacity: 1;
+					}
+				</style>
+				<link href="/_logo.png" rel="icon" />
+				<a href="..">&#x1F4C1; ..</a>
+				` + files
+				.sort($mol_compare_text((item) => item.type))
+				.map( file => `<a href="${file.name}">${file.type === 'dir' ? '&#x1F4C1;' : '&#128196;'} ${file.name}</a>` )
+				.join( '\n' )
+			
+			res.writeHead( 200, {
+				'Content-Type': 'text/html',
+				'Access-Control-Allow-Origin': '*',
+			} )
+			
+			res.end( html )
 		}
 		
 		port() {

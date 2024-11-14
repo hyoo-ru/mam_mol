@@ -32,7 +32,8 @@ namespace $ {
 
 			// Отслеживать проверку наличия родительской папки не стоит до корня диска
 			// Лучше ограничить mam-ом
-			if ( path !== this.$.$mol_file_base.watch_root && path !== parent.path() ) {
+			const root = (this.constructor as typeof $mol_file_base).watch_root
+			if ( path !== root && path !== parent.path() ) {
 				/*
 				Если родитель удалился, надо ресетнуть все дочерние на любой глубине
 				Родитель может удалиться, потом создасться, а дочерняя папка только удалиться.
@@ -58,7 +59,7 @@ namespace $ {
 		protected static frame = null as null | $mol_after_timeout
 
 		protected static changed_add(type: 'addDir' | 'unlinkDir' | 'add' | 'change' | 'unlink', path: string) {
-			const file = this.$.$mol_file_base.relative( path.at(-1) === '/' ? path.slice(0, -1) : path )
+			const file = this.relative( path.at(-1) === '/' ? path.slice(0, -1) : path )
 
 			if (type === 'add') {
 				// добавился файл - у parent надо обновить список sub, если он был заюзан
@@ -97,7 +98,6 @@ namespace $ {
 
 		@ $mol_action
 		static flush() {
-			// this.flush_counter()
 			// Пока flush работает, вотчер сюда не заходит, но может добавлять новые изменения
 			// на каждом перезапуске они применятся
 			// Пока run выполняется, изменения накапливаются, в конце run вызывается flush
@@ -147,7 +147,7 @@ namespace $ {
 			на следующем перезапуске вызывается git pull, т.к.
 			с точки зрения реактивной системы hyoo/board еще не существует.
 			*/
-			this.changed.add(this.$.$mol_file_base.absolute(path))
+			this.changed.add(this.absolute(path))
 		}
 	
 		static watch_off<Result>(side_effect: () => Result, affected_dir: string) {
