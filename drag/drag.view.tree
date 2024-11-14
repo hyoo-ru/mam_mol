@@ -3,9 +3,6 @@ $mol_drag $mol_ghost
 		dragstart?event <=> drag_start?event <=> start?event null
 		drag?event <=> drag_move?event <=> move?event null
 		dragend?event <=> drag_end?event <=> end?event null
-		touchstart?event <=> drag_start?event <=> start?event null
-		touchmove?event <=> drag_move?event <=> move?event null
-		touchend?event <=> drag_end?event <=> end?event null
 	attr *
 		draggable true
 		mol_drag_status <= status? \ready
