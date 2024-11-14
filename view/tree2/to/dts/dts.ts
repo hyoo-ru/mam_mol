@@ -85,9 +85,9 @@ namespace $ {
 		]
 	}
 
-	function type_enforce(this: $, name: $mol_tree2, a: readonly $mol_tree2[], b: readonly $mol_tree2[]) {
+	function type_enforce(this: $, name: $mol_tree2, type_suffix: number, a: readonly $mol_tree2[], b: readonly $mol_tree2[]) {
 		return name.struct('line', [
-			name.data(`type ${ name.value.replace(/<.*>/g, '') }__${ this.$mol_guid() } = $mol_type_enforce<` ),
+			name.data(`type ${ name.value.replace(/<.*>/g, '') }__${ type_suffix } = $mol_type_enforce<` ),
 			name.struct( 'indent', [
 				a[0].struct('line', a),
 				a[0].data(','),
@@ -102,6 +102,7 @@ namespace $ {
 		const descr = $mol_view_tree2_classes( tree )
 		
 		const types = [] as $mol_tree2[]
+		let assert_count = 0
 		
 		for( const klass of descr.kids ) {
 			
@@ -177,6 +178,7 @@ namespace $ {
 								types.push( type_enforce.call(
 									this,
 									method,
+									++assert_count,
 									parameters.call(this, main, prop, 0),
 									parameters.call(this, second_main, second_key, 0),
 								) )
@@ -186,6 +188,7 @@ namespace $ {
 								types.push( type_enforce.call(
 									this,
 									method,
+									++assert_count,
 									parameters.call(this, main, prop, prop_parts.key ? 1 : 0),
 									parameters.call(this, second_main, second_key, (left_parts.next ? left_parts : right_parts).key ? 1 : 0),
 								) )
@@ -280,6 +283,7 @@ namespace $ {
 										type_enforce.call(
 											this,
 											input.data(`${ klass.type }_${prop.type.replace(/[\?\*]*/g, '')}`),
+											++assert_count,
 											result,
 											array_type
 										)
@@ -304,6 +308,7 @@ namespace $ {
 										type_enforce.call(
 											this,
 											first.data(input.type),
+											++assert_count,
 											[
 												first.data('[ '),
 												...args,
@@ -328,6 +333,7 @@ namespace $ {
 										type_enforce.call(
 											this,
 											over.data(`${ input.type }__${ name.value }`),
+											++assert_count,
 											over.hack( belt ),
 											return_type.call(
 												this,
