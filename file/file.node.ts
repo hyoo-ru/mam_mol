@@ -50,13 +50,14 @@ namespace $ {
 			return this.absolute<This>( $node.path.resolve( this.base, path ).replace( /\\/g , '/' ) )
 		}
 
-
 		@ $mol_mem_key
 		static watcher2(base: string) {
 			const watcher = $node.fs.watch( base, (type, name) => {
 				if (! name) return
 				if (/([\/\\]\.|___$)/.test( name )) return
-				const path = base + '/' + name
+
+				const path = $node.path.join( base, name )
+
 				this.changed_add(type, path)
 			})
 

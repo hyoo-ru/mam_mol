@@ -85,33 +85,43 @@ namespace $ {
 		}
 	
 		@ $mol_mem_key
-		viewTreeTranspile( path : string ) {
-
+		view_tree_text(path: string) {
 			const source = $mol_file.absolute( path )
-			const target = source.parent().resolve( `-view.tree` )
-
 			const tree = this.$.$mol_tree2_from_string( source.text(), source.relate( this.root() ) )
 
+			const js = this.$.$mol_tree2_js_to_text( this.$.$mol_view_tree2_to_js( tree ) )
+			const dts = this.$.$mol_view_tree2_to_dts( tree )
+			const locale = JSON.stringify( this.$.$mol_view_tree2_to_locale( tree ), null, '\t' )
+
+			return { js, dts, locale }
+		}
+
+		@ $mol_mem_key
+		viewTreeTranspile( path : string ) {
+			const source = $mol_file.absolute( path )
+			const text = this.view_tree_text(path)
+			
+			const target = source.parent().resolve( `-view.tree` )
 			const js = target.resolve( source.name() + '.js' )
 			const js_map = target.resolve( js.name() + '.map' )
 			const dts = target.resolve( source.name() + '.d.ts' )
 			const dts_map = target.resolve( dts.name() + '.map' )
 
-			const js_text = this.$.$mol_tree2_js_to_text( this.$.$mol_view_tree2_to_js( tree ) )
-			js.text( this.$.$mol_tree2_text_to_string( js_text ) + '\n//# sourceMappingURL=' + js_map.relate( target ) )
-			js_map.text( JSON.stringify( this.$.$mol_tree2_text_to_sourcemap( js_text ), null, '\t' ) )
+			js.text( this.$.$mol_tree2_text_to_string( text.js ) + '\n//# sourceMappingURL=' + js_map.relate( target ) )
+			js_map.text( JSON.stringify( this.$.$mol_tree2_text_to_sourcemap( text.js ), null, '\t' ) )
 
-			const dts_text = this.$.$mol_view_tree2_to_dts( tree )
-			dts.text( this.$.$mol_tree2_text_to_string( dts_text ) + '\n//# sourceMappingURL=' + dts_map.relate( target ) )
+			dts.text( this.$.$mol_tree2_text_to_string( text.dts ) + '\n//# sourceMappingURL=' + dts_map.relate( target ) )
 			
-			const dts_map_raw = this.$.$mol_tree2_text_to_sourcemap( dts_text )
+			const dts_map_raw = this.$.$mol_tree2_text_to_sourcemap( text.dts )
 			delete dts_map_raw.sourcesContent
 			dts_map_raw.file = dts.relate( target )
 			dts_map_raw.sourceRoot = this.root().relate( target )
+
 			dts_map.text( JSON.stringify( dts_map_raw, null, '\t' ) )
 
 			const locale_file = target.resolve( source.name() + `.locale=en.json` )
-			locale_file.text( JSON.stringify( this.$.$mol_view_tree2_to_locale( tree ), null, '\t' ) )
+
+			locale_file.text( text.locale )
 
 			return [ js, js_map, dts, dts_map, locale_file ]
 		}
