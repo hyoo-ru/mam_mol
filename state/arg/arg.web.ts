@@ -105,7 +105,7 @@ namespace $ {
 
 		@ $mol_action
 		static go( next : { [ key : string ] : string | null } ) {
-			$mol_dom_context.location.href = this.make_link( next )
+			$mol_dom_context.location.href = this.link( next )
 		}
 		
 		static encode( str : string ) {
