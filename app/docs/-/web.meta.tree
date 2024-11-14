@@ -23,6 +23,7 @@
 	pack aura git \https://github.com/hyoo-ru/aura.hyoo.ru.git
 	pack bench git \https://github.com/hyoo-ru/bench.hyoo.ru.git
 	pack board git \https://github.com/hyoo-ru/board.hyoo.ru.git
+	pack budget git \https://github.com/hyoo-ru/budget.hyoo.ru.git
 	pack bunker git \https://github.com/hyoo-ru/bunker.hyoo.ru.git
 	pack calc git \https://github.com/hyoo-ru/calc.hyoo.ru.git
 	pack case git \https://github.com/hyoo-ru/case.hyoo.ru.git
