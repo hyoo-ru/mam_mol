@@ -215,6 +215,14 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_fail_catch(error: unknown): boolean;
+}
+
+declare namespace $ {
+    function $mol_fail_log(error: unknown): boolean;
+}
+
+declare namespace $ {
     enum $mol_wire_cursor {
         stale = -1,
         doubt = -2,
@@ -427,14 +435,6 @@ declare namespace $ {
 
 declare namespace $ {
     type $mol_type_foot<Tuple extends readonly any[]> = Tuple['length'] extends 0 ? never : Tuple[$mol_type_tail<Tuple>['length']];
-}
-
-declare namespace $ {
-    function $mol_fail_catch(error: unknown): boolean;
-}
-
-declare namespace $ {
-    function $mol_fail_log(error: unknown): boolean;
 }
 
 declare namespace $ {

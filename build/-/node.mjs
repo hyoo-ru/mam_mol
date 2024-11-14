@@ -766,6 +766,39 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    const catched = new WeakMap();
+    function $mol_fail_catch(error) {
+        if (typeof error !== 'object')
+            return false;
+        if ($mol_promise_like(error))
+            $mol_fail_hidden(error);
+        if (catched.get(error))
+            return false;
+        catched.set(error, true);
+        return true;
+    }
+    $.$mol_fail_catch = $mol_fail_catch;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_fail_log(error) {
+        if ($mol_promise_like(error))
+            return false;
+        if (!$mol_fail_catch(error))
+            return false;
+        console.error(error);
+        return true;
+    }
+    $.$mol_fail_log = $mol_fail_log;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
     let $mol_wire_cursor;
     (function ($mol_wire_cursor) {
         $mol_wire_cursor[$mol_wire_cursor["stale"] = -1] = "stale";
@@ -1738,39 +1771,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    const catched = new WeakMap();
-    function $mol_fail_catch(error) {
-        if (typeof error !== 'object')
-            return false;
-        if ($mol_promise_like(error))
-            $mol_fail_hidden(error);
-        if (catched.get(error))
-            return false;
-        catched.set(error, true);
-        return true;
-    }
-    $.$mol_fail_catch = $mol_fail_catch;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_fail_log(error) {
-        if ($mol_promise_like(error))
-            return false;
-        if (!$mol_fail_catch(error))
-            return false;
-        console.error(error);
-        return true;
-    }
-    $.$mol_fail_log = $mol_fail_log;
-})($ || ($ = {}));
 
 ;
 "use strict";
@@ -5002,7 +5002,14 @@ var $;
             }
         }
         else {
-            Promise.resolve().then(() => $mol_wire_async(build.server()).start());
+            Promise.resolve().then(() => {
+                try {
+                    build.server().start();
+                }
+                catch (error) {
+                    $mol_fail_log(error);
+                }
+            });
         }
     }
     $.$mol_build_start = $mol_build_start;

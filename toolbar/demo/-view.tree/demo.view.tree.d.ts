@@ -1,46 +1,46 @@
 declare namespace $ {
 
-	type $mol_string__hint__TM5PMH89 = $mol_type_enforce<
+	type $mol_string__hint__5FSW3BBF = $mol_type_enforce<
 		ReturnType< $mol_toolbar_demo['search_hint'] >
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__hint__8AX76KF6 = $mol_type_enforce<
+	type $mol_string__hint__96I9CPGG = $mol_type_enforce<
 		ReturnType< $mol_toolbar_demo['replace_hint'] >
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_button_major__title__Y95SRLWJ = $mol_type_enforce<
+	type $mol_button_major__title__79A0L0LM = $mol_type_enforce<
 		ReturnType< $mol_toolbar_demo['approve_label'] >
 		,
 		ReturnType< $mol_button_major['title'] >
 	>
-	type $mol_button_minor__title__ZCM21YXG = $mol_type_enforce<
+	type $mol_button_minor__title__4Q47BV5I = $mol_type_enforce<
 		ReturnType< $mol_toolbar_demo['decline_label'] >
 		,
 		ReturnType< $mol_button_minor['title'] >
 	>
-	type $mol_button_minor__sub__X0GFZ75H = $mol_type_enforce<
+	type $mol_button_minor__sub__DOYTVHO0 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_minor['sub'] >
 	>
-	type $mol_button_minor__sub__FMF7LVYG = $mol_type_enforce<
+	type $mol_button_minor__sub__SQSZPPLN = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_minor['sub'] >
 	>
-	type $mol_button_minor__sub__YHN3135E = $mol_type_enforce<
+	type $mol_button_minor__sub__GV0LNXA3 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_minor['sub'] >
 	>
-	type $mol_button_minor__sub__RDEBGBK5 = $mol_type_enforce<
+	type $mol_button_minor__sub__7YYHCUJS = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_minor['sub'] >
 	>
-	type $mol_toolbar__items__7HJV7P4Q = $mol_type_enforce<
+	type $mol_toolbar__items__2VTHMKQO = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_toolbar['items'] >
