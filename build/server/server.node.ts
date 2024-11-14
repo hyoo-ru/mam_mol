@@ -248,22 +248,20 @@ namespace $ {
 			
 			return socket
 		}
-		
+
 		@ $mol_mem_key
-		notify( [ line, path ]: [ InstanceType<$node['ws']['WebSocket']>, string ] ) {
-			
+		bundle_changed_at( path: string ) {
+			$mol_wire_solid()
 			try {
 			
 				const build = this.build()
 				const bundle = build.root().resolve( path )
-			
+				const sources = build.sourcesAll([ bundle.path() , [ 'node' ] ])
+				const resources = build.bundleFiles([ bundle.path() , [ 'node' ] ])
 				// watch changes
-				const sources = [
-					...build.sourcesAll([ bundle.path() , [ 'node' ] ]),
-					...build.bundleFiles([ bundle.path() , [ 'node' ] ])
-				]
+				// прописанные в meta.tree ресурсы, должны при изменении триггерить location.reload
 				
-				for( const src of sources ) src.version()
+				for( const src of [...sources, ...resources] ) src.version()
 			} catch (error) {
 				if ($mol_fail_catch(error)) {
 					this.$.$mol_log3_fail({
@@ -273,7 +271,12 @@ namespace $ {
 					})
 				}
 			}
-			
+			return new Date()
+		}
+		
+		@ $mol_mem_key
+		notify( [ line, path ]: [ InstanceType<$node['ws']['WebSocket']>, string ] ) {
+			this.bundle_changed_at(path)
 
 			// ignore initial
 			if( !$mol_mem_cached( ()=> this.notify([ line, path ]) ) ) return true

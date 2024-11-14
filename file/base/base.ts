@@ -304,7 +304,7 @@ namespace $ {
 			
 			const exists = Boolean( this.stat() )
 
-			console.log('exists current', exists, 'next', next, this.path())
+			// console.log('exists current', exists, 'next', next, this.path())
 			if( next === undefined ) return exists
 			if( next === exists ) return exists
 
@@ -341,7 +341,7 @@ namespace $ {
 			// то надо снова его обновить, вызвать логику, которая делала пуш в text.
 			// Например файл удалили, потом снова создали, версия поменялась - перезаписываем
 			// Если использовать version, то вновь созданный файл, через вотчер запустит свое пересоздание
-			if (next !== undefined) this.version()
+			if (next !== undefined) this.exists()
 			return this.text_int(next, virt)
 		}
 

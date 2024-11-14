@@ -37,27 +37,34 @@ namespace $ {
 			const build = this.$.$mol_build.relative( '.', paths )
 
 			if( paths.length > 0 ) {
-				process.exit(build.start() ? 0 : 1)
+				try {
+					for (const path_raw of paths) {
+						const path = build.root().resolve( path_raw ).path()
+						build.bundleAll( path )
+					}
+					process.exit(0)
+				} catch( error: any ) {
+					if( $mol_fail_catch( error ) ) {
+						this.$.$mol_log3_fail({
+							place: '$mol_build_start' , 
+							message: error.message,
+							trace: error.stack,
+						})
+					}
+
+					process.exit(1)
+				}
 			} else {
-				Promise.resolve().then( ()=> build.server().start() )
+				Promise.resolve().then( ()=> {
+					try {
+						build.server().start() 
+					} catch (error) {
+						$mol_fail_log(error)
+					}
+				} )
 			}
 		}
 	
-		start() {
-			try {
-				return this.paths().map( path => this.bundleAll( this.root().resolve( path ).path() ) )
-			} catch (error: any) {
-				if ($mol_fail_catch(error)) {
-					this.$.$mol_log3_fail({
-						place: `${this}.start()` , 
-						message: error.message,
-						trace: error.stack,
-					})
-				}
-				return null
-			}
-		}
-
 		@ $mol_mem_key
 		metaTreeTranspile( path : string ) {
 		
