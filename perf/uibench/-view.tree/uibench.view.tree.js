@@ -4,7 +4,7 @@
 		}
 		Table(){
 			const obj = new this.$.$mol_perf_uibench_table();
-			(obj.state) = () => ((this?.table_state()));
+			(obj.state) = () => ((this.table_state()));
 			return obj;
 		}
 		anim_state(){
@@ -12,7 +12,7 @@
 		}
 		Anim(){
 			const obj = new this.$.$mol_perf_uibench_anim();
-			(obj.state) = () => ((this?.anim_state()));
+			(obj.state) = () => ((this.anim_state()));
 			return obj;
 		}
 		tree_state(){
@@ -20,7 +20,7 @@
 		}
 		Tree(){
 			const obj = new this.$.$mol_perf_uibench_tree();
-			(obj.state) = () => ((this?.tree_state()));
+			(obj.state) = () => ((this.tree_state()));
 			return obj;
 		}
 		attr_static(){
@@ -28,9 +28,9 @@
 		}
 		sub(){
 			return [
-				(this?.Table()), 
-				(this?.Anim()), 
-				(this?.Tree())
+				(this.Table()), 
+				(this.Anim()), 
+				(this.Tree())
 			];
 		}
 	};

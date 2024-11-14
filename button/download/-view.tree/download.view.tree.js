@@ -16,7 +16,7 @@
 			return "blob.bin";
 		}
 		sub(){
-			return [(this?.Icon()), (this?.title())];
+			return [(this.Icon()), (this.title())];
 		}
 	};
 	($mol_mem(($.$mol_button_download.prototype), "Icon"));

@@ -1,91 +1,91 @@
 declare namespace $ {
 
-	type $mol_check_group__title__8SI14COL = $mol_type_enforce<
+	type $mol_check_group__title_mol_check_group_demo_1 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_check_group['title'] >
 	>
-	type $mol_check_group__checks__1NMKXV7R = $mol_type_enforce<
+	type $mol_check_group__checks_mol_check_group_demo_2 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_check_group['checks'] >
 	>
-	type $mol_check_box__title__KX1QA061 = $mol_type_enforce<
+	type $mol_check_box__title_mol_check_group_demo_3 = $mol_type_enforce<
 		ReturnType< $mol_check_group_demo['strength_title'] >
 		,
 		ReturnType< $mol_check_box['title'] >
 	>
-	type $mol_check_box__checked__YD3ML7KZ = $mol_type_enforce<
+	type $mol_check_box__checked_mol_check_group_demo_4 = $mol_type_enforce<
 		ReturnType< $mol_check_group_demo['strength'] >
 		,
 		ReturnType< $mol_check_box['checked'] >
 	>
-	type $mol_check_box__title__OVAYGD1Y = $mol_type_enforce<
+	type $mol_check_box__title_mol_check_group_demo_5 = $mol_type_enforce<
 		ReturnType< $mol_check_group_demo['perception_title'] >
 		,
 		ReturnType< $mol_check_box['title'] >
 	>
-	type $mol_check_box__checked__I02UO3FJ = $mol_type_enforce<
+	type $mol_check_box__checked_mol_check_group_demo_6 = $mol_type_enforce<
 		ReturnType< $mol_check_group_demo['perception'] >
 		,
 		ReturnType< $mol_check_box['checked'] >
 	>
-	type $mol_check_box__title__LORXTDO5 = $mol_type_enforce<
+	type $mol_check_box__title_mol_check_group_demo_7 = $mol_type_enforce<
 		ReturnType< $mol_check_group_demo['endurance_title'] >
 		,
 		ReturnType< $mol_check_box['title'] >
 	>
-	type $mol_check_box__checked__S2RM8N9L = $mol_type_enforce<
+	type $mol_check_box__checked_mol_check_group_demo_8 = $mol_type_enforce<
 		ReturnType< $mol_check_group_demo['endurance'] >
 		,
 		ReturnType< $mol_check_box['checked'] >
 	>
-	type $mol_check_box__title__V90Q6D6H = $mol_type_enforce<
+	type $mol_check_box__title_mol_check_group_demo_9 = $mol_type_enforce<
 		ReturnType< $mol_check_group_demo['charisma_title'] >
 		,
 		ReturnType< $mol_check_box['title'] >
 	>
-	type $mol_check_box__checked__F1D30LFN = $mol_type_enforce<
+	type $mol_check_box__checked_mol_check_group_demo_10 = $mol_type_enforce<
 		ReturnType< $mol_check_group_demo['charisma'] >
 		,
 		ReturnType< $mol_check_box['checked'] >
 	>
-	type $mol_check_box__title__EMOQ8UJ4 = $mol_type_enforce<
+	type $mol_check_box__title_mol_check_group_demo_11 = $mol_type_enforce<
 		ReturnType< $mol_check_group_demo['intelligence_title'] >
 		,
 		ReturnType< $mol_check_box['title'] >
 	>
-	type $mol_check_box__checked__MVETXH47 = $mol_type_enforce<
+	type $mol_check_box__checked_mol_check_group_demo_12 = $mol_type_enforce<
 		ReturnType< $mol_check_group_demo['intelligence'] >
 		,
 		ReturnType< $mol_check_box['checked'] >
 	>
-	type $mol_check_box__title__2NRZKI5V = $mol_type_enforce<
+	type $mol_check_box__title_mol_check_group_demo_13 = $mol_type_enforce<
 		ReturnType< $mol_check_group_demo['agility_title'] >
 		,
 		ReturnType< $mol_check_box['title'] >
 	>
-	type $mol_check_box__checked__0Z6CK74M = $mol_type_enforce<
+	type $mol_check_box__checked_mol_check_group_demo_14 = $mol_type_enforce<
 		ReturnType< $mol_check_group_demo['agility'] >
 		,
 		ReturnType< $mol_check_box['checked'] >
 	>
-	type $mol_check_box__title__4E41Q535 = $mol_type_enforce<
+	type $mol_check_box__title_mol_check_group_demo_15 = $mol_type_enforce<
 		ReturnType< $mol_check_group_demo['luck_title'] >
 		,
 		ReturnType< $mol_check_box['title'] >
 	>
-	type $mol_check_box__checked__SPUG62YY = $mol_type_enforce<
+	type $mol_check_box__checked_mol_check_group_demo_16 = $mol_type_enforce<
 		ReturnType< $mol_check_group_demo['luck'] >
 		,
 		ReturnType< $mol_check_box['checked'] >
 	>
-	type $mol_list__rows__5JK7W91K = $mol_type_enforce<
+	type $mol_list__rows_mol_check_group_demo_17 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_list__rows__YBCNZ1G7 = $mol_type_enforce<
+	type $mol_list__rows_mol_check_group_demo_18 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >

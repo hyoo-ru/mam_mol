@@ -6,7 +6,7 @@
 			return "0123456789";
 		}
 		hint(){
-			return (this?.mask("0"));
+			return (this.mask("0"));
 		}
 		keyboard(){
 			return "numeric";

@@ -4,7 +4,7 @@
 		}
 		Empty(){
 			const obj = new this.$.$mol_portion();
-			(obj.portion) = () => ((this?.fist()));
+			(obj.portion) = () => ((this.fist()));
 			return obj;
 		}
 		second(){
@@ -12,7 +12,7 @@
 		}
 		Partial(){
 			const obj = new this.$.$mol_portion();
-			(obj.portion) = () => ((this?.second()));
+			(obj.portion) = () => ((this.second()));
 			return obj;
 		}
 		third(){
@@ -20,7 +20,7 @@
 		}
 		Full(){
 			const obj = new this.$.$mol_portion();
-			(obj.portion) = () => ((this?.third()));
+			(obj.portion) = () => ((this.third()));
 			return obj;
 		}
 		title(){
@@ -28,9 +28,9 @@
 		}
 		sub(){
 			return [
-				(this?.Empty()), 
-				(this?.Partial()), 
-				(this?.Full())
+				(this.Empty()), 
+				(this.Partial()), 
+				(this.Full())
 			];
 		}
 		tags(){

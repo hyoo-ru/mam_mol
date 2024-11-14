@@ -15,8 +15,8 @@
 		}
 		Esternal(){
 			const obj = new this.$.$mol_link();
-			(obj.uri) = () => ((this?.standalone()));
-			(obj.sub) = () => ([(this?.Standalone_icon())]);
+			(obj.uri) = () => ((this.standalone()));
+			(obj.sub) = () => ([(this.Standalone_icon())]);
 			return obj;
 		}
 		Close_icon(){
@@ -26,7 +26,7 @@
 		Close(){
 			const obj = new this.$.$mol_link();
 			(obj.arg) = () => ({"mol_chat": null});
-			(obj.sub) = () => ([(this?.Close_icon())]);
+			(obj.sub) = () => ([(this.Close_icon())]);
 			return obj;
 		}
 		embed(){
@@ -34,14 +34,14 @@
 		}
 		Embed(){
 			const obj = new this.$.$mol_frame();
-			(obj.uri) = () => ((this?.embed()));
+			(obj.uri) = () => ((this.embed()));
 			return obj;
 		}
 		Page(){
 			const obj = new this.$.$mol_page();
-			(obj.title) = () => ((this?.title()));
-			(obj.tools) = () => ([(this?.Esternal()), (this?.Close())]);
-			(obj.Body) = () => ((this?.Embed()));
+			(obj.title) = () => ((this.title()));
+			(obj.tools) = () => ([(this.Esternal()), (this.Close())]);
+			(obj.Body) = () => ((this.Embed()));
 			return obj;
 		}
 		seed(){
@@ -54,13 +54,13 @@
 			return {"mol_chat": ""};
 		}
 		hint(){
-			return (this?.title());
+			return (this.title());
 		}
 		sub(){
-			return [(this?.Icon())];
+			return [(this.Icon())];
 		}
 		pages(){
-			return [(this?.Page())];
+			return [(this.Page())];
 		}
 	};
 	($mol_mem(($.$mol_chat.prototype), "Icon"));

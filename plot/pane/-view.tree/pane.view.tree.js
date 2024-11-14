@@ -1,10 +1,10 @@
 	($.$mol_plot_pane) = class $mol_plot_pane extends ($.$mol_svg_root) {
 		gap_x(){
-			const obj = new this.$.$mol_vector_range((this?.gap_left()), (this?.gap_right()));
+			const obj = new this.$.$mol_vector_range((this.gap_left()), (this.gap_right()));
 			return obj;
 		}
 		gap_y(){
-			const obj = new this.$.$mol_vector_range((this?.gap_bottom()), (this?.gap_top()));
+			const obj = new this.$.$mol_vector_range((this.gap_bottom()), (this.gap_top()));
 			return obj;
 		}
 		shift_limit_x(){
@@ -46,17 +46,17 @@
 			return [];
 		}
 		graphs_positioned(){
-			return (this?.graphs());
+			return (this.graphs());
 		}
 		graphs_visible(){
-			return (this?.graphs_positioned());
+			return (this.graphs_positioned());
 		}
 		zoom(next){
 			if(next !== undefined) return next;
 			return 1;
 		}
 		cursor_position(){
-			return (this?.Touch()?.pointer_center());
+			return (this.Touch().pointer_center());
 		}
 		allow_draw(){
 			return true;
@@ -68,10 +68,10 @@
 			return true;
 		}
 		action_type(){
-			return (this?.Touch()?.action_type());
+			return (this.Touch().action_type());
 		}
 		action_point(){
-			return (this?.Touch()?.action_point());
+			return (this.Touch().action_point());
 		}
 		draw_start(next){
 			if(next !== undefined) return next;
@@ -87,14 +87,14 @@
 		}
 		Touch(){
 			const obj = new this.$.$mol_touch();
-			(obj.zoom) = (next) => ((this?.zoom(next)));
-			(obj.pan) = (next) => ((this?.shift(next)));
-			(obj.allow_draw) = () => ((this?.allow_draw()));
-			(obj.allow_pan) = () => ((this?.allow_pan()));
-			(obj.allow_zoom) = () => ((this?.allow_zoom()));
-			(obj.draw_start) = (next) => ((this?.draw_start(next)));
-			(obj.draw) = (next) => ((this?.draw(next)));
-			(obj.draw_end) = (next) => ((this?.draw_end(next)));
+			(obj.zoom) = (next) => ((this.zoom(next)));
+			(obj.pan) = (next) => ((this.shift(next)));
+			(obj.allow_draw) = () => ((this.allow_draw()));
+			(obj.allow_pan) = () => ((this.allow_pan()));
+			(obj.allow_zoom) = () => ((this.allow_zoom()));
+			(obj.draw_start) = (next) => ((this.draw_start(next)));
+			(obj.draw) = (next) => ((this.draw(next)));
+			(obj.draw_end) = (next) => ((this.draw_end(next)));
 			return obj;
 		}
 		aspect(){
@@ -115,23 +115,23 @@
 			return 24;
 		}
 		gap_left(){
-			return (this?.gap_hor());
+			return (this.gap_hor());
 		}
 		gap_right(){
-			return (this?.gap_hor());
+			return (this.gap_hor());
 		}
 		gap_top(){
-			return (this?.gap_vert());
+			return (this.gap_vert());
 		}
 		gap_bottom(){
-			return (this?.gap_vert());
+			return (this.gap_vert());
 		}
 		gap(){
-			const obj = new this.$.$mol_vector_2d((this?.gap_x()), (this?.gap_y()));
+			const obj = new this.$.$mol_vector_2d((this.gap_x()), (this.gap_y()));
 			return obj;
 		}
 		shift_limit(){
-			const obj = new this.$.$mol_vector_2d((this?.shift_limit_x()), (this?.shift_limit_y()));
+			const obj = new this.$.$mol_vector_2d((this.shift_limit_x()), (this.shift_limit_y()));
 			return obj;
 		}
 		shift_default(){
@@ -144,7 +144,7 @@
 			return obj;
 		}
 		scale_limit(){
-			const obj = new this.$.$mol_vector_2d((this?.scale_limit_x()), (this?.scale_limit_y()));
+			const obj = new this.$.$mol_vector_2d((this.scale_limit_x()), (this.scale_limit_y()));
 			return obj;
 		}
 		scale_default(){
@@ -173,21 +173,21 @@
 			return obj;
 		}
 		dimensions(){
-			const obj = new this.$.$mol_vector_2d((this?.dimensions_x()), (this?.dimensions_y()));
+			const obj = new this.$.$mol_vector_2d((this.dimensions_x()), (this.dimensions_y()));
 			return obj;
 		}
 		dimensions_viewport(){
-			const obj = new this.$.$mol_vector_2d((this?.dimensions_viewport_x()), (this?.dimensions_viewport_y()));
+			const obj = new this.$.$mol_vector_2d((this.dimensions_viewport_x()), (this.dimensions_viewport_y()));
 			return obj;
 		}
 		sub(){
-			return (this?.graphs_sorted());
+			return (this.graphs_sorted());
 		}
 		graphs_colored(){
-			return (this?.graphs_visible());
+			return (this.graphs_visible());
 		}
 		plugins(){
-			return [...(super.plugins()), (this?.Touch())];
+			return [...(super.plugins()), (this.Touch())];
 		}
 	};
 	($mol_mem(($.$mol_plot_pane.prototype), "gap_x"));

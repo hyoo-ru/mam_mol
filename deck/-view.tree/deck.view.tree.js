@@ -8,8 +8,8 @@
 		}
 		Switch(){
 			const obj = new this.$.$mol_switch();
-			(obj.value) = (next) => ((this?.current(next)));
-			(obj.options) = () => ((this?.switch_options()));
+			(obj.value) = (next) => ((this.current(next)));
+			(obj.options) = () => ((this.switch_options()));
 			return obj;
 		}
 		Content(){
@@ -20,7 +20,7 @@
 			return [];
 		}
 		rows(){
-			return [(this?.Switch()), (this?.Content())];
+			return [(this.Switch()), (this.Content())];
 		}
 	};
 	($mol_mem(($.$mol_deck.prototype), "current"));

@@ -5,7 +5,7 @@
 		}
 		Article(){
 			const obj = new this.$.$mol_textarea();
-			(obj.value) = (next) => ((this?.article(next)));
+			(obj.value) = (next) => ((this.article(next)));
 			return obj;
 		}
 		report(){
@@ -13,16 +13,16 @@
 		}
 		Report(){
 			const obj = new this.$.$mol_text_code();
-			(obj.text) = () => ((this?.report()));
+			(obj.text) = () => ((this.report()));
 			return obj;
 		}
 		List(){
 			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ([(this?.Article()), (this?.Report())]);
+			(obj.rows) = () => ([(this.Article()), (this.Report())]);
 			return obj;
 		}
 		sub(){
-			return [(this?.List())];
+			return [(this.List())];
 		}
 		tags(){
 			return [

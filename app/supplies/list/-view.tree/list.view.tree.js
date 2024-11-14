@@ -8,8 +8,8 @@
 		}
 		Search(){
 			const obj = new this.$.$mol_code();
-			(obj.hint) = () => ((this?.search_hint()));
-			(obj.value) = (next) => ((this?.search_query(next)));
+			(obj.hint) = () => ((this.search_hint()));
+			(obj.value) = (next) => ((this.search_query(next)));
 			return obj;
 		}
 		supply_rows(){
@@ -17,7 +17,7 @@
 		}
 		Supply_rows(){
 			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ((this?.supply_rows()));
+			(obj.rows) = () => ((this.supply_rows()));
 			return obj;
 		}
 		supply(id){
@@ -27,21 +27,21 @@
 			return "";
 		}
 		supply_arg(id){
-			return {"supply": (this?.supply_id(id))};
+			return {"supply": (this.supply_id(id))};
 		}
 		supplies(){
 			return [];
 		}
 		tools(){
-			return [(this?.Search())];
+			return [(this.Search())];
 		}
 		body(){
-			return [(this?.Supply_rows())];
+			return [(this.Supply_rows())];
 		}
 		Supply_row(id){
 			const obj = new this.$.$mol_app_supplies_card();
-			(obj.supply) = () => ((this?.supply(id)));
-			(obj.arg) = () => ((this?.supply_arg(id)));
+			(obj.supply) = () => ((this.supply(id)));
+			(obj.arg) = () => ((this.supply_arg(id)));
 			return obj;
 		}
 	};

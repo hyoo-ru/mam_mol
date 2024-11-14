@@ -4,7 +4,7 @@
 		}
 		Table(){
 			const obj = new this.$.$mol_grid_table();
-			(obj.sub) = () => ((this?.rows()));
+			(obj.sub) = () => ((this.rows()));
 			return obj;
 		}
 		head_cells(){
@@ -17,10 +17,10 @@
 			return [];
 		}
 		cell_content_text(id){
-			return (this?.cell_content(id));
+			return (this.cell_content(id));
 		}
 		cell_content_number(id){
-			return (this?.cell_content(id));
+			return (this.cell_content(id));
 		}
 		col_head_content(id){
 			return [];
@@ -40,8 +40,8 @@
 		}
 		Cell_dimmer(id){
 			const obj = new this.$.$mol_dimmer();
-			(obj.needle) = () => ((this?.needle()));
-			(obj.haystack) = () => ((this?.cell_value(id)));
+			(obj.needle) = () => ((this.needle()));
+			(obj.haystack) = () => ((this.cell_value(id)));
 			return obj;
 		}
 		row_height(){
@@ -72,18 +72,18 @@
 			return 0;
 		}
 		sub(){
-			return [(this?.Head()), (this?.Table())];
+			return [(this.Head()), (this.Table())];
 		}
 		Head(){
 			const obj = new this.$.$mol_grid_row();
-			(obj.cells) = () => ((this?.head_cells()));
+			(obj.cells) = () => ((this.head_cells()));
 			return obj;
 		}
 		Row(id){
 			const obj = new this.$.$mol_grid_row();
-			(obj.minimal_height) = () => ((this?.row_height()));
-			(obj.minimal_width) = () => ((this?.minimal_width()));
-			(obj.cells) = () => ((this?.cells(id)));
+			(obj.minimal_height) = () => ((this.row_height()));
+			(obj.minimal_width) = () => ((this.minimal_width()));
+			(obj.cells) = () => ((this.cells(id)));
 			return obj;
 		}
 		Cell(id){
@@ -95,29 +95,29 @@
 		}
 		Cell_text(id){
 			const obj = new this.$.$mol_grid_cell();
-			(obj.sub) = () => ((this?.cell_content_text(id)));
+			(obj.sub) = () => ((this.cell_content_text(id)));
 			return obj;
 		}
 		Cell_number(id){
 			const obj = new this.$.$mol_grid_number();
-			(obj.sub) = () => ((this?.cell_content_number(id)));
+			(obj.sub) = () => ((this.cell_content_number(id)));
 			return obj;
 		}
 		Col_head(id){
 			const obj = new this.$.$mol_float();
 			(obj.dom_name) = () => ("th");
-			(obj.sub) = () => ((this?.col_head_content(id)));
+			(obj.sub) = () => ((this.col_head_content(id)));
 			return obj;
 		}
 		Cell_branch(id){
 			const obj = new this.$.$mol_check_expand();
-			(obj.level) = () => ((this?.cell_level(id)));
-			(obj.label) = () => ((this?.cell_content(id)));
-			(obj.expanded) = (next) => ((this?.cell_expanded(id, next)));
+			(obj.level) = () => ((this.cell_level(id)));
+			(obj.label) = () => ((this.cell_content(id)));
+			(obj.expanded) = (next) => ((this.cell_expanded(id, next)));
 			return obj;
 		}
 		Cell_content(id){
-			return [(this?.Cell_dimmer(id))];
+			return [(this.Cell_dimmer(id))];
 		}
 	};
 	($mol_mem(($.$mol_grid.prototype), "Table"));
@@ -136,7 +136,7 @@
 			return [];
 		}
 		sub(){
-			return (this?.cells());
+			return (this.cells());
 		}
 	};
 	($.$mol_grid_cell) = class $mol_grid_cell extends ($.$mol_view) {

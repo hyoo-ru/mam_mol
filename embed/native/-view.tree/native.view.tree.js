@@ -7,8 +7,8 @@
 		}
 		Fallback(){
 			const obj = new this.$.$mol_link();
-			(obj.uri) = () => ((this?.uri()));
-			(obj.sub) = () => ([(this?.title())]);
+			(obj.uri) = () => ((this.uri()));
+			(obj.sub) = () => ([(this.title())]);
 			return obj;
 		}
 		uri_change(next){
@@ -28,15 +28,15 @@
 		attr(){
 			return {
 				...(super.attr()), 
-				"data": (this?.uri()), 
-				"type": (this?.mime())
+				"data": (this.uri()), 
+				"type": (this.mime())
 			};
 		}
 		sub(){
-			return [(this?.Fallback())];
+			return [(this.Fallback())];
 		}
 		message(){
-			return {"hashchange": (next) => (this?.uri_change(next))};
+			return {"hashchange": (next) => (this.uri_change(next))};
 		}
 	};
 	($mol_mem(($.$mol_embed_native.prototype), "Fallback"));

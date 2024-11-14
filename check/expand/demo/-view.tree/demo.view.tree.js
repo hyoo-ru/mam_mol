@@ -8,8 +8,8 @@
 		}
 		Labeled_base(){
 			const obj = new this.$.$mol_check_expand();
-			(obj.checked) = (next) => ((this?.base_expanded(next)));
-			(obj.title) = () => ((this?.c1Label()));
+			(obj.checked) = (next) => ((this.base_expanded(next)));
+			(obj.title) = () => ((this.c1Label()));
 			return obj;
 		}
 		c2Label(){
@@ -21,8 +21,8 @@
 		}
 		Labeled_expanded(){
 			const obj = new this.$.$mol_check_expand();
-			(obj.title) = () => ((this?.c2Label()));
-			(obj.checked) = (next) => ((this?.expanded_expanded(next)));
+			(obj.title) = () => ((this.c2Label()));
+			(obj.checked) = (next) => ((this.expanded_expanded(next)));
 			return obj;
 		}
 		c5Label(){
@@ -30,28 +30,28 @@
 		}
 		Disabled(){
 			const obj = new this.$.$mol_check_expand();
-			(obj.title) = () => ((this?.c5Label()));
+			(obj.title) = () => ((this.c5Label()));
 			(obj.disabled) = () => (true);
 			return obj;
 		}
 		Empty_base(){
 			const obj = new this.$.$mol_check_expand();
-			(obj.checked) = (next) => ((this?.base_expanded(next)));
+			(obj.checked) = (next) => ((this.base_expanded(next)));
 			return obj;
 		}
 		Empty_expanded(){
 			const obj = new this.$.$mol_check_expand();
-			(obj.checked) = (next) => ((this?.expanded_expanded(next)));
+			(obj.checked) = (next) => ((this.expanded_expanded(next)));
 			return obj;
 		}
 		Demo_items(){
 			const obj = new this.$.$mol_list();
 			(obj.rows) = () => ([
-				(this?.Labeled_base()), 
-				(this?.Labeled_expanded()), 
-				(this?.Disabled()), 
-				(this?.Empty_base()), 
-				(this?.Empty_expanded())
+				(this.Labeled_base()), 
+				(this.Labeled_expanded()), 
+				(this.Disabled()), 
+				(this.Empty_base()), 
+				(this.Empty_expanded())
 			]);
 			return obj;
 		}
@@ -59,7 +59,7 @@
 			return "Checkbox-expand in various states";
 		}
 		sub(){
-			return [(this?.Demo_items())];
+			return [(this.Demo_items())];
 		}
 		tags(){
 			return ["fold"];

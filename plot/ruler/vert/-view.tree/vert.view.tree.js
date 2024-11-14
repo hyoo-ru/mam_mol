@@ -9,13 +9,13 @@
 			return "14";
 		}
 		label_pos_x(id){
-			return (this?.title_pos_x());
+			return (this.title_pos_x());
 		}
 		background_height(){
 			return "100%";
 		}
 		background_width(){
-			return (this?.title_pos_x());
+			return (this.title_pos_x());
 		}
 	};
 

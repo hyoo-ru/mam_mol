@@ -5,7 +5,7 @@
 		}
 		Url(){
 			const obj = new this.$.$mol_string();
-			(obj.value) = (next) => ((this?.url(next)));
+			(obj.value) = (next) => ((this.url(next)));
 			return obj;
 		}
 		fetch_data(next){
@@ -14,12 +14,12 @@
 		}
 		Fetch(){
 			const obj = new this.$.$mol_button_major();
-			(obj.click) = (next) => ((this?.fetch_data()));
+			(obj.click) = (next) => ((this.fetch_data()));
 			return obj;
 		}
 		Request(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this?.Url()), (this?.Fetch())]);
+			(obj.sub) = () => ([(this.Url()), (this.Fetch())]);
 			return obj;
 		}
 		data(next){
@@ -28,19 +28,19 @@
 		}
 		Data(){
 			const obj = new this.$.$mol_dump_value();
-			(obj.value) = () => ((this?.data()));
+			(obj.value) = () => ((this.data()));
 			return obj;
 		}
 		Content(){
 			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ([(this?.Request()), (this?.Data())]);
+			(obj.rows) = () => ([(this.Request()), (this.Data())]);
 			return obj;
 		}
 		title(){
 			return "Simple spoiler";
 		}
 		sub(){
-			return [(this?.Content())];
+			return [(this.Content())];
 		}
 		tags(){
 			return [

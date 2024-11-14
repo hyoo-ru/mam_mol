@@ -4,13 +4,13 @@
 		}
 		Info_content(){
 			const obj = new this.$.$mol_text();
-			(obj.text) = () => ((this?.info_content_text()));
+			(obj.text) = () => ((this.info_content_text()));
 			return obj;
 		}
 		Info_pop(){
 			const obj = new this.$.$mol_pick();
 			(obj.title) = () => ("Info");
-			(obj.bubble_content) = () => ([(this?.Info_content())]);
+			(obj.bubble_content) = () => ([(this.Info_content())]);
 			return obj;
 		}
 		Options_trigger_icon(){
@@ -30,7 +30,7 @@
 		Menu_item_download(){
 			const obj = new this.$.$mol_button_download();
 			(obj.title) = () => ("Download");
-			(obj.blob) = () => ((this?.Menu_item_download_blob()));
+			(obj.blob) = () => ((this.Menu_item_download_blob()));
 			(obj.file_name) = () => ("demo.bin");
 			return obj;
 		}
@@ -48,37 +48,37 @@
 		Delete_confirm(){
 			const obj = new this.$.$mol_button_major();
 			(obj.title) = () => ("Confirm");
-			(obj.click) = (next) => ((this?.delete_confirm(next)));
+			(obj.click) = (next) => ((this.delete_confirm(next)));
 			return obj;
 		}
 		Menu_item_delete(){
 			const obj = new this.$.$mol_pick();
 			(obj.align) = () => ("center");
-			(obj.trigger_content) = () => ([(this?.menu_item_delete_icon()), (this?.menu_item_delete_label())]);
-			(obj.bubble_content) = () => ([(this?.Delete_confirm())]);
+			(obj.trigger_content) = () => ([(this.menu_item_delete_icon()), (this.menu_item_delete_label())]);
+			(obj.bubble_content) = () => ([(this.Delete_confirm())]);
 			return obj;
 		}
 		Options_content(){
 			const obj = new this.$.$mol_list();
 			(obj.rows) = () => ([
-				(this?.Menu_item_copy()), 
-				(this?.Menu_item_download()), 
-				(this?.Menu_item_delete())
+				(this.Menu_item_copy()), 
+				(this.Menu_item_download()), 
+				(this.Menu_item_delete())
 			]);
 			return obj;
 		}
 		Options_pop(){
 			const obj = new this.$.$mol_pick();
 			(obj.hint) = () => ("Click to show options menu");
-			(obj.trigger_content) = () => ([(this?.Options_trigger_icon())]);
-			(obj.bubble_content) = () => ([(this?.Options_content())]);
+			(obj.trigger_content) = () => ([(this.Options_trigger_icon())]);
+			(obj.bubble_content) = () => ([(this.Options_content())]);
 			return obj;
 		}
 		title(){
 			return "Simple and complex popups";
 		}
 		sub(){
-			return [(this?.Info_pop()), (this?.Options_pop())];
+			return [(this.Info_pop()), (this.Options_pop())];
 		}
 		tags(){
 			return [

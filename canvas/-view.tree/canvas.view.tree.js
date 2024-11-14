@@ -15,8 +15,8 @@
 		field(){
 			return {
 				...(super.field()), 
-				"width": (this?.width()), 
-				"height": (this?.height())
+				"width": (this.width()), 
+				"height": (this.height())
 			};
 		}
 		paint(){

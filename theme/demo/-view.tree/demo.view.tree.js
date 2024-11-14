@@ -11,14 +11,14 @@
 		}
 		Hue(){
 			const obj = new this.$.$mol_number();
-			(obj.value) = (next) => ((this?.hue(next)));
+			(obj.value) = (next) => ((this.hue(next)));
 			(obj.precision_change) = () => (15);
 			return obj;
 		}
 		Hue_field(){
 			const obj = new this.$.$mol_form_field();
 			(obj.name) = () => ("Hue");
-			(obj.Content) = () => ((this?.Hue()));
+			(obj.Content) = () => ((this.Hue()));
 			return obj;
 		}
 		hue_spread(next){
@@ -27,19 +27,19 @@
 		}
 		Hue_spread(){
 			const obj = new this.$.$mol_number();
-			(obj.value) = (next) => ((this?.hue_spread(next)));
+			(obj.value) = (next) => ((this.hue_spread(next)));
 			(obj.precision_change) = () => (15);
 			return obj;
 		}
 		Hue_spread_field(){
 			const obj = new this.$.$mol_form_field();
 			(obj.name) = () => ("Hue spread");
-			(obj.Content) = () => ((this?.Hue_spread()));
+			(obj.Content) = () => ((this.Hue_spread()));
 			return obj;
 		}
 		Config(){
 			const obj = new this.$.$mol_row();
-			(obj.sub) = () => ([(this?.Hue_field()), (this?.Hue_spread_field())]);
+			(obj.sub) = () => ([(this.Hue_field()), (this.Hue_spread_field())]);
 			return obj;
 		}
 		Base(){
@@ -66,23 +66,23 @@
 			const obj = new this.$.$mol_theme_demo_case();
 			(obj.title) = () => ("Current light");
 			(obj.inner) = () => ([
-				(this?.Base()), 
-				(this?.Accent()), 
-				(this?.Current()), 
-				(this?.Special())
+				(this.Base()), 
+				(this.Accent()), 
+				(this.Current()), 
+				(this.Special())
 			]);
 			return obj;
 		}
 		Scroll(){
 			const obj = new this.$.$mol_scroll();
-			(obj.sub) = () => ([(this?.Cases())]);
+			(obj.sub) = () => ([(this.Cases())]);
 			return obj;
 		}
 		style(){
-			return {"--mol_theme_hue": (this?.hue_deg()), "--mol_theme_hue_spread": (this?.hue_spread_deg())};
+			return {"--mol_theme_hue": (this.hue_deg()), "--mol_theme_hue_spread": (this.hue_spread_deg())};
 		}
 		sub(){
-			return [(this?.Config()), (this?.Scroll())];
+			return [(this.Config()), (this.Scroll())];
 		}
 		tags(){
 			return ["theme", "skin"];
@@ -110,12 +110,12 @@
 		}
 		Card2_text(){
 			const obj = new this.$.$mol_button_copy();
-			(obj.title) = () => ((this?.title()));
+			(obj.title) = () => ((this.title()));
 			return obj;
 		}
 		Card2(){
 			const obj = new this.$.$mol_row();
-			(obj.sub) = () => ([(this?.Card2_text())]);
+			(obj.sub) = () => ([(this.Card2_text())]);
 			return obj;
 		}
 		Card1_text(){
@@ -125,7 +125,7 @@
 		}
 		Card1(){
 			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ([(this?.Card2()), (this?.Card1_text())]);
+			(obj.rows) = () => ([(this.Card2()), (this.Card1_text())]);
 			return obj;
 		}
 		Back(){
@@ -181,25 +181,25 @@
 		Self(){
 			const obj = new this.$.$mol_list();
 			(obj.rows) = () => ([
-				(this?.Card1()), 
-				(this?.Back()), 
-				(this?.Line()), 
-				(this?.Text()), 
-				(this?.Field()), 
-				(this?.Shade()), 
-				(this?.Focus()), 
-				(this?.Control()), 
-				(this?.Hover()), 
-				(this?.Current()), 
-				(this?.Special())
+				(this.Card1()), 
+				(this.Back()), 
+				(this.Line()), 
+				(this.Text()), 
+				(this.Field()), 
+				(this.Shade()), 
+				(this.Focus()), 
+				(this.Control()), 
+				(this.Hover()), 
+				(this.Current()), 
+				(this.Special())
 			]);
 			return obj;
 		}
 		title(){
-			return (this?.theme());
+			return (this.theme());
 		}
 		sub(){
-			return [(this?.Self()), ...(this.inner())];
+			return [(this.Self()), ...(this.inner())];
 		}
 		inner(){
 			return [];

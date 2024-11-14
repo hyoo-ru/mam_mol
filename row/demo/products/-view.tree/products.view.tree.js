@@ -7,7 +7,7 @@
 		}
 		Products(){
 			const obj = new this.$.$mol_row();
-			(obj.sub) = () => ((this?.products()));
+			(obj.sub) = () => ((this.products()));
 			return obj;
 		}
 		title(){
@@ -20,11 +20,11 @@
 			const obj = new this.$.$mol_card();
 			(obj.minimal_width) = () => (110);
 			(obj.minimal_height) = () => (100);
-			(obj.title) = () => ((this?.product_title(id)));
+			(obj.title) = () => ((this.product_title(id)));
 			return obj;
 		}
 		sub(){
-			return [(this?.Products())];
+			return [(this.Products())];
 		}
 		tags(){
 			return [

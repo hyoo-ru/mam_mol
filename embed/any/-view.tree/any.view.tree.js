@@ -7,26 +7,26 @@
 		}
 		Image(){
 			const obj = new this.$.$mol_image();
-			(obj.title) = () => ((this?.title()));
-			(obj.uri) = () => ((this?.uri()));
+			(obj.title) = () => ((this.title()));
+			(obj.uri) = () => ((this.uri()));
 			return obj;
 		}
 		Object(){
 			const obj = new this.$.$mol_embed_native();
-			(obj.title) = () => ((this?.title()));
-			(obj.uri) = () => ((this?.uri()));
+			(obj.title) = () => ((this.title()));
+			(obj.uri) = () => ((this.uri()));
 			return obj;
 		}
 		Youtube(){
 			const obj = new this.$.$mol_embed_youtube();
-			(obj.title) = () => ((this?.title()));
-			(obj.uri) = () => ((this?.uri()));
+			(obj.title) = () => ((this.title()));
+			(obj.uri) = () => ((this.uri()));
 			return obj;
 		}
 		Rutube(){
 			const obj = new this.$.$mol_embed_rutube();
-			(obj.title) = () => ((this?.title()));
-			(obj.uri) = () => ((this?.uri()));
+			(obj.title) = () => ((this.title()));
+			(obj.uri) = () => ((this.uri()));
 			return obj;
 		}
 	};

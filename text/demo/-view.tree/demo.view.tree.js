@@ -5,8 +5,8 @@
 		}
 		Search(){
 			const obj = new this.$.$mol_search_jumper();
-			(obj.query) = (next) => ((this?.search(next)));
-			(obj.Root) = () => ((this?.View()));
+			(obj.query) = (next) => ((this.search(next)));
+			(obj.Root) = () => ((this.View()));
 			return obj;
 		}
 		Edit_icon(){
@@ -16,20 +16,20 @@
 		Edit(){
 			const obj = new this.$.$mol_link();
 			(obj.arg) = () => ({"edit": ""});
-			(obj.sub) = () => ([(this?.Edit_icon())]);
+			(obj.sub) = () => ([(this.Edit_icon())]);
 			return obj;
 		}
 		View(){
 			const obj = new this.$.$mol_text();
-			(obj.text) = () => ((this?.text()));
-			(obj.highlight) = () => ((this?.search()));
+			(obj.text) = () => ((this.text()));
+			(obj.highlight) = () => ((this.search()));
 			return obj;
 		}
 		View_page(){
 			const obj = new this.$.$mol_page();
 			(obj.title) = () => ("Output");
-			(obj.tools) = () => ([(this?.Search()), (this?.Edit())]);
-			(obj.body) = () => ([(this?.View())]);
+			(obj.tools) = () => ([(this.Search()), (this.Edit())]);
+			(obj.body) = () => ([(this.View())]);
 			return obj;
 		}
 		Close_icon(){
@@ -39,7 +39,7 @@
 		Close(){
 			const obj = new this.$.$mol_link();
 			(obj.arg) = () => ({"edit": null});
-			(obj.sub) = () => ([(this?.Close_icon())]);
+			(obj.sub) = () => ([(this.Close_icon())]);
 			return obj;
 		}
 		text(next){
@@ -48,30 +48,30 @@
 		}
 		Code(){
 			const obj = new this.$.$mol_textarea();
-			(obj.value) = (next) => ((this?.text(next)));
+			(obj.value) = (next) => ((this.text(next)));
 			return obj;
 		}
 		Code_page(){
 			const obj = new this.$.$mol_page();
 			(obj.title) = () => ("Input");
-			(obj.tools) = () => ([(this?.Close())]);
-			(obj.body) = () => ([(this?.Code())]);
+			(obj.tools) = () => ([(this.Close())]);
+			(obj.body) = () => ([(this.Code())]);
 			return obj;
 		}
 		pages(){
-			return [(this?.View_page()), (this?.Code_page())];
+			return [(this.View_page()), (this.Code_page())];
 		}
 		Book(){
 			const obj = new this.$.$mol_book2();
 			(obj.Placeholder) = () => (null);
-			(obj.pages) = () => ((this?.pages()));
+			(obj.pages) = () => ((this.pages()));
 			return obj;
 		}
 		title(){
 			return "Markdown visualization example";
 		}
 		sub(){
-			return [(this?.Book())];
+			return [(this.Book())];
 		}
 		tags(){
 			return ["markdown", "marked"];

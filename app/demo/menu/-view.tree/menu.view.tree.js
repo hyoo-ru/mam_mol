@@ -5,7 +5,7 @@
 		}
 		Filter(){
 			const obj = new this.$.$mol_search();
-			(obj.query) = (next) => ((this?.filter(next)));
+			(obj.query) = (next) => ((this.filter(next)));
 			return obj;
 		}
 		ids_tags(){
@@ -15,13 +15,13 @@
 			return 0;
 		}
 		levels_expanded(){
-			return (this?.levels_expanded_default());
+			return (this.levels_expanded_default());
 		}
 		Tree(){
 			const obj = new this.$.$mol_tag_tree();
-			(obj.Item) = (id) => ((this?.Option(id)));
-			(obj.ids_tags) = () => ((this?.ids_tags()));
-			(obj.levels_expanded) = () => ((this?.levels_expanded()));
+			(obj.Item) = (id) => ((this.Option(id)));
+			(obj.ids_tags) = () => ((this.ids_tags()));
+			(obj.levels_expanded) = () => ((this.levels_expanded()));
 			return obj;
 		}
 		option_arg(id){
@@ -32,8 +32,8 @@
 		}
 		Option_title(id){
 			const obj = new this.$.$mol_dimmer();
-			(obj.haystack) = () => ((this?.option_title(id)));
-			(obj.needle) = () => ((this?.filter()));
+			(obj.haystack) = () => ((this.option_title(id)));
+			(obj.needle) = () => ((this.filter()));
 			return obj;
 		}
 		names(){
@@ -53,12 +53,12 @@
 			return null;
 		}
 		body(){
-			return [(this?.Filter()), (this?.Tree())];
+			return [(this.Filter()), (this.Tree())];
 		}
 		Option(id){
 			const obj = new this.$.$mol_link();
-			(obj.arg) = () => ((this?.option_arg(id)));
-			(obj.sub) = () => ([(this?.Option_title(id))]);
+			(obj.arg) = () => ((this.option_arg(id)));
+			(obj.sub) = () => ([(this.Option_title(id))]);
 			return obj;
 		}
 	};

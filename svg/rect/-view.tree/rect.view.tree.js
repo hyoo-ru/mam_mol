@@ -20,10 +20,10 @@
 		attr(){
 			return {
 				...(super.attr()), 
-				"width": (this?.width()), 
-				"height": (this?.height()), 
-				"x": (this?.pos_x()), 
-				"y": (this?.pos_y())
+				"width": (this.width()), 
+				"height": (this.height()), 
+				"x": (this.pos_x()), 
+				"y": (this.pos_y())
 			};
 		}
 	};

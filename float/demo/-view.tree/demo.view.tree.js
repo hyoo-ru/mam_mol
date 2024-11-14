@@ -6,12 +6,12 @@
 		}
 		Head_row(){
 			const obj = new this.$.$mol_row();
-			(obj.sub) = () => ([(this?.Head_content())]);
+			(obj.sub) = () => ([(this.Head_content())]);
 			return obj;
 		}
 		Head(){
 			const obj = new this.$.$mol_float();
-			(obj.sub) = () => ([(this?.Head_row())]);
+			(obj.sub) = () => ([(this.Head_row())]);
 			return obj;
 		}
 		Filler1(){
@@ -24,19 +24,19 @@
 		}
 		Content(){
 			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ([(this?.Filler1()), (this?.Filler2())]);
+			(obj.rows) = () => ([(this.Filler1()), (this.Filler2())]);
 			return obj;
 		}
 		Scroll(){
 			const obj = new this.$.$mol_scroll();
-			(obj.sub) = () => ([(this?.Head()), (this?.Content())]);
+			(obj.sub) = () => ([(this.Head()), (this.Content())]);
 			return obj;
 		}
 		title(){
 			return "Floating header example";
 		}
 		sub(){
-			return [(this?.Scroll())];
+			return [(this.Scroll())];
 		}
 		tags(){
 			return ["scroll", "container"];

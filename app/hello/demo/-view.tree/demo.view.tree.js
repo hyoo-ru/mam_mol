@@ -7,7 +7,7 @@
 			return "Simpliest application";
 		}
 		sub(){
-			return [(this?.App())];
+			return [(this.App())];
 		}
 		aspects(){
 			return ["Application"];

@@ -6,5 +6,5 @@
 	"sourcesContent": [
 		"$mol_plot_ruler_hor $mol_plot_ruler\n\ttitle_align \\start\n\tlabel_align \\middle\n\ttitle_pos_x \\0\n\ttitle_pos_y \\100%\n\tlabel_pos_y* <= title_pos_y\n\tbackground_width \\100%\n"
 	],
-	"mappings": "AAAA,AAAA,qDAAoB,4BAApB;AAAA,AACC;AAAA,AAAA,UAAa,OAAb;AAAA;AACA;AAAA,AAAA,UAAa,QAAb;AAAA;AACA;AAAA,AAAA,UAAa,GAAb;AAAA;AACA;AAAA,AAAA,UAAa,MAAb;AAAA;AACA;AAAA,AAAA,UAAa,KAAG,eAAH,CAAb;AAAA;AACA;AAAA,AAAA,UAAkB,MAAlB;AAAA;AAND,CAAA;"
+	"mappings": "AAAA,AAAA,qDAAoB,4BAApB;AAAA,AACC;AAAA,AAAA,UAAa,OAAb;AAAA;AACA;AAAA,AAAA,UAAa,QAAb;AAAA;AACA;AAAA,AAAA,UAAa,GAAb;AAAA;AACA;AAAA,AAAA,UAAa,MAAb;AAAA;AACA;AAAA,AAAA,UAAa,KAAG,cAAH,CAAb;AAAA;AACA;AAAA,AAAA,UAAkB,MAAlB;AAAA;AAND,CAAA;"
 }

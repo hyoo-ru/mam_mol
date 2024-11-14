@@ -10,7 +10,7 @@
 		}
 		Link(){
 			const obj = new this.$.$mol_link();
-			(obj.sub) = () => ([(this?.Link_speck()), (this?.Link_icon())]);
+			(obj.sub) = () => ([(this.Link_speck()), (this.Link_icon())]);
 			return obj;
 		}
 		string_speck(){
@@ -18,7 +18,7 @@
 		}
 		String_speck(){
 			const obj = new this.$.$mol_speck();
-			(obj.value) = () => ((this?.string_speck()));
+			(obj.value) = () => ((this.string_speck()));
 			return obj;
 		}
 		String_field(){
@@ -27,7 +27,7 @@
 		}
 		String(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this?.String_speck()), (this?.String_field())]);
+			(obj.sub) = () => ([(this.String_speck()), (this.String_field())]);
 			return obj;
 		}
 		notification_count(){
@@ -35,7 +35,7 @@
 		}
 		Button_speck(){
 			const obj = new this.$.$mol_speck();
-			(obj.value) = () => ((this?.notification_count()));
+			(obj.value) = () => ((this.notification_count()));
 			return obj;
 		}
 		Button_icon(){
@@ -44,7 +44,7 @@
 		}
 		Button(){
 			const obj = new this.$.$mol_button_minor();
-			(obj.sub) = () => ([(this?.Button_speck()), (this?.Button_icon())]);
+			(obj.sub) = () => ([(this.Button_speck()), (this.Button_icon())]);
 			return obj;
 		}
 		Message_speck(){
@@ -56,15 +56,15 @@
 		}
 		Message(){
 			const obj = new this.$.$mol_paragraph();
-			(obj.sub) = () => ([(this?.Message_speck()), (this?.message_text())]);
+			(obj.sub) = () => ([(this.Message_speck()), (this.message_text())]);
 			return obj;
 		}
 		sub(){
 			return [
-				(this?.Link()), 
-				(this?.String()), 
-				(this?.Button()), 
-				(this?.Message())
+				(this.Link()), 
+				(this.String()), 
+				(this.Button()), 
+				(this.Message())
 			];
 		}
 		tags(){

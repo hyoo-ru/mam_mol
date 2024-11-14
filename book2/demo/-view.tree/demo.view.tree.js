@@ -21,11 +21,11 @@
 		}
 		View(){
 			const obj = new this.$.$mol_book2();
-			(obj.Placeholder) = () => ((this?.Side()));
+			(obj.Placeholder) = () => ((this.Side()));
 			(obj.pages) = () => ([
-				(this?.First()), 
-				(this?.Second()), 
-				(this?.Third())
+				(this.First()), 
+				(this.Second()), 
+				(this.Third())
 			]);
 			return obj;
 		}
@@ -33,7 +33,7 @@
 			return "Adaprive layout for various sizes of screen";
 		}
 		sub(){
-			return [(this?.View())];
+			return [(this.View())];
 		}
 		tags(){
 			return [

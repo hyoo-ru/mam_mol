@@ -1,51 +1,51 @@
 declare namespace $ {
 
-	type $mol_format__value__NRQBGVGZ = $mol_type_enforce<
+	type $mol_format__value_mol_pick_time_1 = $mol_type_enforce<
 		ReturnType< $mol_pick_time['value'] >
 		,
 		ReturnType< $mol_format['value'] >
 	>
-	type $mol_format__mask__0KR91UYT = $mol_type_enforce<
+	type $mol_format__mask_mol_pick_time_2 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_format['mask'] >
 	>
-	type $mol_format__allow__YON7NFY0 = $mol_type_enforce<
+	type $mol_format__allow_mol_pick_time_3 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_format['allow'] >
 	>
-	type $mol_format__enabled__KM9FUZPW = $mol_type_enforce<
+	type $mol_format__enabled_mol_pick_time_4 = $mol_type_enforce<
 		ReturnType< $mol_pick_time['enabled'] >
 		,
 		ReturnType< $mol_format['enabled'] >
 	>
-	type $mol_switch__value__AJORFQV2 = $mol_type_enforce<
+	type $mol_switch__value_mol_pick_time_5 = $mol_type_enforce<
 		ReturnType< $mol_pick_time['hour_selected'] >
 		,
 		ReturnType< $mol_switch['value'] >
 	>
-	type $mol_switch__options__R4SY8Q0K = $mol_type_enforce<
+	type $mol_switch__options_mol_pick_time_6 = $mol_type_enforce<
 		ReturnType< $mol_pick_time['hour_options'] >
 		,
 		ReturnType< $mol_switch['options'] >
 	>
-	type $mol_paragraph__title__TSNLLLGK = $mol_type_enforce<
+	type $mol_paragraph__title_mol_pick_time_7 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_switch__value__RT637DWZ = $mol_type_enforce<
+	type $mol_switch__value_mol_pick_time_8 = $mol_type_enforce<
 		ReturnType< $mol_pick_time['minute_selected'] >
 		,
 		ReturnType< $mol_switch['value'] >
 	>
-	type $mol_switch__options__4MT92SF0 = $mol_type_enforce<
+	type $mol_switch__options_mol_pick_time_9 = $mol_type_enforce<
 		ReturnType< $mol_pick_time['minute_options'] >
 		,
 		ReturnType< $mol_switch['options'] >
 	>
-	type $mol_row__sub__XPQ2CCP0 = $mol_type_enforce<
+	type $mol_row__sub_mol_pick_time_10 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_row['sub'] >

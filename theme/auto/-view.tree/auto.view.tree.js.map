@@ -6,5 +6,5 @@
 	"sourcesContent": [
 		"$mol_theme_auto $mol_plugin\n\tattr * mol_theme <= theme \\\n"
 	],
-	"mappings": "AAAA,AAAA,6CAAgB,wBAAhB;AAAA,AACqB;AAAA,AAAA,UAAO,EAAP;AAAA;AAApB;AAAA,AAAA,UAAK,CAAE,aAAU,KAAG,SAAH,CAAZ,CAAL;AAAA;AADD,CAAA;"
+	"mappings": "AAAA,AAAA,6CAAgB,wBAAhB;AAAA,AACqB;AAAA,AAAA,UAAO,EAAP;AAAA;AAApB;AAAA,AAAA,UAAK,CAAE,aAAU,KAAG,QAAH,CAAZ,CAAL;AAAA;AADD,CAAA;"
 }

@@ -14,7 +14,7 @@
 			return obj;
 		}
 		col_head_content(id){
-			return [(this?.col_head_title(id)), (this?.Col_head_sort(id))];
+			return [(this.col_head_title(id)), (this.Col_head_sort(id))];
 		}
 		result_value(id){
 			return "";
@@ -24,11 +24,11 @@
 		}
 		Result_portion(id){
 			const obj = new this.$.$mol_portion();
-			(obj.portion) = () => ((this?.result_portion(id)));
+			(obj.portion) = () => ((this.result_portion(id)));
 			return obj;
 		}
 		records(){
-			return (this?.result());
+			return (this.result());
 		}
 		col_sort(next){
 			if(next !== undefined) return next;
@@ -36,12 +36,12 @@
 		}
 		Col_head(id){
 			const obj = new this.$.$mol_bench_head();
-			(obj.event_click) = (next) => ((this?.event_sort_toggle(id, next)));
-			(obj.sub) = () => ((this?.col_head_content(id)));
+			(obj.event_click) = (next) => ((this.event_sort_toggle(id, next)));
+			(obj.sub) = () => ((this.col_head_content(id)));
 			return obj;
 		}
 		cell_content_number(id){
-			return [(this?.result_value(id)), (this?.Result_portion(id))];
+			return [(this.result_value(id)), (this.Result_portion(id))];
 		}
 	};
 	($mol_mem_key(($.$mol_bench.prototype), "event_sort_toggle"));
@@ -61,10 +61,10 @@
 			return false;
 		}
 		event(){
-			return {...(super.event()), "click": (next) => (this?.event_click(next))};
+			return {...(super.event()), "click": (next) => (this.event_click(next))};
 		}
 		attr(){
-			return {...(super.attr()), "title": (this?.hint())};
+			return {...(super.attr()), "title": (this.hint())};
 		}
 	};
 	($mol_mem(($.$mol_bench_head.prototype), "event_click"));

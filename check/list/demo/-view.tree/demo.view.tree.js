@@ -5,7 +5,7 @@
 		}
 		Rights(){
 			const obj = new this.$.$mol_check_list();
-			(obj.option_checked) = (id, next) => ((this?.right(id, next)));
+			(obj.option_checked) = (id, next) => ((this.right(id, next)));
 			(obj.options) = () => ({
 				"read": "Allow Read", 
 				"write": "Allow Write", 
@@ -22,7 +22,7 @@
 			return "Set of toggles";
 		}
 		sub(){
-			return [(this?.Rights())];
+			return [(this.Rights())];
 		}
 		tags(){
 			return [

@@ -3,13 +3,13 @@
 			const obj = new this.$.$mol_check_group();
 			(obj.title) = () => ("SPECIAL");
 			(obj.checks) = () => ([
-				(this?.Strength()), 
-				(this?.Perception()), 
-				(this?.Endurance()), 
-				(this?.Charisma()), 
-				(this?.Intelligence()), 
-				(this?.Agility()), 
-				(this?.Luck())
+				(this.Strength()), 
+				(this.Perception()), 
+				(this.Endurance()), 
+				(this.Charisma()), 
+				(this.Intelligence()), 
+				(this.Agility()), 
+				(this.Luck())
 			]);
 			return obj;
 		}
@@ -22,8 +22,8 @@
 		}
 		Strength(){
 			const obj = new this.$.$mol_check_box();
-			(obj.title) = () => ((this?.strength_title()));
-			(obj.checked) = (next) => ((this?.strength(next)));
+			(obj.title) = () => ((this.strength_title()));
+			(obj.checked) = (next) => ((this.strength(next)));
 			return obj;
 		}
 		perception_title(){
@@ -35,8 +35,8 @@
 		}
 		Perception(){
 			const obj = new this.$.$mol_check_box();
-			(obj.title) = () => ((this?.perception_title()));
-			(obj.checked) = (next) => ((this?.perception(next)));
+			(obj.title) = () => ((this.perception_title()));
+			(obj.checked) = (next) => ((this.perception(next)));
 			return obj;
 		}
 		endurance_title(){
@@ -48,8 +48,8 @@
 		}
 		Endurance(){
 			const obj = new this.$.$mol_check_box();
-			(obj.title) = () => ((this?.endurance_title()));
-			(obj.checked) = (next) => ((this?.endurance(next)));
+			(obj.title) = () => ((this.endurance_title()));
+			(obj.checked) = (next) => ((this.endurance(next)));
 			return obj;
 		}
 		charisma_title(){
@@ -61,8 +61,8 @@
 		}
 		Charisma(){
 			const obj = new this.$.$mol_check_box();
-			(obj.title) = () => ((this?.charisma_title()));
-			(obj.checked) = (next) => ((this?.charisma(next)));
+			(obj.title) = () => ((this.charisma_title()));
+			(obj.checked) = (next) => ((this.charisma(next)));
 			return obj;
 		}
 		intelligence_title(){
@@ -74,8 +74,8 @@
 		}
 		Intelligence(){
 			const obj = new this.$.$mol_check_box();
-			(obj.title) = () => ((this?.intelligence_title()));
-			(obj.checked) = (next) => ((this?.intelligence(next)));
+			(obj.title) = () => ((this.intelligence_title()));
+			(obj.checked) = (next) => ((this.intelligence(next)));
 			return obj;
 		}
 		agility_title(){
@@ -87,8 +87,8 @@
 		}
 		Agility(){
 			const obj = new this.$.$mol_check_box();
-			(obj.title) = () => ((this?.agility_title()));
-			(obj.checked) = (next) => ((this?.agility(next)));
+			(obj.title) = () => ((this.agility_title()));
+			(obj.checked) = (next) => ((this.agility(next)));
 			return obj;
 		}
 		luck_title(){
@@ -100,33 +100,33 @@
 		}
 		Luck(){
 			const obj = new this.$.$mol_check_box();
-			(obj.title) = () => ((this?.luck_title()));
-			(obj.checked) = (next) => ((this?.luck(next)));
+			(obj.title) = () => ((this.luck_title()));
+			(obj.checked) = (next) => ((this.luck(next)));
 			return obj;
 		}
 		Partial(){
 			const obj = new this.$.$mol_list();
 			(obj.rows) = () => ([
-				(this?.Strength()), 
-				(this?.Perception()), 
-				(this?.Endurance()), 
-				(this?.Charisma()), 
-				(this?.Intelligence()), 
-				(this?.Agility()), 
-				(this?.Luck())
+				(this.Strength()), 
+				(this.Perception()), 
+				(this.Endurance()), 
+				(this.Charisma()), 
+				(this.Intelligence()), 
+				(this.Agility()), 
+				(this.Luck())
 			]);
 			return obj;
 		}
 		Demo_items(){
 			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ([(this?.All()), (this?.Partial())]);
+			(obj.rows) = () => ([(this.All()), (this.Partial())]);
 			return obj;
 		}
 		title(){
 			return "Group of checkboxes";
 		}
 		sub(){
-			return [(this?.Demo_items())];
+			return [(this.Demo_items())];
 		}
 		tags(){
 			return ["multi", "group"];

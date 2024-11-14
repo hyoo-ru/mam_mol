@@ -27,22 +27,22 @@
 		field(){
 			return {
 				...(super.field()), 
-				"src": (this?.uri()), 
-				"alt": (this?.title()), 
-				"loading": (this?.loading()), 
-				"decoding": (this?.decoding()), 
-				"crossOrigin": (this?.cors())
+				"src": (this.uri()), 
+				"alt": (this.title()), 
+				"loading": (this.loading()), 
+				"decoding": (this.decoding()), 
+				"crossOrigin": (this.cors())
 			};
 		}
 		attr(){
 			return {
 				...(super.attr()), 
-				"width": (this?.natural_width()), 
-				"height": (this?.natural_height())
+				"width": (this.natural_width()), 
+				"height": (this.natural_height())
 			};
 		}
 		event(){
-			return {"load": (next) => (this?.load(next))};
+			return {"load": (next) => (this.load(next))};
 		}
 		minimal_width(){
 			return 16;

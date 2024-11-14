@@ -16,7 +16,7 @@
 			return (this.$.$mol_locale.text("$mol_button_share_hint"));
 		}
 		sub(){
-			return [(this?.Icon()), (this?.title())];
+			return [(this.Icon()), (this.title())];
 		}
 	};
 	($mol_mem(($.$mol_button_share.prototype), "Icon"));

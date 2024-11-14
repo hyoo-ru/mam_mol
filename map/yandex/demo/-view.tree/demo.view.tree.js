@@ -10,21 +10,21 @@
 		}
 		Place(){
 			const obj = new this.$.$mol_map_yandex_mark();
-			(obj.title) = () => ((this?.place_title()));
-			(obj.address) = () => ((this?.place_addres()));
-			(obj.content) = () => ((this?.place_content()));
+			(obj.title) = () => ((this.place_title()));
+			(obj.address) = () => ((this.place_addres()));
+			(obj.content) = () => ((this.place_content()));
 			return obj;
 		}
 		Map(){
 			const obj = new this.$.$mol_map_yandex();
-			(obj.objects) = () => ([(this?.Place())]);
+			(obj.objects) = () => ([(this.Place())]);
 			return obj;
 		}
 		title(){
 			return "Simple Yandex Maps wrapper";
 		}
 		sub(){
-			return [(this?.Map())];
+			return [(this.Map())];
 		}
 		aspects(){
 			return ["Integration", "Widget/Map"];

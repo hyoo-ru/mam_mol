@@ -4,7 +4,7 @@
 		}
 		This(){
 			const obj = new this.$.$mol_link();
-			(obj.sub) = () => ([(this?.this_label())]);
+			(obj.sub) = () => ([(this.this_label())]);
 			return obj;
 		}
 		red_label(){
@@ -13,7 +13,7 @@
 		Red(){
 			const obj = new this.$.$mol_link();
 			(obj.arg) = () => ({"color": "red"});
-			(obj.sub) = () => ([(this?.red_label())]);
+			(obj.sub) = () => ([(this.red_label())]);
 			return obj;
 		}
 		green_label(){
@@ -22,7 +22,7 @@
 		Green(){
 			const obj = new this.$.$mol_link();
 			(obj.arg) = () => ({"color": "green"});
-			(obj.sub) = () => ([(this?.green_label())]);
+			(obj.sub) = () => ([(this.green_label())]);
 			return obj;
 		}
 		blue_label(){
@@ -31,7 +31,7 @@
 		Blue(){
 			const obj = new this.$.$mol_link();
 			(obj.arg) = () => ({"color": "blue"});
-			(obj.sub) = () => ([(this?.blue_label())]);
+			(obj.sub) = () => ([(this.blue_label())]);
 			return obj;
 		}
 		external_hint(){
@@ -41,7 +41,7 @@
 			const obj = new this.$.$mol_link();
 			(obj.uri) = () => ("http://example.org");
 			(obj.title) = () => ("example.org");
-			(obj.hint) = () => ((this?.external_hint()));
+			(obj.hint) = () => ((this.external_hint()));
 			return obj;
 		}
 		object_uri(){
@@ -56,20 +56,20 @@
 		}
 		Download(){
 			const obj = new this.$.$mol_link();
-			(obj.uri) = () => ((this?.object_uri()));
+			(obj.uri) = () => ((this.object_uri()));
 			(obj.file_name) = () => ("file.csv");
-			(obj.sub) = () => ([(this?.Download_icon()), (this?.download_label())]);
+			(obj.sub) = () => ([(this.Download_icon()), (this.download_label())]);
 			return obj;
 		}
 		Demo_items(){
 			const obj = new this.$.$mol_list();
 			(obj.rows) = () => ([
-				(this?.This()), 
-				(this?.Red()), 
-				(this?.Green()), 
-				(this?.Blue()), 
-				(this?.External()), 
-				(this?.Download())
+				(this.This()), 
+				(this.Red()), 
+				(this.Green()), 
+				(this.Blue()), 
+				(this.External()), 
+				(this.Download())
 			]);
 			return obj;
 		}
@@ -77,7 +77,7 @@
 			return "Some hyperlinks";
 		}
 		sub(){
-			return [(this?.Demo_items())];
+			return [(this.Demo_items())];
 		}
 		tags(){
 			return [

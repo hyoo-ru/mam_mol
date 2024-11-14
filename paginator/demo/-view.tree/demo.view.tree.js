@@ -5,14 +5,14 @@
 		}
 		Pages(){
 			const obj = new this.$.$mol_paginator();
-			(obj.value) = (next) => ((this?.page(next)));
+			(obj.value) = (next) => ((this.page(next)));
 			return obj;
 		}
 		title(){
 			return "Page switcher";
 		}
 		sub(){
-			return [(this?.Pages())];
+			return [(this.Pages())];
 		}
 		tags(){
 			return ["paginator", "navigation"];

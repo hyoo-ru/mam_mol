@@ -8,13 +8,13 @@
 		}
 		loginControl(){
 			const obj = new this.$.$mol_string();
-			(obj.value) = (next) => ((this?.login(next)));
+			(obj.value) = (next) => ((this.login(next)));
 			return obj;
 		}
 		loginField(){
 			const obj = new this.$.$mol_form_field();
-			(obj.name) = () => ((this?.loginLabel()));
-			(obj.control) = () => ((this?.loginControl()));
+			(obj.name) = () => ((this.loginLabel()));
+			(obj.control) = () => ((this.loginControl()));
 			return obj;
 		}
 		passwordLabel(){
@@ -26,14 +26,14 @@
 		}
 		passControl(){
 			const obj = new this.$.$mol_string();
-			(obj.value) = (next) => ((this?.password(next)));
+			(obj.value) = (next) => ((this.password(next)));
 			(obj.type) = () => ("password");
 			return obj;
 		}
 		passwordField(){
 			const obj = new this.$.$mol_form_field();
-			(obj.name) = () => ((this?.passwordLabel()));
-			(obj.control) = () => ((this?.passControl()));
+			(obj.name) = () => ((this.passwordLabel()));
+			(obj.control) = () => ((this.passControl()));
 			return obj;
 		}
 		submitLabel(){
@@ -48,15 +48,15 @@
 		}
 		submit(){
 			const obj = new this.$.$mol_button_major();
-			(obj.sub) = () => ([(this?.submitLabel())]);
-			(obj.click) = (next) => ((this?.event_submit(next)));
-			(obj.disabled) = () => ((this?.submit_blocked()));
+			(obj.sub) = () => ([(this.submitLabel())]);
+			(obj.click) = (next) => ((this.event_submit(next)));
+			(obj.disabled) = () => ((this.submit_blocked()));
 			return obj;
 		}
 		form(){
 			const obj = new this.$.$mol_form();
-			(obj.form_fields) = () => ([(this?.loginField()), (this?.passwordField())]);
-			(obj.buttons) = () => ([(this?.submit())]);
+			(obj.form_fields) = () => ([(this.loginField()), (this.passwordField())]);
+			(obj.buttons) = () => ([(this.submit())]);
 			return obj;
 		}
 		entered(next){
@@ -67,7 +67,7 @@
 			return 400;
 		}
 		sub(){
-			return [(this?.form())];
+			return [(this.form())];
 		}
 	};
 	($mol_mem(($.$mol_app_supplies_enter.prototype), "login"));

@@ -7,8 +7,8 @@
 		}
 		Product_item(){
 			const obj = new this.$.$mol_labeler();
-			(obj.title) = () => ((this?.product_title()));
-			(obj.content) = () => ([(this?.product_name())]);
+			(obj.title) = () => ((this.product_title()));
+			(obj.content) = () => ([(this.product_name())]);
 			return obj;
 		}
 		cost_title(){
@@ -21,18 +21,18 @@
 		}
 		Cost(){
 			const obj = new this.$.$mol_cost();
-			(obj.value) = () => ((this?.cost()));
+			(obj.value) = () => ((this.cost()));
 			return obj;
 		}
 		Cost_item(){
 			const obj = new this.$.$mol_labeler();
-			(obj.title) = () => ((this?.cost_title()));
-			(obj.content) = () => ([(this?.Cost())]);
+			(obj.title) = () => ((this.cost_title()));
+			(obj.content) = () => ([(this.Cost())]);
 			return obj;
 		}
 		Main_group(){
 			const obj = new this.$.$mol_row();
-			(obj.sub) = () => ([(this?.Product_item()), (this?.Cost_item())]);
+			(obj.sub) = () => ([(this.Product_item()), (this.Cost_item())]);
 			return obj;
 		}
 		division_title(){
@@ -43,8 +43,8 @@
 		}
 		Division_item(){
 			const obj = new this.$.$mol_labeler();
-			(obj.title) = () => ((this?.division_title()));
-			(obj.content) = () => ([(this?.division_name())]);
+			(obj.title) = () => ((this.division_title()));
+			(obj.content) = () => ([(this.division_name())]);
 			return obj;
 		}
 		price_label(){
@@ -57,18 +57,18 @@
 		}
 		Price(){
 			const obj = new this.$.$mol_cost();
-			(obj.value) = () => ((this?.price()));
+			(obj.value) = () => ((this.price()));
 			return obj;
 		}
 		Price_item(){
 			const obj = new this.$.$mol_labeler();
-			(obj.title) = () => ((this?.price_label()));
-			(obj.content) = () => ([(this?.Price())]);
+			(obj.title) = () => ((this.price_label()));
+			(obj.content) = () => ([(this.Price())]);
 			return obj;
 		}
 		Addon_group(){
 			const obj = new this.$.$mol_row();
-			(obj.sub) = () => ([(this?.Division_item()), (this?.Price_item())]);
+			(obj.sub) = () => ([(this.Division_item()), (this.Price_item())]);
 			return obj;
 		}
 		quantity_title(){
@@ -79,8 +79,8 @@
 		}
 		Quantity_item(){
 			const obj = new this.$.$mol_labeler();
-			(obj.title) = () => ((this?.quantity_title()));
-			(obj.content) = () => ([(this?.quantity())]);
+			(obj.title) = () => ((this.quantity_title()));
+			(obj.content) = () => ([(this.quantity())]);
 			return obj;
 		}
 		supply_date_title(){
@@ -91,8 +91,8 @@
 		}
 		Supply_date_item(){
 			const obj = new this.$.$mol_labeler();
-			(obj.title) = () => ((this?.supply_date_title()));
-			(obj.content) = () => ([(this?.supply_date())]);
+			(obj.title) = () => ((this.supply_date_title()));
+			(obj.content) = () => ([(this.supply_date())]);
 			return obj;
 		}
 		store_title(){
@@ -103,25 +103,25 @@
 		}
 		Store_item(){
 			const obj = new this.$.$mol_labeler();
-			(obj.title) = () => ((this?.store_title()));
-			(obj.content) = () => ([(this?.store_name())]);
+			(obj.title) = () => ((this.store_title()));
+			(obj.content) = () => ([(this.store_name())]);
 			return obj;
 		}
 		Supply_group(){
 			const obj = new this.$.$mol_row();
 			(obj.sub) = () => ([
-				(this?.Quantity_item()), 
-				(this?.Supply_date_item()), 
-				(this?.Store_item())
+				(this.Quantity_item()), 
+				(this.Supply_date_item()), 
+				(this.Store_item())
 			]);
 			return obj;
 		}
 		Row(){
 			const obj = new this.$.$mol_view();
 			(obj.sub) = () => ([
-				(this?.Main_group()), 
-				(this?.Addon_group()), 
-				(this?.Supply_group())
+				(this.Main_group()), 
+				(this.Addon_group()), 
+				(this.Supply_group())
 			]);
 			return obj;
 		}
@@ -133,7 +133,7 @@
 			return obj;
 		}
 		Content(){
-			return (this?.Row());
+			return (this.Row());
 		}
 	};
 	($mol_mem(($.$mol_app_supplies_position.prototype), "Product_item"));

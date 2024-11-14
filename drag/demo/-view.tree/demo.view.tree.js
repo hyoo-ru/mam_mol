@@ -17,14 +17,14 @@
 		}
 		Trash(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this?.Trash_icon()), " Trash"]);
+			(obj.sub) = () => ([(this.Trash_icon()), " Trash"]);
 			return obj;
 		}
 		Trash_drop(){
 			const obj = new this.$.$mol_drop();
-			(obj.adopt) = (next) => ((this?.transfer_adopt(next)));
-			(obj.receive) = (next) => ((this?.receive_trash(next)));
-			(obj.Sub) = () => ((this?.Trash()));
+			(obj.adopt) = (next) => ((this.transfer_adopt(next)));
+			(obj.receive) = (next) => ((this.receive_trash(next)));
+			(obj.Sub) = () => ((this.Trash()));
 			return obj;
 		}
 		task_rows(){
@@ -32,20 +32,20 @@
 		}
 		List(){
 			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ((this?.task_rows()));
+			(obj.rows) = () => ((this.task_rows()));
 			return obj;
 		}
 		Page(){
 			const obj = new this.$.$mol_page();
-			(obj.head) = () => ([(this?.Trash_drop())]);
-			(obj.Body_content) = () => ((this?.List()));
+			(obj.head) = () => ([(this.Trash_drop())]);
+			(obj.Body_content) = () => ((this.List()));
 			return obj;
 		}
 		List_drop(){
 			const obj = new this.$.$mol_drop();
-			(obj.adopt) = (next) => ((this?.transfer_adopt(next)));
-			(obj.receive) = (next) => ((this?.receive(next)));
-			(obj.Sub) = () => ((this?.Page()));
+			(obj.adopt) = (next) => ((this.transfer_adopt(next)));
+			(obj.receive) = (next) => ((this.receive(next)));
+			(obj.Sub) = () => ((this.Page()));
 			return obj;
 		}
 		task_title(id){
@@ -63,31 +63,31 @@
 		}
 		Task_link(id){
 			const obj = new this.$.$mol_link();
-			(obj.uri) = () => ((this?.task_uri(id)));
-			(obj.sub) = () => ([(this?.task_title(id))]);
+			(obj.uri) = () => ((this.task_uri(id)));
+			(obj.sub) = () => ([(this.task_title(id))]);
 			return obj;
 		}
 		Task_drop(id){
 			const obj = new this.$.$mol_drop();
-			(obj.adopt) = (next) => ((this?.transfer_adopt(next)));
-			(obj.receive) = (next) => ((this?.receive_before(id, next)));
-			(obj.Sub) = () => ((this?.Task_link(id)));
+			(obj.adopt) = (next) => ((this.transfer_adopt(next)));
+			(obj.receive) = (next) => ((this.receive_before(id, next)));
+			(obj.Sub) = () => ((this.Task_link(id)));
 			return obj;
 		}
 		task_count(){
 			return 100;
 		}
 		sub(){
-			return [(this?.List_drop())];
+			return [(this.List_drop())];
 		}
 		Task_row(id){
 			const obj = new this.$.$mol_drag();
 			(obj.transfer) = () => ({
-				"text/plain": (this?.task_title(id)), 
-				"text/html": (this?.task_html(id)), 
-				"text/uri-list": (this?.task_uri(id))
+				"text/plain": (this.task_title(id)), 
+				"text/html": (this.task_html(id)), 
+				"text/uri-list": (this.task_uri(id))
 			});
-			(obj.Sub) = () => ((this?.Task_drop(id)));
+			(obj.Sub) = () => ((this.Task_drop(id)));
 			return obj;
 		}
 		tags(){

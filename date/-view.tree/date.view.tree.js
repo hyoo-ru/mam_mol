@@ -13,9 +13,9 @@
 		Today(){
 			const obj = new this.$.$mol_button_minor();
 			(obj.hint) = () => ((this.$.$mol_locale.text("$mol_date_Today_hint")));
-			(obj.enabled) = () => ((this?.enabled()));
-			(obj.click) = (next) => ((this?.today_click(next)));
-			(obj.sub) = () => ([(this?.Today_icon())]);
+			(obj.enabled) = () => ((this.enabled()));
+			(obj.click) = (next) => ((this.today_click(next)));
+			(obj.sub) = () => ([(this.Today_icon())]);
 			return obj;
 		}
 		value(next){
@@ -23,16 +23,16 @@
 			return "";
 		}
 		value_changed(next){
-			return (this?.Input()?.value_changed(next));
+			return (this.Input().value_changed(next));
 		}
 		input_mask(id){
 			return "";
 		}
 		Input(){
 			const obj = new this.$.$mol_format();
-			(obj.value) = (next) => ((this?.value(next)));
-			(obj.mask) = (id) => ((this?.input_mask(id)));
-			(obj.enabled) = () => ((this?.enabled()));
+			(obj.value) = (next) => ((this.value(next)));
+			(obj.mask) = (id) => ((this.input_mask(id)));
+			(obj.enabled) = () => ((this.enabled()));
 			return obj;
 		}
 		clear(next){
@@ -46,25 +46,25 @@
 		Clear(){
 			const obj = new this.$.$mol_button_minor();
 			(obj.hint) = () => ((this.$.$mol_locale.text("$mol_date_Clear_hint")));
-			(obj.enabled) = () => ((this?.enabled()));
-			(obj.click) = (next) => ((this?.clear(next)));
-			(obj.sub) = () => ([(this?.Clear_icon())]);
+			(obj.enabled) = () => ((this.enabled()));
+			(obj.click) = (next) => ((this.clear(next)));
+			(obj.sub) = () => ([(this.Clear_icon())]);
 			return obj;
 		}
 		input_content(){
 			return [
-				(this?.Today()), 
-				(this?.Input()), 
-				(this?.Clear())
+				(this.Today()), 
+				(this.Input()), 
+				(this.Clear())
 			];
 		}
 		Input_row(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ((this?.input_content()));
+			(obj.sub) = () => ((this.input_content()));
 			return obj;
 		}
 		month_moment(){
-			return (this?.value_moment());
+			return (this.value_moment());
 		}
 		day_selected(id){
 			return false;
@@ -74,7 +74,7 @@
 			return null;
 		}
 		Calendar_title(){
-			return (this?.Calendar()?.Title());
+			return (this.Calendar().Title());
 		}
 		prev_hint(){
 			return (this.$.$mol_locale.text("$mol_date_prev_hint"));
@@ -89,9 +89,9 @@
 		}
 		Prev(){
 			const obj = new this.$.$mol_button_minor();
-			(obj.hint) = () => ((this?.prev_hint()));
-			(obj.click) = (next) => ((this?.prev(next)));
-			(obj.sub) = () => ([(this?.Prev_icon())]);
+			(obj.hint) = () => ((this.prev_hint()));
+			(obj.click) = (next) => ((this.prev(next)));
+			(obj.sub) = () => ([(this.Prev_icon())]);
 			return obj;
 		}
 		next_hint(){
@@ -107,27 +107,27 @@
 		}
 		Next(){
 			const obj = new this.$.$mol_button_minor();
-			(obj.hint) = () => ((this?.next_hint()));
-			(obj.click) = (next) => ((this?.next(next)));
-			(obj.sub) = () => ([(this?.Next_icon())]);
+			(obj.hint) = () => ((this.next_hint()));
+			(obj.click) = (next) => ((this.next(next)));
+			(obj.sub) = () => ([(this.Next_icon())]);
 			return obj;
 		}
 		Calendar_tools(){
 			const obj = new this.$.$mol_view();
 			(obj.sub) = () => ([
-				(this?.Prev()), 
-				(this?.Calendar_title()), 
-				(this?.Next())
+				(this.Prev()), 
+				(this.Calendar_title()), 
+				(this.Next())
 			]);
 			return obj;
 		}
 		Calendar(){
 			const obj = new this.$.$mol_date_calendar();
-			(obj.enabled) = () => ((this?.enabled()));
-			(obj.month_moment) = () => ((this?.month_moment()));
-			(obj.day_selected) = (id) => ((this?.day_selected(id)));
-			(obj.day_click) = (id, next) => ((this?.day_click(id, next)));
-			(obj.head) = () => ([(this?.Calendar_tools())]);
+			(obj.enabled) = () => ((this.enabled()));
+			(obj.month_moment) = () => ((this.month_moment()));
+			(obj.day_selected) = (id) => ((this.day_selected(id)));
+			(obj.day_click) = (id, next) => ((this.day_click(id, next)));
+			(obj.head) = () => ([(this.Calendar_tools())]);
 			return obj;
 		}
 		Icon(){
@@ -135,7 +135,7 @@
 			return obj;
 		}
 		bubble_content(){
-			return [(this?.Input_row()), (this?.Calendar())];
+			return [(this.Input_row()), (this.Calendar())];
 		}
 		value_number(next){
 			if(next !== undefined) return next;
@@ -178,14 +178,14 @@
 		}
 		Day_button(id){
 			const obj = new this.$.$mol_button_minor();
-			(obj.title) = () => ((this?.day_text(id)));
-			(obj.event_click) = (next) => ((this?.day_click(id, next)));
+			(obj.title) = () => ((this.day_text(id)));
+			(obj.event_click) = (next) => ((this.day_click(id, next)));
 			(obj.minimal_height) = () => (24);
-			(obj.enabled) = () => ((this?.enabled()));
+			(obj.enabled) = () => ((this.enabled()));
 			return obj;
 		}
 		day_content(id){
-			return [(this?.Day_button(id))];
+			return [(this.Day_button(id))];
 		}
 	};
 	($mol_mem_key(($.$mol_date_calendar.prototype), "day_click"));

@@ -14,17 +14,17 @@
 		}
 		Download(){
 			const obj = new this.$.$mol_link_lazy();
-			(obj.hint) = () => ((this?.title()));
-			(obj.uri_generated) = () => ((this?.uri_generated()));
-			(obj.file_name) = () => ((this?.download_file()));
-			(obj.sub) = () => ([(this?.Download_icon()), (this?.download_label())]);
+			(obj.hint) = () => ((this.title()));
+			(obj.uri_generated) = () => ((this.uri_generated()));
+			(obj.file_name) = () => ((this.download_file()));
+			(obj.sub) = () => ([(this.Download_icon()), (this.download_label())]);
 			return obj;
 		}
 		title(){
 			return "Lazy generated link";
 		}
 		sub(){
-			return [(this?.Download())];
+			return [(this.Download())];
 		}
 		tags(){
 			return [

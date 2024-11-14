@@ -4,7 +4,7 @@
 		}
 		Prefix(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this?.prefix())]);
+			(obj.sub) = () => ([(this.prefix())]);
 			return obj;
 		}
 		value_view(){
@@ -12,7 +12,7 @@
 		}
 		Value(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this?.value_view())]);
+			(obj.sub) = () => ([(this.value_view())]);
 			return obj;
 		}
 		postfix(){
@@ -20,7 +20,7 @@
 		}
 		Postfix(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this?.postfix())]);
+			(obj.sub) = () => ([(this.postfix())]);
 			return obj;
 		}
 		value(){
@@ -28,9 +28,9 @@
 		}
 		sub(){
 			return [
-				(this?.Prefix()), 
-				(this?.Value()), 
-				(this?.Postfix())
+				(this.Prefix()), 
+				(this.Value()), 
+				(this.Postfix())
 			];
 		}
 	};

@@ -7,7 +7,7 @@
 		}
 		Open(){
 			const obj = new this.$.$mol_button_minor();
-			(obj.title) = () => ((this?.open_title()));
+			(obj.title) = () => ((this.open_title()));
 			return obj;
 		}
 		export_title(){
@@ -15,7 +15,7 @@
 		}
 		Export(){
 			const obj = new this.$.$mol_button_minor();
-			(obj.title) = () => ((this?.export_title()));
+			(obj.title) = () => ((this.export_title()));
 			return obj;
 		}
 		save_title(){
@@ -23,23 +23,23 @@
 		}
 		Save(){
 			const obj = new this.$.$mol_button_minor();
-			(obj.title) = () => ((this?.save_title()));
+			(obj.title) = () => ((this.save_title()));
 			return obj;
 		}
 		File_menu(){
 			const obj = new this.$.$mol_list();
 			(obj.rows) = () => ([
-				(this?.Open()), 
-				(this?.Export()), 
-				(this?.Save())
+				(this.Open()), 
+				(this.Export()), 
+				(this.Save())
 			]);
 			return obj;
 		}
 		File(){
 			const obj = new this.$.$mol_pop_over();
 			(obj.align) = () => ("bottom_right");
-			(obj.Anchor) = () => ((this?.file_title()));
-			(obj.bubble_content) = () => ([(this?.File_menu())]);
+			(obj.Anchor) = () => ((this.file_title()));
+			(obj.bubble_content) = () => ([(this.File_menu())]);
 			return obj;
 		}
 		help_title(){
@@ -50,7 +50,7 @@
 		}
 		Updates(){
 			const obj = new this.$.$mol_button_minor();
-			(obj.title) = () => ((this?.updates_title()));
+			(obj.title) = () => ((this.updates_title()));
 			return obj;
 		}
 		about_title(){
@@ -58,31 +58,31 @@
 		}
 		About(){
 			const obj = new this.$.$mol_button_minor();
-			(obj.title) = () => ((this?.about_title()));
+			(obj.title) = () => ((this.about_title()));
 			return obj;
 		}
 		Help_menu(){
 			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ([(this?.Updates()), (this?.About())]);
+			(obj.rows) = () => ([(this.Updates()), (this.About())]);
 			return obj;
 		}
 		Help(){
 			const obj = new this.$.$mol_pop_over();
 			(obj.align) = () => ("bottom_right");
-			(obj.Anchor) = () => ((this?.help_title()));
-			(obj.bubble_content) = () => ([(this?.Help_menu())]);
+			(obj.Anchor) = () => ((this.help_title()));
+			(obj.bubble_content) = () => ([(this.Help_menu())]);
 			return obj;
 		}
 		Menu(){
 			const obj = new this.$.$mol_row();
-			(obj.sub) = () => ([(this?.File()), (this?.Help())]);
+			(obj.sub) = () => ([(this.File()), (this.Help())]);
 			return obj;
 		}
 		title(){
 			return "Menu that opens on mouse over";
 		}
 		sub(){
-			return [(this?.Menu())];
+			return [(this.Menu())];
 		}
 		tags(){
 			return [

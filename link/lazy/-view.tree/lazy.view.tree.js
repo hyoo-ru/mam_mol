@@ -14,7 +14,7 @@
 			return false;
 		}
 		event(){
-			return {...(super.event()), "mousedown": (next) => (this?.generate(next))};
+			return {...(super.event()), "mousedown": (next) => (this.generate(next))};
 		}
 	};
 	($mol_mem(($.$mol_link_lazy.prototype), "generate"));

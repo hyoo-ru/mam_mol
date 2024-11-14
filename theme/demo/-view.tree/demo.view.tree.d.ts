@@ -1,81 +1,81 @@
 declare namespace $ {
 
-	type $mol_number__value__EM75FMGZ = $mol_type_enforce<
+	type $mol_number__value_mol_theme_demo_1 = $mol_type_enforce<
 		ReturnType< $mol_theme_demo['hue'] >
 		,
 		ReturnType< $mol_number['value'] >
 	>
-	type $mol_number__precision_change__R3X1A9T3 = $mol_type_enforce<
+	type $mol_number__precision_change_mol_theme_demo_2 = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_number['precision_change'] >
 	>
-	type $mol_form_field__name__P8YLGXJ0 = $mol_type_enforce<
+	type $mol_form_field__name_mol_theme_demo_3 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__Content__5WHD28PA = $mol_type_enforce<
+	type $mol_form_field__Content_mol_theme_demo_4 = $mol_type_enforce<
 		ReturnType< $mol_theme_demo['Hue'] >
 		,
 		ReturnType< $mol_form_field['Content'] >
 	>
-	type $mol_number__value__BJRIW38Y = $mol_type_enforce<
+	type $mol_number__value_mol_theme_demo_5 = $mol_type_enforce<
 		ReturnType< $mol_theme_demo['hue_spread'] >
 		,
 		ReturnType< $mol_number['value'] >
 	>
-	type $mol_number__precision_change__KEADB9UF = $mol_type_enforce<
+	type $mol_number__precision_change_mol_theme_demo_6 = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_number['precision_change'] >
 	>
-	type $mol_form_field__name__9D5HIYG4 = $mol_type_enforce<
+	type $mol_form_field__name_mol_theme_demo_7 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__Content__7OVUPJDO = $mol_type_enforce<
+	type $mol_form_field__Content_mol_theme_demo_8 = $mol_type_enforce<
 		ReturnType< $mol_theme_demo['Hue_spread'] >
 		,
 		ReturnType< $mol_form_field['Content'] >
 	>
-	type $mol_row__sub__OCKYALJL = $mol_type_enforce<
+	type $mol_row__sub_mol_theme_demo_9 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_row['sub'] >
 	>
-	type $mol_theme_demo_case__theme__03P3XC0D = $mol_type_enforce<
+	type $mol_theme_demo_case__theme_mol_theme_demo_10 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_theme_demo_case['theme'] >
 	>
-	type $mol_theme_demo_case__theme__PDWMI30O = $mol_type_enforce<
+	type $mol_theme_demo_case__theme_mol_theme_demo_11 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_theme_demo_case['theme'] >
 	>
-	type $mol_theme_demo_case__theme__I56CT3JL = $mol_type_enforce<
+	type $mol_theme_demo_case__theme_mol_theme_demo_12 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_theme_demo_case['theme'] >
 	>
-	type $mol_theme_demo_case__theme__IRLZWBX3 = $mol_type_enforce<
+	type $mol_theme_demo_case__theme_mol_theme_demo_13 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_theme_demo_case['theme'] >
 	>
-	type $mol_theme_demo_case__title__8QAZ2NT8 = $mol_type_enforce<
+	type $mol_theme_demo_case__title_mol_theme_demo_14 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_theme_demo_case['title'] >
 	>
-	type $mol_theme_demo_case__inner__8Y14FC58 = $mol_type_enforce<
+	type $mol_theme_demo_case__inner_mol_theme_demo_15 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_theme_demo_case['inner'] >
 	>
-	type $mol_scroll__sub__FLJPBEF0 = $mol_type_enforce<
+	type $mol_scroll__sub_mol_theme_demo_16 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_scroll['sub'] >
@@ -105,77 +105,77 @@ declare namespace $ {
 		aspects( ): readonly(any)[]
 	}
 	
-	type $mol_button_copy__title__BS3AIB64 = $mol_type_enforce<
+	type $mol_button_copy__title_mol_theme_demo_case_1 = $mol_type_enforce<
 		ReturnType< $mol_theme_demo_case['title'] >
 		,
 		ReturnType< $mol_button_copy['title'] >
 	>
-	type $mol_row__sub__RPCGUCY3 = $mol_type_enforce<
+	type $mol_row__sub_mol_theme_demo_case_2 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_row['sub'] >
 	>
-	type $mol_button_copy__title__70D2M7IP = $mol_type_enforce<
+	type $mol_button_copy__title_mol_theme_demo_case_3 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_copy['title'] >
 	>
-	type $mol_list__rows__WD9JWZIB = $mol_type_enforce<
+	type $mol_list__rows_mol_theme_demo_case_4 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_button_copy__title__DU48GD2Y = $mol_type_enforce<
+	type $mol_button_copy__title_mol_theme_demo_case_5 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_copy['title'] >
 	>
-	type $mol_button_copy__title__RTIZM1OR = $mol_type_enforce<
+	type $mol_button_copy__title_mol_theme_demo_case_6 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_copy['title'] >
 	>
-	type $mol_button_copy__title__R3TOGYJQ = $mol_type_enforce<
+	type $mol_button_copy__title_mol_theme_demo_case_7 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_copy['title'] >
 	>
-	type $mol_button_copy__title__BV0T1YE1 = $mol_type_enforce<
+	type $mol_button_copy__title_mol_theme_demo_case_8 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_copy['title'] >
 	>
-	type $mol_button_copy__title__F83LRN9B = $mol_type_enforce<
+	type $mol_button_copy__title_mol_theme_demo_case_9 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_copy['title'] >
 	>
-	type $mol_button_copy__title__U0SSTKOZ = $mol_type_enforce<
+	type $mol_button_copy__title_mol_theme_demo_case_10 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_copy['title'] >
 	>
-	type $mol_button_copy__title__KAZOQR0Z = $mol_type_enforce<
+	type $mol_button_copy__title_mol_theme_demo_case_11 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_copy['title'] >
 	>
-	type $mol_button_copy__title__T6P4CCLX = $mol_type_enforce<
+	type $mol_button_copy__title_mol_theme_demo_case_12 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_copy['title'] >
 	>
-	type $mol_button_copy__title__9DN6RLXV = $mol_type_enforce<
+	type $mol_button_copy__title_mol_theme_demo_case_13 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_copy['title'] >
 	>
-	type $mol_button_copy__title__43P4083O = $mol_type_enforce<
+	type $mol_button_copy__title_mol_theme_demo_case_14 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_copy['title'] >
 	>
-	type $mol_list__rows__BQ1YXTF0 = $mol_type_enforce<
+	type $mol_list__rows_mol_theme_demo_case_15 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >

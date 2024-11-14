@@ -5,7 +5,7 @@
 		}
 		Align(){
 			const obj = new this.$.$mol_switch();
-			(obj.value) = (next) => ((this?.align(next)));
+			(obj.value) = (next) => ((this.align(next)));
 			(obj.options) = () => ({
 				"flex-start": "left", 
 				"center": "center", 
@@ -19,7 +19,7 @@
 		}
 		Justify(){
 			const obj = new this.$.$mol_switch();
-			(obj.value) = (next) => ((this?.justify(next)));
+			(obj.value) = (next) => ((this.justify(next)));
 			(obj.options) = () => ({
 				"flex-start": "top", 
 				"center": "center", 
@@ -29,22 +29,22 @@
 		}
 		Float(){
 			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ([(this?.Align()), (this?.Justify())]);
+			(obj.rows) = () => ([(this.Align()), (this.Justify())]);
 			return obj;
 		}
 		Transit(){
 			const obj = new this.$.$mol_transit();
-			(obj.Sub) = () => ((this?.Float()));
+			(obj.Sub) = () => ((this.Float()));
 			return obj;
 		}
 		title(){
 			return "Layout transition";
 		}
 		style(){
-			return {"justify-content": (this?.justify()), "align-items": (this?.align())};
+			return {"justify-content": (this.justify()), "align-items": (this.align())};
 		}
 		sub(){
-			return [(this?.Transit())];
+			return [(this.Transit())];
 		}
 		aspects(){
 			return ["Widget/Layout"];

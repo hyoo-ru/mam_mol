@@ -4,14 +4,14 @@
 		}
 		Text(){
 			const obj = new this.$.$mol_text();
-			(obj.text) = () => ((this?.content()));
+			(obj.text) = () => ((this.content()));
 			return obj;
 		}
 		title(){
 			return (this.$.$mol_locale.text("$mol_app_quine_title"));
 		}
 		body(){
-			return [(this?.Text())];
+			return [(this.Text())];
 		}
 		paths(){
 			return [

@@ -21,20 +21,20 @@
 			return [];
 		}
 		graphs(){
-			return (this?.level_graphs());
+			return (this.level_graphs());
 		}
 		Level(id){
 			const obj = new this.$.$mol_plot_map_heat_level();
-			(obj.hint) = () => ((this?.level_hint(id)));
-			(obj.points) = () => ((this?.level_points(id)));
-			(obj.opacity) = () => ((this?.level_opacity(id)));
-			(obj.diameter) = () => ((this?.level_diameter()));
-			(obj.aspect) = () => ((this?.level_aspect()));
+			(obj.hint) = () => ((this.level_hint(id)));
+			(obj.points) = () => ((this.level_points(id)));
+			(obj.opacity) = () => ((this.level_opacity(id)));
+			(obj.diameter) = () => ((this.level_diameter()));
+			(obj.aspect) = () => ((this.level_aspect()));
 			return obj;
 		}
 		Sample(){
 			const obj = new this.$.$mol_plot_graph_sample();
-			(obj.color) = () => ((this?.color()));
+			(obj.color) = () => ((this.color()));
 			return obj;
 		}
 	};
@@ -45,7 +45,7 @@
 			return "1";
 		}
 		style(){
-			return {...(super.style()), "opacity": (this?.opacity())};
+			return {...(super.style()), "opacity": (this.opacity())};
 		}
 	};
 

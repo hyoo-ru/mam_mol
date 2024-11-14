@@ -14,7 +14,7 @@
 			return "Cards with optional status";
 		}
 		sub(){
-			return [(this?.Simple()), (this?.Pending())];
+			return [(this.Simple()), (this.Pending())];
 		}
 		tags(){
 			return [

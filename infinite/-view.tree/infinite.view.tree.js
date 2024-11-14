@@ -26,14 +26,14 @@
 			const obj = new this.$.$mol_view();
 			(obj.minimal_width) = () => (0);
 			(obj.minimal_height) = () => (0);
-			(obj.sub) = () => ([(this?.before_load(id))]);
+			(obj.sub) = () => ([(this.before_load(id))]);
 			return obj;
 		}
 		After(id){
 			const obj = new this.$.$mol_view();
 			(obj.minimal_width) = () => (0);
 			(obj.minimal_height) = () => (0);
-			(obj.sub) = () => ([(this?.after_load(id))]);
+			(obj.sub) = () => ([(this.after_load(id))]);
 			return obj;
 		}
 	};

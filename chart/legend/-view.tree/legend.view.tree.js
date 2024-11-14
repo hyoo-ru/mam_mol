@@ -4,7 +4,7 @@
 		}
 		Gallery(){
 			const obj = new this.$.$mol_gallery();
-			(obj.items) = () => ((this?.graph_legends()));
+			(obj.items) = () => ((this.graph_legends()));
 			return obj;
 		}
 		Graph_sample(id){
@@ -12,7 +12,7 @@
 		}
 		Graph_sample_box(id){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this?.Graph_sample(id))]);
+			(obj.sub) = () => ([(this.Graph_sample(id))]);
 			return obj;
 		}
 		graph_title(id){
@@ -20,7 +20,7 @@
 		}
 		Graph_title(id){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this?.graph_title(id))]);
+			(obj.sub) = () => ([(this.graph_title(id))]);
 			return obj;
 		}
 		graphs(){
@@ -30,11 +30,11 @@
 			return [];
 		}
 		sub(){
-			return [(this?.Gallery())];
+			return [(this.Gallery())];
 		}
 		Graph_legend(id){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this?.Graph_sample_box(id)), (this?.Graph_title(id))]);
+			(obj.sub) = () => ([(this.Graph_sample_box(id)), (this.Graph_title(id))]);
 			return obj;
 		}
 	};

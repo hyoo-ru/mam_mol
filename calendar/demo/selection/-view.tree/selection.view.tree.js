@@ -7,8 +7,8 @@
 		}
 		Calendar(){
 			const obj = new this.$.$mol_calendar();
-			(obj.month_string) = () => ((this?.month()));
-			(obj.day_selected) = (id) => ((this?.selected(id)));
+			(obj.month_string) = () => ((this.month()));
+			(obj.day_selected) = (id) => ((this.selected(id)));
 			return obj;
 		}
 		title(){
@@ -27,7 +27,7 @@
 			];
 		}
 		sub(){
-			return [(this?.Calendar())];
+			return [(this.Calendar())];
 		}
 		tags(){
 			return ["month"];

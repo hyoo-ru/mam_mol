@@ -8,10 +8,10 @@
 		}
 		Input(){
 			const obj = new this.$.$mol_format();
-			(obj.value) = (next) => ((this?.value(next)));
+			(obj.value) = (next) => ((this.value(next)));
 			(obj.mask) = () => ("__:__");
 			(obj.allow) = () => ("0123456789.");
-			(obj.enabled) = () => ((this?.enabled()));
+			(obj.enabled) = () => ((this.enabled()));
 			return obj;
 		}
 		hour_selected(next){
@@ -23,8 +23,8 @@
 		}
 		Hours(){
 			const obj = new this.$.$mol_switch();
-			(obj.value) = (next) => ((this?.hour_selected(next)));
-			(obj.options) = () => ((this?.hour_options()));
+			(obj.value) = (next) => ((this.hour_selected(next)));
+			(obj.options) = () => ((this.hour_options()));
 			return obj;
 		}
 		Delimiter(){
@@ -41,16 +41,16 @@
 		}
 		Minutes(){
 			const obj = new this.$.$mol_switch();
-			(obj.value) = (next) => ((this?.minute_selected(next)));
-			(obj.options) = () => ((this?.minute_options()));
+			(obj.value) = (next) => ((this.minute_selected(next)));
+			(obj.options) = () => ((this.minute_options()));
 			return obj;
 		}
 		Pickers(){
 			const obj = new this.$.$mol_row();
 			(obj.sub) = () => ([
-				(this?.Hours()), 
-				(this?.Delimiter()), 
-				(this?.Minutes())
+				(this.Hours()), 
+				(this.Delimiter()), 
+				(this.Minutes())
 			]);
 			return obj;
 		}
@@ -59,10 +59,10 @@
 			return obj;
 		}
 		trigger_enabled(){
-			return (this?.enabled());
+			return (this.enabled());
 		}
 		bubble_content(){
-			return [(this?.Input()), (this?.Pickers())];
+			return [(this.Input()), (this.Pickers())];
 		}
 		value_moment(next){
 			if(next !== undefined) return next;

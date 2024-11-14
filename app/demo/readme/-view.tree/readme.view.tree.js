@@ -7,8 +7,8 @@
 		}
 		Source_link(){
 			const obj = new this.$.$mol_link_source();
-			(obj.uri) = () => ((this?.source_link()));
-			(obj.hint) = () => ((this?.source_hint()));
+			(obj.uri) = () => ((this.source_link()));
+			(obj.hint) = () => ((this.source_hint()));
 			return obj;
 		}
 		Close_icon(){
@@ -22,8 +22,8 @@
 		Close(){
 			const obj = new this.$.$mol_button_minor();
 			(obj.hint) = () => ((this.$.$mol_locale.text("$mol_app_demo_readme_Close_hint")));
-			(obj.sub) = () => ([(this?.Close_icon())]);
-			(obj.click) = (next) => ((this?.close(next)));
+			(obj.sub) = () => ([(this.Close_icon())]);
+			(obj.click) = (next) => ((this.close(next)));
 			return obj;
 		}
 		readme(){
@@ -56,17 +56,17 @@
 			return false;
 		}
 		tools(){
-			return [(this?.Source_link()), (this?.Close())];
+			return [(this.Source_link()), (this.Close())];
 		}
 		Readme(){
 			const obj = new this.$.$mol_text();
-			(obj.text) = () => ((this?.readme()));
-			(obj.uri_base) = () => ((this?.uri_base()));
+			(obj.text) = () => ((this.readme()));
+			(obj.uri_base) = () => ((this.uri_base()));
 			return obj;
 		}
 		Not_found(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this?.Not_found_caption())]);
+			(obj.sub) = () => ([(this.Not_found_caption())]);
 			return obj;
 		}
 	};

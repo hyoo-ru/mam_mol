@@ -1,14 +1,14 @@
 	($.$mol_nav_demo) = class $mol_nav_demo extends ($.$mol_example) {
 		Nav(){
 			const obj = new this.$.$mol_nav();
-			(obj.keys_x) = () => ((this?.tab_list()));
-			(obj.current_x) = (next) => ((this?.tab_current(next)));
-			(obj.keys_y) = () => ((this?.row_list()));
-			(obj.current_y) = (next) => ((this?.row_current(next)));
+			(obj.keys_x) = () => ((this.tab_list()));
+			(obj.current_x) = (next) => ((this.tab_current(next)));
+			(obj.keys_y) = () => ((this.row_list()));
+			(obj.current_y) = (next) => ((this.row_current(next)));
 			return obj;
 		}
 		tab_list(){
-			return (this?.Tab_list()?.keys());
+			return (this.Tab_list().keys());
 		}
 		tab_current(next){
 			if(next !== undefined) return next;
@@ -16,7 +16,7 @@
 		}
 		Tab_list(){
 			const obj = new this.$.$mol_switch();
-			(obj.value) = (next) => ((this?.tab_current(next)));
+			(obj.value) = (next) => ((this.tab_current(next)));
 			(obj.options) = () => ({
 				"first": "First", 
 				"second": "Second", 
@@ -25,7 +25,7 @@
 			return obj;
 		}
 		row_list(){
-			return (this?.Row_list()?.keys());
+			return (this.Row_list().keys());
 		}
 		row_current(next){
 			if(next !== undefined) return next;
@@ -33,7 +33,7 @@
 		}
 		Row_list(){
 			const obj = new this.$.$mol_switch();
-			(obj.value) = (next) => ((this?.row_current(next)));
+			(obj.value) = (next) => ((this.row_current(next)));
 			(obj.options) = () => ({
 				"first": "First", 
 				"second": "Second", 
@@ -43,7 +43,7 @@
 		}
 		Demo_items(){
 			const obj = new this.$.$mol_card();
-			(obj.content) = () => ([(this?.Tab_list()), (this?.Row_list())]);
+			(obj.content) = () => ([(this.Tab_list()), (this.Row_list())]);
 			(obj.status) = () => ("Select option and use keys to switch");
 			return obj;
 		}
@@ -51,10 +51,10 @@
 			return "Number input control with various configuration";
 		}
 		plugins(){
-			return [(this?.Nav())];
+			return [(this.Nav())];
 		}
 		sub(){
-			return [(this?.Demo_items())];
+			return [(this.Demo_items())];
 		}
 		tags(){
 			return ["navigation"];

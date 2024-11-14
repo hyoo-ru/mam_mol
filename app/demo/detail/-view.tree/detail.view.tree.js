@@ -9,20 +9,20 @@
 		}
 		Readme(){
 			const obj = new this.$.$mol_check_icon();
-			(obj.checked) = (next) => ((this?.readme(next)));
+			(obj.checked) = (next) => ((this.readme(next)));
 			(obj.hint) = () => ((this.$.$mol_locale.text("$mol_app_demo_detail_Readme_hint")));
-			(obj.Icon) = () => ((this?.readme_icon()));
+			(obj.Icon) = () => ((this.readme_icon()));
 			return obj;
 		}
 		chat_pages(){
-			return (this?.Chat()?.pages());
+			return (this.Chat().pages());
 		}
 		chat_seed(){
 			return "0_0";
 		}
 		Chat(){
 			const obj = new this.$.$mol_chat();
-			(obj.seed) = () => ((this?.chat_seed()));
+			(obj.seed) = () => ((this.chat_seed()));
 			return obj;
 		}
 		edit_hint(){
@@ -42,9 +42,9 @@
 		}
 		Edit(){
 			const obj = new this.$.$mol_link();
-			(obj.hint) = () => ((this?.edit_hint()));
-			(obj.sub) = () => ([(this?.Edit_speck()), (this?.Edit_icon())]);
-			(obj.uri) = () => ((this?.edit_uri()));
+			(obj.hint) = () => ((this.edit_hint()));
+			(obj.sub) = () => ([(this.Edit_speck()), (this.Edit_icon())]);
+			(obj.uri) = () => ((this.edit_uri()));
 			return obj;
 		}
 		close_hint(){
@@ -59,9 +59,9 @@
 		}
 		Close(){
 			const obj = new this.$.$mol_link();
-			(obj.hint) = () => ((this?.close_hint()));
-			(obj.sub) = () => ([(this?.Close_icon())]);
-			(obj.arg) = () => ((this?.close_arg()));
+			(obj.hint) = () => ((this.close_hint()));
+			(obj.sub) = () => ([(this.Close_icon())]);
+			(obj.arg) = () => ((this.close_arg()));
 			return obj;
 		}
 		Demo(){
@@ -73,14 +73,14 @@
 		}
 		tools(){
 			return [
-				(this?.Readme()), 
-				(this?.Chat()), 
-				(this?.Edit()), 
-				(this?.Close())
+				(this.Readme()), 
+				(this.Chat()), 
+				(this.Edit()), 
+				(this.Close())
 			];
 		}
 		body(){
-			return [(this?.Demo())];
+			return [(this.Demo())];
 		}
 	};
 	($mol_mem(($.$mol_app_demo_detail.prototype), "readme"));

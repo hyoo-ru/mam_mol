@@ -17,9 +17,9 @@
 				...(super.attr()), 
 				"data": null, 
 				"type": null, 
-				"allow": (this?.allow()), 
-				"src": (this?.uri()), 
-				"srcdoc": (this?.html())
+				"allow": (this.allow()), 
+				"src": (this.uri()), 
+				"srcdoc": (this.html())
 			};
 		}
 		fullscreen(){

@@ -12,7 +12,7 @@
 			return null;
 		}
 		showed(){
-			return (this?.hovered());
+			return (this.hovered());
 		}
 		attr(){
 			return {...(super.attr()), "tabindex": 0};
@@ -20,8 +20,8 @@
 		event(){
 			return {
 				...(super.event()), 
-				"mouseenter": (next) => (this?.event_show(next)), 
-				"mouseleave": (next) => (this?.event_hide(next))
+				"mouseenter": (next) => (this.event_show(next)), 
+				"mouseleave": (next) => (this.event_hide(next))
 			};
 		}
 	};

@@ -3763,8 +3763,8 @@ var $;
             ...(bidi && next) ? [prop.struct('next')] : [],
         ]);
     }
-    function call_method_name(child) {
-        return child.struct('?.[]', [
+    function call_method_name(child, optional) {
+        return child.struct(optional ? '?.[]' : '[]', [
             child.data(name_of.call(this, child))
         ]);
     }
@@ -3774,7 +3774,7 @@ var $;
         }
         const chain = [bind.struct('this')];
         for (const child of bind.kids) {
-            chain.push(call_method_name.call(this, child), args_of.call(this, child, bidi));
+            chain.push(call_method_name.call(this, child, chain.length > 1), args_of.call(this, child, bidi));
         }
         return bind.struct('()', chain);
     }
@@ -3833,11 +3833,11 @@ var $;
             ],
             '=': bind => [bind.struct('()', [
                     bind.struct('this'),
-                    ...bind.hack({ '': (method, belt) => [
-                            call_method_name.call(this, method),
+                    ...bind.hack({ '': (method, belt, ctx) => [
+                            call_method_name.call(this, method, (ctx.item_index++) > 0),
                             args_of.call(this, method),
                             ...method.hack(belt),
-                        ] }),
+                        ] }, { item_index: 0 }),
                 ])],
             '': (input, belt, context) => {
                 if (input.type[0] === '*') {
@@ -4210,7 +4210,7 @@ var $;
     }
     function type_enforce(name, a, b) {
         return name.struct('line', [
-            name.data(`type ${name.value.replace(/<.*>/g, '')}__${this.$mol_guid()} = $mol_type_enforce<`),
+            name.data(`type ${name.value.replace(/<.*>/g, '')} = $mol_type_enforce<`),
             name.struct('indent', [
                 a[0].struct('line', a),
                 a[0].data(','),
@@ -4223,10 +4223,12 @@ var $;
         const descr = $mol_view_tree2_classes(tree);
         const types = [];
         for (const klass of descr.kids) {
+            let assert_count = 0;
             const parent = this.$mol_view_tree2_child(klass);
             const props = this.$mol_view_tree2_class_props(klass);
             const aliases = [];
             const context = { objects: [] };
+            const klass_name = klass.type.slice(1);
             types.push(klass.struct('line', [
                 klass.data('export class '),
                 klass.data(klass.type),
@@ -4268,10 +4270,10 @@ var $;
                         const second_main = left_parts.key || left_parts.next ? main : left.struct('line', return_type.call(this, main, left));
                         const second_key = left_parts.next || left_parts.key ? left : right;
                         if (prop_parts.key) {
-                            types.push(type_enforce.call(this, method, parameters.call(this, main, prop, 0), parameters.call(this, second_main, second_key, 0)));
+                            types.push(type_enforce.call(this, method.data(`${method.type}_${klass_name}_${++assert_count}`), parameters.call(this, main, prop, 0), parameters.call(this, second_main, second_key, 0)));
                         }
                         if (prop_parts.next) {
-                            types.push(type_enforce.call(this, method, parameters.call(this, main, prop, prop_parts.key ? 1 : 0), parameters.call(this, second_main, second_key, (left_parts.next ? left_parts : right_parts).key ? 1 : 0)));
+                            types.push(type_enforce.call(this, method.data(`${method.type}_${klass_name}_${++assert_count}`), parameters.call(this, main, prop, prop_parts.key ? 1 : 0), parameters.call(this, second_main, second_key, (left_parts.next ? left_parts : right_parts).key ? 1 : 0)));
                         }
                         return return_type.call(this, left.struct('line', return_type.call(this, main, left)), name_of.call(this, right));
                     },
@@ -4339,7 +4341,7 @@ var $;
                                 }
                                 else
                                     continue;
-                                types.push(type_enforce.call(this, input.data(`${klass.type}_${prop.type.replace(/[\?\*]*/g, '')}`), result, array_type));
+                                types.push(type_enforce.call(this, input.data(`${klass.type}_${prop.type.replace(/[\?\*]*/g, '')}_${++assert_count}`), result, array_type));
                             }
                             return readonly_arr(input, array_type);
                         }
@@ -4352,7 +4354,7 @@ var $;
                                         result.unshift(kid.data(', '));
                                     return kid.struct('line', result);
                                 });
-                                types.push(type_enforce.call(this, first.data(input.type), [
+                                types.push(type_enforce.call(this, first.data(`${input.type}_${klass_name}_${++assert_count}`), [
                                     first.data('[ '),
                                     ...args,
                                     first.data(' ]'),
@@ -4368,7 +4370,7 @@ var $;
                                     const bind = this.$mol_view_tree2_child(over);
                                     if (bind.type === '=>')
                                         continue;
-                                    types.push(type_enforce.call(this, over.data(`${input.type}__${name.value}`), over.hack(belt), return_type.call(this, input.data(input.type), over)));
+                                    types.push(type_enforce.call(this, over.data(`${input.type}__${name.value}_${klass_name}_${++assert_count}`), over.hack(belt), return_type.call(this, input.data(input.type), over)));
                                 }
                             return [
                                 input.data(input.type),

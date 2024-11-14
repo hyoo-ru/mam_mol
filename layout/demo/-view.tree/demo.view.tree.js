@@ -3,24 +3,24 @@
 			return null;
 		}
 		context(){
-			return (this?.Sample()?.context());
+			return (this.Sample().context());
 		}
 		width(){
-			return (this?.Sample()?.width());
+			return (this.Sample().width());
 		}
 		height(){
-			return (this?.Sample()?.height());
+			return (this.Sample().height());
 		}
 		Sample(){
 			const obj = new this.$.$mol_canvas();
-			(obj.paint) = () => ((this?.paint()));
+			(obj.paint) = () => ((this.paint()));
 			return obj;
 		}
 		title(){
 			return "Custom flex layout engine";
 		}
 		sub(){
-			return [(this?.Sample())];
+			return [(this.Sample())];
 		}
 		aspects(){
 			return ["Algorithm/Constraint"];

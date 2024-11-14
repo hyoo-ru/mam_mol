@@ -3273,10 +3273,10 @@ var $;
 			return 0;
 		}
 		field(){
-			return {...(super.field()), "tabIndex": (this?.tabindex())};
+			return {...(super.field()), "tabIndex": (this.tabindex())};
 		}
 		event(){
-			return {...(super.event()), "scroll": (next) => (this?.event_scroll(next))};
+			return {...(super.event()), "scroll": (next) => (this.event_scroll(next))};
 		}
 	};
 	($mol_mem(($.$mol_scroll.prototype), "event_scroll"));
@@ -3579,7 +3579,7 @@ var $;
 			return 0;
 		}
 		sub(){
-			return (this?.rows());
+			return (this.rows());
 		}
 		Empty(){
 			const obj = new this.$.$mol_view();
@@ -3587,12 +3587,12 @@ var $;
 		}
 		Gap_before(){
 			const obj = new this.$.$mol_view();
-			(obj.style) = () => ({"paddingTop": (this?.gap_before())});
+			(obj.style) = () => ({"paddingTop": (this.gap_before())});
 			return obj;
 		}
 		Gap_after(){
 			const obj = new this.$.$mol_view();
-			(obj.style) = () => ({"paddingTop": (this?.gap_after())});
+			(obj.style) = () => ({"paddingTop": (this.gap_after())});
 			return obj;
 		}
 		view_window(){
@@ -3783,9 +3783,9 @@ var $;
 		}
 		Bubble(){
 			const obj = new this.$.$mol_pop_bubble();
-			(obj.align) = () => ((this?.align()));
-			(obj.content) = () => ((this?.bubble_content()));
-			(obj.height_max) = () => ((this?.height_max()));
+			(obj.align) = () => ((this.align()));
+			(obj.content) = () => ((this.bubble_content()));
+			(obj.height_max) = () => ((this.height_max()));
 			return obj;
 		}
 		showed(next){
@@ -3802,10 +3802,10 @@ var $;
 			return "vert";
 		}
 		sub(){
-			return [(this?.Anchor())];
+			return [(this.Anchor())];
 		}
 		sub_visible(){
-			return [(this?.Anchor()), (this?.Bubble())];
+			return [(this.Anchor()), (this.Bubble())];
 		}
 	};
 	($mol_mem(($.$mol_pop.prototype), "Bubble"));
@@ -3821,15 +3821,15 @@ var $;
 			return "";
 		}
 		sub(){
-			return (this?.content());
+			return (this.content());
 		}
 		style(){
-			return {...(super.style()), "maxHeight": (this?.height_max())};
+			return {...(super.style()), "maxHeight": (this.height_max())};
 		}
 		attr(){
 			return {
 				...(super.attr()), 
-				"mol_pop_align": (this?.align()), 
+				"mol_pop_align": (this.align()), 
 				"tabindex": 0
 			};
 		}
@@ -3973,7 +3973,7 @@ var $;
 			return null;
 		}
 		showed(){
-			return (this?.hovered());
+			return (this.hovered());
 		}
 		attr(){
 			return {...(super.attr()), "tabindex": 0};
@@ -3981,8 +3981,8 @@ var $;
 		event(){
 			return {
 				...(super.event()), 
-				"mouseenter": (next) => (this?.event_show(next)), 
-				"mouseleave": (next) => (this?.event_hide(next))
+				"mouseenter": (next) => (this.event_show(next)), 
+				"mouseleave": (next) => (this.event_hide(next))
 			};
 		}
 	};
@@ -4029,7 +4029,7 @@ var $;
 		}
 		Databases(){
 			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ((this?.databases()));
+			(obj.rows) = () => ((this.databases()));
 			return obj;
 		}
 		name(id){
@@ -4037,7 +4037,7 @@ var $;
 		}
 		Name(id){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this?.name(id))]);
+			(obj.sub) = () => ([(this.name(id))]);
 			return obj;
 		}
 		query_count_label_mod(id){
@@ -4048,8 +4048,8 @@ var $;
 		}
 		Query_count(id){
 			const obj = new this.$.$mol_perf_dbmon_query_count();
-			(obj.label_mod) = () => ((this?.query_count_label_mod(id)));
-			(obj.count) = () => ((this?.query_count(id)));
+			(obj.label_mod) = () => ((this.query_count_label_mod(id)));
+			(obj.count) = () => ((this.query_count(id)));
 			return obj;
 		}
 		top_queries(id){
@@ -4057,9 +4057,9 @@ var $;
 		}
 		database(id){
 			return [
-				(this?.Name(id)), 
-				(this?.Query_count(id)), 
-				(this?.top_queries(id))
+				(this.Name(id)), 
+				(this.Query_count(id)), 
+				(this.top_queries(id))
 			];
 		}
 		query_elapsed(id){
@@ -4075,18 +4075,18 @@ var $;
 			return "dbmon ($mol)";
 		}
 		sub(){
-			return [(this?.Databases())];
+			return [(this.Databases())];
 		}
 		Database(id){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ((this?.database(id)));
+			(obj.sub) = () => ((this.database(id)));
 			return obj;
 		}
 		Query(id){
 			const obj = new this.$.$mol_perf_dbmon_query();
-			(obj.elapsed) = () => ((this?.query_elapsed(id)));
-			(obj.elapsed_mod) = () => ((this?.query_elapsed_mod(id)));
-			(obj.value) = () => ((this?.query_value(id)));
+			(obj.elapsed) = () => ((this.query_elapsed(id)));
+			(obj.elapsed_mod) = () => ((this.query_elapsed_mod(id)));
+			(obj.value) = () => ((this.query_value(id)));
 			return obj;
 		}
 	};
@@ -4104,12 +4104,12 @@ var $;
 		}
 		Label(){
 			const obj = new this.$.$mol_view();
-			(obj.attr) = () => ({"mol_perf_dbmon_query_count_label": (this?.label_mod())});
-			(obj.sub) = () => ([(this?.count())]);
+			(obj.attr) = () => ({"mol_perf_dbmon_query_count_label": (this.label_mod())});
+			(obj.sub) = () => ([(this.count())]);
 			return obj;
 		}
 		sub(){
-			return [(this?.Label())];
+			return [(this.Label())];
 		}
 	};
 	($mol_mem(($.$mol_perf_dbmon_query_count.prototype), "Label"));
@@ -4122,8 +4122,8 @@ var $;
 		}
 		Elapsed(){
 			const obj = new this.$.$mol_view();
-			(obj.attr) = () => ({"mol_perf_dbmon_query_elapsed": (this?.elapsed_mod())});
-			(obj.sub) = () => ([(this?.elapsed())]);
+			(obj.attr) = () => ({"mol_perf_dbmon_query_elapsed": (this.elapsed_mod())});
+			(obj.sub) = () => ([(this.elapsed())]);
 			return obj;
 		}
 		value(){
@@ -4133,10 +4133,10 @@ var $;
 			return 40;
 		}
 		Anchor(){
-			return (this?.Elapsed());
+			return (this.Elapsed());
 		}
 		bubble_content(){
-			return [(this?.value())];
+			return [(this.value())];
 		}
 		align(){
 			return "left_center";

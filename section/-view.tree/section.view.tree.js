@@ -4,8 +4,8 @@
 		}
 		Title(){
 			const obj = new this.$.$mol_paragraph();
-			(obj.dom_name) = () => ((this?.title_dom_name()));
-			(obj.title) = () => ((this?.title()));
+			(obj.dom_name) = () => ((this.title_dom_name()));
+			(obj.title) = () => ((this.title()));
 			return obj;
 		}
 		tools(){
@@ -13,15 +13,15 @@
 		}
 		Tools(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ((this?.tools()));
+			(obj.sub) = () => ((this.tools()));
 			return obj;
 		}
 		head(){
-			return [(this?.Title()), (this?.Tools())];
+			return [(this.Title()), (this.Tools())];
 		}
 		Head(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ((this?.head()));
+			(obj.sub) = () => ((this.head()));
 			return obj;
 		}
 		content(){
@@ -29,14 +29,14 @@
 		}
 		Content(){
 			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ((this?.content()));
+			(obj.rows) = () => ((this.content()));
 			return obj;
 		}
 		level(){
 			return 1;
 		}
 		rows(){
-			return [(this?.Head()), (this?.Content())];
+			return [(this.Head()), (this.Content())];
 		}
 	};
 	($mol_mem(($.$mol_section.prototype), "Title"));

@@ -1,12 +1,12 @@
 	($.$mol_audio_demo_vibe) = class $mol_audio_demo_vibe extends ($.$mol_example_small) {
 		room_status(next){
-			return (this?.Room()?.status(next));
+			return (this.Room().status(next));
 		}
 		active(next){
-			return (this?.Beep_vibe()?.active(next));
+			return (this.Beep_vibe().active(next));
 		}
 		stop_at(next){
-			return (this?.Beep_vibe()?.stop_at(next));
+			return (this.Beep_vibe().stop_at(next));
 		}
 		freq(next){
 			if(next !== undefined) return next;
@@ -14,8 +14,8 @@
 		}
 		Beep_vibe(){
 			const obj = new this.$.$mol_audio_vibe();
-			(obj.freq_default) = () => ((this?.freq()));
-			(obj.shape_default) = () => ((this?.shape()));
+			(obj.freq_default) = () => ((this.freq()));
+			(obj.shape_default) = () => ((this.shape()));
 			return obj;
 		}
 		duration_label(){
@@ -28,13 +28,13 @@
 		Duration_num(){
 			const obj = new this.$.$mol_number();
 			(obj.precision_change) = () => (0.05);
-			(obj.value) = (next) => ((this?.duration(next)));
+			(obj.value) = (next) => ((this.duration(next)));
 			return obj;
 		}
 		Duration(){
 			const obj = new this.$.$mol_labeler();
-			(obj.title) = () => ((this?.duration_label()));
-			(obj.content) = () => ([(this?.Duration_num())]);
+			(obj.title) = () => ((this.duration_label()));
+			(obj.content) = () => ([(this.Duration_num())]);
 			return obj;
 		}
 		frequency_label(){
@@ -43,13 +43,13 @@
 		Frequency_num(){
 			const obj = new this.$.$mol_number();
 			(obj.precision_change) = () => (50);
-			(obj.value) = (next) => ((this?.freq(next)));
+			(obj.value) = (next) => ((this.freq(next)));
 			return obj;
 		}
 		Frequency(){
 			const obj = new this.$.$mol_labeler();
-			(obj.title) = () => ((this?.frequency_label()));
-			(obj.content) = () => ([(this?.Frequency_num())]);
+			(obj.title) = () => ((this.frequency_label()));
+			(obj.content) = () => ([(this.Frequency_num())]);
 			return obj;
 		}
 		shape_label(){
@@ -62,7 +62,7 @@
 		Shape_select(){
 			const obj = new this.$.$mol_select();
 			(obj.Filter) = () => (null);
-			(obj.value) = (next) => ((this?.shape(next)));
+			(obj.value) = (next) => ((this.shape(next)));
 			(obj.options) = () => ([
 				"sine", 
 				"square", 
@@ -73,8 +73,8 @@
 		}
 		Shape(){
 			const obj = new this.$.$mol_labeler();
-			(obj.title) = () => ((this?.shape_label()));
-			(obj.content) = () => ([(this?.Shape_select())]);
+			(obj.title) = () => ((this.shape_label()));
+			(obj.content) = () => ([(this.Shape_select())]);
 			return obj;
 		}
 		beep_vibe_start_click(next){
@@ -87,27 +87,27 @@
 		}
 		Play_button(){
 			const obj = new this.$.$mol_button_major();
-			(obj.click) = (next) => ((this?.beep_vibe_start_click(next)));
-			(obj.sub) = () => ([(this?.Play_icon()), "Play"]);
+			(obj.click) = (next) => ((this.beep_vibe_start_click(next)));
+			(obj.sub) = () => ([(this.Play_icon()), "Play"]);
 			return obj;
 		}
 		Room_status(){
 			const obj = new this.$.$mol_audio_status();
-			(obj.status) = (next) => ((this?.room_status(next)));
+			(obj.status) = (next) => ((this.room_status(next)));
 			return obj;
 		}
 		Button_row(){
 			const obj = new this.$.$mol_row();
-			(obj.sub) = () => ([(this?.Play_button()), (this?.Room_status())]);
+			(obj.sub) = () => ([(this.Play_button()), (this.Room_status())]);
 			return obj;
 		}
 		List(){
 			const obj = new this.$.$mol_list();
 			(obj.rows) = () => ([
-				(this?.Duration()), 
-				(this?.Frequency()), 
-				(this?.Shape()), 
-				(this?.Button_row())
+				(this.Duration()), 
+				(this.Frequency()), 
+				(this.Shape()), 
+				(this.Button_row())
 			]);
 			return obj;
 		}
@@ -116,11 +116,11 @@
 		}
 		Room(){
 			const obj = new this.$.$mol_audio_room();
-			(obj.input) = () => ([(this?.Beep_vibe())]);
+			(obj.input) = () => ([(this.Beep_vibe())]);
 			return obj;
 		}
 		sub(){
-			return [(this?.List())];
+			return [(this.List())];
 		}
 		tags(){
 			return ["sound"];

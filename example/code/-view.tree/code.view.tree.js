@@ -8,11 +8,11 @@
 			(obj.Menu_page) = () => (null);
 			(obj.Perf) = () => (null);
 			(obj.Bookmark) = () => (null);
-			(obj.code) = (next) => ((this?.code(next)));
+			(obj.code) = (next) => ((this.code(next)));
 			return obj;
 		}
 		sub(){
-			return [(this?.Sandbox())];
+			return [(this.Sandbox())];
 		}
 		tags(){
 			return [

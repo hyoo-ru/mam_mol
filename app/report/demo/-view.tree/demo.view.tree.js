@@ -4,7 +4,7 @@
 			return obj;
 		}
 		sub(){
-			return [(this?.App())];
+			return [(this.App())];
 		}
 		aspects(){
 			return ["Widget/Form"];

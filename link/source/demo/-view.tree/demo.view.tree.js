@@ -5,24 +5,24 @@
 		}
 		Input(){
 			const obj = new this.$.$mol_string();
-			(obj.value) = (next) => ((this?.uri(next)));
+			(obj.value) = (next) => ((this.uri(next)));
 			return obj;
 		}
 		Output(){
 			const obj = new this.$.$mol_link_source();
-			(obj.uri) = () => ((this?.uri()));
+			(obj.uri) = () => ((this.uri()));
 			return obj;
 		}
 		Blocks(){
 			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ([(this?.Input()), (this?.Output())]);
+			(obj.rows) = () => ([(this.Input()), (this.Output())]);
 			return obj;
 		}
 		title(){
 			return "Link with icon";
 		}
 		sub(){
-			return [(this?.Blocks())];
+			return [(this.Blocks())];
 		}
 		tags(){
 			return [

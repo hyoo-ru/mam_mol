@@ -4,12 +4,12 @@
 		}
 		Item(id){
 			const obj = new this.$.$mol_button_minor();
-			(obj.title) = () => ((this?.item_title(id)));
+			(obj.title) = () => ((this.item_title(id)));
 			return obj;
 		}
 		Tree(){
 			const obj = new this.$.$mol_tag_tree();
-			(obj.Item) = (id) => ((this?.Item(id)));
+			(obj.Item) = (id) => ((this.Item(id)));
 			(obj.levels_expanded) = () => (0);
 			(obj.ids_tags) = () => ({
 				"Batman": [
@@ -94,7 +94,7 @@
 			return "Autoatic tag tree";
 		}
 		sub(){
-			return [(this?.Tree())];
+			return [(this.Tree())];
 		}
 		tags(){
 			return ["taxonomy", "menu"];

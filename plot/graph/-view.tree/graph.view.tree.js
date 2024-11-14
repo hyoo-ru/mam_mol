@@ -41,7 +41,7 @@
 			return "";
 		}
 		hint(){
-			return (this?.title());
+			return (this.title());
 		}
 		series_x(){
 			return [];
@@ -50,13 +50,13 @@
 			return [];
 		}
 		attr(){
-			return {...(super.attr()), "mol_plot_graph_type": (this?.type())};
+			return {...(super.attr()), "mol_plot_graph_type": (this.type())};
 		}
 		style(){
-			return {...(super.style()), "color": (this?.color())};
+			return {...(super.style()), "color": (this.color())};
 		}
 		viewport(){
-			const obj = new this.$.$mol_vector_2d((this?.viewport_x()), (this?.viewport_y()));
+			const obj = new this.$.$mol_vector_2d((this.viewport_x()), (this.viewport_y()));
 			return obj;
 		}
 		shift(){
@@ -70,11 +70,11 @@
 			return obj;
 		}
 		dimensions_pane(){
-			const obj = new this.$.$mol_vector_2d((this?.dimensions_pane_x()), (this?.dimensions_pane_y()));
+			const obj = new this.$.$mol_vector_2d((this.dimensions_pane_x()), (this.dimensions_pane_y()));
 			return obj;
 		}
 		dimensions(){
-			const obj = new this.$.$mol_vector_2d((this?.dimensions_x()), (this?.dimensions_y()));
+			const obj = new this.$.$mol_vector_2d((this.dimensions_x()), (this.dimensions_y()));
 			return obj;
 		}
 		size_real(){
@@ -82,7 +82,7 @@
 			return obj;
 		}
 		gap(){
-			const obj = new this.$.$mol_vector_2d((this?.gap_x()), (this?.gap_y()));
+			const obj = new this.$.$mol_vector_2d((this.gap_x()), (this.gap_y()));
 			return obj;
 		}
 		repos_x(id){
@@ -105,7 +105,7 @@
 		}
 		Hint(){
 			const obj = new this.$.$mol_svg_title();
-			(obj.title) = () => ((this?.hint()));
+			(obj.title) = () => ((this.hint()));
 			return obj;
 		}
 		hue(next){
@@ -140,10 +140,10 @@
 			return "black";
 		}
 		attr(){
-			return {...(super.attr()), "mol_plot_graph_type": (this?.type())};
+			return {...(super.attr()), "mol_plot_graph_type": (this.type())};
 		}
 		style(){
-			return {...(super.style()), "color": (this?.color())};
+			return {...(super.style()), "color": (this.color())};
 		}
 	};
 

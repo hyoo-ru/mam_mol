@@ -4,7 +4,7 @@
 		}
 		Content(){
 			const obj = new this.$.$mol_row();
-			(obj.sub) = () => ((this?.content()));
+			(obj.sub) = () => ((this.content()));
 			return obj;
 		}
 		attach_title(){
@@ -24,7 +24,7 @@
 		Image(id){
 			const obj = new this.$.$mol_image();
 			(obj.title) = () => ("");
-			(obj.uri) = () => ((this?.item_uri(id)));
+			(obj.uri) = () => ((this.item_uri(id)));
 			return obj;
 		}
 		items(next){
@@ -32,18 +32,18 @@
 			return [];
 		}
 		sub(){
-			return [(this?.Content())];
+			return [(this.Content())];
 		}
 		Add(){
 			const obj = new this.$.$mol_button_open();
-			(obj.title) = () => ((this?.attach_title()));
-			(obj.files) = (next) => ((this?.attach_new(next)));
+			(obj.title) = () => ((this.attach_title()));
+			(obj.files) = (next) => ((this.attach_new(next)));
 			return obj;
 		}
 		Item(id){
 			const obj = new this.$.$mol_button_minor();
-			(obj.click) = (next) => ((this?.item_drop(id, next)));
-			(obj.sub) = () => ([(this?.Image(id))]);
+			(obj.click) = (next) => ((this.item_drop(id, next)));
+			(obj.sub) = () => ([(this.Image(id))]);
 			return obj;
 		}
 	};

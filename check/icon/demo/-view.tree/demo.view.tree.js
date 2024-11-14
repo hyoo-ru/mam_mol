@@ -9,8 +9,8 @@
 		}
 		Base(){
 			const obj = new this.$.$mol_check_icon();
-			(obj.Icon) = () => ((this?.Base_icon()));
-			(obj.checked) = (next) => ((this?.base_checked(next)));
+			(obj.Icon) = () => ((this.Base_icon()));
+			(obj.checked) = (next) => ((this.base_checked(next)));
 			return obj;
 		}
 		Checked_icon(){
@@ -23,8 +23,8 @@
 		}
 		Checked(){
 			const obj = new this.$.$mol_check_icon();
-			(obj.Icon) = () => ((this?.Checked_icon()));
-			(obj.checked) = (next) => ((this?.checked_checked(next)));
+			(obj.Icon) = () => ((this.Checked_icon()));
+			(obj.checked) = (next) => ((this.checked_checked(next)));
 			return obj;
 		}
 		Disabled_icon(){
@@ -33,7 +33,7 @@
 		}
 		Disabled(){
 			const obj = new this.$.$mol_check_box();
-			(obj.Icon) = () => ((this?.Disabled_icon()));
+			(obj.Icon) = () => ((this.Disabled_icon()));
 			(obj.checked) = () => (true);
 			(obj.enabled) = () => (false);
 			return obj;
@@ -43,9 +43,9 @@
 		}
 		sub(){
 			return [
-				(this?.Base()), 
-				(this?.Checked()), 
-				(this?.Disabled())
+				(this.Base()), 
+				(this.Checked()), 
+				(this.Disabled())
 			];
 		}
 		tags(){

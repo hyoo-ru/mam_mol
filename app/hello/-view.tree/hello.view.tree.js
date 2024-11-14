@@ -8,8 +8,8 @@
 		}
 		Name(){
 			const obj = new this.$.$mol_string();
-			(obj.hint) = () => ((this?.name_hint()));
-			(obj.value) = (next) => ((this?.name(next)));
+			(obj.hint) = () => ((this.name_hint()));
+			(obj.value) = (next) => ((this.name(next)));
 			return obj;
 		}
 		greeting(){
@@ -17,11 +17,11 @@
 		}
 		Greeting(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this?.greeting())]);
+			(obj.sub) = () => ([(this.greeting())]);
 			return obj;
 		}
 		sub(){
-			return [(this?.Name()), (this?.Greeting())];
+			return [(this.Name()), (this.Greeting())];
 		}
 	};
 	($mol_mem(($.$mol_app_hello.prototype), "name"));

@@ -12,7 +12,7 @@
 			return "100%";
 		}
 		label_pos_y(id){
-			return (this?.title_pos_y());
+			return (this.title_pos_y());
 		}
 		background_width(){
 			return "100%";

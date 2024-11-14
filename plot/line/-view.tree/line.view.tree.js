@@ -15,15 +15,15 @@
 			return "path";
 		}
 		attr(){
-			return {...(super.attr()), "d": (this?.curve())};
+			return {...(super.attr()), "d": (this.curve())};
 		}
 		sub(){
-			return [(this?.Hint())];
+			return [(this.Hint())];
 		}
 		Sample(){
 			const obj = new this.$.$mol_plot_graph_sample();
-			(obj.color) = () => ((this?.color()));
-			(obj.type) = () => ((this?.type()));
+			(obj.color) = () => ((this.color()));
+			(obj.type) = () => ((this.type()));
 			return obj;
 		}
 	};

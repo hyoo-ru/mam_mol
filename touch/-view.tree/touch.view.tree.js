@@ -139,11 +139,11 @@
 		event(){
 			return {
 				...(super.event()), 
-				"pointerdown": (next) => (this?.event_start(next)), 
-				"pointermove": (next) => (this?.event_move(next)), 
-				"pointerup": (next) => (this?.event_end(next)), 
-				"pointerleave": (next) => (this?.event_leave(next)), 
-				"wheel": (next) => (this?.event_wheel(next))
+				"pointerdown": (next) => (this.event_start(next)), 
+				"pointermove": (next) => (this.event_move(next)), 
+				"pointerup": (next) => (this.event_end(next)), 
+				"pointerleave": (next) => (this.event_leave(next)), 
+				"wheel": (next) => (this.event_wheel(next))
 			};
 		}
 	};

@@ -10,10 +10,10 @@
 		}
 		Forces_left(){
 			const obj = new this.$.$mol_plot_dot();
-			(obj.title) = () => ((this?.forces_left_title()));
-			(obj.series_x) = () => ((this?.forces_left_x()));
-			(obj.series_y) = () => ((this?.forces_left_y()));
-			(obj.points_max) = () => ((this?.points_max()));
+			(obj.title) = () => ((this.forces_left_title()));
+			(obj.series_x) = () => ((this.forces_left_x()));
+			(obj.series_y) = () => ((this.forces_left_y()));
+			(obj.points_max) = () => ((this.points_max()));
 			return obj;
 		}
 		forces_right_title(){
@@ -27,10 +27,10 @@
 		}
 		Forces_right(){
 			const obj = new this.$.$mol_plot_dot();
-			(obj.title) = () => ((this?.forces_right_title()));
-			(obj.series_x) = () => ((this?.forces_right_x()));
-			(obj.series_y) = () => ((this?.forces_right_y()));
-			(obj.points_max) = () => ((this?.points_max()));
+			(obj.title) = () => ((this.forces_right_title()));
+			(obj.series_x) = () => ((this.forces_right_x()));
+			(obj.series_y) = () => ((this.forces_right_y()));
+			(obj.points_max) = () => ((this.points_max()));
 			return obj;
 		}
 		vert_title(){
@@ -38,7 +38,7 @@
 		}
 		Vert_ruler(){
 			const obj = new this.$.$mol_plot_ruler_vert();
-			(obj.title) = () => ((this?.vert_title()));
+			(obj.title) = () => ((this.vert_title()));
 			return obj;
 		}
 		hor_title(){
@@ -46,23 +46,23 @@
 		}
 		Hor_ruler(){
 			const obj = new this.$.$mol_plot_ruler_hor();
-			(obj.title) = () => ((this?.hor_title()));
-			(obj.series_x) = () => ((this?.forces_left_x()));
+			(obj.title) = () => ((this.hor_title()));
+			(obj.series_x) = () => ((this.forces_left_x()));
 			return obj;
 		}
 		Cross(){
 			const obj = new this.$.$mol_plot_mark_cross();
-			(obj.graphs) = () => ([(this?.Forces_left()), (this?.Forces_right())]);
+			(obj.graphs) = () => ([(this.Forces_left()), (this.Forces_right())]);
 			return obj;
 		}
 		Chart(){
 			const obj = new this.$.$mol_chart();
 			(obj.graphs) = () => ([
-				(this?.Forces_left()), 
-				(this?.Forces_right()), 
-				(this?.Vert_ruler()), 
-				(this?.Hor_ruler()), 
-				(this?.Cross())
+				(this.Forces_left()), 
+				(this.Forces_right()), 
+				(this.Vert_ruler()), 
+				(this.Hor_ruler()), 
+				(this.Cross())
 			]);
 			return obj;
 		}
@@ -76,7 +76,7 @@
 			return 2500;
 		}
 		sub(){
-			return [(this?.Chart())];
+			return [(this.Chart())];
 		}
 		tags(){
 			return [

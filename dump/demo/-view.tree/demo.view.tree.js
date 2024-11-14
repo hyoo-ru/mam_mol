@@ -4,25 +4,25 @@
 		}
 		Dump_short(){
 			const obj = new this.$.$mol_dump_value();
-			(obj.value) = () => ((this?.value()));
+			(obj.value) = () => ((this.value()));
 			return obj;
 		}
 		Dump_long(){
 			const obj = new this.$.$mol_dump_value();
-			(obj.value) = () => ((this?.value()));
+			(obj.value) = () => ((this.value()));
 			(obj.prototypes) = () => (true);
 			return obj;
 		}
 		Dump_list(){
 			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ([(this?.Dump_short()), (this?.Dump_long())]);
+			(obj.rows) = () => ([(this.Dump_short()), (this.Dump_long())]);
 			return obj;
 		}
 		title(){
 			return "Attach files an show them";
 		}
 		sub(){
-			return [(this?.Dump_list())];
+			return [(this.Dump_list())];
 		}
 		tags(){
 			return [

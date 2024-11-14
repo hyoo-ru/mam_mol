@@ -7,10 +7,10 @@
 			return null;
 		}
 		style(){
-			return {"animationName": (this?.animation_name_style())};
+			return {"animationName": (this.animation_name_style())};
 		}
 		event(){
-			return {"animationend": (next) => (this?.reset(next))};
+			return {"animationend": (next) => (this.reset(next))};
 		}
 	};
 	($mol_mem(($.$mol_transit.prototype), "reset"));

@@ -3,7 +3,7 @@
 			return "title";
 		}
 		sub(){
-			return [(this?.title())];
+			return [(this.title())];
 		}
 	};
 

@@ -11,14 +11,14 @@
 		}
 		Show_check(){
 			const obj = new this.$.$mol_check_box();
-			(obj.hint) = () => ((this?.pop_showed_check_hint()));
-			(obj.checked) = (next) => ((this?.pop_showed(next)));
+			(obj.hint) = () => ((this.pop_showed_check_hint()));
+			(obj.checked) = (next) => ((this.pop_showed(next)));
 			return obj;
 		}
 		Showed(){
 			const obj = new this.$.$mol_labeler();
-			(obj.title) = () => ((this?.show_title()));
-			(obj.content) = () => ([(this?.Show_check())]);
+			(obj.title) = () => ((this.show_title()));
+			(obj.content) = () => ([(this.Show_check())]);
 			return obj;
 		}
 		align_title(){
@@ -47,19 +47,19 @@
 		}
 		Align_select(){
 			const obj = new this.$.$mol_switch();
-			(obj.value) = (next) => ((this?.pop_align(next)));
-			(obj.options) = () => ((this?.aligins()));
+			(obj.value) = (next) => ((this.pop_align(next)));
+			(obj.options) = () => ((this.aligins()));
 			return obj;
 		}
 		Align(){
 			const obj = new this.$.$mol_labeler();
-			(obj.title) = () => ((this?.align_title()));
-			(obj.content) = () => ([(this?.Align_select())]);
+			(obj.title) = () => ((this.align_title()));
+			(obj.content) = () => ([(this.Align_select())]);
 			return obj;
 		}
 		Manage(){
 			const obj = new this.$.$mol_row();
-			(obj.sub) = () => ([(this?.Showed()), (this?.Align())]);
+			(obj.sub) = () => ([(this.Showed()), (this.Align())]);
 			return obj;
 		}
 		anchor_button_icon(){
@@ -71,7 +71,7 @@
 		}
 		Pop_anchor(){
 			const obj = new this.$.$mol_button_major();
-			(obj.sub) = () => ([(this?.anchor_button_icon()), (this?.anchor_button_title())]);
+			(obj.sub) = () => ([(this.anchor_button_icon()), (this.anchor_button_title())]);
 			return obj;
 		}
 		bubble_hint(){
@@ -80,27 +80,27 @@
 		Content(){
 			const obj = new this.$.$mol_row();
 			(obj.minimal_width) = () => (150);
-			(obj.sub) = () => ([(this?.bubble_hint())]);
+			(obj.sub) = () => ([(this.bubble_hint())]);
 			return obj;
 		}
 		Pop(){
 			const obj = new this.$.$mol_pop();
-			(obj.Anchor) = () => ((this?.Pop_anchor()));
-			(obj.showed) = () => ((this?.pop_showed()));
-			(obj.align) = () => ((this?.pop_align()));
-			(obj.bubble_content) = () => ([(this?.Content())]);
+			(obj.Anchor) = () => ((this.Pop_anchor()));
+			(obj.showed) = () => ((this.pop_showed()));
+			(obj.align) = () => ((this.pop_align()));
+			(obj.bubble_content) = () => ([(this.Content())]);
 			return obj;
 		}
 		Pop_area(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this?.Pop())]);
+			(obj.sub) = () => ([(this.Pop())]);
 			return obj;
 		}
 		title(){
 			return "Pop up block with various alignment";
 		}
 		sub(){
-			return [(this?.Manage()), (this?.Pop_area())];
+			return [(this.Manage()), (this.Pop_area())];
 		}
 		tags(){
 			return [

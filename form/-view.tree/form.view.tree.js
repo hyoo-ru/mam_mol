@@ -7,22 +7,22 @@
 			return [];
 		}
 		body(){
-			return (this?.form_fields());
+			return (this.form_fields());
 		}
 		Body(){
 			const obj = new this.$.$mol_list();
-			(obj.sub) = () => ((this?.body()));
+			(obj.sub) = () => ((this.body()));
 			return obj;
 		}
 		buttons(){
 			return [];
 		}
 		foot(){
-			return (this?.buttons());
+			return (this.buttons());
 		}
 		Foot(){
 			const obj = new this.$.$mol_row();
-			(obj.sub) = () => ((this?.foot()));
+			(obj.sub) = () => ((this.foot()));
 			return obj;
 		}
 		submit_allowed(){
@@ -32,14 +32,14 @@
 			return false;
 		}
 		event(){
-			return {...(super.event()), "keydown": (next) => (this?.keydown(next))};
+			return {...(super.event()), "keydown": (next) => (this.keydown(next))};
 		}
 		submit(next){
 			if(next !== undefined) return next;
 			return null;
 		}
 		rows(){
-			return [(this?.Body()), (this?.Foot())];
+			return [(this.Body()), (this.Foot())];
 		}
 	};
 	($mol_mem(($.$mol_form.prototype), "keydown"));

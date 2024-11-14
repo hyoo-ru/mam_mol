@@ -1,6 +1,6 @@
 	($.$mol_plot_map_heat_demo) = class $mol_plot_map_heat_demo extends ($.$mol_example_large) {
 		zoom(next){
-			return (this?.Plot()?.scale_y(next));
+			return (this.Plot().scale_y(next));
 		}
 		terrain_x(){
 			return [];
@@ -13,15 +13,15 @@
 		}
 		Terrain(){
 			const obj = new this.$.$mol_plot_map_heat();
-			(obj.series_x) = () => ((this?.terrain_x()));
-			(obj.series_y) = () => ((this?.terrain_y()));
-			(obj.series_z) = () => ((this?.terrain_z()));
+			(obj.series_x) = () => ((this.terrain_x()));
+			(obj.series_y) = () => ((this.terrain_y()));
+			(obj.series_z) = () => ((this.terrain_z()));
 			return obj;
 		}
 		Plot(){
 			const obj = new this.$.$mol_plot_pane();
-			(obj.zoom) = (next) => ((this?.zoom(next)));
-			(obj.graphs) = () => ([(this?.Terrain())]);
+			(obj.zoom) = (next) => ((this.zoom(next)));
+			(obj.graphs) = () => ([(this.Terrain())]);
 			return obj;
 		}
 		title(){
@@ -37,7 +37,7 @@
 			return 20;
 		}
 		sub(){
-			return [(this?.Plot())];
+			return [(this.Plot())];
 		}
 		tags(){
 			return [

@@ -8,14 +8,14 @@
 		}
 		Avatars_control(){
 			const obj = new this.$.$mol_attach();
-			(obj.items) = (next) => ((this?.avatars(next)));
+			(obj.items) = (next) => ((this.avatars(next)));
 			return obj;
 		}
 		Avatars_field(){
 			const obj = new this.$.$mol_form_field();
 			(obj.name) = () => ("Avatars");
-			(obj.bid) = () => ((this?.avatars_bid()));
-			(obj.Content) = () => ((this?.Avatars_control()));
+			(obj.bid) = () => ((this.avatars_bid()));
+			(obj.Content) = () => ((this.Avatars_control()));
 			return obj;
 		}
 		name_first_bid(){
@@ -28,14 +28,14 @@
 		Name_first_control(){
 			const obj = new this.$.$mol_string();
 			(obj.hint) = () => ("Jack");
-			(obj.value) = (next) => ((this?.name_first(next)));
+			(obj.value) = (next) => ((this.name_first(next)));
 			return obj;
 		}
 		Name_first_field(){
 			const obj = new this.$.$mol_form_field();
 			(obj.name) = () => ("First Name");
-			(obj.bid) = () => ((this?.name_first_bid()));
-			(obj.Content) = () => ((this?.Name_first_control()));
+			(obj.bid) = () => ((this.name_first_bid()));
+			(obj.Content) = () => ((this.Name_first_control()));
 			return obj;
 		}
 		name_nick_bid(){
@@ -48,14 +48,14 @@
 		Name_nick_control(){
 			const obj = new this.$.$mol_string();
 			(obj.hint) = () => ("Capitan");
-			(obj.value) = (next) => ((this?.name_nick(next)));
+			(obj.value) = (next) => ((this.name_nick(next)));
 			return obj;
 		}
 		Name_nick_field(){
 			const obj = new this.$.$mol_form_field();
 			(obj.name) = () => ("Nick Name");
-			(obj.bid) = () => ((this?.name_nick_bid()));
-			(obj.Content) = () => ((this?.Name_nick_control()));
+			(obj.bid) = () => ((this.name_nick_bid()));
+			(obj.Content) = () => ((this.Name_nick_control()));
 			return obj;
 		}
 		name_second_bid(){
@@ -68,22 +68,22 @@
 		Name_second_control(){
 			const obj = new this.$.$mol_string();
 			(obj.hint) = () => ("Sparrow");
-			(obj.value) = (next) => ((this?.name_second(next)));
+			(obj.value) = (next) => ((this.name_second(next)));
 			return obj;
 		}
 		Name_second_field(){
 			const obj = new this.$.$mol_form_field();
 			(obj.name) = () => ("Second Name");
-			(obj.bid) = () => ((this?.name_second_bid()));
-			(obj.Content) = () => ((this?.Name_second_control()));
+			(obj.bid) = () => ((this.name_second_bid()));
+			(obj.Content) = () => ((this.Name_second_control()));
 			return obj;
 		}
 		Names(){
 			const obj = new this.$.$mol_form_group();
 			(obj.sub) = () => ([
-				(this?.Name_first_field()), 
-				(this?.Name_nick_field()), 
-				(this?.Name_second_field())
+				(this.Name_first_field()), 
+				(this.Name_nick_field()), 
+				(this.Name_second_field())
 			]);
 			return obj;
 		}
@@ -96,14 +96,14 @@
 		}
 		Age_control(){
 			const obj = new this.$.$mol_number();
-			(obj.value) = (next) => ((this?.age(next)));
+			(obj.value) = (next) => ((this.age(next)));
 			return obj;
 		}
 		Age_field(){
 			const obj = new this.$.$mol_form_field();
 			(obj.name) = () => ("Age");
-			(obj.bid) = () => ((this?.age_bid()));
-			(obj.Content) = () => ((this?.Age_control()));
+			(obj.bid) = () => ((this.age_bid()));
+			(obj.Content) = () => ((this.Age_control()));
 			return obj;
 		}
 		sex_label(){
@@ -125,15 +125,15 @@
 		}
 		Sex_control(){
 			const obj = new this.$.$mol_switch();
-			(obj.value) = (next) => ((this?.sex(next)));
-			(obj.options) = () => ((this?.sex_options()));
+			(obj.value) = (next) => ((this.sex(next)));
+			(obj.options) = () => ((this.sex_options()));
 			return obj;
 		}
 		Sex_field(){
 			const obj = new this.$.$mol_form_field();
-			(obj.name) = () => ((this?.sex_label()));
-			(obj.bid) = () => ((this?.sex_bid()));
-			(obj.Content) = () => ((this?.Sex_control()));
+			(obj.name) = () => ((this.sex_label()));
+			(obj.bid) = () => ((this.sex_bid()));
+			(obj.Content) = () => ((this.Sex_control()));
 			return obj;
 		}
 		color_bid(){
@@ -145,7 +145,7 @@
 		}
 		Color_control(){
 			const obj = new this.$.$mol_select();
-			(obj.value) = (next) => ((this?.color(next)));
+			(obj.value) = (next) => ((this.color(next)));
 			(obj.dictionary) = () => ({
 				"": "❔", 
 				"white": "⬜ White", 
@@ -158,16 +158,16 @@
 		Color_field(){
 			const obj = new this.$.$mol_form_field();
 			(obj.name) = () => ("Skin color");
-			(obj.bid) = () => ((this?.color_bid()));
-			(obj.Content) = () => ((this?.Color_control()));
+			(obj.bid) = () => ((this.color_bid()));
+			(obj.Content) = () => ((this.Color_control()));
 			return obj;
 		}
 		Parameters(){
 			const obj = new this.$.$mol_form_group();
 			(obj.sub) = () => ([
-				(this?.Age_field()), 
-				(this?.Sex_field()), 
-				(this?.Color_field())
+				(this.Age_field()), 
+				(this.Sex_field()), 
+				(this.Color_field())
 			]);
 			return obj;
 		}
@@ -181,14 +181,14 @@
 		Mail_control(){
 			const obj = new this.$.$mol_string();
 			(obj.hint) = () => ("name@domain.com");
-			(obj.value) = (next) => ((this?.mail(next)));
+			(obj.value) = (next) => ((this.mail(next)));
 			return obj;
 		}
 		Mail_field(){
 			const obj = new this.$.$mol_form_field();
 			(obj.name) = () => ("E-mail");
-			(obj.bid) = () => ((this?.mail_bid()));
-			(obj.Content) = () => ((this?.Mail_control()));
+			(obj.bid) = () => ((this.mail_bid()));
+			(obj.Content) = () => ((this.Mail_control()));
 			return obj;
 		}
 		signup(next){
@@ -196,13 +196,13 @@
 			return null;
 		}
 		signup_allowed(){
-			return (this?.Form()?.submit_allowed());
+			return (this.Form().submit_allowed());
 		}
 		Signup(){
 			const obj = new this.$.$mol_button_major();
 			(obj.title) = () => ("Sign Up");
-			(obj.click) = (next) => ((this?.signup(next)));
-			(obj.enabled) = () => ((this?.signup_allowed()));
+			(obj.click) = (next) => ((this.signup(next)));
+			(obj.enabled) = () => ((this.signup_allowed()));
 			return obj;
 		}
 		result(next){
@@ -211,19 +211,19 @@
 		}
 		Result(){
 			const obj = new this.$.$mol_status();
-			(obj.message) = () => ((this?.result()));
+			(obj.message) = () => ((this.result()));
 			return obj;
 		}
 		Form(){
 			const obj = new this.$.$mol_form();
 			(obj.body) = () => ([
-				(this?.Avatars_field()), 
-				(this?.Names()), 
-				(this?.Parameters()), 
-				(this?.Mail_field())
+				(this.Avatars_field()), 
+				(this.Names()), 
+				(this.Parameters()), 
+				(this.Mail_field())
 			]);
-			(obj.submit) = (next) => ((this?.signup(next)));
-			(obj.buttons) = () => ([(this?.Signup()), (this?.Result())]);
+			(obj.submit) = (next) => ((this.signup(next)));
+			(obj.buttons) = () => ([(this.Signup()), (this.Result())]);
 			return obj;
 		}
 		title(){
@@ -244,7 +244,7 @@
 			};
 		}
 		sub(){
-			return [(this?.Form())];
+			return [(this.Form())];
 		}
 		tags(){
 			return [

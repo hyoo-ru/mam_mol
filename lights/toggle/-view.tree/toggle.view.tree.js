@@ -8,13 +8,13 @@
 			return false;
 		}
 		Icon(){
-			return (this?.Lights_icon());
+			return (this.Lights_icon());
 		}
 		hint(){
 			return (this.$.$mol_locale.text("$mol_lights_toggle_hint"));
 		}
 		checked(next){
-			return (this?.lights(next));
+			return (this.lights(next));
 		}
 	};
 	($mol_mem(($.$mol_lights_toggle.prototype), "Lights_icon"));

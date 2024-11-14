@@ -2701,8 +2701,8 @@ var $;
 		attr(){
 			return {
 				...(super.attr()), 
-				"viewBox": (this?.view_box()), 
-				"preserveAspectRatio": (this?.aspect())
+				"viewBox": (this.view_box()), 
+				"preserveAspectRatio": (this.aspect())
 			};
 		}
 	};
@@ -2976,11 +2976,11 @@ var $;
 		event(){
 			return {
 				...(super.event()), 
-				"pointerdown": (next) => (this?.event_start(next)), 
-				"pointermove": (next) => (this?.event_move(next)), 
-				"pointerup": (next) => (this?.event_end(next)), 
-				"pointerleave": (next) => (this?.event_leave(next)), 
-				"wheel": (next) => (this?.event_wheel(next))
+				"pointerdown": (next) => (this.event_start(next)), 
+				"pointermove": (next) => (this.event_move(next)), 
+				"pointerup": (next) => (this.event_end(next)), 
+				"pointerleave": (next) => (this.event_leave(next)), 
+				"wheel": (next) => (this.event_wheel(next))
 			};
 		}
 	};
@@ -3270,11 +3270,11 @@ var $;
 ;
 	($.$mol_plot_pane) = class $mol_plot_pane extends ($.$mol_svg_root) {
 		gap_x(){
-			const obj = new this.$.$mol_vector_range((this?.gap_left()), (this?.gap_right()));
+			const obj = new this.$.$mol_vector_range((this.gap_left()), (this.gap_right()));
 			return obj;
 		}
 		gap_y(){
-			const obj = new this.$.$mol_vector_range((this?.gap_bottom()), (this?.gap_top()));
+			const obj = new this.$.$mol_vector_range((this.gap_bottom()), (this.gap_top()));
 			return obj;
 		}
 		shift_limit_x(){
@@ -3316,17 +3316,17 @@ var $;
 			return [];
 		}
 		graphs_positioned(){
-			return (this?.graphs());
+			return (this.graphs());
 		}
 		graphs_visible(){
-			return (this?.graphs_positioned());
+			return (this.graphs_positioned());
 		}
 		zoom(next){
 			if(next !== undefined) return next;
 			return 1;
 		}
 		cursor_position(){
-			return (this?.Touch()?.pointer_center());
+			return (this.Touch().pointer_center());
 		}
 		allow_draw(){
 			return true;
@@ -3338,10 +3338,10 @@ var $;
 			return true;
 		}
 		action_type(){
-			return (this?.Touch()?.action_type());
+			return (this.Touch().action_type());
 		}
 		action_point(){
-			return (this?.Touch()?.action_point());
+			return (this.Touch().action_point());
 		}
 		draw_start(next){
 			if(next !== undefined) return next;
@@ -3357,14 +3357,14 @@ var $;
 		}
 		Touch(){
 			const obj = new this.$.$mol_touch();
-			(obj.zoom) = (next) => ((this?.zoom(next)));
-			(obj.pan) = (next) => ((this?.shift(next)));
-			(obj.allow_draw) = () => ((this?.allow_draw()));
-			(obj.allow_pan) = () => ((this?.allow_pan()));
-			(obj.allow_zoom) = () => ((this?.allow_zoom()));
-			(obj.draw_start) = (next) => ((this?.draw_start(next)));
-			(obj.draw) = (next) => ((this?.draw(next)));
-			(obj.draw_end) = (next) => ((this?.draw_end(next)));
+			(obj.zoom) = (next) => ((this.zoom(next)));
+			(obj.pan) = (next) => ((this.shift(next)));
+			(obj.allow_draw) = () => ((this.allow_draw()));
+			(obj.allow_pan) = () => ((this.allow_pan()));
+			(obj.allow_zoom) = () => ((this.allow_zoom()));
+			(obj.draw_start) = (next) => ((this.draw_start(next)));
+			(obj.draw) = (next) => ((this.draw(next)));
+			(obj.draw_end) = (next) => ((this.draw_end(next)));
 			return obj;
 		}
 		aspect(){
@@ -3385,23 +3385,23 @@ var $;
 			return 24;
 		}
 		gap_left(){
-			return (this?.gap_hor());
+			return (this.gap_hor());
 		}
 		gap_right(){
-			return (this?.gap_hor());
+			return (this.gap_hor());
 		}
 		gap_top(){
-			return (this?.gap_vert());
+			return (this.gap_vert());
 		}
 		gap_bottom(){
-			return (this?.gap_vert());
+			return (this.gap_vert());
 		}
 		gap(){
-			const obj = new this.$.$mol_vector_2d((this?.gap_x()), (this?.gap_y()));
+			const obj = new this.$.$mol_vector_2d((this.gap_x()), (this.gap_y()));
 			return obj;
 		}
 		shift_limit(){
-			const obj = new this.$.$mol_vector_2d((this?.shift_limit_x()), (this?.shift_limit_y()));
+			const obj = new this.$.$mol_vector_2d((this.shift_limit_x()), (this.shift_limit_y()));
 			return obj;
 		}
 		shift_default(){
@@ -3414,7 +3414,7 @@ var $;
 			return obj;
 		}
 		scale_limit(){
-			const obj = new this.$.$mol_vector_2d((this?.scale_limit_x()), (this?.scale_limit_y()));
+			const obj = new this.$.$mol_vector_2d((this.scale_limit_x()), (this.scale_limit_y()));
 			return obj;
 		}
 		scale_default(){
@@ -3443,21 +3443,21 @@ var $;
 			return obj;
 		}
 		dimensions(){
-			const obj = new this.$.$mol_vector_2d((this?.dimensions_x()), (this?.dimensions_y()));
+			const obj = new this.$.$mol_vector_2d((this.dimensions_x()), (this.dimensions_y()));
 			return obj;
 		}
 		dimensions_viewport(){
-			const obj = new this.$.$mol_vector_2d((this?.dimensions_viewport_x()), (this?.dimensions_viewport_y()));
+			const obj = new this.$.$mol_vector_2d((this.dimensions_viewport_x()), (this.dimensions_viewport_y()));
 			return obj;
 		}
 		sub(){
-			return (this?.graphs_sorted());
+			return (this.graphs_sorted());
 		}
 		graphs_colored(){
-			return (this?.graphs_visible());
+			return (this.graphs_visible());
 		}
 		plugins(){
-			return [...(super.plugins()), (this?.Touch())];
+			return [...(super.plugins()), (this.Touch())];
 		}
 	};
 	($mol_mem(($.$mol_plot_pane.prototype), "gap_x"));
@@ -3516,7 +3516,7 @@ var $;
 			return "title";
 		}
 		sub(){
-			return [(this?.title())];
+			return [(this.title())];
 		}
 	};
 
@@ -3568,7 +3568,7 @@ var $;
 			return "";
 		}
 		hint(){
-			return (this?.title());
+			return (this.title());
 		}
 		series_x(){
 			return [];
@@ -3577,13 +3577,13 @@ var $;
 			return [];
 		}
 		attr(){
-			return {...(super.attr()), "mol_plot_graph_type": (this?.type())};
+			return {...(super.attr()), "mol_plot_graph_type": (this.type())};
 		}
 		style(){
-			return {...(super.style()), "color": (this?.color())};
+			return {...(super.style()), "color": (this.color())};
 		}
 		viewport(){
-			const obj = new this.$.$mol_vector_2d((this?.viewport_x()), (this?.viewport_y()));
+			const obj = new this.$.$mol_vector_2d((this.viewport_x()), (this.viewport_y()));
 			return obj;
 		}
 		shift(){
@@ -3597,11 +3597,11 @@ var $;
 			return obj;
 		}
 		dimensions_pane(){
-			const obj = new this.$.$mol_vector_2d((this?.dimensions_pane_x()), (this?.dimensions_pane_y()));
+			const obj = new this.$.$mol_vector_2d((this.dimensions_pane_x()), (this.dimensions_pane_y()));
 			return obj;
 		}
 		dimensions(){
-			const obj = new this.$.$mol_vector_2d((this?.dimensions_x()), (this?.dimensions_y()));
+			const obj = new this.$.$mol_vector_2d((this.dimensions_x()), (this.dimensions_y()));
 			return obj;
 		}
 		size_real(){
@@ -3609,7 +3609,7 @@ var $;
 			return obj;
 		}
 		gap(){
-			const obj = new this.$.$mol_vector_2d((this?.gap_x()), (this?.gap_y()));
+			const obj = new this.$.$mol_vector_2d((this.gap_x()), (this.gap_y()));
 			return obj;
 		}
 		repos_x(id){
@@ -3632,7 +3632,7 @@ var $;
 		}
 		Hint(){
 			const obj = new this.$.$mol_svg_title();
-			(obj.title) = () => ((this?.hint()));
+			(obj.title) = () => ((this.hint()));
 			return obj;
 		}
 		hue(next){
@@ -3667,10 +3667,10 @@ var $;
 			return "black";
 		}
 		attr(){
-			return {...(super.attr()), "mol_plot_graph_type": (this?.type())};
+			return {...(super.attr()), "mol_plot_graph_type": (this.type())};
 		}
 		style(){
-			return {...(super.style()), "color": (this?.color())};
+			return {...(super.style()), "color": (this.color())};
 		}
 	};
 
@@ -3988,15 +3988,15 @@ var $;
 			return "path";
 		}
 		attr(){
-			return {...(super.attr()), "d": (this?.curve())};
+			return {...(super.attr()), "d": (this.curve())};
 		}
 		sub(){
-			return [(this?.Hint())];
+			return [(this.Hint())];
 		}
 		Sample(){
 			const obj = new this.$.$mol_plot_graph_sample();
-			(obj.color) = () => ((this?.color()));
-			(obj.type) = () => ((this?.type()));
+			(obj.color) = () => ((this.color()));
+			(obj.type) = () => ((this.type()));
 			return obj;
 		}
 	};
@@ -4078,17 +4078,17 @@ var $;
 			return [];
 		}
 		graphs_enriched(){
-			return (this?.graphs());
+			return (this.graphs());
 		}
 		graph_samples(){
 			return [];
 		}
 		sub(){
-			return (this?.graphs_enriched());
+			return (this.graphs_enriched());
 		}
 		Sample(){
 			const obj = new this.$.$mol_plot_graph_sample();
-			(obj.sub) = () => ((this?.graph_samples()));
+			(obj.sub) = () => ((this.graph_samples()));
 			return obj;
 		}
 	};
@@ -4172,7 +4172,7 @@ var $;
 			return "path";
 		}
 		attr(){
-			return {...(super.attr()), "d": (this?.geometry())};
+			return {...(super.attr()), "d": (this.geometry())};
 		}
 	};
 
@@ -4190,7 +4190,7 @@ var $;
 		}
 		Curve(){
 			const obj = new this.$.$mol_svg_path();
-			(obj.geometry) = () => ((this?.curve()));
+			(obj.geometry) = () => ((this.curve()));
 			return obj;
 		}
 		points_max(){
@@ -4200,14 +4200,14 @@ var $;
 			return 1;
 		}
 		style(){
-			return {...(super.style()), "stroke-width": (this?.diameter())};
+			return {...(super.style()), "stroke-width": (this.diameter())};
 		}
 		sub(){
-			return [(this?.Hint()), (this?.Curve())];
+			return [(this.Hint()), (this.Curve())];
 		}
 		Sample(){
 			const obj = new this.$.$mol_plot_graph_sample();
-			(obj.color) = () => ((this?.color()));
+			(obj.color) = () => ((this.color()));
 			return obj;
 		}
 	};
@@ -4353,20 +4353,20 @@ var $;
 			return [];
 		}
 		graphs(){
-			return (this?.level_graphs());
+			return (this.level_graphs());
 		}
 		Level(id){
 			const obj = new this.$.$mol_plot_map_heat_level();
-			(obj.hint) = () => ((this?.level_hint(id)));
-			(obj.points) = () => ((this?.level_points(id)));
-			(obj.opacity) = () => ((this?.level_opacity(id)));
-			(obj.diameter) = () => ((this?.level_diameter()));
-			(obj.aspect) = () => ((this?.level_aspect()));
+			(obj.hint) = () => ((this.level_hint(id)));
+			(obj.points) = () => ((this.level_points(id)));
+			(obj.opacity) = () => ((this.level_opacity(id)));
+			(obj.diameter) = () => ((this.level_diameter()));
+			(obj.aspect) = () => ((this.level_aspect()));
 			return obj;
 		}
 		Sample(){
 			const obj = new this.$.$mol_plot_graph_sample();
-			(obj.color) = () => ((this?.color()));
+			(obj.color) = () => ((this.color()));
 			return obj;
 		}
 	};
@@ -4377,7 +4377,7 @@ var $;
 			return "1";
 		}
 		style(){
-			return {...(super.style()), "opacity": (this?.opacity())};
+			return {...(super.style()), "opacity": (this.opacity())};
 		}
 	};
 
@@ -4465,18 +4465,18 @@ var $;
 		}
 		Curve(){
 			const obj = new this.$.$mol_svg_path();
-			(obj.geometry) = () => ((this?.curve()));
+			(obj.geometry) = () => ((this.curve()));
 			return obj;
 		}
 		style(){
-			return {...(super.style()), "stroke-width": (this?.stroke_width())};
+			return {...(super.style()), "stroke-width": (this.stroke_width())};
 		}
 		sub(){
-			return [(this?.Hint()), (this?.Curve())];
+			return [(this.Hint()), (this.Curve())];
 		}
 		Sample(){
 			const obj = new this.$.$mol_plot_graph_sample();
-			(obj.color) = () => ((this?.color()));
+			(obj.color) = () => ((this.color()));
 			return obj;
 		}
 	};
@@ -4643,10 +4643,10 @@ var $;
 		attr(){
 			return {
 				...(super.attr()), 
-				"width": (this?.width()), 
-				"height": (this?.height()), 
-				"x": (this?.pos_x()), 
-				"y": (this?.pos_y())
+				"width": (this.width()), 
+				"height": (this.height()), 
+				"x": (this.pos_x()), 
+				"y": (this.pos_y())
 			};
 		}
 	};
@@ -4685,7 +4685,7 @@ var $;
 			return "middle";
 		}
 		align_hor(){
-			return (this?.align());
+			return (this.align());
 		}
 		align_vert(){
 			return "baseline";
@@ -4702,14 +4702,14 @@ var $;
 		attr(){
 			return {
 				...(super.attr()), 
-				"x": (this?.pos_x()), 
-				"y": (this?.pos_y()), 
-				"text-anchor": (this?.align_hor()), 
-				"alignment-baseline": (this?.align_vert())
+				"x": (this.pos_x()), 
+				"y": (this.pos_y()), 
+				"text-anchor": (this.align_hor()), 
+				"alignment-baseline": (this.align_vert())
 			};
 		}
 		sub(){
-			return [(this?.text())];
+			return [(this.text())];
 		}
 	};
 
@@ -4758,10 +4758,10 @@ var $;
 		}
 		Background(){
 			const obj = new this.$.$mol_svg_rect();
-			(obj.pos_x) = () => ((this?.background_x()));
-			(obj.pos_y) = () => ((this?.background_y()));
-			(obj.width) = () => ((this?.background_width()));
-			(obj.height) = () => ((this?.background_height()));
+			(obj.pos_x) = () => ((this.background_x()));
+			(obj.pos_y) = () => ((this.background_y()));
+			(obj.width) = () => ((this.background_width()));
+			(obj.height) = () => ((this.background_height()));
 			return obj;
 		}
 		curve(){
@@ -4769,7 +4769,7 @@ var $;
 		}
 		Curve(){
 			const obj = new this.$.$mol_svg_path();
-			(obj.geometry) = () => ((this?.curve()));
+			(obj.geometry) = () => ((this.curve()));
 			return obj;
 		}
 		labels_formatted(){
@@ -4786,10 +4786,10 @@ var $;
 		}
 		Title(){
 			const obj = new this.$.$mol_svg_text();
-			(obj.pos_x) = () => ((this?.title_pos_x()));
-			(obj.pos_y) = () => ((this?.title_pos_y()));
-			(obj.align) = () => ((this?.title_align()));
-			(obj.text) = () => ((this?.title()));
+			(obj.pos_x) = () => ((this.title_pos_x()));
+			(obj.pos_y) = () => ((this.title_pos_y()));
+			(obj.align) = () => ((this.title_align()));
+			(obj.text) = () => ((this.title()));
 			return obj;
 		}
 		label_pos_x(id){
@@ -4799,7 +4799,7 @@ var $;
 			return "";
 		}
 		label_pos(id){
-			return [(this?.label_pos_x(id)), (this?.label_pos_y(id))];
+			return [(this.label_pos_x(id)), (this.label_pos_y(id))];
 		}
 		label_text(id){
 			return "";
@@ -4839,17 +4839,17 @@ var $;
 		}
 		sub(){
 			return [
-				(this?.Background()), 
-				(this?.Curve()), 
-				(this?.labels_formatted()), 
-				(this?.Title())
+				(this.Background()), 
+				(this.Curve()), 
+				(this.labels_formatted()), 
+				(this.Title())
 			];
 		}
 		Label(id){
 			const obj = new this.$.$mol_svg_text();
-			(obj.pos) = () => ((this?.label_pos(id)));
-			(obj.text) = () => ((this?.label_text(id)));
-			(obj.align) = () => ((this?.label_align()));
+			(obj.pos) = () => ((this.label_pos(id)));
+			(obj.text) = () => ((this.label_text(id)));
+			(obj.align) = () => ((this.label_align()));
 			return obj;
 		}
 	};
@@ -4988,13 +4988,13 @@ var $;
 			return "14";
 		}
 		label_pos_x(id){
-			return (this?.title_pos_x());
+			return (this.title_pos_x());
 		}
 		background_height(){
 			return "100%";
 		}
 		background_width(){
-			return (this?.title_pos_x());
+			return (this.title_pos_x());
 		}
 	};
 
@@ -5066,7 +5066,7 @@ var $;
 			return "100%";
 		}
 		label_pos_y(id){
-			return (this?.title_pos_y());
+			return (this.title_pos_y());
 		}
 		background_width(){
 			return "100%";
@@ -5141,16 +5141,16 @@ var $;
 			return "1rem";
 		}
 		box_pos_x(){
-			return (this?.pos_x());
+			return (this.pos_x());
 		}
 		box_pos_y(){
 			return "0";
 		}
 		Back(){
 			const obj = new this.$.$mol_svg_rect();
-			(obj.width) = () => ((this?.box_width()));
-			(obj.height) = () => ((this?.box_height()));
-			(obj.pos) = () => ([(this?.box_pos_x()), (this?.box_pos_y())]);
+			(obj.width) = () => ((this.box_width()));
+			(obj.height) = () => ((this.box_height()));
+			(obj.pos) = () => ([(this.box_pos_x()), (this.box_pos_y())]);
 			return obj;
 		}
 		pos_x(){
@@ -5167,9 +5167,9 @@ var $;
 		}
 		Text(){
 			const obj = new this.$.$mol_svg_text();
-			(obj.pos) = () => ([(this?.pos_x()), (this?.pos_y())]);
-			(obj.align) = () => ((this?.align()));
-			(obj.sub) = () => ([(this?.text())]);
+			(obj.pos) = () => ([(this.pos_x()), (this.pos_y())]);
+			(obj.align) = () => ((this.align()));
+			(obj.sub) = () => ([(this.text())]);
 			return obj;
 		}
 		font_size(){
@@ -5179,7 +5179,7 @@ var $;
 			return 0;
 		}
 		sub(){
-			return [(this?.Back()), (this?.Text())];
+			return [(this.Back()), (this.Text())];
 		}
 	};
 	($mol_mem(($.$mol_svg_text_box.prototype), "Back"));
@@ -5268,7 +5268,7 @@ var $;
 		}
 		Curve(){
 			const obj = new this.$.$mol_svg_path();
-			(obj.geometry) = () => ((this?.curve()));
+			(obj.geometry) = () => ((this.curve()));
 			return obj;
 		}
 		title_x_pos_x(){
@@ -5282,9 +5282,9 @@ var $;
 		}
 		Label_x(){
 			const obj = new this.$.$mol_svg_text_box();
-			(obj.pos_x) = () => ((this?.title_x_pos_x()));
-			(obj.pos_y) = () => ((this?.title_x_pos_y()));
-			(obj.text) = () => ((this?.title_x()));
+			(obj.pos_x) = () => ((this.title_x_pos_x()));
+			(obj.pos_y) = () => ((this.title_x_pos_y()));
+			(obj.text) = () => ((this.title_x()));
 			return obj;
 		}
 		title_y_pos_x(){
@@ -5298,9 +5298,9 @@ var $;
 		}
 		Label_y(){
 			const obj = new this.$.$mol_svg_text_box();
-			(obj.pos_x) = () => ((this?.title_y_pos_x()));
-			(obj.pos_y) = () => ((this?.title_y_pos_y()));
-			(obj.text) = () => ((this?.title_y()));
+			(obj.pos_x) = () => ((this.title_y_pos_x()));
+			(obj.pos_y) = () => ((this.title_y_pos_y()));
+			(obj.text) = () => ((this.title_y()));
 			return obj;
 		}
 		labels(){
@@ -5319,14 +5319,14 @@ var $;
 			return [];
 		}
 		dimensions(){
-			const obj = new this.$.$mol_vector_2d((this?.dimensions_x()), (this?.dimensions_y()));
+			const obj = new this.$.$mol_vector_2d((this.dimensions_x()), (this.dimensions_y()));
 			return obj;
 		}
 		sub(){
 			return [
-				(this?.Curve()), 
-				(this?.Label_x()), 
-				(this?.Label_y())
+				(this.Curve()), 
+				(this.Label_x()), 
+				(this.Label_y())
 			];
 		}
 	};

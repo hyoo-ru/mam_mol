@@ -8,7 +8,7 @@
 		}
 		Search_start(){
 			const obj = new this.$.$mol_hotkey();
-			(obj.key) = () => ({"F": (next) => (this?.search_start(next))});
+			(obj.key) = () => ({"F": (next) => (this.search_start(next))});
 			(obj.mod_ctrl) = () => (true);
 			return obj;
 		}
@@ -28,14 +28,14 @@
 			return "";
 		}
 		search_start(next){
-			return (this?.Menu()?.search_start(next));
+			return (this.Menu().search_start(next));
 		}
 		sources_uri(){
 			return "https://github.com/hyoo-ru/mam_mol/";
 		}
 		Sources(){
 			const obj = new this.$.$mol_link_source();
-			(obj.uri) = () => ((this?.sources_uri()));
+			(obj.uri) = () => ((this.sources_uri()));
 			return obj;
 		}
 		Lights(){
@@ -43,13 +43,13 @@
 			return obj;
 		}
 		tools(){
-			return [(this?.Sources()), (this?.Lights())];
+			return [(this.Sources()), (this.Lights())];
 		}
 		chat_seed(id){
 			return "p9zx0v_nsmx1d";
 		}
 		chat_pages(id){
-			return (this?.Detail(id)?.chat_pages());
+			return (this.Detail(id).chat_pages());
 		}
 		detail_description(){
 			return "";
@@ -81,7 +81,7 @@
 			return (this.$.$mol_locale.text("$mol_app_demo_detail_empty_postfix"));
 		}
 		editor_title(){
-			return (this?.detail_title());
+			return (this.detail_title());
 		}
 		meta_bundle_base(){
 			return "";
@@ -90,44 +90,44 @@
 			return {};
 		}
 		plugins(){
-			return [(this?.Theme()), (this?.Search_start())];
+			return [(this.Theme()), (this.Search_start())];
 		}
 		demo_block_list(){
 			return ["$mol_example_small", "$mol_example_large"];
 		}
 		Menu(){
 			const obj = new this.$.$mol_app_demo_menu();
-			(obj.title) = () => ((this?.menu_title()));
-			(obj.names) = () => ((this?.names()));
-			(obj.widget_tags) = (id) => ((this?.widget_tags(id)));
-			(obj.widget_aspects) = (id) => ((this?.widget_aspects(id)));
-			(obj.widget_title) = (id) => ((this?.widget_title(id)));
-			(obj.tools) = () => ((this?.tools()));
+			(obj.title) = () => ((this.menu_title()));
+			(obj.names) = () => ((this.names()));
+			(obj.widget_tags) = (id) => ((this.widget_tags(id)));
+			(obj.widget_aspects) = (id) => ((this.widget_aspects(id)));
+			(obj.widget_title) = (id) => ((this.widget_title(id)));
+			(obj.tools) = () => ((this.tools()));
 			return obj;
 		}
 		Detail(id){
 			const obj = new this.$.$mol_app_demo_detail();
-			(obj.chat_seed) = () => ((this?.chat_seed(id)));
-			(obj.title) = () => ((this?.detail_title()));
-			(obj.description) = () => ((this?.detail_description()));
-			(obj.edit_uri) = () => ((this?.edit_uri()));
-			(obj.readme) = (next) => ((this?.readme_page(next)));
-			(obj.Demo) = () => ((this?.Demo()));
+			(obj.chat_seed) = () => ((this.chat_seed(id)));
+			(obj.title) = () => ((this.detail_title()));
+			(obj.description) = () => ((this.detail_description()));
+			(obj.edit_uri) = () => ((this.edit_uri()));
+			(obj.readme) = (next) => ((this.readme_page(next)));
+			(obj.Demo) = () => ((this.Demo()));
 			return obj;
 		}
 		Readme_page(){
 			const obj = new this.$.$mol_app_demo_readme();
-			(obj.repo) = () => ((this?.repo()));
-			(obj.opened) = (next) => ((this?.readme_page(next)));
-			(obj.module) = () => ((this?.module()));
+			(obj.repo) = () => ((this.repo()));
+			(obj.opened) = (next) => ((this.readme_page(next)));
+			(obj.module) = () => ((this.module()));
 			return obj;
 		}
 		Detail_empty_message(){
 			const obj = new this.$.$mol_status();
 			(obj.sub) = () => ([
-				(this?.detail_empty_prefix()), 
-				(this?.selected()), 
-				(this?.detail_empty_postfix())
+				(this.detail_empty_prefix()), 
+				(this.selected()), 
+				(this.detail_empty_postfix())
 			]);
 			return obj;
 		}

@@ -12,8 +12,8 @@
 		}
 		Plan(){
 			const obj = new this.$.$mol_plot_bar();
-			(obj.title) = () => ((this?.plan_title()));
-			(obj.series_y) = () => ((this?.plan()));
+			(obj.title) = () => ((this.plan_title()));
+			(obj.series_y) = () => ((this.plan()));
 			return obj;
 		}
 		fact_title(){
@@ -36,9 +36,9 @@
 		}
 		Fact(){
 			const obj = new this.$.$mol_plot_group();
-			(obj.title) = () => ((this?.fact_title()));
-			(obj.series_y) = () => ((this?.facts()));
-			(obj.graphs) = () => ([(this?.Fact_line()), (this?.Fact_dots())]);
+			(obj.title) = () => ((this.fact_title()));
+			(obj.series_y) = () => ((this.facts()));
+			(obj.graphs) = () => ([(this.Fact_line()), (this.Fact_dots())]);
 			return obj;
 		}
 		vert_title(){
@@ -46,7 +46,7 @@
 		}
 		Vert_ruler(){
 			const obj = new this.$.$mol_plot_ruler_vert();
-			(obj.title) = () => ((this?.vert_title()));
+			(obj.title) = () => ((this.vert_title()));
 			return obj;
 		}
 		marker_hor_title(){
@@ -62,24 +62,24 @@
 		}
 		Marker_hor(){
 			const obj = new this.$.$mol_plot_mark_hor();
-			(obj.title) = () => ((this?.marker_hor_title()));
-			(obj.labels) = () => ((this?.months()));
+			(obj.title) = () => ((this.marker_hor_title()));
+			(obj.labels) = () => ((this.months()));
 			return obj;
 		}
 		Marker_cross(){
 			const obj = new this.$.$mol_plot_mark_cross();
-			(obj.labels) = () => ((this?.months()));
-			(obj.graphs) = () => ([(this?.Plan()), (this?.Fact_dots())]);
+			(obj.labels) = () => ((this.months()));
+			(obj.graphs) = () => ([(this.Plan()), (this.Fact_dots())]);
 			return obj;
 		}
 		Chart(){
 			const obj = new this.$.$mol_chart();
 			(obj.graphs) = () => ([
-				(this?.Plan()), 
-				(this?.Fact()), 
-				(this?.Vert_ruler()), 
-				(this?.Marker_hor()), 
-				(this?.Marker_cross())
+				(this.Plan()), 
+				(this.Fact()), 
+				(this.Vert_ruler()), 
+				(this.Marker_hor()), 
+				(this.Marker_cross())
 			]);
 			return obj;
 		}
@@ -87,7 +87,7 @@
 			return "Simple chart with hadcoded series";
 		}
 		sub(){
-			return [(this?.Chart())];
+			return [(this.Chart())];
 		}
 		tags(){
 			return [

@@ -6,12 +6,12 @@
 			return null;
 		}
 		attr(){
-			return {...(super.attr()), "mol_text_list_type": (this?.type())};
+			return {...(super.attr()), "mol_text_list_type": (this.type())};
 		}
 		Paragraph(id){
 			const obj = new this.$.$mol_text_list_item();
-			(obj.index) = () => ((this?.item_index(id)));
-			(obj.sub) = () => ((this?.block_content(id)));
+			(obj.index) = () => ((this.item_index(id)));
+			(obj.sub) = () => ((this.block_content(id)));
 			return obj;
 		}
 	};
@@ -21,7 +21,7 @@
 			return 0;
 		}
 		attr(){
-			return {...(super.attr()), "mol_text_list_item_index": (this?.index())};
+			return {...(super.attr()), "mol_text_list_item_index": (this.index())};
 		}
 	};
 

@@ -11,11 +11,11 @@
 		}
 		Collage(){
 			const obj = new this.$.$mol_stack();
-			(obj.sub) = () => ([(this?.Back()), (this?.Front())]);
+			(obj.sub) = () => ([(this.Back()), (this.Front())]);
 			return obj;
 		}
 		sub(){
-			return [(this?.Collage())];
+			return [(this.Collage())];
 		}
 		aspects(){
 			return ["Widget/Layout"];

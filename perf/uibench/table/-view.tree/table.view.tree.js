@@ -15,11 +15,11 @@
 			return {...(super.attr_static()), "class": "Table"};
 		}
 		sub(){
-			return (this?.rows());
+			return (this.rows());
 		}
 		Row(id){
 			const obj = new this.$.$mol_perf_uibench_table_row();
-			(obj.state) = () => ((this?.row_state(id)));
+			(obj.state) = () => ((this.row_state(id)));
 			return obj;
 		}
 	};
@@ -36,7 +36,7 @@
 		}
 		Head(){
 			const obj = new this.$.$mol_perf_uibench_table_cell();
-			(obj.text) = () => ((this?.head_text()));
+			(obj.text) = () => ((this.head_text()));
 			return obj;
 		}
 		cells(){
@@ -57,16 +57,16 @@
 		attr(){
 			return {
 				...(super.attr()), 
-				"class": (this?.classes()), 
-				"data-id": (this?.id())
+				"class": (this.classes()), 
+				"data-id": (this.id())
 			};
 		}
 		sub(){
-			return [(this?.Head()), (this?.cells())];
+			return [(this.Head()), (this.cells())];
 		}
 		Cell(id){
 			const obj = new this.$.$mol_perf_uibench_table_cell();
-			(obj.text) = () => ((this?.cell_state(id)));
+			(obj.text) = () => ((this.cell_state(id)));
 			return obj;
 		}
 	};
@@ -87,10 +87,10 @@
 			return {...(super.attr_static()), "class": "TableCell"};
 		}
 		event(){
-			return {...(super.event()), "click": (next) => (this?.click(next))};
+			return {...(super.event()), "click": (next) => (this.click(next))};
 		}
 		sub(){
-			return [(this?.text())];
+			return [(this.text())];
 		}
 	};
 	($mol_mem(($.$mol_perf_uibench_table_cell.prototype), "click"));

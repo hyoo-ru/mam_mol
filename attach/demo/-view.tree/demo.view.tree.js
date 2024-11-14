@@ -5,14 +5,14 @@
 		}
 		Filled(){
 			const obj = new this.$.$mol_attach();
-			(obj.items) = (next) => ((this?.filled_items(next)));
+			(obj.items) = (next) => ((this.filled_items(next)));
 			return obj;
 		}
 		title(){
 			return "Attach files an show them";
 		}
 		sub(){
-			return [(this?.Filled())];
+			return [(this.Filled())];
 		}
 		tags(){
 			return [

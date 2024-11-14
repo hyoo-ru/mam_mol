@@ -14,17 +14,17 @@
 		}
 		Dump(id){
 			const obj = new this.$.$mol_dump_value();
-			(obj.value) = () => ((this?.dump_value(id)));
-			(obj.expanded) = (next) => ((this?.dump_expanded(id, next)));
-			(obj.prototypes) = () => ((this?.prototypes()));
-			(obj.preview_show) = () => ((this?.preview_show()));
+			(obj.value) = () => ((this.dump_value(id)));
+			(obj.expanded) = (next) => ((this.dump_expanded(id, next)));
+			(obj.prototypes) = () => ((this.prototypes()));
+			(obj.preview_show) = () => ((this.preview_show()));
 			return obj;
 		}
 		values(){
 			return [];
 		}
 		sub(){
-			return [(this?.Dump("0"))];
+			return [(this.Dump("0"))];
 		}
 	};
 	($mol_mem_key(($.$mol_dump_list.prototype), "dump_expanded"));

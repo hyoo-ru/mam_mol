@@ -8,8 +8,8 @@
 		}
 		Labeled_base(){
 			const obj = new this.$.$mol_check_box();
-			(obj.checked) = (next) => ((this?.base_checked(next)));
-			(obj.title) = () => ((this?.c1Label()));
+			(obj.checked) = (next) => ((this.base_checked(next)));
+			(obj.title) = () => ((this.c1Label()));
 			return obj;
 		}
 		c2Label(){
@@ -21,8 +21,8 @@
 		}
 		Labeled_checked(){
 			const obj = new this.$.$mol_check_box();
-			(obj.title) = () => ((this?.c2Label()));
-			(obj.checked) = (next) => ((this?.checked_checked(next)));
+			(obj.title) = () => ((this.c2Label()));
+			(obj.checked) = (next) => ((this.checked_checked(next)));
 			return obj;
 		}
 		c6Label(){
@@ -30,19 +30,19 @@
 		}
 		Labeled_disabled(){
 			const obj = new this.$.$mol_check_box();
-			(obj.title) = () => ((this?.c6Label()));
+			(obj.title) = () => ((this.c6Label()));
 			(obj.checked) = () => (true);
 			(obj.enabled) = () => (false);
 			return obj;
 		}
 		Alone_base(){
 			const obj = new this.$.$mol_check_box();
-			(obj.checked) = (next) => ((this?.base_checked(next)));
+			(obj.checked) = (next) => ((this.base_checked(next)));
 			return obj;
 		}
 		Alone_checked(){
 			const obj = new this.$.$mol_check_box();
-			(obj.checked) = (next) => ((this?.checked_checked(next)));
+			(obj.checked) = (next) => ((this.checked_checked(next)));
 			return obj;
 		}
 		Alone_disabled(){
@@ -54,12 +54,12 @@
 		Demo_items(){
 			const obj = new this.$.$mol_list();
 			(obj.rows) = () => ([
-				(this?.Labeled_base()), 
-				(this?.Labeled_checked()), 
-				(this?.Labeled_disabled()), 
-				(this?.Alone_base()), 
-				(this?.Alone_checked()), 
-				(this?.Alone_disabled())
+				(this.Labeled_base()), 
+				(this.Labeled_checked()), 
+				(this.Labeled_disabled()), 
+				(this.Alone_base()), 
+				(this.Alone_checked()), 
+				(this.Alone_disabled())
 			]);
 			return obj;
 		}
@@ -67,7 +67,7 @@
 			return "Checkboxes in various states";
 		}
 		sub(){
-			return [(this?.Demo_items())];
+			return [(this.Demo_items())];
 		}
 		tags(){
 			return ["switch", "toggle"];

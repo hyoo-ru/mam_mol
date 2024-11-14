@@ -42,29 +42,29 @@
 		Content(){
 			const obj = new this.$.$mol_list();
 			(obj.rows) = () => ([
-				(this?.Filler0()), 
-				(this?.Filler1()), 
-				(this?.Filler2()), 
-				(this?.Filler3()), 
-				(this?.Filler4()), 
-				(this?.Filler5()), 
-				(this?.Filler6()), 
-				(this?.Filler7()), 
-				(this?.Filler8()), 
-				(this?.Filler9())
+				(this.Filler0()), 
+				(this.Filler1()), 
+				(this.Filler2()), 
+				(this.Filler3()), 
+				(this.Filler4()), 
+				(this.Filler5()), 
+				(this.Filler6()), 
+				(this.Filler7()), 
+				(this.Filler8()), 
+				(this.Filler9())
 			]);
 			return obj;
 		}
 		Scroll(){
 			const obj = new this.$.$mol_scroll();
-			(obj.sub) = () => ([(this?.Content())]);
+			(obj.sub) = () => ([(this.Content())]);
 			return obj;
 		}
 		title(){
 			return "Simple scroll pane";
 		}
 		sub(){
-			return [(this?.Scroll())];
+			return [(this.Scroll())];
 		}
 		tags(){
 			return ["scroll", "container"];

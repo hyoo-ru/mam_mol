@@ -17,48 +17,48 @@
 		}
 		Enabled(){
 			const obj = new this.$.$mol_switch();
-			(obj.value) = (next) => ((this?.color(next)));
+			(obj.value) = (next) => ((this.color(next)));
 			(obj.options) = () => ({
-				"red": (this?.option_red()), 
-				"green": (this?.option_green()), 
-				"blue": (this?.option_blue()), 
-				"infernal": (this?.option_infernal())
+				"red": (this.option_red()), 
+				"green": (this.option_green()), 
+				"blue": (this.option_blue()), 
+				"infernal": (this.option_infernal())
 			});
 			return obj;
 		}
 		Enabled_labeler(){
 			const obj = new this.$.$mol_labeler();
 			(obj.title) = () => ("Read/Write");
-			(obj.Content) = () => ((this?.Enabled()));
+			(obj.Content) = () => ((this.Enabled()));
 			return obj;
 		}
 		Disabled(){
 			const obj = new this.$.$mol_switch();
-			(obj.value) = (next) => ((this?.color(next)));
+			(obj.value) = (next) => ((this.color(next)));
 			(obj.enabled) = () => (false);
 			(obj.options) = () => ({
-				"red": (this?.option_red()), 
-				"green": (this?.option_green()), 
-				"blue": (this?.option_blue())
+				"red": (this.option_red()), 
+				"green": (this.option_green()), 
+				"blue": (this.option_blue())
 			});
 			return obj;
 		}
 		Disabled_labeler(){
 			const obj = new this.$.$mol_labeler();
 			(obj.title) = () => ("Read only");
-			(obj.Content) = () => ((this?.Disabled()));
+			(obj.Content) = () => ((this.Disabled()));
 			return obj;
 		}
 		Demo_items(){
 			const obj = new this.$.$mol_list();
-			(obj.sub) = () => ([(this?.Enabled_labeler()), (this?.Disabled_labeler())]);
+			(obj.sub) = () => ([(this.Enabled_labeler()), (this.Disabled_labeler())]);
 			return obj;
 		}
 		title(){
 			return "Color switchers in various state";
 		}
 		sub(){
-			return [(this?.Demo_items())];
+			return [(this.Demo_items())];
 		}
 		tags(){
 			return [

@@ -4,7 +4,7 @@
 		}
 		Speed(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this?.speed())]);
+			(obj.sub) = () => ([(this.speed())]);
 			return obj;
 		}
 		start(next){
@@ -14,7 +14,7 @@
 		Start(){
 			const obj = new this.$.$mol_button_major();
 			(obj.title) = () => ("@ Start");
-			(obj.click) = (next) => ((this?.start(next)));
+			(obj.click) = (next) => ((this.start(next)));
 			return obj;
 		}
 		stop(next){
@@ -24,7 +24,7 @@
 		Stop(){
 			const obj = new this.$.$mol_button_major();
 			(obj.title) = () => ("@ Stop");
-			(obj.click) = (next) => ((this?.stop(next)));
+			(obj.click) = (next) => ((this.stop(next)));
 			return obj;
 		}
 		labels(){
@@ -32,7 +32,7 @@
 		}
 		Labels(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ((this?.labels()));
+			(obj.sub) = () => ((this.labels()));
 			return obj;
 		}
 		label_color(id){
@@ -46,15 +46,15 @@
 		}
 		sub(){
 			return [
-				(this?.Speed()), 
-				(this?.Start()), 
-				(this?.Stop()), 
-				(this?.Labels())
+				(this.Speed()), 
+				(this.Start()), 
+				(this.Stop()), 
+				(this.Labels())
 			];
 		}
 		Label(id){
 			const obj = new this.$.$mol_view();
-			(obj.style) = () => ({"color": (this?.label_color(id)), "transform": (this?.label_transform(id))});
+			(obj.style) = () => ({"color": (this.label_color(id)), "transform": (this.label_transform(id))});
 			(obj.sub) = () => (["Dope"]);
 			return obj;
 		}

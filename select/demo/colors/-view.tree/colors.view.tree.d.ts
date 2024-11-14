@@ -1,46 +1,46 @@
 declare namespace $ {
 
-	type $mol_select_colors_color_preview__color__E9PSJYPY = $mol_type_enforce<
+	type $mol_select_colors_color_preview__color_mol_select_demo_colors_1 = $mol_type_enforce<
 		ReturnType< $mol_select_demo_colors['option_color'] >
 		,
 		ReturnType< $mol_select_colors_color_preview['color'] >
 	>
-	type $mol_dimmer__haystack__F5XOW6X8 = $mol_type_enforce<
+	type $mol_dimmer__haystack_mol_select_demo_colors_2 = $mol_type_enforce<
 		ReturnType< $mol_select_demo_colors['color_name'] >
 		,
 		ReturnType< $mol_dimmer['haystack'] >
 	>
-	type $mol_dimmer__needle__0H7AR8FX = $mol_type_enforce<
+	type $mol_dimmer__needle_mol_select_demo_colors_3 = $mol_type_enforce<
 		ReturnType< $mol_select_demo_colors['color_filter'] >
 		,
 		ReturnType< $mol_dimmer['needle'] >
 	>
-	type $mol_view__sub__QN2LGX1Y = $mol_type_enforce<
+	type $mol_view__sub_mol_select_demo_colors_4 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_view__minimal_height__7FUBMD6U = $mol_type_enforce<
+	type $mol_view__minimal_height_mol_select_demo_colors_5 = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_view['minimal_height'] >
 	>
-	type $mol_select__value__P79A7KQA = $mol_type_enforce<
+	type $mol_select__value_mol_select_demo_colors_6 = $mol_type_enforce<
 		ReturnType< $mol_select_demo_colors['color'] >
 		,
 		ReturnType< $mol_select['value'] >
 	>
-	type $mol_select__dictionary__HK73WAU5 = $mol_type_enforce<
+	type $mol_select__dictionary_mol_select_demo_colors_7 = $mol_type_enforce<
 		ReturnType< $mol_select_demo_colors['colors'] >
 		,
 		ReturnType< $mol_select['dictionary'] >
 	>
-	type $mol_select__option_label__XEDZE46L = $mol_type_enforce<
+	type $mol_select__option_label_mol_select_demo_colors_8 = $mol_type_enforce<
 		ReturnType< $mol_select_demo_colors['color_name'] >
 		,
 		ReturnType< $mol_select['option_label'] >
 	>
-	type $mol_select__option_content__IBPLQERG = $mol_type_enforce<
+	type $mol_select__option_content_mol_select_demo_colors_9 = $mol_type_enforce<
 		ReturnType< $mol_select_demo_colors['option_content'] >
 		,
 		ReturnType< $mol_select['option_content'] >

@@ -5,14 +5,14 @@
 		}
 		Calendar(){
 			const obj = new this.$.$mol_calendar();
-			(obj.month_moment) = () => ((this?.today()));
+			(obj.month_moment) = () => ((this.today()));
 			return obj;
 		}
 		title(){
 			return "Days of curret month";
 		}
 		sub(){
-			return [(this?.Calendar())];
+			return [(this.Calendar())];
 		}
 		tags(){
 			return ["month"];
