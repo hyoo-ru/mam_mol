@@ -21,8 +21,7 @@ $mol_drag_demo $mol_example_large
 		Sub <= Task_drop* $mol_drop
 			adopt?transfer <=> transfer_adopt?transfer null
 			receive?obj <=> receive_before*?obj null
-			Sub <= Task_link* $mol_link
-				uri <= task_uri* \
+			Sub <= Task_content* $mol_text
 				sub / <= task_title* \
 	tags /
 		\drag
