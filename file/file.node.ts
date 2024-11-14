@@ -51,14 +51,10 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		static watcher2(base: string) {
-			const watcher = $node.fs.watch( base, (type, name) => {
+		static watcher(path: string) {
+			const watcher = $node.fs.watch( path, (type, name) => {
 				if (! name) return
-				if (/([\/\\]\.|___$)/.test( name )) return
-
-				const path = $node.path.join( base, name )
-
-				this.changed_add(type, path)
+				this.changed_add(type, $node.path.join( path, name ))
 			})
 
 			watcher.on('error', e => this.$.$mol_fail_log(e) )
@@ -68,40 +64,33 @@ namespace $ {
 					watcher.close()
 				}
 			}
-		}
 
-		@ $mol_mem_key
-		static watcher(path: string) {
-			return this.watcher2(path)
+			// const watcher = $node.chokidar.watch( path , {
+			// 	persistent : true ,
+			// 	ignored: path => /([\/\\]\.|___$)/.test( path ),
+			// 	depth :  0 ,
+			// 	ignoreInitial : true ,
+			// 	awaitWriteFinish: {
+			// 		stabilityThreshold: 100,
+			// 	},
+			// } )
 
-			const watcher = $node.chokidar.watch( path , {
-				persistent : true ,
-				ignored: path => /([\/\\]\.|___$)/.test( path ),
-				depth :  0 ,
-				ignoreInitial : true ,
-				awaitWriteFinish: {
-					stabilityThreshold: 100,
-				},
-			} )
-
-			watcher
-				.on( 'all' , (type: 'add' | 'change' | 'unlink' | 'addDir' | 'unlinkDir', path) => {
-					const normalized = type === 'unlink' || type === 'unlinkDir' ? 'rename' : 'change'
-					this.changed_add(normalized, path)
-				} )
-				.on( 'error' , e => this.$.$mol_fail_log(e) )
+			// watcher
+			// 	.on( 'all' , (type: 'add' | 'change' | 'unlink' | 'addDir' | 'unlinkDir', path) => {
+			// 		const normalized = type === 'unlink' || type === 'unlinkDir' ? 'rename' : 'change'
+			// 		this.changed_add(normalized, path)
+			// 	} )
+			// 	.on( 'error' , e => this.$.$mol_fail_log(e) )
 			
-			return {
-				destructor() {
-					watcher.close()
-				}
-			}
+			// return {
+			// 	destructor() {
+			// 		watcher.close()
+			// 	}
+			// }
 
 		}
 
 		override watcher() { return this.$.$mol_file_node.watcher(this.path()) }
-
-		protected fs() { return $mol_wire_sync($node.fs.promises) }
 
 		@ $mol_action
 		protected override info( path: string ) {

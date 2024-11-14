@@ -77,7 +77,7 @@ namespace $ {
 			let content = ''
 			for( const step of tree.select( 'build' , null ).kids ) {
 
-				const res = this.$.$mol_file.watch_off(() => this.$.$mol_run.spawn( { command: step.text(), dir } ), dir )
+				const res = this.$.$mol_file.unwatched(() => this.$.$mol_run.spawn( { command: step.text(), dir } ), dir )
 					.stdout.toString().trim()
 				if( step.type ) content += `let ${ step.type } = ${ JSON.stringify( res ) }`
 
@@ -988,7 +988,7 @@ namespace $ {
 			if( bundle === 'node' ) {
 				const dir = this.root().path()
 
-				this.$.$mol_file.watch_off(() =>
+				this.$.$mol_file.unwatched(() =>
 					this.$.$mol_run.spawn( {
 						command: ['node', '--enable-source-maps', '--trace-uncaught', target.relate( this.root() ) ], 
 						dir

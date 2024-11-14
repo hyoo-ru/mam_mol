@@ -37,13 +37,11 @@ namespace $ {
 			const root = (this.constructor as typeof $mol_file_base).watch_root
 			if ( path !== root && path !== parent.path() ) {
 				/*
-				Если родитель удалился, надо ресетнуть все дочерние на любой глубине
-				Родитель может удалиться, потом создасться, а дочерняя папка только удалиться.
+				Если папка удалилась, надо ресетнуть все объекты в ней на любой глубине.
+				rm -rf с последующим git pull: parent папка может удалиться, потом создасться, а текущая папка только удалиться.
 				Поэтому parent.exists() не запустит перевычисления
 
 				parent.version() меняется не только при удалении, будет ложное срабатывание
-				события вотчера addDir сбрасывает только parent.sub(), а parent.version() может остаться та же
-				тогда дочерний не перзапустится
 				Если addDir будет сбрасывать parent.version(), то будет лишний раз перевычислен parent, хоть и он сам не поменялся
 				*/
 
@@ -70,24 +68,26 @@ namespace $ {
 		protected static frame = null as null | $mol_after_timeout
 
 		protected static changed_add(type: 'change' | 'rename', path: string) {
+			if (/([\/\\]\.|___$)/.test( path )) return
+
 			const file = this.relative( path.at(-1) === '/' ? path.slice(0, -1) : path )
 			console.log(type, path)
 
-			// add: добавился файл - у parent надо обновить список sub, если он был заюзан
-			// change, unlink: обновился или удалился файл - ресетим
-			// addDir, добавилась папка, у parent обновляем список директорий в sub
+			// add (change): добавился файл - у parent надо обновить список sub, если он был заюзан
+			// change, unlink (rename): обновился или удалился файл - ресетим
+			// addDir (change), добавилась папка, у parent обновляем список директорий в sub
 			// дочерние ресетим
-			// версию папки не меняем, т.к. иначе выполнится логика, связанная
 
-			// unlinkDir, удалилась папка, ресетим ее
+			// unlinkDir (rename), удалилась папка, ресетим ее
 			// stat у всех дочерних обновится сам, т.к. связан с parent.version()
 			this.changed.add(file)
 
 			if (! this.watching) return
 
+			// throttle, пока события поступают файл может записываться, нельзя сбрасывать, аналог awaitWriteFinish из chokidar
+			// интервалы между change-сообщениями модифицируемого файла должны быть меньше watch_debounce
 			this.frame?.destructor()
 			this.frame = new this.$.$mol_after_timeout(this.watch_debounce(), () => {
-				console.log('changed_add scheduled: ', this.watching ? 'yes' : 'no')
 				if (! this.watching) return
 				this.watching = false
 				$mol_wire_async(this).flush()
@@ -107,7 +107,7 @@ namespace $ {
 				const parent = file.parent()
 
 				try {
-					if ( $mol_wire_probe(() => parent.sub())) parent.sub(null)
+					if ( $mol_wire_probe(() => parent.sub()) ) parent.sub(null)
 					file.reset()
 				} catch (error) {
 					if ($mol_fail_catch(error)) $mol_fail_log(error)
@@ -115,11 +115,10 @@ namespace $ {
 			}
 
 			this.changed.clear()
-
-			// Выставляем обратно в true, что б watch мог зайти сюда
 			this.watching = true
-			this.watch_wd?.destructor()
-			this.watch_wd = null
+
+			// this.watch_wd?.destructor()
+			// this.watch_wd = null
 	}
 
 		protected static watching = true
@@ -127,8 +126,12 @@ namespace $ {
 		protected static lock = new $mol_lock
 
 		@ $mol_action
-		protected static watching_off(path: string) {
+		protected static watch_off(path: string) {
 			this.watching = false
+			// run должен ожидать конца flush
+			this.flush()
+			this.watching = false
+
 			/*
 			watch запаздывает и событие может прилететь через 3 сек после окончания сайд эффекта
 			поэтому добавляем папку, которую меняет side_effect
@@ -141,20 +144,20 @@ namespace $ {
 			с точки зрения реактивной системы hyoo/board еще не существует.
 			*/
 			this.changed.add(this.absolute(path))
-			const stack = new Error().stack
-			this.watch_wd = new $mol_after_timeout(10000, () => {
-				console.error('Lock timeout')
-				console.error(stack)
-			})
+			// const stack = new Error().stack
+			// this.watch_wd = new $mol_after_timeout(10000, () => {
+			// 	console.error('Lock timeout')
+			// 	console.error(stack)
+			// })
 			
 		}
 	
-		protected static watch_wd = null as null | $mol_after_timeout
+		// protected static watch_wd = null as null | $mol_after_timeout
 
-		static watch_off<Result>(side_effect: () => Result, affected_dir: string) {
-			// ждем, пока выполнится предыдущий watch_off
+		static unwatched<Result>(side_effect: () => Result, affected_dir: string) {
+			// ждем, пока выполнится предыдущий unwatched
 			const unlock = this.lock.grab()
-			this.watching_off(affected_dir)
+			this.watch_off(affected_dir)
 
 			try {
 				const result = side_effect()

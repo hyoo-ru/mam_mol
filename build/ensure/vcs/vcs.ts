@@ -45,7 +45,7 @@ namespace $ {
 			if (this.update_disabled) return false
 
 			try {
-				return this.$.$mol_file.watch_off(() => this.update(dir), dir)
+				return this.$.$mol_file.unwatched(() => this.update(dir), dir)
 			} catch (e) {
 				if (e instanceof $mol_run_error && e.cause.timeout_kill) {
 
@@ -76,7 +76,7 @@ namespace $ {
 				if (! this.inited(path)) {
 					if (! this.repo(path) ) return false
 
-					this.$.$mol_file.watch_off(() => this.init_existing(path), path)
+					this.$.$mol_file.unwatched(() => this.init_existing(path), path)
 					return true
 				}
 
@@ -90,7 +90,7 @@ namespace $ {
 
 			if (this.repo(path)) {
 
-				this.$.$mol_file.watch_off(() => this.init(path), path)
+				this.$.$mol_file.unwatched(() => this.init(path), path)
 
 				// mod.reset()
 				// for ( const sub of mod.sub() ) sub.reset()
