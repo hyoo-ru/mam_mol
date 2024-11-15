@@ -50,47 +50,57 @@ namespace $ {
 			return this.absolute<This>( $node.path.resolve( this.base, path ).replace( /\\/g , '/' ) )
 		}
 
-		@ $mol_mem_key
-		static watcher(path: string) {
-			const watcher = $node.fs.watch( path, (type, name) => {
+		@ $mol_mem
+		override watcher(reset?: null) {
+			const path = this.path()
+			const root = this.root()
+			// Если папки/файла нет, watch упадет с ошибкой
+			// exists обратится к parent.version и parent.watcher
+			// Поэтому у root-папки и выше не надо вызывать exists, иначе поднимется выше base до корня диска
+			// exists вызывать надо, что б пересоздавать вотчер при появлении папки или файла
+			if (! root && ! this.exists() ) return super.watcher()
+
+			let watcher
+
+			try {
+				// Между exists и watch файл может удалиться, в любом случае надо обрабатывать ENOENT
+				watcher = $node.fs.watch( path )
+			} catch (error: any) {
+				if ( ! (error instanceof Error) ) error = new Error('Unknown watch error',  {cause: error})
+				error.message += '\n' + path
+
+				if ( root || error.code !== 'ENOENT' ) {
+					this.$.$mol_fail_log(error)
+				}
+
+				// Если файла нет - вотчер не создается, создастся потом, когда exists поменяется на true.
+				// Если создание упало с другой ошибкой - не ломаем работу mol_file, деградируем до не реактивной fs.
+
+				return super.watcher()
+			}
+
+			watcher.on('change', (type: 'change' | 'rename', name) => {
 				if (! name) return
-				this.changed_add(type, $node.path.join( path, name ))
+				const path = $node.path.join( this.path(), name.toString() )
+				;(this.constructor as typeof $mol_file_base).changed_add(type, path)
 			})
 
 			watcher.on('error', e => this.$.$mol_fail_log(e) )
 
+			let destructed = false
+
+			watcher.on('close', () => {
+				// Если в процессе работы вотчер сам закрылся, надо его переоткрыть
+				if (! destructed) setTimeout(() => $mol_wire_async(this).watcher(null), 500)
+			})
+
 			return {
 				destructor() {
+					destructed = true
 					watcher.close()
 				}
 			}
-
-			// const watcher = $node.chokidar.watch( path , {
-			// 	persistent : true ,
-			// 	ignored: path => /([\/\\]\.|___$)/.test( path ),
-			// 	depth :  0 ,
-			// 	ignoreInitial : true ,
-			// 	awaitWriteFinish: {
-			// 		stabilityThreshold: 100,
-			// 	},
-			// } )
-
-			// watcher
-			// 	.on( 'all' , (type: 'add' | 'change' | 'unlink' | 'addDir' | 'unlinkDir', path) => {
-			// 		const normalized = type === 'unlink' || type === 'unlinkDir' ? 'rename' : 'change'
-			// 		this.changed_add(normalized, path)
-			// 	} )
-			// 	.on( 'error' , e => this.$.$mol_fail_log(e) )
-			
-			// return {
-			// 	destructor() {
-			// 		watcher.close()
-			// 	}
-			// }
-
 		}
-
-		override watcher() { return this.$.$mol_file_node.watcher(this.path()) }
 
 		@ $mol_action
 		protected override info( path: string ) {

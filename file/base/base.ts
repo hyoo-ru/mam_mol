@@ -26,6 +26,14 @@ namespace $ {
 		@ $mol_action
 		exists_cut() { return this.exists() }
 
+		protected root() {
+			const path = this.path()
+			const base = (this.constructor as typeof $mol_file_base).base
+
+			// Если путь выше или равен base - считаем это корнем
+			return base.startsWith(path)
+		}
+
 		@ $mol_mem
 		protected stat(next? : $mol_file_stat | null, virt?: 'virt') {
 
@@ -34,29 +42,20 @@ namespace $ {
 
 			// Отслеживать проверку наличия родительской папки не стоит до корня диска
 			// Лучше ограничить mam-ом
-			const root = (this.constructor as typeof $mol_file_base).watch_root
-			if ( path !== root && path !== parent.path() ) {
+			if ( ! this.root() ) {
 				/*
-				Если папка удалилась, надо ресетнуть все объекты в ней на любой глубине.
-				rm -rf с последующим git pull: parent папка может удалиться, потом создасться, а текущая папка только удалиться.
-				Поэтому parent.exists() не запустит перевычисления
+				Если parent папка удалилась, надо ресетнуть все объекты в ней на любой глубине.
+				Например, rm -rf с последующим git pull: parent папка может удалиться, потом создасться,
+				а текущая папка успеет только удалиться до момента выполнения stat.
+				Поэтому parent.exists() не запустит перевычисления, нужна именно parent.version()
 
-				parent.version() меняется не только при удалении, будет ложное срабатывание
-				Если addDir будет сбрасывать parent.version(), то будет лишний раз перевычислен parent, хоть и он сам не поменялся
+				Однако, parent.version() меняется не только при удалении, будет ложное срабатывание
+				С этим придется мириться, красивого решения пока нет.
 				*/
 
 				parent.version()
-
-				// родительской папки может не быть, например, из foo/bar/baz на диске есть только foo
-				// baz.stat запустит bar.watcher и node.fs.watch упадет с ошибкой, т.к. папки bar нет
-				if (parent.exists()) parent.watcher()
-			} else {
-				// watch_root - это корень mam или диска, считаем, что он всегда существует
-				// если тут делать exists проверку, как строчками выше,
-				// то будет выполнен stat во всех верхних папках до корня диска,
-				// что делать не стоит из-за прав доступа, к примеру
-				parent.watcher()
 			}
+			parent.watcher()
 
 			if( virt ) return next ?? null
 			
@@ -241,9 +240,6 @@ namespace $ {
 			// Если файл записали, потом отключили вотчер, кто-то из вне его поменял, потом включили вотчер, снова записали тот же буфер,
 			// то буфер не запишется на диск, т.к. кэш не консистентен с диском.
 			
-			// Также это не поможет, т.к. всякие генерации view.tree используют не идемпотентные id-ки
-			// При первом старте, даже если есть уже сбилженый view.tree.d.ts, он будет перезаписан.
-			// watcher триггернется и снова запишет с новыми id и зациклится
 			if (! changed && this.exists()) return prev
 			
 			this.parent().exists( true )
@@ -287,7 +283,7 @@ namespace $ {
 			return null
 		}
 
-		static watch_root = ''
+		// static watch_root = ''
 
 		// static watcher_warned = false
 		watcher() {
@@ -314,12 +310,10 @@ namespace $ {
 			if( next ) {
 				this.parent().exists( true )
 				this.ensure()
-				this.reset()
-				return next
+			} else {
+				this.drop()
 			}
 
-			this.drop()
-			// удалили директорию, все дочерние потеряли актуальность
 			this.reset()
 
 			return next
