@@ -6,5 +6,5 @@
 	"sourcesContent": [
 		"$mol_view_tree2_to_js_test_ex_left_with_separate_default_and_comment_bar $mol_object\n\trows /\n$mol_view_tree2_to_js_test_ex_left_with_separate_default_and_comment_foo $mol_object\n\tcontent 123\n\tObj $mol_view_tree2_to_js_test_ex_left_with_separate_default_and_comment_bar\n\t\trows / <= content - 321\n"
 	],
-	"mappings": "AAAA,AAAA,+JAAyE,wBAAzE;AAAA,AACC;AAAA,AAAA,UAAK,EAAL;AAAA;AADD,CAAA;AAEA,+JAAyE,wBAAzE;AAAA,AACC;AAAA,AAAA,UAAQ,GAAR;AAAA;AACA;AAAA,AAAI,oGAAJ;AACC,uBAAK,CAAE,KAAG,WAAH,CAAF,CAAL,CADD;AAAA,UAAI,GAAJ;AAAA;AAFD,CAFA;AAIC,YAFD,CAEC,6FAJD;"
+	"mappings": "AAAA,AAAA,+JAAyE,wBAAzE;AAAA,AACC;AAAA,AAAA,UAAK,EAAL;AAAA;AADD,CAAA;AAEA,+JAAyE,wBAAzE;AAAA,AACC;AAAA,AAAA,UAAQ,GAAR;AAAA;AACA;AAAA,AAAI,oGAAJ;AACC,uBAAK,CAAE,KAAG,UAAH,CAAF,CAAL,CADD;AAAA,UAAI,GAAJ;AAAA;AAFD,CAFA;AAIC,YAFD,CAEC,6FAJD;"
 }

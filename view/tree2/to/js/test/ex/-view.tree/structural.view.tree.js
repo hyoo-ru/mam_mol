@@ -6,7 +6,7 @@
 			return {
 				"alpha": 1, 
 				"beta": {}, 
-				"xxx": (this?.lol())
+				"xxx": (this.lol())
 			};
 		}
 	};

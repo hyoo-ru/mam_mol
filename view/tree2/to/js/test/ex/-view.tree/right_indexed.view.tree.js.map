@@ -6,5 +6,5 @@
 	"sourcesContent": [
 		"$mol_view_tree2_to_js_test_ex_right_indexed_foo $mol_object\n\ta? *\n\t\tsome 123\n$mol_view_tree2_to_js_test_ex_right_indexed_bar $mol_object\n\tCls* $mol_view_tree2_to_js_test_ex_right_indexed_foo\n\t\ta => b*\n"
 	],
-	"mappings": "AAAA,AAAA,6GAAgD,wBAAhD;AAAA,AACC;AAAA,AAAA;AAAA,UAAG,CACF,QAAK,GADH,CAAH;AAAA;AADD,CAAA;AACC,YADD,CACC,kEADD;AAGA,6GAAgD,wBAAhD;AAAA,AAEO;AAAA,AAAA,eADN,SACC,KAAK;AAAA;AADN;AAAA,AAAK,2EAAL;AAAA,UAAK,GAAL;AAAA;AADD,CAHA;AAIC,gBADD,CACC,oEAJD;"
+	"mappings": "AAAA,AAAA,6GAAgD,wBAAhD;AAAA,AACC;AAAA,AAAA;AAAA,UAAG,CACF,QAAK,GADH,CAAH;AAAA;AADD,CAAA;AACC,YADD,CACC,kEADD;AAGA,6GAAgD,wBAAhD;AAAA,AAEO;AAAA,AAAA,eADN,QACC,IAAK;AAAA;AADN;AAAA,AAAK,2EAAL;AAAA,UAAK,GAAL;AAAA;AADD,CAHA;AAIC,gBADD,CACC,oEAJD;"
 }

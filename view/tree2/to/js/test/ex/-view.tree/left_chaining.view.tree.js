@@ -5,13 +5,13 @@
 		}
 		c(next){
 			if(next !== undefined) return next;
-			return (this?.d());
+			return (this.d());
 		}
 		b(){
-			return (this?.c());
+			return (this.c());
 		}
 		a(){
-			return (this?.b());
+			return (this.b());
 		}
 	};
 	($mol_mem(($.$mol_view_tree2_to_js_test_ex_left_chaining_foo.prototype), "d"));

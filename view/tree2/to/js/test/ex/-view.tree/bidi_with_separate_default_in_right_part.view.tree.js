@@ -4,7 +4,7 @@
 			return false;
 		}
 		a(next){
-			return (this?.b(next));
+			return (this.b(next));
 		}
 	};
 	($mol_mem(($.$mol_view_tree2_to_js_test_ex_bidi_with_separate_default_in_right_part_foo.prototype), "b"));

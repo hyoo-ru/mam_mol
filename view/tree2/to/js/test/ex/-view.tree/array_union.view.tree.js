@@ -5,7 +5,7 @@
 		bar(){
 			return [
 				"a", 
-				(this?.foo()), 
+				(this.foo()), 
 				"b"
 			];
 		}

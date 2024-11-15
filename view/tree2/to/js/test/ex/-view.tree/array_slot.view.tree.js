@@ -6,7 +6,7 @@
 			return 1;
 		}
 		sub_ins(){
-			return [(this?.sub_ins1())];
+			return [(this.sub_ins1())];
 		}
 		ins2(){
 			return "ins2";
@@ -15,9 +15,9 @@
 			return [
 				2, 
 				3, 
-				(this?.ins1()), 
+				(this.ins1()), 
 				...(this.sub_ins()), 
-				(this?.ins2())
+				(this.ins2())
 			];
 		}
 		foot2(){
@@ -29,7 +29,7 @@
 				true, 
 				"foot1", 
 				...(this.insert()), 
-				(this?.foot2())
+				(this.foot2())
 			];
 		}
 	};
