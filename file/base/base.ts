@@ -30,8 +30,8 @@ namespace $ {
 			const path = this.path()
 			const base = (this.constructor as typeof $mol_file_base).base
 
-			// Если путь выше или равен base - считаем это корнем
-			return base.startsWith(path)
+			// Если путь выше или равен base или если parent такойже как и this - считаем это корнем
+			return base.startsWith(path) || this == this.parent()
 		}
 
 		@ $mol_mem
