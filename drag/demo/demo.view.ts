@@ -39,7 +39,7 @@ namespace $.$$ {
 
 		transfer_adopt( transfer : DataTransfer ) {
 
-			const uri = transfer.getData( "text/uri-list" ) == ""?transfer.getData( "text/plain" ):transfer.getData( "text/uri-list" )
+			const uri = transfer.getData( "text/uri-list" ) || transfer.getData( "text/plain" )
 			if( !uri ) return
 
 			return this.task_list().find( task => this.task_uri( task ) === uri )
