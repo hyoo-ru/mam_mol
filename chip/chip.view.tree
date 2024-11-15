@@ -1,0 +1,3 @@
+$mol_chip $mol_view
+	sub /
+		<= title
