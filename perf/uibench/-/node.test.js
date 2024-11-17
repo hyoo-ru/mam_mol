@@ -2514,6 +2514,8 @@ var $;
             const val = fields[key];
             if (val === undefined)
                 continue;
+            if (val === el[key])
+                continue;
             el[key] = val;
         }
     }
