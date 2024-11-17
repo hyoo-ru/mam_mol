@@ -30,6 +30,9 @@
 		arg(id){
 			return {};
 		}
+		menu_link_arg(id){
+			return (this.arg(id));
+		}
 		spread_title(id){
 			return "";
 		}
@@ -44,7 +47,7 @@
 		}
 		Menu_link(id){
 			const obj = new this.$.$mol_link();
-			(obj.arg) = () => ((this.arg(id)));
+			(obj.arg) = () => ((this.menu_link_arg(id)));
 			(obj.sub) = () => ((this.menu_link_content(id)));
 			return obj;
 		}

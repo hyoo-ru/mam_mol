@@ -8711,7 +8711,7 @@ declare namespace $ {
 		ReturnType< $mol_dimmer['haystack'] >
 	>
 	type $mol_link__arg_mol_book2_catalog_4 = $mol_type_enforce<
-		ReturnType< $mol_book2_catalog['arg'] >
+		ReturnType< $mol_book2_catalog['menu_link_arg'] >
 		,
 		ReturnType< $mol_link['arg'] >
 	>
@@ -8785,6 +8785,7 @@ declare namespace $ {
 		Menu_filter( ): $mol_search
 		Menu_links_empty( ): $mol_view
 		arg( id: any): Record<string, any>
+		menu_link_arg( id: any): ReturnType< $mol_book2_catalog['arg'] >
 		spread_title( id: any): string
 		Menu_link_title( id: any): $mol_dimmer
 		menu_link_content( id: any): readonly(any)[]
