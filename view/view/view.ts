@@ -14,8 +14,6 @@ namespace $ {
 		return suffix
 	}
 	
-	const error_showed = new WeakMap< Error, $mol_view >()
-
 	/**
 	 * The base class for all visual components. It provides the infrastructure for reactive lazy rendering, handling exceptions.
 	 * @see https://mol.hyoo.ru/#!section=docs/=vv2nig_s5zr0f
@@ -235,14 +233,11 @@ namespace $ {
 				$mol_dom_render_attributes( node , { mol_view_error } )
 				
 				if( $mol_promise_like( error ) ) break render
-				if( ( error_showed.get( error ) ?? this ) !== this ) break render
 				
 				try {
 					const message = error.message || error
 					;( node as HTMLElement ).innerText = message.replace( /^|$/mg, '\xA0\xA0' )
 				} catch {}
-				
-				error_showed.set( error, this )
 				
 			}
 			
