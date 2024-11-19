@@ -83,7 +83,8 @@ namespace $ {
 
 			if (! this.watching) return
 
-			// throttle, пока события поступают файл может записываться, нельзя сбрасывать, аналог awaitWriteFinish из chokidar
+			// throttle, пока события поступают не сбрасываем.
+			// аналог awaitWriteFinish из chokidar
 			// интервалы между change-сообщениями модифицируемого файла должны быть меньше watch_debounce
 			this.frame?.destructor()
 			this.frame = new this.$.$mol_after_timeout(this.watch_debounce(), () => {
@@ -93,6 +94,10 @@ namespace $ {
 			} )
 		}
 
+		/**
+		 * Должно быть больше, чем время между событиями от вотчера при записи внешним процессом.
+		 * Иначе запуск ресетов паралельно с изменением может привести к неконсистентности.
+		 */
 		static watch_debounce() { return 500 }
 
 		@ $mol_action
