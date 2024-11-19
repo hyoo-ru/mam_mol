@@ -88,10 +88,14 @@ namespace $ {
 
 		@ $mol_mem_key
 		generate( url : string ) {
-			
-			$mol_wire_solid()
-	
-			const matched = url.match( /^(.*)\/-\/(\w+(?:.\w+)+)$/ )
+			// Если использовать динамически подгружаемые через $mol_script модули
+			// То урл тут может быть вида /gd/demo/app/-/gd/avatar.npm/-/app.js
+			// В path должна попасть часть до первого /-/
+			// Динамически подгрудаться могут обособленные, редко используемые скрипты.
+			// Например шахматы, встроенные в основное приложение.
+			// У которых двиг stockfish.js динамически загружается в воркер.
+			// Логично лениво грузить скрипты только при открытии шахмат.
+			const matched = url.match( /^(.*?)\/-\/((?:(?:\w+(?:.\w+)+)(?:\/-\/)?)+)$/ )
 			if( !matched ) return [] as $mol_file[]
 			
 			const build = this.build()
@@ -108,6 +112,9 @@ namespace $ {
 			}
 			
 			const path = mod.path()
+
+			this.path_add(path, bundle)
+
 			return build.bundle( [ path , bundle ] )
 		}
 
@@ -127,6 +134,7 @@ namespace $ {
 			const path = dir.path()
 
 			// ensure загружает сорцы, делает git pull, это не стоит делать на build-папках
+			// Поэтому регулярка выше отсеивает build-папки
 			this.build().modEnsure( path )
 
 			const file = root.resolve( `${req.path}index.html` )
@@ -211,10 +219,13 @@ namespace $ {
 		
 		@ $mol_mem
 		socket() {
-			
+			const build = this.build()
+			const root = build.root()
+
 			return super.socket().on( 'connection' , ( line , req )=> {
 				
-				const path = req.url!.replace( /\/-.*/ , '' ).substring( 1 )
+				const path_relative = req.url!.replace( /\/-.*/ , '' ).substring( 1 )
+				const path = root.resolve( path_relative ).path()
 
 				this.$.$mol_log3_rise({
 					place: this ,
@@ -223,9 +234,11 @@ namespace $ {
 				})
 				
 				this.lines( new Map( [ ... this.lines(), [ line, path ] ] ) )
-				
+
+				this.path_add(path, '')
+
 				line.on( 'close' , ()=> {
-					
+					this.path_doubt(path)
 					const lines = new Map( this.lines() )
 					lines.delete( line )
 					this.lines( lines )
@@ -245,21 +258,83 @@ namespace $ {
 			for( const [ line, path ] of this.lines() ) {
 				this.notify([ line, path ])
 			}
-			
+
+			this.bundles_keep()
+
 			return socket
+		}
+
+		@ $mol_mem
+		protected bundles_count(reset?: null): number {
+			return 1 + ( $mol_wire_probe(() => this.bundles_count()) ?? 0 )
+		}
+
+		/**
+		 * Держать в памяти собранные бандлы плохо, т.к. gc их может долго не утилизировать и node сожрет память и упадет.
+		 * Логичнее удалять отложенно, после того как reload-сокет отписался от пути и повторно не подписался.
+		 */
+		@ $mol_mem
+		protected bundles_keep() {
+			const build = this.build()
+			this.bundles_count()
+			for (const [path, bundles] of Object.entries(this.path_bundles)) {
+				const sources = build.sourcesAll([ path , [ 'node' ] ])
+				for (const source of sources ) source.version()
+				for (const bundle of bundles) {
+					const files = build.bundle([ path, bundle ])
+					for ( const file of files ) {
+						file.version()
+					}
+				}
+			}
+		}
+
+		protected path_bundles = {} as Record<string, Set<string>>
+		protected path_doubted = new Set<string>()
+
+		path_add(path: string, bundle: string) {
+			this.path_doubted.delete(path)
+			if (! this.path_bundles[path]) this.path_bundles[path] = new Set()
+			this.path_bundles[path].add(bundle)
+			this.bundles_count(null)
+		}
+
+		protected path_doubt_timeout = null as null | $mol_after_timeout
+
+		path_doubt(path: string) {
+			this.path_doubted.add(path)
+
+			if ( this.path_doubt_timeout) return
+
+			this.path_doubt_timeout = new this.$.$mol_after_timeout(
+				15000,
+				() => $mol_wire_async(this).path_doubted_remove()
+			)
+		}
+
+		path_doubted_remove() {
+			for (const path of this.path_doubted) {
+				delete this.path_bundles[path]
+			}
+			this.path_doubt_timeout = null
+			this.path_doubted.clear()
+			this.bundles_count(null)
 		}
 
 		@ $mol_mem_key
 		bundle_changed_at( path: string ) {
-			$mol_wire_solid()
+			const build = this.build()
 			try {
 			
-				const build = this.build()
-				const bundle = build.root().resolve( path )
-				const sources = build.sourcesAll([ bundle.path() , [ 'node' ] ])
-				const resources = build.bundleFiles([ bundle.path() , [ 'node' ] ])
-				// watch changes
-				// прописанные в meta.tree ресурсы, должны при изменении триггерить location.reload
+				const sources = build.sourcesAll([ path , [ 'node' ] ])
+
+				/**
+				Бывает надо какой-то внешней программой в watch-режиме компилить js-ки или wasm
+				и класть как артефакт в - (например, игровой движок на unity)
+				При изменении этих файлов, надо перезапускать страницу.
+				Если их класть не в -, а рядом с сорцами, то билдер mol будет пытаться их анализировать и упадет.
+				 */
+				const resources = build.bundleFiles([ path , [ 'node' ] ])
 				
 				for( const src of [...sources, ...resources] ) src.version()
 			} catch (error) {
@@ -271,6 +346,7 @@ namespace $ {
 					})
 				}
 			}
+
 			return new Date()
 		}
 		
