@@ -6,13 +6,12 @@ namespace $.$$ {
 	 */
 	export class $mol_number extends $.$mol_number {
 		
-		value_limited( next? : string | number ) : number {
-			if ( next === undefined ) return this.value()
-			if ( next === '' ) return this.value( Number.NaN )
+		value_limited( val? :  number ) : number {
+			if (Number.isNaN( val )) return this.value(val)
+			if ( val === undefined ) return this.value()
 
 			const min = this.value_min()
 			const max = this.value_max()
-			const val = Number( next )
 
 			if( val < min ) return this.value( min )
 			if( val > max ) return this.value( max )
@@ -29,8 +28,10 @@ namespace $.$$ {
 		}
 
 		value_normalized(next?: string) {
-			const next_num = this.value_limited( next )
+			const next_num = this.value_limited( next === undefined ? next : Number(next) )
+
 			if (Number.isNaN(next_num)) return ''
+
 			const precision_view = this.precision_view()
 
 			if( next_num === 0 ) return '0'
