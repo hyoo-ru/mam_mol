@@ -2423,9 +2423,10 @@ declare namespace $ {
 //# sourceMappingURL=number.view.tree.d.ts.map
 declare namespace $.$$ {
     class $mol_number extends $.$mol_number {
-        value_limited(next?: any): number;
+        value_limited(val?: number): number;
         event_dec(next?: Event): void;
         event_inc(next?: Event): void;
+        value_normalized(next?: string): string;
         value_string(next?: string): string;
         dec_enabled(): boolean;
         inc_enabled(): boolean;

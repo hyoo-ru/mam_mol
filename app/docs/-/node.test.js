@@ -14603,14 +14603,13 @@ var $;
     var $$;
     (function ($$) {
         class $mol_number extends $.$mol_number {
-            value_limited(next) {
-                if (next === undefined)
+            value_limited(val) {
+                if (Number.isNaN(val))
+                    return this.value(val);
+                if (val === undefined)
                     return this.value();
-                if (next === '')
-                    return this.value(Number.NaN);
                 const min = this.value_min();
                 const max = this.value_max();
-                const val = Number(next);
                 if (val < min)
                     return this.value(min);
                 if (val > max)
@@ -14623,20 +14622,28 @@ var $;
             event_inc(next) {
                 this.value_limited((this.value_limited() || 0) + this.precision_change());
             }
-            value_string(next) {
-                const next_num = this.value_limited(next);
-                const precisionView = this.precision_view();
+            value_normalized(next) {
+                const next_num = this.value_limited(next === undefined ? next : Number(next));
+                if (Number.isNaN(next_num))
+                    return '';
+                const precision_view = this.precision_view();
                 if (next_num === 0)
                     return '0';
                 if (!next_num)
                     return '';
-                if (precisionView >= 1) {
-                    return (next_num / precisionView).toFixed();
+                if (precision_view >= 1) {
+                    return (next_num / precision_view).toFixed();
                 }
                 else {
-                    const fixedNumber = Math.log10(1 / precisionView);
-                    return next_num.toFixed(Math.ceil(fixedNumber));
+                    const fixed_number = Math.log10(1 / precision_view);
+                    return next_num.toFixed(Math.ceil(fixed_number));
                 }
+            }
+            value_string(next) {
+                const current = this.value_normalized();
+                if (next !== undefined)
+                    this.value_normalized(next);
+                return next ?? current;
             }
             dec_enabled() {
                 return this.enabled() && (!((this.value() || 0) <= this.value_min()));
@@ -14645,6 +14652,9 @@ var $;
                 return this.enabled() && (!((this.value() || 0) >= this.value_max()));
             }
         }
+        __decorate([
+            $mol_mem
+        ], $mol_number.prototype, "value_string", null);
         __decorate([
             $mol_mem
         ], $mol_number.prototype, "dec_enabled", null);

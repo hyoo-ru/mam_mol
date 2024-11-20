@@ -6,14 +6,12 @@ namespace $.$$ {
 	 */
 	export class $mol_number extends $.$mol_number {
 		
-		value_limited( next? : any ) : number {
-			if ( next === undefined ) return this.value()
-			if ( next === '' ) return this.value( Number.NaN )
+		value_limited( val? :  number ) : number {
+			if (Number.isNaN( val )) return this.value(val)
+			if ( val === undefined ) return this.value()
 
 			const min = this.value_min()
 			const max = this.value_max()
-
-			const val = Number( next )
 
 			if( val < min ) return this.value( min )
 			if( val > max ) return this.value( max )
@@ -28,21 +26,33 @@ namespace $.$$ {
 		override event_inc( next? : Event ) {
 			this.value_limited( ( this.value_limited() || 0 ) + this.precision_change() )
 		}
-		
-		override value_string( next? : string ) {
-			const next_num = this.value_limited( next )
 
-			const precisionView = this.precision_view()
+		value_normalized(next?: string) {
+			const next_num = this.value_limited( next === undefined ? next : Number(next) )
+
+			if (Number.isNaN(next_num)) return ''
+
+			const precision_view = this.precision_view()
 
 			if( next_num === 0 ) return '0'
 			if( !next_num ) return ''
 
-			if( precisionView >= 1 ) {
-				return ( next_num / precisionView ).toFixed()
+			if( precision_view >= 1 ) {
+				return ( next_num / precision_view ).toFixed()
 			} else {
-				const fixedNumber = Math.log10( 1 / precisionView )
-				return next_num.toFixed( Math.ceil( fixedNumber ) )
+				const fixed_number = Math.log10( 1 / precision_view )
+				return next_num.toFixed( Math.ceil( fixed_number ) )
 			}
+		}
+		
+		@ $mol_mem
+		override value_string( next? : string ) {
+			const current = this.value_normalized()
+
+			if ( next !== undefined) this.value_normalized( next )
+
+			return next ?? current
+
 		}
 		
 		@ $mol_mem
