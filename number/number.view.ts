@@ -49,10 +49,7 @@ namespace $.$$ {
 		override value_string( next? : string ) {
 			const current = this.value_normalized()
 
-			if ( next !== undefined) {
-				const normalized = this.value_normalized( next )
-				if (normalized) return normalized
-			}
+			if ( next !== undefined) this.value_normalized( next )
 
 			return next ?? current
 
