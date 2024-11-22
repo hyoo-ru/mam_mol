@@ -72,9 +72,9 @@ declare namespace $ {
 		foot( ): readonly($mol_view)[]
 		Foot( ): $mol_view
 		dom_name( ): string
-		field( ): ({ 
+		attr( ): ({ 
 			'tabIndex': ReturnType< $mol_page['tabindex'] >,
-		})  & ReturnType< $mol_view['field'] >
+		})  & ReturnType< $mol_view['attr'] >
 		sub( ): readonly(any)[]
 	}
 	

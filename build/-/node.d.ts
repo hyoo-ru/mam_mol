@@ -300,6 +300,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_wire_pub_sub extends $mol_wire_pub implements $mol_wire_sub {
+        [x: symbol]: () => any[];
         protected pub_from: number;
         protected cursor: $mol_wire_cursor;
         get temp(): boolean;
@@ -330,6 +331,7 @@ declare namespace $ {
 
 declare namespace $ {
     abstract class $mol_wire_fiber<Host, Args extends readonly unknown[], Result> extends $mol_wire_pub_sub {
+        [x: symbol]: string | (() => any[]);
         readonly task: (this: Host, ...args: Args) => Result;
         readonly host?: Host | undefined;
         static warm: boolean;
@@ -541,18 +543,18 @@ declare namespace $ {
         timeout?: number;
         env?: Record<string, string | undefined>;
     };
-    function $mol_run_async(this: $, { dir, timeout, command, env }: $mol_run_options): import("child_process").SpawnSyncReturns<Buffer> | (Promise<$mol_run_error_context> & {
+    function $mol_run_async(this: $, { dir, timeout, command, env }: $mol_run_options): import("child_process").SpawnSyncReturns<Buffer<ArrayBufferLike>> | (Promise<$mol_run_error_context> & {
         destructor: () => void;
     });
-    function $mol_run(this: $, options: $mol_run_options): $mol_run_error_context | import("child_process").SpawnSyncReturns<Buffer>;
+    function $mol_run(this: $, options: $mol_run_options): $mol_run_error_context | import("child_process").SpawnSyncReturns<Buffer<ArrayBufferLike>>;
 }
 
 declare namespace $ {
-    function $mol_exec(this: $, dir: string, command: string, ...args: readonly string[]): $mol_run_error_context | import("child_process").SpawnSyncReturns<Buffer>;
+    function $mol_exec(this: $, dir: string, command: string, ...args: readonly string[]): $mol_run_error_context | import("child_process").SpawnSyncReturns<Buffer<ArrayBufferLike>>;
 }
 
 declare namespace $ {
-    function $mol_charset_encode(value: string): Uint8Array;
+    function $mol_charset_encode(value: string): Uint8Array<ArrayBufferLike>;
 }
 
 declare namespace $ {
@@ -639,7 +641,7 @@ declare namespace $ {
         stat(next?: $mol_file_stat | null, virt?: 'virt'): $mol_file_stat | null;
         ensure(): void;
         drop(): void;
-        buffer(next?: Uint8Array): Uint8Array;
+        buffer(next?: Uint8Array): Uint8Array<ArrayBufferLike>;
         sub(): $mol_file[];
         resolve(path: string): $mol_file;
         relate(base?: $mol_file): string;

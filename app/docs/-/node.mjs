@@ -4716,8 +4716,8 @@ var $;
 		dom_name(){
 			return "article";
 		}
-		field(){
-			return {...(super.field()), "tabIndex": (this.tabindex())};
+		attr(){
+			return {...(super.attr()), "tabIndex": (this.tabindex())};
 		}
 		sub(){
 			return [

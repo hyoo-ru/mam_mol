@@ -119,6 +119,7 @@ declare namespace $ {
         offset?: $mol_time_duration_config;
     };
     class $mol_time_moment extends $mol_time_base {
+        [x: symbol]: (() => any[]) | ((mode: "default" | "number" | "string") => string | number);
         constructor(config?: $mol_time_moment_config);
         readonly year: number | undefined;
         readonly month: number | undefined;

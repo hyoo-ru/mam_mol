@@ -159,6 +159,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_wire_pub_sub extends $mol_wire_pub implements $mol_wire_sub {
+        [x: symbol]: () => any[];
         protected pub_from: number;
         protected cursor: $mol_wire_cursor;
         get temp(): boolean;
@@ -193,6 +194,7 @@ declare namespace $ {
 
 declare namespace $ {
     abstract class $mol_wire_fiber<Host, Args extends readonly unknown[], Result> extends $mol_wire_pub_sub {
+        [x: symbol]: string | (() => any[]);
         readonly task: (this: Host, ...args: Args) => Result;
         readonly host?: Host | undefined;
         static warm: boolean;
@@ -741,6 +743,7 @@ declare namespace $ {
     function $mol_view_visible_height(): number;
     function $mol_view_state_key(suffix: string): string;
     class $mol_view extends $mol_object {
+        [x: symbol]: () => any[];
         static Root<This extends typeof $mol_view>(this: This, id: number): InstanceType<This>;
         autorun(): void;
         static autobind(): void;
