@@ -7,7 +7,7 @@ namespace $.$$ {
 	export class $mol_number extends $.$mol_number {
 		
 		value_limited( val? :  number ) : number {
-			if (Number.isNaN( val )) return this.value(val)
+			if (Number.isNaN( val )) return this.value( val )
 			if ( val === undefined ) return this.value()
 
 			const min = this.value_min()
@@ -28,7 +28,7 @@ namespace $.$$ {
 		}
 
 		value_normalized(next?: string) {
-			const next_num = this.value_limited( next === undefined ? next : Number(next) )
+			const next_num = this.value_limited( next === undefined ? next : Number(next || Number.NaN) )
 
 			if (Number.isNaN(next_num)) return ''
 
@@ -48,13 +48,24 @@ namespace $.$$ {
 		@ $mol_mem
 		override value_string( next? : string ) {
 			const current = this.value_normalized()
+			if (next === undefined) return current
 
-			if ( next !== undefined) this.value_normalized( next )
+			const minus = next.includes('-')
+			next = next.replace(/[^\d\.]/g, '')
+			
+			if ( minus ) next = '-' + next
+			const dot_pos = next.indexOf('.')
+
+			if (dot_pos !== -1) {
+				next = next.slice(0, dot_pos) + '.' + next.slice(dot_pos + 1).replace(/\./g, '')
+			}
+
+			this.value_normalized( next )
 
 			return next ?? current
 
 		}
-		
+
 		@ $mol_mem
 		override dec_enabled() : boolean {
 			return this.enabled() && (
