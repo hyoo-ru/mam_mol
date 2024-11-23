@@ -67,6 +67,18 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
+		formatter() {
+			return new Intl.NumberFormat()
+		}
+
+		override mask(val: string) {
+			if (! val) return ''
+			const current = Number(val.replace(/[^\d\.\-]/g, ''))
+			if (Number.isNaN(current)) return ''
+			return this.formatter().format(current).replace(/[^\s]/g, '_')
+		}
+
+		@ $mol_mem
 		override dec_enabled() : boolean {
 			return this.enabled() && (
 				!( ( this.value() || 0 ) <= this.value_min() )
