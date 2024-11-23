@@ -51,7 +51,7 @@ namespace $.$$ {
 			if (next === undefined) return current
 
 			const minus = next.includes('-')
-			next = next.replace(/[^\d\.]/g, '')
+			next = next.replace(/,/g, '.').replace(/[^\d\.]/g, '')
 			
 			if ( minus ) next = '-' + next
 			const dot_pos = next.indexOf('.')
@@ -67,15 +67,17 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		formatter() {
-			return new Intl.NumberFormat()
+		static formatter() {
+			return new Intl.NumberFormat('en-EN')
 		}
+
+		formatter() { return this.$.$mol_number.formatter() }
 
 		override mask(val: string) {
 			if (! val) return ''
-			const current = Number(val.replace(/[^\d\.\-]/g, ''))
+			const current = Number(val.replace(/,/g, '.').replace(/[^\d\.\-]/g, ''))
 			if (Number.isNaN(current)) return ''
-			return this.formatter().format(current).replace(/[^\s]/g, '_')
+			return this.formatter().format(current).replace(',', ' ').replace(/[^\s]/g, '_')
 		}
 
 		@ $mol_mem
