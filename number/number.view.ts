@@ -1,5 +1,17 @@
 namespace $.$$ {
 
+	function format(num_str: string) {
+		let result = ''
+
+		for (let i = num_str.length - 1; i >= 0; i--) {
+			result += '_'
+			if ((i % 3) === 0) result += ' '
+		}
+
+		return result.trim()
+
+	}
+
 	/**
 	 * Component for entering, incrementing and decrementing numeric values.
 	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_number_demo
@@ -43,7 +55,21 @@ namespace $.$$ {
 				return val.toFixed( Math.ceil( fixed_number ) )
 			}
 		}
-		
+	
+		override allow() {
+			let next = this.allow_default()
+			
+			const precision = this.precision_view()
+
+			// Точку в конце поставить нельзя, если precision_view целое число > 0
+			if ( precision - Math.floor(precision) === 0 ) next = next.replace(/[.,]/g, '')
+
+			// Минус нельзя ввести, если минимальное значение >=0
+			if (this.value_min() >= 0) next = next.replace('-', '')
+
+			return next
+		}
+
 		@ $mol_mem
 		override value_string( next? : string ): string {
 			// Вытягиваем value
@@ -67,7 +93,7 @@ namespace $.$$ {
 				// Определяем где относительно предыдущей точки юзер поставил новую
 				if (dot_pos_prev === dot_pos) dot_pos = next.lastIndexOf('.')
 				
-				// Из частей до и после новой точки старую точку удаляем, отбрасываем значения больше
+				// Из частей до и после новой точки старую точку удаляем
 				const frac = next.slice(dot_pos + 1).replace(/\./g, '')
 
 				// Если точка идет первой, перед ней пишем 0, что бы форматирование выглядело нормально в mask
@@ -77,9 +103,7 @@ namespace $.$$ {
 			// Оставляем старое значение в value есть сочетание, приводящие к NaN, например -.
 			if ( Number.isNaN(Number(next)) ) return next
 
-			const precision = this.precision_view()
-			// Точку в конце поставить нельзя, если precision_view целое число > 0
-			if ( next.endsWith('.') && precision - Math.floor(precision) === 0) return next
+			if ( next.endsWith('.') ) return next
 			if ( next.endsWith('-') ) return next
 
 			// Если пустая строка - сетим NaN
@@ -87,24 +111,13 @@ namespace $.$$ {
 			return this.round( this.value_limited(Number(next || Number.NaN)) )
 		}
 
-		format(num_str: string) {
-			let result = ''
-
-			for (let i = num_str.length - 1; i >= 0; i--) {
-				result += '_'
-				if ((i % 3) === 0) result += ' '
-			}
-			return result.trim()
-
-		}
-
 		override mask(val: string) {
-			const [_, main = '', frac = ''] = val.match(/(\-?\d+)(?:\.?(\d+))?/) ?? []
+			const [_, minus, main = '', frac] = val.match(/(\-)?(\d+)(?:\.?(\d+))?/) ?? []
 
-			const prefix = this.format(main)
+			const prefix = (minus ? '_' : '') + format(main)
 			if (! frac) return prefix
 
-			const suffix = this.format(frac).split('').reverse().join('')
+			const suffix = format(frac).split('').reverse().join('')
 
 			return prefix + '_' + suffix
 		}
