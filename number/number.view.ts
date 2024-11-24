@@ -28,15 +28,19 @@ namespace $.$$ {
 		}
 
 		value_normalized(next?: string) {
-			const next_num = this.value_limited( next === undefined ? next : Number(next || Number.NaN) )
+			const next_num = this.value_limited(
+				next === undefined
+					? next
+					: next === '-' || next === '.'
+						? $mol_wire_probe(() => this.value_limited()) ?? 0
+						: Number(next || Number.NaN)
+			)
 
 			if (Number.isNaN(next_num)) return ''
-
-			const precision_view = this.precision_view()
-
 			if( next_num === 0 ) return '0'
 			if( !next_num ) return ''
 
+			const precision_view = this.precision_view()
 			if( precision_view >= 1 ) {
 				return ( next_num / precision_view ).toFixed()
 			} else {
@@ -78,9 +82,6 @@ namespace $.$$ {
 		}
 
 		override mask(val: string) {
-			// const str = val.replace(/,/g, '.').replace(/[^\d\.\-]/g, '')
-			// const [ main = '', frac = ''] = str.split('.') ?? []
-
 			const [_, main = '', frac = ''] = val.match(/(\-?\d+)(?:\.?(\d+))?/) ?? []
 
 			const prefix = this.format(main)
