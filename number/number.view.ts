@@ -77,7 +77,7 @@ namespace $.$$ {
 			// Оставляем старое значение в value есть сочетание, приводящие к NaN, например -.
 			if ( Number.isNaN(Number(next)) ) return next
 
-			// Точку в конце поставить нельзя, если precision_view < 1, т.е. разрешены только целые числа.
+			// Точку в конце поставить нельзя, если precision_view >= 1, т.е. разрешены только целые числа.
 			if ( next.endsWith('.') && this.precision_view() < 1) return next
 			if ( next.endsWith('-') ) return next
 
