@@ -77,8 +77,9 @@ namespace $.$$ {
 			// Оставляем старое значение в value есть сочетание, приводящие к NaN, например -.
 			if ( Number.isNaN(Number(next)) ) return next
 
-			// Точку в конце поставить нельзя, если precision_view >= 1, т.е. разрешены только целые числа.
-			if ( next.endsWith('.') && this.precision_view() < 1) return next
+			const precision = this.precision_view()
+			// Точку в конце поставить нельзя, если precision_view целое число > 0
+			if ( next.endsWith('.') && precision - Math.floor(precision) === 0) return next
 			if ( next.endsWith('-') ) return next
 
 			// Если пустая строка - сетим NaN
