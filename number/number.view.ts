@@ -66,18 +66,29 @@ namespace $.$$ {
 
 		}
 
-		@ $mol_mem
-		static formatter() {
-			return new Intl.NumberFormat('en-EN')
+		format(num_str: string) {
+			let result = ''
+
+			for (let i = num_str.length - 1; i >= 0; i--) {
+				result += '_'
+				if ((i % 3) === 0) result += ' '
+			}
+			return result.trim()
+
 		}
 
-		formatter() { return this.$.$mol_number.formatter() }
-
 		override mask(val: string) {
-			if (! val) return ''
-			const current = Number(val.replace(/,/g, '.').replace(/[^\d\.\-]/g, ''))
-			if (Number.isNaN(current)) return ''
-			return this.formatter().format(current).replace(',', ' ').replace(/[^\s]/g, '_')
+			// const str = val.replace(/,/g, '.').replace(/[^\d\.\-]/g, '')
+			// const [ main = '', frac = ''] = str.split('.') ?? []
+
+			const [_, main = '', frac = ''] = val.match(/(\-?\d+)(?:\.?(\d+))?/) ?? []
+
+			const prefix = this.format(main)
+			if (! frac) return prefix
+
+			const suffix = this.format(frac).split('').reverse().join('')
+
+			return prefix + '_' + suffix
 		}
 
 		@ $mol_mem
