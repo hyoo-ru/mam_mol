@@ -27,47 +27,63 @@ namespace $.$$ {
 			this.value_limited( ( this.value_limited() || 0 ) + this.precision_change() )
 		}
 
-		value_normalized(next?: string) {
-			const next_num = this.value_limited(
-				next === undefined
-					? next
-					: next === '-' || next === '.'
-						? $mol_wire_probe(() => this.value_limited())
-						: Number(next || Number.NaN)
-			)
-
-			if (Number.isNaN(next_num)) return ''
-			if( next_num === 0 ) return '0'
-			if( !next_num ) return ''
+		round(val: number) {
+			if (Number.isNaN(val)) return ''
+			if( val === 0 ) return '0'
+			if( !val ) return ''
 
 			const precision_view = this.precision_view()
+
+			if (! precision_view) return val.toFixed()
+
 			if( precision_view >= 1 ) {
-				return ( next_num / precision_view ).toFixed()
+				return ( val / precision_view ).toFixed()
 			} else {
 				const fixed_number = Math.log10( 1 / precision_view )
-				return next_num.toFixed( Math.ceil( fixed_number ) )
+				return val.toFixed( Math.ceil( fixed_number ) )
 			}
 		}
 		
 		@ $mol_mem
-		override value_string( next? : string ) {
-			const current = this.value_normalized()
+		override value_string( next? : string ): string {
+			// Вытягиваем value
+			// Если кто-то поменяет из вне value, value_string надо обновить
+			const current = this.round( this.value_limited() )
 			if (next === undefined) return current
 
 			const minus = next.includes('-')
+			// Запятые меняем на точки, удаляем не-цифры и не-точки и лишние ноли в начале целой части.
 			next = next.replace(/,/g, '.').replace(/[^\d\.]/g, '').replace(/^0{2,}/, '0')
 			
+			// Второй минус не даем ввести.
+			// Если где-либо ввели минус, то ставим минус в начале, если его там нет
 			if ( minus ) next = '-' + next
-			const dot_pos = next.indexOf('.')
+
+			let dot_pos = next.indexOf('.')
 
 			if (dot_pos !== -1) {
-				next = (next.slice(0, dot_pos) || '0') + '.' + next.slice(dot_pos + 1).replace(/\./g, '')
+				const prev = $mol_wire_probe(() => this.value_string()) ?? ''
+				const dot_pos_prev = prev.indexOf('.')
+				// Определяем где относительно предыдущей точки юзер поставил новую
+				if (dot_pos_prev === dot_pos) dot_pos = next.lastIndexOf('.')
+				
+				// Из частей до и после новой точки старую точку удаляем, отбрасываем значения больше
+				const frac = next.slice(dot_pos + 1).replace(/\./g, '')
+
+				// Если точка идет первой, перед ней пишем 0, что бы форматирование выглядело нормально в mask
+				next = (next.slice(0, dot_pos) || '0').replace(/\./g, '') + '.' + frac
 			}
 
-			this.value_normalized( next )
+			// Оставляем старое значение в value есть сочетание, приводящие к NaN, например -.
+			if ( Number.isNaN(Number(next)) ) return next
 
-			return next ?? current
+			// Точку в конце поставить нельзя, если precision_view < 1, т.е. разрешены только целые числа.
+			if ( next.endsWith('.') && this.precision_view() < 1) return next
+			if ( next.endsWith('-') ) return next
 
+			// Если пустая строка - сетим NaN
+			// Применяем округления.
+			return this.round( this.value_limited(Number(next || Number.NaN)) )
 		}
 
 		format(num_str: string) {
