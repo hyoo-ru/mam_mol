@@ -32,7 +32,7 @@ namespace $.$$ {
 				next === undefined
 					? next
 					: next === '-' || next === '.'
-						? $mol_wire_probe(() => this.value_limited()) ?? 0
+						? $mol_wire_probe(() => this.value_limited())
 						: Number(next || Number.NaN)
 			)
 
@@ -61,7 +61,7 @@ namespace $.$$ {
 			const dot_pos = next.indexOf('.')
 
 			if (dot_pos !== -1) {
-				next = next.slice(0, dot_pos) + '.' + next.slice(dot_pos + 1).replace(/\./g, '')
+				next = (next.slice(0, dot_pos) || '0') + '.' + next.slice(dot_pos + 1).replace(/\./g, '')
 			}
 
 			this.value_normalized( next )
