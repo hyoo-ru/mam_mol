@@ -77,13 +77,10 @@ namespace $.$$ {
 			const current = this.round( this.value_limited() )
 			if (next === undefined) return current
 
-			const minus = next.includes('-')
 			// Запятые меняем на точки, удаляем не-цифры и не-точки и лишние ноли в начале целой части.
-			next = next.replace(/,/g, '.').replace(/[^\d\.]/g, '').replace(/^0{2,}/, '0')
-			
-			// Второй минус не даем ввести.
-			// Если где-либо ввели минус, то ставим минус в начале, если его там нет
-			if ( minus ) next = '-' + next
+			// Минус получится ввести только в начале.
+			next = (next.startsWith('-') ? '-' : '')
+				+ next.replace(/,/g, '.').replace(/[^\d\.]/g, '').replace(/^0{2,}/, '0')
 
 			let dot_pos = next.indexOf('.')
 
