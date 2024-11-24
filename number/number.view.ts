@@ -55,7 +55,7 @@ namespace $.$$ {
 			if (next === undefined) return current
 
 			const minus = next.includes('-')
-			next = next.replace(/,/g, '.').replace(/[^\d\.]/g, '')
+			next = next.replace(/,/g, '.').replace(/[^\d\.]/g, '').replace(/^0{2,}/, '0')
 			
 			if ( minus ) next = '-' + next
 			const dot_pos = next.indexOf('.')
