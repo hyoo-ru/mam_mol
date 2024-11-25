@@ -70,7 +70,7 @@ namespace $.$$ {
 
 			// Запятые меняем на точки, удаляем не-цифры и не-точки и лишние ноли в начале целой части.
 			// Минус получится ввести только в начале.
-			next = (this.value_min() >= 0 && next.startsWith('-') ? '-' : '')
+			next = (this.value_min() < 0 && next.startsWith('-') ? '-' : '')
 				+ next.replace(/,/g, '.').replace(/[^\d\.]/g, '').replace(/^0{2,}/, '0')
 
 			let dot_pos = next.indexOf('.')
