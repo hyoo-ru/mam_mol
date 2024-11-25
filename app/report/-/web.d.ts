@@ -2429,7 +2429,7 @@ declare namespace $.$$ {
         value_limited(val?: number): number;
         event_dec(next?: Event): void;
         event_inc(next?: Event): void;
-        value_normalized(next?: string): string;
+        round(val: number): string;
         value_string(next?: string): string;
         dec_enabled(): boolean;
         inc_enabled(): boolean;

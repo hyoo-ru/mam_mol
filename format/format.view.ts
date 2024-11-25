@@ -19,8 +19,11 @@ namespace $.$$ {
 			const mask = this.mask( filtered )
 			
 			if( ( prev?.[0] ?? 0 ) >= from ) return [ from, to ]
-				
-			const lastAllow = ( value.length - [ ... value ].reverse().findIndex( letter => allow.includes( letter ) ) )%(value.length+1)
+
+			const lastAllow = (
+				value.length - [ ... value ].reverse().findIndex( letter => allow.includes( letter ) )
+			) % ( value.length + 1 )
+
 			if( lastAllow < from ) {
 				from = to = lastAllow
 			}
@@ -29,7 +32,7 @@ namespace $.$$ {
 				++ from
 				++ to
 			}
-				
+
 			return [ from, to ]
 		}
 		

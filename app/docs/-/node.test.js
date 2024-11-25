@@ -14622,28 +14622,49 @@ var $;
             event_inc(next) {
                 this.value_limited((this.value_limited() || 0) + this.precision_change());
             }
-            value_normalized(next) {
-                const next_num = this.value_limited(next === undefined ? next : Number(next));
-                if (Number.isNaN(next_num))
+            round(val) {
+                if (Number.isNaN(val))
+                    return '';
+                if (val === 0)
+                    return '0';
+                if (!val)
                     return '';
                 const precision_view = this.precision_view();
-                if (next_num === 0)
-                    return '0';
-                if (!next_num)
-                    return '';
+                if (!precision_view)
+                    return val.toFixed();
                 if (precision_view >= 1) {
-                    return (next_num / precision_view).toFixed();
+                    return (val / precision_view).toFixed();
                 }
                 else {
                     const fixed_number = Math.log10(1 / precision_view);
-                    return next_num.toFixed(Math.ceil(fixed_number));
+                    return val.toFixed(Math.ceil(fixed_number));
                 }
             }
             value_string(next) {
-                const current = this.value_normalized();
-                if (next !== undefined)
-                    this.value_normalized(next);
-                return next ?? current;
+                const current = this.round(this.value_limited());
+                if (next === undefined)
+                    return current;
+                const precision = this.precision_view();
+                if (precision - Math.floor(precision) === 0)
+                    next = next.replace(/[.,]/g, '');
+                next = (this.value_min() < 0 && next.startsWith('-') ? '-' : '')
+                    + next.replace(/,/g, '.').replace(/[^\d\.]/g, '').replace(/^0{2,}/, '0');
+                let dot_pos = next.indexOf('.');
+                if (dot_pos !== -1) {
+                    const prev = $mol_wire_probe(() => this.value_string()) ?? '';
+                    const dot_pos_prev = prev.indexOf('.');
+                    if (dot_pos_prev === dot_pos)
+                        dot_pos = next.lastIndexOf('.');
+                    const frac = next.slice(dot_pos + 1).replace(/\./g, '');
+                    next = (next.slice(0, dot_pos) || '0').replace(/\./g, '') + '.' + frac;
+                }
+                if (Number.isNaN(Number(next)))
+                    return next;
+                if (next.endsWith('.'))
+                    return next;
+                if (next.endsWith('-'))
+                    return next;
+                return this.round(this.value_limited(Number(next || Number.NaN)));
             }
             dec_enabled() {
                 return this.enabled() && (!((this.value() || 0) <= this.value_min()));
