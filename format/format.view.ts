@@ -19,8 +19,11 @@ namespace $.$$ {
 			const mask = this.mask( filtered )
 			
 			if( ( prev?.[0] ?? 0 ) >= from ) return [ from, to ]
-				
-			const lastAllow = ( value.length - [ ... value ].reverse().findIndex( letter => allow.includes( letter ) ) )%(value.length+1)
+
+			const lastAllow = (
+				value.length - [ ... value ].reverse().findIndex( letter => allow.includes( letter ) )
+			) % ( value.length + 1 )
+
 			if( lastAllow < from ) {
 				from = to = lastAllow
 			}
@@ -29,9 +32,23 @@ namespace $.$$ {
 				++ from
 				++ to
 			}
-				
+
+			// Если по-сравнению с this.mask_prev в mask добавились/удалились не подчервивания слева от from
+			// То надо увеличить/уменьшить from и to, на кол-во добавленных/удаленных символов
+			const before = mask.slice(0, from).replace(/_/g, '').length
+			const before_prev =  this.mask_prev.slice(0, from).replace(/_/g, '').length
+			let delta = before - before_prev
+
+			from += delta
+			to += delta
+
+
+			this.mask_prev = mask
+
 			return [ from, to ]
 		}
+
+		protected mask_prev = ''
 		
 		@ $mol_mem
 		value_changed( next?: string ) {
