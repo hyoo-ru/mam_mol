@@ -1,17 +1,5 @@
 namespace $.$$ {
 
-	function format(num_str: string) {
-		let result = ''
-
-		for (let i = num_str.length - 1; i >= 0; i--) {
-			result += '_'
-			if ((i % 3) === 0) result += ' '
-		}
-
-		return result.trim()
-
-	}
-
 	/**
 	 * Component for entering, incrementing and decrementing numeric values.
 	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_number_demo
