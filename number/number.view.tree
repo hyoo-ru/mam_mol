@@ -6,9 +6,7 @@ $mol_number $mol_view
 	value? +NaN
 	enabled true
 	sub /
-		<= String $mol_format
-			allow <= allow <= allow_default \0123456789,.-
-			mask* <= mask* \
+		<= String $mol_string
 			- \ we don't want native number controls in mobile devices
 			- \ https://stackoverflow.com/questions/3790935/can-i-hide-the-html5-number-input-s-spin-box
 			type <= type \tel

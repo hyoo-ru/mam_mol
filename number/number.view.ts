@@ -55,20 +55,6 @@ namespace $.$$ {
 				return val.toFixed( Math.ceil( fixed_number ) )
 			}
 		}
-	
-		override allow() {
-			let next = this.allow_default()
-			
-			const precision = this.precision_view()
-
-			// Точку в конце поставить нельзя, если precision_view целое число > 0
-			if ( precision - Math.floor(precision) === 0 ) next = next.replace(/[.,]/g, '')
-
-			// Минус нельзя ввести, если минимальное значение >=0
-			if (this.value_min() >= 0) next = next.replace('-', '')
-
-			return next
-		}
 
 		@ $mol_mem
 		override value_string( next? : string ): string {
@@ -77,9 +63,14 @@ namespace $.$$ {
 			const current = this.round( this.value_limited() )
 			if (next === undefined) return current
 
+			const precision = this.precision_view()
+
+			// Точку в конце поставить нельзя, если precision_view целое число > 0
+			if ( precision - Math.floor(precision) === 0 ) next = next.replace(/[.,]/g, '')
+
 			// Запятые меняем на точки, удаляем не-цифры и не-точки и лишние ноли в начале целой части.
 			// Минус получится ввести только в начале.
-			next = (next.startsWith('-') ? '-' : '')
+			next = (this.value_min() >= 0 && next.startsWith('-') ? '-' : '')
 				+ next.replace(/,/g, '.').replace(/[^\d\.]/g, '').replace(/^0{2,}/, '0')
 
 			let dot_pos = next.indexOf('.')
@@ -106,17 +97,6 @@ namespace $.$$ {
 			// Если пустая строка - сетим NaN
 			// Применяем округления.
 			return this.round( this.value_limited(Number(next || Number.NaN)) )
-		}
-
-		override mask(val: string) {
-			const [_, minus, main = '', frac] = val.match(/(\-)?(\d+)(?:\.?(\d+))?/) ?? []
-
-			const prefix = (minus ? '_' : '') + format(main)
-			if (! frac) return prefix
-
-			const suffix = format(frac).split('').reverse().join('')
-
-			return prefix + '_' + suffix
 		}
 
 		@ $mol_mem
