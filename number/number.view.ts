@@ -84,7 +84,11 @@ namespace $.$$ {
 
 			// Если пустая строка - сетим NaN
 			// Применяем округления.
-			return this.round( this.value_limited(Number(next || Number.NaN)) )
+			this.value_limited(Number(next || Number.NaN))
+
+			// Возвращаем все-равно не нормализованное значение
+			// Иначе нельзя ввести будет 10, если min/max 5..10
+			return next
 		}
 
 		@ $mol_mem

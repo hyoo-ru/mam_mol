@@ -14664,7 +14664,8 @@ var $;
                     return next;
                 if (next.endsWith('-'))
                     return next;
-                return this.round(this.value_limited(Number(next || Number.NaN)));
+                this.value_limited(Number(next || Number.NaN));
+                return next;
             }
             dec_enabled() {
                 return this.enabled() && (!((this.value() || 0) <= this.value_min()));
