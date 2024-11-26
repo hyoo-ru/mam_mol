@@ -6,5 +6,5 @@ $mol_portion_indicator $mol_view
 $mol_portion $mol_view
 	portion 0
 	sub /
-		<= indicator $mol_portion_indicator
+		<= Indicator $mol_portion_indicator
 			width_style <= indicator_width_style \0
