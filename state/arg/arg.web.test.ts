@@ -8,6 +8,11 @@ namespace $ {
 			@ $mol_mem
 			static href( next? : string ) { return next || '' }
 	
+			@ $mol_action
+			static go( next : { [ key : string ] : string | null } ) {
+				this.href( this.link( next ) )
+			}
+
 		}
 		context.$mol_state_arg = $mol_state_arg_mock
 	} )
@@ -17,7 +22,7 @@ namespace $ {
 		'args as dictionary'( $ ) {
 			
 			$.$mol_state_arg.href( '#!foo=bar/xxx' )
-			$mol_assert_like( $.$mol_state_arg.dict() , { foo : 'bar' , xxx : '' } )
+			$mol_assert_equal( $.$mol_state_arg.dict() , { foo : 'bar' , xxx : '' } )
 
 			$.$mol_state_arg.dict({ foo : null , yyy : '' , lol : '123' })
 			$mol_assert_equal( $.$mol_state_arg.href().replace( /.*#/ , '#' ) , '#!yyy/lol=123' )
