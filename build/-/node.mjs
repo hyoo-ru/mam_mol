@@ -5430,15 +5430,15 @@ var $;
             }
         }
         gitVersion() {
-            return this.$.$mol_run({ command: 'git version', dir: '.' }).stdout.toString().trim().match(/.*\s+([\d\.]+)$/)?.[1] ?? '';
+            return this.$.$mol_run({ command: 'git version', dir: '.' }).stdout.toString().trim().match(/.*\s+([\d\.]+\d+)/)?.[1] ?? '';
         }
         gitDeepenSupported() {
             return $mol_compare_text()(this.gitVersion(), '2.42.0') >= 0;
         }
         gitPull(path) {
             const args = [];
-            if (!this.interactive()) {
-                args.push(this.gitDeepenSupported() ? '--deepen=1' : '--depth=1');
+            if (!this.interactive() && this.gitDeepenSupported()) {
+                args.push('--deepen=1');
             }
             return this.run_safe({ command: ['git', 'pull', ...args], dir: path });
         }
