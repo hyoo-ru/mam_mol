@@ -1,0 +1,34 @@
+$mol_file_demo $mol_example
+	title \Webdav demo
+	actual_url? \
+	sub /
+		<= Left $mol_page
+			title \Webdav controls
+			body /
+				<= Form $mol_form
+					body /
+						<= Webdav_url_field $mol_form_field
+							name \WebDav url
+							Content <= Webdav_url_control $mol_string
+								hint \http://
+								value? <=> webdav_url? \
+					submit? <=> refresh? null
+					buttons /
+						<= Update $mol_button_major
+							title \Update
+							click? <=> refresh? null
+		<= Right $mol_page
+			title \Files
+			body / <= Files $mol_list
+				minimal_width 320
+				rows <= file_list /$mol_view
+					<= File*0 $mol_card
+						title <= file_name* \
+						status <= file_type* \file
+	tags /
+		\$mol_button
+		\form
+		\file upload
+		\webdav
+	aspects /
+		\Widget/Form

@@ -433,7 +433,7 @@ The name of the field corresponds to calling the property, the content of the fi
 - **[$mol_fetch](fetch)** - Reactive [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
 - **[$mol_webdav](webdav)** - Reactive [WebDAV](https://wikipedia.org/wiki/WebDAV) client
 - **[$mol_file](file)** - Isomorphic reactive file system wrapper
-- **[$mol_exec](exec)** - Synchronous execute of system command
+- **[$mol_run](run)** - Synchronous execute of system command
 - **[$mol_cordova](cordova)** - [Apache Cordova](https://cordova.apache.org) API
 
 ## Time
