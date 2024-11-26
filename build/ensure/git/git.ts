@@ -7,7 +7,7 @@ namespace $ {
 		protected version() {
 			$mol_wire_solid()
 			return this.$.$mol_run.spawn({ command: 'git version', dir: this.root().path() })
-				.stdout.toString().trim().match(/.*\s+([\d\.]+)$/)?.[1] ?? ''
+				.stdout.toString().trim().match(/.*\s+([\d\.]+\d+)/)?.[1] ?? ''
 		}
 
 		protected deepen_supported() {
@@ -24,13 +24,18 @@ namespace $ {
 
 			const command = ['git', 'pull']
 
-			if ( ! this.interactive() ) {
-				// depth и deepen не годятся для локальной разработки, поэтому оставляем ограничение глубины пула только для CI
-				// --depth=1 в сочетании с сабмодулями обрезает историю, кроме первого коммита
-				// --deepen=1 в git-конфиге сабмодуля выставляет bare=true, после этого все команды падают с сообщением
-				// warning: core.bare and core.worktree do not make sense
-				// fatal: unable to set up work tree using invalid config
-				command.push( this.deepen_supported() ? '--deepen=1' : '--depth=1' )
+			if ( ! this.interactive() && this.deepen_supported()) {
+				/**
+				depth и deepen не годятся для локальной разработки, поэтому оставляем ограничение глубины пула только для CI
+
+				--depth=1 в сочетании с сабмодулями обрезает историю, кроме первого коммита
+
+				--deepen=1 если не сделать unset GIT_DIR
+				в git-конфиге сабмодуля выставляет bare=true, после этого все команды падают с сообщением
+				warning: core.bare and core.worktree do not make sense
+				fatal: unable to set up work tree using invalid config
+				 */
+				command.push( '--deepen=1' )
 			}
 
 			const timeout = this.pull_timeout()

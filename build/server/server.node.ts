@@ -88,6 +88,7 @@ namespace $ {
 
 		@ $mol_mem_key
 		generate( url : string ) {
+			$mol_wire_solid()
 			/*
 			Если использовать динамически подгружаемые через $mol_script модули
 			То урл тут может быть вида /demo/app/-/node_modules/stockfish/-/stockfish.js
@@ -261,7 +262,7 @@ namespace $ {
 				this.notify([ line, path ])
 			}
 
-			this.bundles_keep()
+			// this.bundles_keep()
 
 			return socket
 		}
@@ -295,6 +296,7 @@ namespace $ {
 		protected path_doubted = new Set<string>()
 
 		path_add(path: string, bundle: string) {
+			return
 			this.path_doubted.delete(path)
 			if (! this.path_bundles[path]) this.path_bundles[path] = new Set()
 			this.path_bundles[path].add(bundle)
