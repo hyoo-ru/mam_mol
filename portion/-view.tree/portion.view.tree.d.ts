@@ -14,7 +14,7 @@ declare namespace $ {
 	>
 	export class $mol_portion extends $mol_view {
 		indicator_width_style( ): string
-		indicator( ): $mol_portion_indicator
+		Indicator( ): $mol_portion_indicator
 		portion( ): number
 		sub( ): readonly(any)[]
 	}

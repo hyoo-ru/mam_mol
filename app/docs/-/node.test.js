@@ -18942,7 +18942,7 @@ var $;
 		indicator_width_style(){
 			return "0";
 		}
-		indicator(){
+		Indicator(){
 			const obj = new this.$.$mol_portion_indicator();
 			(obj.width_style) = () => ((this.indicator_width_style()));
 			return obj;
@@ -18951,10 +18951,10 @@ var $;
 			return 0;
 		}
 		sub(){
-			return [(this.indicator())];
+			return [(this.Indicator())];
 		}
 	};
-	($mol_mem(($.$mol_portion.prototype), "indicator"));
+	($mol_mem(($.$mol_portion.prototype), "Indicator"));
 
 
 ;
