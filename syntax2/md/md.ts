@@ -34,7 +34,7 @@ namespace $ {
 		'code-comment-block' : /(?:\/\*[^]*?\*\/|\/\+[^]*?\+\/|<![^]*?>)/ ,
 		'code-link' : /(?:\w+:\/\/|#)\S+?(?=\s|\\\\|""|$)/ ,
 		'code-comment-inline' : /\/\/.*?(?:$|\/\/)|- \\.*/ ,
-		'code-string' : /(?:".*?"|'.*?'|`.*?`|\/.+?\/[dygimsu]*(?!\p{Letter})|[ \t]*\\[^\n]*)/u ,
+		'code-string' : /(?:".*?"|'.*?'|`.*?`| ?\\\\.+?\\\\|\/.+?\/[dygimsu]*(?!\p{Letter})|[ \t]*\\[^\n]*)/u ,
 		'code-number' : /[+-]?(?:\d*\.)?\d+\w*/ ,
 		'code-call' : /\.?\w+ *(?=\()/ ,
 		'code-sexpr' : /\((\w+ )/ ,
