@@ -6,6 +6,11 @@ namespace $ {
 			super()
 		}
 
+		@ $mol_action
+		clone() {
+			return new this.$.$mol_fetch_response(new Response(this.native.body, this.native))
+		}
+
 		status() {
 			const types = [ 'unknown', 'inform', 'success', 'redirect', 'wrong', 'failed' ] as const
 			return types[ Math.floor( this.native.status / 100 ) ]
