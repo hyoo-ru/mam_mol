@@ -77,7 +77,6 @@
     "$mol_dom_context",
     "$mol_dom",
     "$node",
-    "$node_modules",
     "$mol_exec",
     "$mol_run",
     "$mol_error_mix",

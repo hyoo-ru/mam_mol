@@ -1,6 +1,6 @@
 {
   "name": "mam",
-  "version": "1.11.403",
+  "version": "1.11.406",
   "exports": {
     "node": {
       "import": "./node.mjs",
@@ -75,7 +75,6 @@
     "$mol_charset_encoding",
     "$mol_charset_encode",
     "$node",
-    "$node_modules",
     "$mol_exec",
     "$mol_run",
     "$mol_error_mix",
@@ -132,6 +131,7 @@
     "$mol_base64_encode",
     "$mol_base64",
     "$mol_sourcemap_builder",
+    "$node_modules",
     "$mol_tree2_xml_to_text",
     "$mol_tree2_xml_to",
     "$mol_tree2_xml",
