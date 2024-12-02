@@ -1,4 +1,4 @@
-name: Deploy
+name: $mol
 
 on:
   workflow_dispatch:
@@ -42,12 +42,12 @@ jobs:
     if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
-    - env:
-        GITHUB_TOKEN: ${{ secrets.GH_PAT }}
-        INPUTS_CLIENT_PAYLOAD: '{"repository":${{ toJson(github.event.repository.name) }}}'
-        INPUTS_EVENT_TYPE: dependency_changed
-        INPUTS_REPOSITORY: ${{ matrix.repo }}
-      uses: rekgrpth/github-repository-dispatch-shell-action@v1
+    - uses: peter-evans/repository-dispatch@v3
+      with:
+        token: ${{ secrets.GH_PAT }}
+        repository: ${{ matrix.repo }}
+        event-type: dependency_changed
+        client-payload: '{"repository":${{ toJson(github.event.repository.name) }}}'
     strategy:
       matrix:
         repo:

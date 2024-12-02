@@ -1,6 +1,6 @@
 namespace $ {
 
-	export type $mol_view_content = $mol_view|Node|string|number|boolean
+	export type $mol_view_content = $mol_view|Node|string|number|boolean|null
 	
 	export function $mol_view_visible_width() {
 		return $mol_window.size().width
@@ -86,7 +86,7 @@ namespace $ {
 		
 		/// Raw child views
 		sub() {
-			return [] as readonly ($mol_view|Node|string|number|boolean)[]
+			return [] as readonly $mol_view_content[]
 		}
 		
 		/// Visible sub views with defined ambient context
