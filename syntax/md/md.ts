@@ -24,7 +24,7 @@ namespace $ {
 		'code-docs' : /\/\/\/.*?$/ ,
 		'code-comment-block' : /(?:\/\*[^]*?\*\/|\/\+[^]*?\+\/|<![^]*?>)/ ,
 		'code-link' : /\w+:\/\/\S*/ ,
-		'code-comment-inline' : /\/\/.*?$/ ,
+		'code-comment-inline' : /(?:\/\/|# |-- ).*?$/ ,
 		'code-string' : /(?:".*?"|'.*?'|`.*?`|\/.+?\/[gmi]*|(?:^|[ \t])\\[^\n]*\n)/ ,
 		'code-number' : /[+-]?(?:\d*\.)?\d+\w*/ ,
 		'code-call' : /\.?\w+(?=\()/ ,
