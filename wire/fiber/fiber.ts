@@ -264,7 +264,7 @@ namespace $ {
 		 * Asynchronous execution.
 		 * It's SuspenseAPI consumer. So SuspenseAPI providers can be called inside.
 		 */
-		async async() {
+		async async_raw() {
 			
 			while( true ) {
 				
@@ -286,6 +286,14 @@ namespace $ {
 				
 			}
 			
+		}
+
+		async() {
+			const promise = this.async_raw() as Promise<Result> & { destructor(): void }
+
+			if (! promise.destructor) promise.destructor = () => this.destructor()
+
+			return promise
 		}
 		
 		step() {

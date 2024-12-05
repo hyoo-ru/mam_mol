@@ -229,7 +229,10 @@ declare namespace $ {
         refresh(): void;
         abstract put(next: Result | Error | Promise<Result | Error>): Result | Error | Promise<Result | Error>;
         sync(): Awaited<Result>;
-        async(): Promise<Result>;
+        async_raw(): Promise<Result>;
+        async(): Promise<Result> & {
+            destructor(): void;
+        };
         step(): Promise<null>;
     }
 }
