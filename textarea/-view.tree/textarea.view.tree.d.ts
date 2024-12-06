@@ -65,6 +65,11 @@ declare namespace $ {
 		,
 		ReturnType< $mol_text_code['highlight'] >
 	>
+	type $mol_text_code__syntax_mol_textarea_14 = $mol_type_enforce<
+		ReturnType< $mol_textarea['syntax'] >
+		,
+		ReturnType< $mol_text_code['syntax'] >
+	>
 	export class $mol_textarea extends $mol_stack {
 		clickable( next?: boolean ): boolean
 		sidebar_showed( ): boolean
@@ -82,6 +87,7 @@ declare namespace $ {
 		Edit( ): $mol_textarea_edit
 		row_numb( id: any): number
 		highlight( ): string
+		syntax( ): $mol_syntax2
 		View( ): $mol_text_code
 		attr( ): ({ 
 			'mol_textarea_clickable': ReturnType< $mol_textarea['clickable'] >,
