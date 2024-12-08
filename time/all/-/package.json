@@ -1,6 +1,6 @@
 {
   "name": "mol_time_all",
-  "version": "1.1.1179",
+  "version": "1.1.1180",
   "exports": {
     "node": {
       "import": "./node.mjs",
