@@ -5,7 +5,7 @@
 		"localized_string"
 	],
 	"sourcesContent": [
-		"$mol_lights_toggle $mol_check_icon\n\tIcon <= Lights_icon $mol_icon_brightness_6\n\thint @ \\Toggle lights\n\tchecked? <=> lights? false\n",
+		"$mol_lights_toggle $mol_check_icon\n\tIcon <= Lights_icon $mol_icon_brightness_4\n\thint @ \\Toggle lights\n\tchecked? <=> lights? false\n",
 		"\n\t\t()\n\t\t\tthis\n\t\t\t[] \\$\n\t\t\t[] \\$mol_locale\n\t\t\t[] \\text\n\t\t\t(,) #key\n\t"
 	],
 	"mappings": "AAAA,AAAA,mDAAmB,4BAAnB;AAAA,AACS;AAAA,AAAY,kDAAZ;AAAA,UAAY,GAAZ;AAAA;AAEK;AAAA,AAAA;AAAA,UAAQ,KAAR;AAAA;AAFb;AAAA,AAAA,UAAK,KAAG,cAAH,CAAL;AAAA;AACA;AAAA,AAAA,UCDC,CACC,IACA,EACA,YACA,KACA,CDJG,yBCIH,CALD,CDCD;AAAA;AACA;AAAA,AAAA,UAAS,KAAI,aAAJ,CAAT;AAAA;AAHD,CAAA;AACS,YADT,CACS,+CADT;AAGc,YAHd,CAGc,0CAHd;"
