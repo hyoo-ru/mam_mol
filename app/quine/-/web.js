@@ -2990,7 +2990,7 @@ var $;
     var $$;
     (function ($$) {
         const { per, rem } = $mol_style_unit;
-        const { hsla } = $mol_style_func;
+        const { hsla, blur } = $mol_style_func;
         $mol_style_define($mol_page, {
             display: 'flex',
             flex: {
@@ -3003,6 +3003,7 @@ var $;
             maxHeight: per(100),
             boxSizing: 'border-box',
             color: $mol_theme.text,
+            backdropFilter: blur(`3px`),
             ':focus': {
                 outline: 'none',
             },
