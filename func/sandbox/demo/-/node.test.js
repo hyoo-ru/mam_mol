@@ -1403,12 +1403,13 @@ var $;
                         break;
                 }
                 if ($mol_promise_like(result) && !handled.has(result)) {
+                    handled.add(result);
                     const put = (res) => {
                         if (this.cache === result)
                             this.put(res);
                         return res;
                     };
-                    result = result.then(put, put);
+                    result = Object.assign(result.then(put, put), { destructor: result.destructor });
                 }
             }
             catch (error) {
@@ -1419,10 +1420,11 @@ var $;
                     result = new Error(String(error), { cause: error });
                 }
                 if ($mol_promise_like(result) && !handled.has(result)) {
-                    result = result.finally(() => {
+                    handled.add(result);
+                    result = Object.assign(result.finally(() => {
                         if (this.cache === result)
                             this.absorb();
-                    });
+                    }), { destructor: result.destructor });
                 }
             }
             if ($mol_promise_like(result) && !handled.has(result)) {
