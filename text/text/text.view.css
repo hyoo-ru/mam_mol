@@ -147,7 +147,6 @@ h6[mol_text_header] {
 
 [mol_text_code_line] {
 	display: inline-block;
-	white-space: nowrap;
 }
 
 [mol_text_type="strong"] {
