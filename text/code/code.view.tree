@@ -10,7 +10,7 @@ $mol_text_code $mol_stack
 		<= Rows $mol_list
 			render_visible_only <= render_visible_only false
 			rows <= rows /
-				<= Row*0 $mol_text_code_row
+				<= Row*0 $mol_text_code_line
 					numb_showed <= sidebar_showed
 					numb <= row_numb* 0
 					text <= row_text* \
