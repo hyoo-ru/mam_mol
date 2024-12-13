@@ -181,11 +181,15 @@ namespace $ {
 				
 				if( $mol_promise_like( result ) && !handled.has( result ) ) {
 					
+					handled.add( result )
 					const put = ( res: Result )=> {
 						if( this.cache === result ) this.put( res )
 						return res
 					}
-					result = result.then( put, put )
+					result = Object.assign(
+						result.then( put, put ),
+						{ destructor: ( result as any ).destructor }
+					)
 					
 				}
 				
@@ -199,9 +203,13 @@ namespace $ {
 				
 				if( $mol_promise_like( result ) && !handled.has( result ) ) {
 					
-					result = result.finally( ()=> {
-						if( this.cache === result ) this.absorb()
-					} )
+					handled.add( result )
+					result = Object.assign(
+						result.finally( ()=> {
+							if( this.cache === result ) this.absorb()
+						} ),
+						{ destructor: ( result as any ).destructor }
+					) 
 					
 				}
 				
@@ -264,7 +272,7 @@ namespace $ {
 		 * Asynchronous execution.
 		 * It's SuspenseAPI consumer. So SuspenseAPI providers can be called inside.
 		 */
-		async async() {
+		async async_raw() {
 			
 			while( true ) {
 				
@@ -286,6 +294,14 @@ namespace $ {
 				
 			}
 			
+		}
+
+		async() {
+			const promise = this.async_raw() as Promise<Result> & { destructor(): void }
+
+			if (! promise.destructor) promise.destructor = () => this.destructor()
+
+			return promise
 		}
 		
 		step() {

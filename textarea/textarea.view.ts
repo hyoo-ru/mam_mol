@@ -107,6 +107,9 @@ namespace $.$$ {
 			return index
 		}
 		
+		syntax() {
+			return this.$.$mol_syntax2_md_code
+		}
 	}
 
 }

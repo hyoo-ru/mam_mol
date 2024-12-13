@@ -8,7 +8,7 @@ namespace $.$$ {
 		position: 'relative',
 		
 		font: {
-			family: 'monospace',
+			family: 'inherit',
 		},
 		
 		Numb: {
