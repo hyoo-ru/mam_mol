@@ -205,7 +205,7 @@
 			return obj;
 		}
 		Code_line(id){
-			const obj = new this.$.$mol_text_code_row();
+			const obj = new this.$.$mol_text_code_line();
 			(obj.numb_showed) = () => (false);
 			(obj.highlight) = () => ((this.highlight()));
 			(obj.text) = () => ((this.line_text(id)));

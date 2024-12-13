@@ -61,7 +61,7 @@ $mol_text $mol_list
 		dom_name \span
 		type <= line_type* \
 		sub <= line_content* /
-	Code_line* $mol_text_code_row
+	Code_line* $mol_text_code_line
 		numb_showed false
 		highlight <= highlight \
 		text <= line_text* \

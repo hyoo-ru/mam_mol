@@ -506,7 +506,7 @@ $mol_text_code_token_link $mol_text_code_token
 		href <= uri \
 		target \_blank
 
-$mol_text_code_row $mol_paragraph
+$mol_text_code_line $mol_paragraph
 	text \
 	minimal_height 24
 	numb_showed true
@@ -555,7 +555,7 @@ $mol_text_code $mol_stack
 		<= Rows $mol_list
 			render_visible_only <= render_visible_only false
 			rows <= rows /
-				<= Row*0 $mol_text_code_row
+				<= Row*0 $mol_text_code_line
 					numb_showed <= sidebar_showed
 					numb <= row_numb* 0
 					text <= row_text* \
@@ -749,7 +749,7 @@ $mol_text $mol_list
 		dom_name \span
 		type <= line_type* \
 		sub <= line_content* /
-	Code_line* $mol_text_code_row
+	Code_line* $mol_text_code_line
 		numb_showed false
 		highlight <= highlight \
 		text <= line_text* \

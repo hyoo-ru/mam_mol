@@ -1507,42 +1507,42 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_view__sub_mol_text_code_row_1 = $mol_type_enforce<
+	type $mol_view__sub_mol_text_code_line_1 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_text_code_token__type_mol_text_code_row_2 = $mol_type_enforce<
-		ReturnType< $mol_text_code_row['token_type'] >
+	type $mol_text_code_token__type_mol_text_code_line_2 = $mol_type_enforce<
+		ReturnType< $mol_text_code_line['token_type'] >
 		,
 		ReturnType< $mol_text_code_token['type'] >
 	>
-	type $mol_text_code_token__haystack_mol_text_code_row_3 = $mol_type_enforce<
-		ReturnType< $mol_text_code_row['token_text'] >
+	type $mol_text_code_token__haystack_mol_text_code_line_3 = $mol_type_enforce<
+		ReturnType< $mol_text_code_line['token_text'] >
 		,
 		ReturnType< $mol_text_code_token['haystack'] >
 	>
-	type $mol_text_code_token__needle_mol_text_code_row_4 = $mol_type_enforce<
-		ReturnType< $mol_text_code_row['highlight'] >
+	type $mol_text_code_token__needle_mol_text_code_line_4 = $mol_type_enforce<
+		ReturnType< $mol_text_code_line['highlight'] >
 		,
 		ReturnType< $mol_text_code_token['needle'] >
 	>
-	type $mol_text_code_token_link__haystack_mol_text_code_row_5 = $mol_type_enforce<
-		ReturnType< $mol_text_code_row['token_text'] >
+	type $mol_text_code_token_link__haystack_mol_text_code_line_5 = $mol_type_enforce<
+		ReturnType< $mol_text_code_line['token_text'] >
 		,
 		ReturnType< $mol_text_code_token_link['haystack'] >
 	>
-	type $mol_text_code_token_link__needle_mol_text_code_row_6 = $mol_type_enforce<
-		ReturnType< $mol_text_code_row['highlight'] >
+	type $mol_text_code_token_link__needle_mol_text_code_line_6 = $mol_type_enforce<
+		ReturnType< $mol_text_code_line['highlight'] >
 		,
 		ReturnType< $mol_text_code_token_link['needle'] >
 	>
-	type $mol_text_code_token_link__uri_mol_text_code_row_7 = $mol_type_enforce<
-		ReturnType< $mol_text_code_row['token_uri'] >
+	type $mol_text_code_token_link__uri_mol_text_code_line_7 = $mol_type_enforce<
+		ReturnType< $mol_text_code_line['token_uri'] >
 		,
 		ReturnType< $mol_text_code_token_link['uri'] >
 	>
-	export class $mol_text_code_row extends $mol_paragraph {
+	export class $mol_text_code_line extends $mol_paragraph {
 		numb( ): number
 		token_type( id: any): string
 		token_text( id: any): string
@@ -1561,9 +1561,9 @@ declare namespace $ {
 	
 }
 
-//# sourceMappingURL=row.view.tree.d.ts.map
+//# sourceMappingURL=line.view.tree.d.ts.map
 declare namespace $.$$ {
-    class $mol_text_code_row extends $.$mol_text_code_row {
+    class $mol_text_code_line extends $.$mol_text_code_line {
         maximal_width(): number;
         syntax(): $mol_syntax2<{
             'code-indent': RegExp;
@@ -2113,35 +2113,35 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_text_code_row__numb_showed_mol_text_code_1 = $mol_type_enforce<
+	type $mol_text_code_line__numb_showed_mol_text_code_1 = $mol_type_enforce<
 		ReturnType< $mol_text_code['sidebar_showed'] >
 		,
-		ReturnType< $mol_text_code_row['numb_showed'] >
+		ReturnType< $mol_text_code_line['numb_showed'] >
 	>
-	type $mol_text_code_row__numb_mol_text_code_2 = $mol_type_enforce<
+	type $mol_text_code_line__numb_mol_text_code_2 = $mol_type_enforce<
 		ReturnType< $mol_text_code['row_numb'] >
 		,
-		ReturnType< $mol_text_code_row['numb'] >
+		ReturnType< $mol_text_code_line['numb'] >
 	>
-	type $mol_text_code_row__text_mol_text_code_3 = $mol_type_enforce<
+	type $mol_text_code_line__text_mol_text_code_3 = $mol_type_enforce<
 		ReturnType< $mol_text_code['row_text'] >
 		,
-		ReturnType< $mol_text_code_row['text'] >
+		ReturnType< $mol_text_code_line['text'] >
 	>
-	type $mol_text_code_row__syntax_mol_text_code_4 = $mol_type_enforce<
+	type $mol_text_code_line__syntax_mol_text_code_4 = $mol_type_enforce<
 		ReturnType< $mol_text_code['syntax'] >
 		,
-		ReturnType< $mol_text_code_row['syntax'] >
+		ReturnType< $mol_text_code_line['syntax'] >
 	>
-	type $mol_text_code_row__uri_resolve_mol_text_code_5 = $mol_type_enforce<
+	type $mol_text_code_line__uri_resolve_mol_text_code_5 = $mol_type_enforce<
 		ReturnType< $mol_text_code['uri_resolve'] >
 		,
-		ReturnType< $mol_text_code_row['uri_resolve'] >
+		ReturnType< $mol_text_code_line['uri_resolve'] >
 	>
-	type $mol_text_code_row__highlight_mol_text_code_6 = $mol_type_enforce<
+	type $mol_text_code_line__highlight_mol_text_code_6 = $mol_type_enforce<
 		ReturnType< $mol_text_code['highlight'] >
 		,
-		ReturnType< $mol_text_code_row['highlight'] >
+		ReturnType< $mol_text_code_line['highlight'] >
 	>
 	type $mol_list__render_visible_only_mol_text_code_7 = $mol_type_enforce<
 		ReturnType< $mol_text_code['render_visible_only'] >
@@ -2171,7 +2171,7 @@ declare namespace $ {
 		syntax( ): any
 		uri_resolve( id: any): string
 		highlight( ): string
-		Row( id: any): $mol_text_code_row
+		Row( id: any): $mol_text_code_line
 		rows( ): readonly(any)[]
 		Rows( ): $mol_list
 		text_export( ): string
@@ -2193,7 +2193,7 @@ declare namespace $.$$ {
     class $mol_text_code extends $.$mol_text_code {
         render_visible_only(): boolean;
         text_lines(): readonly string[];
-        rows(): $.$mol_text_code_row[];
+        rows(): $.$mol_text_code_line[];
         row_text(index: number): string;
         row_numb(index: number): number;
         find_pos(offset: number): any;
@@ -3148,30 +3148,30 @@ declare namespace $ {
 		,
 		ReturnType< $mol_text_span['sub'] >
 	>
-	type $mol_text_code_row__numb_showed_mol_text_40 = $mol_type_enforce<
+	type $mol_text_code_line__numb_showed_mol_text_40 = $mol_type_enforce<
 		boolean
 		,
-		ReturnType< $mol_text_code_row['numb_showed'] >
+		ReturnType< $mol_text_code_line['numb_showed'] >
 	>
-	type $mol_text_code_row__highlight_mol_text_41 = $mol_type_enforce<
+	type $mol_text_code_line__highlight_mol_text_41 = $mol_type_enforce<
 		ReturnType< $mol_text['highlight'] >
 		,
-		ReturnType< $mol_text_code_row['highlight'] >
+		ReturnType< $mol_text_code_line['highlight'] >
 	>
-	type $mol_text_code_row__text_mol_text_42 = $mol_type_enforce<
+	type $mol_text_code_line__text_mol_text_42 = $mol_type_enforce<
 		ReturnType< $mol_text['line_text'] >
 		,
-		ReturnType< $mol_text_code_row['text'] >
+		ReturnType< $mol_text_code_line['text'] >
 	>
-	type $mol_text_code_row__uri_resolve_mol_text_43 = $mol_type_enforce<
+	type $mol_text_code_line__uri_resolve_mol_text_43 = $mol_type_enforce<
 		ReturnType< $mol_text['uri_resolve'] >
 		,
-		ReturnType< $mol_text_code_row['uri_resolve'] >
+		ReturnType< $mol_text_code_line['uri_resolve'] >
 	>
-	type $mol_text_code_row__syntax_mol_text_44 = $mol_type_enforce<
+	type $mol_text_code_line__syntax_mol_text_44 = $mol_type_enforce<
 		ReturnType< $mol_text['code_syntax'] >
 		,
-		ReturnType< $mol_text_code_row['syntax'] >
+		ReturnType< $mol_text_code_line['syntax'] >
 	>
 	type $mol_link_iconed__uri_mol_text_45 = $mol_type_enforce<
 		ReturnType< $mol_text['link_uri'] >
@@ -3264,7 +3264,7 @@ declare namespace $ {
 		Grid_cell( id: any): $mol_text
 		String( id: any): $mol_dimmer
 		Span( id: any): $mol_text_span
-		Code_line( id: any): $mol_text_code_row
+		Code_line( id: any): $mol_text_code_line
 		Link( id: any): $mol_link_iconed
 		Link_http( id: any): $mol_link_iconed
 		Embed( id: any): $mol_embed_any
@@ -3369,7 +3369,7 @@ declare namespace $.$$ {
             'code-punctuation': RegExp;
         }>;
         block_text(index: number): string;
-        block_content(index: number): ($.$mol_dimmer | $.$mol_text_code_row | $.$mol_link_iconed | $.$mol_embed_any | $mol_text_span)[];
+        block_content(index: number): ($.$mol_dimmer | $.$mol_text_code_line | $.$mol_link_iconed | $.$mol_embed_any | $mol_text_span)[];
         line_tokens(path: readonly number[]): Readonly<{
             name: string;
             found: string;
@@ -3382,7 +3382,7 @@ declare namespace $.$$ {
         };
         line_type(path: readonly number[]): string;
         line_text(path: readonly number[]): string;
-        line_content(path: readonly number[]): ($.$mol_dimmer | $.$mol_text_code_row | $.$mol_link_iconed | $.$mol_embed_any | $mol_text_span)[];
+        line_content(path: readonly number[]): ($.$mol_dimmer | $.$mol_text_code_line | $.$mol_link_iconed | $.$mol_embed_any | $mol_text_span)[];
         link_uri(path: readonly number[]): string;
         link_host(path: readonly number[]): string;
         auto_scroll(): void;

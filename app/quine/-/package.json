@@ -129,7 +129,7 @@
     "$mol_text_list",
     "$mol_text_code",
     "$mol_stack",
-    "$mol_text_code_row",
+    "$mol_text_code_line",
     "$mol_text_code_token",
     "$mol_dimmer",
     "$mol_regexp",

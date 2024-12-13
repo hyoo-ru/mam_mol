@@ -195,30 +195,30 @@ declare namespace $ {
 		,
 		ReturnType< $mol_text_span['sub'] >
 	>
-	type $mol_text_code_row__numb_showed_mol_text_40 = $mol_type_enforce<
+	type $mol_text_code_line__numb_showed_mol_text_40 = $mol_type_enforce<
 		boolean
 		,
-		ReturnType< $mol_text_code_row['numb_showed'] >
+		ReturnType< $mol_text_code_line['numb_showed'] >
 	>
-	type $mol_text_code_row__highlight_mol_text_41 = $mol_type_enforce<
+	type $mol_text_code_line__highlight_mol_text_41 = $mol_type_enforce<
 		ReturnType< $mol_text['highlight'] >
 		,
-		ReturnType< $mol_text_code_row['highlight'] >
+		ReturnType< $mol_text_code_line['highlight'] >
 	>
-	type $mol_text_code_row__text_mol_text_42 = $mol_type_enforce<
+	type $mol_text_code_line__text_mol_text_42 = $mol_type_enforce<
 		ReturnType< $mol_text['line_text'] >
 		,
-		ReturnType< $mol_text_code_row['text'] >
+		ReturnType< $mol_text_code_line['text'] >
 	>
-	type $mol_text_code_row__uri_resolve_mol_text_43 = $mol_type_enforce<
+	type $mol_text_code_line__uri_resolve_mol_text_43 = $mol_type_enforce<
 		ReturnType< $mol_text['uri_resolve'] >
 		,
-		ReturnType< $mol_text_code_row['uri_resolve'] >
+		ReturnType< $mol_text_code_line['uri_resolve'] >
 	>
-	type $mol_text_code_row__syntax_mol_text_44 = $mol_type_enforce<
+	type $mol_text_code_line__syntax_mol_text_44 = $mol_type_enforce<
 		ReturnType< $mol_text['code_syntax'] >
 		,
-		ReturnType< $mol_text_code_row['syntax'] >
+		ReturnType< $mol_text_code_line['syntax'] >
 	>
 	type $mol_link_iconed__uri_mol_text_45 = $mol_type_enforce<
 		ReturnType< $mol_text['link_uri'] >
@@ -311,7 +311,7 @@ declare namespace $ {
 		Grid_cell( id: any): $mol_text
 		String( id: any): $mol_dimmer
 		Span( id: any): $mol_text_span
-		Code_line( id: any): $mol_text_code_row
+		Code_line( id: any): $mol_text_code_line
 		Link( id: any): $mol_link_iconed
 		Link_http( id: any): $mol_link_iconed
 		Embed( id: any): $mol_embed_any
