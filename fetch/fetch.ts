@@ -79,12 +79,11 @@ namespace $ {
 	export class $mol_fetch extends $mol_object2 {
 		
 		static request( input : RequestInfo , init : RequestInit = {} ) {
-			const native = globalThis.fetch ?? $node['undici'].fetch
 			
 			const controller = new AbortController()
 			let done = false
 			
-			const promise = native( input , {
+			const promise = globalThis.fetch( input , {
 				... init,
 				signal: controller!.signal,
 			} ).finally( ()=> {
