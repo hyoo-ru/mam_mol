@@ -663,7 +663,6 @@
   "dependencies": {
     "jsdom": "*",
     "chokidar": "*",
-    "undici": "*",
     "web-audio-api": "*"
   }
 }

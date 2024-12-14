@@ -7,7 +7,6 @@ interface $node {
 	"chokidar" : typeof import( "chokidar" ) // mol/file/file.node.ts
 	"os" : typeof import( "os" ) // mol/state/local/local.node.ts
 	"buffer" : typeof import( "buffer" ) // mol/blob/blob.ts
-	"undici" : typeof import( "undici" ) // mol/fetch/fetch.ts
 	"crypto" : typeof import( "crypto" ) // mol/crypto/native/native.node.ts
 	"web-audio-api" : typeof import( "web-audio-api" ) // mol/audio/context/context.ts
 }

@@ -780,13 +780,12 @@ var $;
                         break;
                 }
                 if ($mol_promise_like(result) && !handled.has(result)) {
-                    handled.add(result);
                     const put = (res) => {
                         if (this.cache === result)
                             this.put(res);
                         return res;
                     };
-                    result = Object.assign(result.then(put, put), { destructor: result.destructor });
+                    result = result.then(put, put);
                 }
             }
             catch (error) {
@@ -797,11 +796,10 @@ var $;
                     result = new Error(String(error), { cause: error });
                 }
                 if ($mol_promise_like(result) && !handled.has(result)) {
-                    handled.add(result);
-                    result = Object.assign(result.finally(() => {
+                    result = result.finally(() => {
                         if (this.cache === result)
                             this.absorb();
-                    }), { destructor: result.destructor });
+                    });
                 }
             }
             if ($mol_promise_like(result) && !handled.has(result)) {

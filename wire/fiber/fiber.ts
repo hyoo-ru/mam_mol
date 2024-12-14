@@ -181,15 +181,11 @@ namespace $ {
 				
 				if( $mol_promise_like( result ) && !handled.has( result ) ) {
 					
-					handled.add( result )
 					const put = ( res: Result )=> {
 						if( this.cache === result ) this.put( res )
 						return res
 					}
-					result = Object.assign(
-						result.then( put, put ),
-						{ destructor: ( result as any ).destructor }
-					)
+					result = result.then( put, put )
 					
 				}
 				
@@ -203,13 +199,9 @@ namespace $ {
 				
 				if( $mol_promise_like( result ) && !handled.has( result ) ) {
 					
-					handled.add( result )
-					result = Object.assign(
-						result.finally( ()=> {
-							if( this.cache === result ) this.absorb()
-						} ),
-						{ destructor: ( result as any ).destructor }
-					) 
+					result = result.finally( ()=> {
+						if( this.cache === result ) this.absorb()
+					} )
 					
 				}
 				
