@@ -39,7 +39,8 @@ namespace $ {
 					$$.$mol_log3_warn({
 						place: '$mol_wire_task',
 						message: `Non idempotency`,
-						existen,
+						sub,
+						pubs: [ ... sub?.pub_list ?? [] , existen ],
 						next,
 						hint: 'Ignore it',
 					})
