@@ -121,11 +121,6 @@ namespace $ {
 			
 			super.destructor()
 			
-			const prev = this.cache
-			if( $mol_owning_check( this, prev ) ) {
-				prev.destructor()
-			}
-			
 			if( this.pub_from === 0 ) {
 				;( this.host as any ?? this.task )[ this.field() ] = null
 			} else {

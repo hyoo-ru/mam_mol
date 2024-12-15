@@ -69,6 +69,14 @@ namespace $ {
 				this.cursor = $mol_wire_cursor.fresh
 				if( next !== prev ) this.emit()
 				
+				if( $mol_owning_catch( this, next ) ) {
+					try {
+						(next as any)[ Symbol.toStringTag ] = (this as any)[ Symbol.toStringTag ]
+					} catch { // Promises throw in strict mode
+						Object.defineProperty( next, Symbol.toStringTag, { value: (this as any)[ Symbol.toStringTag ] } )
+					}
+				}
+
 				return next
 			}
 			

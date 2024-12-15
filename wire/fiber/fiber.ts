@@ -321,6 +321,16 @@ namespace $ {
 				}
 			} )
 		}
+
+		destructor() {
+			
+			super.destructor()
+			
+			if( $mol_owning_check( this, this.cache ) ) {
+				this.cache.destructor()
+			}
+
+		}
 		
 	}
 	
