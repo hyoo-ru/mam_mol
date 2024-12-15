@@ -181,9 +181,9 @@ namespace $ {
 				
 				if( $mol_promise_like( result ) ) {
 
-					// if( wrappers.has( result ) ) {
-					// 	result = wrappers.get( result )!
-					// } else {
+					if( wrappers.has( result ) ) {
+						result = wrappers.get( result )!.then(a=>a)
+					} else {
 						
 						const put = ( res: Result )=> {
 							if( this.cache === result ) this.put( res )
@@ -199,7 +199,7 @@ namespace $ {
 						const error = new Error( `Promise in ${ this }` )
 						Object.defineProperty( result, 'stack', { get: ()=> error.stack } )
 
-					// }
+					}
 				}
 				
 			} catch( error: any ) {
@@ -212,9 +212,9 @@ namespace $ {
 				
 				if( $mol_promise_like( result ) ) {
 					
-					// if( wrappers.has( result ) ) {
-					// 	result = wrappers.get( result )!
-					// } else {
+					if( wrappers.has( result ) ) {
+						result = wrappers.get( result )!
+					} else {
 						
 						wrappers.set( result, result = Object.assign(
 							result.finally( ()=> {
@@ -226,7 +226,7 @@ namespace $ {
 						const error = new Error( `Promise in ${ this }` )
 						Object.defineProperty( result, 'stack', { get: ()=> error.stack } )
 
-					// }
+					}
 					
 				}
 				
