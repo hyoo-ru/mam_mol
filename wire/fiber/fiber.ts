@@ -1,6 +1,6 @@
 namespace $ {
 	
-	const handled = new WeakSet< Promise< unknown > >()
+	const wrappers = new WeakMap< Promise< unknown >, Promise< any > >()
 	
 	/**
 	 * Suspendable task with support both sync/async api.
@@ -179,14 +179,27 @@ namespace $ {
 					default: result = (this.task as any).call( this.host!, ... this.args ); break
 				}
 				
-				if( $mol_promise_like( result ) && !handled.has( result ) ) {
-					
-					const put = ( res: Result )=> {
-						if( this.cache === result ) this.put( res )
-						return res
-					}
-					result = result.then( put, put )
-					
+				if( $mol_promise_like( result ) ) {
+
+					// if( wrappers.has( result ) ) {
+					// 	result = wrappers.get( result )!
+					// } else {
+						
+						const put = ( res: Result )=> {
+							if( this.cache === result ) this.put( res )
+							return res
+						}
+
+						wrappers.set( result, result = Object.assign(
+							result.then( put, put ),
+							{ destructor: ( result as any ).destructor || (()=> {}) }
+						) )
+						wrappers.set( result, result )
+
+						const error = new Error( `Promise in ${ this }` )
+						Object.defineProperty( result, 'stack', { get: ()=> error.stack } )
+
+					// }
 				}
 				
 			} catch( error: any ) {
@@ -197,25 +210,25 @@ namespace $ {
 					result = new Error( String( error ), { cause: error } )
 				}
 				
-				if( $mol_promise_like( result ) && !handled.has( result ) ) {
+				if( $mol_promise_like( result ) ) {
 					
-					result = result.finally( ()=> {
-						if( this.cache === result ) this.absorb()
-					} )
+					// if( wrappers.has( result ) ) {
+					// 	result = wrappers.get( result )!
+					// } else {
+						
+						wrappers.set( result, result = Object.assign(
+							result.finally( ()=> {
+								if( this.cache === result ) this.absorb()
+							} ),
+							{ destructor: ( result as any ).destructor || (()=> {}) }
+						) )
+						
+						const error = new Error( `Promise in ${ this }` )
+						Object.defineProperty( result, 'stack', { get: ()=> error.stack } )
+
+					// }
 					
 				}
-				
-			}
-			
-			if( $mol_promise_like( result ) && !handled.has( result ) ) {
-					
-				result = Object.assign( result, {
-					destructor: (result as any)['destructor'] ?? (()=> {})
-				} )
-				handled.add( result )
-				
-				const error = new Error( `Promise in ${ this }` )
-				Object.defineProperty( result, 'stack', { get: ()=> error.stack } )
 				
 			}
 			

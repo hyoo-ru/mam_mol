@@ -1159,7 +1159,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    const handled = new WeakSet();
+    const wrappers = new WeakMap();
     class $mol_wire_fiber extends $mol_wire_pub_sub {
         task;
         host;
@@ -1294,13 +1294,16 @@ var $;
                         result = this.task.call(this.host, ...this.args);
                         break;
                 }
-                if ($mol_promise_like(result) && !handled.has(result)) {
+                if ($mol_promise_like(result)) {
                     const put = (res) => {
                         if (this.cache === result)
                             this.put(res);
                         return res;
                     };
-                    result = result.then(put, put);
+                    wrappers.set(result, result = Object.assign(result.then(put, put), { destructor: result.destructor || (() => { }) }));
+                    wrappers.set(result, result);
+                    const error = new Error(`Promise in ${this}`);
+                    Object.defineProperty(result, 'stack', { get: () => error.stack });
                 }
             }
             catch (error) {
@@ -1310,20 +1313,14 @@ var $;
                 else {
                     result = new Error(String(error), { cause: error });
                 }
-                if ($mol_promise_like(result) && !handled.has(result)) {
-                    result = result.finally(() => {
+                if ($mol_promise_like(result)) {
+                    wrappers.set(result, result = Object.assign(result.finally(() => {
                         if (this.cache === result)
                             this.absorb();
-                    });
+                    }), { destructor: result.destructor || (() => { }) }));
+                    const error = new Error(`Promise in ${this}`);
+                    Object.defineProperty(result, 'stack', { get: () => error.stack });
                 }
-            }
-            if ($mol_promise_like(result) && !handled.has(result)) {
-                result = Object.assign(result, {
-                    destructor: result['destructor'] ?? (() => { })
-                });
-                handled.add(result);
-                const error = new Error(`Promise in ${this}`);
-                Object.defineProperty(result, 'stack', { get: () => error.stack });
             }
             if (!$mol_promise_like(result)) {
                 this.track_cut();
