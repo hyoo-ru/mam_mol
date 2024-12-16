@@ -2601,7 +2601,6 @@ var $;
             const win = this.$.$mol_dom_context;
             if (win.parent !== win.self && !win.document.hasFocus())
                 return;
-            this.focused(true);
         }
         destructor() {
             const node = $mol_wire_probe(() => this.dom_node());
