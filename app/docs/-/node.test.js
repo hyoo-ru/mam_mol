@@ -1687,7 +1687,8 @@ var $;
                     $$.$mol_log3_warn({
                         place: '$mol_wire_task',
                         message: `Non idempotency`,
-                        existen,
+                        sub,
+                        pubs: [...sub?.pub_list ?? [], existen],
                         next,
                         hint: 'Ignore it',
                     });
@@ -4206,8 +4207,11 @@ var $;
                     stabilityThreshold: 100,
                 },
             });
-            watcher
-                .on('all', (type, path) => {
+            watcher.on('all', (type, path) => {
+                if (path instanceof Error) {
+                    this.$.$mol_fail_log(path);
+                    return;
+                }
                 const file = $mol_file.relative(path.replace(/\\/g, '/'));
                 file.reset();
                 if (type === 'change') {
@@ -4216,8 +4220,7 @@ var $;
                 else {
                     file.parent().reset();
                 }
-            })
-                .on('error', $mol_fail_log);
+            });
             return {
                 destructor() {
                     watcher.close();
@@ -39834,6 +39837,19 @@ var $;
                 $mol_jsx("strong", null, "world"),
                 "!");
             $mol_assert_equal(dom.outerHTML, '<div>hello<strong>world</strong>!</div>');
+        },
+        'Make fragment'() {
+            const dom = $mol_jsx($mol_jsx_frag, null,
+                $mol_jsx("br", null),
+                $mol_jsx("hr", null));
+            $mol_assert_equal($mol_dom_serialize(dom), '<br xmlns="http://www.w3.org/1999/xhtml" /><hr xmlns="http://www.w3.org/1999/xhtml" />');
+        },
+        'Spread fragment'() {
+            const dom = $mol_jsx("div", null,
+                $mol_jsx($mol_jsx_frag, null,
+                    $mol_jsx("br", null),
+                    $mol_jsx("hr", null)));
+            $mol_assert_equal(dom.outerHTML, '<div><br><hr></div>');
         },
         'Function as component'() {
             const Button = (props, target) => {

@@ -4,6 +4,8 @@ namespace $ {
 	export interface $mol_wire_sub extends $mol_wire_pub {
 		
 		temp: boolean
+
+		pub_list: $mol_wire_pub[]
 		
 		/**
 		 * Begin auto wire to publishers.

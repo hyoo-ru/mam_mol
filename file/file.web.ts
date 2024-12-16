@@ -18,7 +18,7 @@ namespace $ {
 			: ''
 		
 		@ $mol_mem
-		buffer( next? : Uint8Array ) {
+		buffer( next? : Uint8Array< ArrayBuffer > ) {
 			if (next !== undefined) throw new Error(`Saving content not supported: ${this.path}`)
 
 			const response = $mol_fetch.response(this.path())
@@ -77,7 +77,7 @@ namespace $ {
 			throw new Error('$mol_file_web.relate() not implemented')
 		}
 		
-		append( next : Uint8Array | string ) {
+		append( next : Uint8Array< ArrayBuffer > | string ) {
 			throw new Error('$mol_file_web.append() not implemented')
 		}
 	}

@@ -91,7 +91,7 @@ namespace $ {
 			return match ? match[ 1 ].substring( 1 ) : ''
 		}
 
-		abstract buffer( next? : Uint8Array ): Uint8Array
+		abstract buffer( next? : Uint8Array< ArrayBuffer > ): Uint8Array< ArrayBuffer >
 
 		@ $mol_mem
 		text(next?: string, virt?: 'virt') {
@@ -121,7 +121,7 @@ namespace $ {
 
 		abstract relate( base?: $mol_file ): string
 		
-		abstract append( next : Uint8Array | string ): void
+		abstract append( next : Uint8Array< ArrayBuffer > | string ): void
 		
 		find(
 			include? : RegExp ,
