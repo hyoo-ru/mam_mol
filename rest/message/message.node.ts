@@ -20,7 +20,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem
-		data(): null | string | Uint8Array | Element | object {
+		data(): null | string | Uint8Array< ArrayBuffer > | Element | object {
 			return null
 		}
 		
@@ -43,7 +43,7 @@ namespace $ {
 		}
 		
 		reply(
-			data: null | string | Uint8Array | Element | object,
+			data: null | string | Uint8Array< ArrayBuffer > | Element | object,
 			meta?: {
 				type?: $mol_rest_port_mime,
 				code?: $mol_rest_code,
@@ -68,7 +68,7 @@ namespace $ {
 		@ $mol_action
 		derive(
 			method: string,
-			data: null | string | Uint8Array | Element | object,
+			data: null | string | Uint8Array< ArrayBuffer > | Element | object,
 		) {
 			return $mol_rest_message.make({
 				port: this.port,
