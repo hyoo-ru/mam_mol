@@ -14,7 +14,7 @@ namespace $ {
 		'': { id: $mol_dom_safe_attr },
 		
 		// special
-		'': { href: $mol_dom_safe_uri },
+		a: { href: $mol_dom_safe_uri },
 		img: { src: $mol_dom_safe_uri },
 		object: { src: $mol_dom_safe_uri },
 
