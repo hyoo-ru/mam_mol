@@ -67,7 +67,7 @@ namespace $ {
 			} )
 
 			watcher
-			.on( 'all' , ( type , path )=> {
+			.on( 'all' , ( type: string , path: string )=> {
 				
 				const file = $mol_file.relative( path.replace( /\\/g , '/' ) )
 
