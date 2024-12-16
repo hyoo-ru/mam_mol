@@ -20,7 +20,7 @@ namespace $ {
 		}
 	}
 
-	function buffer_normalize(buf: Buffer): Uint8Array {
+	function buffer_normalize(buf: Buffer< ArrayBuffer >): Uint8Array< ArrayBuffer > {
 		return new Uint8Array(buf.buffer, buf.byteOffset, buf.byteLength)
 	}
 	
@@ -130,7 +130,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem
-		buffer( next? : Uint8Array ) {
+		buffer( next? : Uint8Array< ArrayBuffer > ) {
 
 			const path = this.path()
 			if( next === undefined ) {
@@ -141,7 +141,7 @@ namespace $ {
 
 					const prev = $mol_mem_cached( ()=> this.buffer() )
 					
-					next = buffer_normalize( $node.fs.readFileSync( path ) )
+					next = buffer_normalize( $node.fs.readFileSync( path ) as Buffer< ArrayBuffer > )
 
 					if( prev !== undefined && !$mol_compare_array( prev, next ) ) {
 						this.$.$mol_log3_rise({
@@ -213,7 +213,7 @@ namespace $ {
 			return $node.path.relative( base.path() , this.path() ).replace( /\\/g , '/' )
 		}
 		
-		append( next : Uint8Array | string ) {
+		append( next : Uint8Array< ArrayBuffer > | string ) {
 			const path = this.path()
 			try {
 				$node.fs.appendFileSync( path , next )

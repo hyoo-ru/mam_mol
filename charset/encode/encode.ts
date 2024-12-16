@@ -4,7 +4,7 @@ namespace $ {
 	const encoder = new TextEncoder()
 
 	export function $mol_charset_encode(value: string) {
-		return encoder.encode(value)
+		return encoder.encode(value) as Uint8Array< ArrayBuffer >
 	}
 
 }
