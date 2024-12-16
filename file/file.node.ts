@@ -66,8 +66,12 @@ namespace $ {
 				},
 			} )
 
-			watcher
-			.on( 'all' , ( type: string , path: string )=> {
+			watcher.on( 'all' , ( type , path )=> {
+
+				if( path instanceof Error ) {
+					this.$.$mol_fail_log( path )
+					return
+				}
 				
 				const file = $mol_file.relative( path.replace( /\\/g , '/' ) )
 
@@ -80,7 +84,6 @@ namespace $ {
 				}
 
 			} )
-			.on( 'error' , $mol_fail_log )
 			
 			return {
 				destructor() {
