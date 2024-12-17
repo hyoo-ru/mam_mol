@@ -2537,7 +2537,8 @@ var $;
                     stabilityThreshold: 100,
                 },
             });
-            watcher.on('all', (type, path) => {
+            watcher
+                .on('all', (type, path) => {
                 if (path instanceof Error) {
                     this.$.$mol_fail_log(path);
                     return;
@@ -2550,7 +2551,8 @@ var $;
                 else {
                     file.parent().reset();
                 }
-            });
+            })
+                .on('error', $mol_fail_log);
             return {
                 destructor() {
                     watcher.close();

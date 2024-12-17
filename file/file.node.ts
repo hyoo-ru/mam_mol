@@ -66,7 +66,8 @@ namespace $ {
 				},
 			} )
 
-			watcher.on( 'all' , ( type , path )=> {
+			watcher
+			.on( 'all' , ( type , path )=> {
 
 				if( path instanceof Error ) {
 					this.$.$mol_fail_log( path )
@@ -84,6 +85,7 @@ namespace $ {
 				}
 
 			} )
+			.on( 'error' , $mol_fail_log )
 			
 			return {
 				destructor() {
