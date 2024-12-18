@@ -20,7 +20,7 @@ namespace $ {
 		}
 	}
 
-	function buffer_normalize(buf: Buffer): Uint8Array {
+	function buffer_normalize(buf: Buffer< ArrayBuffer >): Uint8Array< ArrayBuffer > {
 		return new Uint8Array(buf.buffer, buf.byteOffset, buf.byteLength)
 	}
 

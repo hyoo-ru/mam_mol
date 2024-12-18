@@ -491,7 +491,7 @@ namespace $ {
 			// } )
 			
 			// new this.$.$mol_after_timeout( 1000, ()=> {
-				this.focused( true )
+				// this.focused( true )
 			// } )
 			
 		}
