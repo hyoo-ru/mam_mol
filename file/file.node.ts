@@ -212,7 +212,7 @@ namespace $ {
 				encoding: 'binary',
 			})
 
-			return Readable.toWeb(stream) as ReadableStream<Uint8Array>
+			return Readable.toWeb(stream) as ReadableStream<Uint8Array<ArrayBuffer>>
 		}
 
 		@ $mol_mem
@@ -225,7 +225,7 @@ namespace $ {
 				encoding: 'binary',
 			})
 
-			return Writable.toWeb(stream) as WritableStream<Uint8Array>
+			return Writable.toWeb(stream) as WritableStream<Uint8Array<ArrayBuffer>>
 		}
 
 		open( ... modes: readonly $mol_file_mode[] ) {

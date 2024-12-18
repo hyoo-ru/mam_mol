@@ -38,7 +38,7 @@ namespace $ {
 		protected override read() {
 			try {
 				const response = this.fetch({})
-				return new Uint8Array(response.buffer())
+				return new Uint8Array(response.buffer()) as Uint8Array<ArrayBuffer>
 			} catch (error) {
 				if (
 					error instanceof Error
@@ -50,7 +50,7 @@ namespace $ {
 			}
 		}
 
-		protected override write( body : Uint8Array ) { this.fetch({ method: 'PUT', body }) }
+		protected override write( body : Uint8Array<ArrayBuffer> ) { this.fetch({ method: 'PUT', body }) }
 		protected override ensure() { this.fetch({ method: 'MKCOL' }) }
 		protected override drop() { this.fetch({ method: 'DELETE' }) }
 
@@ -94,7 +94,7 @@ namespace $ {
 				headers: ! opts.start ? {} : {
 					'Range': `bytes=${opts.start}-${opts.end ?? ''}`
 				}
-			}).stream() || $mol_fail(new Error('Not found'))
+			}).stream() as ReadableStream<Uint8Array<ArrayBuffer>> | null || $mol_fail(new Error('Not found'))
 		}
 
 		protected override info() {

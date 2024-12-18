@@ -70,7 +70,7 @@ namespace $ {
 			if (/([\/\\]\.|___$)/.test( path )) return
 
 			const file = this.relative( path.at(-1) === '/' ? path.slice(0, -1) : path )
-			console.log(type, path)
+			// console.log(type, path)
 
 			// add (change): добавился файл - у parent надо обновить список sub, если он был заюзан
 			// change, unlink (rename): обновился или удалился файл - ресетим
@@ -148,12 +148,6 @@ namespace $ {
 			с точки зрения реактивной системы hyoo/board еще не существует.
 			*/
 			this.changed.add(this.absolute(path))
-			// const stack = new Error().stack
-			// this.watch_wd = new $mol_after_timeout(10000, () => {
-			// 	console.error('Lock timeout')
-			// 	console.error(stack)
-			// })
-			
 		}
 	
 		// protected static watch_wd = null as null | $mol_after_timeout
@@ -187,7 +181,7 @@ namespace $ {
 		@ $mol_mem
 		version() {
 			const next = this.stat()?.mtime.getTime().toString( 36 ).toUpperCase() ?? ''
-			console.log('version', next, this.path())
+			// console.log('version', next, this.path())
 			return next
 		}
 
@@ -195,29 +189,29 @@ namespace $ {
 		protected ensure() {}
 		protected drop() {}
 		protected copy(to: string) {}
-		protected read() { return new Uint8Array }
-		protected write(buffer: Uint8Array) { }
+		protected read(): Uint8Array<ArrayBuffer> { return new Uint8Array }
+		protected write(buffer: Uint8Array<ArrayBuffer>) { }
 		protected kids() {
 			return [] as readonly this[]
 		}
 
 		@ $mol_mem_key
 		readable(opts: { start?: number, end?: number }) {
-			return new ReadableStream<Uint8Array>
+			return new ReadableStream<Uint8Array<ArrayBuffer>>
 		}
 
 		@ $mol_mem_key
 		writable(opts: { start?: number }) {
-			return new WritableStream<Uint8Array>
+			return new WritableStream<Uint8Array<ArrayBuffer>>
 		}
 
 		// open( ... modes: readonly $mol_file_mode[] ) { return 0 }
 
 		@ $mol_mem
-		buffer( next? : Uint8Array ): Uint8Array {
+		buffer( next? : Uint8Array<ArrayBuffer> ): Uint8Array<ArrayBuffer> {
 
 			// Если версия пустая - возвращаем пустой буфер
-			let readed = new Uint8Array
+			let readed: Uint8Array<ArrayBuffer> = new Uint8Array()
 
 			if( next === undefined ) {
 				// Если меняется версия файла, буфер надо перечитать
