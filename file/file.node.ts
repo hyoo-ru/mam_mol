@@ -147,7 +147,7 @@ namespace $ {
 			const path = this.path()
 
 			try {
-				return buffer_normalize($node.fs.readFileSync( path ))
+				return buffer_normalize($node.fs.readFileSync( path ) as Buffer< ArrayBuffer >)
 			} catch( error: any ) {
 				if (! $mol_promise_like(error)) {
 					error.message += '\n' + path
