@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_build_ensure_npm extends $mol_object {
+	export class $mol_build_ensure_npm extends $mol_object implements $mol_build_ensure_plugin {
 		root() { return $mol_file.absolute('') }
 
 		@ $mol_mem_key

@@ -20,28 +20,8 @@ namespace $ {
 		}
 	}
 
-	function buffer_normalize(buf: Buffer< ArrayBuffer >): Uint8Array< ArrayBuffer > {
+	export function $mol_file_node_buffer_normalize(buf: Buffer< ArrayBuffer >): Uint8Array< ArrayBuffer > {
 		return new Uint8Array(buf.buffer, buf.byteOffset, buf.byteLength)
-	}
-
-	enum file_modes {
-		/** create if it doesn't already exist */
-		create = $node.fs.constants.O_CREAT,
-		/** truncate to zero size if it already exists */
-		exists_truncate = $node.fs.constants.O_TRUNC,
-		/** throw exception if it already exists */
-		exists_fail = $node.fs.constants.O_EXCL,
-		read_only = $node.fs.constants.O_RDONLY,
-		write_only = $node.fs.constants.O_WRONLY,
-		read_write = $node.fs.constants.O_RDWR,
-		/** data will be appended to the end */
-		append = $node.fs.constants.O_APPEND,
-	}
-
-	export type $mol_file_mode = keyof typeof file_modes
-
-	function mode_mask(modes: readonly $mol_file_mode[]) {
-		return modes.reduce( ( res, mode )=> res | file_modes[ mode ], 0 )
 	}
 
 	export class $mol_file_node extends $mol_file {
@@ -147,7 +127,7 @@ namespace $ {
 			const path = this.path()
 
 			try {
-				return buffer_normalize($node.fs.readFileSync( path ) as Buffer< ArrayBuffer >)
+				return $mol_file_node_buffer_normalize($node.fs.readFileSync( path ) as Buffer< ArrayBuffer >)
 			} catch( error: any ) {
 				if (! $mol_promise_like(error)) {
 					error.message += '\n' + path
@@ -226,13 +206,6 @@ namespace $ {
 			})
 
 			return Writable.toWeb(stream) as WritableStream<Uint8Array<ArrayBuffer>>
-		}
-
-		open( ... modes: readonly $mol_file_mode[] ) {
-			return $node.fs.openSync(
-				this.path(),
-				mode_mask(modes)
-			)
 		}
 
 	}

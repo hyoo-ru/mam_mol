@@ -413,6 +413,13 @@ namespace $ {
 			return this.path()
 		}
 		
+		@ $mol_action
+		open( ... modes: readonly $mol_file_transaction_mode[] ) {
+			return this.$.$mol_file_transaction.make({
+				path: () => this.path(),
+				modes: () => modes
+			})
+		}
 	}
 
 }
