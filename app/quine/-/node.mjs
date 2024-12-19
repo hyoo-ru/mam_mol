@@ -5845,10 +5845,6 @@ var $;
             });
             watcher
                 .on('all', (type, path) => {
-                if (path instanceof Error) {
-                    this.$.$mol_fail_log(path);
-                    return;
-                }
                 const file = $mol_file.relative(path.replace(/\\/g, '/'));
                 file.reset();
                 if (type === 'change') {
