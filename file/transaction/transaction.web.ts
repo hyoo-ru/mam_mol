@@ -1,7 +1,7 @@
 namespace $ {
 	export class $mol_file_transaction_web extends $mol_file_transaction {
 		override write(options: {
-			buffer: ArrayBufferView,
+			buffer: ArrayBufferView | string | readonly ArrayBufferView[],
 			offset?: number | null,
 			length?: number | null,
 			position?: number | null,

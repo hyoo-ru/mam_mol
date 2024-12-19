@@ -24,12 +24,22 @@ namespace $ {
 			return $node.fs.openSync(this.path(), mode_mask(this.modes()) )
 		}
 
-		override write({ buffer, offset = 0, length = buffer.byteLength, position }: {
-			buffer: ArrayBufferView,
+		override write({ buffer, offset = 0, length, position = null }: {
+			buffer: ArrayBufferView | string | readonly ArrayBufferView[],
 			offset?: number | null,
 			length?: number | null,
 			position?: number | null,
 		}) {
+			if (Array.isArray(buffer)) {
+				return $node.fs.writevSync( this.descr(), buffer, position ?? undefined)
+			}
+
+			if (typeof buffer === 'string') {
+				return $node.fs.writeSync( this.descr(), buffer, position )
+			}
+
+			length = length ?? (buffer as ArrayBufferView).byteLength
+
 			return $node.fs.writeSync( this.descr(), buffer as NodeJS.ArrayBufferView, offset, length, position )
 		}
 
