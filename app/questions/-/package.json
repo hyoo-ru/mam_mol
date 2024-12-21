@@ -214,7 +214,6 @@
     "$mol_dom_parse"
   ],
   "dependencies": {
-    "jsdom": "*",
-    "node:stream": "*"
+    "jsdom": "*"
   }
 }

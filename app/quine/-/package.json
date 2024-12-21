@@ -198,7 +198,6 @@
     "$mol_expander"
   ],
   "dependencies": {
-    "jsdom": "*",
-    "node:stream": "*"
+    "jsdom": "*"
   }
 }

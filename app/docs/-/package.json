@@ -666,7 +666,6 @@
   ],
   "dependencies": {
     "jsdom": "*",
-    "node:stream": "*",
     "web-audio-api": "*"
   }
 }

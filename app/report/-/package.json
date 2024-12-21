@@ -176,7 +176,6 @@
     "$mol_icon_plus"
   ],
   "dependencies": {
-    "jsdom": "*",
-    "node:stream": "*"
+    "jsdom": "*"
   }
 }
