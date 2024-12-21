@@ -20,217 +20,196 @@ namespace $ {
 		}
 	}
 
-	function buffer_normalize(buf: Buffer< ArrayBuffer >): Uint8Array< ArrayBuffer > {
+	export function $mol_file_node_buffer_normalize(buf: Buffer< ArrayBuffer >): Uint8Array< ArrayBuffer > {
 		return new Uint8Array(buf.buffer, buf.byteOffset, buf.byteLength)
-	}
-	
-	export enum $mol_file_mode_open {
-		/** create if it doesn't already exist */
-		create = $node.fs.constants.O_CREAT,
-		/** truncate to zero size if it already exists */
-		exists_truncate = $node.fs.constants.O_TRUNC,
-		/** throw exception if it already exists */
-		exists_fail = $node.fs.constants.O_EXCL,
-		read_only = $node.fs.constants.O_RDONLY,
-		write_only = $node.fs.constants.O_WRONLY,
-		read_write = $node.fs.constants.O_RDWR,
-		/** data will be appended to the end */
-		append = $node.fs.constants.O_APPEND,
 	}
 
 	export class $mol_file_node extends $mol_file {
-		
-		@ $mol_mem_key
-		static absolute( path : string ) {
-			return this.make({
-				path : $mol_const( path )
-			})
+
+		static relative<This extends typeof $mol_file>(this: This, path : string ) {
+			return this.absolute<This>( $node.path.resolve( this.base, path ).replace( /\\/g , '/' ) )
 		}
 
-		static relative( path : string ) {
-			return this.absolute( $node.path.resolve( this.base, path ).replace( /\\/g , '/' ) )
-		}
-		
 		@ $mol_mem
-		watcher() {
+		override watcher(reset?: null) {
+			const path = this.path()
+			const root = this.root()
+			// Если папки/файла нет, watch упадет с ошибкой
+			// exists обратится к parent.version и parent.watcher
+			// Поэтому у root-папки и выше не надо вызывать exists, иначе поднимется выше base до корня диска
+			// exists вызывать надо, что б пересоздавать вотчер при появлении папки или файла
+			if (! root && ! this.exists() ) return super.watcher()
 
-			if( /\/\./.test( this.path() ) ) return { destructor(){} }
-			
-			const watcher = $node.chokidar.watch( this.path() , {
-				persistent : true ,
-				ignored: path => /([\/\\]\.|___$)/.test( path ) ,
-				depth :  0 ,
-				ignoreInitial : true ,
-				awaitWriteFinish: {
-					stabilityThreshold: 100,
-				},
-			} )
+			let watcher
 
-			watcher
-			.on( 'all' , ( type , path )=> {
-				
-				const file = $mol_file.relative( path.replace( /\\/g , '/' ) )
+			try {
+				// Между exists и watch файл может удалиться, в любом случае надо обрабатывать ENOENT
+				watcher = $node.fs.watch( path )
+			} catch (error: any) {
+				if ( ! (error instanceof Error) ) error = new Error('Unknown watch error',  {cause: error})
+				error.message += '\n' + path
 
-				file.reset()
-				
-				if( type === 'change' ) {
-					this.stat( null )
-				} else {
-					file.parent().reset()
+				if ( root || error.code !== 'ENOENT' ) {
+					this.$.$mol_fail_log(error)
 				}
 
-			} )
-			.on( 'error' , $mol_fail_log )
-			
+				// Если файла нет - вотчер не создается, создастся потом, когда exists поменяется на true.
+				// Если создание упало с другой ошибкой - не ломаем работу mol_file, деградируем до не реактивной fs.
+
+				return super.watcher()
+			}
+
+			watcher.on('change', (type: 'change' | 'rename', name) => {
+				if (! name) return
+				const path = $node.path.join( this.path(), name.toString() )
+				;(this.constructor as typeof $mol_file_base).changed_add(type, path)
+			})
+
+			watcher.on('error', e => this.$.$mol_fail_log(e) )
+
+			let destructed = false
+
+			watcher.on('close', () => {
+				// Если в процессе работы вотчер сам закрылся, надо его переоткрыть
+				if (! destructed) setTimeout(() => $mol_wire_async(this).watcher(null), 500)
+			})
+
 			return {
 				destructor() {
+					destructed = true
 					watcher.close()
 				}
 			}
-
 		}
 
-		@ $mol_mem
-		stat( next? : $mol_file_stat | null, virt?: 'virt' ) {
-			
-			let stat = next
-			const path = this.path()
-
-			this.parent().watcher()
-			
-			if( virt ) return next!
-			
+		@ $mol_action
+		protected override info( path: string ) {
 			try {
-				stat = next ?? stat_convert($node.fs.statSync( path, { throwIfNoEntry: false } ))
+				return stat_convert($node.fs.statSync(path))
 			} catch( error: any ) {
-				if (error.code === 'ENOENT') error = new $mol_file_not_found(`File not found`)
-				error.message += '\n' + path
-				return this.$.$mol_fail_hidden(error)
+				if (this.$.$mol_fail_catch(error)) {
+					if (error.code === 'ENOENT') return null
+					error.message += '\n' + path
+					this.$.$mol_fail_hidden(error)
+				}
 			}
-
-			return stat
+			return null
 		}
 
-		@ $mol_mem
-		ensure() {
+		@ $mol_action
+		protected override ensure() {
 			const path = this.path()
-
 			try {
-				$node.fs.mkdirSync( path )
+				$node.fs.mkdirSync( path, { recursive: true } )
+				return null
 			} catch( e: any ) {
-				e.message += '\n' + path
-				this.$.$mol_fail_hidden(e)
+				if (this.$.$mol_fail_catch(e)) {
+					if (e.code === 'EEXIST') return null
+					e.message += '\n' + path
+					this.$.$mol_fail_hidden(e)
+				}
 			}
 
+		}
+
+		@ $mol_action
+		protected override copy(to: string) {
+			$node.fs.copyFileSync(this.path(), to)
 		}
 		
 		@ $mol_action
-		drop() {
+		protected override drop() {
 			$node.fs.unlinkSync( this.path() )
 		}
-		
-		@ $mol_mem
-		buffer( next? : Uint8Array< ArrayBuffer > ) {
 
+		@ $mol_action
+		protected override read() {
 			const path = this.path()
-			if( next === undefined ) {
 
-				if( !this.stat() ) return new Uint8Array
-				
-				try {
-
-					const prev = $mol_mem_cached( ()=> this.buffer() )
-					
-					next = buffer_normalize( $node.fs.readFileSync( path ) as Buffer< ArrayBuffer > )
-
-					if( prev !== undefined && !$mol_compare_array( prev, next ) ) {
-						this.$.$mol_log3_rise({
-							place: `$mol_file_node..buffer()`,
-							message: 'Changed' ,
-							path: this.relate() ,
-						})
-					}
-
-					return next
-
-				} catch( error: any ) {
-
+			try {
+				return $mol_file_node_buffer_normalize($node.fs.readFileSync( path ) as Buffer< ArrayBuffer >)
+			} catch( error: any ) {
+				if (! $mol_promise_like(error)) {
 					error.message += '\n' + path
-					return this.$.$mol_fail_hidden( error )
-
 				}
-				
+
+				$mol_fail_hidden( error )
 			}
-			
-			this.parent().exists( true )
-			
-			const now = new Date
-			this.stat( {
-				type: 'file',
-				size: next.length,
-				atime: now,
-				mtime: now,
-				ctime: now,
-			}, 'virt' )
+		}
+
+		@ $mol_action
+		protected override write(buffer: Uint8Array) {
+			const path = this.path()
 
 			try {
 
-				$node.fs.writeFileSync( path, next )
+				$node.fs.writeFileSync( path, buffer )
 
 			} catch( error: any ) {
-
-				error.message += '\n' + path
+				if (this.$.$mol_fail_catch(error)) {
+					error.message += '\n' + path
+				}
 				return this.$.$mol_fail_hidden( error )
-
 			}
-			
-			return next
 
 		}
-		@ $mol_mem
-		sub() : $mol_file[] {
-			if (! this.exists() ) return []
-			if ( this.type() !== 'dir') return []
 
+		protected override kids() {
 			const path = this.path()
-			this.stat()
 
 			try {
-				return $node.fs.readdirSync( path )
+				const kids = $node.fs.readdirSync( path )
 					.filter( name => !/^\.+$/.test( name ) )
 					.map( name => this.resolve( name ) )
+
+				return kids
 			} catch( e: any ) {
-				e.message += '\n' + path
-				return this.$.$mol_fail_hidden(e)
+				if (this.$.$mol_fail_catch(e)) {
+					if (e.code === 'ENOENT') return []
+					e.message += '\n' + path
+				}
+				$mol_fail_hidden(e)
 			}
 		}
 		
-		resolve( path : string ) {
-			return ( this.constructor as typeof $mol_file ).relative( $node.path.join( this.path() , path ) )
+		override resolve( path : string ) {
+			return ( this.constructor as typeof $mol_file )
+				.relative( $node.path.join( this.path() , path ) ) as this
 		}
 		
-		relate( base = ( this.constructor as typeof $mol_file ).relative( '.' )) {
+		override relate( base = ( this.constructor as typeof $mol_file ).relative( '.' )) {
 			return $node.path.relative( base.path() , this.path() ).replace( /\\/g , '/' )
 		}
-		
-		append( next : Uint8Array< ArrayBuffer > | string ) {
-			const path = this.path()
-			try {
-				$node.fs.appendFileSync( path , next )
-			} catch( e: any ) {
-				e.message += '\n' + path
-				return this.$.$mol_fail_hidden(e)
-			}
+
+		@ $mol_mem_key
+		override readable(opts: { start?: number, end?: number }) {
+			const { Readable } = $node['node:stream'] as typeof import('stream')
+			const stream = $node.fs.createReadStream(this.path(), {
+				flags: 'r',
+				autoClose: true,
+				start: opts?.start,
+				end: opts?.end,
+				encoding: 'binary',
+			})
+
+			return Readable.toWeb(stream) as ReadableStream<Uint8Array<ArrayBuffer>>
 		}
-		
-		open( ... modes: readonly ( keyof typeof $mol_file_mode_open )[] ) {
-			return $node.fs.openSync(
-				this.path(),
-				modes.reduce( ( res, mode )=> res | $mol_file_mode_open[ mode ], 0 ),
-			)
+
+		@ $mol_mem
+		override writable(opts?: { start?: number }) {
+			const { Writable } = $node['node:stream'] as typeof import('stream')
+			const stream = $node.fs.createWriteStream(this.path(), {
+				flags: 'w+',
+				autoClose: true,
+				start: opts?.start,
+				encoding: 'binary',
+			})
+
+			return Writable.toWeb(stream) as WritableStream<Uint8Array<ArrayBuffer>>
 		}
 
 	}
+
 
 	$.$mol_file = $mol_file_node
 }
