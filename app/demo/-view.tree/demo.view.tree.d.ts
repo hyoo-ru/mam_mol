@@ -12,7 +12,7 @@ declare namespace $ {
 		,
 		ReturnType< $mol_hotkey['mod_ctrl'] >
 	>
-	type _mol_app_demo_3 = $mol_type_enforce<
+	type __mol_app_demo_3 = $mol_type_enforce<
 		Parameters< $mol_app_demo['search_start'] >[0]
 		,
 		Parameters< ReturnType< $mol_app_demo['Menu'] >['search_start'] >[0]
@@ -22,7 +22,7 @@ declare namespace $ {
 		,
 		ReturnType< $mol_link_source['uri'] >
 	>
-	type _mol_app_demo_5 = $mol_type_enforce<
+	type __mol_app_demo_5 = $mol_type_enforce<
 		Parameters< $mol_app_demo['chat_pages'] >[0]
 		,
 		Parameters< $mol_app_demo['Detail'] >[0]

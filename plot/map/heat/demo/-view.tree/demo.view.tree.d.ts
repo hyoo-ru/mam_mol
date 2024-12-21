@@ -1,6 +1,6 @@
 declare namespace $ {
 
-	type _mol_plot_map_heat_demo_1 = $mol_type_enforce<
+	type __mol_plot_map_heat_demo_1 = $mol_type_enforce<
 		Parameters< $mol_plot_map_heat_demo['zoom'] >[0]
 		,
 		Parameters< ReturnType< $mol_plot_map_heat_demo['Plot'] >['scale_y'] >[0]

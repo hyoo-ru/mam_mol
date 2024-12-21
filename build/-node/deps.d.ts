@@ -4,7 +4,7 @@ interface $node {
 	"jsdom" : typeof import( "jsdom" ) // mol/dom/context/context.node.ts
 	"util" : typeof import( "util" ) // mol/charset/encode/encode.ts
 	"fs" : typeof import( "fs" ) // mol/build/build.node.ts
-	"chokidar" : typeof import( "chokidar" ) // mol/file/file.node.ts
+	"node:stream" : typeof import( "node:stream" ) // mol/file/file.node.ts
 	"os" : typeof import( "os" ) // mol/server/server.node.ts
 	"sourcemap-codec" : typeof import( "sourcemap-codec" ) // mol/sourcemap/builder/builder.ts
 	"typescript" : typeof import( "typescript" ) // mol/build/build.node.ts

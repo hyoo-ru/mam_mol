@@ -1,16 +1,16 @@
 declare namespace $ {
 
-	type _mol_audio_demo_vibe_1 = $mol_type_enforce<
+	type __mol_audio_demo_vibe_1 = $mol_type_enforce<
 		Parameters< $mol_audio_demo_vibe['room_status'] >[0]
 		,
 		Parameters< ReturnType< $mol_audio_demo_vibe['Room'] >['status'] >[0]
 	>
-	type _mol_audio_demo_vibe_2 = $mol_type_enforce<
+	type __mol_audio_demo_vibe_2 = $mol_type_enforce<
 		Parameters< $mol_audio_demo_vibe['active'] >[0]
 		,
 		Parameters< ReturnType< $mol_audio_demo_vibe['Beep_vibe'] >['active'] >[0]
 	>
-	type _mol_audio_demo_vibe_3 = $mol_type_enforce<
+	type __mol_audio_demo_vibe_3 = $mol_type_enforce<
 		Parameters< $mol_audio_demo_vibe['stop_at'] >[0]
 		,
 		Parameters< ReturnType< $mol_audio_demo_vibe['Beep_vibe'] >['stop_at'] >[0]
@@ -75,22 +75,22 @@ declare namespace $ {
 		,
 		ReturnType< $mol_select['value'] >
 	>
-	type $mol_audio_demo_vibe_Shape_select_17 = $mol_type_enforce<
+	type $mol_audio_demo_vibe_Shape_select__17 = $mol_type_enforce<
 		`sine`
 		,
 		$mol_audio_vibe_shape
 	>
-	type $mol_audio_demo_vibe_Shape_select_18 = $mol_type_enforce<
+	type $mol_audio_demo_vibe_Shape_select__18 = $mol_type_enforce<
 		`square`
 		,
 		$mol_audio_vibe_shape
 	>
-	type $mol_audio_demo_vibe_Shape_select_19 = $mol_type_enforce<
+	type $mol_audio_demo_vibe_Shape_select__19 = $mol_type_enforce<
 		`sawtooth`
 		,
 		$mol_audio_vibe_shape
 	>
-	type $mol_audio_demo_vibe_Shape_select_20 = $mol_type_enforce<
+	type $mol_audio_demo_vibe_Shape_select__20 = $mol_type_enforce<
 		`triangle`
 		,
 		$mol_audio_vibe_shape

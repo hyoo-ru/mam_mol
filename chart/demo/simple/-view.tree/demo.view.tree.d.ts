@@ -30,22 +30,22 @@ declare namespace $ {
 		,
 		ReturnType< $mol_plot_ruler_vert['title'] >
 	>
-	type $mol_chart_demo_simple_months_7 = $mol_type_enforce<
+	type $mol_chart_demo_simple_months__7 = $mol_type_enforce<
 		`January`
 		,
 		string
 	>
-	type $mol_chart_demo_simple_months_8 = $mol_type_enforce<
+	type $mol_chart_demo_simple_months__8 = $mol_type_enforce<
 		`February`
 		,
 		string
 	>
-	type $mol_chart_demo_simple_months_9 = $mol_type_enforce<
+	type $mol_chart_demo_simple_months__9 = $mol_type_enforce<
 		`March`
 		,
 		string
 	>
-	type $mol_chart_demo_simple_months_10 = $mol_type_enforce<
+	type $mol_chart_demo_simple_months__10 = $mol_type_enforce<
 		`April`
 		,
 		string

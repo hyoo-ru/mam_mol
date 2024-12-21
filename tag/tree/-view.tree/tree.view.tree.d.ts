@@ -30,12 +30,12 @@ declare namespace $ {
 		,
 		ReturnType< $mol_tag_tree['tag_name'] >
 	>
-	type $mol_tag_tree_sub_7 = $mol_type_enforce<
+	type $mol_tag_tree_sub__7 = $mol_type_enforce<
 		ReturnType< $mol_tag_tree['tag_list'] >[number]
 		,
 		$mol_view
 	>
-	type $mol_tag_tree_sub_8 = $mol_type_enforce<
+	type $mol_tag_tree_sub__8 = $mol_type_enforce<
 		ReturnType< $mol_tag_tree['item_list'] >[number]
 		,
 		$mol_view

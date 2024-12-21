@@ -525,32 +525,40 @@ declare namespace $ {
 declare namespace $ {
     type $mol_run_error_context = {
         pid?: number;
-        stdout: Buffer;
-        stderr: Buffer;
-        status?: number | null;
-        signal: NodeJS.Signals | null;
+        stdout: Buffer | string;
+        stderr: Buffer | string;
     };
     class $mol_run_error extends $mol_error_mix<{
-        timeout?: boolean;
+        timeout_kill?: boolean;
+        pid?: number;
         signal?: NodeJS.Signals | null;
+        status?: number | null;
+        command: string;
+        dir: string;
     }> {
     }
-    const $mol_run_spawn: typeof import("child_process").spawn;
-    const $mol_run_spawn_sync: typeof import("child_process").spawnSync;
+    const $mol_run_spawn: (command: string, args: readonly string[], options: import("child_process").SpawnOptions) => import("child_process").ChildProcess;
+    const $mol_run_spawn_sync: (command: string, args?: readonly string[] | undefined, options?: import("child_process").SpawnSyncOptions | undefined) => import("child_process").SpawnSyncReturns<string | Buffer<ArrayBufferLike>>;
     type $mol_run_options = {
         command: readonly string[] | string;
         dir: string;
         timeout?: number;
         env?: Record<string, string | undefined>;
     };
-    function $mol_run_async(this: $, { dir, timeout, command, env }: $mol_run_options): import("child_process").SpawnSyncReturns<Buffer<ArrayBufferLike>> | (Promise<$mol_run_error_context> & {
-        destructor: () => void;
-    });
-    function $mol_run(this: $, options: $mol_run_options): $mol_run_error_context | import("child_process").SpawnSyncReturns<Buffer<ArrayBufferLike>>;
+    class $mol_run extends $mol_object {
+        static async_enabled(): boolean;
+        static spawn(options: $mol_run_options): $mol_run_error_context | import("child_process").SpawnSyncReturns<string | Buffer<ArrayBufferLike>>;
+        static spawn_async({ dir, sync, timeout, command, env }: $mol_run_options & {
+            sync?: boolean;
+        }): import("child_process").SpawnSyncReturns<string | Buffer<ArrayBufferLike>> | (Promise<$mol_run_error_context> & {
+            destructor: () => void;
+        });
+        static error_message(res?: $mol_run_error_context): string;
+    }
 }
 
 declare namespace $ {
-    function $mol_exec(this: $, dir: string, command: string, ...args: readonly string[]): $mol_run_error_context | import("child_process").SpawnSyncReturns<Buffer<ArrayBufferLike>>;
+    function $mol_exec(this: $, dir: string, command: string, ...args: readonly string[]): $mol_run_error_context | import("child_process").SpawnSyncReturns<string | Buffer<ArrayBufferLike>>;
 }
 
 declare namespace $ {
@@ -1632,12 +1640,12 @@ declare namespace $ {
 		,
 		ReturnType< $mol_row['sub'] >
 	>
-	type _mol_perf_jsfb_22 = $mol_type_enforce<
+	type __mol_perf_jsfb_22 = $mol_type_enforce<
 		Parameters< $mol_perf_jsfb['row_title'] >[0]
 		,
 		Parameters< $mol_perf_jsfb['Row'] >[0]
 	>
-	type _mol_perf_jsfb_23 = $mol_type_enforce<
+	type __mol_perf_jsfb_23 = $mol_type_enforce<
 		Parameters< $mol_perf_jsfb['row_title'] >[1]
 		,
 		Parameters< $mol_perf_jsfb['Row'] >[0]

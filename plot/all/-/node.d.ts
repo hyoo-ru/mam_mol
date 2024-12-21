@@ -525,32 +525,40 @@ declare namespace $ {
 declare namespace $ {
     type $mol_run_error_context = {
         pid?: number;
-        stdout: Buffer;
-        stderr: Buffer;
-        status?: number | null;
-        signal: NodeJS.Signals | null;
+        stdout: Buffer | string;
+        stderr: Buffer | string;
     };
     class $mol_run_error extends $mol_error_mix<{
-        timeout?: boolean;
+        timeout_kill?: boolean;
+        pid?: number;
         signal?: NodeJS.Signals | null;
+        status?: number | null;
+        command: string;
+        dir: string;
     }> {
     }
-    const $mol_run_spawn: typeof import("child_process").spawn;
-    const $mol_run_spawn_sync: typeof import("child_process").spawnSync;
+    const $mol_run_spawn: (command: string, args: readonly string[], options: import("child_process").SpawnOptions) => import("child_process").ChildProcess;
+    const $mol_run_spawn_sync: (command: string, args?: readonly string[] | undefined, options?: import("child_process").SpawnSyncOptions | undefined) => import("child_process").SpawnSyncReturns<string | Buffer<ArrayBufferLike>>;
     type $mol_run_options = {
         command: readonly string[] | string;
         dir: string;
         timeout?: number;
         env?: Record<string, string | undefined>;
     };
-    function $mol_run_async(this: $, { dir, timeout, command, env }: $mol_run_options): import("child_process").SpawnSyncReturns<Buffer<ArrayBufferLike>> | (Promise<$mol_run_error_context> & {
-        destructor: () => void;
-    });
-    function $mol_run(this: $, options: $mol_run_options): $mol_run_error_context | import("child_process").SpawnSyncReturns<Buffer<ArrayBufferLike>>;
+    class $mol_run extends $mol_object {
+        static async_enabled(): boolean;
+        static spawn(options: $mol_run_options): $mol_run_error_context | import("child_process").SpawnSyncReturns<string | Buffer<ArrayBufferLike>>;
+        static spawn_async({ dir, sync, timeout, command, env }: $mol_run_options & {
+            sync?: boolean;
+        }): import("child_process").SpawnSyncReturns<string | Buffer<ArrayBufferLike>> | (Promise<$mol_run_error_context> & {
+            destructor: () => void;
+        });
+        static error_message(res?: $mol_run_error_context): string;
+    }
 }
 
 declare namespace $ {
-    function $mol_exec(this: $, dir: string, command: string, ...args: readonly string[]): $mol_run_error_context | import("child_process").SpawnSyncReturns<Buffer<ArrayBufferLike>>;
+    function $mol_exec(this: $, dir: string, command: string, ...args: readonly string[]): $mol_run_error_context | import("child_process").SpawnSyncReturns<string | Buffer<ArrayBufferLike>>;
 }
 
 declare namespace $ {
@@ -1123,17 +1131,17 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_vector_2d_mol_touch_1 = $mol_type_enforce<
+	type $mol_vector_2d__mol_touch_1 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<number> >
 	>
-	type $mol_vector_2d_mol_touch_2 = $mol_type_enforce<
+	type $mol_vector_2d__mol_touch_2 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<number> >
 	>
-	type $mol_vector_2d_mol_touch_3 = $mol_type_enforce<
+	type $mol_vector_2d__mol_touch_3 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<number> >
@@ -1234,72 +1242,72 @@ declare namespace $ {
 //# sourceMappingURL=title.view.tree.d.ts.map
 declare namespace $ {
 
-	type $mol_vector_range_mol_plot_graph_1 = $mol_type_enforce<
+	type $mol_vector_range__mol_plot_graph_1 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range_mol_plot_graph_2 = $mol_type_enforce<
+	type $mol_vector_range__mol_plot_graph_2 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range_mol_plot_graph_3 = $mol_type_enforce<
+	type $mol_vector_range__mol_plot_graph_3 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range_mol_plot_graph_4 = $mol_type_enforce<
+	type $mol_vector_range__mol_plot_graph_4 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range_mol_plot_graph_5 = $mol_type_enforce<
+	type $mol_vector_range__mol_plot_graph_5 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range_mol_plot_graph_6 = $mol_type_enforce<
+	type $mol_vector_range__mol_plot_graph_6 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range_mol_plot_graph_7 = $mol_type_enforce<
+	type $mol_vector_range__mol_plot_graph_7 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range_mol_plot_graph_8 = $mol_type_enforce<
+	type $mol_vector_range__mol_plot_graph_8 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_2d_mol_plot_graph_9 = $mol_type_enforce<
+	type $mol_vector_2d__mol_plot_graph_9 = $mol_type_enforce<
 		[ ReturnType< $mol_plot_graph['viewport_x'] >, ReturnType< $mol_plot_graph['viewport_y'] > ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<$mol_vector_range<number>> >
 	>
-	type $mol_vector_2d_mol_plot_graph_10 = $mol_type_enforce<
+	type $mol_vector_2d__mol_plot_graph_10 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<number> >
 	>
-	type $mol_vector_2d_mol_plot_graph_11 = $mol_type_enforce<
+	type $mol_vector_2d__mol_plot_graph_11 = $mol_type_enforce<
 		[ ReturnType< $mol_plot_graph['dimensions_pane_x'] >, ReturnType< $mol_plot_graph['dimensions_pane_y'] > ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<$mol_vector_range<number>> >
 	>
-	type $mol_vector_2d_mol_plot_graph_12 = $mol_type_enforce<
+	type $mol_vector_2d__mol_plot_graph_12 = $mol_type_enforce<
 		[ ReturnType< $mol_plot_graph['dimensions_x'] >, ReturnType< $mol_plot_graph['dimensions_y'] > ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<$mol_vector_range<number>> >
 	>
-	type $mol_vector_2d_mol_plot_graph_13 = $mol_type_enforce<
+	type $mol_vector_2d__mol_plot_graph_13 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<number> >
 	>
-	type $mol_vector_2d_mol_plot_graph_14 = $mol_type_enforce<
+	type $mol_vector_2d__mol_plot_graph_14 = $mol_type_enforce<
 		[ ReturnType< $mol_plot_graph['gap_x'] >, ReturnType< $mol_plot_graph['gap_y'] > ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<$mol_vector_range<number>> >
@@ -1382,52 +1390,52 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_vector_range_mol_plot_pane_1 = $mol_type_enforce<
+	type $mol_vector_range__mol_plot_pane_1 = $mol_type_enforce<
 		[ ReturnType< $mol_plot_pane['gap_left'] >, ReturnType< $mol_plot_pane['gap_right'] > ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range_mol_plot_pane_2 = $mol_type_enforce<
+	type $mol_vector_range__mol_plot_pane_2 = $mol_type_enforce<
 		[ ReturnType< $mol_plot_pane['gap_bottom'] >, ReturnType< $mol_plot_pane['gap_top'] > ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range_mol_plot_pane_3 = $mol_type_enforce<
+	type $mol_vector_range__mol_plot_pane_3 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range_mol_plot_pane_4 = $mol_type_enforce<
+	type $mol_vector_range__mol_plot_pane_4 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range_mol_plot_pane_5 = $mol_type_enforce<
+	type $mol_vector_range__mol_plot_pane_5 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range_mol_plot_pane_6 = $mol_type_enforce<
+	type $mol_vector_range__mol_plot_pane_6 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range_mol_plot_pane_7 = $mol_type_enforce<
+	type $mol_vector_range__mol_plot_pane_7 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range_mol_plot_pane_8 = $mol_type_enforce<
+	type $mol_vector_range__mol_plot_pane_8 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range_mol_plot_pane_9 = $mol_type_enforce<
+	type $mol_vector_range__mol_plot_pane_9 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range_mol_plot_pane_10 = $mol_type_enforce<
+	type $mol_vector_range__mol_plot_pane_10 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
@@ -1472,57 +1480,57 @@ declare namespace $ {
 		,
 		ReturnType< $mol_touch['draw_end'] >
 	>
-	type $mol_vector_2d_mol_plot_pane_19 = $mol_type_enforce<
+	type $mol_vector_2d__mol_plot_pane_19 = $mol_type_enforce<
 		[ ReturnType< $mol_plot_pane['gap_x'] >, ReturnType< $mol_plot_pane['gap_y'] > ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<$mol_vector_range<number>> >
 	>
-	type $mol_vector_2d_mol_plot_pane_20 = $mol_type_enforce<
+	type $mol_vector_2d__mol_plot_pane_20 = $mol_type_enforce<
 		[ ReturnType< $mol_plot_pane['shift_limit_x'] >, ReturnType< $mol_plot_pane['shift_limit_y'] > ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<$mol_vector_range<number>> >
 	>
-	type $mol_vector_2d_mol_plot_pane_21 = $mol_type_enforce<
+	type $mol_vector_2d__mol_plot_pane_21 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<number> >
 	>
-	type $mol_vector_2d_mol_plot_pane_22 = $mol_type_enforce<
+	type $mol_vector_2d__mol_plot_pane_22 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<number> >
 	>
-	type $mol_vector_2d_mol_plot_pane_23 = $mol_type_enforce<
+	type $mol_vector_2d__mol_plot_pane_23 = $mol_type_enforce<
 		[ ReturnType< $mol_plot_pane['scale_limit_x'] >, ReturnType< $mol_plot_pane['scale_limit_y'] > ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<$mol_vector_range<number>> >
 	>
-	type $mol_vector_2d_mol_plot_pane_24 = $mol_type_enforce<
+	type $mol_vector_2d__mol_plot_pane_24 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<number> >
 	>
-	type $mol_vector_2d_mol_plot_pane_25 = $mol_type_enforce<
+	type $mol_vector_2d__mol_plot_pane_25 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<number> >
 	>
-	type $mol_vector_2d_mol_plot_pane_26 = $mol_type_enforce<
+	type $mol_vector_2d__mol_plot_pane_26 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<number> >
 	>
-	type $mol_vector_2d_mol_plot_pane_27 = $mol_type_enforce<
+	type $mol_vector_2d__mol_plot_pane_27 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<number> >
 	>
-	type $mol_vector_2d_mol_plot_pane_28 = $mol_type_enforce<
+	type $mol_vector_2d__mol_plot_pane_28 = $mol_type_enforce<
 		[ ReturnType< $mol_plot_pane['dimensions_x'] >, ReturnType< $mol_plot_pane['dimensions_y'] > ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<$mol_vector_range<number>> >
 	>
-	type $mol_vector_2d_mol_plot_pane_29 = $mol_type_enforce<
+	type $mol_vector_2d__mol_plot_pane_29 = $mol_type_enforce<
 		[ ReturnType< $mol_plot_pane['dimensions_viewport_x'] >, ReturnType< $mol_plot_pane['dimensions_viewport_y'] > ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<$mol_vector_range<number>> >
@@ -1977,12 +1985,12 @@ declare namespace $ {
 		,
 		ReturnType< $mol_svg_text['text'] >
 	>
-	type $mol_vector_range_mol_plot_ruler_10 = $mol_type_enforce<
+	type $mol_vector_range__mol_plot_ruler_10 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range_mol_plot_ruler_11 = $mol_type_enforce<
+	type $mol_vector_range__mol_plot_ruler_11 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
@@ -2188,12 +2196,12 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_vector_range_mol_plot_mark_cross_1 = $mol_type_enforce<
+	type $mol_vector_range__mol_plot_mark_cross_1 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range_mol_plot_mark_cross_2 = $mol_type_enforce<
+	type $mol_vector_range__mol_plot_mark_cross_2 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
@@ -2233,7 +2241,7 @@ declare namespace $ {
 		,
 		ReturnType< $mol_svg_text_box['text'] >
 	>
-	type $mol_vector_2d_mol_plot_mark_cross_10 = $mol_type_enforce<
+	type $mol_vector_2d__mol_plot_mark_cross_10 = $mol_type_enforce<
 		[ ReturnType< $mol_plot_mark_cross['dimensions_x'] >, ReturnType< $mol_plot_mark_cross['dimensions_y'] > ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<$mol_vector_range<number>> >

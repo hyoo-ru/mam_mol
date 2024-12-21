@@ -1,11 +1,11 @@
 declare namespace $ {
 
-	type _mol_search_jumper_1 = $mol_type_enforce<
+	type __mol_search_jumper_1 = $mol_type_enforce<
 		Parameters< $mol_search_jumper['forward'] >[0]
 		,
 		Parameters< ReturnType< $mol_search_jumper['Index'] >['forward'] >[0]
 	>
-	type _mol_search_jumper_2 = $mol_type_enforce<
+	type __mol_search_jumper_2 = $mol_type_enforce<
 		Parameters< $mol_search_jumper['backward'] >[0]
 		,
 		Parameters< ReturnType< $mol_search_jumper['Index'] >['backward'] >[0]

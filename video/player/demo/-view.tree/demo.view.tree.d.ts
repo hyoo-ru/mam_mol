@@ -70,17 +70,17 @@ declare namespace $ {
 		,
 		ReturnType< $mol_row['sub'] >
 	>
-	type _mol_video_player_demo_15 = $mol_type_enforce<
+	type __mol_video_player_demo_15 = $mol_type_enforce<
 		Parameters< $mol_video_player_demo['playing'] >[0]
 		,
 		Parameters< ReturnType< $mol_video_player_demo['Player'] >['playing'] >[0]
 	>
-	type _mol_video_player_demo_16 = $mol_type_enforce<
+	type __mol_video_player_demo_16 = $mol_type_enforce<
 		Parameters< $mol_video_player_demo['volume'] >[0]
 		,
 		Parameters< ReturnType< $mol_video_player_demo['Player'] >['volume'] >[0]
 	>
-	type _mol_video_player_demo_17 = $mol_type_enforce<
+	type __mol_video_player_demo_17 = $mol_type_enforce<
 		Parameters< $mol_video_player_demo['time'] >[0]
 		,
 		Parameters< ReturnType< $mol_video_player_demo['Player'] >['time'] >[0]

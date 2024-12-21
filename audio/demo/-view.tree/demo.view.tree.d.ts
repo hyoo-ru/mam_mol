@@ -1,6 +1,6 @@
 declare namespace $ {
 
-	type _mol_audio_demo_1 = $mol_type_enforce<
+	type __mol_audio_demo_1 = $mol_type_enforce<
 		Parameters< $mol_audio_demo['beep_status'] >[0]
 		,
 		Parameters< ReturnType< $mol_audio_demo['Beep_room'] >['status'] >[0]
@@ -15,17 +15,17 @@ declare namespace $ {
 		,
 		ReturnType< $mol_audio_melody['notes'] >
 	>
-	type _mol_audio_demo_4 = $mol_type_enforce<
+	type __mol_audio_demo_4 = $mol_type_enforce<
 		Parameters< $mol_audio_demo['noise_status'] >[0]
 		,
 		Parameters< ReturnType< $mol_audio_demo['Noise_room'] >['status'] >[0]
 	>
-	type _mol_audio_demo_5 = $mol_type_enforce<
+	type __mol_audio_demo_5 = $mol_type_enforce<
 		Parameters< $mol_audio_demo['noise_active'] >[0]
 		,
 		Parameters< ReturnType< $mol_audio_demo['Noise'] >['active'] >[0]
 	>
-	type _mol_audio_demo_6 = $mol_type_enforce<
+	type __mol_audio_demo_6 = $mol_type_enforce<
 		Parameters< $mol_audio_demo['noise_stop_at'] >[0]
 		,
 		Parameters< ReturnType< $mol_audio_demo['Noise'] >['stop_at'] >[0]

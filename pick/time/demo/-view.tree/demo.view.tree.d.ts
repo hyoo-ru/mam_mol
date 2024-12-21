@@ -1,6 +1,6 @@
 declare namespace $ {
 
-	type $mol_time_moment_mol_pick_time_demo_1 = $mol_type_enforce<
+	type $mol_time_moment__mol_pick_time_demo_1 = $mol_type_enforce<
 		[ string ]
 		,
 		ConstructorParameters< typeof $mol_time_moment >

@@ -25,7 +25,7 @@ declare namespace $ {
 		,
 		ReturnType< $mol_select_list['enabled'] >
 	>
-	type _mol_select_list_demo_6 = $mol_type_enforce<
+	type __mol_select_list_demo_6 = $mol_type_enforce<
 		Parameters< $mol_select_list_demo['filter_pattern'] >[0]
 		,
 		Parameters< ReturnType< $mol_select_list_demo['Friends_lazy'] >['filter_pattern'] >[0]

@@ -1,6 +1,6 @@
 declare namespace $ {
 
-	type _mol_select_list_1 = $mol_type_enforce<
+	type __mol_select_list_1 = $mol_type_enforce<
 		Parameters< $mol_select_list['filter_pattern'] >[0]
 		,
 		Parameters< ReturnType< $mol_select_list['Pick'] >['filter_pattern'] >[0]
@@ -65,7 +65,7 @@ declare namespace $ {
 		,
 		ReturnType< $mol_button_minor['enabled'] >
 	>
-	type $mol_select_list_sub_14 = $mol_type_enforce<
+	type $mol_select_list_sub__14 = $mol_type_enforce<
 		ReturnType< $mol_select_list['badges_list'] >[number]
 		,
 		$mol_view

@@ -163,12 +163,16 @@
     "$mol_storage",
     "$mol_mem_persist",
     "$mol_file",
+    "$mol_file_base",
+    "$mol_action",
+    "$mol_lock",
+    "$mol_compare_array",
     "$mol_charset_decode",
     "$mol_charset",
     "$mol_charset_encoding",
     "$mol_charset_encode",
-    "$mol_action",
-    "$mol_compare_array",
+    "$mol_file_transaction",
+    "$node_modules",
     "$mol_grid",
     "$mol_float",
     "$mol_check_expand",
@@ -195,6 +199,6 @@
   ],
   "dependencies": {
     "jsdom": "*",
-    "chokidar": "*"
+    "node:stream": "*"
   }
 }

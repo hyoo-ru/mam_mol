@@ -1,16 +1,16 @@
 declare namespace $ {
 
-	type _mol_audio_demo_sequencer_1 = $mol_type_enforce<
+	type __mol_audio_demo_sequencer_1 = $mol_type_enforce<
 		Parameters< $mol_audio_demo_sequencer['room_status'] >[0]
 		,
 		Parameters< ReturnType< $mol_audio_demo_sequencer['Room'] >['status'] >[0]
 	>
-	type _mol_audio_demo_sequencer_2 = $mol_type_enforce<
+	type __mol_audio_demo_sequencer_2 = $mol_type_enforce<
 		Parameters< $mol_audio_demo_sequencer['room_active'] >[0]
 		,
 		Parameters< ReturnType< $mol_audio_demo_sequencer['Room'] >['active'] >[0]
 	>
-	type _mol_audio_demo_sequencer_3 = $mol_type_enforce<
+	type __mol_audio_demo_sequencer_3 = $mol_type_enforce<
 		Parameters< $mol_audio_demo_sequencer['beep_track_active'] >[0]
 		,
 		Parameters< ReturnType< $mol_audio_demo_sequencer['Beep_track'] >['active'] >[0]

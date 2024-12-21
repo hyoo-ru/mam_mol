@@ -1,11 +1,11 @@
 declare namespace $ {
 
-	type $mol_vector_range_mol_plot_mark_cross_1 = $mol_type_enforce<
+	type $mol_vector_range__mol_plot_mark_cross_1 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range_mol_plot_mark_cross_2 = $mol_type_enforce<
+	type $mol_vector_range__mol_plot_mark_cross_2 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
@@ -45,7 +45,7 @@ declare namespace $ {
 		,
 		ReturnType< $mol_svg_text_box['text'] >
 	>
-	type $mol_vector_2d_mol_plot_mark_cross_10 = $mol_type_enforce<
+	type $mol_vector_2d__mol_plot_mark_cross_10 = $mol_type_enforce<
 		[ ReturnType< $mol_plot_mark_cross['dimensions_x'] >, ReturnType< $mol_plot_mark_cross['dimensions_y'] > ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<$mol_vector_range<number>> >

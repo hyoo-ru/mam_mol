@@ -45,12 +45,12 @@ declare namespace $ {
 		,
 		ReturnType< $mol_svg_text['text'] >
 	>
-	type $mol_vector_range_mol_plot_ruler_10 = $mol_type_enforce<
+	type $mol_vector_range__mol_plot_ruler_10 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range_mol_plot_ruler_11 = $mol_type_enforce<
+	type $mol_vector_range__mol_plot_ruler_11 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >

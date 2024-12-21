@@ -5,7 +5,7 @@ declare namespace $ {
 		,
 		ReturnType< $mol_chart_legend['graphs'] >
 	>
-	type _mol_chart_2 = $mol_type_enforce<
+	type __mol_chart_2 = $mol_type_enforce<
 		Parameters< $mol_chart['zoom'] >[0]
 		,
 		Parameters< ReturnType< $mol_chart['Plot'] >['scale_x'] >[0]

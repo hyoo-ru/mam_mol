@@ -105,12 +105,12 @@ declare namespace $ {
 		,
 		ReturnType< $mol_row['sub'] >
 	>
-	type _mol_perf_jsfb_22 = $mol_type_enforce<
+	type __mol_perf_jsfb_22 = $mol_type_enforce<
 		Parameters< $mol_perf_jsfb['row_title'] >[0]
 		,
 		Parameters< $mol_perf_jsfb['Row'] >[0]
 	>
-	type _mol_perf_jsfb_23 = $mol_type_enforce<
+	type __mol_perf_jsfb_23 = $mol_type_enforce<
 		Parameters< $mol_perf_jsfb['row_title'] >[1]
 		,
 		Parameters< $mol_perf_jsfb['Row'] >[0]
