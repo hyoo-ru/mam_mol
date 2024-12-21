@@ -1225,7 +1225,7 @@ namespace $ {
 			json.version = version.join( '.' )
 
 			for( let dep of this.nodeDeps([ path , exclude ]).keys() ) {
-				if( require('module').builtinModules.includes(dep) ) continue
+				if( require('module').builtinModules.includes(dep) || dep.startsWith('node:')) continue
 				json.dependencies[ dep ] = `*`
 			}
 			
