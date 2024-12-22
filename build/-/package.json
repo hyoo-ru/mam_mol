@@ -1,6 +1,6 @@
 {
   "name": "mam",
-  "version": "1.11.429",
+  "version": "1.11.431",
   "exports": {
     "node": {
       "import": "./node.mjs",
@@ -155,7 +155,6 @@
     "@types/serve-index": "*",
     "@types/jsdom": "*",
     "@types/ws": "*",
-    "node:stream": "*",
     "jsdom": "*",
     "sourcemap-codec": "*",
     "typescript": "*",

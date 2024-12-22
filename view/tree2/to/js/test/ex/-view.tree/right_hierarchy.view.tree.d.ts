@@ -1,26 +1,26 @@
 declare namespace $ {
 
-	type _mol_view_tree2_to_js_test_ex_right_hierarchy_foo_1 = $mol_type_enforce<
+	type __mol_view_tree2_to_js_test_ex_right_hierarchy_foo_1 = $mol_type_enforce<
 		Parameters< $mol_view_tree2_to_js_test_ex_right_hierarchy_foo['indexed_title'] >[0]
 		,
 		Parameters< $mol_view_tree2_to_js_test_ex_right_hierarchy_foo['Indexed'] >[0]
 	>
-	type _mol_view_tree2_to_js_test_ex_right_hierarchy_foo_2 = $mol_type_enforce<
+	type __mol_view_tree2_to_js_test_ex_right_hierarchy_foo_2 = $mol_type_enforce<
 		Parameters< $mol_view_tree2_to_js_test_ex_right_hierarchy_foo['indexed_title'] >[1]
 		,
 		Parameters< $mol_view_tree2_to_js_test_ex_right_hierarchy_foo['Indexed'] >[0]
 	>
-	type _mol_view_tree2_to_js_test_ex_right_hierarchy_foo_3 = $mol_type_enforce<
+	type __mol_view_tree2_to_js_test_ex_right_hierarchy_foo_3 = $mol_type_enforce<
 		Parameters< $mol_view_tree2_to_js_test_ex_right_hierarchy_foo['prj_domain'] >[0]
 		,
 		Parameters< ReturnType< $mol_view_tree2_to_js_test_ex_right_hierarchy_foo['prj'] >['domain'] >[0]
 	>
-	type _mol_view_tree2_to_js_test_ex_right_hierarchy_foo_4 = $mol_type_enforce<
+	type __mol_view_tree2_to_js_test_ex_right_hierarchy_foo_4 = $mol_type_enforce<
 		Parameters< $mol_view_tree2_to_js_test_ex_right_hierarchy_foo['prj_user'] >[0]
 		,
 		Parameters< $mol_view_tree2_to_js_test_ex_right_hierarchy_foo['prj_domain'] >[0]
 	>
-	type _mol_view_tree2_to_js_test_ex_right_hierarchy_foo_5 = $mol_type_enforce<
+	type __mol_view_tree2_to_js_test_ex_right_hierarchy_foo_5 = $mol_type_enforce<
 		Parameters< $mol_view_tree2_to_js_test_ex_right_hierarchy_foo['prj_user_id'] >[0]
 		,
 		Parameters< $mol_view_tree2_to_js_test_ex_right_hierarchy_foo['prj_user'] >[0]

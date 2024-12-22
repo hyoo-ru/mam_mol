@@ -1,6 +1,6 @@
 {
   "name": "mol_plot_all",
-  "version": "1.2.1224",
+  "version": "1.2.1225",
   "exports": {
     "node": {
       "import": "./node.mjs",
