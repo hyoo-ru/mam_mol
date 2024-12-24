@@ -1,6 +1,7 @@
 \/
 	pack bun git \https://github.com/spleekz/mam_bun.git
 	pack hyoo git \https://github.com/hyoo-ru/mam_hyoo.git
+	pack iva git \https://github.com/thenesterov/mam_iva.git
 	pack jin git \https://github.com/nin-jin/mam_jin.git
 	pack lib git \https://github.com/hyoo-ru/mam_lib.git
 	pack mol git \https://github.com/hyoo-ru/mam_mol.git
