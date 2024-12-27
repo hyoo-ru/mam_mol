@@ -5,6 +5,7 @@
 	pack jin git \https://github.com/nin-jin/mam_jin.git
 	pack lib git \https://github.com/hyoo-ru/mam_lib.git
 	pack mol git \https://github.com/hyoo-ru/mam_mol.git
+	pack milis git \https://github.com/Lyumih/milis.git
 	pack mpds git \https://github.com/mpds-io/mam_mpds.git
 	pack node git \https://github.com/hyoo-ru/mam_node.git
 	pack optimade git \https://github.com/mpds-io/mam_optimade.git
