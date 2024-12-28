@@ -59,6 +59,7 @@
 	pack play git \https://github.com/hyoo-ru/play.hyoo.ru.git
 	pack rdf git \https://github.com/hyoo-ru/rdf.hyoo.ru.git
 	pack realworld git \https://github.com/hyoo-ru/realworld.hyoo.ru.git
+	pack science git \https://github.com/hyoo-ru/science.hyoo.ru.git
 	pack scout git \https://github.com/hyoo-ru/scout.hyoo.ru.git
 	pack search git \https://github.com/hyoo-ru/search.hyoo.ru.git
 	pack shelter git \https://github.com/hyoo-ru/shelter.hyoo.ru.git
