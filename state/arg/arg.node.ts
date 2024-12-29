@@ -70,7 +70,7 @@ namespace $ {
 		
 		@ $mol_action
 		static go( next : { [ key : string ] : string | null } ) {
-			this.href( this.make_link( next ) )
+			this.href( this.link( next ) )
 		}
 		
 		constructor( public prefix = '' ) {

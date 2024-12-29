@@ -1,7 +1,7 @@
 namespace $.$$ {
 
 	const { per , rem } = $mol_style_unit
-	const { hsla } = $mol_style_func
+	const { hsla, blur } = $mol_style_func
 
 	$mol_style_define( $mol_page , {
 
@@ -16,6 +16,7 @@ namespace $.$$ {
 		maxHeight: per(100) ,
 		boxSizing: 'border-box' ,
 		color: $mol_theme.text ,
+		backdropFilter: blur( `3px` ),
 		// zIndex: 0 ,
 		
 		':focus': {
@@ -69,7 +70,7 @@ namespace $.$$ {
 			
 			flex: {
 				basis: 'auto',
-				grow: 1000,
+				grow: 0,
 				shrink: 1,
 			},
 			display: 'flex',

@@ -84,12 +84,10 @@ namespace $ {
 	export class $mol_fetch extends $mol_object2 {
 		
 		static request( input : RequestInfo , init : RequestInit = {} ) {
-			const native = globalThis.fetch ?? $node['undici'].fetch
-			
 			const controller = new AbortController()
 			let done = false
 			
-			const promise = native( input , {
+			const promise = fetch( input , {
 				... init,
 				signal: controller!.signal,
 			} ).finally( ()=> {
@@ -116,7 +114,7 @@ namespace $ {
 			const response = this.response( input , init )
 			if( response.status() === 'success' ) return response
 			
-			throw new Error( response.message() )
+			throw new Error( response.message(), { cause: response } )
 		}
 
 		@ $mol_action

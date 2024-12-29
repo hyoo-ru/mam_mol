@@ -25,7 +25,7 @@ namespace $ {
 				
 				static send( next: string ) {
 					$mol_wire_sync( this.first ).push( next )
-					this.$.$mol_wait_timeout(0)
+					$$.$mol_wait_timeout(0)
 					this.last.push( next )
 				}
 				
@@ -39,8 +39,8 @@ namespace $ {
 			$.$mol_after_mock_warp()
 			await promise
 			
-			$mol_assert_like( NameLogger.first, [ 'john', 'jin' ] )
-			$mol_assert_like( NameLogger.last, [ 'jin' ] )
+			$mol_assert_equal( NameLogger.first, [ 'john', 'jin' ] )
+			$mol_assert_equal( NameLogger.last, [ 'jin' ] )
 
 		},
 
@@ -51,7 +51,7 @@ namespace $ {
 			
 			function send_name( next: string ) {
 				$mol_wire_sync( first ).push( next )
-				$.$mol_wait_timeout(0)
+				$$.$mol_wait_timeout(0)
 				last.push( next )
 			}
 			
@@ -63,8 +63,8 @@ namespace $ {
 			$.$mol_after_mock_warp()
 			await promise
 			
-			$mol_assert_like( first, [ 'john', 'jin' ] )
-			$mol_assert_like( last, [ 'jin' ] )
+			$mol_assert_equal( first, [ 'john', 'jin' ] )
+			$mol_assert_equal( last, [ 'jin' ] )
 			
 		},
 

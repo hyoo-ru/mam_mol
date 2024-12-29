@@ -1,37 +1,52 @@
 namespace $ {
-	
-	export class $mol_build_server extends $mol_server {
 
+	export class $mol_build_server extends $mol_server {
+		
 		static trace = false
 
-		expressGenerator() {
-			const t = this
-			const self = $mol_wire_async( this )
+		sync_middleware(
+			mdl: (
+				req : typeof $node.express.request ,
+				res : typeof $node.express.response ,
+			) => void | boolean
+		) {
+			const wrapped = $mol_wire_async(mdl)
 
-			return $mol_func_name_from(async function( req : any , res : any , next : (e?: unknown) => void ) {
+			return $mol_func_name_from(async (
+				req : typeof $node.express.request ,
+				res : typeof $node.express.response ,
+				next : (err?: unknown) => any
+			) => {
+				// const wrapped = $mol_wire_async(mdl)
+
 				try {
-					return await self.handleRequest( req, res, next )
-				} catch (error) {
-					if ($mol_fail_catch(error)) {
-						self.$.$mol_log3_fail({
-							place: `${t}.expressGenerator`,
-							stack: (error as Error).stack,
-							message: (error as Error).message ?? error,
-						})
-						next(error)
+					const stopped = await wrapped(req, res)
+					if (! stopped) Promise.resolve().then(next)
+				} catch (error: any) {
+					if (! this.$.$mol_build_server.trace) {
+						error.message += '\n' + 'Set $mol_build_server.trace = true for stacktraces'
 					}
-				}
-			}, this.handleRequest)
+	
+					res.status(500).send( error.toString() ).end()
 
+					this.$.$mol_log3_fail({
+						place: `${this}.${mdl.name}()`,
+						uri: req.path,
+						stack: this.$.$mol_build_server.trace ? error.stack : undefined,
+						message: error.message,
+					})
+				}
+			}, mdl)
 		}
+	
+	
+		expressGenerator() { return this.sync_middleware(this.handleRequest.bind(this)) }
 		
 		handleRequest(
 			req : typeof $node.express.request ,
-			res : typeof $node.express.response ,
-			next : () => any
+			res : typeof $node.express.response,
 		) {
-			res.set( 'Cache-Control', 'must-revalidate, public, ' )
-			
+
 			try {
 				
 				// if( req.query._escaped_fragment_ ) {
@@ -44,41 +59,26 @@ namespace $ {
 				// 	return
 				// }
 
-				return this.generate( req.url ) && Promise.resolve().then( next )
-			
+				this.generate( req.url )
+				res.set( 'Cache-Control', 'no-cache, public' )
 			} catch( error: any ) {
+				if ($mol_promise_like(error)) $mol_fail_hidden(error)
 
-				if( $mol_fail_catch( error ) ) {
-					this.$.$mol_log3_fail({
-						place: `${this}.handleRequest()`,
-						uri: req.path,
-						message: error.message,
-						stack: error.stack,
-					})
-				}
+				if (! req.url.match( /\.js$/ ) ) $mol_fail_hidden(error)
+
+				this.$.$mol_log3_fail({
+					place: `${this}.handleRequest()`,
+					uri: req.path,
+					message: error.message,
+					stack: error.stack,
+				})
+
+				const script = ( error as Error ).message.split( '\n\n' ).map( msg => {
+					return `console.error( ${ JSON.stringify( msg ) } )`
+				} ).join( '\n' )
 				
-				if( req.url.match( /\.js$/ ) ) {
-
-					const script = ( error as Error ).message.split( '\n\n' ).map( msg => {
-						return `console.error( ${ JSON.stringify( msg ) } )`
-					} ).join( '\n' )
-					
-					res.send( script ).end()
-
-				} else {
-					if (! this.$.$mol_build_server.trace) {
-						error.message += '\n' + 'Set $mol_build_server.trace = true for stacktraces'
-					}
-
-					res.status(500).send( error.toString() ).end()
-					this.$.$mol_log3_fail({
-						place: `${this}.handleRequest()`,
-						uri: req.path,
-						stack: this.$.$mol_build_server.trace ? error.stack : undefined,
-						message: error.message,
-					})
-				}
-
+				res.send( script ).end()
+				return true
 			}
 		}
 		
@@ -88,14 +88,21 @@ namespace $ {
 
 		@ $mol_mem_key
 		generate( url : string ) {
-			
 			$mol_wire_solid()
-
-			const matched = url.match( /^(.*)\/-\/(\w+(?:.\w+)+)$/ )
+			/*
+			Если использовать динамически подгружаемые через $mol_script модули
+			То урл тут может быть вида /demo/app/-/node_modules/stockfish/-/stockfish.js
+			В path должна попасть часть до первого /-/
+			Динамически подгружаться могут обособленные, редко используемые скрипты.
+			Например шахматы, встроенные в основное приложение.
+			У которых здоровый двиг stockfish.js динамически загружается в воркер
+			только при открытии шахмат.
+			*/
+			const matched = url.match( /^(.*?)\/-\/((?:(?:\w+(?:.\w+)+)(?:\/-\/)?)+)$/ )
 			if( !matched ) return [] as $mol_file[]
 			
 			const build = this.build()
-			
+
 			const [ , rawpath , bundle ] = matched
 			const mod = build.root().resolve( rawpath )
 
@@ -109,111 +116,99 @@ namespace $ {
 			
 			const path = mod.path()
 
-			return build.bundle( { path , bundle } )
-			
+			this.path_add(path, bundle)
+
+			return build.bundle( [ path , bundle ] )
 		}
 
-		override expressIndex() {
-			const t = this
-			const self = $mol_wire_async( this )
-			return $mol_func_name_from(async function(
-				req : typeof $node.express.request ,
-				res : typeof $node.express.response ,
-				next : (e?: unknown) => void
-			) {
-				try {
-					return await self.expressIndexRequest(req, res, next )
-				} catch (error) {
-					if ($mol_fail_catch(error)) {
-						self.$.$mol_log3_fail({
-							place: `${t}.expressIndex`,
-							stack: (error as Error).stack,
-							message: (error as Error).message ?? error,
-						})
-						next(error)
-					}
-				}
-
-			}, self.expressIndexRequest)
-		}
+		override expressIndex() { return this.sync_middleware(this.expressIndexRequest.bind(this)) }
 		
 		expressIndexRequest(
 			req : typeof $node.express.request ,
 			res : typeof $node.express.response ,
-			next : () => void
 		) {
-			const root = $mol_file.absolute( this.rootPublic() )
-			const dir = root.resolve( req.path )				
-			const build = this.build()
-
-			build.modEnsure( dir.path() )
-
+			// a/b/?c#d, a/b/-/
 			const match =  req.url.match( /(\/|.*[^\-]\/)([\?#].*)?$/ )
-			if( !match) return next()				
+			if( !match) return
+
+			const root = this.$.$mol_file.absolute( this.rootPublic() )
+			const dir = root.resolve( req.path )
+
+			const path = dir.path()
+
+			// ensure загружает сорцы, делает git pull, это не стоит делать на build-папках
+			// Поэтому регулярка выше отсеивает build-папки
+			this.build().modEnsure( path )
 
 			const file = root.resolve( `${req.path}index.html` )
 
 			if( file.exists() ) {
-				return res.redirect( 301, `${match[1]}-/test.html${match[2] ?? ''}` )
-			}				
-			
-			if( dir.type() === 'dir' ) {
-				const files = [ {name: '-', type: 'dir'} ]
-				for( const file of dir.sub() ) {
-					if (!files.find(( {name} ) => name === file.name())) {
-						files.push( {name: file.name(), type: file.type()} )
-					}
-					if( /\.meta\.tree$/.test( file.name() ) ) {
-						const meta = $$.$mol_tree2_from_string( file.text() )
-						for( const pack of meta.select( 'pack', null ).kids ) {
-							if (!files.find(( {name} ) => name === pack.type))
-								files.push( {name: pack.type, type: 'dir'} )
-						}
-					}
-				}
-				const html = `
-					<style>
-						body {
-							display: flex;
-							flex-direction: column;
-							flex-wrap: wrap;
-							font: 1rem/1.5rem sans-serif;
-							height: 100%;
-							margin: 0;
-							padding: 0.75rem;
-							box-sizing: border-box;
-						}
-						a {
-							text-decoration: none;
-							color: rgb(57, 115, 172);
-							font-weight: bolder;
-						}
-						a:hover {
-							background: hsl( 0deg, 0%, 0%, .05 )
-						}
-						a[href^="."], a[href^="-"], a[href="node_modules"] {
-							opacity: 0.5;
-						}
-						a[href=".."], a[href="-"] {
-							opacity: 1;
-						}
-					</style>
-					<link href="/_logo.png" rel="icon" />
-					<a href="..">&#x1F4C1; ..</a>
-					` + files
-					.sort($mol_compare_text((item) => item.type))
-					.map( file => `<a href="${file.name}">${file.type === 'dir' ? '&#x1F4C1;' : '&#128196;'} ${file.name}</a>` )
-					.join( '\n' )
-				
-				res.writeHead( 200, {
-					'Content-Type': 'text/html',
-					'Access-Control-Allow-Origin': '*',
-				} )
-				
-				return res.end( html )
+				res.redirect( 301, `${match[1]}-/test.html${match[2] ?? ''}` )
+				return true
 			}
 			
-			return next()
+			if( dir.type() !== 'dir' ) return
+
+			const files = [ {name: '-', type: 'dir'} ]
+
+			for( const file of dir.sub() ) {
+
+				if (!files.find(( {name} ) => name === file.name())) {
+					files.push( {name: file.name(), type: file.type()} )
+				}
+
+				if( /\.meta\.tree$/.test( file.name() ) ) {
+					const meta = this.$.$mol_tree2_from_string( file.text() )
+
+					for( const pack of meta.select( 'pack', null ).kids ) {
+						if ( files.find(( {name} ) => name === pack.type) ) continue
+
+						files.push( {name: pack.type, type: 'dir'} )
+					}
+				}
+			}
+
+			const html = `
+				<style>
+					body {
+						display: flex;
+						flex-direction: column;
+						flex-wrap: wrap;
+						font: 1rem/1.5rem sans-serif;
+						height: 100%;
+						margin: 0;
+						padding: 0.75rem;
+						box-sizing: border-box;
+					}
+					a {
+						text-decoration: none;
+						color: rgb(57, 115, 172);
+						font-weight: bolder;
+					}
+					a:hover {
+						background: hsl( 0deg, 0%, 0%, .05 )
+					}
+					a[href^="."], a[href^="-"], a[href="node_modules"] {
+						opacity: 0.5;
+					}
+					a[href=".."], a[href="-"] {
+						opacity: 1;
+					}
+				</style>
+				<link href="/_logo.png" rel="icon" />
+				<a href="..">&#x1F4C1; ..</a>
+				` + files
+				.sort($mol_compare_text((item) => item.type))
+				.map( file => `<a href="${file.name}">${file.type === 'dir' ? '&#x1F4C1;' : '&#128196;'} ${file.name}</a>` )
+				.join( '\n' )
+			
+			res.writeHead( 200, {
+				'Content-Type': 'text/html',
+				'Access-Control-Allow-Origin': '*',
+			} )
+			
+			res.end( html )
+			return true
 		}
 		
 		port() {
@@ -221,16 +216,19 @@ namespace $ {
 		}
 		
 		@ $mol_mem
-		lines( next = new Map< InstanceType<$node['ws']>, string >() ) {
+		lines( next = new Map< InstanceType<$node['ws']['WebSocket']>, string >() ) {
 			return next
 		}
 		
 		@ $mol_mem
 		socket() {
-			
+			const build = this.build()
+			const root = build.root()
+
 			return super.socket().on( 'connection' , ( line , req )=> {
 				
-				const path = req.url!.replace( /\/-.*/ , '' ).substring( 1 )
+				const path_relative = req.url!.replace( /\/-.*/ , '' ).substring( 1 )
+				const path = root.resolve( path_relative ).path()
 
 				this.$.$mol_log3_rise({
 					place: this ,
@@ -239,9 +237,11 @@ namespace $ {
 				})
 				
 				this.lines( new Map( [ ... this.lines(), [ line, path ] ] ) )
-				
+
+				this.path_add(path, '')
+
 				line.on( 'close' , ()=> {
-					
+					this.path_doubt(path)
 					const lines = new Map( this.lines() )
 					lines.delete( line )
 					this.lines( lines )
@@ -254,32 +254,93 @@ namespace $ {
 
 		@ $mol_mem
 		start() {
-
 			this.slave_servers()
 			this.repl()
-			
 			const socket = this.socket()
 
 			for( const [ line, path ] of this.lines() ) {
 				this.notify([ line, path ])
 			}
-			
+
+			// this.bundles_keep()
+
 			return socket
 		}
-		
+
+		@ $mol_mem
+		protected bundles_count(reset?: null): number {
+			return 1 + ( $mol_wire_probe(() => this.bundles_count()) ?? 0 )
+		}
+
+		/**
+		 * Держать в памяти собранные бандлы плохо, т.к. gc их может долго не утилизировать и node сожрет память и упадет.
+		 * Логичнее удалять отложенно, после того как reload-сокет отписался от пути и повторно не подписался.
+		 */
+		@ $mol_mem
+		protected bundles_keep() {
+			const build = this.build()
+			this.bundles_count()
+			for (const [path, bundles] of Object.entries(this.path_bundles)) {
+				const sources = build.sourcesAll([ path , [ 'node' ] ])
+				for (const source of sources ) source.version()
+				for (const bundle of bundles) {
+					const files = build.bundle([ path, bundle ])
+					for ( const file of files ) {
+						file.version()
+					}
+				}
+			}
+		}
+
+		protected path_bundles = {} as Record<string, Set<string>>
+		protected path_doubted = new Set<string>()
+
+		path_add(path: string, bundle: string) {
+			return
+			this.path_doubted.delete(path)
+			if (! this.path_bundles[path]) this.path_bundles[path] = new Set()
+			this.path_bundles[path].add(bundle)
+			this.bundles_count(null)
+		}
+
+		protected path_doubt_timeout = null as null | $mol_after_timeout
+
+		path_doubt(path: string) {
+			this.path_doubted.add(path)
+
+			if ( this.path_doubt_timeout) return
+
+			this.path_doubt_timeout = new this.$.$mol_after_timeout(
+				15000,
+				() => $mol_wire_async(this).path_doubted_remove()
+			)
+		}
+
+		path_doubted_remove() {
+			for (const path of this.path_doubted) {
+				delete this.path_bundles[path]
+			}
+			this.path_doubt_timeout = null
+			this.path_doubted.clear()
+			this.bundles_count(null)
+		}
+
 		@ $mol_mem_key
-		notify( [ line, path ]: [ InstanceType<$node['ws']>, string ] ) {
-			
+		bundle_changed_at( path: string ) {
+			const build = this.build()
 			try {
 			
-				const build = this.build()
-				const bundle = build.root().resolve( path )
-			
-				// watch changes
-				const sources = build.sourcesAll({ path: bundle.path() , exclude : [ 'node' ] })
+				const sources = build.sourcesAll([ path , [ 'node' ] ])
+
+				/**
+				Бывает надо какой-то внешней программой в watch-режиме компилить js-ки или wasm
+				и класть как артефакт в - (например, игровой движок на unity)
+				При изменении этих файлов, надо перезапускать страницу.
+				Если их класть не в -, а рядом с сорцами, то билдер mol будет пытаться их анализировать и упадет.
+				 */
+				const resources = build.bundleFiles([ path , [ 'node' ] ])
 				
-				for( const src of sources ) src.buffer()	
-				
+				for( const src of [...sources, ...resources] ) src.version()
 			} catch (error) {
 				if ($mol_fail_catch(error)) {
 					this.$.$mol_log3_fail({
@@ -289,7 +350,13 @@ namespace $ {
 					})
 				}
 			}
-			
+
+			return new Date()
+		}
+		
+		@ $mol_mem_key
+		notify( [ line, path ]: [ InstanceType<$node['ws']['WebSocket']>, string ] ) {
+			this.bundle_changed_at(path)
 
 			// ignore initial
 			if( !$mol_mem_cached( ()=> this.notify([ line, path ]) ) ) return true
@@ -329,9 +396,9 @@ namespace $ {
 			
 			try {
 				
-				for( const file of build.bundle({ path, bundle: 'node.js' }) ) file.stat()
-				for( const file of build.bundle({ path, bundle: 'node.audit.js' }) ) file.stat()
-				for( const file of build.bundle({ path, bundle: 'node.test.js' }) ) file.stat()
+				for( const file of build.bundle([ path, 'node.js' ]) ) file.version()
+				for( const file of build.bundle([ path, 'node.audit.js' ]) ) file.version()
+				for( const file of build.bundle([ path, 'node.test.js' ]) ) file.version()
 			
 			} catch( error: any ) {
 				

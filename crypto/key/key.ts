@@ -8,14 +8,14 @@ namespace $ {
 	
 	export class $mol_crypto_key extends $mol_buffer {
 		
-		static from< This extends typeof $mol_crypto_key >( this: This, serial: number | string | ArrayBufferView ) {
+		static from< This extends typeof $mol_crypto_key >( this: This, serial: number | string | ArrayBufferView< ArrayBuffer > ) {
 			
 			if( typeof serial === 'string' ) {
 				serial = new Uint8Array([
 					... $mol_base64_url_decode( serial.slice( 0, 43 ) ),
 					... $mol_base64_url_decode( serial.slice( 43, 86 ) ),
 					... $mol_base64_url_decode( serial.slice( 86, 129 ) ),
-				])
+				]) as Uint8Array< ArrayBuffer >
 			}
 			
 			return super.from( serial ) as InstanceType< This >

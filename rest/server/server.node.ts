@@ -21,7 +21,7 @@ namespace $ {
 			} )
 			
 			server.on( 'upgrade',
-				( req, sock, head )=> $mol_wire_async( this ).ws_upgrade( req, sock, head )
+				( req, sock, head: Buffer< ArrayBuffer > )=> $mol_wire_async( this ).ws_upgrade( req, sock, head )
 			)
 			
 			server.listen( this.port(), ()=> {
@@ -87,7 +87,7 @@ namespace $ {
 		ws_upgrade(
 			req: InstanceType< $node['http']['IncomingMessage'] >,
 			socket: InstanceType< $node['stream']['Duplex'] >,
-			head: Buffer,
+			head: Buffer< ArrayBuffer >,
 		) {
 			
 			const port = $mol_rest_port_ws_node.make({ socket })
@@ -146,7 +146,7 @@ namespace $ {
 			socket.on( 'end', onclose )
 			socket.on( 'error', onclose )
 			
-			socket.on( 'data', ( chunk: Buffer )=> this.ws_income( chunk, upgrade, socket ) )
+			socket.on( 'data', ( chunk: Buffer< ArrayBuffer > )=> this.ws_income( chunk, upgrade, socket ) )
 			
 			const key_in = req.headers["sec-websocket-key"]
 			const magic = '258EAFA5-E914-47DA-95CA-C5AB0DC85B11'
@@ -169,11 +169,11 @@ namespace $ {
 			
 		}
 		
-		_ws_income_chunks = new WeakMap< InstanceType< typeof $node.stream.Duplex >, Uint8Array[] >
-		_ws_income_frames = new WeakMap< InstanceType< typeof $node.stream.Duplex >, ( string | Uint8Array )[] >
+		_ws_income_chunks = new WeakMap< InstanceType< typeof $node.stream.Duplex >, Uint8Array< ArrayBuffer >[] >
+		_ws_income_frames = new WeakMap< InstanceType< typeof $node.stream.Duplex >, ( string | Uint8Array< ArrayBuffer > )[] >
 		
 		async ws_income(
-			chunk: Buffer,
+			chunk: Buffer< ArrayBuffer >,
 			upgrade: $mol_rest_message,
 			sock: InstanceType< typeof $node.stream.Duplex >,
 		) {
@@ -209,7 +209,7 @@ namespace $ {
 					sock.unshift( tail )
 				}
 				
-				let data: string | Uint8Array = new Uint8Array( chunk.buffer, chunk.byteOffset + frame.size(), frame.data().size )
+				let data: string | Uint8Array< ArrayBuffer > = new Uint8Array( chunk.buffer, chunk.byteOffset + frame.size(), frame.data().size )
 				
 				if( frame.data().mask ) {
 					const mask = frame.mask()
@@ -235,10 +235,10 @@ namespace $ {
 					if( typeof frames[0] === 'string' ) {
 						data = ( frames as string[] ).join( '' )
 					} else {
-						const size = ( frames as Uint8Array[] ).reduce( ( s, f )=> s + f.byteLength, 0 )
+						const size = ( frames as Uint8Array< ArrayBuffer >[] ).reduce( ( s, f )=> s + f.byteLength, 0 )
 						data = new Uint8Array( size )
 						let offset = 0
-						for( const frame of ( frames as Uint8Array[] ) ) {
+						for( const frame of ( frames as Uint8Array< ArrayBuffer >[] ) ) {
 							data.set( frame, offset )
 							offset += frame.byteLength
 						}

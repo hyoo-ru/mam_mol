@@ -9,6 +9,7 @@ namespace $ {
 			const val : any = fields[ key ]
 			
 			if( val === undefined ) continue
+			if( val === (el as any)[ key ] ) continue
 			
 			(el as any)[ key ] = val
 		}

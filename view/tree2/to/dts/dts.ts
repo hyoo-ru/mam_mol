@@ -87,7 +87,7 @@ namespace $ {
 
 	function type_enforce(this: $, name: $mol_tree2, a: readonly $mol_tree2[], b: readonly $mol_tree2[]) {
 		return name.struct('line', [
-			name.data(`type ${ name.value.replace(/<.*>/g, '') }__${ this.$mol_guid() } = $mol_type_enforce<` ),
+			name.data(`type ${ name.value.replace(/<.*>/g, '') } = $mol_type_enforce<` ),
 			name.struct( 'indent', [
 				a[0].struct('line', a),
 				a[0].data(','),
@@ -105,10 +105,12 @@ namespace $ {
 		
 		for( const klass of descr.kids ) {
 			
+			let assert_count = 0
 			const parent = this.$mol_view_tree2_child(klass)
 			const props = this.$mol_view_tree2_class_props(klass)
 			const aliases = [] as $mol_tree2[]
 			const context = { objects: [] as $mol_tree2[] }
+			const klass_name = klass.type.slice(1)
 			types.push(
 				klass.struct( 'line', [
 					klass.data( 'export class ' ),
@@ -176,7 +178,7 @@ namespace $ {
 							if (prop_parts.key) {
 								types.push( type_enforce.call(
 									this,
-									method,
+									method.data(`${method.type}__${klass_name}_${++assert_count}`),
 									parameters.call(this, main, prop, 0),
 									parameters.call(this, second_main, second_key, 0),
 								) )
@@ -185,7 +187,7 @@ namespace $ {
 							if (prop_parts.next) {
 								types.push( type_enforce.call(
 									this,
-									method,
+									method.data(`${method.type}__${klass_name}_${++assert_count}`),
 									parameters.call(this, main, prop, prop_parts.key ? 1 : 0),
 									parameters.call(this, second_main, second_key, (left_parts.next ? left_parts : right_parts).key ? 1 : 0),
 								) )
@@ -279,7 +281,7 @@ namespace $ {
 									types.push(
 										type_enforce.call(
 											this,
-											input.data(`${ klass.type }_${prop.type.replace(/[\?\*]*/g, '')}`),
+											input.data(`${ klass.type }_${prop.type.replace(/[\?\*]*/g, '')}__${++assert_count}`),
 											result,
 											array_type
 										)
@@ -303,7 +305,7 @@ namespace $ {
 									types.push(
 										type_enforce.call(
 											this,
-											first.data(input.type),
+											first.data(`${input.type}__${klass_name}_${++assert_count}`),
 											[
 												first.data('[ '),
 												...args,
@@ -327,7 +329,7 @@ namespace $ {
 									types.push(
 										type_enforce.call(
 											this,
-											over.data(`${ input.type }__${ name.value }`),
+											over.data(`${ input.type }__${ name.value }_${klass_name}_${++assert_count}`),
 											over.hack( belt ),
 											return_type.call(
 												this,

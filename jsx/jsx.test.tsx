@@ -1,4 +1,5 @@
 /** @jsx $mol_jsx */
+/** @jsxFrag $mol_jsx_frag */
 namespace $ {
 	
 	$mol_test({
@@ -58,6 +59,32 @@ namespace $ {
 				</div>
 			
 			$mol_assert_equal( dom.outerHTML, '<div>hello<strong>world</strong>!</div>' )
+
+		} ,
+
+		'Make fragment'() {
+
+			const dom =
+				<>
+					<br />
+					<hr />
+				</>
+			
+			$mol_assert_equal( $mol_dom_serialize( dom ), '<br xmlns="http://www.w3.org/1999/xhtml" /><hr xmlns="http://www.w3.org/1999/xhtml" />' )
+
+		} ,
+
+		'Spread fragment'() {
+
+			const dom =
+				<div>
+					<>
+						<br />
+						<hr />
+					</>
+				</div>
+			
+			$mol_assert_equal( dom.outerHTML, '<div><br><hr></div>' )
 
 		} ,
 

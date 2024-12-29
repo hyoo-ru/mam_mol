@@ -14,8 +14,8 @@ namespace $ {
 		($ as any)['devtoolsFormatters'].push( config )
 	}
 
-	export let $mol_dev_format_head = Symbol( '$mol_dev_format_head' )
-	export let $mol_dev_format_body = Symbol( '$mol_dev_format_body' )
+	export const $mol_dev_format_head = Symbol( '$mol_dev_format_head' )
+	export const $mol_dev_format_body = Symbol( '$mol_dev_format_body' )
 
 	$mol_dev_format_register({
 
