@@ -471,6 +471,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    var $mol_dom: typeof globalThis;
+}
+
+declare namespace $ {
     class $mol_func_sandbox {
         static blacklist: Set<Function>;
         static whitelist: WeakSet<WeakKey>;

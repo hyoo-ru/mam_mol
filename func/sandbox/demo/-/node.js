@@ -1928,6 +1928,13 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    $.$mol_dom = $mol_dom_context;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_func_sandbox {
         static blacklist = new Set([
             (function () { }).constructor,

@@ -3985,6 +3985,13 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    $.$mol_dom = $mol_dom_context;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_state_local_node extends $mol_state_local {
         static dir() {
             const base = process.env.XDG_DATA_HOME || ($node.os.homedir() + '/.local/share');

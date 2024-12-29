@@ -2383,6 +2383,13 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    $.$mol_dom = $mol_dom_context;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
     function $mol_dom_qname(name) {
         return name.replace(/\W/g, '').replace(/^(?=\d+)/, '_');
     }
