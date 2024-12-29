@@ -2,7 +2,7 @@ namespace $ {
 	
 	let sponge = new Uint32Array(80)
 	
-	/** Fast small sync SHA-1 */
+	/** Fast small sync SHA-1 (20 bytes, 160 bits) */
 	export function $mol_crypto_hash( data: Uint8Array ) {
 		
 		const bits = data.byteLength << 3
