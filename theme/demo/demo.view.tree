@@ -2,6 +2,18 @@ $mol_theme_demo $mol_example_large
 	style *
 		--mol_theme_hue <= hue_deg \
 		--mol_theme_hue_spread <= hue_spread_deg \
+		--mol_theme_back <= back_color \
+		--mol_theme_card <= card_color \
+		--mol_theme_field <= field_color \
+		--mol_theme_hover <= hover_color \
+		--mol_theme_text <= text_color \
+		--mol_theme_shade <= shade_color \
+		--mol_theme_line <= line_color \
+		--mol_theme_focus <= focus_color \
+		--mol_theme_control <= control_color \
+		--mol_theme_current <= current_color \
+		--mol_theme_special <= special_color \
+		--mol_theme_icon <= icon_color \
 	sub /
 		<= Config $mol_row sub /
 			<= Hue_field $mol_form_field
@@ -14,6 +26,57 @@ $mol_theme_demo $mol_example_large
 				Content <= Hue_spread $mol_number
 					value? <=> hue_spread? 90
 					precision_change 15
+		<= Colors_row $mol_row sub /
+			<= Back_color_field $mol_form_field
+				name \Back
+				Content <= Back_color $mol_string
+					value? <=> back_color? \
+			<= Card_color_field $mol_form_field
+				name \Card
+				Content <= Card_color $mol_string
+					value? <=> card_color? \
+			<= Field_color_field $mol_form_field
+				name \Field
+				Content <= Field_color $mol_string
+					value? <=> field_color? \
+			<= Hover_color_field $mol_form_field
+				name \Hover
+				Content <= Hover_color $mol_string
+					value? <=> hover_color? \
+		<= Colors_row_2 $mol_row sub /
+			<= Text_color_field $mol_form_field
+				name \Text
+				Content <= Text_color $mol_string
+					value? <=> text_color? \
+			<= Shade_color_field $mol_form_field
+				name \Shade
+				Content <= Shade_color $mol_string
+					value? <=> shade_color? \
+			<= Line_color_field $mol_form_field
+				name \Line
+				Content <= Line_color $mol_string
+					value? <=> line_color? \
+			<= Focus_color_field $mol_form_field
+				name \Focus
+				Content <= Focus_color $mol_string
+					value? <=> Fover_color? \
+		<= Colors_row_3 $mol_row sub /
+			<= Control_color_field $mol_form_field
+				name \Control
+				Content <= Control_color $mol_string
+					value? <=> control_color? \
+			<= Current_color_field $mol_form_field
+				name \Current
+				Content <= Current_color $mol_string
+					value? <=> current_color? \
+			<= Special_color_field $mol_form_field
+				name \Special
+				Content <= Special_color $mol_string
+					value? <=> special_color? \
+			<= Icon_color_field $mol_form_field
+				name \Icon
+				Content <= Icon_color $mol_string
+					value? <=> icon_color? \
 		<= Scroll $mol_scroll sub /
 			<= Cases $mol_theme_demo_case
 				title \Current light
@@ -46,5 +109,5 @@ $mol_theme_demo_case $mol_view
 			<= Hover $mol_button_copy title \$mol_theme.hover
 			<= Current $mol_button_copy title \$mol_theme.curent
 			<= Special $mol_button_copy title \$mol_theme.special
-		^ inner 
+		^ inner
 	inner /
