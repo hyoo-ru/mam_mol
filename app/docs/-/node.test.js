@@ -5108,7 +5108,6 @@ var $;
             maxHeight: per(100),
             boxSizing: 'border-box',
             color: $mol_theme.text,
-            backdropFilter: blur(`3px`),
             ':focus': {
                 outline: 'none',
             },

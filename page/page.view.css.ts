@@ -16,7 +16,7 @@ namespace $.$$ {
 		maxHeight: per(100) ,
 		boxSizing: 'border-box' ,
 		color: $mol_theme.text ,
-		backdropFilter: blur( `3px` ),
+		// backdropFilter: blur( `3px` ), enforces layering
 		// zIndex: 0 ,
 		
 		':focus': {
