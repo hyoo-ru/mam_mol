@@ -3790,7 +3790,7 @@ declare namespace $ {
 		uri( ): string
 		loading( ): string
 		decoding( ): string
-		cors( ): string
+		cors( ): any
 		natural_width( ): number
 		natural_height( ): number
 		load( next?: any ): any
