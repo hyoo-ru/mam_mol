@@ -9,7 +9,7 @@
 			return "async";
 		}
 		cors(){
-			return null;
+			return "anonymous";
 		}
 		natural_width(){
 			return 0;

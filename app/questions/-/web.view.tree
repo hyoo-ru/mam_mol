@@ -320,7 +320,7 @@ $mol_image $mol_view
 		alt <= title
 		loading <= loading \eager
 		decoding <= decoding \async
-		crossOrigin <= cors null
+		crossOrigin <= cors \anonymous
 	attr *any
 		^
 		width <= natural_width 0
