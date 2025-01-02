@@ -14295,7 +14295,7 @@ var $;
 (function ($) {
     function $mol_html_decode(text) {
         return text
-            .replace(/&(?:#(\d+)|(lt|gt|quot));/gi, (str, numb, name) => {
+            .replace(/&(?:#(\d+)|(lt|gt|quot|amp));/gi, (str, numb, name) => {
             if (numb)
                 return String.fromCharCode(numb);
             const mapping = {
