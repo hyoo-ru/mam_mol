@@ -24,6 +24,29 @@ namespace $ {
 			return true
 		}
 
+		protected static fetch(request: Request, fallback_header?: string) {
+			const raw = this.$.$mol_fetch.response(request).native
+			if (raw.status < 400) return raw
+			if (! this.corp() && ! fallback_header) return raw
+
+			const response = raw.clone()
+			const headers = response.headers
+
+			if ( this.corp() ) {
+				headers.set( 'Cross-Origin-Embedder-Policy', 'require-corp' )
+				headers.set( 'Cross-Origin-Opener-Policy', 'same-origin' )
+			}
+
+			if (fallback_header) {
+				headers.set( '$mol_offline_remote_status', `${fallback_header} $mol_offline fallback to cache`)
+			}
+
+			return response
+
+		}
+
+		static corp() { return true }
+
 		static override modify(request: Request) {
 			let fallback_header
 
@@ -38,10 +61,11 @@ namespace $ {
 		
 				// fetch with fallback to cache if statuses not match
 				try {
-					const actual = this.$.$mol_fetch.response(request)
-					if (actual.code() < 400) return actual.native
+					const response = this.fetch(request)
 
-					fallback_header = actual.message()
+					if (response.status < 400) return response
+
+					fallback_header = response.statusText || `HTTP Error ${ response.status }`
 				} catch (err) {
 					if ( $mol_promise_like(err) ) $mol_fail_hidden(err)
 					fallback_header = (err as Error).message || 'Fetch error'
@@ -52,14 +76,9 @@ namespace $ {
 				request = new ($mol_wire_sync(Request))(request, { cache: 'force-cache' })
 			}
 
-			const cached = this.$.$mol_fetch.response(request)
+			const cached = this.fetch(request, fallback_header)
 
-			if (! fallback_header ) return cached.native
-
-			const clone = cached.clone()
-			clone.headers().set( '$mol_offline_remote_status', `${fallback_header} $mol_offline fallback to cache`)
-
-			return clone.native
+			return cached
 		}
 	}
 
