@@ -129,24 +129,29 @@ var $;
                     return;
                 if (request.cache === 'no-store')
                     return;
-                const fetch_data = () => fetch(request).then(response => {
+                const fetch_data = () => fetch(new Request(request, { credentials: 'omit' })).then(response => {
                     if (response.status !== 200)
                         return response;
+                    event.waitUntil(caches.open('$mol_offline').then(cache => cache.put(request, response)));
+                    return response.clone();
+                });
+                const enrich = (response) => {
+                    if (!response.status)
+                        return response;
                     const headers = new Headers(response.headers);
-                    headers.set("Cross-Origin-Embedder-Policy", "require-corp");
-                    headers.set("Cross-Origin-Opener-Policy", "same-origin");
                     headers.set("$mol_offline", "");
-                    response = new Response(response.body, {
+                    headers.set("Cross-Origin-Embedder-Policy", "credentialless");
+                    headers.set("Cross-Origin-Resource-Policy", "cross-origin");
+                    headers.set("Cross-Origin-Opener-Policy", "same-origin");
+                    return new Response(response.body, {
                         status: response.status,
                         statusText: response.statusText,
                         headers,
                     });
-                    event.waitUntil(caches.open('$mol_offline').then(cache => cache.put(request, response)));
-                    return response.clone();
-                });
+                };
                 const fresh = request.cache === 'force-cache' ? null : fetch_data();
                 if (fresh)
-                    event.waitUntil(fresh);
+                    event.waitUntil(fresh.then(enrich));
                 event.respondWith(caches.match(request).then(cached => request.cache === 'no-cache' || request.cache === 'reload'
                     ? (cached
                         ? fresh
@@ -162,7 +167,7 @@ var $;
                             return cloned;
                         })
                         : fresh)
-                    : (cached || fresh || fetch_data())));
+                    : (cached || fresh || fetch_data())).then(enrich));
             });
             self.addEventListener('beforeinstallprompt', (event) => event.prompt());
         }
