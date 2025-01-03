@@ -45,7 +45,7 @@ namespace $.$$ {
 						left: p.offsetLeft + p.offsetWidth - b.offsetWidth,
 						behavior: 'smooth',
 					})
-					new this.$.$mol_after_timeout( 1000, ()=> n.bring() )
+					// new this.$.$mol_after_timeout( 1000, ()=> n.bring() )
 				} )
 				
 				break
