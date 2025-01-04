@@ -53,15 +53,23 @@ namespace $ {
 		}
 
 		point_compare( point: $mol_dom_point ) {
-			if( point.is_tail() ) return this.native().comparePoint(
-				point.node.parentNode!,
-				[ ... point.node.parentNode!.childNodes ].indexOf( point.node as ChildNode ),
-			)
-			else return this.native().comparePoint( point.node, point.pos )
+			return this.native().comparePoint( ... point.native() )
+		}
+		
+		point_bound( point: $mol_dom_point ) {
+			const zone = this.point_compare( point )
+			return zone < 0 ? this.anchor : zone > 0 ? this.extend : point
 		}
 		
 		range_contains( range: $mol_dom_range ) {
 			return ( this.point_compare( range.anchor ) === 0 )&&( this.point_compare( range.extend ) === 0 )
+		}
+
+		range_bounds( range: $mol_dom_range ) {
+			return new $mol_dom_range(
+				this.point_bound( range.anchor ),
+				this.point_bound( range.extend ),
+			)
 		}
 
 		select() {

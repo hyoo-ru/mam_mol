@@ -70,6 +70,14 @@ namespace $ {
 		tail() {
 			return $mol_dom_point.tail( this.node )
 		}
+
+		native() {
+			if( this.is_tail() ) return [
+				this.node.parentNode!,
+				[ ... this.node.parentNode!.childNodes ].indexOf( this.node as ChildNode ),
+			] as const
+			return [ this.node, this.pos ] as const
+		}
 		
 		/** Point near the node. -1: before, +1: after. */
 		static near( node: Node, axis: -1 | 1 ) {
