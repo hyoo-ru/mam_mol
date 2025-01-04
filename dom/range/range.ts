@@ -12,7 +12,10 @@ namespace $ {
 		}
 		
 		static from_selection( sel = $mol_dom_context.getSelection()! ) {
-			return this.from_native( sel?.getRangeAt(0) )
+			return new this(
+				new $mol_dom_point( sel.anchorNode!, sel.anchorOffset ),
+				new $mol_dom_point( sel.focusNode!, sel.focusOffset ),
+			)
 		}
 		
 		static from_native( range: Range ) {
@@ -35,6 +38,10 @@ namespace $ {
 		
 		is_empty() {
 			return this.anchor.node === this.extend.node && this.anchor.pos === this.extend.pos
+		}
+
+		swap() {
+			return new $mol_dom_range( this.extend, this.anchor )
 		}
 
 		expand() {
@@ -73,21 +80,26 @@ namespace $ {
 		}
 
 		select() {
+			
+			const [ anchorNode, anchorOffset ] = this.anchor.native()
+			const [ focusNode, focusOffset ] = this.extend.native()
+
 			const sel = $mol_dom_context.document.getSelection()!
-			sel.removeAllRanges()
-			sel.addRange( this.native() )
+			sel.setBaseAndExtent( anchorNode, anchorOffset, focusNode, focusOffset )
+
+			return this
 		}
 		
 		native() {
 
 			const range = $mol_dom_context.document.createRange()
 
-			if( this.extend.is_tail() ) range.setEndAfter( this.extend.node )
-			else range.setEnd( this.extend.node, this.extend.pos )
-		
 			if( this.anchor.is_tail() ) range.setStartAfter( this.anchor.node )
 			else range.setStart( this.anchor.node, this.anchor.pos )
 
+			if( this.extend.is_tail() ) range.setEndAfter( this.extend.node )
+			else range.setEnd( this.extend.node, this.extend.pos )		
+		
 			return range
 		}
 		
