@@ -3645,6 +3645,11 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function is_identifier(tree) {
+        if (tree.type)
+            return false;
+        return /^[a-z_$][a-z_$0-9]*$/i.test(tree.text());
+    }
     function $mol_tree2_js_to_text(js) {
         function sequence(open, separator, close) {
             return (input, belt) => [
@@ -3745,25 +3750,21 @@ var $;
             '{}': block('{', '', '}'),
             '[]': (input, belt) => {
                 const first = input.kids[0];
-                if (first.type)
+                if (!is_identifier(first))
                     return sequence('[', '', ']')(input, belt);
                 else
                     return [input.data('.' + first.text())];
             },
             '?.[]': (input, belt) => {
                 const first = input.kids[0];
-                if (first.type)
+                if (!is_identifier(first))
                     return sequence('?.[', '', ']')(input, belt);
                 else
                     return [input.data('?.' + first.text())];
             },
-            ':': (input, belt) => {
-                const first = input.kids[0];
-                if (first.type)
-                    return duplet('[', ']: ')(input, belt);
-                else
-                    return duplet('', ': ')(input, belt);
-            },
+            ':': (input, belt) => input.kids[0].type
+                ? duplet('[', ']: ')(input, belt)
+                : duplet('', ': ')(input, belt),
             'let': duplet('let ', ' = '),
             'const': duplet('const ', ' = '),
             'var': duplet('var ', ' = '),
@@ -3794,7 +3795,7 @@ var $;
             '?:': triplet('', ' ? ', ' : '),
             '.': (input, belt) => {
                 const first = input.kids[0];
-                if (first.type)
+                if (!is_identifier(first))
                     return triplet('[', ']')(input, belt);
                 else
                     return [
