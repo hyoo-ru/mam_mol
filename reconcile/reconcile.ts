@@ -9,6 +9,7 @@ namespace $ {
 		drop,
 		insert,
 		update,
+		replace,
 	}: {
 		prev: readonly Prev[],
 		from: number,
@@ -18,9 +19,11 @@ namespace $ {
 		drop: ( prev: Prev, lead: Prev | null )=> Prev | null,
 		insert: ( next: Next, lead: Prev | null )=> Prev,
 		update?: ( next: Next, prev: Prev, lead: Prev | null )=> Prev,
+		replace?: ( next: Next, prev: Prev, lead: Prev | null )=> Prev,
 	} ) {
 		
-		if( !update ) update = ( next, prev, lead )=> insert( next, drop( prev, lead ) )
+		if( !update ) update = ( next, prev, lead )=> prev
+		if( !replace ) replace = ( next, prev, lead )=> insert( next, drop( prev, lead ) )
 		
 		if( to > prev.length ) to = prev.length // $mol_fail( new RangeError( `To(${ to }) greater then length(${ prev.length })` ) )
 		if( from > to ) from = to // $mol_fail( new RangeError( `From(${ to }) greater then to(${ to })` ) )
@@ -33,7 +36,7 @@ namespace $ {
 			
 			if( p < to && n < next.length && equal( next[n], prev[p] ) ) {
 				
-				lead = prev[p]
+				lead = update( next[n], prev[p], lead )
 				++ p
 				++ n
 				
@@ -49,7 +52,7 @@ namespace $ {
 				
 			} else {
 				
-				lead = update( next[n], prev[p], lead )
+				lead = replace( next[n], prev[p], lead )
 				++ p
 				++ n
 				

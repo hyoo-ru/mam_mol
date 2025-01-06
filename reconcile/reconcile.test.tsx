@@ -20,7 +20,7 @@ namespace $ {
 				equal: ( next, prev )=> prev.textContent === next,
 				drop: ( prev, lead )=> list.removeChild( prev ),
 				insert: ( next, lead )=> list.insertBefore( <p data-rev="new">{ next }</p>, lead ? lead.nextSibling : list.firstChild ),
-				update: ( next, prev, lead )=> {
+				replace: ( next, prev, lead )=> {
 					prev.textContent = next
 					prev.setAttribute( 'data-rev', 'up' )
 					return prev
@@ -52,7 +52,7 @@ namespace $ {
 				equal: ( next, prev )=> prev.textContent === next,
 				drop: ( prev, lead )=> list.removeChild( prev ),
 				insert: ( next, lead )=> list.insertBefore( <p data-rev="new">{ next }</p>, lead ? lead.nextSibling : list.firstChild ),
-				update: ( next, prev, lead )=> {
+				replace: ( next, prev, lead )=> {
 					prev.textContent = next
 					prev.setAttribute( 'data-rev', 'up' )
 					return prev
@@ -84,7 +84,7 @@ namespace $ {
 				equal: ( next, prev )=> prev.textContent === next,
 				drop: ( prev, lead )=> list.removeChild( prev ),
 				insert: ( next, lead )=> list.insertBefore( <p data-rev="new">{ next }</p>, lead ? lead.nextSibling : list.firstChild ),
-				update: ( next, prev, lead )=> {
+				replace: ( next, prev, lead )=> {
 					prev.textContent = next
 					prev.setAttribute( 'data-rev', 'up' )
 					return prev
@@ -115,7 +115,7 @@ namespace $ {
 				equal: ( next, prev )=> prev.textContent === next,
 				drop: ( prev, lead )=> list.removeChild( prev ),
 				insert: ( next, lead )=> list.insertBefore( <p data-rev="new">{ next }</p>, lead ? lead.nextSibling : list.firstChild ),
-				update: ( next, prev, lead )=> {
+				replace: ( next, prev, lead )=> {
 					prev.textContent = next
 					prev.setAttribute( 'data-rev', 'up' )
 					return prev
@@ -150,7 +150,7 @@ namespace $ {
 				equal: ( next, prev )=> prev.textContent === next,
 				drop: ( prev, lead )=> list.removeChild( prev ),
 				insert: ( next, lead )=> list.insertBefore( <p data-rev="new">{ next }</p>, lead ? lead.nextSibling : list.firstChild ),
-				update: ( next, prev, lead )=> {
+				replace: ( next, prev, lead )=> {
 					prev.textContent = next
 					prev.setAttribute( 'data-rev', 'up' )
 					return prev
@@ -183,7 +183,7 @@ namespace $ {
 				equal: ( next, prev )=> prev.textContent === next,
 				drop: ( prev, lead )=> list.removeChild( prev ),
 				insert: ( next, lead )=> list.insertBefore( <p data-rev="new">{ next }</p>, lead ? lead.nextSibling : list.firstChild ),
-				update: ( next, prev, lead )=> {
+				replace: ( next, prev, lead )=> {
 					prev.textContent = next
 					prev.setAttribute( 'data-rev', 'up' )
 					return prev
