@@ -103,7 +103,7 @@ namespace $ {
 		}
 
 		/** Point at one step in some direction. */
-		move( axis: -1 | 1 ) {
+		move_step( axis: -1 | 1 ) {
 			if( axis > 0 ) {
 				if( this.is_tail() ) {
 					const next = this.node.nextSibling
@@ -129,56 +129,30 @@ namespace $ {
 			}
 		}
 
-		// char_lift( root: Element ): $mol_dom_point {
-		// 	return this.lift( ()=> {
-		// 		if( this.node === root && this.is_head() ) return true
-		// 		if( this.node.nodeType !== this.node.TEXT_NODE ) return false
-		// 		if( this.is_head() ) return false
-		// 		this.pos -= 1
-		// 		return true
-		// 	} )
-		// }
-		
-		// char_fall( root: Element ): $mol_dom_point {
-		// 	return this.fall( ()=> {
-		// 		if( this.node === root && this.is_foot() ) return true
-		// 		if( this.node.nodeType !== this.node.TEXT_NODE ) return false
-		// 		if( this.is_foot() ) return false
-		// 		this.pos += 1
-		// 		return true
-		// 	} )
-		// }
+		move_chars( root: Element, offset: number ): $mol_dom_point {
 
-		// lift( check: ()=> boolean ): $mol_dom_point {
+			if( this.node === root && this.is_tail() ) return $mol_dom_point.foot( root )
+
+			const axis = Math.abs( offset ) as -1 | 0 | 1
+			if( axis < 0 ) $mol_fail( new Error( 'Unsupported yet' ) )
 			
-		// 	if( check() ) return this
-			
-		// 	if( !this.is_head() ) {
-		// 		const kid = this.node.childNodes[ this.pos - 1 ]
-		// 		this.node = kid
-		// 		this.is_foot()
-		// 		return this.lift( check )
-		// 	}
-			
-		// 	return this.jump(-1)?.lift( check ) ?? this
-			
-		// }
-		
-		// fall( check: ()=> boolean ): $mol_dom_point {
-			
-		// 	if( check() ) return this
-			
-		// 	if( !this.is_foot() ) {
-		// 		const kid = this.node.childNodes[ this.pos ]
-		// 		this.node = kid
-		// 		this.is_head()
-		// 		return this.fall( check )
-		// 	}
-			
-		// 	return this.jump(-1)?.fall( check ) ?? this
-			
-		// }
-		
+			if( this.node.nodeValue && this.pos >= 0 ) {
+
+				const pos = this.pos + offset
+				const len = this.node.nodeValue.length
+
+				if( pos <= len ) return new $mol_dom_point( this.node, pos )
+				else return $mol_dom_point.tail( this.node ).move_chars( root, pos - len )
+
+			} else {
+
+				return this.move_step( axis || 1 )?.move_chars( root, offset )
+					?? $mol_dom_point.foot( root )
+				
+			}
+
+		}
+
 	}
 	
 }
