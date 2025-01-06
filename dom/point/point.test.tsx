@@ -73,21 +73,21 @@ namespace $.$$ {
 			let cursor = $mol_dom_point.head( div )
 
 			$mol_assert_equal([
-				cursor = cursor.move(+1)!,
-				cursor = cursor.move(+1)!,
-				cursor = cursor.move(+1)!,
-				cursor = cursor.move(+1)!,
-				cursor = cursor.move(+1)!,
-				cursor = cursor.move(+1)!,
-				cursor = cursor.move(+1)!,
-				cursor = cursor.move(+1)!,
-				cursor = cursor.move(+1)!,
-				cursor = cursor.move(+1)!,
-				cursor = cursor.move(+1)!,
-				cursor = cursor.move(+1)!,
-				cursor = cursor.move(+1)!,
-				cursor = cursor.move(+1)!,
-				cursor = cursor.move(+1)!,
+				cursor = cursor.move_step(+1)!,
+				cursor = cursor.move_step(+1)!,
+				cursor = cursor.move_step(+1)!,
+				cursor = cursor.move_step(+1)!,
+				cursor = cursor.move_step(+1)!,
+				cursor = cursor.move_step(+1)!,
+				cursor = cursor.move_step(+1)!,
+				cursor = cursor.move_step(+1)!,
+				cursor = cursor.move_step(+1)!,
+				cursor = cursor.move_step(+1)!,
+				cursor = cursor.move_step(+1)!,
+				cursor = cursor.move_step(+1)!,
+				cursor = cursor.move_step(+1)!,
+				cursor = cursor.move_step(+1)!,
+				cursor = cursor.move_step(+1)!,
 			], [
 				$mol_dom_point.head( div.firstChild! ),
 				$mol_dom_point.foot( div.firstChild! ),
@@ -104,6 +104,32 @@ namespace $.$$ {
 				$mol_dom_point.foot( div.lastChild! ),
 				$mol_dom_point.tail( div.lastChild! ),
 				null,
+			] )
+			
+		},
+		
+		"move by chars to the end"( $ ) {
+
+			const div = <div>1<span>23</span><br/>4</div>
+			const span = div.childNodes[1]
+			const br = div.childNodes[2]
+
+			let start = $mol_dom_point.head( div )
+
+			$mol_assert_equal([
+				start.move_chars( div, +0 )!,
+				start.move_chars( div, +1 )!,
+				start.move_chars( div, +2 )!,
+				start.move_chars( div, +3 )!,
+				start.move_chars( div, +4 )!,
+				start.move_chars( div, +5 )!,
+			], [
+				$mol_dom_point.head( div.firstChild! ),
+				$mol_dom_point.foot( div.firstChild! ),
+				new $mol_dom_point( span.firstChild!, 1 ),
+				$mol_dom_point.foot( span.firstChild! ),
+				$mol_dom_point.foot( div.lastChild! ),
+				$mol_dom_point.foot( div ),
 			] )
 			
 		},
