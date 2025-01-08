@@ -35,6 +35,10 @@ namespace $ {
 		static around( node: Node ) {
 			return $mol_dom_range.inside( node ).expand()
 		}
+
+		container() {
+			return this.native().commonAncestorContainer
+		}
 		
 		is_empty() {
 			return this.anchor.node === this.extend.node && this.anchor.pos === this.extend.pos
