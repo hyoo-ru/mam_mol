@@ -4892,7 +4892,7 @@ declare namespace $ {
             name: string;
             dict: Dict;
         };
-        Value: ReturnType<Value>;
+        Value: Dict[keyof Dict];
     };
 }
 
@@ -13034,7 +13034,7 @@ declare namespace $ {
 declare namespace $ {
     function $mol_data_array<Sub extends $mol_data_value>(sub: Sub): ((val: readonly Parameters<Sub>[0][]) => readonly ReturnType<Sub>[]) & {
         config: Sub;
-        Value: ReturnType<Value>;
+        Value: readonly ReturnType<Sub>[];
     };
 }
 
@@ -13071,7 +13071,7 @@ declare namespace $ {
 declare namespace $ {
     function $mol_data_const<Val>(ref: Val): ((val: Val) => Val) & {
         config: Val;
-        Value: ReturnType<Value>;
+        Value: Val;
     };
 }
 
@@ -13089,7 +13089,7 @@ declare namespace $ {
 declare namespace $ {
     function $mol_data_dict<Sub extends $mol_data_value>(sub: Sub): ((val: Readonly<Record<string, ReturnType<Sub>>>) => Readonly<Record<string, ReturnType<Sub>>>) & {
         config: Sub;
-        Value: ReturnType<Value>;
+        Value: Readonly<Record<string, ReturnType<Sub>>>;
     };
 }
 
@@ -13111,14 +13111,14 @@ declare namespace $ {
 declare namespace $ {
     function $mol_data_pattern(pattern: RegExp): ((val: string) => string) & {
         config: RegExp;
-        Value: ReturnType<Value>;
+        Value: string;
     };
 }
 
 declare namespace $ {
     let $mol_data_email: ((val: string) => string) & {
         config: RegExp;
-        Value: ReturnType<Value>;
+        Value: string;
     };
 }
 
@@ -13153,7 +13153,7 @@ declare namespace $ {
 declare namespace $ {
     function $mol_data_instance<Instance extends new (...args: any[]) => any>(Instance: Instance): ((val: InstanceType<Instance>) => InstanceType<Instance>) & {
         config: Instance;
-        Value: ReturnType<Value>;
+        Value: InstanceType<Instance>;
     };
 }
 
@@ -13210,7 +13210,7 @@ declare namespace $ {
 declare namespace $ {
     function $mol_data_nullable<Sub extends $mol_data_value>(sub: Sub): ((val: Parameters<Sub>[0] | null) => ReturnType<Sub> | null) & {
         config: Sub;
-        Value: ReturnType<Value>;
+        Value: ReturnType<Sub> | null;
     };
 }
 
@@ -13242,7 +13242,7 @@ declare namespace $ {
             sub: Sub;
             fallback: Fallback | undefined;
         };
-        Value: ReturnType<Value>;
+        Value: ReturnType<Sub> | (Fallback extends undefined ? undefined : ReturnType<Extract<Fallback, () => any>>);
     };
 }
 
@@ -13287,7 +13287,7 @@ declare namespace $ {
         config: {
             funcs: Funcs & Guard<Funcs>;
         };
-        Value: ReturnType<Value>;
+        Value: $mol_type_result<$mol_type_foot<Funcs>>;
     };
     export {};
 }
@@ -13306,7 +13306,7 @@ declare namespace $ {
 declare namespace $ {
     function $mol_data_range<Value>(from: Value, to: Value): ((val: Value) => Value) & {
         config: Value[];
-        Value: ReturnType<Value_1>;
+        Value: Value;
     };
 }
 
@@ -13330,7 +13330,7 @@ declare namespace $ {
 declare namespace $ {
     function $mol_data_record<Sub extends Record<string, $mol_data_value>>(sub: Sub): ((val: $mol_type_merge<$mol_type_override<Partial<{ [key in keyof Sub]: Parameters<Sub[key]>[0]; }>, Pick<{ [key in keyof Sub]: Parameters<Sub[key]>[0]; }, { [Field in keyof { [key in keyof Sub]: Parameters<Sub[key]>[0]; }]: undefined extends { [key in keyof Sub]: Parameters<Sub[key]>[0]; }[Field] ? never : Field; }[keyof Sub]>>>) => Readonly<$mol_type_merge<$mol_type_override<Partial<{ [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }>, Pick<{ [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }, { [Field_1 in keyof { [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }]: undefined extends { [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }[Field_1] ? never : Field_1; }[keyof Sub]>>>>) & {
         config: Sub;
-        Value: ReturnType<Value>;
+        Value: Readonly<$mol_type_merge<$mol_type_override<Partial<{ [key in keyof Sub]: ReturnType<Sub[key]>; }>, Pick<{ [key in keyof Sub]: ReturnType<Sub[key]>; }, { [Field in keyof { [key in keyof Sub]: ReturnType<Sub[key]>; }]: undefined extends { [key in keyof Sub]: ReturnType<Sub[key]>; }[Field] ? never : Field; }[keyof Sub]>>>>;
     };
 }
 
@@ -13370,7 +13370,7 @@ declare namespace $ {
 declare namespace $ {
     function $mol_data_variant<Sub extends $mol_data_value[]>(...sub: Sub): ((val: Parameters<Sub[number]>[0]) => ReturnType<Sub[number]>) & {
         config: Sub;
-        Value: ReturnType<Value>;
+        Value: ReturnType<Sub[number]>;
     };
 }
 
