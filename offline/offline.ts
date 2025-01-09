@@ -45,7 +45,7 @@ namespace $ {
 
 		}
 
-		static corp() { return true }
+		static corp() { return false }
 
 		static override modify(request: Request) {
 			let fallback_header
