@@ -3,104 +3,156 @@ namespace $ {
 	export class $mol_dom_point extends Object {
 		
 		constructor(
-			public node: Node,
-			public pos: number,
-		) { super() }
+			readonly node: Node,
+			readonly pos: number,
+		) {
+			super()
+			
+			if( pos <= 0 ) return
+			if( node.nodeValue ) return
+			
+			this.node = this.node.childNodes[ pos - 1 ]
+			if( !this.node ) $mol_fail( new Error( 'node is undefined' ) )
+			
+			this.pos = -1
+
+		}
 		
-		static start( node: Node ) {
+		/** Iterator for deep comparison. */
+		[ Symbol.iterator ]() {
+			return [ this.node, this.pos ].values()
+		}
+		
+		/** Point after start of the node. */
+		static head( node: Node ) {
 			return new this( node, 0 )
-		} 
+		}
 		
-		static end( node: Node ) {
+		/** Point before end of the node. */
+		static foot( node: Node ) {
 			const length = node.nodeValue?.length ?? node.childNodes.length
 			return new this( node, length )
 		}
-		
-		to( point: $mol_dom_point ) {
-			this.node = point.node
-			this.pos = point.pos
+
+		/** Point after end of the node. */
+		static tail( node: Node ) {
+			return new this( node, -1 )
+		}
+
+		/** Is point after start of the node. */
+		is_head() {
+			return this.pos === 0
 		}
 		
-		to_start() {
-			this.pos = 0
-			return this
+		/** Is point before end of the node. */
+		is_foot() {
+			if( this.is_tail() ) return !this.node.nextSibling
+			else return this.pos === ( this.node.nodeValue?.length ?? this.node.childNodes.length )
+		}
+
+		/** Is point after end of the node. */
+		is_tail() {
+			return this.pos === -1
 		}
 		
-		to_end() {
-			this.pos = this.node.nodeValue?.length ?? this.node.childNodes.length
-			return this
+		/** Point after start of the node. */
+		head() {
+			return $mol_dom_point.head( this.node )
 		}
 		
-		is_start() {
-			return this.pos <= 0
+		/** Point before end of the node. */
+		foot() {
+			if( this.is_tail() ) return $mol_dom_point.foot( this.node.parentNode! )
+			else return $mol_dom_point.foot( this.node )
 		}
 		
-		is_end() {
-			return this.pos >= ( this.node.nodeValue?.length ?? this.node.childNodes.length )
+		/** Point after end of the node. */
+		tail() {
+			return $mol_dom_point.tail( this.node )
+		}
+
+		native() {
+			if( this.is_tail() ) return [
+				this.node.parentNode!,
+				[ ... this.node.parentNode!.childNodes ].indexOf( this.node as ChildNode ),
+			] as const
+			return [ this.node, this.pos ] as const
 		}
 		
-		char_backward( root: Element ): $mol_dom_point {
-			return this.backward( ()=> {
-				if( this.node === root && this.is_start() ) return true
-				if( this.node.nodeType !== this.node.TEXT_NODE ) return false
-				if( this.is_start() ) return false
-				this.pos -= 1
-				return true
-			} )
+		/** Point near the node. -1: before, +1: after. */
+		static near( node: Node, axis: -1 | 1 ) {
+
+			const parent = node.parentElement
+			if( !parent ) return null
+
+			if( axis < 0 ) return node.previousSibling
+				? $mol_dom_point.tail( node.previousSibling )
+				: $mol_dom_point.head( parent )
+
+			return $mol_dom_point.tail( node )
+
 		}
 		
-		char_forward( root: Element ): $mol_dom_point {
-			return this.forward( ()=> {
-				if( this.node === root && this.is_end() ) return true
-				if( this.node.nodeType !== this.node.TEXT_NODE ) return false
-				if( this.is_end() ) return false
-				this.pos += 1
-				return true
-			} )
-		}
-		
-		backward( check: ()=> boolean ): $mol_dom_point {
-			
-			if( check() ) return this
-			
-			if( !this.is_start() ) {
-				const kid = this.node.childNodes[ this.pos - 1 ]
-				this.node = kid
-				this.to_end()
-				return this.backward( check )
+		/** Point near the node. -1: before, +1: after. */
+		jump( axis: -1 | 1 ) {
+			if( this.is_tail() ) {
+				return $mol_dom_point.near( this.node.parentNode!, axis )
+			} else {
+				return $mol_dom_point.near( this.node, axis )
 			}
-			
-			const parent = this.node.parentElement
-			if( !parent ) return this
-			
-			const offset = [ ... parent.childNodes ].indexOf( this.node as ChildNode )
-			this.node = parent
-			this.pos = offset
-			return this.backward( check )
-			
 		}
-		
-		forward( check: ()=> boolean ): $mol_dom_point {
-			
-			if( check() ) return this
-			
-			if( !this.is_end() ) {
-				const kid = this.node.childNodes[ this.pos ]
-				this.node = kid
-				this.to_start()
-				return this.forward( check )
+
+		/** Point at one step in some direction. */
+		move_step( axis: -1 | 1 ) {
+			if( axis > 0 ) {
+				if( this.is_tail() ) {
+					const next = this.node.nextSibling
+					if( next ) return $mol_dom_point.head( next )
+					else return this.jump(+1)
+				} else if( this.is_foot() ) {
+					return this.jump(+1)
+				} else {
+					const next = this.node.firstChild
+					if( next ) return $mol_dom_point.head( next )
+					return new $mol_dom_point( this.node, this.pos + 1 )
+				}
+			} else {
+				if( this.is_tail() ) {
+					const next = this.node.lastChild
+					if( next ) return $mol_dom_point.tail( next )
+					else return $mol_dom_point.head( this.node )
+				} else if( this.is_head() ) {
+					return this.jump(-1)
+				} else {
+					return new $mol_dom_point( this.node, this.pos + 1 )
+				}
 			}
-			
-			const parent = this.node.parentElement
-			if( !parent ) return this
-			
-			const offset = [ ... parent.childNodes ].indexOf( this.node as ChildNode ) + 1
-			this.node = parent
-			this.pos = offset
-			return this.forward( check )
-			
 		}
-		
+
+		move_chars( root: Element, offset: number ): $mol_dom_point {
+
+			if( this.node === root && this.is_tail() ) return $mol_dom_point.foot( root )
+
+			const axis = Math.abs( offset ) as -1 | 0 | 1
+			if( axis < 0 ) $mol_fail( new Error( 'Unsupported yet' ) )
+			
+			if( this.node.nodeValue && this.pos >= 0 ) {
+
+				const pos = this.pos + offset
+				const len = this.node.nodeValue.length
+
+				if( pos <= len ) return new $mol_dom_point( this.node, pos )
+				else return $mol_dom_point.tail( this.node ).move_chars( root, pos - len )
+
+			} else {
+
+				return this.move_step( axis || 1 )?.move_chars( root, offset )
+					?? $mol_dom_point.foot( root )
+				
+			}
+
+		}
+
 	}
 	
 }

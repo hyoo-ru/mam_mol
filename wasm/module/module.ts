@@ -5,7 +5,7 @@ namespace $ {
 		native : WebAssembly.Module
 
 		constructor(
-			readonly buffer : ArrayBuffer
+			readonly buffer : Uint8Array
 		) {
 			super()
 			this.native = new WebAssembly.Module( buffer )
