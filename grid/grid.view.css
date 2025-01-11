@@ -29,23 +29,23 @@
 	padding: var(--mol_gap_text);
 	white-space: nowrap;
 	vertical-align: middle;
-	box-shadow: inset 1px 1px 0 0 var(--mol_theme_line);
+	box-shadow: inset 2px 2px 0 -1px var(--mol_theme_line);
 }
 
 [mol_grid_row]:where(:first-child) > * {
-	box-shadow: inset 1px 0 0 0 var(--mol_theme_line);
+	box-shadow: inset 2px 0 0 -1px var(--mol_theme_line);
 }
 
 [mol_grid_table] > * > *:where(:first-child) {
-	box-shadow: inset 0px 1px 0 0 var(--mol_theme_line);
+	box-shadow: inset 0px 2px 0 -1px var(--mol_theme_line);
 }
 
 [mol_grid_head] > * {
-	box-shadow: inset 1px -1px 0 0 var(--mol_theme_line);
+	box-shadow: inset 2px -2px 0 -1px var(--mol_theme_line);
 }
 
 [mol_grid_head] > *:where(:first-child) {
-	box-shadow: inset 0px -1px 0 0 var(--mol_theme_line);
+	box-shadow: inset 0px -2px 0 -1px var(--mol_theme_line);
 }
 
 [mol_grid_table] > [mol_grid_row]:where(:first-child) > *:where(:first-child) {
