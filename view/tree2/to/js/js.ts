@@ -168,7 +168,7 @@ namespace $ {
 				if( input.type[0] === '/' ) return [
 					input.struct( '[,]', input.hack( belt ) ),
 				]
-				if( input.type && $mol_view_tree2_value_number(input.type) ) return [
+				if( input.type && $mol_tree2_js_is_number(input.type) ) return [
 					input
 				]
 

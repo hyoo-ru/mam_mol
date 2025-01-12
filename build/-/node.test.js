@@ -3035,6 +3035,232 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_tree2_js_is_number(type) {
+        return type.match(/[\+\-]*NaN/) || !Number.isNaN(Number(type));
+    }
+    $.$mol_tree2_js_is_number = $mol_tree2_js_is_number;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function is_identifier(tree) {
+        if (tree.type)
+            return false;
+        return /^[a-z_$][a-z_$0-9]*$/i.test(tree.text());
+    }
+    function $mol_tree2_js_to_text(js) {
+        function sequence(open, separator, close) {
+            return (input, belt) => [
+                input.struct('line', [
+                    ...open ? [input.data(open)] : [],
+                    input.struct(separator && input.kids.length > 2 ? 'indent' : 'line', [].concat(...input.kids.map((kid, index) => [
+                        kid.struct('line', [
+                            ...kid.list([kid]).hack(belt),
+                            ...(separator && index < input.kids.length - 1) ? [input.data(separator)] : [],
+                        ]),
+                    ]))),
+                    ...close ? [input.data(close)] : [],
+                ]),
+            ];
+        }
+        function block(open, separator, close) {
+            return (input, belt) => [
+                ...open ? [input.data(open)] : [],
+                ...input.kids.length === 0 ? [] : [input.struct('indent', input.kids.map((kid, index) => kid.struct('line', [
+                        ...kid.list([kid]).hack(belt),
+                        ...(separator) ? [input.data(separator)] : [],
+                    ])))],
+                ...close ? [input.data(close)] : [],
+            ];
+        }
+        function duplet(open, separator, close) {
+            return (input, belt) => [
+                input.struct('line', [
+                    ...open ? [input.data(open)] : [],
+                    ...input.list(input.kids.slice(0, 1)).hack(belt),
+                    ...(separator && input.kids.length > 1) ? [input.data(separator)] : [],
+                    ...input.list(input.kids.slice(1, 2)).hack(belt),
+                    ...close ? [input.data(close)] : [],
+                ]),
+            ];
+        }
+        function triplet(open, separator12, separator23, close) {
+            return (input, belt) => [
+                input.struct('line', [
+                    ...open ? [input.data(open)] : [],
+                    ...input.list(input.kids.slice(0, 1)).hack(belt),
+                    ...(separator12 && input.kids.length > 1) ? [input.data(separator12)] : [],
+                    ...input.list(input.kids.slice(1, 2)).hack(belt),
+                    ...(separator23 && input.kids.length > 2) ? [input.data(separator23)] : [],
+                    ...input.list(input.kids.slice(2, 3)).hack(belt),
+                    ...close ? [input.data(close)] : [],
+                ]),
+            ];
+        }
+        return js.list(js.hack({
+            '+': sequence('+'),
+            '-': sequence('-'),
+            '!': sequence('!'),
+            '~': sequence('~'),
+            'return': sequence('return '),
+            'break': sequence('break '),
+            'continue': sequence('continue '),
+            'yield': sequence('yield '),
+            'yield*': sequence('yield* '),
+            'await': sequence('await '),
+            'void': sequence('void '),
+            'delete': sequence('delete '),
+            'typeof': sequence('typeof '),
+            'new': sequence('new '),
+            '...': sequence('...'),
+            '@++': sequence('', '', '++'),
+            '@--': sequence('', '', '--'),
+            '(in)': sequence('(', ' in ', ')'),
+            '(instanceof)': sequence('(', ' instanceof ', ')'),
+            '(+)': sequence('(', ' + ', ')'),
+            '(-)': sequence('(', ' - ', ')'),
+            '(*)': sequence('(', ' * ', ')'),
+            '(/)': sequence('(', ' / ', ')'),
+            '(%)': sequence('(', ' % ', ')'),
+            '(**)': sequence('(', ' ** ', ')'),
+            '(<)': sequence('(', ' < ', ')'),
+            '(<=)': sequence('(', ' <= ', ')'),
+            '(>)': sequence('(', ' > ', ')'),
+            '(>=)': sequence('(', ' >= ', ')'),
+            '(==)': sequence('(', ' == ', ')'),
+            '(!=)': sequence('(', ' != ', ')'),
+            '(===)': sequence('(', ' === ', ')'),
+            '(!==)': sequence('(', ' !== ', ')'),
+            '(<<)': sequence('(', ' << ', ')'),
+            '(>>)': sequence('(', ' >> ', ')'),
+            '(>>>)': sequence('(', ' >>> ', ')'),
+            '(&)': sequence('(', ' & ', ')'),
+            '(|)': sequence('(', ' | ', ')'),
+            '(^)': sequence('(', ' ^ ', ')'),
+            '(&&)': sequence('(', ' && ', ')'),
+            '(||)': sequence('(', ' || ', ')'),
+            '(,)': sequence('(', ', ', ')'),
+            '{;}': block('{', ';', '}'),
+            ';': block('', ';', ''),
+            '[,]': sequence('[', ', ', ']'),
+            '{,}': sequence('{', ', ', '}'),
+            '()': sequence('(', '', ')'),
+            '{}': block('{', '', '}'),
+            '[]': (input, belt) => {
+                const first = input.kids[0];
+                if (!is_identifier(first))
+                    return sequence('[', '', ']')(input, belt);
+                else
+                    return [input.data('.' + first.text())];
+            },
+            '?.[]': (input, belt) => {
+                const first = input.kids[0];
+                if (!is_identifier(first))
+                    return sequence('?.[', '', ']')(input, belt);
+                else
+                    return [input.data('?.' + first.text())];
+            },
+            ':': (input, belt) => input.kids[0].type
+                ? duplet('[', ']: ')(input, belt)
+                : duplet('', ': ')(input, belt),
+            'let': duplet('let ', ' = '),
+            'const': duplet('const ', ' = '),
+            'var': duplet('var ', ' = '),
+            '=': duplet('', ' = '),
+            '+=': duplet('', ' += '),
+            '-=': duplet('', ' -= '),
+            '*=': duplet('', ' *= '),
+            '/=': duplet('', ' /= '),
+            '%=': duplet('', ' %= '),
+            '**=': duplet('', ' **= '),
+            '<<=': duplet('', ' <<= '),
+            '>>=': duplet('', ' >>= '),
+            '>>>=': duplet('', ' >>>= '),
+            '&=': duplet('', ' &= '),
+            '|=': duplet('', ' |= '),
+            '^=': duplet('', ' ^= '),
+            '&&=': duplet('', ' &&= '),
+            '||=': duplet('', ' ||= '),
+            '=>': duplet('', ' => '),
+            'async=>': duplet('async ', ' => '),
+            'function': triplet('function '),
+            'function*': triplet('function* '),
+            'async': triplet('async function '),
+            'async*': triplet('async function* '),
+            'class': triplet('class ', ' '),
+            'extends': sequence('extends ', '', ' '),
+            'if': triplet('if', ' ', 'else'),
+            '?:': triplet('', ' ? ', ' : '),
+            '.': (input, belt) => {
+                const first = input.kids[0];
+                if (!is_identifier(first))
+                    return triplet('[', ']')(input, belt);
+                else
+                    return [
+                        input.data(first.text()),
+                        ...input.list(input.kids.slice(1)).hack(belt),
+                    ];
+            },
+            'get': triplet('get [', ']'),
+            'set': triplet('set [', ']'),
+            'static': triplet('static [', ']'),
+            '/./': sequence(),
+            '.global': sequence('g'),
+            '.multiline': sequence('m'),
+            '.ignoreCase': sequence('i'),
+            '.source': (input, belt) => [
+                input.data('/'),
+                input.data(JSON.stringify(input.text()).slice(1, -1)),
+                input.data('/'),
+            ],
+            '``': (input, belt) => {
+                return [
+                    input.struct('line', [
+                        input.data('`'),
+                        ...[].concat(...input.kids.map(kid => {
+                            if (kid.type) {
+                                return [
+                                    kid.data('${'),
+                                    ...kid.list([kid]).hack(belt),
+                                    kid.data('}'),
+                                ];
+                            }
+                            else {
+                                return [
+                                    input.data(JSON.stringify(kid.text()).slice(1, -1)),
+                                ];
+                            }
+                        })),
+                        input.data('`'),
+                    ]),
+                ];
+            },
+            '': (input, belt) => {
+                if (!input.type)
+                    return [
+                        input.data(JSON.stringify(input.text())),
+                    ];
+                if (/^[\w$#][\w0-9$]*$/i.test(input.type))
+                    return [
+                        input.data(input.type),
+                    ];
+                if ($mol_tree2_js_is_number(input.type))
+                    return [
+                        input.data(input.type)
+                    ];
+                $mol_fail(new SyntaxError(`Wrong node type`));
+            },
+        }));
+    }
+    $.$mol_tree2_js_to_text = $mol_tree2_js_to_text;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_view_tree2_error extends Error {
         spans;
         constructor(message, spans) {
@@ -3573,294 +3799,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    const err = $mol_view_tree2_error_str;
-    function $mol_view_tree2_value_type(val) {
-        switch (val.type) {
-            case 'true': return 'bool';
-            case 'false': return 'bool';
-            case 'null': return 'null';
-            case '*': return 'dict';
-            case '@': return 'locale';
-            case '': return 'string';
-            case '<=': return 'get';
-            case '<=>': return 'bind';
-            case '=>': return 'put';
-        }
-        const first_char = val.type && val.type[0];
-        if (first_char === '/')
-            return 'list';
-        if (Number(val.type).toString() == val.type)
-            return 'number';
-        if (/^[$A-Z]/.test(first_char))
-            return 'object';
-        return this.$mol_fail(err `Unknown value type ${val.type} at ${val.span}`);
-    }
-    $.$mol_view_tree2_value_type = $mol_view_tree2_value_type;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    const err = $mol_view_tree2_error_str;
-    function $mol_view_tree2_value(value) {
-        const type = value.type;
-        const kids = value.kids;
-        if (type === '') {
-            if (kids.length === 0)
-                return value.data(JSON.stringify(value.value));
-            return value.data(JSON.stringify(kids.map(node => node.value).join('\n')));
-        }
-        if (kids.length !== 0)
-            return this.$mol_fail(err `Kids are not allowed at ${value.span}, use ${example}`);
-        if (type === 'false' || type === 'true')
-            return value.data(type);
-        if (type === 'null')
-            return value.data(type);
-        if (Number(type).toString() === type.replace(/^\+/, ''))
-            return value.data(type);
-        return this.$mol_fail(err `Value ${value.toString()} not allowed at ${value.span}, use ${example}`);
-    }
-    $.$mol_view_tree2_value = $mol_view_tree2_value;
-    const example = new $mol_view_tree2_error_suggestions([
-        'false',
-        'true',
-        '123',
-        'null',
-        '\\some'
-    ]);
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_view_tree2_value_number(type) {
-        return type.match(/[\+\-]*NaN/) || !Number.isNaN(Number(type));
-    }
-    $.$mol_view_tree2_value_number = $mol_view_tree2_value_number;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function is_identifier(tree) {
-        if (tree.type)
-            return false;
-        return /^[a-z_$][a-z_$0-9]*$/i.test(tree.text());
-    }
-    function $mol_tree2_js_to_text(js) {
-        function sequence(open, separator, close) {
-            return (input, belt) => [
-                input.struct('line', [
-                    ...open ? [input.data(open)] : [],
-                    input.struct(separator && input.kids.length > 2 ? 'indent' : 'line', [].concat(...input.kids.map((kid, index) => [
-                        kid.struct('line', [
-                            ...kid.list([kid]).hack(belt),
-                            ...(separator && index < input.kids.length - 1) ? [input.data(separator)] : [],
-                        ]),
-                    ]))),
-                    ...close ? [input.data(close)] : [],
-                ]),
-            ];
-        }
-        function block(open, separator, close) {
-            return (input, belt) => [
-                ...open ? [input.data(open)] : [],
-                ...input.kids.length === 0 ? [] : [input.struct('indent', input.kids.map((kid, index) => kid.struct('line', [
-                        ...kid.list([kid]).hack(belt),
-                        ...(separator) ? [input.data(separator)] : [],
-                    ])))],
-                ...close ? [input.data(close)] : [],
-            ];
-        }
-        function duplet(open, separator, close) {
-            return (input, belt) => [
-                input.struct('line', [
-                    ...open ? [input.data(open)] : [],
-                    ...input.list(input.kids.slice(0, 1)).hack(belt),
-                    ...(separator && input.kids.length > 1) ? [input.data(separator)] : [],
-                    ...input.list(input.kids.slice(1, 2)).hack(belt),
-                    ...close ? [input.data(close)] : [],
-                ]),
-            ];
-        }
-        function triplet(open, separator12, separator23, close) {
-            return (input, belt) => [
-                input.struct('line', [
-                    ...open ? [input.data(open)] : [],
-                    ...input.list(input.kids.slice(0, 1)).hack(belt),
-                    ...(separator12 && input.kids.length > 1) ? [input.data(separator12)] : [],
-                    ...input.list(input.kids.slice(1, 2)).hack(belt),
-                    ...(separator23 && input.kids.length > 2) ? [input.data(separator23)] : [],
-                    ...input.list(input.kids.slice(2, 3)).hack(belt),
-                    ...close ? [input.data(close)] : [],
-                ]),
-            ];
-        }
-        return js.list(js.hack({
-            '+': sequence('+'),
-            '-': sequence('-'),
-            '!': sequence('!'),
-            '~': sequence('~'),
-            'return': sequence('return '),
-            'break': sequence('break '),
-            'continue': sequence('continue '),
-            'yield': sequence('yield '),
-            'yield*': sequence('yield* '),
-            'await': sequence('await '),
-            'void': sequence('void '),
-            'delete': sequence('delete '),
-            'typeof': sequence('typeof '),
-            'new': sequence('new '),
-            '...': sequence('...'),
-            '@++': sequence('', '', '++'),
-            '@--': sequence('', '', '--'),
-            '(in)': sequence('(', ' in ', ')'),
-            '(instanceof)': sequence('(', ' instanceof ', ')'),
-            '(+)': sequence('(', ' + ', ')'),
-            '(-)': sequence('(', ' - ', ')'),
-            '(*)': sequence('(', ' * ', ')'),
-            '(/)': sequence('(', ' / ', ')'),
-            '(%)': sequence('(', ' % ', ')'),
-            '(**)': sequence('(', ' ** ', ')'),
-            '(<)': sequence('(', ' < ', ')'),
-            '(<=)': sequence('(', ' <= ', ')'),
-            '(>)': sequence('(', ' > ', ')'),
-            '(>=)': sequence('(', ' >= ', ')'),
-            '(==)': sequence('(', ' == ', ')'),
-            '(!=)': sequence('(', ' != ', ')'),
-            '(===)': sequence('(', ' === ', ')'),
-            '(!==)': sequence('(', ' !== ', ')'),
-            '(<<)': sequence('(', ' << ', ')'),
-            '(>>)': sequence('(', ' >> ', ')'),
-            '(>>>)': sequence('(', ' >>> ', ')'),
-            '(&)': sequence('(', ' & ', ')'),
-            '(|)': sequence('(', ' | ', ')'),
-            '(^)': sequence('(', ' ^ ', ')'),
-            '(&&)': sequence('(', ' && ', ')'),
-            '(||)': sequence('(', ' || ', ')'),
-            '(,)': sequence('(', ', ', ')'),
-            '{;}': block('{', ';', '}'),
-            ';': block('', ';', ''),
-            '[,]': sequence('[', ', ', ']'),
-            '{,}': sequence('{', ', ', '}'),
-            '()': sequence('(', '', ')'),
-            '{}': block('{', '', '}'),
-            '[]': (input, belt) => {
-                const first = input.kids[0];
-                if (!is_identifier(first))
-                    return sequence('[', '', ']')(input, belt);
-                else
-                    return [input.data('.' + first.text())];
-            },
-            '?.[]': (input, belt) => {
-                const first = input.kids[0];
-                if (!is_identifier(first))
-                    return sequence('?.[', '', ']')(input, belt);
-                else
-                    return [input.data('?.' + first.text())];
-            },
-            ':': (input, belt) => input.kids[0].type
-                ? duplet('[', ']: ')(input, belt)
-                : duplet('', ': ')(input, belt),
-            'let': duplet('let ', ' = '),
-            'const': duplet('const ', ' = '),
-            'var': duplet('var ', ' = '),
-            '=': duplet('', ' = '),
-            '+=': duplet('', ' += '),
-            '-=': duplet('', ' -= '),
-            '*=': duplet('', ' *= '),
-            '/=': duplet('', ' /= '),
-            '%=': duplet('', ' %= '),
-            '**=': duplet('', ' **= '),
-            '<<=': duplet('', ' <<= '),
-            '>>=': duplet('', ' >>= '),
-            '>>>=': duplet('', ' >>>= '),
-            '&=': duplet('', ' &= '),
-            '|=': duplet('', ' |= '),
-            '^=': duplet('', ' ^= '),
-            '&&=': duplet('', ' &&= '),
-            '||=': duplet('', ' ||= '),
-            '=>': duplet('', ' => '),
-            'async=>': duplet('async ', ' => '),
-            'function': triplet('function '),
-            'function*': triplet('function* '),
-            'async': triplet('async function '),
-            'async*': triplet('async function* '),
-            'class': triplet('class ', ' '),
-            'extends': sequence('extends ', '', ' '),
-            'if': triplet('if', ' ', 'else'),
-            '?:': triplet('', ' ? ', ' : '),
-            '.': (input, belt) => {
-                const first = input.kids[0];
-                if (!is_identifier(first))
-                    return triplet('[', ']')(input, belt);
-                else
-                    return [
-                        input.data(first.text()),
-                        ...input.list(input.kids.slice(1)).hack(belt),
-                    ];
-            },
-            'get': triplet('get [', ']'),
-            'set': triplet('set [', ']'),
-            'static': triplet('static [', ']'),
-            '/./': sequence(),
-            '.global': sequence('g'),
-            '.multiline': sequence('m'),
-            '.ignoreCase': sequence('i'),
-            '.source': (input, belt) => [
-                input.data('/'),
-                input.data(JSON.stringify(input.text()).slice(1, -1)),
-                input.data('/'),
-            ],
-            '``': (input, belt) => {
-                return [
-                    input.struct('line', [
-                        input.data('`'),
-                        ...[].concat(...input.kids.map(kid => {
-                            if (kid.type) {
-                                return [
-                                    kid.data('${'),
-                                    ...kid.list([kid]).hack(belt),
-                                    kid.data('}'),
-                                ];
-                            }
-                            else {
-                                return [
-                                    input.data(JSON.stringify(kid.text()).slice(1, -1)),
-                                ];
-                            }
-                        })),
-                        input.data('`'),
-                    ]),
-                ];
-            },
-            '': (input, belt) => {
-                if (!input.type)
-                    return [
-                        input.data(JSON.stringify(input.text())),
-                    ];
-                if (/^[\w$#][\w0-9$]*$/i.test(input.type))
-                    return [
-                        input.data(input.type),
-                    ];
-                if ($mol_view_tree2_value_number(input.type))
-                    return [
-                        input.data(input.type)
-                    ];
-                $mol_fail(new SyntaxError(`Wrong node type`));
-            },
-        }));
-    }
-    $.$mol_tree2_js_to_text = $mol_tree2_js_to_text;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
 })($ || ($ = {}));
 
 ;
@@ -4221,7 +4159,7 @@ var $;
                     return [
                         input.struct('[,]', input.hack(belt)),
                     ];
-                if (input.type && $mol_view_tree2_value_number(input.type))
+                if (input.type && $mol_tree2_js_is_number(input.type))
                     return [
                         input
                     ];
@@ -4400,7 +4338,7 @@ var $;
     }
     function primitive_type(input) {
         let type = 'string';
-        if (input.type && $mol_view_tree2_value_number(input.type))
+        if (input.type && $mol_tree2_js_is_number(input.type))
             type = 'number';
         if (input.type === 'true' || input.type === 'false')
             type = 'boolean';
@@ -10015,6 +9953,410 @@ var $;
 
 ;
 "use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_data_setup(value, config) {
+        return Object.assign(value, {
+            config,
+            Value: null
+        });
+    }
+    $.$mol_data_setup = $mol_data_setup;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'config by value'() {
+            const N = $mol_data_setup((a) => a, 5);
+            $mol_assert_equal(N.config, 5);
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_func_is_class(func) {
+        return Object.getOwnPropertyDescriptor(func, 'prototype')?.writable === false;
+    }
+    $.$mol_func_is_class = $mol_func_is_class;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'function'() {
+            $mol_assert_not($mol_func_is_class(function () { }));
+        },
+        'generator'() {
+            $mol_assert_not($mol_func_is_class(function* () { }));
+        },
+        'async'() {
+            $mol_assert_not($mol_func_is_class(async function () { }));
+        },
+        'arrow'() {
+            $mol_assert_not($mol_func_is_class(() => null));
+        },
+        'named class'() {
+            $mol_assert_ok($mol_func_is_class(class Foo {
+            }));
+        },
+        'unnamed class'() {
+            $mol_assert_ok($mol_func_is_class(class {
+            }));
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_data_pipe(...funcs) {
+        return $mol_data_setup(function (input) {
+            let value = input;
+            for (const func of funcs)
+                value = $mol_func_is_class(func) ? new func(value) : func.call(this, value);
+            return value;
+        }, { funcs });
+    }
+    $.$mol_data_pipe = $mol_data_pipe;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'single function'() {
+            const stringify = $mol_data_pipe((input) => input.toString());
+            $mol_assert_equal(stringify(5), '5');
+        },
+        'two functions'() {
+            const isLong = $mol_data_pipe((input) => input.toString(), (input) => input.length > 2);
+            $mol_assert_equal(isLong(5.0), false);
+            $mol_assert_equal(isLong(5.1), true);
+        },
+        'three functions'() {
+            const pattern = $mol_data_pipe((input) => input.toString(), (input) => new RegExp(input), (input) => input.toString());
+            $mol_assert_equal(pattern(5), '/5/');
+        },
+        'classes'() {
+            class Box {
+                value;
+                constructor(value) {
+                    this.value = value;
+                }
+            }
+            const boxify = $mol_data_pipe((input) => input.toString(), Box);
+            $mol_assert_ok(boxify(5) instanceof Box);
+            $mol_assert_like(boxify(5).value, '5');
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    const convert = $mol_data_pipe($mol_tree2_from_string, $mol_tree2_js_to_text, $mol_tree2_text_to_string);
+    $mol_test({
+        'boolean'() {
+            $mol_assert_equal(convert(`
+					true
+				`), 'true\n');
+        },
+        'number'() {
+            $mol_assert_equal(convert(`
+					1.2
+				`), '1.2\n');
+            $mol_assert_equal(convert(`
+					1e+2
+				`), '1e+2\n');
+            $mol_assert_equal(convert(`
+					-Infinity
+				`), '-Infinity\n');
+            $mol_assert_equal(convert(`
+					NaN
+				`), 'NaN\n');
+        },
+        'variable'() {
+            $mol_assert_equal(convert(`
+					a
+				`), 'a\n');
+            $mol_assert_equal(convert(`
+					$
+				`), '$\n');
+            $mol_assert_equal(convert(`
+					a0
+				`), 'a0\n');
+        },
+        'string'() {
+            $mol_assert_equal(convert(`
+					\\
+						\\foo
+						\\bar
+				`), '"foo\\nbar"\n');
+            $mol_assert_equal(convert(`
+					\`\`
+						\\foo
+						bar
+				`), '`foo${bar}`\n');
+        },
+        'wrong name'() {
+            $mol_assert_fail(() => convert(`
+					foo+bar
+				`), 'Wrong node type\nfoo+bar\n?#2:6/7');
+        },
+        'array'() {
+            $mol_assert_equal(convert(`
+					[,]
+				`), '[]\n');
+            $mol_assert_equal(convert(`
+					[,]
+						1
+						2
+				`), '[1, 2]\n');
+        },
+        'last'() {
+            $mol_assert_equal(convert(`
+					(,)
+						1
+						2
+				`), '(1, 2)\n');
+        },
+        'scope'() {
+            $mol_assert_equal(convert(`
+					{;}
+						1
+						2
+				`), '{\n\t1;\n\t2;\n}\n');
+        },
+        'object'() {
+            $mol_assert_equal(convert(`
+					{,}
+				`), '{}\n');
+            $mol_assert_equal(convert(`
+					{,}
+						foo
+						bar
+				`), '{foo, bar}\n');
+            $mol_assert_equal(convert(`
+					{,}
+						:
+							\\foo
+							1
+						:
+							bar
+							2
+				`), '{"foo": 1, [bar]: 2}\n');
+        },
+        'regexp'() {
+            $mol_assert_equal(convert(`
+					/./
+						.source \\foo\\n
+						.multiline
+						.ignoreCase
+						.global
+				`), '/foo\\\\n/mig\n');
+        },
+        'unary'() {
+            $mol_assert_equal(convert(`
+					void yield* yield await ~ ! - + 1
+				`), 'void yield* yield await ~!-+1\n');
+        },
+        'binary'() {
+            $mol_assert_equal(convert(`
+					(+)
+						1
+						2
+						3
+				`), '(\n\t1 + \n\t2 + \n\t3\n)\n');
+            $mol_assert_equal(convert(`
+					@++ foo
+				`), 'foo++\n');
+        },
+        'chain'() {
+            $mol_assert_equal(convert(`
+					()
+						foo
+						[] \\bar
+						[] 1
+				`), '(foo.bar[1])\n');
+            $mol_assert_equal(convert(`
+					()
+						foo
+						[] 1
+						(,)
+				`), '(foo[1]())\n');
+            $mol_assert_equal(convert(`
+					()
+						[,] 0
+						[] 1
+						(,)
+							2
+							3
+				`), '([0][1](2, 3))\n');
+        },
+        'function'() {
+            $mol_assert_equal(convert(`
+					=>
+						(,)
+						1
+				`), '() => 1\n');
+            $mol_assert_equal(convert(`
+					async=>
+						(,)
+						1
+				`), 'async () => 1\n');
+            $mol_assert_equal(convert(`
+					function
+						foo
+						(,)
+						{;}
+				`), 'function foo(){}\n');
+            $mol_assert_equal(convert(`
+					function
+						(,) foo
+						{;} debugger
+				`), 'function (foo){\n\tdebugger;\n}\n');
+            $mol_assert_equal(convert(`
+					function*
+						(,)
+						{;}
+				`), 'function* (){}\n');
+            $mol_assert_equal(convert(`
+					async
+						(,)
+						{;}
+				`), 'async function (){}\n');
+            $mol_assert_equal(convert(`
+					async*
+						(,) foo
+						{;} debugger
+				`), 'async function* (foo){\n\tdebugger;\n}\n');
+        },
+        'class'() {
+            $mol_assert_equal(convert(`
+					class
+						Foo
+						{}
+				`), 'class Foo {}\n');
+            $mol_assert_equal(convert(`
+					class
+						Foo
+						extends Bar
+						{}
+				`), 'class Foo extends Bar {}\n');
+            $mol_assert_equal(convert(`
+					class {}
+						.
+							\\foo
+							(,)
+							{;}
+				`), 'class {\n\tfoo(){}\n}\n');
+            $mol_assert_equal(convert(`
+					class {}
+						static
+							\\foo
+							(,)
+							{;}
+				`), 'class {\n\tstatic ["foo"](){}\n}\n');
+            $mol_assert_equal(convert(`
+					class {}
+						get
+							\\foo
+							(,)
+							{;}
+				`), 'class {\n\tget ["foo"](){}\n}\n');
+            $mol_assert_equal(convert(`
+					class {}
+						set
+							\\foo
+							(,) bar
+							{;}
+				`), 'class {\n\tset ["foo"](bar){}\n}\n');
+        },
+        'if'() {
+            $mol_assert_equal(convert(`
+					?:
+						1
+						2
+						3
+				`), '1 ? 2 : 3\n');
+            $mol_assert_equal(convert(`
+					if
+						() 1
+						{;} 2
+				`), 'if(1) {\n\t2;\n}\n');
+            $mol_assert_equal(convert(`
+					if
+						() 1
+						{;} 2
+						{;} 3
+				`), 'if(1) {\n\t2;\n}else{\n\t3;\n}\n');
+        },
+        'assign'() {
+            $mol_assert_equal(convert(`
+					=
+						foo
+						bar
+				`), 'foo = bar\n');
+            $mol_assert_equal(convert(`
+					=
+						[,]
+							foo
+							bar
+						[,]
+							1
+							2
+				`), '[foo, bar] = [1, 2]\n');
+            $mol_assert_equal(convert(`
+					let foo
+				`), 'let foo\n');
+            $mol_assert_equal(convert(`
+					let
+						foo
+						bar
+				`), 'let foo = bar\n');
+            $mol_assert_equal(convert(`
+					+=
+						foo
+						bar
+				`), 'foo += bar\n');
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
 var $;
 (function ($) {
     $mol_test({
@@ -10675,9 +11017,6 @@ var $;
         $.$mol_after_frame = $mol_after_mock_commmon;
     });
 })($ || ($ = {}));
-
-;
-"use strict";
 
 ;
 "use strict";
@@ -12689,407 +13028,6 @@ Clear
             },
         });
     })($$ = $_1.$$ || ($_1.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-
-;
-"use strict";
-
-;
-"use strict";
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_data_setup(value, config) {
-        return Object.assign(value, {
-            config,
-            Value: null
-        });
-    }
-    $.$mol_data_setup = $mol_data_setup;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'config by value'() {
-            const N = $mol_data_setup((a) => a, 5);
-            $mol_assert_equal(N.config, 5);
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_func_is_class(func) {
-        return Object.getOwnPropertyDescriptor(func, 'prototype')?.writable === false;
-    }
-    $.$mol_func_is_class = $mol_func_is_class;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'function'() {
-            $mol_assert_not($mol_func_is_class(function () { }));
-        },
-        'generator'() {
-            $mol_assert_not($mol_func_is_class(function* () { }));
-        },
-        'async'() {
-            $mol_assert_not($mol_func_is_class(async function () { }));
-        },
-        'arrow'() {
-            $mol_assert_not($mol_func_is_class(() => null));
-        },
-        'named class'() {
-            $mol_assert_ok($mol_func_is_class(class Foo {
-            }));
-        },
-        'unnamed class'() {
-            $mol_assert_ok($mol_func_is_class(class {
-            }));
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_data_pipe(...funcs) {
-        return $mol_data_setup(function (input) {
-            let value = input;
-            for (const func of funcs)
-                value = $mol_func_is_class(func) ? new func(value) : func.call(this, value);
-            return value;
-        }, { funcs });
-    }
-    $.$mol_data_pipe = $mol_data_pipe;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'single function'() {
-            const stringify = $mol_data_pipe((input) => input.toString());
-            $mol_assert_equal(stringify(5), '5');
-        },
-        'two functions'() {
-            const isLong = $mol_data_pipe((input) => input.toString(), (input) => input.length > 2);
-            $mol_assert_equal(isLong(5.0), false);
-            $mol_assert_equal(isLong(5.1), true);
-        },
-        'three functions'() {
-            const pattern = $mol_data_pipe((input) => input.toString(), (input) => new RegExp(input), (input) => input.toString());
-            $mol_assert_equal(pattern(5), '/5/');
-        },
-        'classes'() {
-            class Box {
-                value;
-                constructor(value) {
-                    this.value = value;
-                }
-            }
-            const boxify = $mol_data_pipe((input) => input.toString(), Box);
-            $mol_assert_ok(boxify(5) instanceof Box);
-            $mol_assert_like(boxify(5).value, '5');
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    const convert = $mol_data_pipe($mol_tree2_from_string, $mol_tree2_js_to_text, $mol_tree2_text_to_string);
-    $mol_test({
-        'boolean'() {
-            $mol_assert_equal(convert(`
-					true
-				`), 'true\n');
-        },
-        'number'() {
-            $mol_assert_equal(convert(`
-					1.2
-				`), '1.2\n');
-            $mol_assert_equal(convert(`
-					1e+2
-				`), '1e+2\n');
-            $mol_assert_equal(convert(`
-					-Infinity
-				`), '-Infinity\n');
-            $mol_assert_equal(convert(`
-					NaN
-				`), 'NaN\n');
-        },
-        'variable'() {
-            $mol_assert_equal(convert(`
-					a
-				`), 'a\n');
-            $mol_assert_equal(convert(`
-					$
-				`), '$\n');
-            $mol_assert_equal(convert(`
-					a0
-				`), 'a0\n');
-        },
-        'string'() {
-            $mol_assert_equal(convert(`
-					\\
-						\\foo
-						\\bar
-				`), '"foo\\nbar"\n');
-            $mol_assert_equal(convert(`
-					\`\`
-						\\foo
-						bar
-				`), '`foo${bar}`\n');
-        },
-        'wrong name'() {
-            $mol_assert_fail(() => convert(`
-					foo+bar
-				`), 'Wrong node type\nfoo+bar\n?#2:6/7');
-        },
-        'array'() {
-            $mol_assert_equal(convert(`
-					[,]
-				`), '[]\n');
-            $mol_assert_equal(convert(`
-					[,]
-						1
-						2
-				`), '[1, 2]\n');
-        },
-        'last'() {
-            $mol_assert_equal(convert(`
-					(,)
-						1
-						2
-				`), '(1, 2)\n');
-        },
-        'scope'() {
-            $mol_assert_equal(convert(`
-					{;}
-						1
-						2
-				`), '{\n\t1;\n\t2;\n}\n');
-        },
-        'object'() {
-            $mol_assert_equal(convert(`
-					{,}
-				`), '{}\n');
-            $mol_assert_equal(convert(`
-					{,}
-						foo
-						bar
-				`), '{foo, bar}\n');
-            $mol_assert_equal(convert(`
-					{,}
-						:
-							\\foo
-							1
-						:
-							bar
-							2
-				`), '{"foo": 1, [bar]: 2}\n');
-        },
-        'regexp'() {
-            $mol_assert_equal(convert(`
-					/./
-						.source \\foo\\n
-						.multiline
-						.ignoreCase
-						.global
-				`), '/foo\\\\n/mig\n');
-        },
-        'unary'() {
-            $mol_assert_equal(convert(`
-					void yield* yield await ~ ! - + 1
-				`), 'void yield* yield await ~!-+1\n');
-        },
-        'binary'() {
-            $mol_assert_equal(convert(`
-					(+)
-						1
-						2
-						3
-				`), '(\n\t1 + \n\t2 + \n\t3\n)\n');
-            $mol_assert_equal(convert(`
-					@++ foo
-				`), 'foo++\n');
-        },
-        'chain'() {
-            $mol_assert_equal(convert(`
-					()
-						foo
-						[] \\bar
-						[] 1
-				`), '(foo.bar[1])\n');
-            $mol_assert_equal(convert(`
-					()
-						foo
-						[] 1
-						(,)
-				`), '(foo[1]())\n');
-            $mol_assert_equal(convert(`
-					()
-						[,] 0
-						[] 1
-						(,)
-							2
-							3
-				`), '([0][1](2, 3))\n');
-        },
-        'function'() {
-            $mol_assert_equal(convert(`
-					=>
-						(,)
-						1
-				`), '() => 1\n');
-            $mol_assert_equal(convert(`
-					async=>
-						(,)
-						1
-				`), 'async () => 1\n');
-            $mol_assert_equal(convert(`
-					function
-						foo
-						(,)
-						{;}
-				`), 'function foo(){}\n');
-            $mol_assert_equal(convert(`
-					function
-						(,) foo
-						{;} debugger
-				`), 'function (foo){\n\tdebugger;\n}\n');
-            $mol_assert_equal(convert(`
-					function*
-						(,)
-						{;}
-				`), 'function* (){}\n');
-            $mol_assert_equal(convert(`
-					async
-						(,)
-						{;}
-				`), 'async function (){}\n');
-            $mol_assert_equal(convert(`
-					async*
-						(,) foo
-						{;} debugger
-				`), 'async function* (foo){\n\tdebugger;\n}\n');
-        },
-        'class'() {
-            $mol_assert_equal(convert(`
-					class
-						Foo
-						{}
-				`), 'class Foo {}\n');
-            $mol_assert_equal(convert(`
-					class
-						Foo
-						extends Bar
-						{}
-				`), 'class Foo extends Bar {}\n');
-            $mol_assert_equal(convert(`
-					class {}
-						.
-							\\foo
-							(,)
-							{;}
-				`), 'class {\n\tfoo(){}\n}\n');
-            $mol_assert_equal(convert(`
-					class {}
-						static
-							\\foo
-							(,)
-							{;}
-				`), 'class {\n\tstatic ["foo"](){}\n}\n');
-            $mol_assert_equal(convert(`
-					class {}
-						get
-							\\foo
-							(,)
-							{;}
-				`), 'class {\n\tget ["foo"](){}\n}\n');
-            $mol_assert_equal(convert(`
-					class {}
-						set
-							\\foo
-							(,) bar
-							{;}
-				`), 'class {\n\tset ["foo"](bar){}\n}\n');
-        },
-        'if'() {
-            $mol_assert_equal(convert(`
-					?:
-						1
-						2
-						3
-				`), '1 ? 2 : 3\n');
-            $mol_assert_equal(convert(`
-					if
-						() 1
-						{;} 2
-				`), 'if(1) {\n\t2;\n}\n');
-            $mol_assert_equal(convert(`
-					if
-						() 1
-						{;} 2
-						{;} 3
-				`), 'if(1) {\n\t2;\n}else{\n\t3;\n}\n');
-        },
-        'assign'() {
-            $mol_assert_equal(convert(`
-					=
-						foo
-						bar
-				`), 'foo = bar\n');
-            $mol_assert_equal(convert(`
-					=
-						[,]
-							foo
-							bar
-						[,]
-							1
-							2
-				`), '[foo, bar] = [1, 2]\n');
-            $mol_assert_equal(convert(`
-					let foo
-				`), 'let foo\n');
-            $mol_assert_equal(convert(`
-					let
-						foo
-						bar
-				`), 'let foo = bar\n');
-            $mol_assert_equal(convert(`
-					+=
-						foo
-						bar
-				`), 'foo += bar\n');
-        },
-    });
 })($ || ($ = {}));
 
 ;

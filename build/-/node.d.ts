@@ -743,6 +743,14 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_tree2_js_is_number(type: string): boolean | RegExpMatchArray;
+}
+
+declare namespace $ {
+    function $mol_tree2_js_to_text(this: $, js: $mol_tree2): $mol_tree2;
+}
+
+declare namespace $ {
     class $mol_view_tree2_error extends Error {
         readonly spans: readonly $mol_span[];
         constructor(message: string, spans: readonly $mol_span[]);
@@ -907,22 +915,6 @@ declare namespace $ {
 
 declare namespace $ {
     function $mol_view_tree2_class_props(this: $, klass: $mol_tree2): $mol_tree2[];
-}
-
-declare namespace $ {
-    function $mol_view_tree2_value_type(this: $, val: $mol_tree2): "object" | "string" | "number" | "null" | "bool" | "dict" | "locale" | "get" | "bind" | "put" | "list";
-}
-
-declare namespace $ {
-    function $mol_view_tree2_value(this: $, value: $mol_tree2): $mol_tree2;
-}
-
-declare namespace $ {
-    function $mol_view_tree2_value_number(type: string): boolean | RegExpMatchArray;
-}
-
-declare namespace $ {
-    function $mol_tree2_js_to_text(this: $, js: $mol_tree2): $mol_tree2;
 }
 
 declare namespace $ {
