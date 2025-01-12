@@ -1,6 +1,6 @@
 namespace $ {
 
-	export function $mol_match_text< Variant >( query : string , values : ( variant : Variant )=> string[] ) {
+	export function $mol_match_text< Variant >( query : string , values : ( variant : Variant )=> readonly string[] ) {
 		const tags = query.toLowerCase().trim().split( /\s+/ ).filter( tag => tag )
 
 		if( tags.length === 0 ) return ()=> true

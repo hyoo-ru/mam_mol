@@ -6915,6 +6915,11 @@ var $;
 			(obj.rows) = () => ((this.menu_items()));
 			return obj;
 		}
+		Bubble_pane(){
+			const obj = new this.$.$mol_scroll();
+			(obj.sub) = () => ([(this.Menu())]);
+			return obj;
+		}
 		suggest_select(id, next){
 			if(next !== undefined) return next;
 			return null;
@@ -6953,7 +6958,7 @@ var $;
 			return obj;
 		}
 		bubble_content(){
-			return [(this.Menu())];
+			return [(this.Bubble_pane())];
 		}
 		Suggest(id){
 			const obj = new this.$.$mol_button_minor();
@@ -6973,6 +6978,7 @@ var $;
 	($mol_mem(($.$mol_search.prototype), "Clear_icon"));
 	($mol_mem(($.$mol_search.prototype), "Clear"));
 	($mol_mem(($.$mol_search.prototype), "Menu"));
+	($mol_mem(($.$mol_search.prototype), "Bubble_pane"));
 	($mol_mem_key(($.$mol_search.prototype), "suggest_select"));
 	($mol_mem_key(($.$mol_search.prototype), "Suggest_label"));
 	($mol_mem(($.$mol_search.prototype), "Anchor"));
@@ -15668,6 +15674,9 @@ var $;
 			const obj = new this.$.$mol_view();
 			return obj;
 		}
+		align(){
+			return [-.5, -.5];
+		}
 		offset(){
 			return [0, 0];
 		}
@@ -15694,16 +15703,18 @@ var $;
                 const anchor_rect = this.Anchor()?.view_rect();
                 if (!anchor_rect)
                     return null;
+                const offset = this.offset();
+                const align = this.align();
                 const left = Math.floor((prev?.left ?? 0)
                     - (self_rect?.left ?? 0)
-                    - (self_rect?.width ?? 0) / 2
+                    + (self_rect?.width ?? 0) * align[0]
                     + (anchor_rect?.left ?? 0)
-                    + this.offset()[0] * (anchor_rect?.width ?? 0));
+                    + offset[0] * (anchor_rect?.width ?? 0));
                 const top = Math.floor((prev?.top ?? 0)
                     - (self_rect?.top ?? 0)
-                    - (self_rect?.height ?? 0) / 2
+                    + (self_rect?.height ?? 0) * align[1]
                     + (anchor_rect?.top ?? 0)
-                    + this.offset()[1] * (anchor_rect?.height ?? 0));
+                    + offset[1] * (anchor_rect?.height ?? 0));
                 return { left, top };
             }
             transform() {

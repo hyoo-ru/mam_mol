@@ -6,6 +6,9 @@
 			const obj = new this.$.$mol_view();
 			return obj;
 		}
+		align(){
+			return [-.5, -.5];
+		}
 		offset(){
 			return [0, 0];
 		}
