@@ -3049,7 +3049,7 @@ var $;
                 .hack({
                 'bar': (input, belt) => [input.struct('777', input.hack(belt))],
             });
-            $mol_assert_equal(res.toString(), 'foo 777 xxx\n');
+            $mol_assert_equal(res.map(String), ['foo 777 xxx\n']);
         },
     });
 })($ || ($ = {}));
