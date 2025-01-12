@@ -82,8 +82,71 @@ namespace $.$$ {
 		hover( event : PointerEvent ) {
 			this.clickable( event.ctrlKey )
 		}
+
+		@ $mol_mem
+		suggest_context() {
+			
+			const sel = this.selection()
+			if( sel[0] !== sel[1] ) return ''
+
+			return this.value().slice( 0, sel[0] ).replace( /^[\s\S]*\n/, '' )
+
+		}
+
+		@ $mol_mem
+		suggest_pos() {
+
+			const sel = this.selection()
+			if( sel[0] !== sel[1] ) return null
+			
+			return this.View().find_pos( sel[0] ?? 0 )
+		}
+
+		@ $mol_mem
+		suggest_anchor() {
+			return this.suggest_pos()?.token ?? null
+		}
+		
+		@ $mol_mem
+		suggest_offset() {
+			const pos = this.suggest_pos()
+			return [ pos.offset / pos.token.haystack().length, 0 ]
+		}
+
+		@ $mol_mem
+		emoji_data() {
+			return Object.values( this.$.$mol_emoji_safe() )
+				.flatMap( group => Object.entries( group ) )
+		}
+		
+		@ $mol_mem
+		suggest_list() {
+
+			const emojis = this.emoji_data()//.filter( $mol_match_text( this.suggest_context(), item => item[1] ) ).map( item => item[0] )
+			
+			return emojis
+
+		}
+
+		suggest_insert( text?: string ) {
+			if( text === undefined ) return ''
+			const val = this.value()
+			let pos = this.selection()[0]
+			this.value( val.slice( 0, pos ) + text + val.slice( pos ) )
+			pos += text.length
+			this.selection([ pos, pos ])
+			return ''
+		}
 		
 		press( event : KeyboardEvent ) {
+
+			if( event.ctrlKey ) {
+				if( event.keyCode === $mol_keyboard_code.space ) {
+					const showed = this.suggests_showed()
+					this.suggests_showed( !showed )
+					if( !showed ) this.Suggest_search().Query().focused( true )
+				}
+			}
 			
 			if( event.altKey ) {
 				

@@ -24,6 +24,22 @@ $mol_textarea $mol_stack
 			sidebar_showed <= sidebar_showed
 			highlight <= highlight \
 			syntax <= syntax $mol_syntax2
+		<= Suggest $mol_follower
+			Anchor <= suggest_anchor null
+			align /number
+				-.05
+				-.25
+			offset <= suggest_offset /number
+				0
+				1
+			Sub <= Suggest_search $mol_search
+				hint \_
+				- anchor_content /
+				suggests_showed <= suggests_showed? false
+				- submit? <=> suggest_insert? \
+				suggests <= suggest_list /
+					\foo
+					\bar
 	symbols_alt *string
 		comma \<
 		period \>

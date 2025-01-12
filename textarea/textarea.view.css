@@ -60,3 +60,8 @@
 [mol_textarea_edit]:focus + [mol_textarea_view] {
 	z-index: var(--mol_layer_focus);
 }
+
+
+[mol_textarea_suggest] {
+	z-index: var(--mol_layer_popup);
+}
