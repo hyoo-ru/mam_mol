@@ -231,7 +231,7 @@ namespace $ {
 				]
 				
 				// number
-				if( $mol_view_tree2_value_number(input.type) ) return [
+				if( $mol_tree2_js_is_number(input.type) ) return [
 					input.data( input.type )
 				]
 

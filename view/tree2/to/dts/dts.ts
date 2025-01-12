@@ -70,7 +70,7 @@ namespace $ {
 
 	function primitive_type(input: $mol_tree2) {
 		let type = 'string'
-		if (input.type && $mol_view_tree2_value_number(input.type)) type = 'number'
+		if (input.type && $mol_tree2_js_is_number(input.type)) type = 'number'
 
 		if (input.type === 'true' || input.type === 'false') type = 'boolean'
 
