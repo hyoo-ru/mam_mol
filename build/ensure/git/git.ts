@@ -68,6 +68,8 @@ namespace $ {
 		@ $mol_mem
 		protected root_is_submodule() {
 			const dir = this.root().path()
+			if (this.is_git(dir)) return false
+
 			const parent = this.root().parent().path()
 			const dirs = this.submodule_dirs({ dir: parent })
 
