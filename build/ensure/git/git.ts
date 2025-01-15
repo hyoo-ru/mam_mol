@@ -50,19 +50,39 @@ namespace $ {
 			return git_dir.exists() && git_dir.type() === 'dir'
 		}
 
-		@ $mol_mem
-		protected submodules() {
-			const dir = this.root().path()
-			if (! this.is_git( dir ) ) return new Set<string>()
-
-			const command = 'git submodule status --recursive'
-			const output = this.$.$mol_run.spawn({ command, dir }).stdout.toString().trim()
+		@ $mol_action
+		protected submodule_dirs(opts: { dir: string, recursive?: boolean }) {
+			const output = this.$.$mol_run.spawn({
+				command: ['git', 'submodule', 'status', ...( opts.recursive ? ['--recursive'] : [] ) ],
+				dir: opts.dir,
+			}).stdout.toString().trim()
 
 			const dirs = output
 				.split('\n')
 				.map( str => str.match( /^\s*[^ ]+\s+([^ ]*).*/ )?.[1]?.trim() )
 				.filter($mol_guard_defined)
+
+			return dirs
+		}
+
+		@ $mol_mem
+		protected root_is_submodule() {
+			const dir = this.root().path()
+			const parent = this.root().parent().path()
+			const dirs = this.submodule_dirs({ dir: parent })
+
+			return dirs.some(str => str && dir.endsWith(str))
+		}
+
+		@ $mol_mem
+		protected submodules() {
+			const dir = this.root().path()
+			if (! this.is_git( dir ) ) return new Set<string>()
+
+			const dirs = this.submodule_dirs({ dir, recursive: true })
 				.map(str => `${dir}/${str}`)
+
+			if (this.root_is_submodule()) dirs.push(dir)
 
 			return new Set(dirs)
 		}
