@@ -22,6 +22,7 @@ declare namespace $ {
 	>
 	export class $mol_audio_status extends $mol_view {
 		Closed( ): $mol_icon_power_sleep
+		Error( ): $mol_icon_alert
 		Suspended( ): $mol_icon_sleep
 		Playing( ): $mol_icon_play
 		Running( ): $mol_icon_pause
@@ -32,6 +33,7 @@ declare namespace $ {
 		Wakeup( ): $mol_button_minor
 		icons( ): ({ 
 			'closed': ReturnType< $mol_audio_status['Closed'] >,
+			'error': ReturnType< $mol_audio_status['Error'] >,
 			'suspended': ReturnType< $mol_audio_status['Suspended'] >,
 			'playing': ReturnType< $mol_audio_status['Playing'] >,
 			'running': ReturnType< $mol_audio_status['Running'] >,

@@ -7556,6 +7556,15 @@ declare namespace $ {
 //# sourceMappingURL=sleep.view.tree.d.ts.map
 declare namespace $ {
 
+	export class $mol_icon_alert extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=alert.view.tree.d.ts.map
+declare namespace $ {
+
 	export class $mol_icon_sleep extends $mol_icon {
 		path( ): string
 	}
@@ -7573,12 +7582,15 @@ declare namespace $ {
 
 //# sourceMappingURL=pause.view.tree.d.ts.map
 declare namespace $ {
-    type $mol_audio_room_status = AudioContextState | 'playing';
+    type $mol_audio_room_status = AudioContextState | 'playing' | 'error';
     class $mol_audio_room extends $mol_audio_node {
         node(): AudioDestinationNode;
         active(next?: boolean): boolean;
         suspend_time(sec?: number): number;
         suspend_timer(): $mol_after_timeout | null;
+        error(): {
+            value: Error;
+        } | null;
         status(next?: $mol_audio_room_status | null): $mol_audio_room_status;
     }
 }
@@ -7607,6 +7619,7 @@ declare namespace $ {
 	>
 	export class $mol_audio_status extends $mol_view {
 		Closed( ): $mol_icon_power_sleep
+		Error( ): $mol_icon_alert
 		Suspended( ): $mol_icon_sleep
 		Playing( ): $mol_icon_play
 		Running( ): $mol_icon_pause
@@ -7617,6 +7630,7 @@ declare namespace $ {
 		Wakeup( ): $mol_button_minor
 		icons( ): ({ 
 			'closed': ReturnType< $mol_audio_status['Closed'] >,
+			'error': ReturnType< $mol_audio_status['Error'] >,
 			'suspended': ReturnType< $mol_audio_status['Suspended'] >,
 			'playing': ReturnType< $mol_audio_status['Playing'] >,
 			'running': ReturnType< $mol_audio_status['Running'] >,
@@ -7633,7 +7647,7 @@ declare namespace $.$$ {
     class $mol_audio_status extends $.$mol_audio_status {
         status(next?: $mol_audio_room_status): $mol_audio_room_status;
         wakeup(): void;
-        Icon(): $mol_icon_play | $mol_icon_power_sleep | $mol_icon_pause | $mol_icon_sleep;
+        Icon(): $mol_icon_play | $mol_icon_power_sleep | $mol_icon_pause | $mol_icon_sleep | $mol_icon_alert;
         wakeup_enabled(): boolean;
         status_name(): string;
     }

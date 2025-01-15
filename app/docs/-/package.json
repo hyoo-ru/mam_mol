@@ -343,6 +343,7 @@
     "$mol_audio_status",
     "$mol_icon_power_sleep",
     "$mol_icon_power",
+    "$mol_icon_alert",
     "$mol_icon_sleep",
     "$mol_icon_pause",
     "$mol_audio_room",

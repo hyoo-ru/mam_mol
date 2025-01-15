@@ -3,6 +3,10 @@
 			const obj = new this.$.$mol_icon_power_sleep();
 			return obj;
 		}
+		Error(){
+			const obj = new this.$.$mol_icon_alert();
+			return obj;
+		}
 		Suspended(){
 			const obj = new this.$.$mol_icon_sleep();
 			return obj;
@@ -40,6 +44,7 @@
 		icons(){
 			return {
 				"closed": (this.Closed()), 
+				"error": (this.Error()), 
 				"suspended": (this.Suspended()), 
 				"playing": (this.Playing()), 
 				"running": (this.Running())
@@ -57,6 +62,7 @@
 		}
 	};
 	($mol_mem(($.$mol_audio_status.prototype), "Closed"));
+	($mol_mem(($.$mol_audio_status.prototype), "Error"));
 	($mol_mem(($.$mol_audio_status.prototype), "Suspended"));
 	($mol_mem(($.$mol_audio_status.prototype), "Playing"));
 	($mol_mem(($.$mol_audio_status.prototype), "Running"));
