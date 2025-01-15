@@ -1,6 +1,6 @@
 namespace $ {
 
-	export type $mol_audio_room_status = AudioContextState | 'playing'
+	export type $mol_audio_room_status = AudioContextState | 'playing' | 'error'
 
 	/**
 	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_audio_demo
@@ -34,13 +34,27 @@ namespace $ {
 			return new this.$.$mol_after_timeout(time * 1000, () => $mol_wire_async(this).active(false))
 		}
 
+		@ $mol_mem
+		error() {
+			try {
+				this.output()
+			} catch (e) {
+				if (! $mol_promise_like(e)) return { value: e as Error }
+			}
+
+			return null
+		}
 
 		@ $mol_mem
 		status(next?: $mol_audio_room_status | null): $mol_audio_room_status {
-			const state = this.context().state(next === 'playing' ? 'running' : next)
+			if (next === 'playing') next = 'running'
+			if (next === 'error') next = 'closed'
+
+			const state = this.context().state(next)
+
 			if (state === 'closed') return state
 
-			this.output()
+			if ( this.error() ) return 'error'
 
 			if (this.inputs_active() && state === 'running') return 'playing'
 
