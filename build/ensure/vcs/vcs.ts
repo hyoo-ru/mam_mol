@@ -43,6 +43,7 @@ namespace $ {
 		@ $mol_action
 		protected update_safe(dir: string) {
 			if (this.update_disabled) return false
+			if ( this.$.$mol_env()['MOL_BUILD_VSC_UPDATE_DISABLE'] ) return false
 
 			try {
 				return this.$.$mol_file.unwatched(() => this.update(dir), dir)
