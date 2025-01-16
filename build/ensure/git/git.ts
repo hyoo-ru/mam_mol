@@ -67,31 +67,31 @@ namespace $ {
 
 		@ $mol_mem
 		protected root_is_submodule() {
-			const dir = this.root().path()
-			if (this.is_git(dir)) return false
+			const root = this.root()
+			if (this.is_git(root.path())) return false
 
-			const parent = this.root().parent().path()
+			const parent = root.parent()
 
 			try {
-				const dirs = this.submodule_dirs({ dir: parent })
-	
-				return dirs.some(str => str && dir.endsWith('/' + str))
+				const dirs = this.submodule_dirs({ dir: parent.path() })
+
+				return dirs.some(str => str && parent.resolve(str) === root)
 			} catch (e) {
 				if ($mol_promise_like(e)) $mol_fail_hidden(e)
-				console.error(e)
+				this.$.$mol_fail_log(e)
 				return false
 			}
 		}
 
 		@ $mol_mem
 		protected submodules() {
-			const dir = this.root().path()
-			if (! this.is_git( dir ) ) return new Set<string>()
+			const root = this.root()
+			if (! this.is_git( root.path() ) ) return new Set<string>()
 
-			const dirs = this.submodule_dirs({ dir, recursive: true })
-				.map(str => `${dir}/${str}`)
+			const dirs = this.submodule_dirs({ dir: root.path(), recursive: true })
+				.map(dir => root.resolve(dir).path())
 
-			if (this.root_is_submodule()) dirs.push(dir)
+			if (this.root_is_submodule()) dirs.push(root.path())
 
 			return new Set(dirs)
 		}
