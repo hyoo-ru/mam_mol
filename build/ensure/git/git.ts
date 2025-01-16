@@ -75,7 +75,7 @@ namespace $ {
 			try {
 				const dirs = this.submodule_dirs({ dir: parent })
 	
-				return dirs.some(str => str && dir.endsWith(str))
+				return dirs.some(str => str && dir.endsWith('/' + str))
 			} catch (e) {
 				if ($mol_promise_like(e)) $mol_fail_hidden(e)
 				console.error(e)
