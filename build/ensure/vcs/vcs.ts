@@ -43,7 +43,11 @@ namespace $ {
 		@ $mol_action
 		protected update_safe(dir: string) {
 			if (this.update_disabled) return false
-			if ( this.$.$mol_env()['MOL_BUILD_VSC_UPDATE_DISABLE'] ) return false
+			// Это условие отрубает git pull при соответствующей переменной в env
+			// Мы против такой функциональности из-за методологии version less https://mol.hyoo.ru/#!section=docs/=19222d_hpubim
+			// Кому очень надо фиксировать зависимости, могут форкнуть mol и включить этот флаг.
+			// Но форк будут поддерживать сами.
+			// if ( this.$.$mol_env()['MOL_BUILD_VSC_UPDATE_DISABLE'] ) return false
 
 			try {
 				return this.$.$mol_file.unwatched(() => this.update(dir), dir)

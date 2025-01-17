@@ -52,15 +52,18 @@ namespace $ {
 
 		@ $mol_action
 		protected submodule_dirs(opts: { dir: string, recursive?: boolean }) {
+			const dir = this.$.$mol_file.absolute( opts.dir )
+
 			const output = this.$.$mol_run.spawn({
-				command: ['git', 'submodule', 'status', ...( opts.recursive ? ['--recursive'] : [] ) ],
-				dir: opts.dir,
+				command: [ 'git', 'submodule', 'status', ...( opts.recursive ? ['--recursive'] : [] ) ],
+				dir: dir.path(),
 			}).stdout.toString().trim()
 
 			const dirs = output
 				.split('\n')
 				.map( str => str.match( /^\s*[^ ]+\s+([^ ]*).*/ )?.[1]?.trim() )
 				.filter($mol_guard_defined)
+				.map(subdir => dir.resolve(subdir))
 
 			return dirs
 		}
@@ -75,7 +78,7 @@ namespace $ {
 			try {
 				const dirs = this.submodule_dirs({ dir: parent.path() })
 
-				return dirs.some(str => str && parent.resolve(str) === root)
+				return dirs.includes(root)
 			} catch (e) {
 				if ($mol_promise_like(e)) $mol_fail_hidden(e)
 				this.$.$mol_fail_log(e)
@@ -89,11 +92,10 @@ namespace $ {
 			if (! this.is_git( root.path() ) ) return new Set<string>()
 
 			const dirs = this.submodule_dirs({ dir: root.path(), recursive: true })
-				.map(dir => root.resolve(dir).path())
 
-			if (this.root_is_submodule()) dirs.push(root.path())
+			if (this.root_is_submodule()) dirs.push(root)
 
-			return new Set(dirs)
+			return new Set(dirs.map(mod => mod.path()))
 		}
 
 		protected override inited(path: string) {
@@ -118,9 +120,9 @@ namespace $ {
 
 			const branch_norm = branch ?? this.branch_remote(dir)
 
-			this.$.$mol_run.spawn( { command: ['git', 'remote', 'add', '--track', branch_norm, 'origin' , url ], dir } )
+			this.$.$mol_run.spawn( { command: [ 'git', 'remote', 'add', '--track', branch_norm, 'origin' , url ], dir } )
 			this.$.$mol_run.spawn( { command: [ 'git', 'pull', 'origin', branch_norm ], dir } )
-	
+
 			return null
 		}
 
