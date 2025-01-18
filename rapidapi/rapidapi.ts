@@ -1,7 +1,8 @@
 namespace $ {
 	
 	export const $mol_rapidapi_keys = [
-		'ac9e15b3ffmsh0ca1100d872cde4p10d0a6jsn6d36584cc6c9'
+		'ac9e15b3ffmsh0ca1100d872cde4p10d0a6jsn6d36584cc6c9',
+		'35a6c33051mshcaec4228121469fp1309e2jsn59eaba641870',
 	]
 	
 	export function $mol_rapidapi(
