@@ -15,6 +15,15 @@ namespace $ {
 		}
 
 		protected override update(dir: string) {
+			if (this.submodules().has(dir)) {
+				this.$.$mol_log3_rise({
+					place: '$mol_build_ensure_git.update()',
+					message: 'Submodule detected, no git pull',
+					dir,
+				})
+				return false
+			}
+
 			const out = this.$.$mol_run.spawn({
 				command: 'git rev-parse --abbrev-ref --symbolic-full-name HEAD', dir,
 			})
