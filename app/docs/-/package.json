@@ -662,8 +662,8 @@
     "$mol_lights_demo",
     "$mol_locale_demo",
     "$mol_locale_select",
-    "$hyoo_lingua_langs",
-    "$hyoo_lingua"
+    "$mol_lang_iso639",
+    "$mol_lang"
   ],
   "dependencies": {
     "jsdom": "*",
