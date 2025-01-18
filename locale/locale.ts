@@ -54,12 +54,6 @@ namespace $ {
 			const en = this.texts( 'en' )[ key ]
 			if( !en ) return key
 			
-			// try {
-			// 	return $mol_wire_sync( $hyoo_lingua_translate ).call( this.$, lang, en )
-			// } catch( error ) {
-			// 	$mol_fail_log( error )
-			// }
-			
 			return en
 		}
 		
