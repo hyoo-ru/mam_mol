@@ -104,6 +104,16 @@ namespace $ {
 		}
 
 		@ $mol_action
+		static clone() {
+			$mol_dom.history.pushState(
+				$mol_dom.history.state,
+				$mol_dom.document.title,
+				this.href(),
+			)
+		}
+		
+
+		@ $mol_action
 		static go( next : { [ key : string ] : string | null } ) {
 			$mol_dom_context.location.href = this.link( next )
 		}

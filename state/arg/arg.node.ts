@@ -73,6 +73,8 @@ namespace $ {
 			this.href( this.link( next ) )
 		}
 		
+		static clone() {}
+		
 		constructor( public prefix = '' ) {
 			super()
 		}
