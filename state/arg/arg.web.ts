@@ -104,7 +104,7 @@ namespace $ {
 		}
 
 		@ $mol_action
-		static clone() {
+		static commit() {
 			$mol_dom.history.pushState(
 				$mol_dom.history.state,
 				$mol_dom.document.title,
