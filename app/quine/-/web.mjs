@@ -6758,7 +6758,7 @@ var $;
             }
             return new URL('#' + this.prolog + chunks.join(this.separator), this.href_absolute()).toString();
         }
-        static clone() {
+        static commit() {
             $mol_dom.history.pushState($mol_dom.history.state, $mol_dom.document.title, this.href());
         }
         static go(next) {
@@ -6809,7 +6809,7 @@ var $;
     ], $mol_state_arg, "make_link", null);
     __decorate([
         $mol_action
-    ], $mol_state_arg, "clone", null);
+    ], $mol_state_arg, "commit", null);
     __decorate([
         $mol_action
     ], $mol_state_arg, "go", null);
