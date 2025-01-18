@@ -21610,6 +21610,7 @@ declare namespace $ {
         be: string;
         bn: string;
         bi: string;
+        nb: string;
         bs: string;
         br: string;
         bg: string;
@@ -21617,7 +21618,6 @@ declare namespace $ {
         ca: string;
         ch: string;
         ce: string;
-        ny: string;
         zh: string;
         cu: string;
         cv: string;
@@ -21646,7 +21646,6 @@ declare namespace $ {
         ka: string;
         de: string;
         el: string;
-        kl: string;
         gn: string;
         gu: string;
         ht: string;
@@ -21668,6 +21667,7 @@ declare namespace $ {
         it: string;
         ja: string;
         jv: string;
+        kl: string;
         kn: string;
         kr: string;
         ks: string;
@@ -21702,13 +21702,11 @@ declare namespace $ {
         na: string;
         nv: string;
         nd: string;
-        nr: string;
         ng: string;
         ne: string;
         no: string;
-        nb: string;
+        ny: string;
         nn: string;
-        ii: string;
         oc: string;
         oj: string;
         or: string;
@@ -21732,12 +21730,14 @@ declare namespace $ {
         sc: string;
         sr: string;
         sn: string;
+        ii: string;
         sd: string;
         si: string;
         sk: string;
         sl: string;
         so: string;
         st: string;
+        nr: string;
         es: string;
         su: string;
         sw: string;
@@ -21808,6 +21808,7 @@ declare namespace $.$$ {
             be: string;
             bn: string;
             bi: string;
+            nb: string;
             bs: string;
             br: string;
             bg: string;
@@ -21815,7 +21816,6 @@ declare namespace $.$$ {
             ca: string;
             ch: string;
             ce: string;
-            ny: string;
             zh: string;
             cu: string;
             cv: string;
@@ -21844,7 +21844,6 @@ declare namespace $.$$ {
             ka: string;
             de: string;
             el: string;
-            kl: string;
             gn: string;
             gu: string;
             ht: string;
@@ -21866,6 +21865,7 @@ declare namespace $.$$ {
             it: string;
             ja: string;
             jv: string;
+            kl: string;
             kn: string;
             kr: string;
             ks: string;
@@ -21900,13 +21900,11 @@ declare namespace $.$$ {
             na: string;
             nv: string;
             nd: string;
-            nr: string;
             ng: string;
             ne: string;
             no: string;
-            nb: string;
+            ny: string;
             nn: string;
-            ii: string;
             oc: string;
             oj: string;
             or: string;
@@ -21930,12 +21928,14 @@ declare namespace $.$$ {
             sc: string;
             sr: string;
             sn: string;
+            ii: string;
             sd: string;
             si: string;
             sk: string;
             sl: string;
             so: string;
             st: string;
+            nr: string;
             es: string;
             su: string;
             sw: string;
