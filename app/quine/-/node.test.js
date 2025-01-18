@@ -7284,6 +7284,7 @@ var $;
         static go(next) {
             this.href(this.link(next));
         }
+        static clone() { }
         constructor(prefix = '') {
             super();
             this.prefix = prefix;

@@ -1024,6 +1024,7 @@ declare namespace $ {
         static make_link(next: {
             [key: string]: string | null;
         }): string;
+        static clone(): void;
         static go(next: {
             [key: string]: string | null;
         }): void;

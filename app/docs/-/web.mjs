@@ -3279,6 +3279,9 @@ var $;
             }
             return new URL('#' + this.prolog + chunks.join(this.separator), this.href_absolute()).toString();
         }
+        static clone() {
+            $mol_dom.history.pushState($mol_dom.history.state, $mol_dom.document.title, this.href());
+        }
         static go(next) {
             $mol_dom_context.location.href = this.link(next);
         }
@@ -3325,6 +3328,9 @@ var $;
     __decorate([
         $mol_mem_key
     ], $mol_state_arg, "make_link", null);
+    __decorate([
+        $mol_action
+    ], $mol_state_arg, "clone", null);
     __decorate([
         $mol_action
     ], $mol_state_arg, "go", null);
