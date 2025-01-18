@@ -1182,6 +1182,11 @@ declare namespace $ {
         protected deepen_supported(): boolean;
         protected update(dir: string): boolean;
         protected is_git(path: string): boolean;
+        protected submodule_dirs(opts: {
+            dir: string;
+            recursive?: boolean;
+        }): $mol_file[];
+        protected root_is_submodule(): boolean;
         protected submodules(): Set<string>;
         protected inited(path: string): boolean;
         protected branch_remote(dir: string): string;
