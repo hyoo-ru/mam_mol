@@ -1,1 +1,2 @@
-console.info( '%c ▫ $mol_build ▫ Audit passed', 'color:forestgreen; font-weight:bolder' )
+console.info( '%c place: $mol_build
+message: Audit passed', 'color:forestgreen; font-weight:bolder' )

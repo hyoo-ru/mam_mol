@@ -1182,12 +1182,12 @@ var $;
             if (pending)
                 pending();
             let tpl = '%c';
-            const chunks = Object.values(event);
+            const chunks = Object.entries(event);
             for (let i = 0; i < chunks.length; ++i) {
-                tpl += (typeof chunks[i] === 'string') ? ' ▫ %s' : ' ▫ %o';
+                tpl += (typeof chunks[i][1] === 'string') ? '%s: %s\n' : '%s: %o\n';
             }
             const style = `color:${color};font-weight:bolder`;
-            this.console[level](tpl, style, ...chunks);
+            this.console[level](tpl, style, ...[].concat(...chunks));
             const self = this;
             return () => self.console.groupEnd();
         };
