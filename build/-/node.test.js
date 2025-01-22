@@ -6365,7 +6365,7 @@ var $;
                 target.text(`console.error(${JSON.stringify(error.stack)})`);
                 $mol_fail_hidden(error);
             }
-            target.text("console.info( `%c place: $mol_build\nmessage: Audit passed`, 'color:forestgreen; font-weight:bolder' )");
+            target.text("console.info( `%cplace: $mol_build\nmessage: Audit passed`, 'color:forestgreen; font-weight:bolder' )");
             return [target];
         }
         bundle_test_js([path, exclude, bundle]) {
