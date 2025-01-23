@@ -1361,8 +1361,8 @@ declare namespace $ {
         express(): import("express-serve-static-core").Express;
         internal_ip(): string;
         http(): import("http").Server<typeof import("http").IncomingMessage, typeof import("http").ServerResponse>;
-        connections: Set<import("ws")>;
-        socket(): import("ws").Server<typeof import("ws"), typeof import("http").IncomingMessage>;
+        connections: Set<import("ws").default>;
+        socket(): import("ws").Server<typeof import("ws").default, typeof import("http").IncomingMessage>;
         expressHandlers(): readonly $mol_server_middleware[];
         expressCompressor(): $mol_server_middleware;
         expressCors(): $mol_server_middleware;
@@ -1389,9 +1389,9 @@ declare namespace $ {
         expressIndex(): (req: typeof $node.express.request, res: typeof $node.express.response, next: (err?: unknown) => any) => Promise<void>;
         expressIndexRequest(req: typeof $node.express.request, res: typeof $node.express.response): true | undefined;
         port(): number;
-        lines(next?: Map<import("ws"), string>): Map<import("ws"), string>;
-        socket(): import("ws").Server<typeof import("ws"), typeof import("http").IncomingMessage>;
-        start(): import("ws").Server<typeof import("ws"), typeof import("http").IncomingMessage>;
+        lines(next?: Map<import("ws").default, string>): Map<import("ws").default, string>;
+        socket(): import("ws").Server<typeof import("ws").default, typeof import("http").IncomingMessage>;
+        start(): import("ws").Server<typeof import("ws").default, typeof import("http").IncomingMessage>;
         protected bundles_count(reset?: null): number;
         protected bundles_keep(): void;
         protected path_bundles: Record<string, Set<string>>;
