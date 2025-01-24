@@ -6130,7 +6130,7 @@ var $;
             const mod = $mol_file.absolute(path);
             const depends = mod === this.root()
                 ? {}
-                : { '..': Number.MIN_SAFE_INTEGER };
+                : { '..': -999 };
             for (var src of this.sources([path, exclude])) {
                 $mol_build_depsMerge(depends, this.srcDeps(src.path()));
             }
@@ -7071,7 +7071,7 @@ var $;
             depends[leaf.text()] = 0;
         });
         tree.select('include').kids.forEach(leaf => {
-            depends[leaf.text()] = -9000;
+            depends[leaf.text()] = -999;
         });
         return depends;
     };
