@@ -149,7 +149,7 @@ namespace $ {
 				pub?.sub_off( this.data[ cursor + 1 ] as number )
 				
 				end -= 2
-				if( this.sub_from < end ) this.peer_move( end, cursor )
+				if( this.sub_from <= end ) this.peer_move( end, cursor )
 				
 			}
 			
