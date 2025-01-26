@@ -124,7 +124,7 @@ namespace $ {
 				sub.pub_off( pos )
 			}
 			
-			this.sub_from = this.pub_from
+			this.data.length = this.sub_from 
 			this.cursor = this.pub_from
 			this.track_cut()
 			this.cursor = $mol_wire_cursor.final
