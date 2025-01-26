@@ -58,10 +58,9 @@ namespace $ {
 				this.peer_move( end, sub_pos )
 			}
 			
-			this.data.pop()
-			this.data.pop()
+			this.data.length = end
 			
-			if( this.data.length === this.sub_from ) this.reap()
+			if( end === this.sub_from ) this.reap()
 			
 		}
 		

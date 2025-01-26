@@ -122,10 +122,9 @@ namespace $ {
 				const sub = this.data[ cursor ] as $mol_wire_sub
 				const pos = this.data[ cursor + 1 ] as number
 				sub.pub_off( pos )
-				this.data.pop()
-				this.data.pop()
 			}
 			
+			this.sub_from = this.pub_from
 			this.cursor = this.pub_from
 			this.track_cut()
 			this.cursor = $mol_wire_cursor.final
@@ -138,7 +137,7 @@ namespace $ {
 				$mol_fail( new Error( 'Cut of non begun sub' ) )
 			}
 			
-			let tail = 0
+			let end = this.data.length
 			
 			for(
 				let cursor = this.cursor;
@@ -149,20 +148,12 @@ namespace $ {
 				const pub = this.data[ cursor ] as $mol_wire_pub | undefined
 				pub?.sub_off( this.data[ cursor + 1 ] as number )
 				
-				if( this.sub_from < this.data.length ) {
-					this.peer_move( this.data.length - 2, cursor )
-					this.data.pop()
-					this.data.pop()
-				} else {
-					++ tail
-				}
+				end -= 2
+				if( this.sub_from < end ) this.peer_move( end, cursor )
 				
 			}
 			
-			for(; tail; -- tail ) {
-				this.data.pop()
-				this.data.pop()
-			}
+			this.data.length = end
 			
 			this.sub_from = this.cursor
 			
