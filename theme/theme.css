@@ -63,8 +63,8 @@
 	--mol_theme_current: hsl( calc( var(--mol_theme_hue) - var(--mol_theme_hue_spread) ), 80%, 30% );
 	--mol_theme_special: hsl( calc( var(--mol_theme_hue) + var(--mol_theme_hue_spread) ), 80%, 30% );
 	
-	--mol_theme_back: oklch( 99% .01 var(--mol_theme_hue) );
-	--mol_theme_card: oklch( 90% .02 var(--mol_theme_hue) / .25 );
+	--mol_theme_back: oklch( 92% .01 var(--mol_theme_hue) );
+	--mol_theme_card: oklch( 99% .01 var(--mol_theme_hue) / .5 );
 	--mol_theme_field: oklch( 100% 0 var(--mol_theme_hue) / .5 );
 	--mol_theme_hover: oklch( 70% 0 var(--mol_theme_hue) / .1 );
 	
@@ -84,8 +84,8 @@
 	--mol_theme_card: oklch( 35% .1 var(--mol_theme_hue) / .25 );
 }
 :where( [mol_theme="$mol_theme_light"] ) [mol_theme="$mol_theme_base"] {
-	--mol_theme_back: oklch( 95% .02 var(--mol_theme_hue) );
-	--mol_theme_card: oklch( 80% .05 var(--mol_theme_hue) / .25 );
+	--mol_theme_back: oklch( 85% .05 var(--mol_theme_hue) );
+	--mol_theme_card: oklch( 98% .03 var(--mol_theme_hue) / .25 );
 }
 
 :where( :root, [mol_theme="$mol_theme_dark"] ) [mol_theme="$mol_theme_current"] {
@@ -93,8 +93,8 @@
 	--mol_theme_card: oklch( 35% .1 calc( var(--mol_theme_hue) - var(--mol_theme_hue_spread) ) / .25 );
 }
 :where( [mol_theme="$mol_theme_light"] ) [mol_theme="$mol_theme_current"] {
-	--mol_theme_back: oklch( 95% .02 calc( var(--mol_theme_hue) - var(--mol_theme_hue_spread) ) );
-	--mol_theme_card: oklch( 80% .05 calc( var(--mol_theme_hue) - var(--mol_theme_hue_spread) ) / .25 );
+	--mol_theme_back: oklch( 85% .05 calc( var(--mol_theme_hue) - var(--mol_theme_hue_spread) ) );
+	--mol_theme_card: oklch( 98% .03 calc( var(--mol_theme_hue) - var(--mol_theme_hue_spread) ) / .25 );
 }
 
 :where( :root, [mol_theme="$mol_theme_dark"] ) [mol_theme="$mol_theme_special"] {
@@ -102,8 +102,8 @@
 	--mol_theme_card: oklch( 35% .1 calc( var(--mol_theme_hue) + var(--mol_theme_hue_spread) ) / .25 );
 }
 :where( [mol_theme="$mol_theme_light"] ) [mol_theme="$mol_theme_special"] {
-	--mol_theme_back: oklch( 95% .02 calc( var(--mol_theme_hue) + var(--mol_theme_hue_spread) ) );
-	--mol_theme_card: oklch( 80% .05 calc( var(--mol_theme_hue) + var(--mol_theme_hue_spread) ) / .25 );
+	--mol_theme_back: oklch( 85% .05 calc( var(--mol_theme_hue) + var(--mol_theme_hue_spread) ) );
+	--mol_theme_card: oklch( 98% .03 calc( var(--mol_theme_hue) + var(--mol_theme_hue_spread) ) / .25 );
 }
 
 :where( :root, [mol_theme="$mol_theme_dark"] ) [mol_theme="$mol_theme_accent"] {
@@ -111,7 +111,7 @@
 	--mol_theme_card: oklch( 45% .15 calc( var(--mol_theme_hue) + 180deg ) / .25 );
 }
 :where( [mol_theme="$mol_theme_light"] ) [mol_theme="$mol_theme_accent"] {
-	--mol_theme_back: oklch( 93% .1 calc( var(--mol_theme_hue) + 180deg ) );
-	--mol_theme_card: oklch( 83% .15 calc( var(--mol_theme_hue) + 180deg ) / .25 );
+	--mol_theme_back: oklch( 83% .1 calc( var(--mol_theme_hue) + 180deg ) );
+	--mol_theme_card: oklch( 98% .03 calc( var(--mol_theme_hue) + 180deg ) / .25 );
 }
 
