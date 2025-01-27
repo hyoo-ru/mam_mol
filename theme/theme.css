@@ -63,8 +63,8 @@
 	--mol_theme_current: hsl( calc( var(--mol_theme_hue) - var(--mol_theme_hue_spread) ), 80%, 30% );
 	--mol_theme_special: hsl( calc( var(--mol_theme_hue) + var(--mol_theme_hue_spread) ), 80%, 30% );
 	
-	--mol_theme_back: oklch( 97% .05 var(--mol_theme_hue) );
-	--mol_theme_card: oklch( 87% .02 var(--mol_theme_hue) / .25 );
+	--mol_theme_back: oklch( 99% .01 var(--mol_theme_hue) );
+	--mol_theme_card: oklch( 90% .02 var(--mol_theme_hue) / .25 );
 	--mol_theme_field: oklch( 100% 0 var(--mol_theme_hue) / .5 );
 	--mol_theme_hover: oklch( 70% 0 var(--mol_theme_hue) / .1 );
 	
