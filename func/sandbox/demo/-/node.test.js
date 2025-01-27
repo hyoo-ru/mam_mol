@@ -102,10 +102,12 @@ var $node = new Proxy({ require }, {
     get(target, name, wrapper) {
         if (target[name])
             return target[name];
-        const mod = target.require('module');
-        if (mod.builtinModules.indexOf(name) >= 0)
+        if (name.startsWith('node:'))
             return target.require(name);
         if (name[0] === '.')
+            return target.require(name);
+        const mod = target.require('module');
+        if (mod.builtinModules.indexOf(name) >= 0)
             return target.require(name);
         try {
             target.require.resolve(name);

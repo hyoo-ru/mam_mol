@@ -2156,10 +2156,12 @@ var $node = new Proxy({ require }, {
     get(target, name, wrapper) {
         if (target[name])
             return target[name];
-        const mod = target.require('module');
-        if (mod.builtinModules.indexOf(name) >= 0)
+        if (name.startsWith('node:'))
             return target.require(name);
         if (name[0] === '.')
+            return target.require(name);
+        const mod = target.require('module');
+        if (mod.builtinModules.indexOf(name) >= 0)
             return target.require(name);
         try {
             target.require.resolve(name);
@@ -6418,9 +6420,10 @@ var $;
             const pack = $mol_file.absolute(path);
             const source = pack.resolve('index.html');
             const target = pack.resolve(`-/test.html`);
+            const name = '$' + pack.relate(this.root()).replaceAll('/', '_');
             let content = source.exists()
                 ? source.text()
-                : `<!doctype html><meta charset="utf-8" /><body><script src="web.js" charset="utf-8"></script>`;
+                : `<!doctype html><meta charset="utf-8" /><body mol_view_root="${name}"><script src="web.js" charset="utf-8"></script>`;
             content = content.replace(/(<\/body>|$)/, `
 				<script src="/mol/build/client/client.js" charset="utf-8"></script>
 				<script src="web.test.js" charset="utf-8"></script>
