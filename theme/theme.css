@@ -36,7 +36,7 @@
 	--mol_theme_text: oklch( 80% 0 var(--mol_theme_hue) );
 	--mol_theme_shade: oklch( 60% 0 var(--mol_theme_hue) );
 	--mol_theme_line: oklch( 60% 0 var(--mol_theme_hue) / .25 );
-	--mol_theme_focus: oklch( 60% .15 calc( var(--mol_theme_hue) + 180deg ) );
+	--mol_theme_focus: oklch( 70% .2 calc( var(--mol_theme_hue) + 180deg ) );
 	
 	--mol_theme_control: oklch( 70% .1 var(--mol_theme_hue) );
 	--mol_theme_current: oklch( 80% .2 calc( var(--mol_theme_hue) - var(--mol_theme_hue_spread) ) );
@@ -71,7 +71,7 @@
 	--mol_theme_text: oklch( 20% 0 var(--mol_theme_hue) );
 	--mol_theme_shade: oklch( 60% 0 var(--mol_theme_hue) );
 	--mol_theme_line: oklch( 50% 0 var(--mol_theme_hue) / .25 );
-	--mol_theme_focus: oklch( 60% .15 calc( var(--mol_theme_hue) + 180deg ) );
+	--mol_theme_focus: oklch( 50% .15 calc( var(--mol_theme_hue) + 180deg ) );
 	
 	--mol_theme_control: oklch( 35% .2 var(--mol_theme_hue) );
 	--mol_theme_current: oklch( 45% .3 calc( var(--mol_theme_hue) - var(--mol_theme_hue_spread) ) );
