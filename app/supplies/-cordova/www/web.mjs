@@ -3807,12 +3807,16 @@ var $;
             }
             selection_start() {
                 const el = this.dom_node();
+                if (!this.focused())
+                    return undefined;
                 if (el.selectionStart == null)
                     return undefined;
                 return this.selection()[0];
             }
             selection_end() {
                 const el = this.dom_node();
+                if (!this.focused())
+                    return undefined;
                 if (el.selectionEnd == null)
                     return undefined;
                 return this.selection()[1];
