@@ -1,4 +1,8 @@
 	($.$mol_theme_demo) = class $mol_theme_demo extends ($.$mol_example_large) {
+		Theme(){
+			const obj = new this.$.$mol_theme_auto();
+			return obj;
+		}
 		hue_deg(){
 			return "";
 		}
@@ -7,7 +11,7 @@
 		}
 		hue(next){
 			if(next !== undefined) return next;
-			return 210;
+			return 240;
 		}
 		Hue(){
 			const obj = new this.$.$mol_number();
@@ -37,19 +41,28 @@
 			(obj.Content) = () => ((this.Hue_spread()));
 			return obj;
 		}
+		Lights(){
+			const obj = new this.$.$mol_lights_toggle();
+			return obj;
+		}
+		Lights_field(){
+			const obj = new this.$.$mol_form_field();
+			(obj.name) = () => ("Lights");
+			(obj.Content) = () => ((this.Lights()));
+			return obj;
+		}
 		Config(){
 			const obj = new this.$.$mol_row();
-			(obj.sub) = () => ([(this.Hue_field()), (this.Hue_spread_field())]);
+			(obj.sub) = () => ([
+				(this.Hue_field()), 
+				(this.Hue_spread_field()), 
+				(this.Lights_field())
+			]);
 			return obj;
 		}
 		Base(){
 			const obj = new this.$.$mol_theme_demo_case();
 			(obj.theme) = () => ("$mol_theme_base");
-			return obj;
-		}
-		Accent(){
-			const obj = new this.$.$mol_theme_demo_case();
-			(obj.theme) = () => ("$mol_theme_accent");
 			return obj;
 		}
 		Current(){
@@ -62,14 +75,19 @@
 			(obj.theme) = () => ("$mol_theme_special");
 			return obj;
 		}
+		Accent(){
+			const obj = new this.$.$mol_theme_demo_case();
+			(obj.theme) = () => ("$mol_theme_accent");
+			return obj;
+		}
 		Cases(){
 			const obj = new this.$.$mol_theme_demo_case();
 			(obj.title) = () => ("Current light");
 			(obj.inner) = () => ([
 				(this.Base()), 
-				(this.Accent()), 
 				(this.Current()), 
-				(this.Special())
+				(this.Special()), 
+				(this.Accent())
 			]);
 			return obj;
 		}
@@ -77,6 +95,9 @@
 			const obj = new this.$.$mol_scroll();
 			(obj.sub) = () => ([(this.Cases())]);
 			return obj;
+		}
+		plugins(){
+			return [(this.Theme())];
 		}
 		style(){
 			return {"--mol_theme_hue": (this.hue_deg()), "--mol_theme_hue_spread": (this.hue_spread_deg())};
@@ -91,17 +112,20 @@
 			return ["Type/Color"];
 		}
 	};
+	($mol_mem(($.$mol_theme_demo.prototype), "Theme"));
 	($mol_mem(($.$mol_theme_demo.prototype), "hue"));
 	($mol_mem(($.$mol_theme_demo.prototype), "Hue"));
 	($mol_mem(($.$mol_theme_demo.prototype), "Hue_field"));
 	($mol_mem(($.$mol_theme_demo.prototype), "hue_spread"));
 	($mol_mem(($.$mol_theme_demo.prototype), "Hue_spread"));
 	($mol_mem(($.$mol_theme_demo.prototype), "Hue_spread_field"));
+	($mol_mem(($.$mol_theme_demo.prototype), "Lights"));
+	($mol_mem(($.$mol_theme_demo.prototype), "Lights_field"));
 	($mol_mem(($.$mol_theme_demo.prototype), "Config"));
 	($mol_mem(($.$mol_theme_demo.prototype), "Base"));
-	($mol_mem(($.$mol_theme_demo.prototype), "Accent"));
 	($mol_mem(($.$mol_theme_demo.prototype), "Current"));
 	($mol_mem(($.$mol_theme_demo.prototype), "Special"));
+	($mol_mem(($.$mol_theme_demo.prototype), "Accent"));
 	($mol_mem(($.$mol_theme_demo.prototype), "Cases"));
 	($mol_mem(($.$mol_theme_demo.prototype), "Scroll"));
 	($.$mol_theme_demo_case) = class $mol_theme_demo_case extends ($.$mol_view) {

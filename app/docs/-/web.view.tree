@@ -5772,6 +5772,8 @@ $mol_textarea_demo $mol_example
 		\Type/String
 
 $mol_theme_demo $mol_example_large
+	plugins /
+		<= Theme $mol_theme_auto
 	style *
 		--mol_theme_hue <= hue_deg \
 		--mol_theme_hue_spread <= hue_spread_deg \
@@ -5780,21 +5782,24 @@ $mol_theme_demo $mol_example_large
 			<= Hue_field $mol_form_field
 				name \Hue
 				Content <= Hue $mol_number
-					value? <=> hue? 210
+					value? <=> hue? 240
 					precision_change 15
 			<= Hue_spread_field $mol_form_field
 				name \Hue spread
 				Content <= Hue_spread $mol_number
 					value? <=> hue_spread? 90
 					precision_change 15
+			<= Lights_field $mol_form_field
+				name \Lights
+				Content <= Lights $mol_lights_toggle
 		<= Scroll $mol_scroll sub /
 			<= Cases $mol_theme_demo_case
 				title \Current light
 				inner /
 					<= Base $mol_theme_demo_case theme \$mol_theme_base
-					<= Accent $mol_theme_demo_case theme \$mol_theme_accent
 					<= Current $mol_theme_demo_case theme \$mol_theme_current
 					<= Special $mol_theme_demo_case theme \$mol_theme_special
+					<= Accent $mol_theme_demo_case theme \$mol_theme_accent
 	tags /
 		\theme
 		\skin

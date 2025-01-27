@@ -40,20 +40,20 @@ declare namespace $ {
 		,
 		ReturnType< $mol_form_field['Content'] >
 	>
-	type $mol_row__sub_mol_theme_demo_9 = $mol_type_enforce<
+	type $mol_form_field__name_mol_theme_demo_9 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_form_field['name'] >
+	>
+	type $mol_form_field__Content_mol_theme_demo_10 = $mol_type_enforce<
+		ReturnType< $mol_theme_demo['Lights'] >
+		,
+		ReturnType< $mol_form_field['Content'] >
+	>
+	type $mol_row__sub_mol_theme_demo_11 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_row['sub'] >
-	>
-	type $mol_theme_demo_case__theme_mol_theme_demo_10 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_theme_demo_case['theme'] >
-	>
-	type $mol_theme_demo_case__theme_mol_theme_demo_11 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_theme_demo_case['theme'] >
 	>
 	type $mol_theme_demo_case__theme_mol_theme_demo_12 = $mol_type_enforce<
 		string
@@ -65,22 +65,33 @@ declare namespace $ {
 		,
 		ReturnType< $mol_theme_demo_case['theme'] >
 	>
-	type $mol_theme_demo_case__title_mol_theme_demo_14 = $mol_type_enforce<
+	type $mol_theme_demo_case__theme_mol_theme_demo_14 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_theme_demo_case['theme'] >
+	>
+	type $mol_theme_demo_case__theme_mol_theme_demo_15 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_theme_demo_case['theme'] >
+	>
+	type $mol_theme_demo_case__title_mol_theme_demo_16 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_theme_demo_case['title'] >
 	>
-	type $mol_theme_demo_case__inner_mol_theme_demo_15 = $mol_type_enforce<
+	type $mol_theme_demo_case__inner_mol_theme_demo_17 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_theme_demo_case['inner'] >
 	>
-	type $mol_scroll__sub_mol_theme_demo_16 = $mol_type_enforce<
+	type $mol_scroll__sub_mol_theme_demo_18 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_scroll['sub'] >
 	>
 	export class $mol_theme_demo extends $mol_example_large {
+		Theme( ): $mol_theme_auto
 		hue_deg( ): string
 		hue_spread_deg( ): string
 		hue( next?: number ): number
@@ -89,13 +100,16 @@ declare namespace $ {
 		hue_spread( next?: number ): number
 		Hue_spread( ): $mol_number
 		Hue_spread_field( ): $mol_form_field
+		Lights( ): $mol_lights_toggle
+		Lights_field( ): $mol_form_field
 		Config( ): $mol_row
 		Base( ): $mol_theme_demo_case
-		Accent( ): $mol_theme_demo_case
 		Current( ): $mol_theme_demo_case
 		Special( ): $mol_theme_demo_case
+		Accent( ): $mol_theme_demo_case
 		Cases( ): $mol_theme_demo_case
 		Scroll( ): $mol_scroll
+		plugins( ): readonly(any)[]
 		style( ): ({ 
 			'--mol_theme_hue': ReturnType< $mol_theme_demo['hue_deg'] >,
 			'--mol_theme_hue_spread': ReturnType< $mol_theme_demo['hue_spread_deg'] >,
