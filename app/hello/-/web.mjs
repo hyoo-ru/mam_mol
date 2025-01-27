@@ -3045,13 +3045,13 @@ var $;
             }
             selection_start() {
                 const el = this.dom_node();
-                if (el.selectionStart === null)
+                if (el.selectionStart == null)
                     return undefined;
                 return this.selection()[0];
             }
             selection_end() {
                 const el = this.dom_node();
-                if (el.selectionEnd === null)
+                if (el.selectionEnd == null)
                     return undefined;
                 return this.selection()[1];
             }
