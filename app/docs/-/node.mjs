@@ -5131,7 +5131,10 @@ var $;
                     radius: $mol_gap.round,
                 },
                 box: {
-                    shadow: [[0, `0.5rem`, `0.5rem`, `-0.5rem`, hsla(0, 0, 0, .25)]],
+                    shadow: [
+                        [0, `-0.5rem`, `0.5rem`, `-0.5rem`, hsla(0, 0, 0, .25)],
+                        [0, `0.5rem`, `0.5rem`, `-0.5rem`, hsla(0, 0, 0, .25)],
+                    ],
                 },
                 zIndex: 2,
                 '@media': {
@@ -5205,7 +5208,10 @@ var $;
                     radius: $mol_gap.round,
                 },
                 box: {
-                    shadow: [[0, `-0.5rem`, `0.5rem`, `-0.5rem`, hsla(0, 0, 0, .25)]],
+                    shadow: [
+                        [0, `-0.5rem`, `0.5rem`, `-0.5rem`, hsla(0, 0, 0, .25)],
+                        [0, `0.5rem`, `0.5rem`, `-0.5rem`, hsla(0, 0, 0, .25)],
+                    ],
                 },
                 zIndex: 1,
                 padding: $mol_gap.block,
