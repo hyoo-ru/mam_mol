@@ -30,7 +30,7 @@
 
 	--mol_theme_back: oklch( 20% .03 var(--mol_theme_hue) );
 	--mol_theme_card: oklch( 30% .05 var(--mol_theme_hue) / .25 );
-	--mol_theme_field: oklch( 10% 0 var(--mol_theme_hue) / .25 );
+	--mol_theme_field: oklch( 15% 0 var(--mol_theme_hue) / .25 );
 	--mol_theme_hover: oklch( 70% 0 var(--mol_theme_hue) / .1 );
 	
 	--mol_theme_text: oklch( 80% 0 var(--mol_theme_hue) );
