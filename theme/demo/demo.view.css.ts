@@ -4,6 +4,9 @@ namespace $.$$ {
 		
 		gap: $mol_gap.block,
 		padding: $mol_gap.block,
+		border: {
+			radius: $mol_gap.round,
+		},
 		
 		$mol_button_copy: {
 			color: `inherit`,
