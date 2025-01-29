@@ -39,11 +39,11 @@
 	--mol_theme_text: oklch( 80% 0 var(--mol_theme_hue) );
 	--mol_theme_shade: oklch( 60% 0 var(--mol_theme_hue) );
 	--mol_theme_line: oklch( 60% 0 var(--mol_theme_hue) / .25 );
-	--mol_theme_focus: oklch( 70% .2 calc( var(--mol_theme_hue) + 180deg ) );
+	--mol_theme_focus: oklch( 80% .2 calc( var(--mol_theme_hue) + 180deg ) );
 	
-	--mol_theme_control: oklch( 70% .1 var(--mol_theme_hue) );
-	--mol_theme_current: oklch( 70% .15 calc( var(--mol_theme_hue) - var(--mol_theme_hue_spread) ) );
-	--mol_theme_special: oklch( 70% .15 calc( var(--mol_theme_hue) + var(--mol_theme_hue_spread) ) );
+	--mol_theme_control: oklch( 70% .15 var(--mol_theme_hue) );
+	--mol_theme_current: oklch( 70% .2 calc( var(--mol_theme_hue) - var(--mol_theme_hue_spread) ) );
+	--mol_theme_special: oklch( 70% .2 calc( var(--mol_theme_hue) + var(--mol_theme_hue_spread) ) );
 
 } }
 
@@ -76,11 +76,11 @@
 	--mol_theme_text: oklch( 20% 0 var(--mol_theme_hue) );
 	--mol_theme_shade: oklch( 60% 0 var(--mol_theme_hue) );
 	--mol_theme_line: oklch( 50% 0 var(--mol_theme_hue) / .25 );
-	--mol_theme_focus: oklch( 50% .15 calc( var(--mol_theme_hue) + 180deg ) );
+	--mol_theme_focus: oklch( 60% .2 calc( var(--mol_theme_hue) + 180deg ) );
 	
-	--mol_theme_control: oklch( 40% .15 var(--mol_theme_hue) );
-	--mol_theme_current: oklch( 40% .2 calc( var(--mol_theme_hue) - var(--mol_theme_hue_spread) ) );
-	--mol_theme_special: oklch( 40% .2 calc( var(--mol_theme_hue) + var(--mol_theme_hue_spread) ) );
+	--mol_theme_control: oklch( 50% .15 var(--mol_theme_hue) );
+	--mol_theme_current: oklch( 50% .2 calc( var(--mol_theme_hue) - var(--mol_theme_hue_spread) ) );
+	--mol_theme_special: oklch( 50% .2 calc( var(--mol_theme_hue) + var(--mol_theme_hue_spread) ) );
 
 } }
 
