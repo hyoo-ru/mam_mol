@@ -59,7 +59,7 @@ namespace $ {
 				// 	return
 				// }
 
-				this.generate( req.url )
+				if (! this.generate( req.url ) ) return false
 				res.set( 'Cache-Control', 'no-cache, public' )
 			} catch( error: any ) {
 				if ($mol_promise_like(error)) $mol_fail_hidden(error)
@@ -99,7 +99,7 @@ namespace $ {
 			только при открытии шахмат.
 			*/
 			const matched = url.match( /^(.*?)\/-\/((?:(?:\w+(?:.\w+)+)(?:\/-\/)?)+)$/ )
-			if( !matched ) return [] as $mol_file[]
+			if( !matched ) return null
 			
 			const build = this.build()
 
@@ -123,13 +123,16 @@ namespace $ {
 
 		override expressIndex() { return this.sync_middleware(this.expressIndexRequest.bind(this)) }
 		
+		@ $mol_mem_key
+		protected ensure(path: string) {
+			$mol_wire_solid()
+			this.build().modEnsure( path )
+		}
+
 		expressIndexRequest(
 			req : typeof $node.express.request ,
 			res : typeof $node.express.response ,
 		) {
-			// a/b/?c#d, a/b/-/
-			const match =  req.url.match( /(\/|.*[^\-]\/)([\?#].*)?$/ )
-			if( !match) return
 
 			const root = this.$.$mol_file.absolute( this.rootPublic() )
 			const dir = root.resolve( req.path )
@@ -138,7 +141,11 @@ namespace $ {
 
 			// ensure загружает сорцы, делает git pull, это не стоит делать на build-папках
 			// Поэтому регулярка выше отсеивает build-папки
-			this.build().modEnsure( path )
+			this.ensure( path )
+
+			// a/b/?c#d, a/b/-/
+			const match =  req.url.match( /(\/|.*[^\-]\/)([\?#].*)?$/ )
+			if( !match) return
 
 			const file = root.resolve( `${req.path}index.html` )
 
