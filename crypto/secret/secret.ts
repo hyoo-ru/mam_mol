@@ -6,7 +6,10 @@ namespace $ {
 		tagLength: 32,
 	}
 	
-	/** Symmetric cipher with shortest payload */
+	/**
+	 * Symmetric cipher with shortest payload.
+	 * @deprecated Use $mol_crypto_sacred.
+	 */
 	export class $mol_crypto_secret extends Object {
 		
 		/** Key size in bytes. */
