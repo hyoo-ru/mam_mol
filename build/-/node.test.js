@@ -7213,7 +7213,8 @@ var $;
         expressGenerator() { return this.sync_middleware(this.handleRequest.bind(this)); }
         handleRequest(req, res) {
             try {
-                this.generate(req.url);
+                if (!this.generate(req.url))
+                    return false;
                 res.set('Cache-Control', 'no-cache, public');
             }
             catch (error) {
@@ -7241,7 +7242,7 @@ var $;
             $mol_wire_solid();
             const matched = url.match(/^(.*?)\/-\/((?:(?:\w+(?:.\w+)+)(?:\/-\/)?)+)$/);
             if (!matched)
-                return [];
+                return null;
             const build = this.build();
             const [, rawpath, bundle] = matched;
             const mod = build.root().resolve(rawpath);
@@ -7257,14 +7258,18 @@ var $;
             return build.bundle([path, bundle]);
         }
         expressIndex() { return this.sync_middleware(this.expressIndexRequest.bind(this)); }
+        ensure(path) {
+            $mol_wire_solid();
+            this.build().modEnsure(path);
+        }
         expressIndexRequest(req, res) {
-            const match = req.url.match(/(\/|.*[^\-]\/)([\?#].*)?$/);
-            if (!match)
-                return;
             const root = this.$.$mol_file.absolute(this.rootPublic());
             const dir = root.resolve(req.path);
             const path = dir.path();
-            this.build().modEnsure(path);
+            this.ensure(path);
+            const match = req.url.match(/(\/|.*[^\-]\/)([\?#].*)?$/);
+            if (!match)
+                return;
             const file = root.resolve(`${req.path}index.html`);
             if (file.exists()) {
                 res.redirect(301, `${match[1]}-/test.html${match[2] ?? ''}`);
@@ -7519,6 +7524,9 @@ var $;
     __decorate([
         $mol_mem_key
     ], $mol_build_server.prototype, "generate", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_build_server.prototype, "ensure", null);
     __decorate([
         $mol_mem
     ], $mol_build_server.prototype, "lines", null);

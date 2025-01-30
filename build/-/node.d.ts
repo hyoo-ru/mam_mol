@@ -1383,10 +1383,11 @@ declare namespace $ {
         static trace: boolean;
         sync_middleware(mdl: (req: typeof $node.express.request, res: typeof $node.express.response) => void | boolean): (req: typeof $node.express.request, res: typeof $node.express.response, next: (err?: unknown) => any) => Promise<void>;
         expressGenerator(): (req: typeof $node.express.request, res: typeof $node.express.response, next: (err?: unknown) => any) => Promise<void>;
-        handleRequest(req: typeof $node.express.request, res: typeof $node.express.response): true | undefined;
+        handleRequest(req: typeof $node.express.request, res: typeof $node.express.response): boolean | undefined;
         build(): $mol_build;
-        generate(url: string): $mol_file[];
+        generate(url: string): $mol_file[] | null;
         expressIndex(): (req: typeof $node.express.request, res: typeof $node.express.response, next: (err?: unknown) => any) => Promise<void>;
+        protected ensure(path: string): void;
         expressIndexRequest(req: typeof $node.express.request, res: typeof $node.express.response): true | undefined;
         port(): number;
         lines(next?: Map<import("ws").default, string>): Map<import("ws").default, string>;
