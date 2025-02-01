@@ -22,7 +22,7 @@ namespace $ {
 	
 			const style = `color:${color};font-weight:bolder`
 
-			;( this.console[ level ] as any )( tpl , style , ... ( [] as any[] ).concat( ... chunks ) )
+			;( this.console[ level ] as any )( tpl.trim() , style , ... ( [] as any[] ).concat( ... chunks ) )
 
 			const self = this
 			return ()=> self.console.groupEnd()
