@@ -927,7 +927,9 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		bundle_test_js([ path , exclude , bundle ] : [ path : string , exclude : readonly string[] , bundle : string ]) {
+		bundle_test_js(
+			[ path , exclude , bundle ] : [ path : string , exclude : readonly string[] , bundle : string ]
+		): readonly [ $mol_file | undefined, $mol_file | undefined ] {
 			const start = this.now()
 			const pack = $mol_file.absolute( path )
 			
@@ -951,7 +953,7 @@ namespace $ {
 				concater.add( 'function require'+'( path ){ return $node[ path ] }' )
 			}
 
-			if( sources.length === 0 ) return null
+			if( sources.length === 0 ) return [ undefined, undefined ]
 			
 			const errors = [] as Error[]
 
@@ -979,12 +981,12 @@ namespace $ {
 				$mol_fail_hidden( error )
 			}
 
-			return [ target, targetMap ] as const
+			return [ target, targetMap ]
 		}
 
 		@ $mol_mem_key
 		bundleAndRunTestJS( { path , exclude , bundle } : { path : string , exclude : readonly string[] , bundle : string } ) : $mol_file[] {
-			const [ target , targetMap ] = this.bundle_test_js([ path, exclude, bundle ]) ?? []
+			const [ target , targetMap ] = this.bundle_test_js([ path, exclude, bundle ])
 			if (! target || ! targetMap ) {
 				this.$.$mol_log3_warn({
 					place: `${this}.bundleAndRunTestJS` ,
