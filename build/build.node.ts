@@ -951,7 +951,7 @@ namespace $ {
 				concater.add( 'function require'+'( path ){ return $node[ path ] }' )
 			}
 
-			if( sources.length === 0 ) return []
+			if( sources.length === 0 ) return null
 			
 			const errors = [] as Error[]
 
@@ -979,12 +979,22 @@ namespace $ {
 				$mol_fail_hidden( error )
 			}
 
-			return [ target, targetMap ]
+			return [ target, targetMap ] as const
 		}
 
 		@ $mol_mem_key
 		bundleAndRunTestJS( { path , exclude , bundle } : { path : string , exclude : readonly string[] , bundle : string } ) : $mol_file[] {
-			const [ target , targetMap ] = this.bundle_test_js([ path, exclude, bundle ])
+			const [ target , targetMap ] = this.bundle_test_js([ path, exclude, bundle ]) ?? []
+			if (! target || ! targetMap ) {
+				this.$.$mol_log3_warn({
+					place: `${this}.bundleAndRunTestJS` ,
+					message: 'No sources found' ,
+					hint: 'Wrong path?', 
+					path ,
+				})
+				return []
+			}
+
 			if( bundle === 'node' ) {
 				const dir = this.root().path()
 
