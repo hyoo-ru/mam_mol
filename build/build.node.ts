@@ -988,7 +988,7 @@ namespace $ {
 		bundleAndRunTestJS( { path , exclude , bundle } : { path : string , exclude : readonly string[] , bundle : string } ) : $mol_file[] {
 			const [ target , targetMap ] = this.bundle_test_js([ path, exclude, bundle ])
 			if (! target || ! targetMap ) {
-				this.$.$mol_log3_warn({
+				this.$.$mol_log3_fail({
 					place: `${this}.bundleAndRunTestJS` ,
 					message: 'No sources found' ,
 					hint: 'Wrong path?', 
