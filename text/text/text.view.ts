@@ -205,6 +205,8 @@ namespace $.$$ {
 			if ( lang ) {
 				switch ( lang ) {
 					case 'plain': return this.$.$mol_syntax2_plain_code
+					case 'python': return this.$.$mol_syntax2_python_code
+					case 'py': return this.$.$mol_syntax2_python_code
 				}
 			}
 		}
@@ -224,7 +226,7 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem_key
-		pre_syntax(index: number) {
+		pre_syntax( index: number ) {
 			const token = this.flow_tokens()[ index ]
 
 			let lang = ''
