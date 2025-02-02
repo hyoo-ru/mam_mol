@@ -12,16 +12,22 @@ namespace $ {
 			
 			super( errors, message, { cause } )
 			
-			const stack_get = Object.getOwnPropertyDescriptor( this, 'stack' )?.get ?? ( ()=> super.stack )
+			const desc = Object.getOwnPropertyDescriptor( this, 'stack' )
+			const stack_get = desc?.get ?? ( ()=> super.stack ?? desc?.value )
 			
 			Object.defineProperty( this, 'stack', {
-				get: ()=> ( stack_get.call( this ) ?? this.message ) + '\n' + [ JSON.stringify( this.cause, null, '  ' ) ?? 'no cause', ... this.errors.map( e => e.stack ) ].map(
-					e => e.trim()
+				get: ()=> (
+					stack_get.call( this ) ?? this.message ) + '\n' + [
+						JSON.stringify( this.cause, null, '  ' ) ?? 'no cause',
+						... this.errors.map( e => e.stack )
+					].map( e => e.trim()
 						.replace( /at /gm, '   at ' )
 						.replace( /^(?!    +at )(.*)/gm, '    at | $1 (#)' )
-				).join('\n')
+					).join('\n')
 			} )
-			
+			Object.defineProperty(this, 'cause', {
+				get: () => cause
+			})	
 		}
 
 		static [ Symbol.toPrimitive ]() {
