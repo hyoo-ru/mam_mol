@@ -68,7 +68,18 @@ namespace $.$$ {
 		@ $mol_mem_key
 		pre_text( index : number ) {
 			const token = this.flow_tokens()[ index ]
-			return ( token.chunks[2] ?? token.chunks[0].replace( /^(\t| (?:\+\+|--|\*\*|  ) )/gm , '' ) ).replace( /[\n\r]*$/ , '' )
+
+			let text = ''
+
+			if ( token.chunks.length > 3 ) {
+				// code with backticks
+				text = token.chunks[2]
+			} else {
+				// code with indents
+				text = token.chunks[1].replace( /^(\t| (?:\+\+|--|\*\*|  ) )/gm , '' )
+			}
+
+			return text.replace( /[\n\r]*$/ , '' )
 		}
 		
 		@ $mol_mem_key
@@ -190,8 +201,47 @@ namespace $.$$ {
 			
 		}
 		
-		code_syntax() {
-			return this.$.$mol_syntax2_md_code
+		get_syntax( lang: string ): $mol_syntax2 | undefined {
+			if ( lang ) {
+				switch ( lang ) {
+					case 'plain': return this.$.$mol_syntax2_plain_code
+				}
+			}
+		}
+
+		@ $mol_mem_key
+		code_syntax( path: readonly number[] ) {
+			const { name, found, chunks } = this.line_token( path )
+
+			let lang = chunks[0] || chunks[2] || chunks[4] || ''
+			let syntax: $mol_syntax2 = this.$.$mol_syntax2_md_code
+		
+			if ( lang ) {
+				syntax = this.get_syntax( lang.slice(0, -1) ) ?? syntax
+			}
+
+			return syntax
+		}
+
+		@ $mol_mem_key
+		pre_syntax(index: number) {
+			const token = this.flow_tokens()[ index ]
+
+			let lang = ''
+			let syntax: $mol_syntax2 = this.$.$mol_syntax2_md_code
+
+			if ( token.chunks[0] && token.chunks[0].includes( '`' ) ) {
+				lang = token.chunks[1]
+			}
+			else if ( token.chunks[0] && token.chunks[0].includes( '=' ) ) {
+				lang = token.chunks[0].slice(0, -1)
+			}
+
+			if ( lang ) {
+				syntax = this.get_syntax( lang ) ?? syntax
+			}
+
+			return syntax
 		}
 
 		@ $mol_mem_key
@@ -245,6 +295,7 @@ namespace $.$$ {
 			switch( name ) {
 				case 'link': return chunks[0] || chunks[1].replace( /^.*?\/\/|\/.*$/g, '' )
 				case 'text-link': return chunks[0] || chunks[1].replace( /^.*?\/\/|\/.*$/g, '' )
+				case 'code': return chunks[1] || chunks[3] || chunks[5] || ''
 				default: return ( chunks[0] || chunks[1] || chunks[2] ) ?? found
 			}
 			
