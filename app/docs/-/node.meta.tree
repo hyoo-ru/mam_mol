@@ -137,6 +137,7 @@
 	deploy \/mol/app/docs/manifest.json
 	include \/mol/offline/install
 	include \/mol/app/demo
+	include \/jin/keyboard/demo
 	include \/hyoo/crowd/text/demo
 	include \/mol/app/hello/demo
 	include \/mol/app/questions/demo

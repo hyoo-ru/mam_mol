@@ -886,6 +886,290 @@ $mol_app_demo_main $mol_page
 			text <= description \
 			uri_base <= project_uri
 
+$jin_keyboard $mol_view
+	area $mol_view
+	turn? null
+	input? null
+	Row* $jin_keyboard_row
+		layout <= row_layout* /
+		turn? <=> row_turn*? null
+		input? <=> row_input*? null
+		upcase <= upcase? false
+	sub /
+		<= Row*0
+		<= Row*1
+		<= Row*2
+	layout? \
+	layouts *
+		\
+			/
+				/
+					\0
+					\П
+					\У
+					\Д
+				/
+					\.
+					\ 
+					\"
+					\-
+				/
+					\@
+					\W
+					\U
+					\Z
+		\ 
+			/
+				/
+					\⏮
+					\🔠
+					\⏭
+					\
+				/
+					\◀
+					\ 
+					\▶
+					\
+				/
+					\🤛
+					\🔻
+					\🤜
+					\
+					\
+		\0
+			/
+				/
+					\0
+					\1
+					\2
+					\3
+				/
+					\4
+					\
+					\5
+					\6
+				/
+					\7
+					\8
+					\9
+					\#
+		\П
+			/
+				/
+					\К
+					\П
+					\С
+					\Т
+				/
+					\Ф
+					\
+					\Х
+					\Ц
+				/
+					\Ч
+					\Ш
+					\Щ
+					\Ъ
+		\У
+			/
+				/
+					\А
+					\И
+					\У
+					\Е
+				/
+					\Й
+					\
+					\О
+					\Ё
+				/
+					\Ы
+					\Э
+					\Ю
+					\Я
+		\Д
+			/
+				/
+					\Б
+					\В
+					\Г
+					\Д
+				/
+					\Ж
+					\
+					\З
+					\Л
+				/
+					\Ь
+					\М
+					\Н
+					\Р
+		\.
+			/
+				/
+					\!
+					\,
+					\;
+					\'
+				/
+					\.
+					\
+					\:
+					\•
+				/
+					\—
+					\?
+					\…
+					\%
+		\"
+			/
+				/
+					\«
+					\»
+					\{
+					\}
+				/
+					\(
+					\
+					\"
+					\)
+				/
+					\<
+					\>
+					\[
+					\]
+		\-
+			/
+				/
+					\\
+					\|
+					\/
+					\_
+				/
+					\≠
+					\
+					\=
+					\-
+				/
+					\^
+					\×
+					\*
+					\~
+		\@
+			/
+				/
+					\$
+					\₽
+					\€
+					\
+				/
+					\&
+					\
+					\✔
+					\§
+				/
+					\@
+					\`
+					\°
+					\
+		\W
+			/
+				/
+					\F
+					\H
+					\K
+					\
+				/
+					\P
+					\
+					\S
+					\
+				/
+					\T
+					\W
+					\X
+					\
+		\U
+			/
+				/
+					\
+					\
+					\A
+					\
+				/
+					\
+					\
+					\E
+					\I
+				/
+					\J
+					\Y
+					\U
+					\O
+		\Z
+			/
+				/
+					\B
+					\C
+					\D
+					\G
+				/
+					\L
+					\
+					\M
+					\N
+				/
+					\Q
+					\R
+					\V
+					\Z
+
+$jin_keyboard_row $mol_view
+	turn? null
+	input? null
+	layout /
+		\0
+		\П
+		\У
+		\Д
+	Cell* $jin_keyboard_cell
+		symbol <= cell_title* \?
+		turn? <=> cell_turn*? null
+		input? <=> cell_input*? null
+		upcase <= upcase true
+	sub /
+		<= Cell*0
+		<= Cell*1
+		<= Cell*2
+		<= Cell*3
+
+$jin_keyboard_cell $mol_view
+	turn? null
+	input? null
+	upcase true
+	event *
+		^
+		pointerdown? <=> start? null
+		pointerup? <=> end? null
+		pointercancel? <=> abort? null
+	sub /
+		<= title <= symbol \
+
+$jin_keyboard_demo $mol_example_small
+	title \Small onn screen keyboard
+	sub /
+		<= Content $mol_list rows /
+			<= Area $mol_string
+			<= keyboard $jin_keyboard
+				area <= Area
+	tags /
+		\keyboard
+		\touch
+		\screen
+	aspects /
+		\Widget/Control
+
+
 $mol_button_major $mol_button_minor
 	theme \$mol_theme_base
 

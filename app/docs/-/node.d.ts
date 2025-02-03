@@ -4856,6 +4856,157 @@ declare namespace $ {
 }
 
 declare namespace $ {
+
+	type $jin_keyboard_row__layout_jin_keyboard_1 = $mol_type_enforce<
+		ReturnType< $jin_keyboard['row_layout'] >
+		,
+		ReturnType< $jin_keyboard_row['layout'] >
+	>
+	type $jin_keyboard_row__turn_jin_keyboard_2 = $mol_type_enforce<
+		ReturnType< $jin_keyboard['row_turn'] >
+		,
+		ReturnType< $jin_keyboard_row['turn'] >
+	>
+	type $jin_keyboard_row__input_jin_keyboard_3 = $mol_type_enforce<
+		ReturnType< $jin_keyboard['row_input'] >
+		,
+		ReturnType< $jin_keyboard_row['input'] >
+	>
+	type $jin_keyboard_row__upcase_jin_keyboard_4 = $mol_type_enforce<
+		ReturnType< $jin_keyboard['upcase'] >
+		,
+		ReturnType< $jin_keyboard_row['upcase'] >
+	>
+	export class $jin_keyboard extends $mol_view {
+		row_layout( id: any): readonly(any)[]
+		row_turn( id: any, next?: any ): any
+		row_input( id: any, next?: any ): any
+		upcase( next?: boolean ): boolean
+		area( ): $mol_view
+		turn( next?: any ): any
+		input( next?: any ): any
+		Row( id: any): $jin_keyboard_row
+		sub( ): readonly(any)[]
+		layout( next?: string ): string
+		layouts( ): ({ 
+			'': readonly(any)[],
+			' ': readonly(any)[],
+			'0': readonly(any)[],
+			'П': readonly(any)[],
+			'У': readonly(any)[],
+			'Д': readonly(any)[],
+			'.': readonly(any)[],
+			'"': readonly(any)[],
+			'-': readonly(any)[],
+			'@': readonly(any)[],
+			'W': readonly(any)[],
+			'U': readonly(any)[],
+			'Z': readonly(any)[],
+		}) 
+	}
+	
+	type $jin_keyboard_cell__symbol_jin_keyboard_row_1 = $mol_type_enforce<
+		ReturnType< $jin_keyboard_row['cell_title'] >
+		,
+		ReturnType< $jin_keyboard_cell['symbol'] >
+	>
+	type $jin_keyboard_cell__turn_jin_keyboard_row_2 = $mol_type_enforce<
+		ReturnType< $jin_keyboard_row['cell_turn'] >
+		,
+		ReturnType< $jin_keyboard_cell['turn'] >
+	>
+	type $jin_keyboard_cell__input_jin_keyboard_row_3 = $mol_type_enforce<
+		ReturnType< $jin_keyboard_row['cell_input'] >
+		,
+		ReturnType< $jin_keyboard_cell['input'] >
+	>
+	type $jin_keyboard_cell__upcase_jin_keyboard_row_4 = $mol_type_enforce<
+		ReturnType< $jin_keyboard_row['upcase'] >
+		,
+		ReturnType< $jin_keyboard_cell['upcase'] >
+	>
+	export class $jin_keyboard_row extends $mol_view {
+		cell_title( id: any): string
+		cell_turn( id: any, next?: any ): any
+		cell_input( id: any, next?: any ): any
+		upcase( ): boolean
+		turn( next?: any ): any
+		input( next?: any ): any
+		layout( ): readonly(any)[]
+		Cell( id: any): $jin_keyboard_cell
+		sub( ): readonly(any)[]
+	}
+	
+	export class $jin_keyboard_cell extends $mol_view {
+		start( next?: any ): any
+		end( next?: any ): any
+		abort( next?: any ): any
+		symbol( ): string
+		title( ): ReturnType< $jin_keyboard_cell['symbol'] >
+		turn( next?: any ): any
+		input( next?: any ): any
+		upcase( ): boolean
+		event( ): ({ 
+			pointerdown( next?: ReturnType< $jin_keyboard_cell['start'] > ): ReturnType< $jin_keyboard_cell['start'] >,
+			pointerup( next?: ReturnType< $jin_keyboard_cell['end'] > ): ReturnType< $jin_keyboard_cell['end'] >,
+			pointercancel( next?: ReturnType< $jin_keyboard_cell['abort'] > ): ReturnType< $jin_keyboard_cell['abort'] >,
+		})  & ReturnType< $mol_view['event'] >
+		sub( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=keyboard.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $jin_keyboard extends $.$jin_keyboard {
+        row_layout(id: string): never;
+        row_turn(id: string, next?: CompositionEvent): void;
+        turn(next?: CompositionEvent): void;
+        row_input(id: string, next?: InputEvent): void;
+        input(next?: InputEvent): void;
+    }
+    class $jin_keyboard_row extends $.$jin_keyboard_row {
+        cell_title(id: string): any;
+        cell_turn(id: string, next?: InputEvent): void;
+        cell_input(id: string, next?: InputEvent): void;
+    }
+    class $jin_keyboard_cell extends $.$jin_keyboard_cell {
+        title(): string;
+        start(next?: PointerEvent): void;
+        end(next?: Event): void;
+        abort(next?: Event): void;
+    }
+}
+
+declare namespace $.$$ {
+}
+
+declare namespace $ {
+
+	type $jin_keyboard__area_jin_keyboard_demo_1 = $mol_type_enforce<
+		ReturnType< $jin_keyboard_demo['Area'] >
+		,
+		ReturnType< $jin_keyboard['area'] >
+	>
+	type $mol_list__rows_jin_keyboard_demo_2 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_list['rows'] >
+	>
+	export class $jin_keyboard_demo extends $mol_example_small {
+		Area( ): $mol_string
+		keyboard( ): $jin_keyboard
+		Content( ): $mol_list
+		title( ): string
+		sub( ): readonly(any)[]
+		tags( ): readonly(any)[]
+		aspects( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=demo.view.tree.d.ts.map
+declare namespace $ {
     type $mol_int62_string = `${string}_${string}`;
     function $mol_int62_string_ensure(str: unknown): `${string}_${string}` | null;
     type $mol_int62_pair = {

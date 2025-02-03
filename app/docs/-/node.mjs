@@ -11609,6 +11609,641 @@ var $;
 })($ || ($ = {}));
 
 ;
+	($.$jin_keyboard) = class $jin_keyboard extends ($.$mol_view) {
+		row_layout(id){
+			return [];
+		}
+		row_turn(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		row_input(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		upcase(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		area(){
+			const obj = new this.$.$mol_view();
+			return obj;
+		}
+		turn(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		input(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Row(id){
+			const obj = new this.$.$jin_keyboard_row();
+			(obj.layout) = () => ((this.row_layout(id)));
+			(obj.turn) = (next) => ((this.row_turn(id, next)));
+			(obj.input) = (next) => ((this.row_input(id, next)));
+			(obj.upcase) = () => ((this.upcase()));
+			return obj;
+		}
+		sub(){
+			return [
+				(this.Row("0")), 
+				(this.Row("1")), 
+				(this.Row("2"))
+			];
+		}
+		layout(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		layouts(){
+			return {
+				"": [
+					[
+						"0", 
+						"П", 
+						"У", 
+						"Д"
+					], 
+					[
+						".", 
+						" ", 
+						"\"", 
+						"-"
+					], 
+					[
+						"@", 
+						"W", 
+						"U", 
+						"Z"
+					]
+				], 
+				" ": [
+					[
+						"\u0001⏮", 
+						"\u0001🔠", 
+						"\u0001⏭", 
+						""
+					], 
+					[
+						"\u0001◀", 
+						" ", 
+						"\u0001▶", 
+						""
+					], 
+					[
+						"\u0001🤛", 
+						"\u0001🔻", 
+						"\u0001🤜", 
+						"", 
+						""
+					]
+				], 
+				"0": [
+					[
+						"0", 
+						"1", 
+						"2", 
+						"3"
+					], 
+					[
+						"4", 
+						"", 
+						"5", 
+						"6"
+					], 
+					[
+						"7", 
+						"8", 
+						"9", 
+						"#"
+					]
+				], 
+				"П": [
+					[
+						"К", 
+						"П", 
+						"С", 
+						"Т"
+					], 
+					[
+						"Ф", 
+						"", 
+						"Х", 
+						"Ц"
+					], 
+					[
+						"Ч", 
+						"Ш", 
+						"Щ", 
+						"Ъ"
+					]
+				], 
+				"У": [
+					[
+						"А", 
+						"И", 
+						"У", 
+						"Е"
+					], 
+					[
+						"Й", 
+						"", 
+						"О", 
+						"Ё"
+					], 
+					[
+						"Ы", 
+						"Э", 
+						"Ю", 
+						"Я"
+					]
+				], 
+				"Д": [
+					[
+						"Б", 
+						"В", 
+						"Г", 
+						"Д"
+					], 
+					[
+						"Ж", 
+						"", 
+						"З", 
+						"Л"
+					], 
+					[
+						"Ь", 
+						"М", 
+						"Н", 
+						"Р"
+					]
+				], 
+				".": [
+					[
+						"!", 
+						",", 
+						";", 
+						"'"
+					], 
+					[
+						".", 
+						"", 
+						":", 
+						"•"
+					], 
+					[
+						"—", 
+						"?", 
+						"…", 
+						"%"
+					]
+				], 
+				"\"": [
+					[
+						"«", 
+						"»", 
+						"{", 
+						"}"
+					], 
+					[
+						"(", 
+						"", 
+						"\"", 
+						")"
+					], 
+					[
+						"<", 
+						">", 
+						"[", 
+						"]"
+					]
+				], 
+				"-": [
+					[
+						"\\", 
+						"|", 
+						"/", 
+						"_"
+					], 
+					[
+						"≠", 
+						"", 
+						"=", 
+						"-"
+					], 
+					[
+						"^", 
+						"×", 
+						"*", 
+						"~"
+					]
+				], 
+				"@": [
+					[
+						"$", 
+						"₽", 
+						"€", 
+						""
+					], 
+					[
+						"&", 
+						"", 
+						"✔", 
+						"§"
+					], 
+					[
+						"@", 
+						"`", 
+						"°", 
+						""
+					]
+				], 
+				"W": [
+					[
+						"F", 
+						"H", 
+						"K", 
+						""
+					], 
+					[
+						"P", 
+						"", 
+						"S", 
+						""
+					], 
+					[
+						"T", 
+						"W", 
+						"X", 
+						""
+					]
+				], 
+				"U": [
+					[
+						"", 
+						"", 
+						"A", 
+						""
+					], 
+					[
+						"", 
+						"", 
+						"E", 
+						"I"
+					], 
+					[
+						"J", 
+						"Y", 
+						"U", 
+						"O"
+					]
+				], 
+				"Z": [
+					[
+						"B", 
+						"C", 
+						"D", 
+						"G"
+					], 
+					[
+						"L", 
+						"", 
+						"M", 
+						"N"
+					], 
+					[
+						"Q", 
+						"R", 
+						"V", 
+						"Z"
+					]
+				]
+			};
+		}
+	};
+	($mol_mem_key(($.$jin_keyboard.prototype), "row_turn"));
+	($mol_mem_key(($.$jin_keyboard.prototype), "row_input"));
+	($mol_mem(($.$jin_keyboard.prototype), "upcase"));
+	($mol_mem(($.$jin_keyboard.prototype), "area"));
+	($mol_mem(($.$jin_keyboard.prototype), "turn"));
+	($mol_mem(($.$jin_keyboard.prototype), "input"));
+	($mol_mem_key(($.$jin_keyboard.prototype), "Row"));
+	($mol_mem(($.$jin_keyboard.prototype), "layout"));
+	($.$jin_keyboard_row) = class $jin_keyboard_row extends ($.$mol_view) {
+		cell_title(id){
+			return "?";
+		}
+		cell_turn(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		cell_input(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		upcase(){
+			return true;
+		}
+		turn(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		input(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		layout(){
+			return [
+				"0", 
+				"П", 
+				"У", 
+				"Д"
+			];
+		}
+		Cell(id){
+			const obj = new this.$.$jin_keyboard_cell();
+			(obj.symbol) = () => ((this.cell_title(id)));
+			(obj.turn) = (next) => ((this.cell_turn(id, next)));
+			(obj.input) = (next) => ((this.cell_input(id, next)));
+			(obj.upcase) = () => ((this.upcase()));
+			return obj;
+		}
+		sub(){
+			return [
+				(this.Cell("0")), 
+				(this.Cell("1")), 
+				(this.Cell("2")), 
+				(this.Cell("3"))
+			];
+		}
+	};
+	($mol_mem_key(($.$jin_keyboard_row.prototype), "cell_turn"));
+	($mol_mem_key(($.$jin_keyboard_row.prototype), "cell_input"));
+	($mol_mem(($.$jin_keyboard_row.prototype), "turn"));
+	($mol_mem(($.$jin_keyboard_row.prototype), "input"));
+	($mol_mem_key(($.$jin_keyboard_row.prototype), "Cell"));
+	($.$jin_keyboard_cell) = class $jin_keyboard_cell extends ($.$mol_view) {
+		start(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		end(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		abort(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		symbol(){
+			return "";
+		}
+		title(){
+			return (this.symbol());
+		}
+		turn(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		input(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		upcase(){
+			return true;
+		}
+		event(){
+			return {
+				...(super.event()), 
+				"pointerdown": (next) => (this.start(next)), 
+				"pointerup": (next) => (this.end(next)), 
+				"pointercancel": (next) => (this.abort(next))
+			};
+		}
+		sub(){
+			return [(this.title())];
+		}
+	};
+	($mol_mem(($.$jin_keyboard_cell.prototype), "start"));
+	($mol_mem(($.$jin_keyboard_cell.prototype), "end"));
+	($mol_mem(($.$jin_keyboard_cell.prototype), "abort"));
+	($mol_mem(($.$jin_keyboard_cell.prototype), "turn"));
+	($mol_mem(($.$jin_keyboard_cell.prototype), "input"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $jin_keyboard extends $.$jin_keyboard {
+            row_layout(id) {
+                const layouts = this.layouts();
+                const layout = layouts[this.layout()] ?? layouts[''];
+                return layout[Number(id)];
+            }
+            row_turn(id, next) {
+                if (!next)
+                    return;
+                this.turn(next);
+            }
+            turn(next) {
+                if (!next)
+                    return;
+                const el = this.area().dom_node();
+                el.focus();
+                this.layout(next.data);
+            }
+            row_input(id, next) {
+                if (!next)
+                    return;
+                this.input(next);
+            }
+            input(next) {
+                if (!next)
+                    return;
+                let val = next.data;
+                const el = this.area().dom_node();
+                let sel_start = el.selectionStart ?? 0;
+                let sel_end = el.selectionEnd ?? 0;
+                let before = el.value.slice(0, sel_start);
+                let sel = el.value.slice(sel_start, sel_end);
+                let after = el.value.slice(sel_end);
+                switch (val) {
+                    case '⏮':
+                        el.selectionEnd = 0;
+                        this.layout('');
+                        return;
+                    case '🔠':
+                        this.upcase(true);
+                        this.layout('');
+                        return;
+                    case '⏭':
+                        el.selectionStart = 9999;
+                        this.layout('');
+                        return;
+                    case '◀':
+                        el.selectionEnd = sel_start - 1;
+                        this.layout('');
+                        return;
+                    case '▶':
+                        el.selectionStart = sel_end + 1;
+                        this.layout('');
+                        return;
+                    case '🤛':
+                        if (!sel)
+                            before = before.slice(0, -1);
+                        val = '';
+                        break;
+                    case '🔻':
+                        val = '\n';
+                        break;
+                    case '🤜':
+                        if (!sel)
+                            after = after.slice(1);
+                        val = '';
+                        break;
+                }
+                if (!this.upcase())
+                    val = val.toLowerCase();
+                el.value = before + val + after;
+                el.selectionStart = el.selectionEnd = before.length + val.length;
+                el.dispatchEvent(next);
+                this.layout('');
+                this.upcase(false);
+            }
+        }
+        $$.$jin_keyboard = $jin_keyboard;
+        class $jin_keyboard_row extends $.$jin_keyboard_row {
+            cell_title(id) {
+                return this.layout()[Number(id)];
+            }
+            cell_turn(id, next) {
+                if (!next)
+                    return;
+                this.turn(next);
+            }
+            cell_input(id, next) {
+                if (!next)
+                    return;
+                this.input(next);
+            }
+        }
+        $$.$jin_keyboard_row = $jin_keyboard_row;
+        class $jin_keyboard_cell extends $.$jin_keyboard_cell {
+            title() {
+                let title = super.title().replaceAll('', '');
+                if (!this.upcase())
+                    title = title.toLowerCase();
+                return title;
+            }
+            start(next) {
+                if (!next)
+                    return;
+                next.preventDefault();
+                this.dom_node().releasePointerCapture(next.pointerId);
+                this.turn(new CompositionEvent('compositionstart', { data: this.symbol() }));
+            }
+            end(next) {
+                if (!next)
+                    return;
+                this.input(new InputEvent('input', { data: this.symbol() }));
+            }
+            abort(next) {
+                if (!next)
+                    return;
+                this.input(new InputEvent('input', { data: '' }));
+            }
+        }
+        $$.$jin_keyboard_cell = $jin_keyboard_cell;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($jin_keyboard, {
+            flex: {
+                direction: 'column',
+            },
+        });
+        $mol_style_define($jin_keyboard_row, {});
+        $mol_style_define($jin_keyboard_cell, {
+            cursor: 'pointer',
+            touchAction: 'none',
+            ':hover': {
+                background: {
+                    color: $mol_theme.hover,
+                },
+            },
+            align: {
+                items: 'center',
+            },
+            justify: {
+                content: 'center',
+            },
+            box: {
+                shadow: [[0, 0, 0, `1px`, $mol_theme.line]],
+            },
+            width: `2.5rem`,
+            height: `2.5rem`,
+            border: {
+                radius: $mol_gap.round,
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$jin_keyboard_demo) = class $jin_keyboard_demo extends ($.$mol_example_small) {
+		Area(){
+			const obj = new this.$.$mol_string();
+			return obj;
+		}
+		keyboard(){
+			const obj = new this.$.$jin_keyboard();
+			(obj.area) = () => ((this.Area()));
+			return obj;
+		}
+		Content(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ([(this.Area()), (this.keyboard())]);
+			return obj;
+		}
+		title(){
+			return "Small onn screen keyboard";
+		}
+		sub(){
+			return [(this.Content())];
+		}
+		tags(){
+			return [
+				"keyboard", 
+				"touch", 
+				"screen"
+			];
+		}
+		aspects(){
+			return ["Widget/Control"];
+		}
+	};
+	($mol_mem(($.$jin_keyboard_demo.prototype), "Area"));
+	($mol_mem(($.$jin_keyboard_demo.prototype), "keyboard"));
+	($mol_mem(($.$jin_keyboard_demo.prototype), "Content"));
+
+
+;
+"use strict";
+
+;
 "use strict";
 
 ;
