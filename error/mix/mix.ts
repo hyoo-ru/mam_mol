@@ -1,5 +1,18 @@
 namespace $ {
 
+	function cause_serialize(cause: unknown) {
+		return JSON.stringify( cause, null, '  ' )
+			.replace(/\(/,'<')
+			.replace(/\)/,' >')
+	}
+
+	function frame_normalize(frame: string | Object) {
+		return ( typeof frame  === 'string' ? frame : cause_serialize(frame) )
+			.trim()
+			.replace( /at /gm, '   at ' )
+			.replace( /^(?!    +at )(.*)/gm, '    at | $1 (#)' )
+	}
+
 	export class $mol_error_mix< Cause extends {} = {} > extends AggregateError {
 		
 		name = $$.$mol_func_name( this.constructor ).replace( /^\$/, '' ) + '_Error'
@@ -7,21 +20,28 @@ namespace $ {
 		constructor(
 			message: string,
 			readonly cause = {} as Cause,
-			... errors: Error[]
+			... errors: readonly Error[]
 		) {
 			
 			super( errors, message, { cause } )
 			
-			const stack_get = Object.getOwnPropertyDescriptor( this, 'stack' )?.get ?? ( ()=> super.stack )
+			const desc = Object.getOwnPropertyDescriptor( this, 'stack' )
+			const stack_get = ()=> desc?.get?.() ?? super.stack ?? desc?.value ?? this.message
 			
 			Object.defineProperty( this, 'stack', {
-				get: ()=> ( stack_get.call( this ) ?? this.message ) + '\n' + [ JSON.stringify( this.cause, null, '  ' ) ?? 'no cause', ... this.errors.map( e => e.stack ) ].map(
-					e => e.trim()
-						.replace( /at /gm, '   at ' )
-						.replace( /^(?!    +at )(.*)/gm, '    at | $1 (#)' )
-				).join('\n')
+				get: ()=> stack_get() + '\n' + [
+						this.cause ?? 'no cause',
+						... this.errors.flatMap( e => [
+							e.stack,
+							... e instanceof $mol_error_mix || ! e.cause ? [] : [ e.cause ]
+						] )
+					].map(frame_normalize).join('\n')
 			} )
-			
+
+			// в nodejs, что б не дублировалось cause в консоли
+			Object.defineProperty(this, 'cause', {
+				get: () => cause
+			})	
 		}
 
 		static [ Symbol.toPrimitive ]() {

@@ -927,7 +927,9 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		bundle_test_js([ path , exclude , bundle ] : [ path : string , exclude : readonly string[] , bundle : string ]) {
+		bundle_test_js(
+			[ path , exclude , bundle ] : [ path : string , exclude : readonly string[] , bundle : string ]
+		) {
 			const start = this.now()
 			const pack = $mol_file.absolute( path )
 			
@@ -951,7 +953,7 @@ namespace $ {
 				concater.add( 'function require'+'( path ){ return $node[ path ] }' )
 			}
 
-			if( sources.length === 0 ) return []
+			if( sources.length === 0 ) return null
 			
 			const errors = [] as Error[]
 
@@ -979,25 +981,35 @@ namespace $ {
 				$mol_fail_hidden( error )
 			}
 
-			return [ target, targetMap ]
+			return { js: target, map: targetMap }
 		}
 
 		@ $mol_mem_key
 		bundleAndRunTestJS( { path , exclude , bundle } : { path : string , exclude : readonly string[] , bundle : string } ) : $mol_file[] {
-			const [ target , targetMap ] = this.bundle_test_js([ path, exclude, bundle ])
+			const target = this.bundle_test_js([ path, exclude, bundle ])
+			if (! target ) {
+				this.$.$mol_log3_fail({
+					place: `${this}.bundleAndRunTestJS` ,
+					message: 'No sources found' ,
+					hint: 'Wrong path?', 
+					path ,
+				})
+				return []
+			}
+
 			if( bundle === 'node' ) {
 				const dir = this.root().path()
 
 				this.$.$mol_file.unwatched(() =>
 					this.$.$mol_run.spawn( {
-						command: ['node', '--enable-source-maps', '--trace-uncaught', target.relate( this.root() ) ], 
+						command: ['node', '--enable-source-maps', '--trace-uncaught', target.js.relate( this.root() ) ], 
 						dir
 					} ),
 					dir
 				)
 			}
 			
-			return [ target , targetMap ]
+			return [ target.js , target.map ]
 		}
 		
 		@ $mol_mem_key
