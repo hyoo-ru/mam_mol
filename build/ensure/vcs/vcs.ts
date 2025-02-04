@@ -70,6 +70,8 @@ namespace $ {
 
 		@ $mol_mem_key
 		ensure( path : string ) {
+			if (this.$.$mol_env()['MAM_BUILD_ENSURE_VCS_DISABLE']) return false;
+
 			const mod = $mol_file.absolute( path )
 
 			if( mod.exists()) {

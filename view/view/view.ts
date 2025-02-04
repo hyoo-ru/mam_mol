@@ -196,7 +196,7 @@ namespace $ {
 			
 			for( const el of sub ) {
 				if( el && typeof el === 'object' && 'dom_final' in el ) {
-					el['dom_final']()
+					el.dom_final();
 				}
 			}
 			
