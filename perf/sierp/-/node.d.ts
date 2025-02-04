@@ -497,7 +497,7 @@ declare namespace $ {
     class $mol_error_mix<Cause extends {} = {}> extends AggregateError {
         readonly cause: Cause;
         name: string;
-        constructor(message: string, cause?: Cause, ...errors: Error[]);
+        constructor(message: string, cause?: Cause, ...errors: readonly Error[]);
         static [Symbol.toPrimitive](): string;
         static toString(): string;
         static make(...params: ConstructorParameters<typeof $mol_error_mix>): $mol_error_mix<{}>;

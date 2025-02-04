@@ -2206,17 +2206,36 @@ require = (req => Object.assign(function require(name) {
 "use strict";
 var $;
 (function ($) {
+    function cause_serialize(cause) {
+        return JSON.stringify(cause, null, '  ')
+            .replace(/\(/, '<')
+            .replace(/\)/, ' >');
+    }
+    function frame_normalize(frame) {
+        return (typeof frame === 'string' ? frame : cause_serialize(frame))
+            .trim()
+            .replace(/at /gm, '   at ')
+            .replace(/^(?!    +at )(.*)/gm, '    at | $1 (#)');
+    }
     class $mol_error_mix extends AggregateError {
         cause;
         name = $$.$mol_func_name(this.constructor).replace(/^\$/, '') + '_Error';
         constructor(message, cause = {}, ...errors) {
             super(errors, message, { cause });
             this.cause = cause;
-            const stack_get = Object.getOwnPropertyDescriptor(this, 'stack')?.get ?? (() => super.stack);
+            const desc = Object.getOwnPropertyDescriptor(this, 'stack');
+            const stack_get = () => desc?.get?.() ?? super.stack ?? desc?.value ?? this.message;
             Object.defineProperty(this, 'stack', {
-                get: () => (stack_get.call(this) ?? this.message) + '\n' + [JSON.stringify(this.cause, null, '  ') ?? 'no cause', ...this.errors.map(e => e.stack)].map(e => e.trim()
-                    .replace(/at /gm, '   at ')
-                    .replace(/^(?!    +at )(.*)/gm, '    at | $1 (#)')).join('\n')
+                get: () => stack_get() + '\n' + [
+                    this.cause ?? 'no cause',
+                    ...this.errors.flatMap(e => [
+                        e.stack,
+                        ...e instanceof $mol_error_mix || !e.cause ? [] : [e.cause]
+                    ])
+                ].map(frame_normalize).join('\n')
+            });
+            Object.defineProperty(this, 'cause', {
+                get: () => cause
             });
         }
         static [Symbol.toPrimitive]() {
@@ -5569,16 +5588,24 @@ var $;
         }
         submodule_dirs(opts) {
             const dir = this.$.$mol_file.absolute(opts.dir);
-            const output = this.$.$mol_run.spawn({
-                command: ['git', 'submodule', 'status', ...(opts.recursive ? ['--recursive'] : [])],
-                dir: dir.path(),
-            }).stdout.toString().trim();
-            const dirs = output
-                .split('\n')
-                .map(str => str.match(/^\s*[^ ]+\s+([^ ]*).*/)?.[1]?.trim())
-                .filter($mol_guard_defined)
-                .map(subdir => dir.resolve(subdir));
-            return dirs;
+            try {
+                const output = this.$.$mol_run.spawn({
+                    command: ['git', 'submodule', 'status', ...(opts.recursive ? ['--recursive'] : [])],
+                    dir: dir.path(),
+                }).stdout.toString().trim();
+                const dirs = output
+                    .split('\n')
+                    .map(str => str.match(/^\s*[^ ]+\s+([^ ]*).*/)?.[1]?.trim())
+                    .filter($mol_guard_defined)
+                    .map(subdir => dir.resolve(subdir));
+                return dirs;
+            }
+            catch (e) {
+                if ($mol_promise_like(e))
+                    $mol_fail_hidden(e);
+                this.$.$mol_fail_log(e);
+                return [];
+            }
         }
         root_is_submodule() {
             const root = this.root();
@@ -6379,7 +6406,7 @@ var $;
                 concater.add('function require' + '( path ){ return $node[ path ] }');
             }
             if (sources.length === 0)
-                return [];
+                return null;
             const errors = [];
             for (const src of sourcesTest) {
                 if (bundle === 'node' && /node_modules\//.test(src.relate(root))) {
@@ -6402,18 +6429,27 @@ var $;
                 const error = new $mol_error_mix(`Build fail ${pack.relate()}\n${messages}`, {}, ...errors);
                 $mol_fail_hidden(error);
             }
-            return [target, targetMap];
+            return { js: target, map: targetMap };
         }
         bundleAndRunTestJS({ path, exclude, bundle }) {
-            const [target, targetMap] = this.bundle_test_js([path, exclude, bundle]);
+            const target = this.bundle_test_js([path, exclude, bundle]);
+            if (!target) {
+                this.$.$mol_log3_fail({
+                    place: `${this}.bundleAndRunTestJS`,
+                    message: 'No sources found',
+                    hint: 'Wrong path?',
+                    path,
+                });
+                return [];
+            }
             if (bundle === 'node') {
                 const dir = this.root().path();
                 this.$.$mol_file.unwatched(() => this.$.$mol_run.spawn({
-                    command: ['node', '--enable-source-maps', '--trace-uncaught', target.relate(this.root())],
+                    command: ['node', '--enable-source-maps', '--trace-uncaught', target.js.relate(this.root())],
                     dir
                 }), dir);
             }
-            return [target, targetMap];
+            return [target.js, target.map];
         }
         bundleTestHtml(path) {
             const start = this.now();

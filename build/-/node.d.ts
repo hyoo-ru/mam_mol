@@ -544,7 +544,7 @@ declare namespace $ {
     class $mol_error_mix<Cause extends {} = {}> extends AggregateError {
         readonly cause: Cause;
         name: string;
-        constructor(message: string, cause?: Cause, ...errors: Error[]);
+        constructor(message: string, cause?: Cause, ...errors: readonly Error[]);
         static [Symbol.toPrimitive](): string;
         static toString(): string;
         static make(...params: ConstructorParameters<typeof $mol_error_mix>): $mol_error_mix<{}>;
@@ -1309,7 +1309,10 @@ declare namespace $ {
             exclude: readonly string[];
             bundle: string;
         }): $mol_file[];
-        bundle_test_js([path, exclude, bundle]: [path: string, exclude: readonly string[], bundle: string]): $mol_file[];
+        bundle_test_js([path, exclude, bundle]: [path: string, exclude: readonly string[], bundle: string]): {
+            js: $mol_file;
+            map: $mol_file;
+        } | null;
         bundleAndRunTestJS({ path, exclude, bundle }: {
             path: string;
             exclude: readonly string[];

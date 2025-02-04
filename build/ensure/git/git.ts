@@ -63,18 +63,24 @@ namespace $ {
 		protected submodule_dirs(opts: { dir: string, recursive?: boolean }) {
 			const dir = this.$.$mol_file.absolute( opts.dir )
 
-			const output = this.$.$mol_run.spawn({
-				command: [ 'git', 'submodule', 'status', ...( opts.recursive ? ['--recursive'] : [] ) ],
-				dir: dir.path(),
-			}).stdout.toString().trim()
-
-			const dirs = output
-				.split('\n')
-				.map( str => str.match( /^\s*[^ ]+\s+([^ ]*).*/ )?.[1]?.trim() )
-				.filter($mol_guard_defined)
-				.map(subdir => dir.resolve(subdir))
-
-			return dirs
+			try {
+				const output = this.$.$mol_run.spawn({
+					command: [ 'git', 'submodule', 'status', ...( opts.recursive ? ['--recursive'] : [] ) ],
+					dir: dir.path(),
+				}).stdout.toString().trim()
+	
+				const dirs = output
+					.split('\n')
+					.map( str => str.match( /^\s*[^ ]+\s+([^ ]*).*/ )?.[1]?.trim() )
+					.filter($mol_guard_defined)
+					.map(subdir => dir.resolve(subdir))
+	
+				return dirs
+			} catch (e) {
+				if ($mol_promise_like(e)) $mol_fail_hidden(e)
+				this.$.$mol_fail_log(e)
+				return []
+			}
 		}
 
 		@ $mol_mem
