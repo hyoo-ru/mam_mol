@@ -117,26 +117,18 @@ namespace $ {
 			return this.is_git(path) || this.submodules().has(path)
 		}
 
-		@ $mol_mem_key
-		protected branch_remote(dir: string) {
-			const repo = this.repo(dir)
-			if (! repo) return 'master'
-
-			const res = this.$.$mol_run.spawn( { command: ['git', 'remote', 'show', repo.url ],  dir } )
-
-			return res.stdout.toString().match( /HEAD branch: (.*?)\n/ )?.[1] ?? 'master'
-		}
-
 		protected override init_existing(dir: string) {
 			const repo = this.repo(dir)
-			if (! repo) throw new Error(`"${dir}" not a repo`)
+			if (! repo) return null
+
 			const { url, branch } = repo
-			this.$.$mol_run.spawn( { command: ['git', 'init'], dir } )
 
-			const branch_norm = branch ?? this.branch_remote(dir)
-
-			this.$.$mol_run.spawn( { command: [ 'git', 'remote', 'add', '--track', branch_norm, 'origin' , url ], dir } )
-			this.$.$mol_run.spawn( { command: [ 'git', 'pull', 'origin', branch_norm ], dir } )
+			this.$.$mol_log3_warn({
+				place: `${this}.init_existing()`,
+				message: 'directory exsists in meta.tree, but not an a git repository',
+				dir,
+				hint: `git pull ${url} ${branch ?? 'master'}`,
+			})
 
 			return null
 		}
