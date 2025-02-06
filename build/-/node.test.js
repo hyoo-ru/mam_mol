@@ -5635,22 +5635,17 @@ var $;
         inited(path) {
             return this.is_git(path) || this.submodules().has(path);
         }
-        branch_remote(dir) {
-            const repo = this.repo(dir);
-            if (!repo)
-                return 'master';
-            const res = this.$.$mol_run.spawn({ command: ['git', 'remote', 'show', repo.url], dir });
-            return res.stdout.toString().match(/HEAD branch: (.*?)\n/)?.[1] ?? 'master';
-        }
         init_existing(dir) {
             const repo = this.repo(dir);
             if (!repo)
-                throw new Error(`"${dir}" not a repo`);
+                return null;
             const { url, branch } = repo;
-            this.$.$mol_run.spawn({ command: ['git', 'init'], dir });
-            const branch_norm = branch ?? this.branch_remote(dir);
-            this.$.$mol_run.spawn({ command: ['git', 'remote', 'add', '--track', branch_norm, 'origin', url], dir });
-            this.$.$mol_run.spawn({ command: ['git', 'pull', 'origin', branch_norm], dir });
+            this.$.$mol_log3_warn({
+                place: `${this}.init_existing()`,
+                message: 'directory exsists in meta.tree, but not an a git repository',
+                dir,
+                hint: `git pull ${url} ${branch ?? 'master'}`,
+            });
             return null;
         }
         init(path) {
@@ -5682,9 +5677,6 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_build_ensure_git.prototype, "submodules", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_build_ensure_git.prototype, "branch_remote", null);
     $.$mol_build_ensure_git = $mol_build_ensure_git;
 })($ || ($ = {}));
 

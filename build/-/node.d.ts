@@ -1189,7 +1189,6 @@ declare namespace $ {
         protected root_is_submodule(): boolean;
         protected submodules(): Set<string>;
         protected inited(path: string): boolean;
-        protected branch_remote(dir: string): string;
         protected init_existing(dir: string): null;
         protected init(path: string): null;
     }
