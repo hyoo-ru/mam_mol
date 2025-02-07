@@ -50,6 +50,8 @@ namespace $.$$ {
 				return [ min2 , max2 ]
 			}
 
+			const default_minimal = this.item_minimal_height()
+
 			// jumps when fully over limits
 			if( anchoring && (( bottom < limit_top )||( top > limit_bottom )) ) {
 				
@@ -58,7 +60,7 @@ namespace $.$$ {
 				
 				while( min < ( kids.length - 1 ) ) {
 					
-					const height = kids[ min ].minimal_height()
+					const height = default_minimal || kids[ min ].minimal_height()
 					if( top + height >= limit_top ) break
 					
 					top += height
@@ -90,12 +92,12 @@ namespace $.$$ {
 			// extend min to cover top limit
 			while( anchoring && (( top2 > limit_top )&&( min2 > 0 )) ) {
 				-- min2
-				top2 -= kids[ min2 ].minimal_height()
+				top2 -= default_minimal || kids[ min2 ].minimal_height()
 			}
 			
 			// extend max to cover bottom limit
 			while( bottom2 < limit_bottom && max2 < kids.length ) {
-				bottom2 += kids[ max2 ].minimal_height()
+				bottom2 += default_minimal || kids[ max2 ].minimal_height()
 				++ max2
 			}
 			
