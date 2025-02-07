@@ -1017,6 +1017,7 @@ namespace $ {
 			
 			const start = this.now()
 			
+			this.modEnsure(path)
 			const pack = $mol_file.absolute( path )
 			const source = pack.resolve( 'index.html' )
 			const target = pack.resolve( `-/test.html` )
