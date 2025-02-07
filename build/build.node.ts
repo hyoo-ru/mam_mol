@@ -688,13 +688,13 @@ namespace $ {
 		@ $mol_action
 		bundleAll( path: string ) {
 
+			this.bundle([ path , 'index.html' ])
+			this.bundle([ path , 'test.html' ])
+			
 			this.bundleAllWeb(path)
 			this.bundleAllWebAudit(path)
 			this.bundleAllNode(path)
 			this.bundleAllNodeAudit(path)
-			
-			this.bundle([ path , 'index.html' ])
-			this.bundle([ path , 'test.html' ])
 			
 			this.bundle([ path , 'package.json' ])
 			this.bundle([ path , 'readme.md' ])
@@ -1017,6 +1017,7 @@ namespace $ {
 			
 			const start = this.now()
 			
+			this.modEnsure(path)
 			const pack = $mol_file.absolute( path )
 			const source = pack.resolve( 'index.html' )
 			const target = pack.resolve( `-/test.html` )
