@@ -2,7 +2,7 @@ namespace $.$$ {
 	
 	const { rem } = $mol_style_unit
 
-	$mol_style_define( $mol_text_code_row, {
+	$mol_style_define( $mol_text_code_line, {
 
 		display: 'block',
 		position: 'relative',

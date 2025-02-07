@@ -1,5 +1,10 @@
 namespace $ {
 
+	function is_identifier( tree: $mol_tree2 ) {
+		if( tree.type ) return false
+		return /^[a-z_$][a-z_$0-9]*$/i.test( tree.text() )
+	}
+
 	export function $mol_tree2_js_to_text( this: $, js: $mol_tree2 ) {
 
 		function sequence( open?: string, separator?: string, close?: string ) {
@@ -123,21 +128,19 @@ namespace $ {
 			
 			'[]': ( input, belt )=> {
 				const first = input.kids[0]
-				if( first.type ) return sequence( '[', '', ']' )( input, belt )
+				if( !is_identifier( first ) ) return sequence( '[', '', ']' )( input, belt )
 				else return [ input.data( '.' + first.text() ) ]
 			},
 			
 			'?.[]': ( input, belt )=> {
 				const first = input.kids[0]
-				if( first.type ) return sequence( '?.[', '', ']' )( input, belt )
+				if( !is_identifier( first ) ) return sequence( '?.[', '', ']' )( input, belt )
 				else return [ input.data( '?.' + first.text() ) ]
 			},
 			
-			':': ( input, belt )=> {
-				const first = input.kids[0]
-				if( first.type ) return duplet( '[', ']: ' )( input, belt )
-				else return duplet( '', ': ' )( input, belt )
-			},
+			':': ( input, belt )=> input.kids[0].type
+				? duplet( '[', ']: ' )( input, belt )
+				: duplet( '', ': ' )( input, belt ),
 			
 			'let': duplet( 'let ', ' = ' ),
 			'const': duplet( 'const ', ' = ' ),
@@ -174,7 +177,7 @@ namespace $ {
 
 			'.': ( input, belt )=> {
 				const first = input.kids[0]
-				if( first.type ) return triplet( '[', ']' )( input, belt )
+				if( !is_identifier( first ) ) return triplet( '[', ']' )( input, belt )
 				else return [
 					input.data( first.text() ),
 					... input.list( input.kids.slice(1) ).hack( belt ),
@@ -231,7 +234,7 @@ namespace $ {
 				]
 				
 				// number
-				if( $mol_view_tree2_value_number(input.type) ) return [
+				if( $mol_tree2_js_is_number(input.type) ) return [
 					input.data( input.type )
 				]
 

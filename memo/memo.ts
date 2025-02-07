@@ -6,7 +6,7 @@ namespace $ {
 
 			const store = new WeakMap< This , Value >()
 
-			return function( this : This , next? : Value ) {
+			const fun = function( this : This , next? : Value ) {
 
 				if( next === undefined && store.has( this ) ) return store.get( this )
 				
@@ -18,6 +18,9 @@ namespace $ {
 
 			}
 
+			Reflect.defineProperty( fun , 'name' , { value : task.name + ' ' } )
+
+			return fun
 		}
 		
 	}

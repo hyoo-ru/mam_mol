@@ -1,6 +1,9 @@
 $mol_follower $mol_ghost
 	Anchor $mol_view
-	offset /
+	align /number
+		-.5
+		-.5
+	offset /number
 		0
 		0
 	style *

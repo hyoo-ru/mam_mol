@@ -60,7 +60,7 @@ namespace $ {
 		@ $mol_mem
 		socket() {
 
-			const socket = new $node.ws.WebSocket.Server({
+			const socket = new $node.ws.WebSocketServer({
 				server : this.http() ,
 				// perMessageDeflate: {
 				// 	zlibDeflateOptions: {

@@ -1,6 +1,8 @@
 namespace $ {
 	
 	export const $mol_key_store = new WeakMap< object, string >()
+	
+	const TypedArray = Object.getPrototypeOf( Uint8Array )
 
 	/** Returns string key for any value. */
 	export function $mol_key< Value >( value : Value ) : string {
@@ -24,7 +26,8 @@ namespace $ {
 			
 			if( 'toJSON' in value ) return value
 			if( value instanceof RegExp ) return value.toString()
-			if( value instanceof Uint8Array ) return [ ... value ]
+			// if( value instanceof DataView ) return [ ... new Uint8Array( value.buffer ) ]
+			if( value instanceof TypedArray ) return [ ... value as any ]
 			
 			let key = $mol_key_store.get( value )
 			if( key ) return key

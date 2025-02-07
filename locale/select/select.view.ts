@@ -6,7 +6,7 @@ namespace $.$$ {
 		}
 		
 		dictionary() {
-			return this.$.$hyoo_lingua_langs
+			return this.$.$mol_lang_iso639
 		}
 		
 	}

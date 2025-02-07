@@ -66,22 +66,24 @@ namespace $ {
 
 		@ $mol_mem
 		override active(next?: boolean) {
+			this.node()
+			const start_at = this.start_at()
+			this.stop_at()
+
 			if (next) {
 				this.context().active(true)
 				this.start_at(0)
 				this.stop_at(-1)
+				return true
 			}
 
 			if (next === false) {
 				this.start_at(-1)
 				this.stop_at(0)
+				return false
 			}
 
-			this.node()
-			this.start_at()
-			this.stop_at()
-
-			return this.start_at() !== -1
+			return start_at !== -1
 		}
 
 		@ $mol_action

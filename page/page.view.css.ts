@@ -1,7 +1,7 @@
 namespace $.$$ {
 
 	const { per , rem } = $mol_style_unit
-	const { hsla } = $mol_style_func
+	const { hsla, blur } = $mol_style_func
 
 	$mol_style_define( $mol_page , {
 
@@ -16,6 +16,7 @@ namespace $.$$ {
 		maxHeight: per(100) ,
 		boxSizing: 'border-box' ,
 		color: $mol_theme.text ,
+		// backdropFilter: blur( `3px` ), enforces layering
 		// zIndex: 0 ,
 		
 		':focus': {
@@ -38,9 +39,21 @@ namespace $.$$ {
 				radius: $mol_gap.round,
 			},
 			box: {
-				shadow: [[ 0, `0.5rem`, `0.5rem`, `-0.5rem`, hsla( 0, 0, 0, .25 ) ]],
+				shadow: [
+					[ 0, `-0.5rem`, `0.5rem`, `-0.5rem`, hsla( 0, 0, 0, .25 ) ],
+					[ 0, `0.5rem`, `0.5rem`, `-0.5rem`, hsla( 0, 0, 0, .25 ) ],
+				],
 			},
 			zIndex: 2,
+
+			'@media': {
+				'print': {
+					box: {
+						shadow: [[ 0, `1px`, 0, 0, hsla( 0, 0, 0, .25 ) ]],
+					},
+				},
+			},
+
 		},
 
 		Title: {
@@ -69,13 +82,19 @@ namespace $.$$ {
 			
 			flex: {
 				basis: 'auto',
-				grow: 1000,
+				grow: 0,
 				shrink: 1,
 			},
 			display: 'flex',
 			justifyContent: 'flex-end',
 			alignItems: 'flex-start',
 			flexWrap: 'wrap',
+
+			'@media': {
+				'print': {
+					display: 'none',
+				},
+			},
 
 		},
 
@@ -111,7 +130,10 @@ namespace $.$$ {
 				radius: $mol_gap.round,
 			},
 			box: {
-				shadow: [[ 0, `-0.5rem`, `0.5rem`, `-0.5rem`, hsla( 0, 0, 0, .25 ) ]],
+				shadow: [
+					[ 0, `-0.5rem`, `0.5rem`, `-0.5rem`, hsla( 0, 0, 0, .25 ) ],
+					[ 0, `0.5rem`, `0.5rem`, `-0.5rem`, hsla( 0, 0, 0, .25 ) ],
+				],
 			},
 			zIndex: 1,
 			padding: $mol_gap.block ,

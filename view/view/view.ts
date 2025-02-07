@@ -490,9 +490,9 @@ namespace $ {
 			// 	this.dom_node().scrollIntoView({ block: 'start', inline: 'nearest' })
 			// } )
 			
-			// new this.$.$mol_after_timeout( 1000, ()=> {
+			new this.$.$mol_after_timeout( 0, ()=> {
 				this.focused( true )
-			// } )
+			} )
 			
 		}
 

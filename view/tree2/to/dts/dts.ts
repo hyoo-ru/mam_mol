@@ -70,7 +70,7 @@ namespace $ {
 
 	function primitive_type(input: $mol_tree2) {
 		let type = 'string'
-		if (input.type && $mol_view_tree2_value_number(input.type)) type = 'number'
+		if (input.type && $mol_tree2_js_is_number(input.type)) type = 'number'
 
 		if (input.type === 'true' || input.type === 'false') type = 'boolean'
 
@@ -178,7 +178,7 @@ namespace $ {
 							if (prop_parts.key) {
 								types.push( type_enforce.call(
 									this,
-									method.data(`${method.type}_${klass_name}_${++assert_count}`),
+									method.data(`${method.type}__${klass_name}_${++assert_count}`),
 									parameters.call(this, main, prop, 0),
 									parameters.call(this, second_main, second_key, 0),
 								) )
@@ -187,7 +187,7 @@ namespace $ {
 							if (prop_parts.next) {
 								types.push( type_enforce.call(
 									this,
-									method.data(`${method.type}_${klass_name}_${++assert_count}`),
+									method.data(`${method.type}__${klass_name}_${++assert_count}`),
 									parameters.call(this, main, prop, prop_parts.key ? 1 : 0),
 									parameters.call(this, second_main, second_key, (left_parts.next ? left_parts : right_parts).key ? 1 : 0),
 								) )
@@ -281,7 +281,7 @@ namespace $ {
 									types.push(
 										type_enforce.call(
 											this,
-											input.data(`${ klass.type }_${prop.type.replace(/[\?\*]*/g, '')}_${++assert_count}`),
+											input.data(`${ klass.type }_${prop.type.replace(/[\?\*]*/g, '')}__${++assert_count}`),
 											result,
 											array_type
 										)
@@ -305,7 +305,7 @@ namespace $ {
 									types.push(
 										type_enforce.call(
 											this,
-											first.data(`${input.type}_${klass_name}_${++assert_count}`),
+											first.data(`${input.type}__${klass_name}_${++assert_count}`),
 											[
 												first.data('[ '),
 												...args,

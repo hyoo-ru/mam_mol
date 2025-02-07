@@ -73,6 +73,8 @@ namespace $ {
 			this.href( this.link( next ) )
 		}
 		
+		static commit() {}
+		
 		constructor( public prefix = '' ) {
 			super()
 		}

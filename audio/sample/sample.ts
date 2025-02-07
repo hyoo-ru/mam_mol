@@ -56,7 +56,7 @@ namespace $ {
 
 		@ $mol_mem
 		override active(next?: boolean) {
-
+			const prev = super.active(next)
 			if (this.node_started()) {
 				if (next) this.context().active(true)
 				this.rate(next ? null : 0)
@@ -64,7 +64,7 @@ namespace $ {
 				return next ?? false
 			}
 
-			return super.active(next)
+			return prev
 		}
 
 		@ $mol_mem
