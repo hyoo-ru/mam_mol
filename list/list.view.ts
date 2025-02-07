@@ -103,14 +103,28 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		gap_before() {
-			const skipped = this.sub().slice( 0 , this.view_window()[0] )
+		override gap_before() {
+			const pos = this.view_window()[0]
+			const item_height = this.item_minimal_height()
+			if ( item_height ) {
+				return Math.max(0, pos * item_height)
+			}
+
+			const skipped = this.sub().slice( 0 , pos )
 			return Math.max( 0 , skipped.reduce( ( sum , view )=> sum + view.minimal_height() , 0 ) )
 		}
 
 		@ $mol_mem
-		gap_after() {
-			const skipped = this.sub().slice( this.view_window()[1] )
+		override gap_after() {
+			const pos = this.view_window()[1]
+
+			const item_height = this.item_minimal_height()
+			if ( item_height ) {
+				const count = this.sub().length - pos
+				return Math.max(0, count * item_height)
+			}
+
+			const skipped = this.sub().slice( pos )
 			return Math.max( 0 , skipped.reduce( ( sum , view )=> sum + view.minimal_height() , 0 ) )
 		}
 
