@@ -68,17 +68,18 @@ namespace $ {
 			}
 		}
 
-		protected no_pull() {
-			return Boolean(this.$.$mol_env()['MAM_NO_PULL'])
+		protected pull_disabled() {
+			return Boolean(this.$.$mol_env()['MAM_PULL_DISABLED'])
 		}
 
 		@ $mol_mem_key
 		ensure( path : string ) {
-			if (this.no_pull()) return false
 
 			const mod = $mol_file.absolute( path )
 
-			if( mod.exists()) {
+			if( mod.exists() ) {
+				if ( this.pull_disabled() ) return false
+
 				if (! this.inited(path)) {
 					if (! this.repo(path) ) return false
 

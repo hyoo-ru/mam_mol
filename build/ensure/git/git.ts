@@ -117,10 +117,15 @@ namespace $ {
 			return this.is_git(path) || this.submodules().has(path)
 		}
 
+		protected repo_ensured(dir: string) {
+			const repo = this.repo(dir)
+			if (! repo) throw new Error(`"${dir}" not a repo`)
+			return repo
+		}
+
 		@ $mol_mem_key
 		protected branch_remote(dir: string) {
-			const repo = this.repo(dir)
-			if (! repo) return 'master'
+			const repo = this.repo_ensured(dir)
 
 			const res = this.$.$mol_run.spawn( { command: ['git', 'remote', 'show', repo.url ],  dir } )
 
@@ -128,10 +133,9 @@ namespace $ {
 		}
 
 		protected override init_existing(dir: string) {
-			// Если вручную склонить ревизию hyoo/mol перед запуском билда,
+			// Например, если вручную склонить ревизию папки в глубине (например, hyoo/mol) перед запуском билда,
 			// то hyoo надо проинициалзировать в соответствии с meta.ree
-			const repo = this.repo(dir)
-			if (! repo) throw new Error(`"${dir}" not a repo`)
+			const repo = this.repo_ensured(dir)
 			const { url, branch } = repo
 			this.$.$mol_run.spawn( { command: ['git', 'init'], dir } )
 
@@ -145,8 +149,7 @@ namespace $ {
 
 		protected override init(path: string) {
 			const mod = this.$.$mol_file.absolute( path )
-			const repo = this.repo(path)
-			if (! repo) throw new Error(`"${path}" not a repo`)
+			const repo = this.repo_ensured(path)
 
 			const command = [
 				'git', 'clone' , '--depth', '1',
