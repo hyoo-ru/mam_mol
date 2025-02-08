@@ -1166,6 +1166,7 @@ declare namespace $ {
         } | null;
         protected update_disabled: boolean;
         protected update_safe(dir: string): boolean;
+        protected pull_disabled(): boolean;
         ensure(path: string): boolean;
     }
 }
@@ -1189,6 +1190,11 @@ declare namespace $ {
         protected root_is_submodule(): boolean;
         protected submodules(): Set<string>;
         protected inited(path: string): boolean;
+        protected repo_ensured(dir: string): {
+            url: string;
+            branch: null | string;
+        };
+        protected branch_remote(dir: string): string;
         protected init_existing(dir: string): null;
         protected init(path: string): null;
     }
