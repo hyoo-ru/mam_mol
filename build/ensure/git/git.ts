@@ -128,7 +128,8 @@ namespace $ {
 		}
 
 		protected override init_existing(dir: string) {
-			// Если вручную hyoo/mol перед запуском билда, то hyoo надо проинициалзировать в соответствии с meta.ree
+			// Если вручную склонить ревизию hyoo/mol перед запуском билда,
+			// то hyoo надо проинициалзировать в соответствии с meta.ree
 			const repo = this.repo(dir)
 			if (! repo) throw new Error(`"${dir}" not a repo`)
 			const { url, branch } = repo
