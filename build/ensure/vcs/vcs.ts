@@ -68,8 +68,14 @@ namespace $ {
 			}
 		}
 
+		protected no_pull() {
+			return Boolean(this.$.$mol_env()['MAM_NO_PULL'])
+		}
+
 		@ $mol_mem_key
 		ensure( path : string ) {
+			if (this.no_pull()) return false
+
 			const mod = $mol_file.absolute( path )
 
 			if( mod.exists()) {
