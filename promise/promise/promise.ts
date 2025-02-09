@@ -1,7 +1,7 @@
 namespace $ {
 	export class $mol_promise<Result = void> extends Promise<Result> {
-		done!: (value: Result | PromiseLike<Result>) => void
-		fail!: (reason?: any) => void
+		done: (value: Result | PromiseLike<Result>) => void
+		fail: (reason?: any) => void
 
 		constructor(
 			executor?: (
@@ -9,11 +9,17 @@ namespace $ {
 				fail: (reason?: any) => void
 			) => void
 		) {
+			let done: (value: Result | PromiseLike<Result>) => void
+			let fail: (reason?: any) => void
+
 			super((d, f) => {
-				this.done = d
-				this.fail = f
+				done = d
+				fail = f
 				executor?.(d, f)
 			})
+
+			this.done = done!
+			this.fail = fail!
 		}
 
 	}
