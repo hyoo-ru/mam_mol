@@ -58,7 +58,7 @@
 		height: auto;
 	}
 }
-
+[mol_view][mol_view_error]:not([mol_view_error="mol_promise_blocker"]),
 [mol_view][mol_view_error]:not([mol_view_error="Promise"]) {
 	background-image: repeating-linear-gradient(
 		-45deg,
@@ -84,6 +84,7 @@
 	}
 }
 
+:where([mol_view][mol_view_error="mol_promise_blocker"]),
 :where([mol_view][mol_view_error="Promise"]) {
 	background: var(--mol_theme_hover);
 }
