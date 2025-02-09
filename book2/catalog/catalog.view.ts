@@ -6,9 +6,13 @@ namespace $.$$ {
 	 */
 	export class $mol_book2_catalog extends $.$mol_book2_catalog {
 		
+		spread_current() {
+			return this.spread() === '' ? this.Spread_default() : this.Spread(this.spread())
+		}
+
 		@ $mol_mem
 		pages() {
-			const spread = this.spread() === '' ? this.Spread_default() : this.Spread(this.spread())
+			const spread = this.spread_current()
 			return [
 				this.Menu(),
 				... spread
@@ -17,6 +21,11 @@ namespace $.$$ {
 						: [ spread ]
 					: [],
 			]
+		}
+
+		override auto() {
+			const spread = this.spread_current()
+			if (spread instanceof $mol_book2) spread.auto()
 		}
 
 		@ $mol_mem
