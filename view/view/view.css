@@ -58,8 +58,7 @@
 		height: auto;
 	}
 }
-[mol_view][mol_view_error]:not([mol_view_error="mol_promise_blocker"]),
-[mol_view][mol_view_error]:not([mol_view_error="Promise"]) {
+[mol_view][mol_view_error]:not([mol_view_error="Promise"], [mol_view_error="mol_promise_blocker"]) {
 	background-image: repeating-linear-gradient(
 		-45deg,
 		#f92323,
