@@ -102,6 +102,8 @@
     "$mol_type_keys",
     "$mol_style_attach",
     "$mol_style",
+    "$mol_promise_blocker",
+    "$mol_promise_promise",
     "$mol_theme",
     "$mol_style_prop",
     "$mol_style_func",
