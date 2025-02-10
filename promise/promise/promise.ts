@@ -1,20 +1,27 @@
 namespace $ {
+	export class $mol_promise<Result = void> extends Promise<Result> {
+		done: (value: Result | PromiseLike<Result>) => void
+		fail: (reason?: any) => void
 
-	export function $mol_promise< Result = void >() {
-		
-		let done!: ( res: Result | PromiseLike< Result > )=> void
-		let fail!: ( error?: any ) => void
-		
-		const promise = new Promise< Result >( ( d, f ) => {
-			done = d
-			fail = f
-		} )
-		
-		return Object.assign( promise, {
-			done,
-			fail,
-		} )
-		
+		constructor(
+			executor?: (
+				done: (value: Result | PromiseLike<Result>) => void,
+				fail: (reason?: any) => void
+			) => void
+		) {
+			let done: (value: Result | PromiseLike<Result>) => void
+			let fail: (reason?: any) => void
+
+			super((d, f) => {
+				done = d
+				fail = f
+				executor?.(d, f)
+			})
+
+			this.done = done!
+			this.fail = fail!
+		}
+
 	}
 	
 }
