@@ -1,5 +1,11 @@
 namespace $ {
 	
+	/** Derived debuggable error with stack */
+	function restack( error: any ): never {
+		error = new Error( error instanceof Error ? error.message : String( error ), { cause: error } )
+		$mol_fail_hidden( error )
+	}
+	
 	/** Symmetric cipher with shortest payload. */
 	export class $mol_crypto_sacred extends $mol_buffer {
 		
@@ -36,7 +42,7 @@ namespace $ {
 		
 		static async from_native( native: CryptoKey ) {
 			
-			const buf = await $mol_crypto_native.subtle.exportKey( 'raw', native )
+			const buf = await $mol_crypto_native.subtle.exportKey( 'raw', native ).catch( restack )
 			
 			const sacred = this.from( new Uint8Array( buf ) )
 			sacred._native = native as CryptoKey & { type: 'secret' }
@@ -66,7 +72,7 @@ namespace $ {
 				},
 				true,
 				[ 'encrypt', 'decrypt' ],
-			) as CryptoKey & { type: 'secret' } )
+			).catch( restack ) as CryptoKey & { type: 'secret' } )
 		}
 		
 		/** Encrypt any binary message. 16n bytes */
@@ -80,7 +86,7 @@ namespace $ {
 				},
 				await this.native(),
 				open
-			) )
+			).catch( restack ) )
 		}
 		
 		/** Decrypt any binary message. */
@@ -94,13 +100,20 @@ namespace $ {
 				},
 				await this.native(),
 				closed
-			) )
+			).catch( restack ) )
 		}
 		
 		/** Encrypts this Sacred by another. 16 bytes */
 		async close( sacred: $mol_crypto_sacred, salt: BufferSource ) {
-			const buf = new Uint8Array( this.buffer, this.byteOffset + 1, this.byteLength - 1 )
-			return sacred.encrypt( buf, salt )
+			const buf = new Uint8Array( sacred.buffer, sacred.byteOffset + 1, sacred.byteLength - 1 )
+			return this.encrypt( buf, salt )
+		}
+		
+		/** Encrypts this Sacred by another. 16 bytes */
+		async open( buf: Uint8Array, salt: BufferSource ) {
+			const buf2 = new Uint8Array( 16 )
+			buf2.set( await this.decrypt( buf, salt ), 1 )
+			return new $mol_crypto_sacred( buf2.buffer )
 		}
 		
 	}
