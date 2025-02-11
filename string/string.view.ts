@@ -8,7 +8,7 @@ namespace $.$$ {
 		@ $mol_action
 		event_change( next? : Event ) {
 			if( !next ) return
-			const el = next.target as HTMLInputElement
+			const el = this.dom_node() as HTMLInputElement
 			const from = el.selectionStart
 			const to = el.selectionEnd
 			try {
