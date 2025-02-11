@@ -11,7 +11,7 @@ namespace $ {
 				public: await pub.native_derive(),
 				},
 				await priv.native_derive(),
-				$mol_crypto_sacred.size,
+				$mol_crypto_sacred.size * 8,
 			) )
 		)
 		
