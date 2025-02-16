@@ -9,7 +9,7 @@ namespace $ {
 			"PBKDF2",
 			false,
 			[ "deriveKey" ],
-		)
+		).catch( $mol_crypto_restack )
 		
 		const hard = await $mol_crypto_native.subtle.deriveKey(
 			{
@@ -25,7 +25,7 @@ namespace $ {
 			},
 			Boolean( 'extractable' ),
 			[ 'encrypt', 'decrypt' ],
-		)
+		).catch( $mol_crypto_restack )
 		
 		return $mol_crypto_sacred.from_native( hard )
 		

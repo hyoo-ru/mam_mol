@@ -1,11 +1,5 @@
 namespace $ {
 	
-	/** Derived debuggable error with stack */
-	function restack( error: any ): never {
-		error = new Error( error instanceof Error ? error.message : String( error ), { cause: error } )
-		$mol_fail_hidden( error )
-	}
-	
 	/** Symmetric cipher with shortest payload. */
 	export class $mol_crypto_sacred extends $mol_buffer {
 		
@@ -42,7 +36,7 @@ namespace $ {
 		
 		static async from_native( native: CryptoKey ) {
 			
-			const buf = await $mol_crypto_native.subtle.exportKey( 'raw', native ).catch( restack )
+			const buf = await $mol_crypto_native.subtle.exportKey( 'raw', native ).catch( $mol_crypto_restack )
 			
 			const sacred = this.from( new Uint8Array( buf ) )
 			sacred._native = native as CryptoKey & { type: 'secret' }
@@ -72,7 +66,7 @@ namespace $ {
 				},
 				true,
 				[ 'encrypt', 'decrypt' ],
-			).catch( restack ) as CryptoKey & { type: 'secret' } )
+			).catch( $mol_crypto_restack ) as CryptoKey & { type: 'secret' } )
 		}
 		
 		/** Encrypt any binary message. 16n bytes */
@@ -86,7 +80,7 @@ namespace $ {
 				},
 				await this.native(),
 				open
-			).catch( restack ) )
+			).catch( $mol_crypto_restack ) )
 		}
 		
 		/** Decrypt any binary message. */
@@ -100,7 +94,7 @@ namespace $ {
 				},
 				await this.native(),
 				closed
-			).catch( restack ) )
+			).catch( $mol_crypto_restack ) )
 		}
 		
 		/** Encrypts this Sacred by another. 16 bytes */

@@ -58,7 +58,7 @@ namespace $ {
 				ecdsa,
 				Boolean( 'extractable' ),
 				[ 'verify' ],
-			)
+			).catch( $mol_crypto_restack )
 		}
 		
 		@ $mol_memo.method
@@ -77,7 +77,7 @@ namespace $ {
 				ecdh,
 				true,
 				[],
-			)
+			).catch( $mol_crypto_restack )
 			
 		}
 		
@@ -87,7 +87,7 @@ namespace $ {
 				await this.native(),
 				sign,
 				data,
-			)
+			).catch( $mol_crypto_restack )
 		}
 		
 	}
@@ -104,9 +104,9 @@ namespace $ {
 				ecdsa,
 				Boolean( 'extractable' ),
 				[ 'sign', 'verify' ]
-			)
+			).catch( $mol_crypto_restack )
 			
-			const { x, y, d } = await $mol_crypto_native.subtle.exportKey( 'jwk', pair.privateKey )
+			const { x, y, d } = await $mol_crypto_native.subtle.exportKey( 'jwk', pair.privateKey ).catch( $mol_crypto_restack )
 			return this.from( x + y! + d! )
 			
 		}
@@ -128,7 +128,7 @@ namespace $ {
 				ecdsa,
 				Boolean( 'extractable' ),
 				[ 'sign' ],
-			)
+			).catch( $mol_crypto_restack )
 		}
 		
 		@ $mol_memo.method
@@ -148,7 +148,7 @@ namespace $ {
 				ecdh,
 				Boolean( 'extractable' ),
 				[ 'deriveKey', 'deriveBits' ],
-			)
+			).catch( $mol_crypto_restack )
 			
 		}
 		
@@ -162,7 +162,7 @@ namespace $ {
 				ecdsa,
 				await this.native(),
 				data
-			) )
+			).catch( $mol_crypto_restack ) )
 		}
 		
 	}
