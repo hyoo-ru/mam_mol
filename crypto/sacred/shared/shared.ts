@@ -12,8 +12,8 @@ namespace $ {
 				},
 				await priv.native_derive(),
 				$mol_crypto_sacred.size * 8,
-			) )
-		)
+			).catch( $mol_crypto_restack )
+		) )
 		
 	}
 	
