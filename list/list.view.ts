@@ -95,7 +95,9 @@ namespace $.$$ {
 			
 			// extend max to cover bottom limit
 			while( bottom2 < limit_bottom && max2 < kids.length ) {
-				bottom2 += kids[ max2 ].minimal_height()
+				if( kids[ max2 ] instanceof $mol_view ) {
+					bottom2 += kids[ max2 ].minimal_height()
+				}
 				++ max2
 			}
 			
