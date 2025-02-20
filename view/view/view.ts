@@ -431,9 +431,15 @@ namespace $ {
 			path = [] as $mol_view[],
 		): Generator< $mol_view[] > {
 
-			if( check( this ) ) return yield [ ... path, this ]
+			if( path.length === 0 && check( this ) ) return yield [ ... path, this ]
 			
 			try {
+				for( const item of this.sub() ) {
+					if( item instanceof $mol_view && check( item ) ) {
+						return yield [ ... path, item ]
+					}
+				}
+
 				for( const item of this.sub() ) {
 					if( item instanceof $mol_view ) {
 						yield* item.view_find( check, [ ... path, this ] )

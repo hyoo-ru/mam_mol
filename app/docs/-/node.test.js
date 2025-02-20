@@ -3218,9 +3218,14 @@ var $;
             return $mol_dev_format_span({}, $mol_dev_format_native(this));
         }
         *view_find(check, path = []) {
-            if (check(this))
+            if (path.length === 0 && check(this))
                 return yield [...path, this];
             try {
+                for (const item of this.sub()) {
+                    if (item instanceof $mol_view && check(item)) {
+                        return yield [...path, item];
+                    }
+                }
                 for (const item of this.sub()) {
                     if (item instanceof $mol_view) {
                         yield* item.view_find(check, [...path, this]);
