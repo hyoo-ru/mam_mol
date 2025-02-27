@@ -154,7 +154,7 @@ namespace $ {
 		
 		@ $mol_memo.method
 		public() {
-			return new $mol_crypto_key_public( this.buffer, this.byteOffset, this.byteOffset + 64 )
+			return new $mol_crypto_key_public( this.asArray().slice( 0, 64 ).buffer )
 		}
 		
 		async sign( data: BufferSource ) {
