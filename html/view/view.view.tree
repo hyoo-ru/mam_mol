@@ -1,4 +1,4 @@
-$mol_html_view $mol_list
+$mol_html_view $mol_view
 	html \
 	dom null
 	safe_link* \
