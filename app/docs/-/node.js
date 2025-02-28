@@ -31228,6 +31228,7 @@ var $;
             color: $mol_theme.special,
         },
         Subscript: {
+            display: 'inline',
             font: {
                 size: '.75em',
             },
@@ -31235,6 +31236,7 @@ var $;
             bottom: '-0.5em',
         },
         Superscript: {
+            display: 'inline',
             font: {
                 size: '.75em',
             },
