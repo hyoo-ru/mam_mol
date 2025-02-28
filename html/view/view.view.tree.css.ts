@@ -109,6 +109,7 @@ namespace $ {
 		},
 
 		Subscript: {
+			display: 'inline',
 			font: {
 				size: '.75em',
 			},
@@ -117,6 +118,7 @@ namespace $ {
 		},
 
 		Superscript: {
+			display: 'inline',
 			font: {
 				size: '.75em',
 			},
