@@ -537,8 +537,8 @@ declare namespace $ {
         dir: string;
     }> {
     }
-    const $mol_run_spawn: (command: string, args: readonly string[], options: import("child_process").SpawnOptions) => import("child_process").ChildProcess;
-    const $mol_run_spawn_sync: (command: string, args?: readonly string[] | undefined, options?: import("child_process").SpawnSyncOptions | undefined) => import("child_process").SpawnSyncReturns<string | Buffer<ArrayBufferLike>>;
+    const $mol_run_spawn: (...args: Parameters<(typeof $node)["child_process"]["spawn"]>) => import("child_process").ChildProcess;
+    const $mol_run_spawn_sync: (...args: Parameters<(typeof $node)["child_process"]["spawnSync"]>) => import("child_process").SpawnSyncReturns<string | Buffer<ArrayBufferLike>>;
     type $mol_run_options = {
         command: readonly string[] | string;
         dir: string;
