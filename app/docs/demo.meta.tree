@@ -98,6 +98,7 @@ include \/hyoo/harp/demo
 include \/mol/nav/demo
 include \/mol/number/demo
 include \/mol/page/demo
+include \/mol/paragraph/demo
 include \/mol/paginator/demo
 include \/mol/plot/demo
 include \/mol/plot/map/heat/demo
