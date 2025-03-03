@@ -1,19 +1,25 @@
 namespace $ {
 
-	export class $mol_dom_listener extends $mol_object {
+
+	type Source<EventType> = {
+		addEventListener(name: string, handler: (event: EventType) => unknown, passive?: any ): unknown
+		removeEventListener(name: string, handler: (event: EventType) => unknown, passive?: any ): unknown
+	}
+
+	export class $mol_dom_listener<EventType extends Event> extends $mol_object {
 
 		constructor(
-			public _node : any ,
-			public _event : string ,
-			public _handler : ( event : any )=> any ,
-			public _config : boolean|{ passive : boolean } = { passive : true }
+			protected node : Source<EventType>,
+			protected event : string ,
+			protected handler : (event: EventType) => unknown ,
+			protected config : boolean | { passive : boolean } = { passive : true }
 		) {
 			super()
-			this._node.addEventListener( this._event , this._handler , this._config )
+			this.node.addEventListener( this.event , this.handler , this.config )
 		}
 
 		destructor() {
-			this._node.removeEventListener( this._event , this._handler , this._config )
+			this.node.removeEventListener( this.event , this.handler , this.config )
 			super.destructor()
 		}
 
