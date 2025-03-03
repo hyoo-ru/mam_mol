@@ -4900,15 +4900,15 @@ declare namespace $ {
 			' ': readonly(any)[],
 			'0': readonly(any)[],
 			'П': readonly(any)[],
-			'У': readonly(any)[],
-			'Д': readonly(any)[],
+			'И': readonly(any)[],
+			'Б': readonly(any)[],
 			'.': readonly(any)[],
 			'"': readonly(any)[],
-			'-': readonly(any)[],
+			'+': readonly(any)[],
 			'@': readonly(any)[],
-			'W': readonly(any)[],
-			'U': readonly(any)[],
-			'Z': readonly(any)[],
+			'F': readonly(any)[],
+			'I': readonly(any)[],
+			'N': readonly(any)[],
 		}) 
 	}
 	
