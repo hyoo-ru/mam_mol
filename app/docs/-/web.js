@@ -23593,9 +23593,9 @@ var $;
                 const action_type = this.event_eat(event);
                 if (action_type === 'zoom') {
                     const zoom_prev = this.zoom() || 0.001;
-                    const zoom_next = zoom_prev * (1 - .001 * Math.min(event.deltaY, 100));
+                    let zoom_next = zoom_prev * (1 - .001 * Math.min(event.deltaY, 100));
+                    zoom_next = this.zoom(zoom_next);
                     const mult = zoom_next / zoom_prev;
-                    this.zoom(zoom_next);
                     const pan_prev = this.pan();
                     const center = this.pointer_center();
                     const pan_next = pan_prev.multed0(mult).added1(center.multed0(1 - mult));
