@@ -48,6 +48,13 @@ namespace $ {
 			return this.merged( mults , ( a , b )=> a * b ) as any
 		}
 
+		div1(
+			this : $mol_vector< number , Length > ,
+			mults : readonly number[] & { length : Length } ,
+		) : this {
+			return this.merged( mults , ( a , b )=> a / b ) as any
+		}
+
 		powered0( this : $mol_vector< number , Length > , mult : number ) : this {
 			return this.map( value => value ** mult ) as any
 		}
