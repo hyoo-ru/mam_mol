@@ -37,6 +37,10 @@ namespace $ {
 			return this.merged( diff , ( a , b )=> a + b ) as any
 		}
 
+		substracted0( this : $mol_vector< number , Length > , diff : number ) : this {
+			return this.map( value => value - diff ) as any
+		}
+
 		substracted1( this : $mol_vector< number , Length > , diff : readonly number[] & { length : Length } ) : this {
 			return this.merged( diff , ( a , b )=> a - b ) as any
 		}
@@ -50,6 +54,10 @@ namespace $ {
 			mults : readonly number[] & { length : Length } ,
 		) : this {
 			return this.merged( mults , ( a , b )=> a * b ) as any
+		}
+
+		divided0( this : $mol_vector< number , Length > , mult : number ) : this {
+			return this.map( value => value / mult ) as any
 		}
 
 		divided1(
