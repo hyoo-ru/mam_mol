@@ -4,7 +4,7 @@ $mol_plot_map_tiles $mol_plot_graph
 	level_pyramid 0
 	tiles_limit 8
 	uri_template \
-	sub <= tiles /
+	sub <= tiles /$mol_view
 	Tile* $mol_svg_image
 		style *
 			transform <= tile_transform* \
@@ -12,6 +12,6 @@ $mol_plot_map_tiles $mol_plot_graph
 		pos /
 			0
 			0
-		size /
+		size <= tile_dims_real /number
 			<= tile_size_real
 			<= tile_size_real
