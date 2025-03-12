@@ -2805,11 +2805,17 @@ var $;
         added1(diff) {
             return this.merged(diff, (a, b) => a + b);
         }
+        substracted1(diff) {
+            return this.merged(diff, (a, b) => a - b);
+        }
         multed0(mult) {
             return this.map(value => value * mult);
         }
         multed1(mults) {
             return this.merged(mults, (a, b) => a * b);
+        }
+        divided1(mults) {
+            return this.merged(mults, (a, b) => a / b);
         }
         powered0(mult) {
             return this.map(value => value ** mult);

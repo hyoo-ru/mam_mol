@@ -10901,8 +10901,14 @@ declare namespace $ {
         added1(this: $mol_vector<number, Length>, diff: readonly number[] & {
             length: Length;
         }): this;
+        substracted1(this: $mol_vector<number, Length>, diff: readonly number[] & {
+            length: Length;
+        }): this;
         multed0(this: $mol_vector<number, Length>, mult: number): this;
         multed1(this: $mol_vector<number, Length>, mults: readonly number[] & {
+            length: Length;
+        }): this;
+        divided1(this: $mol_vector<number, Length>, mults: readonly number[] & {
             length: Length;
         }): this;
         powered0(this: $mol_vector<number, Length>, mult: number): this;
