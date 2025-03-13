@@ -97,7 +97,9 @@ namespace $.$$ {
 				
 				if( events.length > 0 ) {
 					if( event.ctrlKey && this.allow_zoom() ) return this.action_type( 'zoom' )
-					if( event.buttons === button.left && this.allow_draw() ) return this.action_type( 'draw' )
+					if( event.buttons === button.left && this.allow_draw() ) {
+						return this.action_type( this.allow_pan() && ! event.ctrlKey ? 'pan' : 'draw' )
+					}
 					if( event.buttons && this.allow_pan() ) return this.action_type( 'pan' )
 				}
 				
