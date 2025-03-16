@@ -23,7 +23,6 @@ namespace $.$$ {
 		@ $mol_mem
 		sub() {
 			const placeholders = this.placeholders()
-			const placeholder = placeholders.at(-1) ?? null
 			const next = [  ... this.pages(), ...placeholders ]
 			
 			const prev = $mol_mem_cached( ()=> this.sub() ) ?? []
@@ -36,7 +35,7 @@ namespace $.$$ {
 				if( !n ) break
 
 				if( p === n ) continue
-				if( n === placeholder ) continue
+				if( placeholders.includes(n) ) continue
 
 				new this.$.$mol_after_tick( ()=> {
 					const b = this.dom_node() as HTMLElement
