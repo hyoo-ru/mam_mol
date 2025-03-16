@@ -85,21 +85,26 @@ namespace $.$$ {
 				|| page.title()
 				|| spread
 		}
-		
+
+		spread_current_book() {
+			const spread = this.spread_current()
+			return spread instanceof $mol_book2 ? spread : null
+		}
+
 		@ $mol_mem
 		override placeholders() {
-			const spread = this.spread_current()
-			const spread_placeholders = spread instanceof $mol_book2 ? spread.placeholders() : []
-
+			const spread_placeholders = this.spread_current_book()?.placeholders() ?? []
 			return spread_placeholders.length ? spread_placeholders : super.placeholders()
 		}
 
 		@ $mol_mem
 		override plugins() {
-			const spread = this.spread_current()
-			const spread_plugins = spread instanceof $mol_book2 ? spread.plugins() : []
+			return [ ...this.spread_current_book()?.plugins() ?? [], ...super.plugins() ]
+		}
 
-			return [...spread_plugins, ...super.plugins() ]
+		@ $mol_mem
+		override event() {
+			return { ...super.event(), ...this.spread_current_book()?.event() }
 		}
 	}
 }
