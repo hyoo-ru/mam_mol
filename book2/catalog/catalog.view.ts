@@ -93,5 +93,13 @@ namespace $.$$ {
 
 			return spread_placeholders.length ? spread_placeholders : super.placeholders()
 		}
+
+		@ $mol_mem
+		override plugins() {
+			const spread = this.spread_current()
+			const spread_plugins = spread instanceof $mol_book2 ? spread.plugins() : []
+
+			return [...spread_plugins, ...super.plugins() ]
+		}
 	}
 }
