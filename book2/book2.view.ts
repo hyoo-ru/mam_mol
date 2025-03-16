@@ -22,9 +22,9 @@ namespace $.$$ {
 
 		@ $mol_mem
 		sub() {
-			
-			const placeholder = this.Placeholder()
-			const next = [  ... this.pages(), placeholder ]
+			const placeholders = this.placeholders()
+			const placeholder = placeholders.at(-1) ?? null
+			const next = [  ... this.pages(), ...placeholders ]
 			
 			const prev = $mol_mem_cached( ()=> this.sub() ) ?? []
 			
