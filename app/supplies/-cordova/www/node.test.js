@@ -3659,18 +3659,21 @@ var $;
 		pages(){
 			return [];
 		}
+		Placeholder(){
+			const obj = new this.$.$mol_view();
+			return obj;
+		}
+		placeholders(){
+			return [(this.Placeholder())];
+		}
 		menu_title(){
 			return "";
 		}
 		sub(){
-			return (this.pages());
+			return [...(this.pages()), ...(this.placeholders())];
 		}
 		minimal_width(){
 			return 0;
-		}
-		Placeholder(){
-			const obj = new this.$.$mol_view();
-			return obj;
 		}
 		Gap(id){
 			const obj = new this.$.$mol_view();
@@ -3736,8 +3739,8 @@ var $;
                 return this.pages()[0]?.title() || this.title();
             }
             sub() {
-                const placeholder = this.Placeholder();
-                const next = [...this.pages(), placeholder];
+                const placeholders = this.placeholders();
+                const next = [...this.pages(), ...placeholders];
                 const prev = $mol_mem_cached(() => this.sub()) ?? [];
                 for (let i = 1; i++;) {
                     const p = prev[prev.length - i];
@@ -3746,7 +3749,7 @@ var $;
                         break;
                     if (p === n)
                         continue;
-                    if (n === placeholder)
+                    if (placeholders.includes(n))
                         continue;
                     new this.$.$mol_after_tick(() => {
                         const b = this.dom_node();

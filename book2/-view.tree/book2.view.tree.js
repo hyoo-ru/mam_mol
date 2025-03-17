@@ -2,18 +2,21 @@
 		pages(){
 			return [];
 		}
+		Placeholder(){
+			const obj = new this.$.$mol_view();
+			return obj;
+		}
+		placeholders(){
+			return [(this.Placeholder())];
+		}
 		menu_title(){
 			return "";
 		}
 		sub(){
-			return (this.pages());
+			return [...(this.pages()), ...(this.placeholders())];
 		}
 		minimal_width(){
 			return 0;
-		}
-		Placeholder(){
-			const obj = new this.$.$mol_view();
-			return obj;
 		}
 		Gap(id){
 			const obj = new this.$.$mol_view();

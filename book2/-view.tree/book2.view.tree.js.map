@@ -4,7 +4,7 @@
 		"mol/book2/book2.view.tree"
 	],
 	"sourcesContent": [
-		"$mol_book2 $mol_scroll\n\tmenu_title \\\n\tsub <= pages /$mol_view\n\tminimal_width 0\n\tPlaceholder $mol_view\n\tGap* $mol_view title \\\n"
+		"$mol_book2 $mol_scroll\n\tmenu_title \\\n\tsub /$mol_view\n\t\t^ pages /$mol_view\n\t\t^ placeholders /$mol_view\n\t\t\t<= Placeholder $mol_view\n\tminimal_width 0\n\tGap* $mol_view title \\\n"
 	],
-	"mappings": "AAAA,AAAA,mCAAW,wBAAX;AAAA,AAEQ;AAAA,AAAA,UAAM,EAAN;AAAA;AADP;AAAA,AAAA,UAAY,EAAZ;AAAA;AACA;AAAA,AAAA,UAAI,KAAG,QAAH,CAAJ;AAAA;AACA;AAAA,AAAA,UAAc,CAAd;AAAA;AACA;AAAA,AAAY,qCAAZ;AAAA,UAAY,GAAZ;AAAA;AACA;AAAA,AAAK,qCAAL;AAAe,wBAAO,EAAP,CAAf;AAAA,UAAK,GAAL;AAAA;AALD,CAAA;AAIC,YAJD,CAIC,uCAJD;AAKC,gBALD,CAKC,+BALD;"
+	"mappings": "AAAA,AAAA,mCAAW,wBAAX;AAAA,AAGI;AAAA,AAAA,UAAM,EAAN;AAAA;AAEE;AAAA,AAAY,qCAAZ;AAAA,UAAY,GAAZ;AAAA;AADF;AAAA,AAAA,UAAa,CACd,KAAG,cAAH,CADc,CAAb;AAAA;AAHH;AAAA,AAAA,UAAY,EAAZ;AAAA;AACA;AAAA,AAAA,UAAI,CACH,cAAE,EAAF,CADG,EAEH,qBAAE,EAAF,CAFG,CAAJ;AAAA;AAIA;AAAA,AAAA,UAAc,CAAd;AAAA;AACA;AAAA,AAAK,qCAAL;AAAe,wBAAO,EAAP,CAAf;AAAA,UAAK,GAAL;AAAA;AAPD,CAAA;AAKM,YALN,CAKM,uCALN;AAOC,gBAPD,CAOC,+BAPD;"
 }
