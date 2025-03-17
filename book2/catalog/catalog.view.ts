@@ -85,6 +85,16 @@ namespace $.$$ {
 				|| page.title()
 				|| spread
 		}
-		
+
+		spread_current_book() {
+			const spread = this.spread_current()
+			return spread instanceof $mol_book2 ? spread : null
+		}
+
+		@ $mol_mem
+		override placeholders() {
+			const spread_placeholders = this.spread_current_book()?.placeholders() ?? []
+			return spread_placeholders.length ? spread_placeholders : super.placeholders()
+		}
 	}
 }
