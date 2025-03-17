@@ -96,15 +96,5 @@ namespace $.$$ {
 			const spread_placeholders = this.spread_current_book()?.placeholders() ?? []
 			return spread_placeholders.length ? spread_placeholders : super.placeholders()
 		}
-
-		@ $mol_mem
-		override plugins() {
-			return [ ...this.spread_current_book()?.plugins() ?? [], ...super.plugins() ]
-		}
-
-		@ $mol_mem
-		override event() {
-			return { ...super.event(), ...this.spread_current_book()?.event() }
-		}
 	}
 }
