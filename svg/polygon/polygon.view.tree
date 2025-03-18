@@ -1,0 +1,5 @@
+$mol_svg_polygon $mol_svg
+	dom_name \polygon
+	attr *
+		^
+		points <= geometry \
