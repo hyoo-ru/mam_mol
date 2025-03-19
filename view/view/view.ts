@@ -38,7 +38,7 @@ namespace $ {
 		
 
 		@ $mol_action
-		prevented(event: Event) {
+		prevented_event(event: Event) {
 			if (event.defaultPrevented) return true
 			event.preventDefault()
 			return false
