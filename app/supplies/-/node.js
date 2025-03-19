@@ -8359,7 +8359,8 @@ var $;
             if (this._native)
                 return this._native;
             const second = Math.floor(this.second ?? 0);
-            const native = new Date(this.year ?? 0, this.month ?? 0, (this.day ?? 0) + 1, this.hour ?? 0, this.minute ?? 0, second, Math.floor(((this.second ?? 0) - second) * 1000));
+            const current = new Date();
+            const native = new Date(this.year ?? current.getFullYear(), this.month ?? current.getMonth(), (this.day ?? (current.getDate() - 1)) + 1, this.hour ?? 0, this.minute ?? 0, second, Math.floor(((this.second ?? 0) - second) * 1000));
             const offset = -native.getTimezoneOffset();
             shift: if (this.offset) {
                 const target = this.offset.count('PT1m');
