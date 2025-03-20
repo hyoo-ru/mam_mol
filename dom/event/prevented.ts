@@ -1,11 +1,10 @@
 namespace $ {
 
-	export function $mol_dom_event_prevented(
+	export const $mol_dom_event_prevented = $mol_wire_sync( function $mol_dom_event_prevented(
 		event: Event
 	) {
-		const faberized = $mol_wire_sync(event)
-		if (faberized.defaultPrevented) return true
-		faberized.preventDefault()
+		if (event.defaultPrevented) return true
+		event.preventDefault()
 		return false
-	}
+	} )
 }
