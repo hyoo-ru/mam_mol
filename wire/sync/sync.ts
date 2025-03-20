@@ -14,20 +14,25 @@ namespace $ {
 		return make
 	}
 
-	const getters = new WeakMap<Object, () => unknown>()
+	const getters = new WeakMap<Object, Record<string | symbol, () => unknown>>()
 
 	function get_prop(
 		host: Object,
-		field: (string | symbol),
+		field: string | symbol,
 	) {
-		let get_val = getters.get(host)
+		let props = getters.get(host)
+		let get_val = props?.[field]
 
 		if ( get_val ) return get_val
 
 		get_val = () => host[field as keyof typeof host]
 		Object.defineProperty( get_val , 'name' , { value : field } )
 
-		getters.set(host, get_val)
+		if (! props) {
+			props = {}
+			getters.set(host, props)
+		}
+		props[field] = get_val
 
 		return get_val
 	}
