@@ -42,12 +42,9 @@ namespace $ {
 			get( obj, field ) {
 				
 				let val = (obj as any)[ field ]
-				const is_func = typeof val === 'function'
-				val = is_func ? val : get_prop(obj, field)
+				const temp = $mol_wire_task.getter(typeof val === 'function' ? val : get_prop(obj, field))
 
-				const temp = $mol_wire_task.getter(val)
-
-				if (is_func) return temp( obj, [] ).sync()
+				if (typeof val !== 'function') return temp( obj, [] ).sync()
 
 				return function $mol_wire_sync( this: Host, ... args: unknown[] ) {
 					const fiber = temp( obj, args )
