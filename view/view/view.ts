@@ -36,14 +36,6 @@ namespace $ {
 			}
 		}
 		
-
-		@ $mol_action
-		event_prevented(event: Event) {
-			if (event.defaultPrevented) return true
-			event.preventDefault()
-			return false
-		}
-
 		@ $mol_mem
 		static autobind() {
 			
