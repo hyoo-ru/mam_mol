@@ -14,6 +14,24 @@ namespace $ {
 		return make
 	}
 
+	const getters = new WeakMap<Object, () => unknown>()
+
+	function get_prop(
+		host: Object,
+		field: (string | symbol),
+	) {
+		let get_val = getters.get(host)
+
+		if ( get_val ) return get_val
+
+		get_val = () => host[field as keyof typeof host]
+		Object.defineProperty( get_val , 'name' , { value : field } )
+
+		getters.set(host, get_val)
+
+		return get_val
+	}
+
 	/**
 	 * Convert asynchronous (promise-based) API to synchronous by wrapping function and method calls in a fiber.
 	 * @see https://mol.hyoo.ru/#!section=docs/=1fcpsq_1wh0h2
@@ -24,8 +42,12 @@ namespace $ {
 			get( obj, field ) {
 				
 				let val = (obj as any)[ field ]
-				if( typeof val !== 'function' ) return val
+				const is_func = typeof val === 'function'
+				val = is_func ? val : get_prop(obj, field)
+
 				const temp = $mol_wire_task.getter(val)
+
+				if (is_func) return temp( obj, [] ).sync()
 
 				return function $mol_wire_sync( this: Host, ... args: unknown[] ) {
 					const fiber = temp( obj, args )
