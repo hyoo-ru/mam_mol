@@ -1268,17 +1268,41 @@ var $;
         factories.set(val, make);
         return make;
     }
+    const getters = new WeakMap();
+    function get_prop(host, field) {
+        let props = getters.get(host);
+        let get_val = props?.[field];
+        if (get_val)
+            return get_val;
+        get_val = (next) => {
+            if (next !== undefined)
+                host[field] = next;
+            return host[field];
+        };
+        Object.defineProperty(get_val, 'name', { value: field });
+        if (!props) {
+            props = {};
+            getters.set(host, props);
+        }
+        props[field] = get_val;
+        return get_val;
+    }
     function $mol_wire_sync(obj) {
         return new Proxy(obj, {
             get(obj, field) {
                 let val = obj[field];
+                const temp = $mol_wire_task.getter(typeof val === 'function' ? val : get_prop(obj, field));
                 if (typeof val !== 'function')
-                    return val;
-                const temp = $mol_wire_task.getter(val);
+                    return temp(obj, []).sync();
                 return function $mol_wire_sync(...args) {
                     const fiber = temp(obj, args);
                     return fiber.sync();
                 };
+            },
+            set(obj, field, next) {
+                const temp = $mol_wire_task.getter(get_prop(obj, field));
+                temp(obj, [next]).sync();
+                return true;
             },
             construct(obj, args) {
                 const temp = $mol_wire_task.getter(factory(obj));
