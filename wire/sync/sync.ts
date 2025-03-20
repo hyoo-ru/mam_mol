@@ -63,9 +63,6 @@ namespace $ {
 			},
 
 			set( obj, field, next) {
-				const val = (obj as any)[ field ]
-				if (typeof val === 'function') return false
-
 				const temp = $mol_wire_task.getter(get_prop(obj, field))
 				temp( obj, [ next ] ).sync()
 
