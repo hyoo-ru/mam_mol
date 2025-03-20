@@ -14,7 +14,7 @@ namespace $ {
 		return make
 	}
 
-	const getters = new WeakMap<Object, Record<string | symbol, () => unknown>>()
+	const getters = new WeakMap<Object, Record<string | symbol, (next?: unknown) => unknown>>()
 
 	function get_prop(
 		host: Object,
@@ -25,7 +25,12 @@ namespace $ {
 
 		if ( get_val ) return get_val
 
-		get_val = () => host[field as keyof typeof host]
+		get_val = (next?: unknown) => {
+			if (next !== undefined) host[field as keyof typeof host] = next as any
+
+			return host[field as keyof typeof host]
+		}
+
 		Object.defineProperty( get_val , 'name' , { value : field } )
 
 		if (! props) {
@@ -55,6 +60,16 @@ namespace $ {
 					const fiber = temp( obj, args )
 					return fiber.sync()
 				}
+			},
+
+			set( obj, field, next) {
+				const val = (obj as any)[ field ]
+				if (typeof val === 'function') return false
+
+				const temp = $mol_wire_task.getter(get_prop(obj, field))
+				temp( obj, [ next ] ).sync()
+
+				return true
 			},
 
 			construct(obj, args) {
