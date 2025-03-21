@@ -10,7 +10,7 @@ namespace $ {
 
 		@ $mol_action
 		static wrap<EventType extends Event>(event: EventType) {
-			return new this.$.$mol_dom_event_wrapper($mol_wire_sync(event))
+			return new this.$.$mol_dom_event_wrapper(event)
 		}
 	}
 
