@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_dom_event_wrapper<EventType extends Event> extends $mol_object {
+	export class $mol_dom_event<EventType extends Event> extends $mol_object {
 		constructor(readonly native: EventType) { super() }
 
 		@ $mol_action
@@ -10,13 +10,7 @@ namespace $ {
 
 		@ $mol_action
 		static wrap<EventType extends Event>(event: EventType) {
-			return new this.$.$mol_dom_event_wrapper(event)
+			return new this.$.$mol_dom_event(event)
 		}
-	}
-
-	export function $mol_dom_event<EventType extends Event>(
-		event: EventType
-	) {
-		return $mol_dom_event_wrapper.wrap(event)
 	}
 }
