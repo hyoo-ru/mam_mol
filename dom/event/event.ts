@@ -2,6 +2,7 @@ namespace $ {
 	export class $mol_dom_event_wrapper<EventType extends Event> extends $mol_object {
 		constructor(readonly native: EventType) { super() }
 
+		@ $mol_action
 		prevented(next?: boolean) {
 			if (next) this.native.preventDefault()
 			return this.native.defaultPrevented
