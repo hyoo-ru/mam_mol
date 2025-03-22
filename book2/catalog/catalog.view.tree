@@ -18,22 +18,24 @@ $mol_book2_catalog $mol_book2
 			tools /
 				^ menu_tools
 				^ addon_tools
-			head <= menu_head /
+			head <= menu_head /$mol_view_content
 				<= Menu_title
 				<= Menu_tools
-			body <= menu_body /
+			body <= menu_body /$mol_view_content
 				<= Menu_filter $mol_search
 					query? <=> menu_filter? \
 				<= Menu_links $mol_list
 					Empty <= Menu_links_empty $mol_view
-					rows <= menu_links /
-						<= Menu_link*0 $mol_link
-							arg <= menu_link_arg* <= arg* *
-							sub <= menu_link_content* /
-								<= Menu_link_title* $mol_dimmer
-									needle <= menu_filter
-									haystack <= spread_title* \
-			foot <= menu_foot /
+					rows <= menu_links /$mol_view
+						<= Menu_item*0 $mol_view
+							sub <= menu_item_content* /$mol_view
+								<= Menu_link* $mol_link
+									arg <= menu_link_arg* <= arg* *
+									sub <= menu_link_content* /$mol_view_content
+										<= Menu_link_title* $mol_dimmer
+											needle <= menu_filter
+											haystack <= spread_title* \
+			foot <= menu_foot /$mol_view_content
 	Spread_close $mol_link
 		arg <= spread_close_arg *
 		hint @ \Close page
