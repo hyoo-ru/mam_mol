@@ -17,7 +17,7 @@ namespace $.$$ {
 				this.Menu(),
 				... spread
 					? spread instanceof $mol_book2
-						? spread.pages()
+						? spread.pages_deep()
 						: [ spread ]
 					: [],
 			]
