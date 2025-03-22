@@ -17,7 +17,7 @@ namespace $.$$ {
 				this.Menu(),
 				... spread
 					? spread instanceof $mol_book2
-						? spread.pages()
+						? spread.pages_deep()
 						: [ spread ]
 					: [],
 			]
@@ -48,7 +48,7 @@ namespace $.$$ {
 		@ $mol_mem
 		override menu_links() {
 			return this.spread_ids_filtered()
-				.map( spread => this.Menu_item( spread ) )
+				.map( spread => this.Menu_link( spread ) )
 		}
 
 		@ $mol_mem

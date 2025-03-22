@@ -5,9 +5,26 @@ namespace $.$$ {
 	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_book2_demo
 	 */
 	export class $mol_book2 extends $.$mol_book2 {
+		pages_deep_get(page: $mol_view = this, result = [] as $mol_view[]) {
+			if ( !( page instanceof $mol_book2) ) {
+				result.push(page)
+				return result
+			}
+
+			for (const subpage of page.pages()) {
+				this.pages_deep_get(subpage, result)
+			}
+
+			return result
+		}
+
+		@ $mol_mem
+		pages_deep() {
+			return this.pages_deep_get()
+		}
 		
 		title() {
-			return this.pages().map( page => {
+			return this.pages_deep().map( page => {
 				try {
 					return page?.title()
 				} catch( error ) {
@@ -17,13 +34,13 @@ namespace $.$$ {
 		}
 		
 		menu_title() {
-			return this.pages()[0]?.title() || this.title()
+			return this.pages_deep()[0]?.title() || this.title()
 		}
 
 		@ $mol_mem
 		sub() {
 			const placeholders = this.placeholders()
-			const next = [  ... this.pages(), ...placeholders ]
+			const next = [  ... this.pages_deep(), ...placeholders ]
 			
 			const prev = $mol_mem_cached( ()=> this.sub() ) ?? []
 			
@@ -56,7 +73,7 @@ namespace $.$$ {
 		
 		bring() {
 			
-			const pages = this.pages()
+			const pages = this.pages_deep()
 			
 			if( pages.length ) pages[ pages.length - 1 ].bring()
 			else super.bring()

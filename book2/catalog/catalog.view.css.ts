@@ -7,9 +7,6 @@ namespace $.$$ {
 			},
 			alignSelf: 'stretch',
 		},
-		Menu_item: {
-			flex: { direction: 'column' },
-		},
 	})
 
 }
