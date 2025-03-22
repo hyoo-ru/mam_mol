@@ -5,22 +5,16 @@ namespace $.$$ {
 	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_book2_demo
 	 */
 	export class $mol_book2 extends $.$mol_book2 {
-		pages_deep_get(page: $mol_view = this, result = [] as $mol_view[]) {
-			if ( !( page instanceof $mol_book2) ) {
-				result.push(page)
-				return result
-			}
 
-			for (const subpage of page.pages()) {
-				this.pages_deep_get(subpage, result)
+		@ $mol_mem
+		override pages_deep() {
+			let result = [] as $mol_view[]
+			for (const subpage of this.pages()) {
+				if (subpage instanceof $mol_book2) result = [ ...result, ...subpage.pages_deep() ]
+				else result.push(subpage)
 			}
 
 			return result
-		}
-
-		@ $mol_mem
-		pages_deep() {
-			return this.pages_deep_get()
 		}
 		
 		title() {
