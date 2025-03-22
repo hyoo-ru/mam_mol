@@ -21,7 +21,7 @@ $mol_book2_catalog $mol_book2
 			head <= menu_head /$mol_view_content
 				<= Menu_title
 				<= Menu_tools
-			body <= menu_body /$mol_view_content
+			body <= menu_body /$mol_view
 				<= Menu_filter $mol_search
 					query? <=> menu_filter? \
 				<= Menu_links $mol_list
@@ -35,7 +35,7 @@ $mol_book2_catalog $mol_book2
 										<= Menu_link_title* $mol_dimmer
 											needle <= menu_filter
 											haystack <= spread_title* \
-			foot <= menu_foot /$mol_view_content
+			foot <= menu_foot /$mol_view
 	Spread_close $mol_link
 		arg <= spread_close_arg *
 		hint @ \Close page
