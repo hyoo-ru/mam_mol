@@ -21,6 +21,33 @@ $mol_switch_demo $mol_example
 							red <= option_red
 							green <= option_green
 							blue <= option_blue
+				<= Iconed_text_labeler $mol_labeler
+					title \Icons with text
+					Content <= Iconed_text $mol_switch
+						options *string
+							\
+								\Adjust
+							note \Notes
+							file \Files
+						icons *$mol_icon
+							\
+								<= Adjust_icon $mol_icon_image_outline
+							note <= Note_icon $mol_icon_label_multiple
+							file <= File_icon $mol_icon_file_cabinet
+				<= Iconed_only_labeler $mol_labeler
+					title \Icons only
+					Content <= Iconed_only $mol_switch
+						icon_only true
+						options *string
+							\
+								\Adjust
+							note \Notes
+							file \Files
+						icons *$mol_icon
+							\
+								<= Adjust_icon_only $mol_icon_image_outline
+							note <= Note_icon_only $mol_icon_label_multiple
+							file <= File_icon_only $mol_icon_file_cabinet
 	tags /
 		\option
 		\group

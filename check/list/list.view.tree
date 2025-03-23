@@ -1,5 +1,5 @@
 $mol_check_list $mol_view
-	dictionary *
+	dictionary? *boolean
 	Option* $mol_check
 		checked? <=> option_checked*? false
 		label <= option_label* /
@@ -7,6 +7,8 @@ $mol_check_list $mol_view
 		enabled <= option_enabled* <= enabled true
 		hint <= option_hint* \
 		minimal_height 24
-	options *
+	options *string
+	icons *$mol_icon
+	icon_only false
 	keys /string
 	sub <= items /$mol_check
