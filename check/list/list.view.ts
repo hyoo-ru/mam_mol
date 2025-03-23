@@ -30,13 +30,8 @@ namespace $.$$ {
 			return this.options()[key] || key
 		}
 
-		@ $mol_mem
-		has_icons() {
-			return Object.keys(this.icons()).length > 0
-		}
-
 		override option_hint(id: string) {
-			return this.has_icons() && this.icon_only()
+			return this.icons()[id] && this.icon_only()
 				? this.option_title(id)
 				: super.option_hint(id)
 		}
@@ -44,8 +39,8 @@ namespace $.$$ {
 		override option_label( id: string ) {
 			const label = super.option_label(id)
 
-			if (this.has_icons()) {
-				const icon = this.icons()[id]
+			const icon = this.icons()[id]
+			if (icon) {
 				return this.icon_only() ? [ icon ] : [ icon, ...label ]
 			}
 
