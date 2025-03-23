@@ -1,6 +1,9 @@
 	($.$mol_book2) = class $mol_book2 extends ($.$mol_scroll) {
-		pages(){
+		pages_deep(){
 			return [];
+		}
+		pages(){
+			return (this.pages_deep());
 		}
 		Placeholder(){
 			const obj = new this.$.$mol_view();

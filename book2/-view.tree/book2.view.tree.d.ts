@@ -16,7 +16,8 @@ declare namespace $ {
 		ReturnType< $mol_view['title'] >
 	>
 	export class $mol_book2 extends $mol_scroll {
-		pages( ): readonly($mol_view)[]
+		pages_deep( ): readonly($mol_view)[]
+		pages( ): ReturnType< $mol_book2['pages_deep'] >
 		Placeholder( ): $mol_view
 		placeholders( ): readonly($mol_view)[]
 		menu_title( ): string
