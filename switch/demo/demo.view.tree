@@ -23,7 +23,7 @@ $mol_switch_demo $mol_example
 							blue <= option_blue
 				<= Iconed_text_labeler $mol_labeler
 					title \Icons with text
-					Content <= Iconed_text $mol_switch
+					Content <= Iconed_text $mol_switch_iconed
 						options *string
 							\
 								\Adjust
@@ -36,7 +36,7 @@ $mol_switch_demo $mol_example
 							file <= File_icon $mol_icon_file_cabinet
 				<= Iconed_only_labeler $mol_labeler
 					title \Icons only
-					Content <= Iconed_only $mol_switch
+					Content <= Iconed_only $mol_switch_iconed
 						icon_only true
 						options *string
 							\

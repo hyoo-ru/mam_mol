@@ -1,17 +1,36 @@
 $mol_check_list_demo $mol_example_small
 	title \Set of toggles
 	sub /
-		<= Rights $mol_check_list
-			option_checked*? <=> right*? false
-			options *
-				read \Allow Read
-				write \Allow Write
-				rights \Allow Change Rights
-				backup \Allow BackUp
-				restart \Allow Restart
-				ping \Allow Ping
-				api \Allow API Access
-				docs \Allow Read Documentation
+		<= Demo_items $mol_list
+			rows /
+				<= Rights $mol_check_list
+					option_checked*? <=> right*? false
+					options *
+						read \Allow Read
+						write \Allow Write
+						rights \Allow Change Rights
+						backup \Allow BackUp
+						restart \Allow Restart
+						ping \Allow Ping
+						api \Allow API Access
+						docs \Allow Read Documentation
+				<= Rights_iconed $mol_check_list_iconed
+					option_checked*? <=> right_iconed*? false
+					options *
+						read \Allow Read
+						write \Allow Write
+					icons *
+						read <= Read_icon $mol_icon_eye
+						write <= Write_icon $mol_icon_lead_pencil
+				<= Rights_iconed_ony $mol_check_list_iconed
+					option_checked*? <=> right_iconed_only*? false
+					icon_only true
+					options *
+						read \Allow Read
+						write \Allow Write
+					icons *
+						read <= Read_icon_only $mol_icon_eye
+						write <= Write_icon_only $mol_icon_lead_pencil
 	tags /
 		\option
 		\switch

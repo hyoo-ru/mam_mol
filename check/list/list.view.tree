@@ -8,7 +8,5 @@ $mol_check_list $mol_view
 		hint <= option_hint* \
 		minimal_height 24
 	options *string
-	icons *$mol_icon
-	icon_only false
 	keys /string
 	sub <= items /$mol_check
