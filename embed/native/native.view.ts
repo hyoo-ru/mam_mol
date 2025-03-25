@@ -39,6 +39,17 @@ namespace $.$$ {
 				$mol_wire_async( this ).message_receive
 			)
 		}
+
+		override error_content() {
+			try {
+				this.window()
+			} catch (error) {
+				if ($mol_promise_like(error)) $mol_fail_hidden(error)
+				$mol_fail_log(error)
+			}
+
+			return super.error_content()
+		}
 		
 		message_receive( event?: MessageEvent<[ string, string ]> ) {
 			
