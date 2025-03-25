@@ -7289,6 +7289,10 @@ var $;
             message_listener() {
                 return new $mol_dom_listener($mol_dom_context, 'message', $mol_wire_async(this).message_receive);
             }
+            sub() {
+                this.window();
+                return super.sub();
+            }
             message_receive(event) {
                 if (!event)
                     return;

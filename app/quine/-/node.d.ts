@@ -2800,6 +2800,7 @@ declare namespace $.$$ {
         load(frame: HTMLIFrameElement): Promise<Window>;
         uri_resource(): string;
         message_listener(): $mol_dom_listener;
+        sub(): readonly any[];
         message_receive(event?: MessageEvent<[string, string]>): void;
         uri_change(event: MessageEvent<[string, string]>): void;
         auto(): (Window | $mol_dom_listener)[];
