@@ -7,7 +7,6 @@ $mol_embed_native $mol_scroll
 		data <= uri
 		type <= mime \
 	sub /
-		^ error_content /$mol_view
 		<= Fallback $mol_link
 			uri <= uri
 			sub /

@@ -13,7 +13,6 @@ namespace $.$$ {
 		option_checked( key : string , next? : boolean ) {
 			if( next === undefined ) return this.value() == key
 			this.value( next ? key : '' )
-		
 			return next
 		}
 
