@@ -1015,8 +1015,17 @@ var $;
         }
         destructor() {
             super.destructor();
-            if ($mol_owning_check(this, this.cache)) {
+            if (!$mol_owning_check(this, this.cache))
+                return;
+            try {
                 this.cache.destructor();
+            }
+            catch (result) {
+                if ($mol_promise_like(result)) {
+                    const error = new Error(`Promise in ${this}.destructor()`);
+                    Object.defineProperty(result, 'stack', { get: () => error.stack });
+                }
+                $mol_fail_hidden(result);
             }
         }
     }
