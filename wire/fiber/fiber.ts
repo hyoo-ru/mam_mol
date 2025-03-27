@@ -334,8 +334,6 @@ namespace $ {
 				if ($mol_promise_like(result)) {
 					const error = new Error( `Promise in ${ this }.destructor()` )
 					Object.defineProperty( result, 'stack', { get: ()=> error.stack } )
-				} else {
-					result = new Error(result instanceof Error ? result.message : String(result), { cause: result })
 				}
 
 				$mol_fail_hidden(result)
