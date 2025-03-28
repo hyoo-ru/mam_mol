@@ -24483,7 +24483,9 @@ var $;
                 if (points.length === 0)
                     return '';
                 const [, shift_y] = this.shift();
-                return points.map(point => `M ${point[0]} ${shift_y} V ${point[1]}`).join(' ');
+                return points.map(point => (Number.isFinite(point[0]) && Number.isFinite(point[1]))
+                    ? `M ${point[0]} ${shift_y} V ${point[1]}`
+                    : ``).join(' ');
             }
             stroke_width() {
                 return (8 / Math.sqrt(this.indexes().length)).toPrecision(2) + '%';
