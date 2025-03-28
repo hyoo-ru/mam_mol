@@ -16,13 +16,13 @@ namespace $ {
 			task: ( this: Host, ... args: Args )=> Result,
 		): $mol_wire_atom< Host, Args, Result > {
 			
-			const field = task.name + '<>'
+			const field = task.name + '()'
 			
 			const existen = Object.getOwnPropertyDescriptor( host ?? task, field )?.value
 			if( existen ) return existen
 			
 			const prefix = (host as any)?.[ Symbol.toStringTag ] ?? ( host instanceof Function ? $$.$mol_func_name( host ) : host )
-			const key = prefix + ( '.' + field )
+			const key = prefix + ( '.' + task.name + '<>' )
 			
 			const fiber = new $mol_wire_atom( key, task, host, [] as any as Args )
 			;( host as any ?? task )[ field ] = fiber
@@ -40,7 +40,7 @@ namespace $ {
 			key: Args[0],
 		): $mol_wire_atom< Host, Args, Result > {
 			
-			const field = task.name + '<>'
+			const field = task.name + '()'
 			let dict = Object.getOwnPropertyDescriptor( host ?? task, field )?.value
 			const prefix = (host as any)?.[ Symbol.toStringTag ] ?? ( host instanceof Function ? $$.$mol_func_name( host ) : host )
 			const key_str = $mol_key( key )

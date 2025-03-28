@@ -1805,7 +1805,7 @@ var $;
             return $mol_promise_like(this.cache);
         }
         field() {
-            return this.task.name + '<>';
+            return this.task.name + '()';
         }
         constructor(id, task, host, args) {
             super();
