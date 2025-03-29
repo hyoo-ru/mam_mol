@@ -1,0 +1,3 @@
+$mol_check_list_iconed $mol_check_list
+	icons *$mol_icon
+	icon_only false

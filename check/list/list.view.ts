@@ -6,14 +6,6 @@ namespace $.$$ {
 	 */
 	export class $mol_check_list extends $.$mol_check_list {
 
-		options() : { [ key : string ] : string } {
-			return {}
-		}
-
-		override dictionary(next?: Record<string, boolean>) {
-			return next ?? {}
-		}
-
 		override option_checked(id: string, next?: boolean | null) {
 			const prev = this.dictionary()
 			if (next === undefined) return prev[id] ?? null
@@ -37,7 +29,6 @@ namespace $.$$ {
 		option_title( key : string ) {
 			return this.options()[key] || key
 		}
-		
 	}
 
 }
