@@ -9069,6 +9069,7 @@ declare namespace $ {
 		spread_ids( ): readonly(string)[]
 		menu_filter_enabled( ): boolean
 		spread_ids_filtered( ): readonly(string)[]
+		spread_current( ): any
 		menu_tools( ): readonly(any)[]
 		addon_tools( ): readonly(any)[]
 		pages( ): readonly(any)[]

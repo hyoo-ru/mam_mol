@@ -2190,6 +2190,7 @@ $mol_book2_catalog $mol_book2
 	spread_ids /string
 	menu_filter_enabled false
 	spread_ids_filtered /string
+	spread_current null
 	menu_tools /
 	addon_tools /
 	pages /

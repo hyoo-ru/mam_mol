@@ -20604,6 +20604,9 @@ var $;
 		spread_ids_filtered(){
 			return [];
 		}
+		spread_current(){
+			return null;
+		}
 		menu_tools(){
 			return [];
 		}
