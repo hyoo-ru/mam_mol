@@ -95,7 +95,9 @@ namespace $.$$ {
 			
 			// extend max to cover bottom limit
 			while( bottom2 < limit_bottom && max2 < kids.length ) {
-				bottom2 += kids[ max2 ].minimal_height()
+				if( kids[ max2 ] != null ) {
+					bottom2 += kids[ max2 ].minimal_height()
+				}
 				++ max2
 			}
 			
@@ -129,7 +131,11 @@ namespace $.$$ {
 			return this.sub().reduce( ( sum , view )=> {
 
 				try {
-					return sum + view.minimal_height() 
+					if( sum != null ) {
+						return sum + view.minimal_height()
+					} else {
+						return sum
+					}
 				} catch( error: any ) {
 					$mol_fail_log( error )
 					return sum
