@@ -95,7 +95,9 @@ namespace $.$$ {
 			
 			// extend max to cover bottom limit
 			while( bottom2 < limit_bottom && max2 < kids.length ) {
-				bottom2 += kids[ max2 ].minimal_height()
+				if( kids[ max2 ] != null ) {
+					bottom2 += kids[ max2 ].minimal_height()
+				}
 				++ max2
 			}
 			
@@ -105,13 +107,17 @@ namespace $.$$ {
 		@ $mol_mem
 		gap_before() {
 			const skipped = this.sub().slice( 0 , this.view_window()[0] )
-			return Math.max( 0 , skipped.reduce( ( sum , view )=> sum + view.minimal_height() , 0 ) )
+			return Math.max( 0 , skipped.reduce( ( sum , view )=> {
+				return view == null ? sum : sum + view.minimal_height()
+			} , 0 ) )
 		}
 
 		@ $mol_mem
 		gap_after() {
 			const skipped = this.sub().slice( this.view_window()[1] )
-			return Math.max( 0 , skipped.reduce( ( sum , view )=> sum + view.minimal_height() , 0 ) )
+			return Math.max( 0 , skipped.reduce( ( sum , view )=> {
+				return view == null ? sum : sum + view.minimal_height()
+			} , 0 ) )
 		}
 
 		@ $mol_mem
@@ -129,7 +135,7 @@ namespace $.$$ {
 			return this.sub().reduce( ( sum , view )=> {
 
 				try {
-					return sum + view.minimal_height() 
+					return sum == null ? sum : sum + view.minimal_height()
 				} catch( error: any ) {
 					$mol_fail_log( error )
 					return sum
