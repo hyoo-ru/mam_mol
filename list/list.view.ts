@@ -105,13 +105,13 @@ namespace $.$$ {
 		@ $mol_mem
 		gap_before() {
 			const skipped = this.sub().slice( 0 , this.view_window()[0] )
-			return Math.max( 0 , skipped.reduce( ( sum , view )=> view?.minimal_height() ?? 0 , 0 ) )
+			return Math.max( 0, skipped.reduce( ( sum, view ) => sum + ( view?.minimal_height() ?? 0 ), 0 ) )
 		}
 
 		@ $mol_mem
 		gap_after() {
 			const skipped = this.sub().slice( this.view_window()[1] )
-			return Math.max( 0 , skipped.reduce( ( sum , view )=> view?.minimal_height() ?? 0, 0 ) )
+			return Math.max( 0, skipped.reduce( ( sum, view ) => sum + ( view?.minimal_height() ?? 0 ), 0 ) )
 		}
 
 		@ $mol_mem
@@ -129,7 +129,7 @@ namespace $.$$ {
 			return this.sub().reduce( ( sum , view )=> {
 
 				try {
-					return view?.minimal_height() ?? 0
+					return sum + ( view?.minimal_height() ?? 0 )
 				} catch( error: any ) {
 					$mol_fail_log( error )
 					return sum
