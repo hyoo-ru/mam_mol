@@ -95,9 +95,7 @@ namespace $.$$ {
 			
 			// extend max to cover bottom limit
 			while( bottom2 < limit_bottom && max2 < kids.length ) {
-				if( kids[ max2 ] != null ) {
-					bottom2 += kids[ max2 ].minimal_height()
-				}
+				bottom2 += kids[ max2 ]?.minimal_height() ?? 0
 				++ max2
 			}
 			
