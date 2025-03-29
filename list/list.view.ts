@@ -135,11 +135,7 @@ namespace $.$$ {
 			return this.sub().reduce( ( sum , view )=> {
 
 				try {
-					if( sum != null ) {
-						return sum + view.minimal_height()
-					} else {
-						return sum
-					}
+					return sum == null ? sum : sum + view.minimal_height()
 				} catch( error: any ) {
 					$mol_fail_log( error )
 					return sum
