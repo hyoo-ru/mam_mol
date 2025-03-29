@@ -90,7 +90,7 @@ namespace $.$$ {
 			// extend min to cover top limit
 			while( anchoring && (( top2 > limit_top )&&( min2 > 0 )) ) {
 				-- min2
-				top2 += kids[ max2 ]?.minimal_height() ?? 0
+				top2 -= kids[ min2 ]?.minimal_height() ?? 0
 			}
 			
 			// extend max to cover bottom limit
