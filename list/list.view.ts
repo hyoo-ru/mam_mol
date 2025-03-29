@@ -107,13 +107,17 @@ namespace $.$$ {
 		@ $mol_mem
 		gap_before() {
 			const skipped = this.sub().slice( 0 , this.view_window()[0] )
-			return Math.max( 0 , skipped.reduce( ( sum , view )=> sum + view.minimal_height() , 0 ) )
+			return Math.max( 0 , skipped.reduce( ( sum , view )=> {
+				return view == null ? sum : sum + view.minimal_height()
+			} , 0 ) )
 		}
 
 		@ $mol_mem
 		gap_after() {
 			const skipped = this.sub().slice( this.view_window()[1] )
-			return Math.max( 0 , skipped.reduce( ( sum , view )=> sum + view.minimal_height() , 0 ) )
+			return Math.max( 0 , skipped.reduce( ( sum , view )=> {
+				return view == null ? sum : sum + view.minimal_height()
+			} , 0 ) )
 		}
 
 		@ $mol_mem
