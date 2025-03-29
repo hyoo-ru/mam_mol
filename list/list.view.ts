@@ -58,7 +58,7 @@ namespace $.$$ {
 				
 				while( min < ( kids.length - 1 ) ) {
 					
-					const height = kids[ min ].minimal_height()
+					const height = kids[ min ]?.minimal_height() ?? 0
 					if( top + height >= limit_top ) break
 					
 					top += height
@@ -90,7 +90,7 @@ namespace $.$$ {
 			// extend min to cover top limit
 			while( anchoring && (( top2 > limit_top )&&( min2 > 0 )) ) {
 				-- min2
-				top2 -= kids[ min2 ].minimal_height()
+				top2 += kids[ max2 ]?.minimal_height() ?? 0
 			}
 			
 			// extend max to cover bottom limit
