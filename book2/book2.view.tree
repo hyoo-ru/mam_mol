@@ -1,5 +1,4 @@
 $mol_book2 $mol_scroll
-	dom_name \div
 	menu_title \
 	sub /$mol_view
 		^ pages /$mol_view
