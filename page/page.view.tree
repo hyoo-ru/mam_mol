@@ -5,7 +5,6 @@ $mol_page $mol_view
 		tabIndex <= tabindex -1
 	sub /
 		<= Head $mol_view
-			minimal_height 64
 			dom_name \header
 			sub <= head /
 				<= Title $mol_view

@@ -6,19 +6,8 @@ namespace $.$$ {
 	 */
 	export class $mol_book2 extends $.$mol_book2 {
 
-		@ $mol_mem
-		override pages_deep() {
-			let result = [] as $mol_view[]
-			for (const subpage of this.pages()) {
-				if (subpage instanceof $mol_book2) result = [ ...result, ...subpage.pages_deep() ]
-				else result.push(subpage)
-			}
-
-			return result
-		}
-		
 		title() {
-			return this.pages_deep().map( page => {
+			return this.pages().map( page => {
 				try {
 					return page?.title()
 				} catch( error ) {
@@ -28,46 +17,70 @@ namespace $.$$ {
 		}
 		
 		menu_title() {
-			return this.pages_deep()[0]?.title() || this.title()
+			return this.pages()[0]?.title() || this.title()
 		}
 
 		@ $mol_mem
-		sub() {
+		override sub() {
 			const placeholders = this.placeholders()
-			const next = [  ... this.pages_deep(), ...placeholders ]
 			
+			const next = super.sub()
 			const prev = $mol_mem_cached( ()=> this.sub() ) ?? []
 			
-			for( let i = 1 ; i++ ; ) {
+			for( let prev_i = prev.length - 1, next_i = next.length - 1 ; next_i >= 0; next_i-- ) {
 				
-				const p = prev[ prev.length - i ]
-				const n = next[ next.length - i ]
-				
-				if( !n ) break
+				const prev_page = prev[ prev_i ]
+				const next_page = next[ next_i ]
 
-				if( p === n ) continue
-				if( placeholders.includes(n) ) continue
+				if (next_page instanceof $mol_book2) {
+					next_page.top_book = this.top_book ?? this
+					// ignore books
+					// example:
+					// prev: image placeholder
+					// next: image [labels_book] placeholder
+					continue
+				}
 
-				new this.$.$mol_after_tick( ()=> {
-					const b = this.dom_node() as HTMLElement
-					const p = n.dom_node() as HTMLElement
-					b.scroll({
-						left: p.offsetLeft + p.offsetWidth - b.offsetWidth,
-						behavior: 'smooth',
-					})
-					// new this.$.$mol_after_timeout( 1000, ()=> n.bring() )
-				} )
-				
+				prev_i--
+
+				if( prev_page === next_page ) continue
+				if( placeholders.includes(next_page) ) continue
+
+				this.scroll_page(next_page)
+
 				break
 
 			}
 
-			return next as readonly $mol_view[]
+			return next
 		}
-		
+
+		protected top_book = null as null | $mol_book2
+		protected last_tick = null as null | $mol_after_tick
+
+		scroll_page(page: $mol_view) {
+			this.last_tick?.destructor()
+
+			this.last_tick = new this.$.$mol_after_tick( ()=> {
+
+				const top = this.top_book ?? this
+
+				$mol_dom_scroll({
+					container: top.dom_node() as HTMLElement,
+					item: page.dom_node() as HTMLElement,
+					behavior: 'smooth',
+					block: 'end',
+				})
+
+				this.last_tick = null
+
+			})
+		}
+
+
 		bring() {
 			
-			const pages = this.pages_deep()
+			const pages = this.pages()
 			
 			if( pages.length ) pages[ pages.length - 1 ].bring()
 			else super.bring()
