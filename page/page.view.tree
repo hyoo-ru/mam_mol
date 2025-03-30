@@ -1,7 +1,8 @@
 $mol_page $mol_view
-	dom_name \article
+	dom_name \div
 	attr *
 		^
+		role \article
 		tabIndex <= tabindex -1
 	sub /
 		<= Head $mol_view
