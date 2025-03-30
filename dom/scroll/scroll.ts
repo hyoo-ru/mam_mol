@@ -3,24 +3,30 @@ namespace $ {
 		container,
 		item,
 		behavior,
-		block
+		block,
+		vertical
 	}: {
 		container: HTMLElement
 		item: HTMLElement
 		behavior?: ScrollBehavior
 		block?: ScrollLogicalPosition
+		vertical?: boolean
 	}) {
-		const containerRight = container.offsetLeft + container.offsetWidth
+		const itemStart = vertical ? item.offsetTop : item.offsetLeft
+		const itemSize = vertical ? item.offsetHeight : item.offsetWidth
+		const containerStart = vertical
+			? container.offsetTop + container.offsetHeight
+			: container.offsetLeft + container.offsetWidth
 
-		let shift = item.offsetWidth // end
+		let shift = itemSize // end
 
 		if (block === 'start') shift = 0
-		if (block === 'center') shift = item.offsetWidth / 2
+		if (block === 'center') shift = itemSize / 2
 
-		if ( block === 'nearest' && item.offsetLeft <= containerRight) return
+		if ( block === 'nearest' && itemStart <= containerStart) return
 
 		container.scroll({
-			left: item.offsetLeft + shift - containerRight,
+			left: itemStart + shift - containerStart,
 			behavior,
 		})
 	}
