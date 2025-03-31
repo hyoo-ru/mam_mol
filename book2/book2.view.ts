@@ -26,33 +26,25 @@ namespace $.$$ {
 			
 			const next = super.sub()
 			const prev = $mol_mem_cached( ()=> this.sub() ) ?? []
-			
 			const top = this.top_book ?? this
-
-			for( let prev_i = prev.length - 1, next_i = next.length - 1 ; next_i >= 0; next_i-- ) {
+			
+			let scroll_target
+			for( let i = 1; i <= next.length; i++ ) {
 				
-				const prev_page = prev[ prev_i ]
-				const next_page = next[ next_i ]
-
+				const prev_page = prev[ prev.length - i ]
+				const next_page = next[ next.length - i ]
 				if (next_page instanceof $mol_book2) {
-					next_page.top_book = this.top_book ?? this
-					// ignore books
-					// example:
-					// prev: image placeholder
-					// next: image [labels_book] placeholder
-					continue
+					next_page.top_book = top
 				}
-
-				prev_i--
 
 				if( prev_page === next_page ) continue
 				if( placeholders.includes(next_page) ) continue
 
-				top.scroll_target(next_page)
-
-				break
-
+				if (! scroll_target) scroll_target = next_page
 			}
+
+			// need to set top_book to all sub books, can't break for
+			if (scroll_target) top.scroll_target(scroll_target)
 
 			return next
 		}
@@ -70,8 +62,20 @@ namespace $.$$ {
 
 		@ $mol_mem
 		scroll_task() {
-			const page = this.scroll_target()
+			let page = this.scroll_target()
+
+			// for display: contents view_rect always 0
+			// find last page
+			while (page instanceof $mol_book2) {
+				try {
+					page = page.pages()?.at(-1) ?? null
+				} catch (e) {
+					return null
+				}
+			}
+
 			if (! page ) return null
+
 			const page_rect = page.view_rect()
 			if (! page_rect) return null
 
