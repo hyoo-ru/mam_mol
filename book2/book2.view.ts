@@ -81,7 +81,8 @@ namespace $.$$ {
 			const scroll_left = this.scroll_left()
 
 			const page_right = page_rect.right + scroll_left
-			const left = page_right - (top_rect.left + top_rect.width)
+
+			const left = page_right - top_rect.right
 
 			return new this.$.$mol_after_tick(() => {
 				this.dom_node().scroll({ left, behavior: 'smooth' })
