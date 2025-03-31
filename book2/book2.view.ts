@@ -27,6 +27,8 @@ namespace $.$$ {
 			const next = super.sub()
 			const prev = $mol_mem_cached( ()=> this.sub() ) ?? []
 			
+			const top = this.top_book ?? this
+
 			for( let prev_i = prev.length - 1, next_i = next.length - 1 ; next_i >= 0; next_i-- ) {
 				
 				const prev_page = prev[ prev_i ]
@@ -46,8 +48,7 @@ namespace $.$$ {
 				if( prev_page === next_page ) continue
 				if( placeholders.includes(next_page) ) continue
 
-				const top = this.top_book ?? this
-				top.scroll_page(next_page)
+				top.scroll_target(next_page)
 
 				break
 
@@ -58,35 +59,35 @@ namespace $.$$ {
 
 		protected top_book = null as null | $mol_book2
 
-		override auto() {
-			if (! this.top_book) this.scroll_page()
+		auto() {
+			if (! this.top_book) this.scroll_task()
 		}
 
 		@ $mol_mem
-		scroll_page(page?: $mol_view | $mol_after_tick | null): $mol_view | $mol_after_tick | null {
-			if (page === null) return null
-			if (! page) page = $mol_wire_probe(() => this.scroll_page()) ?? null
-			if (page instanceof $mol_after_tick) page = null
-
-			const top_rect = this.view_rect()
-			if (! top_rect) return page
-
-			// const page_rect = page?.view_rect()
-			// if (! page_rect) return page
-
-			return new this.$.$mol_after_tick(() => {
-				const node = page?.dom_node() as HTMLElement
-				const page_rect = { left: node.offsetLeft, width: node.offsetWidth }
-
-				const left = page_rect.left + page_rect.width - (top_rect.left + top_rect.width)
-	
-				this.dom_node().scroll({
-					left,
-					behavior: 'smooth',
-				})
-			})
+		scroll_target(page?: $mol_view | null) {
+			return page ?? null
 		}
 
+		@ $mol_mem
+		scroll_task() {
+			const page = this.scroll_target()
+			if (! page ) return null
+			const page_rect = page.view_rect()
+			if (! page_rect) return null
+
+			const top_rect = this.view_rect()
+			if (! top_rect) return null
+
+			const scroll_left = this.scroll_left()
+
+			const page_right = page_rect.right + scroll_left
+			const left = page_right - (top_rect.left + top_rect.width)
+
+			return new this.$.$mol_after_tick(() => {
+				this.dom_node().scroll({ left, behavior: 'smooth' })
+				this.scroll_target(null)
+			})
+		}
 
 		bring() {
 			
