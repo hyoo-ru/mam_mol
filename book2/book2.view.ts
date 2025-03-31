@@ -46,7 +46,8 @@ namespace $.$$ {
 				if( prev_page === next_page ) continue
 				if( placeholders.includes(next_page) ) continue
 
-				this.scroll_page(next_page)
+				const top = this.top_book ?? this
+				top.scroll_page(next_page)
 
 				break
 
@@ -56,24 +57,33 @@ namespace $.$$ {
 		}
 
 		protected top_book = null as null | $mol_book2
-		protected last_tick = null as null | $mol_after_tick
 
-		scroll_page(page: $mol_view) {
-			this.last_tick?.destructor()
+		override auto() {
+			if (! this.top_book) this.scroll_page()
+		}
 
-			this.last_tick = new this.$.$mol_after_tick( ()=> {
+		@ $mol_mem
+		scroll_page(page?: $mol_view | $mol_after_tick | null): $mol_view | $mol_after_tick | null {
+			if (page === null) return null
+			if (! page) page = $mol_wire_probe(() => this.scroll_page()) ?? null
+			if (page instanceof $mol_after_tick) page = null
 
-				const top = this.top_book ?? this
+			const top_rect = this.view_rect()
+			if (! top_rect) return page
 
-				$mol_dom_scroll({
-					container: top.dom_node() as HTMLElement,
-					item: page.dom_node() as HTMLElement,
+			// const page_rect = page?.view_rect()
+			// if (! page_rect) return page
+
+			return new this.$.$mol_after_tick(() => {
+				const node = page?.dom_node() as HTMLElement
+				const page_rect = { left: node.offsetLeft, width: node.offsetWidth }
+
+				const left = page_rect.left + page_rect.width - (top_rect.left + top_rect.width)
+	
+				this.dom_node().scroll({
+					left,
 					behavior: 'smooth',
-					block: 'end',
 				})
-
-				this.last_tick = null
-
 			})
 		}
 
