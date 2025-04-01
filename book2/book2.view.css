@@ -12,6 +12,7 @@
 	/* padding: 0 1px;
 	scroll-padding: 0 1px;
 	gap: 1px; */
+	--mol_book2_grip_top: 1.5rem;
 }
 
 [mol_book2] > * {
@@ -41,7 +42,7 @@
 	display: block;
 	content: '';
 	position: absolute;
-	top: 1.5rem;
+	top: var(--mol_book2_grip_top);
 	width: 3px;
 	height: 1rem;
 	background: linear-gradient(
