@@ -5,3 +5,7 @@ $mol_book2 $mol_scroll
 		^ placeholders /$mol_view
 			<= Placeholder null
 	minimal_width 0
+	Gap* $mol_view title \
+	auto /
+		^
+		<= scroll_task_top null
