@@ -51,13 +51,15 @@ namespace $.$$ {
 
 		protected top_book = null as null | $mol_book2
 
-		auto() {
-			if (! this.top_book) this.scroll_task()
-		}
-
 		@ $mol_mem
 		scroll_target(page?: $mol_view | null) {
 			return page ?? null
+		}
+
+		override scroll_task_top() {
+			// avoid mem creation for non-top book
+			if (this.top_book) return null
+			this.scroll_task()
 		}
 
 		@ $mol_mem
