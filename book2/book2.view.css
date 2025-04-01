@@ -78,6 +78,10 @@
 	display: contents;
 }
 
+[mol_book2] [mol_book2] > [mol_book2_placeholder] {
+	display: none;
+}
+
 [mol_book2] > *:not([mol_book2]):first-child {
 	scroll-snap-align: start;
 }
