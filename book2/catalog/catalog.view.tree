@@ -37,6 +37,7 @@ $mol_book2_catalog $mol_book2
 											needle <= menu_filter
 											haystack <= spread_title* \
 			foot <= menu_foot /$mol_view
+		<= Spread_current null
 	Spread_close $mol_link
 		arg <= spread_close_arg *
 		hint @ \Close page
