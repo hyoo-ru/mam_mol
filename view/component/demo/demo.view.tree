@@ -1,5 +1,5 @@
-$mol_view_component_demo $mol_view
-	sub /
-		<= str? \foo
-		\-
-		<= num? +NaN
+$mol_view_component_demo $mol_card
+	content /
+		<= Str $mol_string value? <=> str? \foo
+		<= Num $mol_number value? <=> num? +NaN
+	status <= sel \
