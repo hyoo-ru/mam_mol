@@ -19,7 +19,6 @@
 
 [mol_card_status] {
 	background: var(--mol_theme_line);
-	text-transform: capitalize;
 	padding: var(--mol_gap_text);
 	margin: 0;
 }

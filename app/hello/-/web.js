@@ -1570,9 +1570,16 @@ var $;
         static focused(next, notify) {
             const parents = [];
             let element = next?.[0] ?? $mol_dom_context.document.activeElement;
+            while (element?.shadowRoot) {
+                element = element.shadowRoot.activeElement;
+            }
             while (element) {
                 parents.push(element);
-                element = element.parentNode;
+                const parent = element.parentNode;
+                if (parent instanceof ShadowRoot)
+                    element = parent.host;
+                else
+                    element = parent;
             }
             if (!next || notify)
                 return parents;
@@ -1607,9 +1614,17 @@ var $;
 var $;
 (function ($) {
     if ($mol_dom_context.document) {
-        $mol_dom_context.document.documentElement.addEventListener('focus', (event) => {
-            $mol_view_selection.focused($mol_maybe($mol_dom_context.document.activeElement), 'notify');
-        }, true);
+        function focus(event) {
+            const target = event.target;
+            if (target?.shadowRoot)
+                watch(target.shadowRoot);
+            $mol_view_selection.focused($mol_maybe(target), 'notify');
+        }
+        function watch(root) {
+            root.removeEventListener('focus', focus, true);
+            root.addEventListener('focus', focus, true);
+        }
+        watch($mol_dom_context.document);
     }
 })($ || ($ = {}));
 

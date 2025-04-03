@@ -1,23 +1,27 @@
 namespace $ {
 	
 	if( $mol_dom_context.document ) {
-
-		$mol_dom_context.document.documentElement.addEventListener(
-			'focus' ,
-			( event : FocusEvent )=> {
-				$mol_view_selection.focused( $mol_maybe( $mol_dom_context.document.activeElement ), 'notify' )
-			} ,
-			true ,
-		)
 		
-		// $mol_dom_context.document.documentElement.addEventListener(
-		// 	'blur' ,
-		// 	( event : FocusEvent )=> {
-		// 		$mol_view_selection.focused( $mol_maybe( $mol_dom_context.document.activeElement ) )
-		// 	} ,
-		// 	true ,
-		// )
-	
+		function focus( event: Event ) {
+			
+			const target = event.target as HTMLElement
+			
+			if( target?.shadowRoot ) watch( target!.shadowRoot )
+			
+			$mol_view_selection.focused( $mol_maybe( target ), 'notify' )
+			
+		}
+		
+		function watch( root: Document | ShadowRoot ) {
+			
+			
+			root.removeEventListener( 'focus', focus, true )
+			root.addEventListener( 'focus', focus, true )
+			
+		}
+		
+		watch( $mol_dom_context.document )
+
 	}
 	
 }
