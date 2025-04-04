@@ -88,7 +88,7 @@ namespace $ {
 				return stat_convert($node.fs.statSync(path))
 			} catch( error: any ) {
 				if (this.$.$mol_fail_catch(error)) {
-					if (error.code === 'ENOENT') return null
+					if ((error as { code?: string } ).code === 'ENOENT') return null
 					error.message += '\n' + path
 					this.$.$mol_fail_hidden(error)
 				}
@@ -104,7 +104,7 @@ namespace $ {
 				return null
 			} catch( e: any ) {
 				if (this.$.$mol_fail_catch(e)) {
-					if (e.code === 'EEXIST') return null
+					if ((e as { code?: string } ).code === 'EEXIST') return null
 					e.message += '\n' + path
 					this.$.$mol_fail_hidden(e)
 				}
@@ -163,9 +163,9 @@ namespace $ {
 					.map( name => this.resolve( name ) )
 
 				return kids
-			} catch( e: any ) {
+			} catch( e ) {
 				if (this.$.$mol_fail_catch(e)) {
-					if (e.code === 'ENOENT') return []
+					if ((e as { code?: string }).code === 'ENOENT') return []
 					e.message += '\n' + path
 				}
 				$mol_fail_hidden(e)
