@@ -67,7 +67,7 @@ namespace $ {
 			
 			if( $mol_promise_like( next ) ) {
 				
-				this.cursor = $mol_wire_cursor.fresh
+				this.cursor = $mol_wire_cursor.stale
 				if( next !== prev ) this.emit()
 				
 				if( $mol_owning_catch( this, next ) ) {
