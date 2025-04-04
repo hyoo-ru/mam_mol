@@ -59,7 +59,7 @@ namespace $ {
 			if( $mol_promise_like( this.cache ) ) return
 			this.destructor()
 		}
-		
+
 		put( next: Result | Error | Promise< Result | Error > ) {
 			
 			const prev = this.cache
@@ -67,7 +67,7 @@ namespace $ {
 			
 			if( $mol_promise_like( next ) ) {
 				
-				this.cursor = $mol_wire_cursor.stale
+				this.cursor = $mol_wire_cursor.fresh
 				if( next !== prev ) this.emit()
 				
 				if( $mol_owning_catch( this, next ) ) {
