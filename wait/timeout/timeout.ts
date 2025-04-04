@@ -1,31 +1,25 @@
 namespace $ {
 	
-	export class $mol_wait_timeout_promise extends $mol_promise<void> {
-		readonly task: $mol_after_timeout
+	class timeout_promise extends $mol_promise<void> {
+		task: $mol_after_timeout | undefined | null
 
-		constructor(
-			executor?: (
-				done: (value: void | PromiseLike<void>) => void,
-				fail: (reason?: any) => void
-			) => void,
-			timeout = 0
-		) {
-			super(executor)
-			this.task = new $mol_after_timeout( timeout , ()=> {
-				this.success = true
-				this.done()
-			})
+		succcess() {
+			this.task = null
+			this.done()
 		}
 
-		success = false
-
 		destructor() {
-			this.task.destructor()
+			this.task?.destructor()
+			this.task = null
 		}
 	}
 
-	export function $mol_wait_timeout_async( this: $, timeout: number ) {
-		return new $mol_wait_timeout_promise(undefined, timeout) as Promise<void>
+	export function $mol_wait_timeout_async( this: $, timeout: number ): Promise< void > {
+		const promise = new timeout_promise()
+
+		promise.task = new this.$mol_after_timeout( timeout , ()=> promise.succcess())
+
+		return promise
 	}
 
 	export class $mol_wait_timeout_wrap extends $mol_object {
@@ -37,15 +31,13 @@ namespace $ {
 			this.promise?.destructor()
 		}
 
-		protected promise: $mol_wait_timeout_promise | null = null
+		protected promise: timeout_promise | null = null
 
 		wait() {
-			if (this.promise?.success) return
-
+			if (this.promise && ! this.promise.task) return
 			this.promise?.destructor()
-			this.promise = this.$.$mol_wait_timeout_async(this.timeout) as $mol_wait_timeout_promise
-
-			throw this.promise
+			this.promise = this.$.$mol_wait_timeout_async(this.timeout) as timeout_promise
+			$mol_fail_hidden(this.promise)
 		}
 
 		@ $mol_action
@@ -56,7 +48,10 @@ namespace $ {
 	}
 
 	export function $mol_wait_timeout( this: $, timeout: number ) {
-		return this.$mol_wait_timeout_wrap.timeout(timeout).wait()
+		return this.$mol_wire_sync( this ).$mol_wait_timeout_async( timeout )
 	}
+	// export function $mol_wait_timeout( this: $, timeout: number ) {
+	// 	return this.$mol_wait_timeout_wrap.timeout(timeout).wait()
+	// }
 	
 }
