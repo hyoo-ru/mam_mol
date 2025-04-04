@@ -47,11 +47,11 @@ namespace $ {
 
 	}
 
-	export function $mol_wait_timeout( this: $, timeout: number ) {
-		return this.$mol_wire_sync( this ).$mol_wait_timeout_async( timeout )
-	}
 	// export function $mol_wait_timeout( this: $, timeout: number ) {
-	// 	return this.$mol_wait_timeout_wrap.timeout(timeout).wait()
+	// 	return this.$mol_wire_sync( this ).$mol_wait_timeout_async( timeout )
 	// }
+	export function $mol_wait_timeout( this: $, timeout: number ) {
+		return this.$mol_wait_timeout_wrap.timeout(timeout).wait()
+	}
 	
 }
