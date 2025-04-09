@@ -1,18 +1,4 @@
 	($.$mol_list_demo_table) = class $mol_list_demo_table extends ($.$mol_example) {
-		check_list(){
-			return [];
-		}
-		Check(){
-			const obj = new this.$.$mol_check_group();
-			(obj.checks) = () => ((this.check_list()));
-			(obj.title) = () => ("Good Goods");
-			return obj;
-		}
-		Head(){
-			const obj = new this.$.$mol_row();
-			(obj.sub) = () => ([(this.Check())]);
-			return obj;
-		}
 		row_id(id, next){
 			if(next !== undefined) return next;
 			return "0000";
@@ -136,8 +122,6 @@
 		}
 		Row(id){
 			const obj = new this.$.$mol_row();
-			(obj.minimal_height) = () => (100);
-			(obj.minimal_width) = () => (200);
 			(obj.sub) = () => ((this.row_content(id)));
 			return obj;
 		}
@@ -146,6 +130,8 @@
 		}
 		Rows(){
 			const obj = new this.$.$mol_list();
+			(obj.item_width_min) = (id) => (200);
+			(obj.item_height_min) = (id) => (100);
 			(obj.rows) = () => ((this.rows()));
 			return obj;
 		}
@@ -153,10 +139,10 @@
 			return "Large list of rows with dynamic content";
 		}
 		count(){
-			return 9999;
+			return 99999;
 		}
 		sub(){
-			return [(this.Head()), (this.Rows())];
+			return [(this.Rows())];
 		}
 		tags(){
 			return [
@@ -171,8 +157,6 @@
 			return ["Widget/Layout"];
 		}
 	};
-	($mol_mem(($.$mol_list_demo_table.prototype), "Check"));
-	($mol_mem(($.$mol_list_demo_table.prototype), "Head"));
 	($mol_mem_key(($.$mol_list_demo_table.prototype), "row_id"));
 	($mol_mem_key(($.$mol_list_demo_table.prototype), "row_checked"));
 	($mol_mem_key(($.$mol_list_demo_table.prototype), "Id"));

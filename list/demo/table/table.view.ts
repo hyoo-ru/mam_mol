@@ -3,9 +3,9 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		rows() {
-			return Array.from(
-				{ length: this.count() },
-				(_,i)=> this.Row(i),
+			return $mol_range2(
+				index => this.Row( index ),
+				()=> this.count(),
 			)
 		}
 		
@@ -18,11 +18,12 @@ namespace $.$$ {
 		}
 
 		row_id( id: number ) {
-			return String( id ).padStart( 4, '0' )
+			return String( id ).padStart( 5, '0' )
 		}
 
 		@ $mol_mem_key
 		row_title( id: number ) {
+			$mol_wire_solid()
 			return $mol_stub_product_name()
 		}
 
@@ -31,6 +32,7 @@ namespace $.$$ {
 			id: number,
 			next = Math.floor( Math.random() * 100 )
 		) {
+			$mol_wire_solid()
 			return next
 		}
 
@@ -39,6 +41,7 @@ namespace $.$$ {
 			id: number,
 			next = $mol_array_lottery( Object.keys( this.status_options() ) )
 		) {
+			$mol_wire_solid()
 			return next
 		}
 
@@ -54,6 +57,7 @@ namespace $.$$ {
 				day: Math.floor( Math.random() * 100 )
 			})
 		) {
+			$mol_wire_solid()
 			return next
 		}
 		
