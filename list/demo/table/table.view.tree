@@ -1,47 +1,48 @@
 $mol_list_demo_table $mol_example
 	title \Large list of rows with dynamic content
-	count 9999
+	count 99999
 	sub /
-		<= Head $mol_row sub /
+		- <= Head $mol_row sub /
 			<= Check $mol_check_group
 				checks <= check_list /$mol_check
 				title \Good Goods
-		<= Rows $mol_list rows <= rows /
-			<= Row*0 $mol_row
-				minimal_height 100
-				minimal_width 200
-				sub <= row_content* /
-					<= Id_labeler* $mol_labeler
-						title \ID
-						Content <= Id* $mol_check_box
-							title <= row_id*? \0000
-							checked? <=> row_checked*? false
-					<= Title_labeler* $mol_labeler
-						title \Product Name
-						Content <= Title* $mol_link_iconed
-							uri <= row_uri* \
-							title <= row_title* \
-					<= Color_labeler* $mol_labeler
-						title \Color
-						Content <= Color* $mol_select
-							value? <=> row_color*? \
-							options <= colors /
-					<= Status_labeler* $mol_labeler
-						title \Status
-						Content <= Status* $mol_switch
-							value? <=> row_status*? \
-							options <= status_options *
-								minor \Store
-								major \Sale
-								critical \Support
-					<= Quantity_labeler* $mol_labeler
-						title \Quantity
-						Content <= Quantity* $mol_number
-							value? <=> row_quantity*? 0
-					<= Date_labeler* $mol_labeler
-						title \Supply Time
-						Content <= Date* $mol_date
-							value_moment? <=> row_moment*? $mol_time_moment
+		<= Rows $mol_list
+			item_width_min* 200
+			item_height_min* 100
+			rows <= rows /
+				<= Row*0 $mol_row
+					sub <= row_content* /
+						<= Id_labeler* $mol_labeler
+							title \ID
+							Content <= Id* $mol_check_box
+								title <= row_id*? \0000
+								checked? <=> row_checked*? false
+						<= Title_labeler* $mol_labeler
+							title \Product Name
+							Content <= Title* $mol_link_iconed
+								uri <= row_uri* \
+								title <= row_title* \
+						<= Color_labeler* $mol_labeler
+							title \Color
+							Content <= Color* $mol_select
+								value? <=> row_color*? \
+								options <= colors /
+						<= Status_labeler* $mol_labeler
+							title \Status
+							Content <= Status* $mol_switch
+								value? <=> row_status*? \
+								options <= status_options *
+									minor \Store
+									major \Sale
+									critical \Support
+						<= Quantity_labeler* $mol_labeler
+							title \Quantity
+							Content <= Quantity* $mol_number
+								value? <=> row_quantity*? 0
+						<= Date_labeler* $mol_labeler
+							title \Supply Time
+							Content <= Date* $mol_date
+								value_moment? <=> row_moment*? $mol_time_moment
 	tags /
 		\list
 		\table
