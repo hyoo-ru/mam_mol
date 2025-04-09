@@ -1,6 +1,6 @@
 $mol_list_demo_table $mol_example
 	title \Large list of rows with dynamic content
-	count 99999
+	count 100000
 	sub /
 		- <= Head $mol_row sub /
 			<= Check $mol_check_group
