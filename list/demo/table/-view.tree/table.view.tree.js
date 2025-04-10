@@ -131,7 +131,7 @@
 		Rows(){
 			const obj = new this.$.$mol_list();
 			(obj.item_width_min) = (id) => (200);
-			(obj.item_height_min) = (id) => (100);
+			(obj.item_height_min) = (id) => (96);
 			(obj.rows) = () => ((this.rows()));
 			return obj;
 		}

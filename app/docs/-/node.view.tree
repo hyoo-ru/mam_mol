@@ -4662,7 +4662,7 @@ $mol_list_demo_table $mol_example
 				title \Good Goods
 		<= Rows $mol_list
 			item_width_min* 200
-			item_height_min* 100
+			item_height_min* 96
 			rows <= rows /
 				<= Row*0 $mol_row
 					sub <= row_content* /
