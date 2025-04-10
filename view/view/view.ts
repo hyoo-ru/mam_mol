@@ -434,16 +434,20 @@ namespace $ {
 			if( path.length === 0 && check( this ) ) return yield [ this ]
 			
 			try {
-				const unchecked = [] as $mol_view[]
+				const checked = new Set<$mol_view>()
+				const sub = this.sub()
 
-				for( const item of this.sub() ) {
+				for( const item of sub ) {
 					if( ! ( item instanceof $mol_view ) ) continue
 
-					if ( check( item ) ) yield [ ... path, this, item ]
-					else unchecked.push(item)
+					if ( ! check( item ) ) continue
+					checked.add(item)
+					yield [ ... path, this, item ]
 				}
 
-				for( const item of unchecked ) {
+				for( const item of sub ) {
+					if ( ! ( item instanceof $mol_view) ) continue
+					if ( checked.has(item) ) continue
 					yield* item.view_find( check, [ ... path, this ] )
 				}
 			} catch( error: unknown ) {
