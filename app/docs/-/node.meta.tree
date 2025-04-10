@@ -57,6 +57,7 @@
 	pack notes git \https://github.com/hyoo-ru/notes.hyoo.ru.git
 	pack offer git \https://github.com/hyoo-ru/offer.hyoo.ru.git
 	pack page git \https://github.com/hyoo-ru/page.hyoo.ru.git
+	pack password git \https://github.com/hyoo-ru/password.hyoo.ru.git
 	pack play git \https://github.com/hyoo-ru/play.hyoo.ru.git
 	pack rdf git \https://github.com/hyoo-ru/rdf.hyoo.ru.git
 	pack realworld git \https://github.com/hyoo-ru/realworld.hyoo.ru.git
