@@ -434,17 +434,17 @@ namespace $ {
 			if( path.length === 0 && check( this ) ) return yield [ this ]
 			
 			try {
-				const sub = this.sub()
-				for( const item of sub ) {
-					if( item instanceof $mol_view && check( item ) ) {
-						yield [ ... path, this, item ]
-					}
+				const unchecked = [] as $mol_view[]
+
+				for( const item of this.sub() ) {
+					if( ! ( item instanceof $mol_view ) ) continue
+
+					if ( check( item ) ) yield [ ... path, this, item ]
+					else unchecked.push(item)
 				}
 
-				for( const item of sub ) {
-					if( item instanceof $mol_view && ! check( item) ) {
-						yield* item.view_find( check, [ ... path, this ] )
-					}
+				for( const item of unchecked ) {
+					yield* item.view_find( check, [ ... path, this ] )
 				}
 			} catch( error: unknown ) {
 				if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
