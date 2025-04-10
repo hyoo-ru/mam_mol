@@ -434,14 +434,15 @@ namespace $ {
 			if( path.length === 0 && check( this ) ) return yield [ this ]
 			
 			try {
-				for( const item of this.sub() ) {
+				const sub = this.sub()
+				for( const item of sub ) {
 					if( item instanceof $mol_view && check( item ) ) {
-						return yield [ ... path, this, item ]
+						yield [ ... path, this, item ]
 					}
 				}
 
-				for( const item of this.sub() ) {
-					if( item instanceof $mol_view ) {
+				for( const item of sub ) {
+					if( item instanceof $mol_view && ! check( item) ) {
 						yield* item.view_find( check, [ ... path, this ] )
 					}
 				}
