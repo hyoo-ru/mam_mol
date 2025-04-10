@@ -31,7 +31,7 @@ namespace $.$$ {
 		@ $mol_mem
 		sub() {
 			return this.checked()
-				? [ this.title() ]
+				? [ this.Icon(), this.title() ]
 				: [ this.Icon() ]
 		}
 		

@@ -8,6 +8,10 @@ namespace $.$$ {
 			shrink: 1,
 		},
 		
+		align: {
+			items: 'flex-start',
+		},
+		
 		Icon: {
 			color: $mol_theme.control,
 		},
