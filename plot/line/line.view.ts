@@ -46,13 +46,8 @@ namespace $.$$ {
 				) continue
 
 				if (scaled.x === last.x) {
-					if (scaled.y > last.y) indexes[indexes.length - 1] = i
-					last = scaled
-					continue
-				}
-
-				if (scaled.y === last.y) {
-					if (scaled.x > last.x) indexes[indexes.length - 1] = i
+					if (series_y[indexes[indexes.length - 1]] > series_y[i]) continue
+					indexes[indexes.length - 1] = i
 					last = scaled
 					continue
 				}
