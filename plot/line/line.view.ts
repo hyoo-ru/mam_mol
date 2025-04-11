@@ -45,13 +45,6 @@ namespace $.$$ {
 					&& Math.abs( scaled.y - last.y ) < threshold
 				) continue
 
-				if (scaled.x === last.x) {
-					if (series_y[indexes[indexes.length - 1]] > series_y[i]) continue
-					indexes[indexes.length - 1] = i
-					last = scaled
-					continue
-				}
-
 				const zone = zone_of( scaled )
 				
 				last = scaled
@@ -79,7 +72,9 @@ namespace $.$$ {
 			const points = this.points()
 			if( points.length === 0 ) return ''
 
-			return points.map( (point, index) => `${index === 0 ? 'M' : 'L'} ${point.join(' ')}`).join(' ')
+			const main = points.map( (point) => point.join(',')).join(' ')
+
+			return `M ${points[0].join(' ')} L ${main}`
 		}
 		
 	}

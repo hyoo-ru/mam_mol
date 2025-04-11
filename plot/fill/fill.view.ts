@@ -7,9 +7,9 @@ namespace $.$$ {
 			
 			const [, shift_y] = this.shift()
 
-			const main = points.map( (point, index) => `${index === 0 ? 'M' : 'L'} ${point.join(' ')}`).join(' ')
+			const main = points.map( point => point.join(',')).join(' ')
 
-			return `${main} V ${shift_y} H ${points[0][0]}`
+			return `M ${points[0].join(' ')} L ${main} V ${shift_y} H ${points[0][0]}`
 		}
 		
 		front() {
