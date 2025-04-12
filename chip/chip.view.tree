@@ -1,3 +1,6 @@
 $mol_chip $mol_view
+	attr *
+		^
+		title <= hint \
 	sub /
 		<= title
