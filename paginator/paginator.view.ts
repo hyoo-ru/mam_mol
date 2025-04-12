@@ -9,13 +9,13 @@ namespace $.$$ {
 		backward( event: Event ) {
 			if( event.defaultPrevented ) return
 			event.preventDefault()
-			this.value( this.value() - 1 )
+			this.value( this.value() - this.step() )
 		}
 		
 		forward( event: Event ) {
 			if( event.defaultPrevented ) return
 			event.preventDefault()
-			this.value( this.value() + 1 )
+			this.value( this.value() + this.step() )
 		}
 
 	}
