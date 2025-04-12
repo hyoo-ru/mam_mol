@@ -5132,6 +5132,7 @@ $mol_page_demo $mol_example_large
 		\Widget/Layout
 
 $mol_paginator $mol_bar
+	step 1
 	sub /
 		<= Backward $mol_button_minor
 			hint <= backward_hint @ \Backward

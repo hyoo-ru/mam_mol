@@ -18226,6 +18226,7 @@ declare namespace $ {
 		forward( next?: any ): any
 		Forward_icon( ): $mol_icon_chevron_right
 		Forward( ): $mol_button_minor
+		step( ): number
 		sub( ): readonly(any)[]
 	}
 	

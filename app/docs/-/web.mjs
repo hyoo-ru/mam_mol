@@ -35247,6 +35247,9 @@ var $;
 			(obj.sub) = () => ([(this.Forward_icon())]);
 			return obj;
 		}
+		step(){
+			return 1;
+		}
 		sub(){
 			return [
 				(this.Backward()), 
@@ -35279,13 +35282,13 @@ var $;
                 if (event.defaultPrevented)
                     return;
                 event.preventDefault();
-                this.value(this.value() - 1);
+                this.value(this.value() - this.step());
             }
             forward(event) {
                 if (event.defaultPrevented)
                     return;
                 event.preventDefault();
-                this.value(this.value() + 1);
+                this.value(this.value() + this.step());
             }
         }
         $$.$mol_paginator = $mol_paginator;

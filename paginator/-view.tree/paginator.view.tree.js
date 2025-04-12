@@ -44,6 +44,9 @@
 			(obj.sub) = () => ([(this.Forward_icon())]);
 			return obj;
 		}
+		step(){
+			return 1;
+		}
 		sub(){
 			return [
 				(this.Backward()), 
