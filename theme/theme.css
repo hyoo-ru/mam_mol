@@ -85,11 +85,11 @@
 } }
 
 :where( :root, [mol_theme="$mol_theme_dark"] ) [mol_theme="$mol_theme_base"] {
-	--mol_theme_back: oklch( 25% .05 var(--mol_theme_hue) );
+	--mol_theme_back: oklch( 25% .075 var(--mol_theme_hue) );
 	--mol_theme_card: oklch( 35% .1 var(--mol_theme_hue) / .25 );
 }
 :where( [mol_theme="$mol_theme_light"] ) [mol_theme="$mol_theme_base"] {
-	--mol_theme_back: oklch( 85% .05 var(--mol_theme_hue) );
+	--mol_theme_back: oklch( 85% .075 var(--mol_theme_hue) );
 	--mol_theme_card: oklch( 98% .03 var(--mol_theme_hue) / .25 );
 }
 
