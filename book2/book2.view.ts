@@ -105,6 +105,11 @@ namespace $.$$ {
 			
 		}
 
+		override placeholders() {
+			if (this.Placeholder()) return [ this.Placeholder() ]
+			return super.placeholders()
+		}
+
 	}
 
 }

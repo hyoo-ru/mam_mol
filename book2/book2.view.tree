@@ -3,7 +3,7 @@ $mol_book2 $mol_scroll
 	sub /$mol_view
 		^ pages /$mol_view
 		^ placeholders /$mol_view
-			<= Placeholder null
+	Placeholder null
 	minimal_width 0
 	Gap* $mol_view title \
 	auto /
