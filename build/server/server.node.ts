@@ -1,4 +1,5 @@
 namespace $ {
+	const handled = new WeakSet<Error>()
 
 	export class $mol_build_server extends $mol_server {
 		
@@ -25,8 +26,9 @@ namespace $ {
 				} catch (err) {
 					const error = err instanceof Error ? err : new Error(String(err), { cause: err })
 
-					if (! this.$.$mol_build_server.trace && ! error.message.includes('Set $mol_build_server.trace')) {
+					if (! this.$.$mol_build_server.trace && ! handled.has(error)) {
 						error.message += '\n' + 'Set $mol_build_server.trace = true for stacktraces'
+						handled.add(error)
 					}
 	
 					res.status(500).send( error.toString() ).end()
