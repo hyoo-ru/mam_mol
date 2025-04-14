@@ -9,9 +9,16 @@ namespace $.$$ {
 			alignSelf: 'stretch',
 		},
 		
+		Menu_item: {
+			align: {
+				items: 'flex-start',
+			},
+		},
+		
 		Menu_link: {
 			flex: {
 				grow: 1,
+				shrink: 1,
 			},
 		},
 		
