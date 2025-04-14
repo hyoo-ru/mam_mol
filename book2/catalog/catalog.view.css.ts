@@ -19,6 +19,7 @@ namespace $.$$ {
 			flex: {
 				grow: 1,
 				shrink: 1,
+				wrap: 'wrap',
 			},
 		},
 		
