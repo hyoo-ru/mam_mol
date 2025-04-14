@@ -9158,7 +9158,7 @@ declare namespace $.$$ {
         spread_ids(): readonly string[];
         menu_body(): ($.$mol_list | $.$mol_search)[];
         menu_filter_enabled(): boolean;
-        menu_links(): $.$mol_link[];
+        menu_links(): $mol_view[];
         spread_ids_filtered(): string[];
         Spread(id: string): $mol_view;
         Spread_default(): any;

@@ -48,7 +48,7 @@ namespace $.$$ {
 		@ $mol_mem
 		override menu_links() {
 			return this.spread_ids_filtered()
-				.map( spread => this.Menu_link( spread ) )
+				.map( spread => this.Menu_item( spread ) )
 		}
 
 		@ $mol_mem
