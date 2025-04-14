@@ -7270,6 +7270,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    const trace_hinted = new WeakSet();
     class $mol_build_server extends $mol_server {
         static trace = false;
         sync_middleware(mdl) {
@@ -7280,9 +7281,11 @@ var $;
                     if (!stopped)
                         Promise.resolve().then(next);
                 }
-                catch (error) {
-                    if (!this.$.$mol_build_server.trace) {
+                catch (err) {
+                    const error = err instanceof Error ? err : new Error(String(err), { cause: err });
+                    if (!this.$.$mol_build_server.trace && !trace_hinted.has(error)) {
                         error.message += '\n' + 'Set $mol_build_server.trace = true for stacktraces';
+                        trace_hinted.add(error);
                     }
                     res.status(500).send(error.toString()).end();
                     this.$.$mol_log3_fail({
