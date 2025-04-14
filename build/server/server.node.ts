@@ -22,8 +22,10 @@ namespace $ {
 				try {
 					const stopped = await wrapped(req, res)
 					if (! stopped) Promise.resolve().then(next)
-				} catch (error: any) {
-					if (! this.$.$mol_build_server.trace) {
+				} catch (err) {
+					const error = err instanceof Error ? err : new Error(String(err), { cause: err })
+
+					if (! this.$.$mol_build_server.trace && ! error.message.includes('Set $mol_build_server.trace')) {
 						error.message += '\n' + 'Set $mol_build_server.trace = true for stacktraces'
 					}
 	
