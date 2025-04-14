@@ -2,6 +2,24 @@
 		precision(){
 			return 1;
 		}
+		event_dec(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		dec_enabled(){
+			return (this.enabled());
+		}
+		dec_icon(){
+			const obj = new this.$.$mol_icon_chevron_left();
+			return obj;
+		}
+		Dec(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.event_click) = (next) => ((this.event_dec(next)));
+			(obj.enabled) = () => ((this.dec_enabled()));
+			(obj.sub) = () => ([(this.dec_icon())]);
+			return obj;
+		}
 		type(){
 			return "tel";
 		}
@@ -28,24 +46,6 @@
 			(obj.submit) = (next) => ((this.submit(next)));
 			return obj;
 		}
-		event_dec(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		dec_enabled(){
-			return (this.enabled());
-		}
-		dec_icon(){
-			const obj = new this.$.$mol_icon_minus();
-			return obj;
-		}
-		Dec(){
-			const obj = new this.$.$mol_button_minor();
-			(obj.event_click) = (next) => ((this.event_dec(next)));
-			(obj.enabled) = () => ((this.dec_enabled()));
-			(obj.sub) = () => ([(this.dec_icon())]);
-			return obj;
-		}
 		event_inc(next){
 			if(next !== undefined) return next;
 			return null;
@@ -54,7 +54,7 @@
 			return (this.enabled());
 		}
 		inc_icon(){
-			const obj = new this.$.$mol_icon_plus();
+			const obj = new this.$.$mol_icon_chevron_right();
 			return obj;
 		}
 		Inc(){
@@ -85,18 +85,18 @@
 		}
 		sub(){
 			return [
-				(this.String()), 
 				(this.Dec()), 
+				(this.String()), 
 				(this.Inc())
 			];
 		}
 	};
-	($mol_mem(($.$mol_number.prototype), "value_string"));
-	($mol_mem(($.$mol_number.prototype), "submit"));
-	($mol_mem(($.$mol_number.prototype), "String"));
 	($mol_mem(($.$mol_number.prototype), "event_dec"));
 	($mol_mem(($.$mol_number.prototype), "dec_icon"));
 	($mol_mem(($.$mol_number.prototype), "Dec"));
+	($mol_mem(($.$mol_number.prototype), "value_string"));
+	($mol_mem(($.$mol_number.prototype), "submit"));
+	($mol_mem(($.$mol_number.prototype), "String"));
 	($mol_mem(($.$mol_number.prototype), "event_inc"));
 	($mol_mem(($.$mol_number.prototype), "inc_icon"));
 	($mol_mem(($.$mol_number.prototype), "Inc"));

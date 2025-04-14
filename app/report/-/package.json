@@ -174,8 +174,9 @@
     "$mol_icon_dots",
     "$mol_match",
     "$mol_number",
-    "$mol_icon_minus",
-    "$mol_icon_plus"
+    "$mol_icon_chevron_left",
+    "$mol_icon_chevron",
+    "$mol_icon_chevron_right"
   ],
   "dependencies": {
     "jsdom": "*"

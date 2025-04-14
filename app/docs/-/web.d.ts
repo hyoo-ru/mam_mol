@@ -768,7 +768,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    const $mol_theme: Record<"image" | "line" | "text" | "field" | "focus" | "back" | "hover" | "card" | "current" | "special" | "control" | "shade", $mol_style_func<"var", unknown>>;
+    const $mol_theme: Record<"image" | "line" | "text" | "field" | "focus" | "back" | "hover" | "card" | "current" | "special" | "control" | "shade" | "spirit", $mol_style_func<"var", unknown>>;
 }
 
 declare namespace $ {
@@ -6274,66 +6274,66 @@ declare namespace $ {
 
 declare namespace $ {
 
-	export class $mol_icon_minus extends $mol_icon {
+	export class $mol_icon_chevron_left extends $mol_icon {
 		path( ): string
 	}
 	
 }
 
-//# sourceMappingURL=minus.view.tree.d.ts.map
+//# sourceMappingURL=left.view.tree.d.ts.map
 declare namespace $ {
 
-	export class $mol_icon_plus extends $mol_icon {
+	export class $mol_icon_chevron_right extends $mol_icon {
 		path( ): string
 	}
 	
 }
 
-//# sourceMappingURL=plus.view.tree.d.ts.map
+//# sourceMappingURL=right.view.tree.d.ts.map
 declare namespace $ {
 }
 
 declare namespace $ {
 
-	type $mol_string__type_mol_number_1 = $mol_type_enforce<
-		ReturnType< $mol_number['type'] >
-		,
-		ReturnType< $mol_string['type'] >
-	>
-	type $mol_string__value_mol_number_2 = $mol_type_enforce<
-		ReturnType< $mol_number['value_string'] >
-		,
-		ReturnType< $mol_string['value'] >
-	>
-	type $mol_string__hint_mol_number_3 = $mol_type_enforce<
-		ReturnType< $mol_number['hint'] >
-		,
-		ReturnType< $mol_string['hint'] >
-	>
-	type $mol_string__enabled_mol_number_4 = $mol_type_enforce<
-		ReturnType< $mol_number['string_enabled'] >
-		,
-		ReturnType< $mol_string['enabled'] >
-	>
-	type $mol_string__submit_mol_number_5 = $mol_type_enforce<
-		ReturnType< $mol_number['submit'] >
-		,
-		ReturnType< $mol_string['submit'] >
-	>
-	type $mol_button_minor__event_click_mol_number_6 = $mol_type_enforce<
+	type $mol_button_minor__event_click_mol_number_1 = $mol_type_enforce<
 		ReturnType< $mol_number['event_dec'] >
 		,
 		ReturnType< $mol_button_minor['event_click'] >
 	>
-	type $mol_button_minor__enabled_mol_number_7 = $mol_type_enforce<
+	type $mol_button_minor__enabled_mol_number_2 = $mol_type_enforce<
 		ReturnType< $mol_number['dec_enabled'] >
 		,
 		ReturnType< $mol_button_minor['enabled'] >
 	>
-	type $mol_button_minor__sub_mol_number_8 = $mol_type_enforce<
+	type $mol_button_minor__sub_mol_number_3 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_minor['sub'] >
+	>
+	type $mol_string__type_mol_number_4 = $mol_type_enforce<
+		ReturnType< $mol_number['type'] >
+		,
+		ReturnType< $mol_string['type'] >
+	>
+	type $mol_string__value_mol_number_5 = $mol_type_enforce<
+		ReturnType< $mol_number['value_string'] >
+		,
+		ReturnType< $mol_string['value'] >
+	>
+	type $mol_string__hint_mol_number_6 = $mol_type_enforce<
+		ReturnType< $mol_number['hint'] >
+		,
+		ReturnType< $mol_string['hint'] >
+	>
+	type $mol_string__enabled_mol_number_7 = $mol_type_enforce<
+		ReturnType< $mol_number['string_enabled'] >
+		,
+		ReturnType< $mol_string['enabled'] >
+	>
+	type $mol_string__submit_mol_number_8 = $mol_type_enforce<
+		ReturnType< $mol_number['submit'] >
+		,
+		ReturnType< $mol_string['submit'] >
 	>
 	type $mol_button_minor__event_click_mol_number_9 = $mol_type_enforce<
 		ReturnType< $mol_number['event_inc'] >
@@ -6352,19 +6352,19 @@ declare namespace $ {
 	>
 	export class $mol_number extends $mol_view {
 		precision( ): number
+		event_dec( next?: any ): any
+		dec_enabled( ): ReturnType< $mol_number['enabled'] >
+		dec_icon( ): $mol_icon_chevron_left
+		Dec( ): $mol_button_minor
 		type( ): string
 		value_string( next?: string ): string
 		hint( ): string
 		string_enabled( ): ReturnType< $mol_number['enabled'] >
 		submit( next?: any ): any
 		String( ): $mol_string
-		event_dec( next?: any ): any
-		dec_enabled( ): ReturnType< $mol_number['enabled'] >
-		dec_icon( ): $mol_icon_minus
-		Dec( ): $mol_button_minor
 		event_inc( next?: any ): any
 		inc_enabled( ): ReturnType< $mol_number['enabled'] >
-		inc_icon( ): $mol_icon_plus
+		inc_icon( ): $mol_icon_chevron_right
 		Inc( ): $mol_button_minor
 		precision_view( ): ReturnType< $mol_number['precision'] >
 		precision_change( ): ReturnType< $mol_number['precision'] >
@@ -6564,6 +6564,15 @@ declare namespace $ {
     function $mol_array_chunks<Item>(array: Item[], br: (item: Item, index: number) => boolean): Item[][];
 }
 
+declare namespace $ {
+
+	export class $mol_icon_plus extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=plus.view.tree.d.ts.map
 declare namespace $ {
 
 	export class $mol_icon_bookmark extends $mol_icon {
@@ -13603,24 +13612,6 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=outline.view.tree.d.ts.map
-declare namespace $ {
-
-	export class $mol_icon_chevron_left extends $mol_icon {
-		path( ): string
-	}
-	
-}
-
-//# sourceMappingURL=left.view.tree.d.ts.map
-declare namespace $ {
-
-	export class $mol_icon_chevron_right extends $mol_icon {
-		path( ): string
-	}
-	
-}
-
-//# sourceMappingURL=right.view.tree.d.ts.map
 declare namespace $ {
 
 	type $mol_button_minor__hint_mol_date_1 = $mol_type_enforce<
