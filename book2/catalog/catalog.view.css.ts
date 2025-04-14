@@ -1,5 +1,6 @@
 namespace $.$$ {
 	$mol_style_define( $mol_book2_catalog, {
+		
 		Menu_filter: {
 			flex: {
 				shrink: 0,
@@ -7,6 +8,13 @@ namespace $.$$ {
 			},
 			alignSelf: 'stretch',
 		},
+		
+		Menu_link: {
+			flex: {
+				grow: 1,
+			},
+		},
+		
 	})
 
 }
