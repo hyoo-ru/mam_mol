@@ -1,4 +1,5 @@
 $mol_chip $mol_view
+	minimal_height 40
 	attr *
 		^
 		title <= hint \

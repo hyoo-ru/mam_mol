@@ -15,17 +15,22 @@ declare namespace $ {
 		,
 		ReturnType< $mol_section['title'] >
 	>
-	type $mol_section__content_mol_emoji_safe_demo_4 = $mol_type_enforce<
+	type $mol_section__level_mol_emoji_safe_demo_4 = $mol_type_enforce<
+		number
+		,
+		ReturnType< $mol_section['level'] >
+	>
+	type $mol_section__content_mol_emoji_safe_demo_5 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_section['content'] >
 	>
-	type $mol_list__rows_mol_emoji_safe_demo_5 = $mol_type_enforce<
+	type $mol_list__rows_mol_emoji_safe_demo_6 = $mol_type_enforce<
 		ReturnType< $mol_emoji_safe_demo['groups'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_scroll__sub_mol_emoji_safe_demo_6 = $mol_type_enforce<
+	type $mol_scroll__sub_mol_emoji_safe_demo_7 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_scroll['sub'] >
