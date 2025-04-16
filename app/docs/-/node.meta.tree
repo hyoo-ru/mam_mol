@@ -127,6 +127,8 @@
 	deploy \/hyoo/js/eval/logo/logo.svg
 \/mol/audio/demo/sample
 	deploy \/mol/audio/demo/sample/drumloop.ogg
+\/mol/emoji/safe
+	deploy \/mol/emoji/safe/safe.json
 \/hyoo/marked/app
 	deploy \/hyoo/marked/readme.md
 	deploy \/hyoo/marked/logo/logo.svg
@@ -200,6 +202,7 @@
 	include \/mol/dimmer/demo
 	include \/mol/drag/demo
 	include \/mol/dump/demo
+	include \/mol/emoji/safe/demo
 	include \/mol/expander/demo
 	include \/mol/fetch/demo
 	include \/mol/filler/demo

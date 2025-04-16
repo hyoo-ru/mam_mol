@@ -6498,7 +6498,7 @@ var $;
             const name = '$' + pack.relate(this.root()).replaceAll('/', '_');
             let content = source.exists()
                 ? source.text()
-                : `<!doctype html><meta charset="utf-8" /><body mol_view_root="${name}"><script src="web.js" charset="utf-8"></script>`;
+                : `<!doctype html><meta charset="utf-8" /><html mol_view_root><body mol_view_root="${name}"><script src="web.js" charset="utf-8"></script>`;
             content = content.replace(/(<\/body>|$)/, `
 				<script src="/mol/build/client/client.js" charset="utf-8"></script>
 				<script src="web.test.js" charset="utf-8"></script>

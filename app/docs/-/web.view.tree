@@ -3976,6 +3976,28 @@ $mol_dump_demo $mol_example_small
 	aspects /
 		\Widget
 
+$mol_chip $mol_view
+	attr *
+		^
+		title <= hint \
+	sub /
+		<= title
+
+$mol_emoji_safe_demo $mol_example_large
+	title \All safe to use emojis
+	sub /
+		<= Scroll $mol_scroll sub /
+			<= Groups $mol_list rows <= groups /
+				<= Group*0 $mol_section
+					title <= group_title* \
+					content / <= Emojis* $mol_view sub <= emojis* /
+						<= Emoji*0 $mol_chip
+							title <= emoji* \
+	tags /
+		\emoji
+	aspects /
+		\Media
+
 $mol_expander_demo $mol_example_small
 	title \Simple spoiler
 	sub /
