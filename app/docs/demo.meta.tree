@@ -69,6 +69,7 @@ include \/mol/deck/demo
 include \/mol/dimmer/demo
 include \/mol/drag/demo
 include \/mol/dump/demo
+include \/mol/emoji/safe/demo
 include \/mol/expander/demo
 include \/mol/fetch/demo
 include \/mol/filler/demo
