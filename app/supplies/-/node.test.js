@@ -5912,7 +5912,7 @@ var $;
             }
             keydown(next) {
                 if (next.ctrlKey && next.keyCode === $mol_keyboard_code.enter && !this.submit_blocked())
-                    this.submit(event);
+                    this.submit(next);
             }
         }
         __decorate([
