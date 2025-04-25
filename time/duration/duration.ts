@@ -38,17 +38,18 @@ namespace $ {
 				}
 
 				duration: {
-					const parser = /^P(?:([+-]?\d+(?:\.\d+)?)Y)?(?:([+-]?\d+(?:\.\d+)?)M)?(?:([+-]?\d+(?:\.\d+)?)D)?(?:T(?:([+-]?\d+(?:\.\d+)?)h)?(?:([+-]?\d+(?:\.\d+)?)m)?(?:([+-]?\d+(?:\.\d+)?)s)?)?$/i
+					const parser = /^(-?)P(?:([+-]?\d+(?:\.\d+)?)Y)?(?:([+-]?\d+(?:\.\d+)?)M)?(?:([+-]?\d+(?:\.\d+)?)D)?(?:T(?:([+-]?\d+(?:\.\d+)?)h)?(?:([+-]?\d+(?:\.\d+)?)m)?(?:([+-]?\d+(?:\.\d+)?)s)?)?$/i
 					
 					const found = parser.exec( config )
 					if( !found ) break duration
 						
-					if( found[1] ) this.year = Number( found[1] )
-					if( found[2] ) this.month = Number( found[2] )
-					if( found[3] ) this.day = Number( found[3] )
-					if( found[4] ) this.hour = Number( found[4] )
-					if( found[5] ) this.minute = Number( found[5] )
-					if( found[6] ) this.second = Number( found[6] )
+					const sign = found[1] ? -1 : 1
+					if( found[2] ) this.year = sign * Number( found[2] )
+					if( found[3] ) this.month = sign * Number( found[3] )
+					if( found[4] ) this.day = sign * Number( found[4] )
+					if( found[5] ) this.hour = sign * Number( found[5] )
+					if( found[6] ) this.minute = sign * Number( found[6] )
+					if( found[7] ) this.second = sign * Number( found[7] )
 					
 					return
 				}
