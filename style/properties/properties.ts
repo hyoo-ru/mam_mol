@@ -3,7 +3,7 @@ namespace $ {
 	export type $mol_style_properties = Partial< $mol_type_override< CSSStyleDeclaration , Overrides > >
 
 	type Common =
-	| 'inherit' | 'initial' | 'unset' | 'revert' | 'revert-layer'
+	| 'inherit' | 'initial' | 'unset' | 'revert' | 'revert-layer' | 'none'
 	| $mol_style_func< 'var' >
 
 	export type $mol_style_properties_color =
