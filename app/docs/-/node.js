@@ -15708,6 +15708,28 @@ var $;
 			if(next !== undefined) return next;
 			return null;
 		}
+		event_inc(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		event_dec_boost(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		event_inc_boost(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Hotkey(){
+			const obj = new this.$.$mol_hotkey();
+			(obj.key) = () => ({
+				"down": (next) => (this.event_dec(next)), 
+				"up": (next) => (this.event_inc(next)), 
+				"pageDown": (next) => (this.event_dec_boost(next)), 
+				"pageUp": (next) => (this.event_inc_boost(next))
+			});
+			return obj;
+		}
 		dec_enabled(){
 			return (this.enabled());
 		}
@@ -15748,10 +15770,6 @@ var $;
 			(obj.submit) = (next) => ((this.submit(next)));
 			return obj;
 		}
-		event_inc(next){
-			if(next !== undefined) return next;
-			return null;
-		}
 		inc_enabled(){
 			return (this.enabled());
 		}
@@ -15772,6 +15790,9 @@ var $;
 		precision_change(){
 			return (this.precision());
 		}
+		boost(){
+			return 10;
+		}
 		value_min(){
 			return -Infinity;
 		}
@@ -15785,6 +15806,9 @@ var $;
 		enabled(){
 			return true;
 		}
+		plugins(){
+			return [(this.Hotkey())];
+		}
 		sub(){
 			return [
 				(this.Dec()), 
@@ -15794,12 +15818,15 @@ var $;
 		}
 	};
 	($mol_mem(($.$mol_number.prototype), "event_dec"));
+	($mol_mem(($.$mol_number.prototype), "event_inc"));
+	($mol_mem(($.$mol_number.prototype), "event_dec_boost"));
+	($mol_mem(($.$mol_number.prototype), "event_inc_boost"));
+	($mol_mem(($.$mol_number.prototype), "Hotkey"));
 	($mol_mem(($.$mol_number.prototype), "dec_icon"));
 	($mol_mem(($.$mol_number.prototype), "Dec"));
 	($mol_mem(($.$mol_number.prototype), "value_string"));
 	($mol_mem(($.$mol_number.prototype), "submit"));
 	($mol_mem(($.$mol_number.prototype), "String"));
-	($mol_mem(($.$mol_number.prototype), "event_inc"));
 	($mol_mem(($.$mol_number.prototype), "inc_icon"));
 	($mol_mem(($.$mol_number.prototype), "Inc"));
 	($mol_mem(($.$mol_number.prototype), "value"));
@@ -15837,9 +15864,19 @@ var $;
             }
             event_dec(next) {
                 this.value_limited((this.value_limited() || 0) - this.precision_change());
+                next?.preventDefault();
             }
             event_inc(next) {
                 this.value_limited((this.value_limited() || 0) + this.precision_change());
+                next?.preventDefault();
+            }
+            event_dec_boost(next) {
+                this.value_limited((this.value_limited() || 0) - this.precision_change() * this.boost());
+                next?.preventDefault();
+            }
+            event_inc_boost(next) {
+                this.value_limited((this.value_limited() || 0) + this.precision_change() * this.boost());
+                next?.preventDefault();
             }
             round(val) {
                 if (Number.isNaN(val))

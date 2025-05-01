@@ -331,10 +331,18 @@ $mol_icon_chevron_right $mol_icon path \M8.59,16.58L13.17,12L8.59,7.41L10,6L16,1
 $mol_number $mol_view
 	precision_view <= precision 1
 	precision_change <= precision 1
+	boost 10
 	value_min -Infinity
 	value_max +Infinity
 	value? +NaN
 	enabled true
+	plugins /
+		<= Hotkey $mol_hotkey
+			key *
+				down? <=> event_dec? null
+				up? <=> event_inc? null
+				pageDown? <=> event_dec_boost? null
+				pageUp? <=> event_inc_boost? null
 	sub /
 		<= Dec $mol_button_minor
 			event_click? <=> event_dec? null
