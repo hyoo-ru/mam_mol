@@ -1,10 +1,18 @@
 $mol_number $mol_view
 	precision_view <= precision 1
 	precision_change <= precision 1
+	boost 10
 	value_min -Infinity
 	value_max +Infinity
 	value? +NaN
 	enabled true
+	plugins /
+		<= Hotkey $mol_hotkey
+			key *
+				down? <=> event_dec? null
+				up? <=> event_inc? null
+				pageDown? <=> event_dec_boost? null
+				pageUp? <=> event_inc_boost? null
 	sub /
 		<= Dec $mol_button_minor
 			event_click? <=> event_dec? null
