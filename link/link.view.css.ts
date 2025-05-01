@@ -26,7 +26,7 @@ namespace $ {
 			
 		},
 
-		':focus-visible': {
+		':focus': {
 			
 			outline: 'none',
 			
