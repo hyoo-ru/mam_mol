@@ -6,7 +6,7 @@ namespace $ {
 		num = minus ? -num - 1n : num
 		
 		const bytes = [] as number[]
-		while( num ) {
+		do {
 			
 			let byte = minus ^ Number( num % 256n )
 			bytes.push( byte )
@@ -18,7 +18,7 @@ namespace $ {
 			
 			break
 			
-		}
+		} while( num )
 	
 		return new Uint8Array(bytes);
 	}

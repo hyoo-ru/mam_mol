@@ -9,6 +9,16 @@ namespace $.$$ {
 			)
 			
 			$mol_assert_equal(
+				$mol_bigint_decode( new Uint8Array( new Int8Array([ 1 ]).buffer ) ),
+				1n,
+			)
+			
+			$mol_assert_equal(
+				$mol_bigint_decode( new Uint8Array( new Int8Array([ -1 ]).buffer ) ),
+				-1n,
+			)
+			
+			$mol_assert_equal(
 				$mol_bigint_decode( new Uint8Array( new Int8Array([ 127 ]).buffer ) ),
 				127n,
 			)

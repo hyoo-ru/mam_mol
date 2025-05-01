@@ -5,7 +5,17 @@ namespace $.$$ {
 			
 			$mol_assert_equal(
 				$mol_bigint_encode( 0n ),
-				new Uint8Array,
+				new Uint8Array( new Int8Array([ 0 ]).buffer ),
+			)
+			
+			$mol_assert_equal(
+				$mol_bigint_encode( 1n ),
+				new Uint8Array( new Int8Array([ 1 ]).buffer ),
+			)
+			
+			$mol_assert_equal(
+				$mol_bigint_encode( -1n ),
+				new Uint8Array( new Int8Array([ -1 ]).buffer ),
 			)
 			
 			$mol_assert_equal(
