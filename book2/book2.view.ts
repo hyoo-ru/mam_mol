@@ -6,19 +6,8 @@ namespace $.$$ {
 	 */
 	export class $mol_book2 extends $.$mol_book2 {
 
-		@ $mol_mem
-		override pages_deep() {
-			let result = [] as $mol_view[]
-			for (const subpage of this.pages()) {
-				if (subpage instanceof $mol_book2) result = [ ...result, ...subpage.pages_deep() ]
-				else result.push(subpage)
-			}
-
-			return result
-		}
-		
 		title() {
-			return this.pages_deep().map( page => {
+			return this.pages().map( page => {
 				try {
 					return page?.title()
 				} catch( error ) {
@@ -28,50 +17,97 @@ namespace $.$$ {
 		}
 		
 		menu_title() {
-			return this.pages_deep()[0]?.title() || this.title()
+			return this.pages()[0]?.title() || this.title()
 		}
 
 		@ $mol_mem
-		sub() {
+		override sub() {
 			const placeholders = this.placeholders()
-			const next = [  ... this.pages_deep(), ...placeholders ]
 			
+			const next = super.sub()
 			const prev = $mol_mem_cached( ()=> this.sub() ) ?? []
+			const top = this.top_book ?? this
 			
-			for( let i = 1 ; i++ ; ) {
+			let scroll_target
+			for( let i = 1; i <= next.length; i++ ) {
 				
-				const p = prev[ prev.length - i ]
-				const n = next[ next.length - i ]
-				
-				if( !n ) break
+				const prev_page = prev[ prev.length - i ]
+				const next_page = next[ next.length - i ]
+				if (next_page instanceof $mol_book2) {
+					next_page.top_book = top
+				}
 
-				if( p === n ) continue
-				if( placeholders.includes(n) ) continue
+				if( prev_page === next_page ) continue
+				if( placeholders.includes(next_page) ) continue
 
-				new this.$.$mol_after_tick( ()=> {
-					const b = this.dom_node() as HTMLElement
-					const p = n.dom_node() as HTMLElement
-					b.scroll({
-						left: p.offsetLeft + p.offsetWidth - b.offsetWidth,
-						behavior: 'smooth',
-					})
-					// new this.$.$mol_after_timeout( 1000, ()=> n.bring() )
-				} )
-				
-				break
-
+				if (! scroll_target) scroll_target = next_page
 			}
 
-			return next as readonly $mol_view[]
+			// need to set top_book to all sub books, can't break for
+			if (scroll_target) top.scroll_target(scroll_target)
+
+			return next
 		}
-		
+
+		protected top_book = null as null | $mol_book2
+
+		@ $mol_mem
+		scroll_target(page?: $mol_view | null) {
+			return page ?? null
+		}
+
+		override scroll_task_top() {
+			// avoid mem creation for non-top book
+			if (this.top_book) return null
+			this.scroll_task()
+		}
+
+		@ $mol_mem
+		scroll_task() {
+			let page = this.scroll_target()
+
+			// for display: contents view_rect always 0
+			// find last page
+			while (page instanceof $mol_book2) {
+				try {
+					page = page.pages()?.at(-1) ?? null
+				} catch (e) {
+					return null
+				}
+			}
+
+			if (! page ) return null
+
+			const page_rect = page.view_rect()
+			if (! page_rect) return null
+
+			const top_rect = this.view_rect()
+			if (! top_rect) return null
+
+			const scroll_left = this.scroll_left()
+
+			const page_right = page_rect.right + scroll_left
+
+			const left = page_right - top_rect.right
+
+			return new this.$.$mol_after_tick(() => {
+				this.dom_node().scroll({ left, behavior: 'smooth' })
+				this.scroll_target(null)
+			})
+		}
+
 		bring() {
 			
-			const pages = this.pages_deep()
+			const pages = this.pages()
 			
 			if( pages.length ) pages[ pages.length - 1 ].bring()
 			else super.bring()
 			
+		}
+
+		override placeholders() {
+			if (this.Placeholder()) return [ this.Placeholder() ]
+			return super.placeholders()
 		}
 
 	}
