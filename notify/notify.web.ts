@@ -1,12 +1,13 @@
 namespace $ {
 	
 	/** Manages system notifications. Notifications of same context are auto joined to one notification. */
-	export class $mol_notify {
+	export class $mol_notify_web extends $mol_notify {
 		
 		@ $mol_mem
-		static allowed( next?: boolean ) {
+		static override allowed( next?: boolean ) {
 			
-			let perm = Notification.permission
+			
+			let perm = this.$.$mol_dom_context.Notification.permission
 			if( next === undefined ) return perm === 'granted'
 			
 			if( perm === 'granted' ) return true
@@ -16,33 +17,22 @@ namespace $ {
 			return perm === 'granted'
 		}
 		
-		static async request_permissions() {
+		static request_permissions() {
 			return new Promise< NotificationPermission >( done =>
-				Notification.requestPermission( perm => {
+				this.$.$mol_dom_context.Notification.requestPermission( perm => {
 					done( perm )
 				} )
 			)
 		}
 		
-		@ $mol_action
-		static show( info: {
-			context: string,
-			message: string,
-			uri: string
-		} ) {
-			navigator.serviceWorker.controller!.postMessage( info )
-		}
-		
 	}
-	
-	if( typeof window === 'undefined' ) {
-		
-		self.addEventListener( 'message', async event => {
-			
-			let { context: title, message: body, uri: data } = event.data
+
+	$.$mol_notify = $mol_notify_web
+
+	export class $mol_notify_service_web extends $mol_notify_service {
+		static override show({ context: title, message: body, uri: data }: $mol_notify_info) {
 			const tag = data
-			
-			const existen = await $mol_service().getNotifications({ tag })
+			const existen = this.$.$mol_service_self_web.notifications({ tag })
 			
 			for( const not of existen ) {
 				
@@ -54,29 +44,27 @@ namespace $ {
 			
 			// const vibrate = [ 100, 200, 300, 400, 500 ]
 			
-			await $mol_service().showNotification( title, { body, data, /*vibrate,*/ tag } )
-			
-		} )
-		
-		self.addEventListener( 'notificationclick', $mol_service_handler( async ( event: any )=> {
-			
-			const clients: any[] = await ( self as any ).clients.matchAll({ includeUncontrolled: true })
-			event.notification.close()
+			this.$.$mol_service_self_web.notification_show( title, { body, data, /*vibrate,*/ tag } )
 
-			if( clients.length ) {
-				
-				const last = clients[ clients.length - 1 ]
-				await last.focus()
-				await last.navigate( event.notification.data )
-				
-			} else {
-				
-				await ( self as any ).clients.openWindow( event.notification.data )
-				
+		}
+
+		static override notification( notification: Notification ) {
+			const matched = this.$.$mol_service_self_web.clients_grab({ includeUncontrolled: true, type: 'window' })
+			const last = matched.at(-1)
+
+			if( last ) {
+				last.focus()
+				last.navigate( notification.data )
+
+				return null
 			}
-			
-		} ) )
-		
+
+			this.$.$mol_service_self_web.window_open( notification.data )
+			return null
+		}
 	}
-	
+
+	$.$mol_notify_service = $mol_notify_service_web
+
+	$mol_service_plugin.$mol_notify_service = $mol_notify_service_web
 }
