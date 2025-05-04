@@ -7427,7 +7427,7 @@ var $;
 			return obj;
 		}
 		type(){
-			return "tel";
+			return "text";
 		}
 		value_string(next){
 			if(next !== undefined) return next;
@@ -7446,6 +7446,7 @@ var $;
 		String(){
 			const obj = new this.$.$mol_string();
 			(obj.type) = () => ((this.type()));
+			(obj.keyboard) = () => ("decimal");
 			(obj.value) = (next) => ((this.value_string(next)));
 			(obj.hint) = () => ((this.hint()));
 			(obj.enabled) = () => ((this.string_enabled()));

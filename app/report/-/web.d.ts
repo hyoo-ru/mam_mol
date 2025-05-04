@@ -2507,37 +2507,42 @@ declare namespace $ {
 		,
 		ReturnType< $mol_string['type'] >
 	>
-	type $mol_string__value_mol_number_6 = $mol_type_enforce<
+	type $mol_string__keyboard_mol_number_6 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_string['keyboard'] >
+	>
+	type $mol_string__value_mol_number_7 = $mol_type_enforce<
 		ReturnType< $mol_number['value_string'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_string__hint_mol_number_7 = $mol_type_enforce<
+	type $mol_string__hint_mol_number_8 = $mol_type_enforce<
 		ReturnType< $mol_number['hint'] >
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__enabled_mol_number_8 = $mol_type_enforce<
+	type $mol_string__enabled_mol_number_9 = $mol_type_enforce<
 		ReturnType< $mol_number['string_enabled'] >
 		,
 		ReturnType< $mol_string['enabled'] >
 	>
-	type $mol_string__submit_mol_number_9 = $mol_type_enforce<
+	type $mol_string__submit_mol_number_10 = $mol_type_enforce<
 		ReturnType< $mol_number['submit'] >
 		,
 		ReturnType< $mol_string['submit'] >
 	>
-	type $mol_button_minor__event_click_mol_number_10 = $mol_type_enforce<
+	type $mol_button_minor__event_click_mol_number_11 = $mol_type_enforce<
 		ReturnType< $mol_number['event_inc'] >
 		,
 		ReturnType< $mol_button_minor['event_click'] >
 	>
-	type $mol_button_minor__enabled_mol_number_11 = $mol_type_enforce<
+	type $mol_button_minor__enabled_mol_number_12 = $mol_type_enforce<
 		ReturnType< $mol_number['inc_enabled'] >
 		,
 		ReturnType< $mol_button_minor['enabled'] >
 	>
-	type $mol_button_minor__sub_mol_number_12 = $mol_type_enforce<
+	type $mol_button_minor__sub_mol_number_13 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_minor['sub'] >
