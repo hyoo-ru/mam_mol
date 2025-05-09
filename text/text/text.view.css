@@ -133,10 +133,8 @@ h6[mol_text_header] {
 [mol_text_embed_object] {
 	object-fit: contain;
 	object-position: center;
-	display: inline;
 	width: 100vw;
 	max-height: calc( 100vh - 6rem );
-	vertical-align: top;
 }
 [mol_text_embed_object_fallback] {
 	padding: 0;
