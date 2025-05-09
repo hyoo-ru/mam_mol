@@ -51,6 +51,17 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    var $mol_dom_context: typeof globalThis;
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    var $mol_dom: typeof globalThis;
+}
+
+declare namespace $ {
     function $mol_offline_web(): void;
 }
 
@@ -387,13 +398,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    var $mol_dom_context: typeof globalThis;
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
     class $mol_view_selection extends $mol_object {
         static focused(next?: Element[], notify?: 'notify'): Element[];
     }
@@ -401,10 +405,6 @@ declare namespace $ {
 
 declare namespace $ {
     function $mol_maybe<Value>(value: Value | null | undefined): Value[];
-}
-
-declare namespace $ {
-    var $mol_dom: typeof globalThis;
 }
 
 declare namespace $ {

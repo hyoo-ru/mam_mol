@@ -96,6 +96,26 @@ var $;
 "use strict";
 var $;
 (function ($) {
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_dom_context = self;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_dom = $mol_dom_context;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
     const blacklist = new Set([
         '//cse.google.com/adsense/search/async-ads.js'
     ]);
@@ -175,7 +195,9 @@ var $;
             console.warn('Service Worker is not supported.');
         }
         else {
-            navigator.serviceWorker.register('web.js').then(reg => {
+            $mol_dom.addEventListener('DOMContentLoaded', () => {
+                navigator.serviceWorker.register('web.js').then(reg => {
+                });
             });
         }
     }
@@ -1664,19 +1686,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_dom_context = self;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
     class $mol_view_selection extends $mol_object {
         static focused(next, notify) {
             const parents = [];
@@ -1718,13 +1727,6 @@ var $;
         return (value == null) ? [] : [value];
     }
     $.$mol_maybe = $mol_maybe;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_dom = $mol_dom_context;
 })($ || ($ = {}));
 
 ;
