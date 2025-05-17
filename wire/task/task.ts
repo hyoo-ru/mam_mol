@@ -59,7 +59,7 @@ namespace $ {
 			if( $mol_promise_like( this.cache ) ) return
 			this.destructor()
 		}
-		
+
 		put( next: Result | Error | Promise< Result | Error > ) {
 			
 			const prev = this.cache
