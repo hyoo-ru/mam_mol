@@ -1,9 +1,9 @@
 $mol_scroll $mol_view
 	scroll_top? 0
 	scroll_left? 0
-	field *
+	attr *
 		^
-		tabIndex <= tabindex -1
+		tabindex <= tabindex -1
 	event *
 		^
 		scroll?event <=> event_scroll?event null

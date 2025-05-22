@@ -66,12 +66,12 @@ namespace $.$$ {
 			const [ shift_x, shift_y ] = this.shift()
 			const [ scale_x, scale_y ] = this.scale()
 			const count = 1 << level
-			const tile_size = this.tile_size_real()
+			const tile_size = this.tile_dims_real()
 			
-			const pos_x = ( ( x / count - .5 ) * tile_size * scale_x + shift_x )
-			const pos_y = ( ( y / count - .5 ) * tile_size * scale_y + shift_y )
+			const pos_x = ( ( x / count - .5 ) * tile_size[0] * scale_x + shift_x )
+			const pos_y = ( ( y / count - .5 ) * tile_size[1] * scale_y + shift_y )
 			
-			const scale = scale_x / 2**level + .5 / tile_size
+			const scale = scale_x / 2**level + .5 / tile_size[1]
 			
 			return `translate3d(${pos_x}px,${pos_y}px,0px) scale(${scale})`
 		}
@@ -96,11 +96,11 @@ namespace $.$$ {
 			
 			const [ level, x, y ] = pos
 			const count = 1 << level
-			const tile_size = this.tile_size_real()
+			const tile_size = this.tile_dims_real()
 			
 			return [
-				Math.floor( ( x / tile_size + .5 ) * count ),
-				Math.floor( ( y / tile_size + .5 ) * count ),
+				Math.floor( ( x / tile_size[0] + .5 ) * count ),
+				Math.floor( ( y / tile_size[1] + .5 ) * count ),
 			]
 			
 		}

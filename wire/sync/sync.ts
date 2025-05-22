@@ -14,6 +14,34 @@ namespace $ {
 		return make
 	}
 
+	const getters = new WeakMap<Object, Record<string | symbol, (next?: unknown) => unknown>>()
+
+	function get_prop(
+		host: Object,
+		field: string | symbol,
+	) {
+		let props = getters.get(host)
+		let get_val = props?.[field]
+
+		if ( get_val ) return get_val
+
+		get_val = (next?: unknown) => {
+			if (next !== undefined) host[field as keyof typeof host] = next as any
+
+			return host[field as keyof typeof host]
+		}
+
+		Object.defineProperty( get_val , 'name' , { value : field } )
+
+		if (! props) {
+			props = {}
+			getters.set(host, props)
+		}
+		props[field] = get_val
+
+		return get_val
+	}
+
 	/**
 	 * Convert asynchronous (promise-based) API to synchronous by wrapping function and method calls in a fiber.
 	 * @see https://mol.hyoo.ru/#!section=docs/=1fcpsq_1wh0h2
@@ -24,13 +52,21 @@ namespace $ {
 			get( obj, field ) {
 				
 				let val = (obj as any)[ field ]
-				if( typeof val !== 'function' ) return val
-				const temp = $mol_wire_task.getter(val)
+				const temp = $mol_wire_task.getter(typeof val === 'function' ? val : get_prop(obj, field))
+
+				if (typeof val !== 'function') return temp( obj, [] ).sync()
 
 				return function $mol_wire_sync( this: Host, ... args: unknown[] ) {
 					const fiber = temp( obj, args )
 					return fiber.sync()
 				}
+			},
+
+			set( obj, field, next) {
+				const temp = $mol_wire_task.getter(get_prop(obj, field))
+				temp( obj, [ next ] ).sync()
+
+				return true
 			},
 
 			construct(obj, args) {

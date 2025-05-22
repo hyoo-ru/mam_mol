@@ -1017,6 +1017,7 @@ namespace $ {
 			
 			const start = this.now()
 			
+			this.modEnsure(path)
 			const pack = $mol_file.absolute( path )
 			const source = pack.resolve( 'index.html' )
 			const target = pack.resolve( `-/test.html` )
@@ -1024,7 +1025,7 @@ namespace $ {
 
 			let content = source.exists()
 				? source.text()
-				: `<!doctype html><meta charset="utf-8" /><body mol_view_root="${name}"><script src="web.js" charset="utf-8"></script>`
+				: `<!doctype html><meta charset="utf-8" /><html mol_view_root><body mol_view_root="${name}"><script src="web.js" charset="utf-8"></script>`
 			
 			content = content.replace(
 				/(<\/body>|$)/ , `

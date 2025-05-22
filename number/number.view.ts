@@ -21,10 +21,22 @@ namespace $.$$ {
 
 	 	override event_dec( next? : Event ) {
 			this.value_limited( ( this.value_limited() || 0 ) - this.precision_change() )
+			next?.preventDefault()
 		}
 
 		override event_inc( next? : Event ) {
 			this.value_limited( ( this.value_limited() || 0 ) + this.precision_change() )
+			next?.preventDefault()
+		}
+
+	 	override event_dec_boost( next? : Event ) {
+			this.value_limited( ( this.value_limited() || 0 ) - this.precision_change() * this.boost() )
+			next?.preventDefault()
+		}
+
+		override event_inc_boost( next? : Event ) {
+			this.value_limited( ( this.value_limited() || 0 ) + this.precision_change() * this.boost() )
+			next?.preventDefault()
 		}
 
 		round(val: number) {

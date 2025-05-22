@@ -83,7 +83,7 @@ namespace $ {
 		
 		if( left instanceof DataView ) return compare_buffer(
 			new Uint8Array( left.buffer, left.byteOffset, left.byteLength ),
-			new Uint8Array( right.buffer, left.byteOffset, left.byteLength ),
+			new Uint8Array( right.buffer, right.byteOffset, right.byteLength ),
 		)
 		
 		for( let i = 0; i < len; ++i ) {

@@ -229,7 +229,9 @@ namespace $ {
 			} catch( error: any ) {
 				
 				$mol_fail_log( error )
-				const mol_view_error = $mol_promise_like(error) ? 'Promise' : error.name || error.constructor.name
+				const mol_view_error = $mol_promise_like(error)
+					? (error as any).constructor[Symbol.toStringTag] ?? 'Promise'
+					: error.name || error.constructor.name
 				$mol_dom_render_attributes( node , { mol_view_error } )
 				
 				if( $mol_promise_like( error ) ) break render
@@ -429,13 +431,24 @@ namespace $ {
 			path = [] as $mol_view[],
 		): Generator< $mol_view[] > {
 
-			if( check( this ) ) return yield [ ... path, this ]
+			if( path.length === 0 && check( this ) ) return yield [ this ]
 			
 			try {
-				for( const item of this.sub() ) {
-					if( item instanceof $mol_view ) {
-						yield* item.view_find( check, [ ... path, this ] )
-					}
+				const checked = new Set<$mol_view>()
+				const sub = this.sub()
+
+				for( const item of sub ) {
+					if( ! ( item instanceof $mol_view ) ) continue
+
+					if ( ! check( item ) ) continue
+					checked.add(item)
+					yield [ ... path, this, item ]
+				}
+
+				for( const item of sub ) {
+					if ( ! ( item instanceof $mol_view) ) continue
+					if ( checked.has(item) ) continue
+					yield* item.view_find( check, [ ... path, this ] )
 				}
 			} catch( error: unknown ) {
 				if( $mol_promise_like( error ) ) $mol_fail_hidden( error )

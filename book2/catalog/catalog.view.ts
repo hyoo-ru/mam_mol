@@ -6,17 +6,26 @@ namespace $.$$ {
 	 */
 	export class $mol_book2_catalog extends $.$mol_book2_catalog {
 		
+		spread_current() {
+			return this.spread() === '' ? this.Spread_default() : this.Spread(this.spread())
+		}
+
 		@ $mol_mem
 		pages() {
-			const spread = this.spread() === '' ? this.Spread_default() : this.Spread(this.spread())
+			const spread = this.spread_current()
 			return [
 				this.Menu(),
 				... spread
 					? spread instanceof $mol_book2
-						? spread.pages()
+						? spread.pages_deep()
 						: [ spread ]
 					: [],
 			]
+		}
+
+		override auto() {
+			const spread = this.spread_current()
+			if (spread instanceof $mol_book2) spread.auto()
 		}
 
 		@ $mol_mem
@@ -39,7 +48,7 @@ namespace $.$$ {
 		@ $mol_mem
 		override menu_links() {
 			return this.spread_ids_filtered()
-				.map( spread => this.Menu_link( spread ) )
+				.map( spread => this.Menu_item( spread ) )
 		}
 
 		@ $mol_mem
@@ -76,6 +85,16 @@ namespace $.$$ {
 				|| page.title()
 				|| spread
 		}
-		
+
+		spread_current_book() {
+			const spread = this.spread_current()
+			return spread instanceof $mol_book2 ? spread : null
+		}
+
+		@ $mol_mem
+		override placeholders() {
+			const spread_placeholders = this.spread_current_book()?.placeholders() ?? []
+			return spread_placeholders.length ? spread_placeholders : super.placeholders()
+		}
 	}
 }

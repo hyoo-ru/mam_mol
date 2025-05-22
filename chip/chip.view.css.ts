@@ -12,6 +12,8 @@ namespace $.$$ {
 			color: $mol_theme.card,
 		},
 		
+		gap: $mol_gap.block,
+		
 	} )
 	
 }

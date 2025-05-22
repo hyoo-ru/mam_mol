@@ -107,10 +107,12 @@ namespace $ {
 			
 			const second = Math.floor( this.second ?? 0 )
 			
+			const current = new Date()
+			
 			const native = new Date(
-				this.year ?? 0 ,
-				this.month ?? 0 ,
-				( this.day ?? 0 ) + 1 ,
+				this.year ?? current.getFullYear() ,
+				this.month ?? ( this.year === undefined ? current.getMonth() : 0 ),
+				( this.day ?? ( this.year === undefined && this.month === undefined ? current.getDate() - 1 : 0 ) ) + 1 ,
 				this.hour ?? 0 ,
 				this.minute ?? 0 ,
 				second,
