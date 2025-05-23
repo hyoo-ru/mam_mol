@@ -5,6 +5,9 @@
 		value(){
 			return null;
 		}
+		minimal_width(){
+			return 12;
+		}
 		attr(){
 			return {...(super.attr()), "mol_theme": (this.theme())};
 		}

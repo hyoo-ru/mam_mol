@@ -59,6 +59,7 @@ $mol_pop_bubble $mol_view
 		tabindex 0
 
 $mol_speck $mol_view
+	minimal_width 12
 	attr *
 		^
 		mol_theme <= theme \$mol_theme_accent

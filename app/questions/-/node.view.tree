@@ -21,6 +21,7 @@ $mol_theme_auto $mol_plugin
 	attr * mol_theme <= theme \
 
 $mol_speck $mol_view
+	minimal_width 12
 	attr *
 		^
 		mol_theme <= theme \$mol_theme_accent
