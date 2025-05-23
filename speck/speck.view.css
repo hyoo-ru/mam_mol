@@ -1,15 +1,15 @@
 [mol_speck] {
 	font-size: .75rem;
 	border-radius: 1rem;
-	margin: -0.5rem -0.25rem;
+	margin: -0.5rem -0.2rem;
 	align-self: flex-start;
 	min-height: 1em;
 	vertical-align: sub;
-	padding: 0 .25em;
+	padding: 0 .2rem;
 	position: absolute;
 	z-index: var(--mol_layer_speck);
 	text-align: center;
-	line-height: 1;
+	line-height: .9;
 	display: inline-block;
 	white-space: nowrap;
 	text-overflow: ellipsis;
