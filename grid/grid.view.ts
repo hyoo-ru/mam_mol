@@ -144,6 +144,12 @@ namespace $.$$ {
 			return this.row_expanded( id.row , next )!
 		}
 		
+		override sub() {
+			this.head_cells()
+			this.rows()
+			return super.sub()
+		}
+		
 	}
 	
 }
