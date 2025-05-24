@@ -145,7 +145,8 @@ namespace $.$$ {
 		}
 		
 		override sub() {
-			this.records()
+			this.head_cells()
+			this.rows()
 			return super.sub()
 		}
 		
