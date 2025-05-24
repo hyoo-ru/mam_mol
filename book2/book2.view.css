@@ -12,6 +12,7 @@
 	/* padding: 0 1px;
 	scroll-padding: 0 1px;
 	gap: 1px; */
+	--mol_book2_grip_top: 1.5rem;
 }
 
 [mol_book2] > * {
@@ -26,11 +27,22 @@
 	box-shadow: inset 0 0 0 1px var(--mol_theme_field);
 }
 
-[mol_book2] > *:not(:first-of-type):before,
-[mol_book2] > *:not(:last-of-type)::after {
+/* Prepend dots to not first page in the book, exclude placeholder */
+[mol_book2] > *:not(:first-child):not([mol_book2]):not([mol_book2_gap])::before,
+/* Append dots to not last page in the book, exclude page before placeholder */
+[mol_book2] > *:not(:last-child):not([mol_book2]):not([mol_book2_gap]):not(:has(+ [mol_book2_placeholder]))::after,
+
+/* Can't add dots to the book due to display: contents */
+/* Prepend dots to all pages in the not first child book, exclude placeholder and second level child book */
+[mol_book2] > *:not(:first-child)[mol_book2] > *:not([mol_book2]):not([mol_book2_gap])::before,
+
+/* Append dots to all pages in the not last child book not before placeholder */
+[mol_book2] > *:not(:last-child)[mol_book2]:not(:has(+ [mol_book2_placeholder])) > :not([mol_book2]):not([mol_book2_gap])::after 
+{
+	display: block;
 	content: '';
 	position: absolute;
-	top: 1.5rem;
+	top: var(--mol_book2_grip_top);
 	width: 3px;
 	height: 1rem;
 	background: linear-gradient(
@@ -49,14 +61,16 @@
 	opacity: .5;
 	z-index: var(--mol_layer_speck);
 }
-[mol_book2] > *:not(:first-of-type):before {
+
+[mol_book2] > *:not(:first-child):not([mol_book2])::before {
 	left: -1px;
 }
-[mol_book2] > *:not(:last-of-type)::after {
+
+[mol_book2] > *:not(:last-child):not([mol_book2])::after {
 	right: -1px;
 }
 
-:where([mol_book2]) > * {
+:where([mol_book2]) > *:not([mol_book]) {
 	background-color: var(--mol_theme_card);
 	/* box-shadow: 0 0 0 1px var(--mol_theme_back); */
 }
@@ -65,7 +79,11 @@
 	display: contents;
 }
 
-[mol_book2] > *:first-child {
+[mol_book2] [mol_book2] > [mol_book2_placeholder] {
+	display: none;
+}
+
+[mol_book2] > *:not([mol_book2]):first-child {
 	scroll-snap-align: start;
 }
 
