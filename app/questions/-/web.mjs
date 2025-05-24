@@ -7203,6 +7203,11 @@ var $;
             cell_expanded(id, next) {
                 return this.row_expanded(id.row, next);
             }
+            sub() {
+                this.head_cells();
+                this.rows();
+                return super.sub();
+            }
         }
         __decorate([
             $mol_mem
