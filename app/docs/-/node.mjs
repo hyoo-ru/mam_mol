@@ -3830,16 +3830,14 @@ var $;
             }
             sub() {
                 const placeholders = this.placeholders();
-                const next = [...this.pages_deep(), ...placeholders];
-                const prev = $mol_mem_cached(() => this.sub()) ?? [];
-                for (let i = 1; i++;) {
+                const next = this.pages_deep().filter(Boolean);
+                const prev = $mol_mem_cached(() => this.sub())?.filter(page => !placeholders.includes(page)) ?? [];
+                for (let i = 1; i; ++i) {
                     const p = prev[prev.length - i];
                     const n = next[next.length - i];
                     if (!n)
                         break;
                     if (p === n)
-                        continue;
-                    if (placeholders.includes(n))
                         continue;
                     new this.$.$mol_after_tick(() => {
                         const b = this.dom_node();
@@ -3851,7 +3849,7 @@ var $;
                     });
                     break;
                 }
-                return next;
+                return [...next, ...placeholders];
             }
             bring() {
                 const pages = this.pages_deep();
