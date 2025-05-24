@@ -144,6 +144,11 @@ namespace $.$$ {
 			return this.row_expanded( id.row , next )!
 		}
 		
+		override sub() {
+			this.records()
+			return super.sub()
+		}
+		
 	}
 	
 }
