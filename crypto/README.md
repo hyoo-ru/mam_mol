@@ -29,7 +29,7 @@ const opened = await secret.decrypt( closed, salt ) // 3 B
 
 ```typescript
 // Returns authenticated secret key using WebAuthn
-const Alice = await $mol_crypto_sacred_id() // 16 B
+const Alice = await $.$mol_crypto_sacred_id() // 16 B
 ```
 
 # Usage from NPM
@@ -41,5 +41,5 @@ npm install mol_crypto_lib
 [![](https://badgen.net/bundlephobia/minzip/mol_crypto_lib)](https://bundlephobia.com/package/mol_crypto_lib)
 
 ```javascript
-import { $mol_crypto_salt } from 'mol_crypto_lib'
+export { $mol_crypto_salt, default as $ } from "mol_crypto_lib"
 ```
