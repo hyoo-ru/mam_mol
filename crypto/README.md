@@ -32,6 +32,20 @@ const opened = await secret.decrypt( closed, salt ) // 3 B
 const Alice = await $.$mol_crypto_sacred_id() // 16 B
 ```
 
+## Password Hashig, Encryption
+
+```typescript
+const password = "qwerty"
+const app = $mol_crypto_hash( $mol_charset_encode( "example.com" ) ) // 20 B
+const secret = await $mol_crypto_sacred_pass( password, app ) // 16 B
+
+const data = new Uint8Array([ 1, 2, 3 ]) // 3 B
+const salt = $mol_crypto_salt() // 16 B
+
+const closed = await secret.encrypt( data, salt ) // 16x B
+const opened = await secret.decrypt( closed, salt ) // 3 B
+```
+
 # Usage from NPM
 
 ```
