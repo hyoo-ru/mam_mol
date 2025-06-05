@@ -148,40 +148,47 @@ namespace $ {
 		
 		/** Makes new tree with node overrided by path. */
 		insert( value : $mol_tree2 | null , ...path : $mol_tree2_path ) : $mol_tree2 {
+			return this.update( $mol_maybe( value ), ... path )[0]
+		}
 
-			if( path.length === 0 ) return value!
+		/** Makes new tree with node overrided by path. */
+		update( value : readonly $mol_tree2[] , ...path : $mol_tree2_path ) : readonly $mol_tree2[] {
+
+			if( path.length === 0 ) return value
 			
 			const type = path[0]
 			if( typeof type === 'string' ) {
 
 				let replaced = false
-				const sub = this.kids.map( ( item , index )=> {
+				const sub = this.kids.flatMap( ( item , index )=> {
 					if( item.type !== type ) return item
 					replaced = true
-					return item.insert( value , ... path.slice( 1 ) )
+					return item.update( value , ... path.slice( 1 ) )
 				} ).filter( Boolean )
 				
 				if( !replaced && value ) {
-					sub.push( this.struct( type , [] ).insert( value , ... path.slice( 1 ) ) )
+					sub.push( ... this.struct( type , [] ).update( value , ... path.slice( 1 ) ) )
 				}
 				
-				return this.clone( sub )
+				return [ this.clone( sub ) ]
 
 			} else if( typeof type === 'number' ) {
 				
-				const sub = this.kids.slice()
-				sub[ type ] = ( sub[ type ] || this.list([]) )
-					.insert( value , ... path.slice( 1 ) )
+				const ins = ( this.kids[ type ] || this.list([]) )
+					.update( value , ... path.slice( 1 ) )
 				
-				return this.clone( sub.filter( Boolean ) )
+				return [ this.clone([
+					... this.kids.slice( 0, type ),
+					... ins,
+					... this.kids.slice( type + 1 ),
+				]) ]
 
 			} else {
 				
 				const kids = ( ( this.kids.length === 0 ) ? [ this.list([]) ] : this.kids )
-				.map( item => item.insert( value , ... path.slice( 1 ) ) )
-				.filter( Boolean )
+					.flatMap( item => item.update( value , ... path.slice( 1 ) ) )
 
-				return this.clone( kids )
+				return [ this.clone( kids ) ]
 
 			}
 
