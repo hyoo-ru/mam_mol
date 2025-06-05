@@ -68,6 +68,7 @@
     "$mol_error",
     "$mol_tree2_to_string",
     "$mol_tree2_to",
+    "$mol_maybe",
     "$mol_term_color",
     "$mol_term",
     "$mol_type_foot",
