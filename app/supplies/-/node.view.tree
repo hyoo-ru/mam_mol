@@ -312,6 +312,7 @@ $mol_search $mol_pop
 				bring => bring
 			<= Clear $mol_button_minor
 				hint @ \Clear
+				enabled <= enabled true
 				click?event <=> clear?event null
 				sub /
 					<= Clear_icon $mol_icon_close

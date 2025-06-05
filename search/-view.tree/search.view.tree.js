@@ -65,6 +65,7 @@
 		Clear(){
 			const obj = new this.$.$mol_button_minor();
 			(obj.hint) = () => ((this.$.$mol_locale.text("$mol_search_Clear_hint")));
+			(obj.enabled) = () => ((this.enabled()));
 			(obj.click) = (next) => ((this.clear(next)));
 			(obj.sub) = () => ([(this.Clear_icon())]);
 			return obj;

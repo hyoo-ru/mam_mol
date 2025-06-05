@@ -2550,52 +2550,57 @@ declare namespace $ {
 		,
 		ReturnType< $mol_button_minor['hint'] >
 	>
-	type $mol_button_minor__click_mol_search_11 = $mol_type_enforce<
+	type $mol_button_minor__enabled_mol_search_11 = $mol_type_enforce<
+		ReturnType< $mol_search['enabled'] >
+		,
+		ReturnType< $mol_button_minor['enabled'] >
+	>
+	type $mol_button_minor__click_mol_search_12 = $mol_type_enforce<
 		ReturnType< $mol_search['clear'] >
 		,
 		ReturnType< $mol_button_minor['click'] >
 	>
-	type $mol_button_minor__sub_mol_search_12 = $mol_type_enforce<
+	type $mol_button_minor__sub_mol_search_13 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_minor['sub'] >
 	>
-	type $mol_list__rows_mol_search_13 = $mol_type_enforce<
+	type $mol_list__rows_mol_search_14 = $mol_type_enforce<
 		ReturnType< $mol_search['menu_items'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_scroll__sub_mol_search_14 = $mol_type_enforce<
+	type $mol_scroll__sub_mol_search_15 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_scroll['sub'] >
 	>
-	type $mol_dimmer__haystack_mol_search_15 = $mol_type_enforce<
+	type $mol_dimmer__haystack_mol_search_16 = $mol_type_enforce<
 		ReturnType< $mol_search['suggest_label'] >
 		,
 		ReturnType< $mol_dimmer['haystack'] >
 	>
-	type $mol_dimmer__needle_mol_search_16 = $mol_type_enforce<
+	type $mol_dimmer__needle_mol_search_17 = $mol_type_enforce<
 		ReturnType< $mol_search['query'] >
 		,
 		ReturnType< $mol_dimmer['needle'] >
 	>
-	type $mol_search_plugins__17 = $mol_type_enforce<
+	type $mol_search_plugins__18 = $mol_type_enforce<
 		ReturnType< $mol_pop['plugins'] >[number]
 		,
 		$mol_plugin
 	>
-	type $mol_view__sub_mol_search_18 = $mol_type_enforce<
+	type $mol_view__sub_mol_search_19 = $mol_type_enforce<
 		ReturnType< $mol_search['anchor_content'] >
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_button_minor__click_mol_search_19 = $mol_type_enforce<
+	type $mol_button_minor__click_mol_search_20 = $mol_type_enforce<
 		ReturnType< $mol_search['suggest_select'] >
 		,
 		ReturnType< $mol_button_minor['click'] >
 	>
-	type $mol_button_minor__sub_mol_search_20 = $mol_type_enforce<
+	type $mol_button_minor__sub_mol_search_21 = $mol_type_enforce<
 		ReturnType< $mol_search['suggest_content'] >
 		,
 		ReturnType< $mol_button_minor['sub'] >
