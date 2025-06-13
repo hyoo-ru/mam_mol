@@ -1,11 +1,7 @@
 $mol_frame $mol_embed_native
-	dom_name \iframe
 	attr *
 		^
-		data null
-		type null
 		allow <= allow \
-		src <= uri? \about:config
 		srcdoc <= html null
 	fullscreen true
 	accelerometer true
