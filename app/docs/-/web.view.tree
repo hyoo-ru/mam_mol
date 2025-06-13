@@ -408,13 +408,11 @@ $mol_icon_forum_outline $mol_icon path \M15,4V11H5.17L4,12.17V4H15M16,2H3A1,1 0 
 $mol_icon_open_in_new $mol_icon path \M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z
 
 $mol_embed_native $mol_scroll
-	uri? \
 	dom_name \iframe
 	window null
 	attr *
 		^
-		src <= uri
-		type <= mime \
+		src <= uri? \about:config
 	sub /
 		<= Fallback $mol_link
 			uri <= uri
@@ -424,13 +422,9 @@ $mol_embed_native $mol_scroll
 		hashchange? <=> uri_change? null
 
 $mol_frame $mol_embed_native
-	dom_name \iframe
 	attr *
 		^
-		data null
-		type null
 		allow <= allow \
-		src <= uri? \about:config
 		srcdoc <= html null
 	fullscreen true
 	accelerometer true

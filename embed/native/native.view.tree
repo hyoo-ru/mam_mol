@@ -1,11 +1,9 @@
 $mol_embed_native $mol_scroll
-	uri? \
 	dom_name \iframe
 	window null
 	attr *
 		^
-		src <= uri
-		type <= mime \
+		src <= uri? \about:config
 	sub /
 		<= Fallback $mol_link
 			uri <= uri

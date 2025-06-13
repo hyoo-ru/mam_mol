@@ -4,7 +4,7 @@
 		"mol/frame/frame.view.tree"
 	],
 	"sourcesContent": [
-		"$mol_frame $mol_embed_native\n\tdom_name \\iframe\n\tattr *\n\t\t^\n\t\tdata null\n\t\ttype null\n\t\tallow <= allow \\\n\t\tsrc <= uri? \\about:config\n\t\tsrcdoc <= html null\n\tfullscreen true\n\taccelerometer true\n\tautoplay true\n\tencription true\n\tgyroscope true\n\tpip true\n\tclipboard_read true\n\tclipboard_write true\n"
+		"$mol_frame $mol_embed_native\n\tattr *\n\t\t^\n\t\tallow <= allow \\\n\t\tsrcdoc <= html null\n\tfullscreen true\n\taccelerometer true\n\tautoplay true\n\tencription true\n\tgyroscope true\n\tpip true\n\tclipboard_read true\n\tclipboard_write true\n"
 	],
-	"mappings": "AAAA,AAAA,mCAAW,8BAAX;AAAA,AAMW;AAAA,AAAA,UAAO,EAAP;AAAA;AACF;AAAA,AAAA;AAAA,UAAM,cAAN;AAAA;AACG;AAAA,AAAA,UAAK,IAAL;AAAA;AAPX;AAAA,AAAA,UAAU,QAAV;AAAA;AACA;AAAA,AAAA,UAAK;AAAA,AACJ,qBADI;AAEJ,YAAK,IAFD;AAGJ,YAAK,IAHD;AAIJ,aAAM,KAAG,QAAH,CAJF;AAKJ,WAAI,KAAG,MAAH,CALA;AAMJ,cAAO,KAAG,OAAH;AANH,CAAL;AAAA;AAOA;AAAA,AAAA,UAAW,IAAX;AAAA;AACA;AAAA,AAAA,UAAc,IAAd;AAAA;AACA;AAAA,AAAA,UAAS,IAAT;AAAA;AACA;AAAA,AAAA,UAAW,IAAX;AAAA;AACA;AAAA,AAAA,UAAU,IAAV;AAAA;AACA;AAAA,AAAA,UAAI,IAAJ;AAAA;AACA;AAAA,AAAA,UAAe,IAAf;AAAA;AACA;AAAA,AAAA,UAAgB,IAAhB;AAAA;AAhBD,CAAA;AAOS,YAPT,CAOS,+BAPT;"
+	"mappings": "AAAA,AAAA,mCAAW,8BAAX;AAAA,AAGW;AAAA,AAAA,UAAO,EAAP;AAAA;AACC;AAAA,AAAA,UAAK,IAAL;AAAA;AAHX;AAAA,AAAA,UAAK;AAAA,AACJ,qBADI;AAEJ,aAAM,KAAG,QAAH,CAFF;AAGJ,cAAO,KAAG,OAAH;AAHH,CAAL;AAAA;AAIA;AAAA,AAAA,UAAW,IAAX;AAAA;AACA;AAAA,AAAA,UAAc,IAAd;AAAA;AACA;AAAA,AAAA,UAAS,IAAT;AAAA;AACA;AAAA,AAAA,UAAW,IAAX;AAAA;AACA;AAAA,AAAA,UAAU,IAAV;AAAA;AACA;AAAA,AAAA,UAAI,IAAJ;AAAA;AACA;AAAA,AAAA,UAAe,IAAf;AAAA;AACA;AAAA,AAAA,UAAgB,IAAhB;AAAA;AAZD,CAAA;"
 }

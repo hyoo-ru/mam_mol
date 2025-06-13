@@ -2,23 +2,13 @@
 		allow(){
 			return "";
 		}
-		uri(next){
-			if(next !== undefined) return next;
-			return "about:config";
-		}
 		html(){
 			return null;
-		}
-		dom_name(){
-			return "iframe";
 		}
 		attr(){
 			return {
 				...(super.attr()), 
-				"data": null, 
-				"type": null, 
 				"allow": (this.allow()), 
-				"src": (this.uri()), 
 				"srcdoc": (this.html())
 			};
 		}
@@ -47,6 +37,5 @@
 			return true;
 		}
 	};
-	($mol_mem(($.$mol_frame.prototype), "uri"));
 
 //# sourceMappingURL=frame.view.tree.js.map
