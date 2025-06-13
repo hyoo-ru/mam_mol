@@ -409,11 +409,11 @@ $mol_icon_open_in_new $mol_icon path \M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.4
 
 $mol_embed_native $mol_scroll
 	uri? \
-	dom_name \object
+	dom_name \iframe
 	window null
 	attr *
 		^
-		data <= uri
+		src <= uri
 		type <= mime \
 	sub /
 		<= Fallback $mol_link

@@ -338,11 +338,11 @@ $mol_link_iconed $mol_link
 
 $mol_embed_native $mol_scroll
 	uri? \
-	dom_name \object
+	dom_name \iframe
 	window null
 	attr *
 		^
-		data <= uri
+		src <= uri
 		type <= mime \
 	sub /
 		<= Fallback $mol_link

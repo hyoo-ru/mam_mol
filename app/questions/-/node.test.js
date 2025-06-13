@@ -7912,7 +7912,7 @@ var $;
 			return "";
 		}
 		dom_name(){
-			return "object";
+			return "iframe";
 		}
 		window(){
 			return null;
@@ -7920,7 +7920,7 @@ var $;
 		attr(){
 			return {
 				...(super.attr()), 
-				"data": (this.uri()), 
+				"src": (this.uri()), 
 				"type": (this.mime())
 			};
 		}

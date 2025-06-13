@@ -2862,7 +2862,7 @@ declare namespace $ {
 		dom_name( ): string
 		window( ): any
 		attr( ): ({ 
-			'data': ReturnType< $mol_embed_native['uri'] >,
+			'src': ReturnType< $mol_embed_native['uri'] >,
 			'type': ReturnType< $mol_embed_native['mime'] >,
 		})  & ReturnType< $mol_scroll['attr'] >
 		sub( ): readonly(any)[]
