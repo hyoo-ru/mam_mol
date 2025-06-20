@@ -311,15 +311,13 @@ $mol_link $mol_view
 
 $mol_image $mol_view
 	dom_name \img
-	field *any
+	attr *any
 		^
 		src <= uri \
 		alt <= title
 		loading <= loading \eager
 		decoding <= decoding \async
 		crossOrigin <= cors null
-	attr *any
-		^
 		width <= natural_width 0
 		height <= natural_height 0
 	event *any

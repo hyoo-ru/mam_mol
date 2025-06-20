@@ -9641,19 +9641,14 @@ var $;
 		dom_name(){
 			return "img";
 		}
-		field(){
+		attr(){
 			return {
-				...(super.field()), 
+				...(super.attr()), 
 				"src": (this.uri()), 
 				"alt": (this.title()), 
 				"loading": (this.loading()), 
 				"decoding": (this.decoding()), 
-				"crossOrigin": (this.cors())
-			};
-		}
-		attr(){
-			return {
-				...(super.attr()), 
+				"crossOrigin": (this.cors()), 
 				"width": (this.natural_width()), 
 				"height": (this.natural_height())
 			};
