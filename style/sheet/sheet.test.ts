@@ -27,11 +27,9 @@ namespace $ {
 		
 			class $mol_style_sheet_test extends $mol_view {}
 
-			const { px , per } = $mol_style_unit
-
 			const sheet = $mol_style_sheet( $mol_style_sheet_test , {
-				width : per(50),
-				height : px(50),
+				width : '50%',
+				height : '50px',
 			} )
 
 			$mol_assert_equal( sheet , '[mol_style_sheet_test] {\n\twidth: 50%;\n\theight: 50px;\n}\n' )
@@ -43,10 +41,9 @@ namespace $ {
 			class $mol_style_sheet_test extends $mol_view {}
 
 			const { calc } = $mol_style_func
-			const { px , per } = $mol_style_unit
 
 			const sheet = $mol_style_sheet( $mol_style_sheet_test , {
-				width : calc( `${ per(100) } - ${ px(1) }` ),
+				width : calc( `100% - 1px` ),
 			} )
 
 			$mol_assert_equal( sheet , '[mol_style_sheet_test] {\n\twidth: calc(100% - 1px);\n}\n' )
@@ -57,15 +54,14 @@ namespace $ {
 		
 			class $mol_style_sheet_test extends $mol_view {}
 
-			const { px } = $mol_style_unit
-
 			const sheet = $mol_style_sheet( $mol_style_sheet_test , {
 				flex : {
-					grow : 5
+					grow: 5,
+					shrink: 10,
 				}
 			} )
 
-			$mol_assert_equal( sheet , '[mol_style_sheet_test] {\n\tflex-grow: 5;\n}\n' )
+			$mol_assert_equal( sheet , '[mol_style_sheet_test] {\n\tflex-grow: 5;\n\tflex-shrink: 10;\n}\n' )
 			
 		},
 		
@@ -75,9 +71,10 @@ namespace $ {
 
 			const sheet = $mol_style_sheet( $mol_style_sheet_test , {
 				'--isVariable': 'yes',
+				'--is_variable': 'no',
 			} )
 
-			$mol_assert_equal( sheet , '[mol_style_sheet_test] {\n\t--is-variable: yes;\n}\n' )
+			$mol_assert_equal( sheet , '[mol_style_sheet_test] {\n\t--is-variable: yes;\n\t--is_variable: no;\n}\n' )
 			
 		},
 		
@@ -85,29 +82,27 @@ namespace $ {
 			
 			class $mol_style_sheet_test extends $mol_view {}
 
-			const { px } = $mol_style_unit
-
 			const sheet = $mol_style_sheet( $mol_style_sheet_test , {
 				'--variable' : {
-					test : px(5)
-				}
+					test1: '5px',
+					test2: '10px',
+				},
 			} )
 
-			$mol_assert_equal( sheet , '[mol_style_sheet_test] {\n\t--variable-test: 5px;\n}\n' )
+			$mol_assert_equal( sheet , '[mol_style_sheet_test] {\n\t--variable-test1: 5px;\n\t--variable-test2: 10px;\n}\n' )
 			
 		},
 
 		'property shorthand'() {
 		
 			class $mol_style_sheet_test extends $mol_view {}
-
-			const { px } = $mol_style_unit
-
+			
 			const sheet = $mol_style_sheet( $mol_style_sheet_test , {
-				padding : [ px(5) , 'auto' ]
+				padding: [ '5px' , 'auto' ],
+				margin: [ '10px' , 'auto' ],
 			} )
 
-			$mol_assert_equal( sheet , '[mol_style_sheet_test] {\n\tpadding: 5px auto;\n}\n' )
+			$mol_assert_equal( sheet , '[mol_style_sheet_test] {\n\tpadding: 5px auto;\n\tmargin: 10px auto;\n}\n' )
 			
 		},
 
@@ -120,19 +115,17 @@ namespace $ {
 			const sheet = $mol_style_sheet( $mol_style_sheet_test , {
 				background: {
 					image: [ [url('foo')], [url('bar')] ],
+					size: [[ 'cover' ], [ 'contain' ]],
 				},
 			} )
 
-			$mol_assert_equal( sheet , '[mol_style_sheet_test] {\n\tbackground-image: url("foo"),url("bar");\n}\n' )
+			$mol_assert_equal( sheet , '[mol_style_sheet_test] {\n\tbackground-image: url("foo"),url("bar");\n\tbackground-size: cover,contain;\n}\n' )
 			
 		},
 
 		'sequenced structs'() {
 		
 			class $mol_style_sheet_test extends $mol_view {}
-
-			const { rem } = $mol_style_unit
-			const { hsla } = $mol_style_func
 
 			const sheet = $mol_style_sheet( $mol_style_sheet_test , {
 				box: {
@@ -141,7 +134,7 @@ namespace $ {
 							inset: true,
 							x: 0,
 							y: 0,
-							blur: rem(.5),
+							blur: '0.5rem',
 							spread: 0,
 							color: 'red',
 						},
@@ -149,7 +142,7 @@ namespace $ {
 							inset: false,
 							x: 0,
 							y: 0,
-							blur: rem(.5),
+							blur: '0.5rem',
 							spread: 0,
 							color: 'blue',
 						},
@@ -166,13 +159,13 @@ namespace $ {
 			class $mol_style_sheet_test extends $mol_view {}
 
 			const sheet = $mol_style_sheet( $mol_style_sheet_test , {
+				color: 'red',
 				':focus': {
-					color: 'red',
 					display: 'block',
 				},
 			} )
 
-			$mol_assert_equal( sheet , '[mol_style_sheet_test]:focus {\n\tcolor: red;\n\tdisplay: block;\n}\n' )
+			$mol_assert_equal( sheet , '[mol_style_sheet_test] {\n\tcolor: red;\n}\n[mol_style_sheet_test]:focus {\n\tdisplay: block;\n}\n' )
 			
 		},
 
@@ -181,13 +174,13 @@ namespace $ {
 			class $mol_style_sheet_test extends $mol_view {}
 
 			const sheet = $mol_style_sheet( $mol_style_sheet_test , {
+				color: 'red',
 				'::first-line': {
-					color: 'red',
 					display: 'block',
 				},
 			} )
 
-			$mol_assert_equal( sheet , '[mol_style_sheet_test]::first-line {\n\tcolor: red;\n\tdisplay: block;\n}\n' )
+			$mol_assert_equal( sheet , '[mol_style_sheet_test] {\n\tcolor: red;\n}\n[mol_style_sheet_test]::first-line {\n\tdisplay: block;\n}\n' )
 			
 		},
 
@@ -196,15 +189,18 @@ namespace $ {
 			class $mol_style_sheet_test extends $mol_view {}
 
 			const sheet = $mol_style_sheet( $mol_style_sheet_test , {
+				color: 'red',
 				'@media': {
 					'print': {
-						color: 'red',
 						display: 'block',
+					},
+					'(max-width: 640px)': {
+						display: 'inline',
 					},
 				},
 			} )
 
-			$mol_assert_equal( sheet , '@media print {\n[mol_style_sheet_test] {\n\tcolor: red;\n\tdisplay: block;\n}\n}\n' )
+			$mol_assert_equal( sheet , '[mol_style_sheet_test] {\n\tcolor: red;\n}\n@media print {\n[mol_style_sheet_test] {\n\tdisplay: block;\n}\n}\n@media (max-width: 640px) {\n[mol_style_sheet_test] {\n\tdisplay: inline;\n}\n}\n' )
 			
 		},
 
@@ -217,17 +213,51 @@ namespace $ {
 			}
 
 			const sheet = $mol_style_sheet( $mol_style_sheet_test , {
+				color: 'red',
 				'@' : {
 					mol_theme: {
 						'$mol_theme_dark': {
-							color: 'red',
 							display: 'block',
+						},
+					},
+					disabled: {
+						'true': {
+							width: '100%',
 						},
 					},
 				},
 			} )
 
-			$mol_assert_equal( sheet , '[mol_style_sheet_test]:where([mol_theme="$mol_theme_dark"]) {\n\tcolor: red;\n\tdisplay: block;\n}\n' )
+			$mol_assert_equal( sheet , '[mol_style_sheet_test] {\n\tcolor: red;\n}\n[mol_style_sheet_test]:where([mol_theme="$mol_theme_dark"]) {\n\tdisplay: block;\n}\n[mol_style_sheet_test]:where([disabled="true"]) {\n\twidth: 100%;\n}\n' )
+			
+		},
+
+		'component block styles with attribute value (short syntax)'() {
+		
+			class $mol_style_sheet_test extends $mol_view {
+				attr() { return {
+					mol_theme: '$mol_theme_dark'
+				} }
+			}
+
+			const sheet = $mol_style_sheet( $mol_style_sheet_test , {
+				color: 'red',
+				'[mol_theme]': {
+					'$mol_theme_dark': {
+						display: 'block',
+					},
+				},
+				'[disabled]': {
+					'true': {
+						width: '100%',
+					},
+					'false': {
+						width: '50%',
+					},
+				},
+			} )
+
+			$mol_assert_equal( sheet , '[mol_style_sheet_test] {\n\tcolor: red;\n}\n[mol_style_sheet_test]:where([mol_theme="$mol_theme_dark"]) {\n\tdisplay: block;\n}\n[mol_style_sheet_test]:where([disabled="true"]) {\n\twidth: 100%;\n}\n[mol_style_sheet_test]:where([disabled="false"]) {\n\twidth: 50%;\n}\n' )
 			
 		},
 
@@ -238,28 +268,29 @@ namespace $ {
 			}
 
 			const sheet = $mol_style_sheet( $mol_style_sheet_test , {
+				color: 'red',
 				Item : {
-					color: 'red',
 					display: 'block',
 				},
 			} )
 
-			$mol_assert_equal( sheet , '[mol_style_sheet_test_item] {\n\tcolor: red;\n\tdisplay: block;\n}\n' )
+			$mol_assert_equal( sheet , '[mol_style_sheet_test] {\n\tcolor: red;\n}\n[mol_style_sheet_test_item] {\n\tdisplay: block;\n}\n' )
 			
 		},
 
 		'component element of element styles'() {
 		
 			const sheet = $mol_style_sheet( $mol_style_sheet_test2 , {
+				width: '100%',
 				List : {
+					color: 'red',
 					Item : {
-						color: 'red',
 						display: 'block',
 					},
 				},
 			} )
 
-			$mol_assert_equal( sheet , '[mol_style_sheet_test2_list_item] {\n\tcolor: red;\n\tdisplay: block;\n}\n' )
+			$mol_assert_equal( sheet , '[mol_style_sheet_test2] {\n\twidth: 100%;\n}\n[mol_style_sheet_test2_list] {\n\tcolor: red;\n}\n[mol_style_sheet_test2_list_item] {\n\tdisplay: block;\n}\n' )
 			
 		},
 
@@ -268,7 +299,8 @@ namespace $ {
 			class $mol_style_sheet_test extends $mol_view {
 				Item() { return new $mol_view }
 				attr() { return {
-					mol_theme: '$mol_theme_dark'
+					mol_theme: '$mol_theme_dark',
+					disabled: true,
 				} }
 			}
 
@@ -291,28 +323,31 @@ namespace $ {
 		'inner component styles by class'() {
 		
 			const sheet = $mol_style_sheet( $mol_style_sheet_test2 , {
+				color: 'red',
 				$mol_style_sheet_test1 : {
-					color: 'red',
 					display: 'block',
 				},
 			} )
 
-			$mol_assert_equal( sheet , '[mol_style_sheet_test2] :where([mol_style_sheet_test1]) {\n\tcolor: red;\n\tdisplay: block;\n}\n' )
+			$mol_assert_equal( sheet , '[mol_style_sheet_test2] {\n\tcolor: red;\n}\n[mol_style_sheet_test2] :where([mol_style_sheet_test1]) {\n\tdisplay: block;\n}\n' )
 			
 		},
 
 		'child component styles by class'() {
 		
 			const sheet = $mol_style_sheet( $mol_style_sheet_test2 , {
+				color: 'red',
 				'>' : {
 					$mol_style_sheet_test1 : {
-						color: 'red',
 						display: 'block',
+					},
+					$mol_style_sheet_test2 : {
+						display: 'inline',
 					},
 				},
 			} )
 
-			$mol_assert_equal( sheet , '[mol_style_sheet_test2] > :where([mol_style_sheet_test1]) {\n\tcolor: red;\n\tdisplay: block;\n}\n' )
+			$mol_assert_equal( sheet , '[mol_style_sheet_test2] {\n\tcolor: red;\n}\n[mol_style_sheet_test2] > :where([mol_style_sheet_test1]) {\n\tdisplay: block;\n}\n[mol_style_sheet_test2] > :where([mol_style_sheet_test2]) {\n\tdisplay: inline;\n}\n' )
 			
 		},
 
