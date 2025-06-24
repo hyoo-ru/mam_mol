@@ -306,7 +306,7 @@ namespace $ {
 			position?: 'left' | 'right' | 'top' | 'bottom' | 'center' | Common
 			
 			/** @see https://developer.mozilla.org/ru/docs/Web/CSS/background-size */
-			size?: ( BG_size | [ BG_size, BG_size ] )[]
+			size?: ( BG_size | [ BG_size ] | [ BG_size, BG_size ] )[]
 			
 		}
 

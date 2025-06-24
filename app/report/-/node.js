@@ -3543,7 +3543,7 @@ var $;
                             props.push(`\t${keys.join('-')}: ${val};\n`);
                         }
                         else if (val.constructor === Object) {
-                            for (let suffix in val) {
+                            for (let suffix of Object.keys(val).reverse()) {
                                 addProp([...keys, kebab(suffix)], val[suffix]);
                             }
                         }
@@ -3561,13 +3561,13 @@ var $;
                 }
                 else if (key === '>') {
                     const types = config[key];
-                    for (let type in types) {
+                    for (let type of Object.keys(types).reverse()) {
                         make_class(selector(prefix, path) + ' > :where([' + $mol_dom_qname(type) + '])', [], types[type]);
                     }
                 }
                 else if (key === '@') {
                     const attrs = config[key];
-                    for (let name in attrs) {
+                    for (let name of Object.keys(attrs).reverse()) {
                         for (let val in attrs[name]) {
                             make_class(selector(prefix, path) + ':where([' + name + '=' + JSON.stringify(val) + '])', [], attrs[name][val]);
                         }
@@ -3575,7 +3575,7 @@ var $;
                 }
                 else if (key === '@media') {
                     const media = config[key];
-                    for (let query in media) {
+                    for (let query of Object.keys(media).reverse()) {
                         rules.push('}\n');
                         make_class(prefix, path, media[query]);
                         rules.push(`${key} ${query} {\n`);
@@ -3584,7 +3584,7 @@ var $;
                 else if (key[0] === '[' && key[key.length - 1] === ']') {
                     const attr = key.slice(1, -1);
                     const vals = config[key];
-                    for (let val in vals) {
+                    for (let val of Object.keys(vals).reverse()) {
                         make_class(selector(prefix, path) + ':where([' + attr + '=' + JSON.stringify(val) + '])', [], vals[val]);
                     }
                 }

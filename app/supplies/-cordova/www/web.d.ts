@@ -778,7 +778,7 @@ declare namespace $ {
             image?: readonly (readonly [$mol_style_func<$mol_style_func_image> | string & {}])[] | 'none' | Common;
             repeat?: Repeat | [Repeat, Repeat] | Common;
             position?: 'left' | 'right' | 'top' | 'bottom' | 'center' | Common;
-            size?: (BG_size | [BG_size, BG_size])[];
+            size?: (BG_size | [BG_size] | [BG_size, BG_size])[];
         };
         box?: {
             shadow?: readonly ([
