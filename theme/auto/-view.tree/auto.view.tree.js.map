@@ -4,7 +4,7 @@
 		"mol/theme/auto/auto.view.tree"
 	],
 	"sourcesContent": [
-		"$mol_theme_auto $mol_plugin\n\tattr * mol_theme <= theme \\\n"
+		"$mol_theme_auto $mol_plugin\n\tlight \\$mol_theme_light\n\tattr * mol_theme <= theme <= dark \\$mol_theme_dark\n"
 	],
-	"mappings": "AAAA,AAAA,6CAAgB,wBAAhB;AAAA,AACqB;AAAA,AAAA,UAAO,EAAP;AAAA;AAApB;AAAA,AAAA,UAAK,CAAE,aAAU,KAAG,QAAH,CAAZ,CAAL;AAAA;AADD,CAAA;"
+	"mappings": "AAAA,AAAA,6CAAgB,wBAAhB;AAAA,AAE8B;AAAA,AAAA,UAAM,iBAAN;AAAA;AAAT;AAAA,AAAA,UAAM,KAAG,OAAH,CAAN;AAAA;AADpB;AAAA,AAAA,UAAO,kBAAP;AAAA;AACA;AAAA,AAAA,UAAK,CAAE,aAAU,KAAG,QAAH,CAAZ,CAAL;AAAA;AAFD,CAAA;"
 }
