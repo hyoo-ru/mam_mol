@@ -1,6 +1,7 @@
 :root {
 	--mol_theme_hue: 240deg;
 	--mol_theme_hue_spread: 90deg;
+	color-scheme: dark light;
 }
 
 :where([mol_theme]) {
