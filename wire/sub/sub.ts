@@ -35,7 +35,7 @@ namespace $ {
 		/**
 		 * Receive notification about publisher changes.
 		 */
-		absorb( quant: $mol_wire_cursor ): void
+		absorb( quant: $mol_wire_cursor, pos: number ): void
 		
 		/**
 		 * Unsubscribes from all publishers.
