@@ -2364,42 +2364,48 @@ declare namespace $ {
 		,
 		ReturnType< $mol_scroll['sub'] >
 	>
-	type $mol_button_minor__event_click_mol_select_8 = $mol_type_enforce<
+	type $mol_button_minor__enabled_mol_select_8 = $mol_type_enforce<
+		ReturnType< $mol_select['enabled'] >
+		,
+		ReturnType< $mol_button_minor['enabled'] >
+	>
+	type $mol_button_minor__event_click_mol_select_9 = $mol_type_enforce<
 		ReturnType< $mol_select['event_select'] >
 		,
 		ReturnType< $mol_button_minor['event_click'] >
 	>
-	type $mol_button_minor__sub_mol_select_9 = $mol_type_enforce<
+	type $mol_button_minor__sub_mol_select_10 = $mol_type_enforce<
 		ReturnType< $mol_select['option_content'] >
 		,
 		ReturnType< $mol_button_minor['sub'] >
 	>
-	type $mol_view__sub_mol_select_10 = $mol_type_enforce<
+	type $mol_view__sub_mol_select_11 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_search__query_mol_select_11 = $mol_type_enforce<
+	type $mol_search__query_mol_select_12 = $mol_type_enforce<
 		ReturnType< $mol_select['filter_pattern'] >
 		,
 		ReturnType< $mol_search['query'] >
 	>
-	type $mol_search__hint_mol_select_12 = $mol_type_enforce<
+	type $mol_search__hint_mol_select_13 = $mol_type_enforce<
 		ReturnType< $mol_select['filter_hint'] >
 		,
 		ReturnType< $mol_search['hint'] >
 	>
-	type $mol_search__submit_mol_select_13 = $mol_type_enforce<
+	type $mol_search__submit_mol_select_14 = $mol_type_enforce<
 		ReturnType< $mol_select['submit'] >
 		,
 		ReturnType< $mol_search['submit'] >
 	>
-	type $mol_search__enabled_mol_select_14 = $mol_type_enforce<
+	type $mol_search__enabled_mol_select_15 = $mol_type_enforce<
 		ReturnType< $mol_select['enabled'] >
 		,
 		ReturnType< $mol_search['enabled'] >
 	>
 	export class $mol_select extends $mol_pick {
+		enabled( ): boolean
 		event_select( id: any, next?: any ): any
 		option_label( id: any): string
 		filter_pattern( next?: string ): string
@@ -2415,7 +2421,6 @@ declare namespace $ {
 		Bubble_pane( ): $mol_scroll
 		filter_hint( ): string
 		submit( next?: any ): any
-		enabled( ): boolean
 		dictionary( next?: Record<string, any> ): Record<string, any>
 		options( ): readonly(string)[]
 		value( next?: string ): string

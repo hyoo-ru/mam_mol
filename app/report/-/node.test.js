@@ -7107,6 +7107,9 @@ var $;
 
 ;
 	($.$mol_select) = class $mol_select extends ($.$mol_pick) {
+		enabled(){
+			return true;
+		}
 		event_select(id, next){
 			if(next !== undefined) return next;
 			return null;
@@ -7168,9 +7171,6 @@ var $;
 			if(next !== undefined) return next;
 			return null;
 		}
-		enabled(){
-			return true;
-		}
 		dictionary(next){
 			if(next !== undefined) return next;
 			return {};
@@ -7187,6 +7187,7 @@ var $;
 		}
 		Option_row(id){
 			const obj = new this.$.$mol_button_minor();
+			(obj.enabled) = () => ((this.enabled()));
 			(obj.event_click) = (next) => ((this.event_select(id, next)));
 			(obj.sub) = () => ((this.option_content(id)));
 			return obj;

@@ -296,6 +296,7 @@ $mol_select $mol_pick
 	value? \
 	option_label_default \
 	Option_row* $mol_button_minor
+		enabled <= enabled true
 		event_click?event <=> event_select*?event null
 		sub <= option_content* /
 			<= Option_label* $mol_dimmer
