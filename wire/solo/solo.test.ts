@@ -584,10 +584,6 @@ namespace $ {
 					return this.value()
 				}
 
-				@ $mol_wire_method
-				static test() {
-				}
-				
 			}
 			
 			$mol_assert_equal( App.result() , 1 )

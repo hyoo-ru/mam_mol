@@ -55,7 +55,7 @@ declare namespace $ {
         pub_off(pub_pos: number): void;
         track_cut(sub: $mol_wire_pub | null): void;
         track_off(sub: $mol_wire_pub | null): void;
-        absorb(quant: $mol_wire_cursor): void;
+        absorb(quant: $mol_wire_cursor, pos: number): void;
         destructor(): void;
     }
 }
@@ -109,7 +109,7 @@ declare namespace $ {
         track_cut(): void;
         complete(): void;
         complete_pubs(): void;
-        absorb(quant?: $mol_wire_cursor): void;
+        absorb(quant?: $mol_wire_cursor, pos?: number): void;
         [$mol_dev_format_head](): any[];
         get pub_empty(): boolean;
     }
