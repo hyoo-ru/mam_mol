@@ -1,24 +1,33 @@
 $mol_number $mol_view
 	precision_view <= precision 1
 	precision_change <= precision 1
+	boost 10
 	value_min -Infinity
 	value_max +Infinity
 	value? +NaN
 	enabled true
+	plugins /
+		<= Hotkey $mol_hotkey
+			key *
+				down? <=> event_dec? null
+				up? <=> event_inc? null
+				pageDown? <=> event_dec_boost? null
+				pageUp? <=> event_inc_boost? null
 	sub /
+		<= Dec $mol_button_minor
+			event_click? <=> event_dec? null
+			enabled <= dec_enabled <= enabled
+			sub / <= dec_icon $mol_icon_chevron_left
 		<= String $mol_string
 			- \ we don't want native number controls in mobile devices
 			- \ https://stackoverflow.com/questions/3790935/can-i-hide-the-html5-number-input-s-spin-box
-			type <= type \tel
+			type <= type \text
+			keyboard \decimal
 			value? <=> value_string? \
 			hint <= hint \ 
 			enabled <= string_enabled <= enabled
 			submit? <=> submit? null
-		<= Dec $mol_button_minor
-			event_click? <=> event_dec? null
-			enabled <= dec_enabled <= enabled
-			sub / <= dec_icon $mol_icon_minus
 		<= Inc $mol_button_minor
 			event_click? <=> event_inc? null
 			enabled <= inc_enabled <= enabled
-			sub / <= inc_icon $mol_icon_plus
+			sub / <= inc_icon $mol_icon_chevron_right

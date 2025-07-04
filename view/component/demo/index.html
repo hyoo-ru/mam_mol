@@ -1,7 +1,7 @@
-<body mol_view_root>
-	<mol-view-component-demo></mol-view-component-demo>
-	<mol-view-component-demo str="bar"></mol-view-component-demo>
+<body mol_view_root tabindex="-1">
+	<mol-view-component-demo id="pre-empty"></mol-view-component-demo>
+	<mol-view-component-demo id="pre-bar" str="bar"></mol-view-component-demo>
 	<script src="web.js"></script>
-	<mol-view-component-demo #num="1e2"></mol-view-component-demo>
-	<mol-view-component-demo str="bar" #num="1e2"></mol-view-component-demo>
+	<mol-view-component-demo id="post-num" #num="1e2"></mol-view-component-demo>
+	<mol-view-component-demo id="post-full" str="bar" #num="1e2"></mol-view-component-demo>
 </body>

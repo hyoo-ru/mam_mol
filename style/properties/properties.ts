@@ -3,7 +3,7 @@ namespace $ {
 	export type $mol_style_properties = Partial< $mol_type_override< CSSStyleDeclaration , Overrides > >
 
 	type Common =
-	| 'inherit' | 'initial' | 'unset' | 'revert' | 'revert-layer'
+	| 'inherit' | 'initial' | 'unset' | 'revert' | 'revert-layer' | 'none'
 	| $mol_style_func< 'var' >
 
 	export type $mol_style_properties_color =
@@ -306,7 +306,7 @@ namespace $ {
 			position?: 'left' | 'right' | 'top' | 'bottom' | 'center' | Common
 			
 			/** @see https://developer.mozilla.org/ru/docs/Web/CSS/background-size */
-			size?: ( BG_size | [ BG_size, BG_size ] )[]
+			size?: ( BG_size | [ BG_size ] | [ BG_size, BG_size ] )[]
 			
 		}
 

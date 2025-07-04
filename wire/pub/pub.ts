@@ -95,7 +95,7 @@ namespace $ {
 		 */
 		emit( quant = $mol_wire_cursor.stale ) {
 			for( let i = this.sub_from; i < this.data.length; i += 2 ) {
-				;( this.data[i] as $mol_wire_sub ).absorb( quant )
+				;( this.data[i] as $mol_wire_sub ).absorb( quant, this.data[ i + 1 ] as number )
 			}
 		}
 		

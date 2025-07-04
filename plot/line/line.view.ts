@@ -44,7 +44,7 @@ namespace $.$$ {
 					Math.abs( scaled.x - last.x ) < threshold
 					&& Math.abs( scaled.y - last.y ) < threshold
 				) continue
-				
+
 				const zone = zone_of( scaled )
 				
 				last = scaled
@@ -72,9 +72,9 @@ namespace $.$$ {
 			const points = this.points()
 			if( points.length === 0 ) return ''
 
-			const main = points.map( point => `L ${point.join(' ')}`).join(' ')
+			const main = points.map( (point) => point.join(',')).join(' ')
 
-			return `M ${points[0].join(' ')} ${main}`
+			return `M ${points[0].join(' ')} L ${main}`
 		}
 		
 	}

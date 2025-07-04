@@ -7,4 +7,5 @@
 	object-position: top left;
 	border-radius: var(--mol_gap_round);
 	aspect-ratio: 4/3;
+	border: none;
 }

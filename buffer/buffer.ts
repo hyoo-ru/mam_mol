@@ -1,6 +1,8 @@
 namespace $ {
 	export class $mol_buffer extends DataView< ArrayBuffer > {
 		
+		[ Symbol.toStringTag ] = this.constructor.name + '<>'
+		
 		static from<
 			This extends typeof $mol_buffer
 		>(

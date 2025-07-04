@@ -22,7 +22,7 @@ namespace $.$$ {
 		}
 		
 		keydown( next : KeyboardEvent ) {
-			if( next.ctrlKey && next.keyCode === $mol_keyboard_code.enter && !this.submit_blocked() ) this.submit( event )
+			if( next.ctrlKey && next.keyCode === $mol_keyboard_code.enter && !this.submit_blocked() ) this.submit( next )
 		}
 		
 	}

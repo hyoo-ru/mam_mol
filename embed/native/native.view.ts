@@ -39,6 +39,12 @@ namespace $.$$ {
 				$mol_wire_async( this ).message_receive
 			)
 		}
+
+		override sub() {
+			this.window()
+
+			return super.sub()
+		}
 		
 		message_receive( event?: MessageEvent<[ string, string ]> ) {
 			

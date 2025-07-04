@@ -185,13 +185,34 @@ namespace $ {
 			
 		}
 
-		absorb( quant = $mol_wire_cursor.stale ) {
+		absorb( quant = $mol_wire_cursor.stale, pos = -1 ) {
 			
 			if( this.cursor === $mol_wire_cursor.final ) return
 			if( this.cursor >= quant ) return
 			
 			this.cursor = quant
 			this.emit( $mol_wire_cursor.doubt )
+			
+			if( pos >= 0 && pos < this.sub_from - 2 ) {
+				
+				const pub = this.data[ pos ] as $mol_wire_pub
+				if( pub instanceof $mol_wire_task ) return
+				
+				for(
+					let cursor = this.pub_from;
+					cursor < this.sub_from;
+					cursor += 2
+				) {
+					
+					const pub = this.data[ cursor ] as $mol_wire_pub
+					
+					if( pub instanceof $mol_wire_task ) {
+						pub.destructor()
+					}
+					
+				}
+				
+			}
 			
 		}
 		
