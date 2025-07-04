@@ -138,3 +138,5 @@ include \/mol/video/camera/demo
 include \/mol/password/demo
 include \/mol/lights/demo
 include \/mol/locale/demo
+
+include \/milis/log/demo
