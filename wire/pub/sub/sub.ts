@@ -193,26 +193,26 @@ namespace $ {
 			this.cursor = quant
 			this.emit( $mol_wire_cursor.doubt )
 			
-			if( pos >= 0 && pos < this.sub_from - 2 ) {
+			// if( pos >= 0 && pos < this.sub_from - 2 ) {
 				
-				const pub = this.data[ pos ] as $mol_wire_pub
-				if( pub instanceof $mol_wire_task ) return
+			// 	const pub = this.data[ pos ] as $mol_wire_pub
+			// 	if( pub instanceof $mol_wire_task ) return
 				
-				for(
-					let cursor = this.pub_from;
-					cursor < this.sub_from;
-					cursor += 2
-				) {
+			// 	for(
+			// 		let cursor = this.pub_from;
+			// 		cursor < this.sub_from;
+			// 		cursor += 2
+			// 	) {
 					
-					const pub = this.data[ cursor ] as $mol_wire_pub
+			// 		const pub = this.data[ cursor ] as $mol_wire_pub
 					
-					if( pub instanceof $mol_wire_task ) {
-						pub.destructor()
-					}
+			// 		if( pub instanceof $mol_wire_task ) {
+			// 			pub.destructor()
+			// 		}
 					
-				}
+			// 	}
 				
-			}
+			// }
 			
 		}
 		

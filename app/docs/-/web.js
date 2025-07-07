@@ -759,17 +759,6 @@ var $;
                 return;
             this.cursor = quant;
             this.emit($mol_wire_cursor.doubt);
-            if (pos >= 0 && pos < this.sub_from - 2) {
-                const pub = this.data[pos];
-                if (pub instanceof $mol_wire_task)
-                    return;
-                for (let cursor = this.pub_from; cursor < this.sub_from; cursor += 2) {
-                    const pub = this.data[cursor];
-                    if (pub instanceof $mol_wire_task) {
-                        pub.destructor();
-                    }
-                }
-            }
         }
         [$mol_dev_format_head]() {
             return $mol_dev_format_native(this);
