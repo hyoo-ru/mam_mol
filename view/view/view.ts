@@ -486,11 +486,9 @@ namespace $ {
 			
 			try {
 				this.dom_final()
-			} catch(err) {
-				$mol_fail_log(err)
+			} finally {
+				view.dom_node().scrollIntoView({ block: align })
 			}
-
-			view.dom_node().scrollIntoView({ block: align })
 
 		}
 		
