@@ -171,18 +171,18 @@ namespace $.$$ {
 			}
 		}
 		
-		data() : { [ field : string ] : string } {
+		data() : { [ field : string ] : string | number } {
 			return {
-				base_length : '403300' ,
-				base_width : '22000' ,
-				base_height : '25000' ,
+				base_length : 403300 ,
+				base_width : 22000 ,
+				base_height : 25000 ,
 				base_kind : 'union' ,
 				base_type : 'ribbon' ,
-				base_release_year : '1993' ,
-				base_weight_max : '30000' ,
-				roof_length : '413300' ,
-				roof_width : '23000' ,
-				roof_height : '26000' ,
+				base_release_year : 1993 ,
+				base_weight_max : 30000 ,
+				roof_length : 413300 ,
+				roof_width : 23000 ,
+				roof_height : 26000 ,
 			}
 		}
 		
