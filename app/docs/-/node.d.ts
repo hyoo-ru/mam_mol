@@ -6647,7 +6647,7 @@ declare namespace $ {
 
 //# sourceMappingURL=demo.view.tree.d.ts.map
 declare namespace $ {
-    function $mol_array_chunks<Item>(array: Item[], br: (item: Item, index: number) => boolean): Item[][];
+    function $mol_array_chunks<Item>(array: readonly Item[], rule: number | ((item: Item, index: number) => boolean)): Item[][];
 }
 
 declare namespace $ {

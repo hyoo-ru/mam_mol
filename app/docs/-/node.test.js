@@ -16381,18 +16381,21 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_array_chunks(array, br) {
+    function $mol_array_chunks(array, rule) {
+        const br = typeof rule === 'number' ? (_, i) => i % rule === 0 : rule;
         let chunk = [];
-        const chunks = [chunk];
+        const chunks = [];
         for (let i = 0; i < array.length; ++i) {
             const item = array[i];
-            chunk.push(item);
             if (br(item, i)) {
-                chunks.push(chunk = []);
+                if (chunk.length)
+                    chunks.push(chunk);
+                chunk = [];
             }
+            chunk.push(item);
         }
-        if (chunk.length === 0)
-            chunks.pop();
+        if (chunk.length)
+            chunks.push(chunk);
         return chunks;
     }
     $.$mol_array_chunks = $mol_array_chunks;
@@ -45570,16 +45573,19 @@ var $;
 (function ($) {
     $mol_test({
         'empty array'() {
-            $mol_assert_like($mol_array_chunks([], () => true), []);
+            $mol_assert_equal($mol_array_chunks([], () => true), []);
         },
         'one chunk'() {
-            $mol_assert_like($mol_array_chunks([1, 2, 3, 4, 5], () => false), [[1, 2, 3, 4, 5]]);
+            $mol_assert_equal($mol_array_chunks([1, 2, 3, 4, 5], () => false), [[1, 2, 3, 4, 5]]);
         },
-        'last empty chunk'() {
-            $mol_assert_like($mol_array_chunks([1, 2, 3, 4, 5], (_, i) => i === 4), [[1, 2, 3, 4, 5]]);
+        'fixed size chunk'() {
+            $mol_assert_equal($mol_array_chunks([1, 2, 3, 4, 5], 3), [[1, 2, 3], [4, 5]]);
+        },
+        'first empty chunk'() {
+            $mol_assert_equal($mol_array_chunks([1, 2, 3, 4, 5], (_, i) => i === 0), [[1, 2, 3, 4, 5]]);
         },
         'chunk for every item'() {
-            $mol_assert_like($mol_array_chunks([1, 2, 3, 4, 5], () => true), [[1], [2], [3], [4], [5]]);
+            $mol_assert_equal($mol_array_chunks([1, 2, 3, 4, 5], () => true), [[1], [2], [3], [4], [5]]);
         },
     });
 })($ || ($ = {}));
