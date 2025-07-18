@@ -13,7 +13,7 @@ namespace $.$$ {
 		
 		@ $mol_mem_key
 		after( anchor_id: number | null ) {
-			this.$.$mol_wait_timeout( 1000 )
+			this.$.$mol_wait_timeout( 500 )
 			return Array.from(
 				{ length: this.chunk_size() },
 				( _, index )=> ( anchor_id ?? 0 ) + index + 1,

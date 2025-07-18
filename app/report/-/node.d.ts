@@ -2865,7 +2865,7 @@ declare namespace $.$$ {
             [field: string]: $mol_app_report_scheme;
         };
         data(): {
-            [field: string]: string;
+            [field: string]: string | number;
         };
         description(): string;
         headCells(): $mol_app_report_cell[];
@@ -2879,7 +2879,7 @@ declare namespace $.$$ {
         };
         cell_value(pos: number[], next: any): any;
         cell_contentName(pos: number[]): string;
-        cell_contentValue(pos: number[]): string;
+        cell_contentValue(pos: number[]): string | number;
     }
 }
 
