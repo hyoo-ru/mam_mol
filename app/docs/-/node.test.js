@@ -280,6 +280,21 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_guid(length = 8, exists = () => false) {
+        for (;;) {
+            let id = Math.random().toString(36).substring(2, length + 2).toUpperCase();
+            if (exists(id))
+                continue;
+            return id;
+        }
+    }
+    $.$mol_guid = $mol_guid;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
     let $mol_wire_cursor;
     (function ($mol_wire_cursor) {
         $mol_wire_cursor[$mol_wire_cursor["stale"] = -1] = "stale";
@@ -294,6 +309,11 @@ var $;
 var $;
 (function ($) {
     class $mol_wire_pub extends Object {
+        constructor(id = `$mol_wire_pub:${$mol_guid()}`) {
+            super();
+            this[Symbol.toStringTag] = id;
+        }
+        [Symbol.toStringTag];
         data = [];
         static get [Symbol.species]() {
             return Array;
@@ -695,7 +715,6 @@ var $;
                 }
             }
         }
-        [Symbol.toStringTag];
         cache = undefined;
         get args() {
             return this.data.slice(0, this.pub_from);
@@ -714,13 +733,12 @@ var $;
             return this.task.name + '()';
         }
         constructor(id, task, host, args) {
-            super();
+            super(id);
             this.task = task;
             this.host = host;
             if (args)
                 this.data.push(...args);
             this.pub_from = this.sub_from = args?.length ?? 0;
-            this[Symbol.toStringTag] = id;
         }
         plan() {
             $mol_wire_fiber.planning.add(this);
@@ -903,21 +921,6 @@ var $;
         }
     }
     $.$mol_wire_fiber = $mol_wire_fiber;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_guid(length = 8, exists = () => false) {
-        for (;;) {
-            let id = Math.random().toString(36).substring(2, length + 2).toUpperCase();
-            if (exists(id))
-                continue;
-            return id;
-        }
-    }
-    $.$mol_guid = $mol_guid;
 })($ || ($ = {}));
 
 ;
@@ -17534,6 +17537,81 @@ var $;
         }
     }
     $.$mol_wire_set = $mol_wire_set;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    const pubs = new WeakMap();
+    function $mol_wire_proxy_pub(id, target) {
+        let pub = pubs.get(target);
+        if (!pub)
+            pubs.set(target, pub = new $mol_wire_pub(id));
+        return pub;
+    }
+    $.$mol_wire_proxy_pub = $mol_wire_proxy_pub;
+    function $mol_wire_proxy(id, target) {
+        if (!target)
+            return target;
+        const type = typeof target;
+        if (type !== 'object' && type !== 'function')
+            return target;
+        return new Proxy(target, {
+            get(target, property) {
+                $mol_wire_proxy_pub(id, target).promote();
+                const suffix = '.' + (typeof property === 'symbol' ? property.description : property);
+                return $mol_wire_proxy(id + suffix, Reflect.get(target, property));
+            },
+            getOwnPropertyDescriptor(target, property) {
+                $mol_wire_proxy_pub(id, target).promote();
+                return Reflect.getOwnPropertyDescriptor(target, property);
+            },
+            ownKeys(target) {
+                $mol_wire_proxy_pub(id, target).promote();
+                return Reflect.ownKeys(target);
+            },
+            has(target, property) {
+                $mol_wire_proxy_pub(id, target).promote();
+                return Reflect.has(target, property);
+            },
+            getPrototypeOf(target) {
+                $mol_wire_proxy_pub(id, target).promote();
+                return $mol_wire_proxy(id, Reflect.getPrototypeOf(target));
+            },
+            isExtensible(target) {
+                $mol_wire_proxy_pub(id, target).promote();
+                return Reflect.isExtensible(target);
+            },
+            set(target, property, next) {
+                const pub = pubs.get(target);
+                if (pub) {
+                    const prev = Reflect.get(target, property);
+                    if ($mol_compare_deep(prev, next))
+                        return true;
+                    pub.emit();
+                }
+                return Reflect.set(target, property, next);
+            },
+            defineProperty(target, property, attributes) {
+                pubs.get(target)?.emit();
+                return Reflect.defineProperty(target, property, attributes);
+            },
+            deleteProperty(target, property) {
+                pubs.get(target)?.emit();
+                return Reflect.deleteProperty(target, property);
+            },
+            setPrototypeOf(target, proto) {
+                pubs.get(target)?.emit();
+                return Reflect.setPrototypeOf(target, proto);
+            },
+            preventExtensions(target) {
+                pubs.get(target)?.emit();
+                return Reflect.preventExtensions(target);
+            },
+        });
+    }
+    $.$mol_wire_proxy = $mol_wire_proxy;
 })($ || ($ = {}));
 
 ;
@@ -45780,6 +45858,73 @@ var $;
             $mol_assert_equal(App.sum(), 222);
         },
     });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
+    var $$;
+    (function ($$) {
+        $mol_test({
+            "Deep property change"($) {
+                const source = $mol_wire_proxy('source', {
+                    foo: {
+                        bar: 123,
+                    }
+                });
+                const { res } = $mol_wire_let({
+                    res() { return source.foo.bar; }
+                });
+                $mol_assert_equal(res(), 123);
+                source.foo.bar = 321;
+                $mol_assert_equal(res(), 321);
+            },
+            "Deep property add/remove"($) {
+                const source = $mol_wire_proxy('source', {
+                    foo: {
+                        bar: 123,
+                    }
+                });
+                const { exists, props } = $mol_wire_let({
+                    exists() { return 'bar' in source.foo; },
+                    props() { return Object.keys(source.foo); },
+                });
+                $mol_assert_equal(exists(), true);
+                $mol_assert_equal(props(), ['bar']);
+                delete source.foo.bar;
+                $mol_assert_equal(exists(), false);
+                $mol_assert_equal(props(), []);
+                Object.defineProperty(source.foo, 'bar', { value: 'xxx', enumerable: true });
+                $mol_assert_equal(exists(), true);
+                $mol_assert_equal(props(), ['bar']);
+            },
+            "Deep property change to equal"($) {
+                const source = $mol_wire_proxy('source', {
+                    foo: {
+                        bar: 123,
+                    }
+                });
+                let count = 0;
+                const { res } = $mol_wire_let({
+                    res() {
+                        ++count;
+                        return source.foo.bar;
+                    }
+                });
+                res();
+                $mol_assert_equal(count, 1);
+                res();
+                $mol_assert_equal(count, 1);
+                source.foo = { bar: 123 };
+                res();
+                $mol_assert_equal(count, 1);
+                source.foo = { bar: 321 };
+                res();
+                $mol_assert_equal(count, 2);
+            },
+        });
+    })($$ = $_1.$$ || ($_1.$$ = {}));
 })($ || ($ = {}));
 
 ;

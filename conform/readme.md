@@ -1,7 +1,7 @@
 # $mol_conform
 
-Conforms two data structures to one with reference uniqueness for different content.
-This is same thing as React Reconciler but for any data.
+Conforms two data structures to one with reference uniqueness for different content and reference identity for deep equal content.
+This is same thing as React Reconciler but for any data. 
 
 ## Usage example
 
@@ -37,5 +37,5 @@ Provides custom conforming function for class (not for subclasses).
 ## Supported by default types
 
 - Primitives: `Undefined`, `Null`, `Boolean`, `Number`, `String`.
-- POJO: `Object`, `Array`.
+- POJO: `Object`, `Array`, `TypedArray`.
 - Native value objects: `Date`, `RegExp`.
