@@ -85,15 +85,15 @@ namespace $ {
 
 		'return target when has cyclic reference'() {
 			const source = { foo : {} }
-			source['self'] = source
+			source[ 'self' as never ] = source as never
 
 			const target = { foo : {} }
-			target['self'] = target
+			target[ 'self' as never ] = target as never
 
 			const result = $mol_conform( target , source )
 
 			$mol_assert_equal( result , target )
-			$mol_assert_equal( result['self'] , target )
+			$mol_assert_equal( result[ 'self' as never ] , target )
 			$mol_assert_equal( result.foo , source.foo )
 		} ,
 
