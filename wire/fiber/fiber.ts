@@ -64,8 +64,6 @@ namespace $ {
 			
 		}
 		
-		[Symbol.toStringTag]!: string
-
 		public cache: Result | Error | Promise< Result | Error > = undefined as any
 		
 		get args() {
@@ -93,10 +91,9 @@ namespace $ {
 			args?: Args
 		) {
 			
-			super()
+			super( id )
 			if( args ) this.data.push( ... args )
 			this.pub_from = this.sub_from = args?.length ?? 0
-			this[ Symbol.toStringTag ] = id
 			
 		}
 		

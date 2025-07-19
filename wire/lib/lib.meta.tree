@@ -17,6 +17,7 @@ include \/mol/wire/method
 include \/mol/wire/patch
 include \/mol/wire/let
 include \/mol/wire/set
+include \/mol/wire/proxy
 include \/mol/wire/dict
 include \/mol/wait/timeout
 include \/mol/wire/log

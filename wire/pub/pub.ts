@@ -5,6 +5,12 @@ namespace $ {
 	 */
 	export class $mol_wire_pub extends Object {
 		
+		constructor( id = `$mol_wire_pub:${ $mol_guid() }` ) {
+			super()
+			this[ Symbol.toStringTag ] = id
+		}
+		
+		[ Symbol.toStringTag ]!: string
 		data = [] as unknown[]
 		
 		// Derived objects should be Arrays.
