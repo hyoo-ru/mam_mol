@@ -29,6 +29,14 @@ namespace $ {
 			)
 		},
 		
+		'unaligned hash'() {
+			const data = new Uint8Array([ 0, 1, 2, 3, 4, 5, 6, 7 ])
+			$mol_assert_equal(
+				$mol_crypto_hash( new Uint8Array( data.buffer, 1, 7 ) ),
+				new Uint8Array([ 140, 31, 40, 252, 47, 72, 194, 113, 214, 196, 152, 240, 242, 73, 205, 222, 54, 92, 84, 197 ]),
+			)
+		},
+		
 		async 'reference'() {
 			const data = new Uint8Array([255,254,253])
 			$mol_assert_equal(
