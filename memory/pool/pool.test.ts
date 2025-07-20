@@ -46,6 +46,7 @@ namespace $.$$ {
 			pool.acquire( 16 )
 			pool.release( 4, 8 )
 			
+			$mol_assert_fail( ()=> pool.release( 4, 8 ), 'Double release' )
 			$mol_assert_fail( ()=> pool.release( 10, 4 ), 'Double release' )
 			$mol_assert_fail( ()=> pool.release( 2, 4 ), 'Double release' )
 			
