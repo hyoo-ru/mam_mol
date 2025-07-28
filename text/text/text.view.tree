@@ -27,6 +27,7 @@ $mol_text $mol_list
 		arg <= header_arg* *
 	Pre* $mol_text_code
 		text <= pre_text* \
+		row_themes <= pre_themes* \
 		highlight <= highlight \
 		uri_resolve* <= uri_resolve* \
 		sidebar_showed <= pre_sidebar_showed <= code_sidebar_showed true
