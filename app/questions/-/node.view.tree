@@ -234,6 +234,7 @@ $mol_text_code $mol_stack
 	text_lines /string
 	find_pos* null
 	uri_base \
+	row_themes /string
 	sub /
 		<= Rows $mol_list
 			render_visible_only <= render_visible_only false
@@ -241,6 +242,7 @@ $mol_text_code $mol_stack
 				<= Row*0 $mol_text_code_line
 					numb_showed <= sidebar_showed
 					numb <= row_numb* 0
+					theme <= row_theme* \
 					text <= row_text* \
 					syntax <= syntax null
 					uri_resolve* <= uri_resolve* \
@@ -448,6 +450,7 @@ $mol_text $mol_list
 		arg <= header_arg* *
 	Pre* $mol_text_code
 		text <= pre_text* \
+		row_themes <= pre_themes* /string
 		highlight <= highlight \
 		uri_resolve* <= uri_resolve* \
 		sidebar_showed <= pre_sidebar_showed <= code_sidebar_showed true

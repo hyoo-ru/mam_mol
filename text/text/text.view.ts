@@ -72,6 +72,18 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem_key
+		pre_themes( index : number ) {
+			const token = this.flow_tokens()[ index ]
+			const names: Record< string, string > = {
+				' ** ': '$mol_theme_accent',
+				' ++ ': '$mol_theme_current',
+				' -- ': '$mol_theme_special',
+			}
+			return token.chunks[0].split('\n')
+				.map( line => names[ line.match( /^ (?:\+\+|--|\*\*|  ) /gm )?.[0] ?? '' ] ?? null )
+		}
+		
+		@ $mol_mem_key
 		quote_text( index : number ) {
 			return this.flow_tokens()[ index ].chunks[0].replace( /^[>"] /mg , '' )
 		}

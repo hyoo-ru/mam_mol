@@ -82,5 +82,9 @@ namespace $.$$ {
 			return this.text() + '\n'
 		}
 		
+		row_theme( row: number ) {
+			return this.row_themes()[ row - 1 ]
+		}
+		
 	}
 }

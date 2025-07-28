@@ -29,6 +29,9 @@
 		pre_text(id){
 			return "";
 		}
+		pre_themes(id){
+			return [];
+		}
 		code_sidebar_showed(){
 			return true;
 		}
@@ -143,6 +146,7 @@
 		Pre(id){
 			const obj = new this.$.$mol_text_code();
 			(obj.text) = () => ((this.pre_text(id)));
+			(obj.row_themes) = () => ((this.pre_themes(id)));
 			(obj.highlight) = () => ((this.highlight()));
 			(obj.uri_resolve) = (id) => ((this.uri_resolve(id)));
 			(obj.sidebar_showed) = () => ((this.pre_sidebar_showed()));
