@@ -58,9 +58,19 @@ namespace $ {
 	}
 
 	$mol_conform_handler( Array , $mol_conform_array )
+	
+	$mol_conform_handler( Int8Array , $mol_conform_array )
+	$mol_conform_handler( Int16Array , $mol_conform_array )
+	$mol_conform_handler( Int32Array , $mol_conform_array )
+	$mol_conform_handler( BigInt64Array , $mol_conform_array )
+	
 	$mol_conform_handler( Uint8Array , $mol_conform_array )
 	$mol_conform_handler( Uint16Array , $mol_conform_array )
 	$mol_conform_handler( Uint32Array , $mol_conform_array )
+	$mol_conform_handler( BigUint64Array , $mol_conform_array )
+
+	$mol_conform_handler( Float32Array , $mol_conform_array )
+	$mol_conform_handler( Float64Array , $mol_conform_array )
 
 	$mol_conform_handler( ({})['constructor'] as any , ( target: Object, source )=> {
 
@@ -69,14 +79,14 @@ namespace $ {
 
 		for( let key in target ) {
 
-			const conformed = $mol_conform( target[key] , source[key] )
+			const conformed = $mol_conform( target[ key as never ] , source[ key as never ] )
 			
-			if( conformed !== target[key] ) {
-				try { target[key] = conformed } catch( error: any ) {}
-				if( !Object.is( conformed , target[key] ) ) equal = false
+			if( conformed !== target[ key as never ] ) {
+				try { target[ key as never ] = conformed } catch( error: any ) {}
+				if( !Object.is( conformed , target[ key as never ] ) ) equal = false
 			}
 			
-			if( !Object.is( conformed , source[key] ) ) equal = false
+			if( !Object.is( conformed , source[ key as never ] ) ) equal = false
 			
 			++ count
 		}

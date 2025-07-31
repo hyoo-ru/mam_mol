@@ -32,6 +32,7 @@ jobs:
         rm -rf mol/.github
         rm -rf mol/.gitignore
         rm -rf mol/icon
+        echo "<meta http-equiv='refresh' content='0;URL=./app/docs/-/'>" >> mol/index.html
         
     - uses: hyoo-ru/gh-deploy@v4.4.1
       if: github.ref == 'refs/heads/master'
