@@ -4,7 +4,7 @@ $mol_image $mol_view
 		^
 		src <= uri \
 		alt <= title
-		loading <= loading \eager
+		loading <= loading \lazy
 		decoding <= decoding \async
 		crossOrigin <= cors null
 		width <= natural_width 0
