@@ -1,8 +1,8 @@
 $mol_frame $mol_embed_native
 	attr *
-		^
 		allow <= allow \
 		srcdoc <= html null
+		src <= uri
 	fullscreen true
 	accelerometer true
 	autoplay true
