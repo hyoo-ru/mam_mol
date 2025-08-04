@@ -27,7 +27,7 @@ namespace $ {
 				serial = new Uint8Array( serial.buffer, serial.byteOffset, serial.byteLength )
 			}
 			
-			;( serial as Uint8Array )[0] = 0
+			;( serial as Uint8Array )[0] = 0xFF
 			
 			const sacred = super.from( serial ) as InstanceType< This >
 		
@@ -46,7 +46,7 @@ namespace $ {
 		
 		constructor( buffer: ArrayBuffer, byteOffset?: number, byteLength?: number ) {
 			super( buffer, byteOffset, byteLength )
-			if( this.getUint8( 0 ) !== 0 ) $mol_fail( new Error( 'Buffer should starts with 0 byte' ) )
+			if( this.getUint8( 0 ) !== 0xFF ) $mol_fail( new Error( 'Buffer should starts with 0xFF byte' ) )
 		}
 		
 		@ $mol_memo.method
@@ -97,17 +97,19 @@ namespace $ {
 			).catch( $mol_crypto_restack ) )
 		}
 		
-		/** Encrypts this Sacred by another. 16 bytes */
-		async close( sacred: $mol_crypto_sacred, salt: BufferSource ) {
+		/** Encrypts Sacred. 16 bytes */
+		async close( sacred: DataView< ArrayBuffer >, salt: BufferSource ) {
+			if( sacred.getUint8(0) !== 0xFF ) throw new Error( 'Closable buffer should starts with 0xFF' )
 			const buf = new Uint8Array( sacred.buffer, sacred.byteOffset + 1, sacred.byteLength - 1 )
 			return this.encrypt( buf, salt )
 		}
 		
-		/** Encrypts this Sacred by another. 16 bytes */
-		async open( buf: Uint8Array, salt: BufferSource ) {
+		/** Decrypts Sacred. 16 bytes */
+		async open( buf: Uint8Array< ArrayBuffer >, salt: BufferSource ) {
 			const buf2 = new Uint8Array( 16 )
+			buf2[0] = 0xFF
 			buf2.set( await this.decrypt( buf, salt ), 1 )
-			return new $mol_crypto_sacred( buf2.buffer )
+			return buf2
 		}
 		
 	}
