@@ -4,6 +4,7 @@ namespace $.$$ {
 		@ $mol_mem
 		window() {
 			$mol_wire_solid()
+			this.uri_resource()
 			return $mol_wire_sync( this as $mol_embed_native ).load( this.dom_node_actual() as HTMLIFrameElement )
 		}
 		
