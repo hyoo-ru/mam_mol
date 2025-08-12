@@ -34,6 +34,7 @@ declare namespace $ {
 		icons( ): ({ 
 			'closed': ReturnType< $mol_audio_status['Closed'] >,
 			'error': ReturnType< $mol_audio_status['Error'] >,
+			'interrupted': ReturnType< $mol_audio_status['Error'] >,
 			'suspended': ReturnType< $mol_audio_status['Suspended'] >,
 			'playing': ReturnType< $mol_audio_status['Playing'] >,
 			'running': ReturnType< $mol_audio_status['Running'] >,

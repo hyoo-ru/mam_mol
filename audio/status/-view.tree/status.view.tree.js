@@ -45,6 +45,7 @@
 			return {
 				"closed": (this.Closed()), 
 				"error": (this.Error()), 
+				"interrupted": (this.Error()), 
 				"suspended": (this.Suspended()), 
 				"playing": (this.Playing()), 
 				"running": (this.Running())

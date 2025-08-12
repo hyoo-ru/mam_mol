@@ -424,8 +424,9 @@ $mol_embed_native $mol_scroll
 
 $mol_frame $mol_embed_native
 	attr *
-		^
+		tabindex <= tabindex
 		allow <= allow \
+		src <= uri
 		srcdoc <= html null
 	fullscreen true
 	accelerometer true
@@ -635,7 +636,7 @@ $mol_image $mol_view
 		^
 		src <= uri \
 		alt <= title
-		loading <= loading \eager
+		loading <= loading \lazy
 		decoding <= decoding \async
 		crossOrigin <= cors null
 		width <= natural_width 0
@@ -1847,6 +1848,7 @@ $mol_audio_status $mol_view
 	icons *
 		closed <= Closed $mol_icon_power_sleep
 		error <= Error $mol_icon_alert
+		interrupted <= Error $mol_icon_alert
 		suspended <= Suspended $mol_icon_sleep
 		playing <= Playing $mol_icon_play
 		running <= Running $mol_icon_pause

@@ -45,7 +45,7 @@ namespace $ {
 			
 		}
 		
-		static async pass( pass: string, salt: Uint8Array ) {
+		static async pass( pass: string, salt: Uint8Array< ArrayBuffer > ) {
 			
 			return new this(
 				await $mol_crypto_native.subtle.deriveKey(

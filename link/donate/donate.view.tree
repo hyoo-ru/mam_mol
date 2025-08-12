@@ -1,0 +1,4 @@
+$mol_link_donate $mol_link
+	hint @ \Donate
+	sub /
+		<= Icon $mol_icon_gift_outline

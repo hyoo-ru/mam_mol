@@ -21,7 +21,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem
-		data(): null | string | Uint8Array | Element | object {
+		data(): null | string | Uint8Array< ArrayBuffer > | Element | object {
 			
 			const consume = $mol_wire_sync( $node['stream/consumers'] )
 			
