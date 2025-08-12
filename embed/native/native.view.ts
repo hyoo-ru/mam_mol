@@ -41,10 +41,10 @@ namespace $.$$ {
 			)
 		}
 
-		override sub() {
+		override sub_visible() {
 			this.window()
 
-			return super.sub()
+			return super.sub_visible()
 		}
 		
 		message_receive( event?: MessageEvent<[ string, string ]> ) {
