@@ -1,6 +1,5 @@
 [mol_check_expand] {
 	min-width: 20px;
-	gap: 0;
 }
 
 :where([mol_check_expand][disabled]) [mol_check_expand_icon] {
