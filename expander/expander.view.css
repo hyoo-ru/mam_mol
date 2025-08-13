@@ -12,3 +12,7 @@
 	flex: auto;
 	position: relative;
 }
+
+[mol_expander_trigger_icon] {
+	margin-left: -.55rem;
+}
