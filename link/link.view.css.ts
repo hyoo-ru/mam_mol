@@ -27,21 +27,15 @@ namespace $ {
 		},
 
 		':focus': {
-			
 			outline: 'none',
-			
-			background: {
-				color: $mol_theme.hover,
-			},
-			
 		},
 
-		// ':has(:focus-visible)': {
-		// 	outline: 'none',
-		// 	background: {
-		// 		color: $mol_theme.hover,
-		// 	}
-		// },
+		':focus-visible': {
+			outline: 'none',
+			background: {
+				color: $mol_theme.hover,
+			}
+		},
 		
 		':active': {
 			color: $mol_theme.focus,
