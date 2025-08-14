@@ -46,7 +46,7 @@
 		var(--mol_theme_special) 86%,
 		var(--mol_theme_special) 100%
 	);
-	opacity: .75;
+	opacity: .5;
 	z-index: var(--mol_layer_speck);
 }
 [mol_book2] > *:not(:first-of-type):before {
