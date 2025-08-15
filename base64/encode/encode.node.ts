@@ -1,6 +1,6 @@
 namespace $ {
 
-	export function $mol_base64_encode_node(str: string | Uint8Array): string {
+	export function $mol_base64_encode_node(str: string | Uint8Array< ArrayBuffer >): string {
 		if (! str) return ''
 		if (Buffer.isBuffer(str)) return str.toString('base64')
 

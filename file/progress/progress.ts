@@ -29,7 +29,7 @@ namespace $ {
 			const writer = this.native.getWriter()
 			const write = writer.write.bind(writer)
 
-			writer.write = async (chunk: Uint8Array) => {
+			writer.write = async (chunk: Uint8Array< ArrayBuffer >) => {
 				try {
 					await write(chunk)
 				} catch (error) {

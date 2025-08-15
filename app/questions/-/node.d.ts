@@ -1399,7 +1399,7 @@ declare namespace $ {
         protected copy(to: string): void;
         protected drop(): void;
         protected read(): Uint8Array<ArrayBuffer>;
-        protected write(buffer: Uint8Array): undefined;
+        protected write(buffer: Uint8Array<ArrayBuffer>): undefined;
         protected kids(): this[];
         resolve(path: string): this;
         relate(base?: $mol_file): string;

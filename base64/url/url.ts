@@ -1,6 +1,6 @@
 namespace $ {
 	
-	export function $mol_base64_url_encode( buffer: Uint8Array ) {
+	export function $mol_base64_url_encode( buffer: Uint8Array< ArrayBuffer > ) {
 		return $mol_base64_encode( buffer ).replace( /\+/g, '-' ).replace( /\//g, '_' ).replace( /=/g, '' )
 	}
 	

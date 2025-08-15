@@ -31,13 +31,13 @@ namespace $ {
 			return this.has_bin( $mol_charset_encode( word ) )
 		}
 		
-		add_bin( bin: Uint8Array ) {
+		add_bin( bin: Uint8Array< ArrayBuffer > ) {
 			for( const index of this.hash( bin ) ) {
 				this.add_bit( index )
 			}
 		}
 		
-		has_bin( bin: Uint8Array ) {
+		has_bin( bin: Uint8Array< ArrayBuffer > ) {
 			let res = 1
 			for( const index of this.hash( bin ) ) {
 				res &= this.has_bit( index )
@@ -45,7 +45,7 @@ namespace $ {
 			return res
 		}
 		
-		hash( data: Uint8Array ) {
+		hash( data: Uint8Array< ArrayBuffer > ) {
 			const res = [] as number[]
 			fill: while( true ) {
 				data = $mol_crypto_hash( data )

@@ -22,7 +22,7 @@ namespace $ {
 			throw new Error('Not defined')
 		}
 
-		keys(): { publicKey: Uint8Array, secretKey: Uint8Array } {
+		keys(): { publicKey: Uint8Array, secretKey: Uint8Array< ArrayBuffer > } {
 			throw new Error('Not defined')
 		}
 
