@@ -43,7 +43,7 @@ namespace $ {
 			super()
 		}
 		
-		static async from( serial: string | Uint8Array ) {
+		static async from( serial: string | Uint8Array< ArrayBuffer > ) {
 			if( typeof serial !== 'string' ) {
 				serial = $mol_base64_url_encode( serial.subarray( 0, 32 ) )
 					+ $mol_base64_url_encode( serial.subarray( 32, 64 ) )
@@ -76,7 +76,7 @@ namespace $ {
 		}
 		
 		/** 64 bytes */
-		async toArray(): Promise< Uint8Array > {
+		async toArray(): Promise< Uint8Array< ArrayBuffer > > {
 			const { x, y, d } = await $mol_crypto_native.subtle.exportKey( 'jwk', this.native )
 			return new Uint8Array([
 				... $mol_base64_url_decode( x! ),
@@ -108,7 +108,7 @@ namespace $ {
 			super()
 		}
 	
-		static async from( serial: string | Uint8Array ) {
+		static async from( serial: string | Uint8Array< ArrayBuffer > ) {
 			if( typeof serial !== 'string' ) {
 				serial = $mol_base64_url_encode( serial.subarray( 0, 32 ) )
 					+ $mol_base64_url_encode( serial.subarray( 32, 64 ) )
@@ -140,7 +140,7 @@ namespace $ {
 		}
 		
 		/** 96 bytes */
-		async toArray(): Promise< Uint8Array > {
+		async toArray(): Promise< Uint8Array< ArrayBuffer > > {
 			const { x, y, d } = await $mol_crypto_native.subtle.exportKey( 'jwk', this.native )
 			return new Uint8Array([
 				... $mol_base64_url_decode( x! ),

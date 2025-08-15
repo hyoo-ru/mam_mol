@@ -1,7 +1,7 @@
 namespace $ {
 	
 	export function $mol_rest_data_simplify(
-		data: null | string | Uint8Array | object
+		data: null | string | Uint8Array< ArrayBuffer > | object
 	) {
 		
 		if( data === null ) return data

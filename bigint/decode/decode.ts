@@ -1,6 +1,6 @@
 namespace $ {
 	
-	export function $mol_bigint_decode( buf: Uint8Array ) {
+	export function $mol_bigint_decode( buf: Uint8Array< ArrayBuffer > ) {
 		
 		const minus = ( buf.at(-1)! & 128 ) ? 255 : 0
 		

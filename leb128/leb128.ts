@@ -1,7 +1,7 @@
 namespace $ {
 
 	/** [LEB128](https://wikipedia.org/wiki/LEB128) implementation. */
-	export function $mol_leb128_encode( val : number ) : Uint8Array {
+	export function $mol_leb128_encode( val : number ) : Uint8Array< ArrayBuffer > {
 		
 		const length = Math.max( 1 , Math.ceil( Math.log2( val ) / 7 ) )
 		const bytes = new Uint8Array( length )
@@ -16,7 +16,7 @@ namespace $ {
 	}
 
 	/** [LEB128](https://wikipedia.org/wiki/LEB128) implementation. */
-	export function $mol_leb128_decode( bytes : Uint8Array ) : number {
+	export function $mol_leb128_decode( bytes : Uint8Array< ArrayBuffer > ) : number {
 
 		let val = 0
 
