@@ -2366,6 +2366,9 @@ var $;
         static linear_gradient(value) {
             return new $mol_style_func('linear-gradient', value);
         }
+        static radial_gradient(value) {
+            return new $mol_style_func('radial-gradient', value);
+        }
         static calc(value) {
             return new $mol_style_func('calc', value);
         }
