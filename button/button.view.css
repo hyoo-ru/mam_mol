@@ -10,6 +10,7 @@
 	word-break: normal;
 	cursor: default;
 	user-select: none;
+	-webkit-user-select: none;
 	border-radius: var(--mol_gap_round);
 	background: transparent;
 	color: inherit;
