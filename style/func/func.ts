@@ -56,6 +56,10 @@ namespace $ {
 			return new $mol_style_func( 'linear-gradient' , value )
 		}
 
+		static radial_gradient< Value >( value : Value ) {
+			return new $mol_style_func( 'radial-gradient' , value )
+		}
+
 		static calc< Value >( value : Value ) {
 			return new $mol_style_func( 'calc' , value )
 		}
