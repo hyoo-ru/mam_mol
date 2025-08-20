@@ -216,7 +216,7 @@ namespace $ {
 		readonly pos: [ number, number ]
 		readonly object: unknown
 		readonly flags: readonly string[]
-		[ Symbol.toStringTag ]: string
+		[ Symbol.toStringTag ]!: string
 		
 		constructor( call: NodeJS.CallSite ) {
 			super()
