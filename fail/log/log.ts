@@ -5,7 +5,7 @@ namespace $ {
 		if( $mol_promise_like( error ) ) return false
 		if( !$mol_fail_catch( error ) ) return false
 		
-		console.error( error )
+		$mol_try( ()=> { $mol_fail_hidden( error ) } )
 		
 		return true
 		

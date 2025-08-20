@@ -16,6 +16,18 @@ namespace $ {
 
 	export const $mol_dev_format_head = Symbol( '$mol_dev_format_head' )
 	export const $mol_dev_format_body = Symbol( '$mol_dev_format_body' )
+	
+	function $mol_dev_format_button( label: any, click: ()=> any ) {
+		return $mol_dev_format_auto( {
+			[ $mol_dev_format_head ]() {
+				return $mol_dev_format_span( { color: 'cornflowerblue' }, label )
+			},
+			[ $mol_dev_format_body ]() {
+				Promise.resolve().then( click )
+				return $mol_dev_format_span({})
+			}
+		} )
+	}
 
 	$mol_dev_format_register({
 
@@ -37,6 +49,24 @@ namespace $ {
 				return $mol_dev_format_native( val )
 			}
 			
+			if( Error.isError( val ) ) {
+				
+				return $mol_dev_format_span( {},
+					$mol_dev_format_native( val ),
+					' ',
+					$mol_dev_format_button( 'throw', ()=> $mol_fail_hidden( val ) ),
+				)
+				
+			}
+			
+			if( val instanceof Promise ) {
+				return $mol_dev_format_shade(
+					$mol_dev_format_native( val ),
+					' ',
+					val[ Symbol.toStringTag ] ?? '',
+				)
+			}
+			
 			if( Symbol.toStringTag in val ) {
 				return $mol_dev_format_native( val )
 			}
@@ -45,9 +75,37 @@ namespace $ {
 			
 		} ,
 		
-		hasBody : val => val[ $mol_dev_format_body ] ,
+		hasBody : ( val: any , config = false )=> {
+			
+			if( config ) return false
+			if( !val ) return false
+			
+			// if( Error.isError( val ) ) true
+			if( val[ $mol_dev_format_body ] ) return true
+			
+			return false
+		},
 
-		body : val => val[ $mol_dev_format_body ]() ,
+		body :  ( val: any , config = false )=> {
+			
+			if( config ) return null
+
+			if( !val ) return null
+			
+			if( $mol_dev_format_body in val ) {
+				try {
+					return val[ $mol_dev_format_body ]()
+				} catch( error ) {
+					return $mol_dev_format_accent( $mol_dev_format_native( val ), '💨', $mol_dev_format_native( error ), '' )
+				}
+			}
+			
+			// if( Error.isError( val ) ) {
+			// 	return $mol_dev_format_native( val )
+			// }
+			
+			return null
+		},
 
 	})
 
@@ -134,5 +192,91 @@ namespace $ {
 	export let $mol_dev_format_indent = $mol_dev_format_div.bind( null , {
 		'margin-left': '13px'
 	} )
+	
+	class Stack extends Array< Call > {
+		
+		// [ Symbol.toPrimitive ]() {
+		// 	return this.toString()
+		// }
+		
+		toString() {
+			return this.join( '\n' )
+		}
+		
+	}
+	
+	class Call extends Object {
+		
+		readonly type: string
+		readonly function: string
+		readonly method: string
+		readonly eval: string
+		readonly source: string
+		readonly offset: number
+		readonly pos: [ number, number ]
+		readonly object: unknown
+		readonly flags: readonly string[]
+		[ Symbol.toStringTag ]: string
+		
+		constructor( call: NodeJS.CallSite ) {
+			super()
+			
+			this.type = call.getTypeName() ?? ''
+			this.function = call.getFunctionName() ?? ''
+			this.method = call.getMethodName() ?? ''
+			if( this.method === this.function ) this.method = ''
+			// const func = c.getFunction()
+			this.pos = [ call.getEnclosingLineNumber(), call.getEnclosingColumnNumber() ]
+			this.eval = call.getEvalOrigin() ?? ''
+			this.source = call.getScriptNameOrSourceURL()
+			this.object = call.getThis()
+			this.offset = call.getPosition()
+			
+			const flags = []
+			if( call.isAsync() ) flags.push( 'async' )
+			if( call.isConstructor() ) flags.push( 'constructor' )
+			if( call.isEval() ) flags.push( 'eval' )
+			if( call.isNative() ) flags.push( 'native' )
+			if( call.isPromiseAll() ) flags.push( 'PromiseAll' )
+			if( call.isToplevel() ) flags.push( 'top' )
+			this.flags = flags
+		
+			const type = this.type ? this.type + '.' : ''
+			const func = this.function || '<anon>'
+			const method = this.method ? ' [' + this.method + '] ' : ''
+			
+			this[ Symbol.toStringTag ] = `${type}${func}${method}`
+		}
+		
+		[ Symbol.toPrimitive ]() {
+			return this.toString()
+		}
+		
+		toString() {
+			const object = this.object || ''
+			const label = this[ Symbol.toStringTag ]
+			const source = `${ this.source }:${ this.pos.join( ':' ) } #${ this.offset }`
+			return `\tat ${object}${label} (${source})`
+		}
+
+		[ $mol_dev_format_head ]() {
+			return $mol_dev_format_div( {},
+				$mol_dev_format_native( this ),
+				$mol_dev_format_shade( ' ' ),
+				... this.object ? [
+					$mol_dev_format_native( this.object ),
+				] : [],
+				... this.method ? [ $mol_dev_format_shade( ' ',
+					' [',
+					this.method,
+					']',
+				) ] : [],
+				$mol_dev_format_shade( ' ', this.flags.join( ', ' ) ),
+			)
+		}
+
+	}
+	
+	Error.prepareStackTrace ??= ( error: Error, stack: NodeJS.CallSite[] )=> new Stack( ... stack.map( call => new Call( call ) ) )
 
 }
