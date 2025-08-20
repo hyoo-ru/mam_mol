@@ -138,7 +138,7 @@ namespace $ {
 		}
 
 		@ $mol_action
-		protected override write(buffer: Uint8Array) {
+		protected override write(buffer: Uint8Array< ArrayBuffer >) {
 			const path = this.path()
 
 			try {

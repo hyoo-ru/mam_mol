@@ -1,7 +1,8 @@
 $mol_frame $mol_embed_native
 	attr *
-		^
+		tabindex <= tabindex
 		allow <= allow \
+		src <= uri
 		srcdoc <= html null
 	fullscreen true
 	accelerometer true

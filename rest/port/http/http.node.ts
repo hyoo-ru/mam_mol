@@ -19,7 +19,7 @@ namespace $ {
 		}
 		
 		@ $mol_action
-		send_bin( data: Uint8Array ) {
+		send_bin( data: Uint8Array< ArrayBuffer > ) {
 			if( this.output.writableEnded ) return
 			super.send_bin( data )
 			this.output.write( data )

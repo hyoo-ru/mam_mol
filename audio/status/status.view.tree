@@ -2,6 +2,7 @@ $mol_audio_status $mol_view
 	icons *
 		closed <= Closed $mol_icon_power_sleep
 		error <= Error $mol_icon_alert
+		interrupted <= Error $mol_icon_alert
 		suspended <= Suspended $mol_icon_sleep
 		playing <= Playing $mol_icon_play
 		running <= Running $mol_icon_pause

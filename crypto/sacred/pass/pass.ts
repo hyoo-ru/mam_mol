@@ -1,7 +1,7 @@
 namespace $ {
 	
 	/** Slow conversion any password string to secret key. */
-	export async function $mol_crypto_sacred_pass( pass: string, salt: Uint8Array ) {
+	export async function $mol_crypto_sacred_pass( pass: string, salt: Uint8Array< ArrayBuffer > ) {
 			
 		const raw = await $mol_crypto_native.subtle.importKey(
 			"raw",

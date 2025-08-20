@@ -5,7 +5,7 @@ namespace $ {
 		channel!: RTCDataChannel
 		
 		@ $mol_action
-		send_bin( data: Uint8Array ) {
+		send_bin( data: Uint8Array< ArrayBuffer > ) {
 			if( this.channel.readyState !== "open" ) return
 			this.channel.send( data )
 		}

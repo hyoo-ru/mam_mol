@@ -1,6 +1,6 @@
 namespace $ {
 	
-	export function $mol_base64_ae_encode( buffer: Uint8Array ) {
+	export function $mol_base64_ae_encode( buffer: Uint8Array< ArrayBuffer > ) {
 		return $mol_base64_encode( buffer ).replace( /\+/g, 'æ' ).replace( /\//g, 'Æ' ).replace( /=/g, '' )
 	}
 	
