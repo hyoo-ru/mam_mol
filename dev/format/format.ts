@@ -226,7 +226,7 @@ namespace $ {
 			this.method = call.getMethodName() ?? ''
 			if( this.method === this.function ) this.method = ''
 			// const func = c.getFunction()
-			this.pos = [ call.getEnclosingLineNumber(), call.getEnclosingColumnNumber() ]
+			this.pos = [ call.getEnclosingLineNumber() ?? 0, call.getEnclosingColumnNumber() ?? 0 ]
 			this.eval = call.getEvalOrigin() ?? ''
 			this.source = call.getScriptNameOrSourceURL() ?? ''
 			this.object = call.getThis()
