@@ -228,7 +228,7 @@ namespace $ {
 			// const func = c.getFunction()
 			this.pos = [ call.getEnclosingLineNumber(), call.getEnclosingColumnNumber() ]
 			this.eval = call.getEvalOrigin() ?? ''
-			this.source = call.getScriptNameOrSourceURL()
+			this.source = call.getScriptNameOrSourceURL() ?? ''
 			this.object = call.getThis()
 			this.offset = call.getPosition()
 			
