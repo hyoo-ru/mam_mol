@@ -1693,6 +1693,17 @@ var $;
 ;
 "use strict";
 var $;
+(function ($) {
+    $mol_test({
+        'return result without errors'() {
+            $mol_assert_equal($mol_try(() => false), false);
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
 (function ($_1) {
     $mol_test_mocks.push($ => $.$mol_fail_log = () => false);
 })($ || ($ = {}));
@@ -4501,17 +4512,6 @@ var $;
         },
         'chunk for every item'() {
             $mol_assert_equal($mol_array_chunks([1, 2, 3, 4, 5], () => true), [[1], [2], [3], [4], [5]]);
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'return result without errors'() {
-            $mol_assert_equal($mol_try(() => false), false);
         },
     });
 })($ || ($ = {}));

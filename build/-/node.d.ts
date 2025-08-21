@@ -73,6 +73,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_fail_hidden(error: any): never;
+}
+
+declare namespace $ {
     function $mol_dev_format_register(config: {
         header: (val: any, config: any) => any;
         hasBody: (val: any, config: any) => false;
@@ -143,10 +147,6 @@ declare namespace $ {
         destructor(): void;
     };
     function $mol_owning_catch<Owner, Having>(owner: Owner, having: Having): boolean;
-}
-
-declare namespace $ {
-    function $mol_fail_hidden(error: any): never;
 }
 
 declare namespace $ {
@@ -444,6 +444,10 @@ declare namespace $ {
 
 declare namespace $ {
     function $mol_fail_catch(error: unknown): boolean;
+}
+
+declare namespace $ {
+    function $mol_try<Result>(handler: () => Result): Result | Error;
 }
 
 declare namespace $ {

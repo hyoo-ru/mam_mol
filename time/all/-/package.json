@@ -24,6 +24,7 @@
     "$mol_fail",
     "$mol_dev_format",
     "$mol_dev",
+    "$mol_fail_hidden",
     "$mol_time_interval"
   ],
   "dependencies": {}

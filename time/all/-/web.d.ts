@@ -72,6 +72,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_fail_hidden(error: any): never;
+}
+
+declare namespace $ {
     function $mol_dev_format_register(config: {
         header: (val: any, config: any) => any;
         hasBody: (val: any, config: any) => false;

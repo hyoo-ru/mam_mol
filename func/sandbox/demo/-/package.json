@@ -67,7 +67,8 @@
     "$mol_term_color",
     "$mol_term",
     "$mol_fail_catch",
-    "$mol_fail_log"
+    "$mol_fail_log",
+    "$mol_try"
   ],
   "dependencies": {
     "jsdom": "*"

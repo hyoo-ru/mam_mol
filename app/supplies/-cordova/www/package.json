@@ -74,6 +74,7 @@
     "$mol_type_tail",
     "$mol_fail_log",
     "$mol_fail_catch",
+    "$mol_try",
     "$mol_wire_plex",
     "$mol_dom_context",
     "$mol_dom",

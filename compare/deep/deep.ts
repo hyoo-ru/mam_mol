@@ -26,7 +26,7 @@ namespace $ {
 		if( left instanceof String ) return Object.is( left.valueOf(), ( right as any )['valueOf']() )
 		if( left instanceof Date ) return Object.is( left.valueOf(), ( right as any )['valueOf']() )
 		if( left instanceof RegExp ) return left.source === (right as any).source && left.flags === (right as any).flags
-		if( left instanceof Error ) return left.message === (right as any).message && left.stack === (right as any).stack
+		if( left instanceof Error ) return left.message === (right as any).message && $mol_compare_deep( left.stack, (right as any).stack )
 
 		let left_cache = $mol_compare_deep_cache.get( left )
 		if( left_cache ) {
