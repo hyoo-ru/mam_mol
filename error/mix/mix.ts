@@ -32,7 +32,7 @@ namespace $ {
 				get: ()=> stack_get() + '\n' + [
 						this.cause ?? 'no cause',
 						... this.errors.flatMap( e => [
-							e.stack,
+							String( e.stack ),
 							... e instanceof $mol_error_mix || ! e.cause ? [] : [ e.cause ]
 						] )
 					].map(frame_normalize).join('\n')

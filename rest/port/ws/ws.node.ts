@@ -11,7 +11,7 @@ namespace $ {
 		}
 		
 		@ $mol_action
-		send_bin( data: Uint8Array ) {
+		send_bin( data: Uint8Array< ArrayBuffer > ) {
 			if( this.socket.writableEnded ) return
 			this.socket.write( $mol_websocket_frame.make( 'bin', data.byteLength ).asArray() )
 			this.socket.write( data )

@@ -35,25 +35,25 @@
 	height: 1rem;
 	background: linear-gradient(
 		to bottom,
-		var(--mol_theme_focus) 0%,
-		var(--mol_theme_focus) 14%,
+		var(--mol_theme_special) 0%,
+		var(--mol_theme_special) 14%,
 		transparent 15%,
 		transparent 42%,
-		var(--mol_theme_focus) 43%,
-		var(--mol_theme_focus) 57%,
+		var(--mol_theme_special) 43%,
+		var(--mol_theme_special) 57%,
 		transparent 58%,
 		transparent 85%,
-		var(--mol_theme_focus) 86%,
-		var(--mol_theme_focus) 100%
+		var(--mol_theme_special) 86%,
+		var(--mol_theme_special) 100%
 	);
 	opacity: .5;
 	z-index: var(--mol_layer_speck);
 }
 [mol_book2] > *:not(:first-of-type):before {
-	left: -1px;
+	left: -3px;
 }
 [mol_book2] > *:not(:last-of-type)::after {
-	right: -1px;
+	right: -3px;
 }
 
 :where([mol_book2]) > * {

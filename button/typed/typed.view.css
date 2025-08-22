@@ -13,7 +13,7 @@
 }
 
 [mol_button_typed]:hover ,
-[mol_button_typed]:focus {
+[mol_button_typed]:focus-visible {
 	box-shadow: inset 0 0 0 10rem var(--mol_theme_hover);
 }
 

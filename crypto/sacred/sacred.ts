@@ -1,5 +1,7 @@
 namespace $ {
 	
+	type BufferSource = ArrayBufferView< ArrayBuffer > | ArrayBuffer
+	
 	/** Symmetric cipher with shortest payload. */
 	export class $mol_crypto_sacred extends $mol_buffer {
 		
