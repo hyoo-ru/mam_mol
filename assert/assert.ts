@@ -43,7 +43,7 @@ namespace $ {
 			$.$mol_fail = fail
 
 			if( typeof ErrorRight === 'string' ) {
-				$mol_assert_equal( error.message, ErrorRight )
+				$mol_assert_equal( error.message ?? error, ErrorRight )
 			} else {
 				$mol_assert_equal( error instanceof ErrorRight, true )
 			}
@@ -77,7 +77,10 @@ namespace $ {
 				if( i === j ) continue
 				if( !$mol_compare_deep( args[i], args[j] ) ) continue
 				
-				$mol_fail( new Error( `args[${i}] = args[${j}] = ${ print( args[i] ) }` ) )
+				return $mol_fail( new Error(
+					`Uniquesess assertion failure`,
+					{ cause: { [i]: args[i], [i]: args[i] } },
+				) )
 				
 			}
 		}
@@ -97,26 +100,12 @@ namespace $ {
 			if( $mol_compare_deep( args[0] , args[i] ) ) continue
 			if( args[0] instanceof $mol_dom_context.Element && args[i] instanceof $mol_dom_context.Element && args[0].outerHTML === ( args[i] as Element ).outerHTML ) continue
 			
-			return $mol_fail( new Error( `args[0] ≠ args[${i}]\n${ print( args[0] ) }\n---\n${ print( args[i] ) }` ) )
+			return $mol_fail( new Error(
+				`Equality assertion failure`,
+				{ cause: { 0: args[0], [i]: args[i] } },
+			) )
 			
 		}
-	}
-	
-	const print = ( val : any ) => {
-		
-		if( !val ) return val
-		if( typeof val === 'bigint' ) return String(val) + 'n'
-		if( typeof val === 'symbol' ) return `Symbol(${val.description})`
-		if( typeof val !== 'object' ) return val
-		if( 'outerHTML' in val ) return val.outerHTML
-		
-		try {
-			return JSON.stringify( val, ( k, v )=> typeof v === 'bigint' ? String(v) : v,'\t' )
-		} catch( error: any ) {
-			console.error( error )
-			return val
-		}
-		
 	}
 	
 }
