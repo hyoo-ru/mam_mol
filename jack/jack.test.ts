@@ -34,7 +34,7 @@ namespace $ {
 						case \\foo
 						case \\bar
 				` ).hack( root ),
-				'args[0] ≠ args[1]\n\\foo\n\n---\n\\bar\n\ntest\n?#2:6/4'
+				'Equality assertion failure\ntest\n?#2:6/4'
 			)
 
 		} ,

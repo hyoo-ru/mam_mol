@@ -98,6 +98,8 @@
 	pack opt git \https://github.com/hyoo-ru/opt.js.hyoo.ru.git
 	pack perf git \https://github.com/hyoo-ru/perf.js.hyoo.ru.git
 	pack sandbox git \https://github.com/hyoo-ru/sandbox.js.hyoo.ru.git
+\/mol/assert
+	include \/mol/dev/format
 \/mol/wire/lib
 	include \/mol/wire/pub
 	include \/mol/wire/pub/sub
