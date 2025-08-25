@@ -46,7 +46,7 @@ namespace $ {
 		event : $mol_log3_event<{}> ,
 	) {
 
-		const self = this
+		const self = this.$
 		const stack = self.$mol_log3_stack
 
 		const deep = stack.length
