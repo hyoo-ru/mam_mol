@@ -192,7 +192,7 @@ var $;
             if (typeof val === 'function') {
                 return $mol_dev_format_native(val);
             }
-            if (Error.isError(val)) {
+            if (val instanceof Error) {
                 return $mol_dev_format_span({}, $mol_dev_format_native(val), ' ', $mol_dev_format_button('throw', () => $mol_fail_hidden(val)));
             }
             if (val instanceof Promise) {
