@@ -366,6 +366,7 @@
     "$mol_avatar",
     "$mol_hash_string",
     "$mol_hash",
+    "$mol_hash_numbers",
     "$mol_bar_demo",
     "$mol_bar",
     "$mol_check_box",

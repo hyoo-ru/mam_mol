@@ -19,14 +19,15 @@ namespace $ {
 				
 				const sub = $mol_wire_auto()
 				const existen = sub?.track_next() as $mol_wire_task< Host, Args, Result > | undefined
+				let cause = ''
 				
 				reuse: if( existen ) {
 					
 					if( !existen.temp ) break reuse
 					
-					if( existen.host !== host ) break reuse
-					if( existen.task !== task ) break reuse
-					if( !$mol_compare_deep( existen.args, args ) ) break reuse
+					if( existen.task !== task ) { cause = 'task'; break reuse }
+					if( existen.host !== host ) { cause = 'host'; break reuse }
+					if( !$mol_compare_deep( existen.args, args ) ) { cause = 'args'; break reuse }
 					
 					return existen
 				}
@@ -38,11 +39,11 @@ namespace $ {
 				if( existen?.temp ) {
 					$$.$mol_log3_warn({
 						place: '$mol_wire_task',
-						message: `Non idempotency`,
+						message: `Different ${cause} on restart`,
 						sub,
-						pubs: [ ... sub?.pub_list ?? [] , existen ],
+						prev: existen,
 						next,
-						hint: 'Ignore it',
+						hint: 'Maybe required additional memoization',
 					})
 				}
 				
