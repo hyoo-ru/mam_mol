@@ -1,5 +1,6 @@
 namespace $ {
 	
+	// Make new tokens: https://github.com/settings/personal-access-tokens/new?name=$mol_github_model&user_models=read
 	export const $mol_github_model_keys = [
 		'11AADME3A07jh1teLjee8r_O7MKyAF8rbdIlhk4OwsJHaCnh4CjDNxn1nLNAvW2Hy6OSTIYABWQyp0rOHt',
 		'11AADME3A0q6w8EFz9G9aa_byqEpTuWUa63PKoSAwN1eVi2GyGJ4SxYhm9OhAc2DCTANK2ULBQpQgUu6D9',
