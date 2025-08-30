@@ -19,7 +19,7 @@ namespace $ {
 		'is different object' () {
 			const Tags = $mol_data_const({ tags: [ 'deep', 'equals' ] })
 			$mol_assert_fail(
-				()=> Tags({ tags: [ 'shallow', 'equals' ] }),
+				()=> Tags({ tags: [ 'shallow' as any, 'equals' ] }),
 				`{"tags":["shallow","equals"]} is not {"tags":["deep","equals"]}`,
 			)
 		} ,
