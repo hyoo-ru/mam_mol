@@ -144,9 +144,10 @@ namespace $ {
 		}
 		
 		@ $mol_action
-		shot( prompt: any, params?: {} ) {
+		shot( prompt: any, context?: any, params?: {} ) {
 			const fork = this.fork()
 			if( params ) fork.params({ ... this.params(), ... params })
+			if( context ) fork.tell( context )
 			fork.ask( prompt )
 			return fork.response()
 		}
@@ -164,7 +165,20 @@ namespace $ {
 			return this
 		}
 		
-		/** Answer from tool */
+		/** Assistant context */
+		@ $mol_action
+		tell( text: any ) {
+			this.history([
+				... this.history(),
+				{
+					role: "assistant",
+					content: JSON.stringify( text ),
+				}
+			])
+			return this
+		}
+		
+		/** Tools answer */
 		@ $mol_action
 		answer( id: string, data: any ) {
 			
@@ -233,7 +247,7 @@ namespace $ {
 			const last = history.at(-1)
 			if( last?.role !== 'user' ) return null
 			
-			const models = this.names()
+			const models = this.$.$mol_array_shuffle_sync( this.names() )
 			const keys = this.$.$mol_array_shuffle_sync( $mol_github_model_keys )
 			
 			for( const model of models ) for( const key of keys ) {
