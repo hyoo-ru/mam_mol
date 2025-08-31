@@ -15,12 +15,11 @@ namespace $ {
 	].map( str => `github_pat_${str}` )
 	
 	export const $mol_github_model_polyglots = [
+		'openai/gpt-4.1', // 50/D
+		'openai/gpt-4o', // 50/D
 		'openai/gpt-4.1-mini', // 150/D
 		'openai/gpt-4o-mini', // 150/D
 		'openai/gpt-4.1-nano', // 150/D
-		'microsoft/Phi-4-mini-instruct', // 150/D
-		'openai/gpt-4.1', // 50/D
-		'openai/gpt-4o', // 50/D
 	]
 	
 	const System = $mol_data_record({
