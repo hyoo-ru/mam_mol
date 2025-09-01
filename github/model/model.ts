@@ -156,17 +156,20 @@ namespace $ {
 		fork() {
 			
 			const fork = $mol_github_model.make({
+				// static state
 				names: $mol_const( this.names() ),
 				rules: $mol_const( this.rules() ),
 				tools: $mol_const( this.tools() ),
 			})
 			
+			// dynamic state
 			fork.params( this.params() )
 			fork.history( this.history() )
 			
 			return fork
 		}
 		
+		/** One-shot stateless prompting */
 		@ $mol_action
 		shot( prompt: any, context?: any, params?: {} ) {
 			const fork = this.fork()
@@ -176,7 +179,7 @@ namespace $ {
 			return fork.response()
 		}
 		
-		/** User prompt */
+		/** Add user prompt */
 		@ $mol_action
 		ask( text: any ) {
 			this.history([
@@ -189,7 +192,7 @@ namespace $ {
 			return this
 		}
 		
-		/** Assistant context */
+		/** Add assistant context */
 		@ $mol_action
 		tell( text: any ) {
 			this.history([
@@ -202,7 +205,7 @@ namespace $ {
 			return this
 		}
 		
-		/** Tools answer */
+		/** Add tools answer */
 		@ $mol_action
 		answer( id: string, data: any ) {
 			
