@@ -6,7 +6,7 @@ namespace $ {
 
 	$mol_dom_context.document?.addEventListener(
 		'DOMContentLoaded',
-		()=> $mol_view.autobind(),
+		()=> $mol_view.auto(),
 		{ once: true },
 	)
 	
