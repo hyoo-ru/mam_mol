@@ -221,6 +221,502 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_style_attach(id, text) {
+        const doc = $mol_dom_context.document;
+        if (!doc)
+            return null;
+        const elid = `$mol_style_attach:${id}`;
+        let el = doc.getElementById(elid);
+        if (!el) {
+            el = doc.createElement('style');
+            el.id = elid;
+            doc.head.appendChild(el);
+        }
+        if (el.innerHTML != text)
+            el.innerHTML = text;
+        return el;
+    }
+    $.$mol_style_attach = $mol_style_attach;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_promise extends Promise {
+        done;
+        fail;
+        constructor(executor) {
+            let done;
+            let fail;
+            super((d, f) => {
+                done = d;
+                fail = f;
+                executor?.(d, f);
+            });
+            this.done = done;
+            this.fail = fail;
+        }
+    }
+    $.$mol_promise = $mol_promise;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_promise_blocker extends $mol_promise {
+        static [Symbol.toStringTag] = '$mol_promise_blocker';
+    }
+    $.$mol_promise_blocker = $mol_promise_blocker;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_decor {
+        value;
+        constructor(value) {
+            this.value = value;
+        }
+        prefix() { return ''; }
+        valueOf() { return this.value; }
+        postfix() { return ''; }
+        toString() {
+            return `${this.prefix()}${this.valueOf()}${this.postfix()}`;
+        }
+    }
+    $.$mol_decor = $mol_decor;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_style_unit extends $mol_decor {
+        literal;
+        constructor(value, literal) {
+            super(value);
+            this.literal = literal;
+        }
+        postfix() {
+            return this.literal;
+        }
+        static per(value) { return `${value}%`; }
+        static px(value) { return `${value}px`; }
+        static mm(value) { return `${value}mm`; }
+        static cm(value) { return `${value}cm`; }
+        static Q(value) { return `${value}Q`; }
+        static in(value) { return `${value}in`; }
+        static pc(value) { return `${value}pc`; }
+        static pt(value) { return `${value}pt`; }
+        static cap(value) { return `${value}cap`; }
+        static ch(value) { return `${value}ch`; }
+        static em(value) { return `${value}em`; }
+        static rem(value) { return `${value}rem`; }
+        static ex(value) { return `${value}ex`; }
+        static ic(value) { return `${value}ic`; }
+        static lh(value) { return `${value}lh`; }
+        static rlh(value) { return `${value}rlh`; }
+        static vh(value) { return `${value}vh`; }
+        static vw(value) { return `${value}vw`; }
+        static vi(value) { return `${value}vi`; }
+        static vb(value) { return `${value}vb`; }
+        static vmin(value) { return `${value}vmin`; }
+        static vmax(value) { return `${value}vmax`; }
+        static deg(value) { return `${value}deg`; }
+        static rad(value) { return `${value}rad`; }
+        static grad(value) { return `${value}grad`; }
+        static turn(value) { return `${value}turn`; }
+        static s(value) { return `${value}s`; }
+        static ms(value) { return `${value}ms`; }
+    }
+    $.$mol_style_unit = $mol_style_unit;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    const { per } = $mol_style_unit;
+    class $mol_style_func extends $mol_decor {
+        name;
+        constructor(name, value) {
+            super(value);
+            this.name = name;
+        }
+        prefix() { return this.name + '('; }
+        postfix() { return ')'; }
+        static linear_gradient(value) {
+            return new $mol_style_func('linear-gradient', value);
+        }
+        static radial_gradient(value) {
+            return new $mol_style_func('radial-gradient', value);
+        }
+        static calc(value) {
+            return new $mol_style_func('calc', value);
+        }
+        static vary(name, defaultValue) {
+            return new $mol_style_func('var', defaultValue ? [name, defaultValue] : name);
+        }
+        static url(href) {
+            return new $mol_style_func('url', JSON.stringify(href));
+        }
+        static hsla(hue, saturation, lightness, alpha) {
+            return new $mol_style_func('hsla', [hue, per(saturation), per(lightness), alpha]);
+        }
+        static clamp(min, mid, max) {
+            return new $mol_style_func('clamp', [min, mid, max]);
+        }
+        static rgba(red, green, blue, alpha) {
+            return new $mol_style_func('rgba', [red, green, blue, alpha]);
+        }
+        static scale(zoom) {
+            return new $mol_style_func('scale', [zoom]);
+        }
+        static linear(...breakpoints) {
+            return new $mol_style_func("linear", breakpoints.map((e) => Array.isArray(e)
+                ? String(e[0]) +
+                    " " +
+                    (typeof e[1] === "number" ? e[1] + "%" : e[1].toString())
+                : String(e)));
+        }
+        static cubic_bezier(x1, y1, x2, y2) {
+            return new $mol_style_func('cubic-bezier', [x1, y1, x2, y2]);
+        }
+        static steps(value, step_position) {
+            return new $mol_style_func('steps', [value, step_position]);
+        }
+        static blur(value) {
+            return new $mol_style_func('blur', value ?? "");
+        }
+        static brightness(value) {
+            return new $mol_style_func('brightness', value ?? "");
+        }
+        static contrast(value) {
+            return new $mol_style_func('contrast', value ?? "");
+        }
+        static drop_shadow(color, x_offset, y_offset, blur_radius) {
+            return new $mol_style_func("drop-shadow", blur_radius
+                ? [color, x_offset, y_offset, blur_radius]
+                : [color, x_offset, y_offset]);
+        }
+        static grayscale(value) {
+            return new $mol_style_func('grayscale', value ?? "");
+        }
+        static hue_rotate(value) {
+            return new $mol_style_func('hue-rotate', value ?? "");
+        }
+        static invert(value) {
+            return new $mol_style_func('invert', value ?? "");
+        }
+        static opacity(value) {
+            return new $mol_style_func('opacity', value ?? "");
+        }
+        static sepia(value) {
+            return new $mol_style_func('sepia', value ?? "");
+        }
+        static saturate(value) {
+            return new $mol_style_func('saturate', value ?? "");
+        }
+    }
+    $.$mol_style_func = $mol_style_func;
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_style_prop(prefix, keys) {
+        const record = keys.reduce((rec, key) => {
+            rec[key] = $mol_style_func.vary(`--${prefix}_${key}`);
+            return rec;
+        }, {});
+        return record;
+    }
+    $.$mol_style_prop = $mol_style_prop;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_theme = $mol_style_prop('mol_theme', [
+        'back',
+        'hover',
+        'card',
+        'current',
+        'special',
+        'text',
+        'control',
+        'shade',
+        'line',
+        'focus',
+        'field',
+        'image',
+        'spirit',
+    ]);
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/theme/theme.css", ":root {\n\t--mol_theme_hue: 240deg;\n\t--mol_theme_hue_spread: 90deg;\n\tcolor-scheme: dark light;\n}\n\n:where([mol_theme]) {\n\tcolor: var(--mol_theme_text);\n\tfill: var(--mol_theme_text);\n\tbackground-color: var(--mol_theme_back);\n}\n\t\n:root, [mol_theme=\"$mol_theme_dark\"], :where([mol_theme=\"$mol_theme_dark\"]) [mol_theme]  {\n\n\t--mol_theme_luma: -1;\n\t--mol_theme_image: invert(1) hue-rotate( 180deg );\n\t--mol_theme_spirit: hsl( 0deg, 0%, 0%, .75 );\n\n\t--mol_theme_back: hsl( var(--mol_theme_hue), 20%, 10% );\n\t--mol_theme_card: hsl( var(--mol_theme_hue), 50%, 20%, .25 );\n\t--mol_theme_field: hsl( var(--mol_theme_hue), 50%, 8%, .25 );\n\t--mol_theme_hover: hsl( var(--mol_theme_hue), 0%, 50%, .1 );\n\t\n\t--mol_theme_text: hsl( var(--mol_theme_hue), 0%, 80% );\n\t--mol_theme_shade: hsl( var(--mol_theme_hue), 0%, 60%, 1 );\n\t--mol_theme_line: hsl( var(--mol_theme_hue), 0%, 50%, .25 );\n\t--mol_theme_focus: hsl( calc( var(--mol_theme_hue) + 180deg ), 100%, 65% );\n\t\n\t--mol_theme_control: hsl( var(--mol_theme_hue), 60%, 65% );\n\t--mol_theme_current: hsl( calc( var(--mol_theme_hue) - var(--mol_theme_hue_spread) ), 60%, 65% );\n\t--mol_theme_special: hsl( calc( var(--mol_theme_hue) + var(--mol_theme_hue_spread) ), 60%, 65% );\n\n} @supports( color: oklch( 0% 0 0deg ) ) {\n:root, [mol_theme=\"$mol_theme_dark\"], :where([mol_theme=\"$mol_theme_dark\"]) [mol_theme]  {\n\t\n\t--mol_theme_back: oklch( 20% .03 var(--mol_theme_hue) );\n\t--mol_theme_card: oklch( 30% .05 var(--mol_theme_hue) / .25 );\n\t--mol_theme_field: oklch( 15% 0 var(--mol_theme_hue) / .25 );\n\t--mol_theme_hover: oklch( 70% 0 var(--mol_theme_hue) / .1 );\n\t\n\t--mol_theme_text: oklch( 80% 0 var(--mol_theme_hue) );\n\t--mol_theme_shade: oklch( 60% 0 var(--mol_theme_hue) );\n\t--mol_theme_line: oklch( 60% 0 var(--mol_theme_hue) / .25 );\n\t--mol_theme_focus: oklch( 80% .2 calc( var(--mol_theme_hue) + 180deg ) );\n\t\n\t--mol_theme_control: oklch( 70% .1 var(--mol_theme_hue) );\n\t--mol_theme_current: oklch( 70% .2 calc( var(--mol_theme_hue) - var(--mol_theme_hue_spread) ) );\n\t--mol_theme_special: oklch( 70% .2 calc( var(--mol_theme_hue) + var(--mol_theme_hue_spread) ) );\n\n} }\n\n[mol_theme=\"$mol_theme_light\"], :where([mol_theme=\"$mol_theme_light\"]) [mol_theme] {\n\t\n\t--mol_theme_luma: 1;\n\t--mol_theme_image: none;\n\t--mol_theme_spirit: hsl( 0deg, 0%, 100%, .75 );\n\t\n\t--mol_theme_back: hsl( var(--mol_theme_hue), 20%, 92% );\n\t--mol_theme_card: hsl( var(--mol_theme_hue), 50%, 100%, .5 );\n\t--mol_theme_field: hsl( var(--mol_theme_hue), 50%, 100%, .75 );\n\t--mol_theme_hover: hsl( var(--mol_theme_hue), 0%, 50%, .1 );\n\t\n\t--mol_theme_text: hsl( var(--mol_theme_hue), 0%, 0% );\n\t--mol_theme_shade: hsl( var(--mol_theme_hue), 0%, 40%, 1 );\n\t--mol_theme_line: hsl( var(--mol_theme_hue), 0%, 50%, .25 );\n\t--mol_theme_focus: hsl( calc( var(--mol_theme_hue) + 180deg ), 100%, 40% );\n\t\n\t--mol_theme_control: hsl( var(--mol_theme_hue), 80%, 30% );\n\t--mol_theme_current: hsl( calc( var(--mol_theme_hue) - var(--mol_theme_hue_spread) ), 80%, 30% );\n\t--mol_theme_special: hsl( calc( var(--mol_theme_hue) + var(--mol_theme_hue_spread) ), 80%, 30% );\n\n} @supports( color: oklch( 0% 0 0deg ) ) {\n[mol_theme=\"$mol_theme_light\"], :where([mol_theme=\"$mol_theme_light\"]) [mol_theme] {\n\t--mol_theme_back: oklch( 92% .01 var(--mol_theme_hue) );\n\t--mol_theme_card: oklch( 99% .01 var(--mol_theme_hue) / .5 );\n\t--mol_theme_field: oklch( 100% 0 var(--mol_theme_hue) / .5 );\n\t--mol_theme_hover: oklch( 70% 0 var(--mol_theme_hue) / .1 );\n\t\n\t--mol_theme_text: oklch( 20% 0 var(--mol_theme_hue) );\n\t--mol_theme_shade: oklch( 60% 0 var(--mol_theme_hue) );\n\t--mol_theme_line: oklch( 50% 0 var(--mol_theme_hue) / .25 );\n\t--mol_theme_focus: oklch( 60% .2 calc( var(--mol_theme_hue) + 180deg ) );\n\t\n\t--mol_theme_control: oklch( 40% .15 var(--mol_theme_hue) );\n\t--mol_theme_current: oklch( 50% .2 calc( var(--mol_theme_hue) - var(--mol_theme_hue_spread) ) );\n\t--mol_theme_special: oklch( 50% .2 calc( var(--mol_theme_hue) + var(--mol_theme_hue_spread) ) );\n\n} }\n\n:where( :root, [mol_theme=\"$mol_theme_dark\"] ) [mol_theme=\"$mol_theme_base\"] {\n\t--mol_theme_back: oklch( 25% .075 var(--mol_theme_hue) );\n\t--mol_theme_card: oklch( 35% .1 var(--mol_theme_hue) / .25 );\n}\n:where( [mol_theme=\"$mol_theme_light\"] ) [mol_theme=\"$mol_theme_base\"] {\n\t--mol_theme_back: oklch( 85% .075 var(--mol_theme_hue) );\n\t--mol_theme_card: oklch( 98% .03 var(--mol_theme_hue) / .25 );\n}\n\n:where( :root, [mol_theme=\"$mol_theme_dark\"] ) [mol_theme=\"$mol_theme_current\"] {\n\t--mol_theme_back: oklch( 25% .05 calc( var(--mol_theme_hue) - var(--mol_theme_hue_spread) ) );\n\t--mol_theme_card: oklch( 35% .1 calc( var(--mol_theme_hue) - var(--mol_theme_hue_spread) ) / .25 );\n}\n:where( [mol_theme=\"$mol_theme_light\"] ) [mol_theme=\"$mol_theme_current\"] {\n\t--mol_theme_back: oklch( 85% .05 calc( var(--mol_theme_hue) - var(--mol_theme_hue_spread) ) );\n\t--mol_theme_card: oklch( 98% .03 calc( var(--mol_theme_hue) - var(--mol_theme_hue_spread) ) / .25 );\n}\n\n:where( :root, [mol_theme=\"$mol_theme_dark\"] ) [mol_theme=\"$mol_theme_special\"] {\n\t--mol_theme_back: oklch( 25% .05 calc( var(--mol_theme_hue) + var(--mol_theme_hue_spread) ) );\n\t--mol_theme_card: oklch( 35% .1 calc( var(--mol_theme_hue) + var(--mol_theme_hue_spread) ) / .25 );\n}\n:where( [mol_theme=\"$mol_theme_light\"] ) [mol_theme=\"$mol_theme_special\"] {\n\t--mol_theme_back: oklch( 85% .05 calc( var(--mol_theme_hue) + var(--mol_theme_hue_spread) ) );\n\t--mol_theme_card: oklch( 98% .03 calc( var(--mol_theme_hue) + var(--mol_theme_hue_spread) ) / .25 );\n}\n\n:where( :root, [mol_theme=\"$mol_theme_dark\"] ) [mol_theme=\"$mol_theme_accent\"] {\n\t--mol_theme_back: oklch( 35% .1 calc( var(--mol_theme_hue) + 180deg ) );\n\t--mol_theme_card: oklch( 45% .15 calc( var(--mol_theme_hue) + 180deg ) / .25 );\n}\n:where( [mol_theme=\"$mol_theme_light\"] ) [mol_theme=\"$mol_theme_accent\"] {\n\t--mol_theme_back: oklch( 83% .1 calc( var(--mol_theme_hue) + 180deg ) );\n\t--mol_theme_card: oklch( 98% .03 calc( var(--mol_theme_hue) + 180deg ) / .25 );\n}\n\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_gap = $mol_style_prop('mol_gap', [
+        'block',
+        'text',
+        'round',
+        'space',
+        'blur',
+    ]);
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/gap/gap.css", ":root {\n\t--mol_gap_block: .75rem;\n\t--mol_gap_text: .5rem .75rem;\n\t--mol_gap_round: .25rem;\n\t--mol_gap_space: .25rem;\n\t--mol_gap_blur: .5rem;\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_fail(error) {
+        throw error;
+    }
+    $.$mol_fail = $mol_fail;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    const named = new WeakSet();
+    function $mol_func_name(func) {
+        let name = func.name;
+        if (name?.length > 1)
+            return name;
+        if (named.has(func))
+            return name;
+        for (let key in this) {
+            try {
+                if (this[key] !== func)
+                    continue;
+                name = key;
+                Object.defineProperty(func, 'name', { value: name });
+                break;
+            }
+            catch { }
+        }
+        named.add(func);
+        return name;
+    }
+    $.$mol_func_name = $mol_func_name;
+    function $mol_func_name_from(target, source) {
+        Object.defineProperty(target, 'name', { value: source.name });
+        return target;
+    }
+    $.$mol_func_name_from = $mol_func_name_from;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_dom_render_children(el, childNodes) {
+        const node_set = new Set(childNodes);
+        let nextNode = el.firstChild;
+        for (let view of childNodes) {
+            if (view == null)
+                continue;
+            if (view instanceof $mol_dom_context.Node) {
+                while (true) {
+                    if (!nextNode) {
+                        el.appendChild(view);
+                        break;
+                    }
+                    if (nextNode == view) {
+                        nextNode = nextNode.nextSibling;
+                        break;
+                    }
+                    else {
+                        if (node_set.has(nextNode)) {
+                            el.insertBefore(view, nextNode);
+                            break;
+                        }
+                        else {
+                            const nn = nextNode.nextSibling;
+                            el.removeChild(nextNode);
+                            nextNode = nn;
+                        }
+                    }
+                }
+            }
+            else {
+                if (nextNode && nextNode.nodeName === '#text') {
+                    const str = String(view);
+                    if (nextNode.nodeValue !== str)
+                        nextNode.nodeValue = str;
+                    nextNode = nextNode.nextSibling;
+                }
+                else {
+                    const textNode = $mol_dom_context.document.createTextNode(String(view));
+                    el.insertBefore(textNode, nextNode);
+                }
+            }
+        }
+        while (nextNode) {
+            const currNode = nextNode;
+            nextNode = currNode.nextSibling;
+            el.removeChild(currNode);
+        }
+    }
+    $.$mol_dom_render_children = $mol_dom_render_children;
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_jsx_prefix = '';
+    $.$mol_jsx_crumbs = '';
+    $.$mol_jsx_booked = null;
+    $.$mol_jsx_document = {
+        getElementById: () => null,
+        createElementNS: (space, name) => $mol_dom_context.document.createElementNS(space, name),
+        createDocumentFragment: () => $mol_dom_context.document.createDocumentFragment(),
+    };
+    $.$mol_jsx_frag = '';
+    function $mol_jsx(Elem, props, ...childNodes) {
+        const id = props && props.id || '';
+        const guid = id ? $.$mol_jsx_prefix ? $.$mol_jsx_prefix + '/' + id : id : $.$mol_jsx_prefix;
+        const crumbs_self = id ? $.$mol_jsx_crumbs.replace(/(\S+)/g, `$1_${id.replace(/\/.*/i, '')}`) : $.$mol_jsx_crumbs;
+        if (Elem && $.$mol_jsx_booked) {
+            if ($.$mol_jsx_booked.has(id)) {
+                $mol_fail(new Error(`JSX already has tag with id ${JSON.stringify(guid)}`));
+            }
+            else {
+                $.$mol_jsx_booked.add(id);
+            }
+        }
+        let node = guid ? $.$mol_jsx_document.getElementById(guid) : null;
+        if ($.$mol_jsx_prefix) {
+            const prefix_ext = $.$mol_jsx_prefix;
+            const booked_ext = $.$mol_jsx_booked;
+            const crumbs_ext = $.$mol_jsx_crumbs;
+            for (const field in props) {
+                const func = props[field];
+                if (typeof func !== 'function')
+                    continue;
+                const wrapper = function (...args) {
+                    const prefix = $.$mol_jsx_prefix;
+                    const booked = $.$mol_jsx_booked;
+                    const crumbs = $.$mol_jsx_crumbs;
+                    try {
+                        $.$mol_jsx_prefix = prefix_ext;
+                        $.$mol_jsx_booked = booked_ext;
+                        $.$mol_jsx_crumbs = crumbs_ext;
+                        return func.call(this, ...args);
+                    }
+                    finally {
+                        $.$mol_jsx_prefix = prefix;
+                        $.$mol_jsx_booked = booked;
+                        $.$mol_jsx_crumbs = crumbs;
+                    }
+                };
+                $mol_func_name_from(wrapper, func);
+                props[field] = wrapper;
+            }
+        }
+        if (typeof Elem !== 'string') {
+            if ('prototype' in Elem) {
+                const view = node && node[String(Elem)] || new Elem;
+                Object.assign(view, props);
+                view[Symbol.toStringTag] = guid;
+                view.childNodes = childNodes;
+                if (!view.ownerDocument)
+                    view.ownerDocument = $.$mol_jsx_document;
+                view.className = (crumbs_self ? crumbs_self + ' ' : '') + (Elem['name'] || Elem);
+                node = view.valueOf();
+                node[String(Elem)] = view;
+                return node;
+            }
+            else {
+                const prefix = $.$mol_jsx_prefix;
+                const booked = $.$mol_jsx_booked;
+                const crumbs = $.$mol_jsx_crumbs;
+                try {
+                    $.$mol_jsx_prefix = guid;
+                    $.$mol_jsx_booked = new Set;
+                    $.$mol_jsx_crumbs = (crumbs_self ? crumbs_self + ' ' : '') + (Elem['name'] || Elem);
+                    return Elem(props, ...childNodes);
+                }
+                finally {
+                    $.$mol_jsx_prefix = prefix;
+                    $.$mol_jsx_booked = booked;
+                    $.$mol_jsx_crumbs = crumbs;
+                }
+            }
+        }
+        if (!node) {
+            node = Elem
+                ? $.$mol_jsx_document.createElementNS(props?.xmlns ?? 'http://www.w3.org/1999/xhtml', Elem)
+                : $.$mol_jsx_document.createDocumentFragment();
+        }
+        $mol_dom_render_children(node, [].concat(...childNodes));
+        if (!Elem)
+            return node;
+        if (guid)
+            node.id = guid;
+        for (const key in props) {
+            if (key === 'id')
+                continue;
+            if (typeof props[key] === 'string') {
+                if (typeof node[key] === 'string')
+                    node[key] = props[key];
+                node.setAttribute(key, props[key]);
+            }
+            else if (props[key] &&
+                typeof props[key] === 'object' &&
+                Reflect.getPrototypeOf(props[key]) === Reflect.getPrototypeOf({})) {
+                if (typeof node[key] === 'object') {
+                    Object.assign(node[key], props[key]);
+                    continue;
+                }
+            }
+            else {
+                node[key] = props[key];
+            }
+        }
+        if ($.$mol_jsx_crumbs)
+            node.className = (props?.['class'] ? props['class'] + ' ' : '') + crumbs_self;
+        return node;
+    }
+    $.$mol_jsx = $mol_jsx;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
     $.$mol_ambient_ref = Symbol('$mol_ambient_ref');
     function $mol_ambient(overrides) {
         return Object.setPrototypeOf(overrides, this || $);
@@ -325,16 +821,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_fail(error) {
-        throw error;
-    }
-    $.$mol_fail = $mol_fail;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
     function $mol_fail_hidden(error) {
         throw error;
     }
@@ -343,38 +829,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    const named = new WeakSet();
-    function $mol_func_name(func) {
-        let name = func.name;
-        if (name?.length > 1)
-            return name;
-        if (named.has(func))
-            return name;
-        for (let key in this) {
-            try {
-                if (this[key] !== func)
-                    continue;
-                name = key;
-                Object.defineProperty(func, 'name', { value: name });
-                break;
-            }
-            catch { }
-        }
-        named.add(func);
-        return name;
-    }
-    $.$mol_func_name = $mol_func_name;
-    function $mol_func_name_from(target, source) {
-        Object.defineProperty(target, 'name', { value: source.name });
-        return target;
-    }
-    $.$mol_func_name_from = $mol_func_name_from;
-})($ || ($ = {}));
 
 ;
 "use strict";
@@ -1820,6 +2274,16 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_guard_defined(value) {
+        return value !== null && value !== undefined;
+    }
+    $.$mol_guard_defined = $mol_guard_defined;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_view_selection extends $mol_object {
         static focused(next, notify) {
             const parents = [];
@@ -2241,61 +2705,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_dom_render_children(el, childNodes) {
-        const node_set = new Set(childNodes);
-        let nextNode = el.firstChild;
-        for (let view of childNodes) {
-            if (view == null)
-                continue;
-            if (view instanceof $mol_dom_context.Node) {
-                while (true) {
-                    if (!nextNode) {
-                        el.appendChild(view);
-                        break;
-                    }
-                    if (nextNode == view) {
-                        nextNode = nextNode.nextSibling;
-                        break;
-                    }
-                    else {
-                        if (node_set.has(nextNode)) {
-                            el.insertBefore(view, nextNode);
-                            break;
-                        }
-                        else {
-                            const nn = nextNode.nextSibling;
-                            el.removeChild(nextNode);
-                            nextNode = nn;
-                        }
-                    }
-                }
-            }
-            else {
-                if (nextNode && nextNode.nodeName === '#text') {
-                    const str = String(view);
-                    if (nextNode.nodeValue !== str)
-                        nextNode.nodeValue = str;
-                    nextNode = nextNode.nextSibling;
-                }
-                else {
-                    const textNode = $mol_dom_context.document.createTextNode(String(view));
-                    el.insertBefore(textNode, nextNode);
-                }
-            }
-        }
-        while (nextNode) {
-            const currNode = nextNode;
-            nextNode = currNode.nextSibling;
-            el.removeChild(currNode);
-        }
-    }
-    $.$mol_dom_render_children = $mol_dom_render_children;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
     function $mol_dom_render_fields(el, fields) {
         for (let key in fields) {
             const val = fields[key];
@@ -2367,275 +2776,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_style_attach(id, text) {
-        const doc = $mol_dom_context.document;
-        if (!doc)
-            return null;
-        const elid = `$mol_style_attach:${id}`;
-        let el = doc.getElementById(elid);
-        if (!el) {
-            el = doc.createElement('style');
-            el.id = elid;
-            doc.head.appendChild(el);
-        }
-        if (el.innerHTML != text)
-            el.innerHTML = text;
-        return el;
-    }
-    $.$mol_style_attach = $mol_style_attach;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_promise extends Promise {
-        done;
-        fail;
-        constructor(executor) {
-            let done;
-            let fail;
-            super((d, f) => {
-                done = d;
-                fail = f;
-                executor?.(d, f);
-            });
-            this.done = done;
-            this.fail = fail;
-        }
-    }
-    $.$mol_promise = $mol_promise;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_promise_blocker extends $mol_promise {
-        static [Symbol.toStringTag] = '$mol_promise_blocker';
-    }
-    $.$mol_promise_blocker = $mol_promise_blocker;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_decor {
-        value;
-        constructor(value) {
-            this.value = value;
-        }
-        prefix() { return ''; }
-        valueOf() { return this.value; }
-        postfix() { return ''; }
-        toString() {
-            return `${this.prefix()}${this.valueOf()}${this.postfix()}`;
-        }
-    }
-    $.$mol_decor = $mol_decor;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_style_unit extends $mol_decor {
-        literal;
-        constructor(value, literal) {
-            super(value);
-            this.literal = literal;
-        }
-        postfix() {
-            return this.literal;
-        }
-        static per(value) { return `${value}%`; }
-        static px(value) { return `${value}px`; }
-        static mm(value) { return `${value}mm`; }
-        static cm(value) { return `${value}cm`; }
-        static Q(value) { return `${value}Q`; }
-        static in(value) { return `${value}in`; }
-        static pc(value) { return `${value}pc`; }
-        static pt(value) { return `${value}pt`; }
-        static cap(value) { return `${value}cap`; }
-        static ch(value) { return `${value}ch`; }
-        static em(value) { return `${value}em`; }
-        static rem(value) { return `${value}rem`; }
-        static ex(value) { return `${value}ex`; }
-        static ic(value) { return `${value}ic`; }
-        static lh(value) { return `${value}lh`; }
-        static rlh(value) { return `${value}rlh`; }
-        static vh(value) { return `${value}vh`; }
-        static vw(value) { return `${value}vw`; }
-        static vi(value) { return `${value}vi`; }
-        static vb(value) { return `${value}vb`; }
-        static vmin(value) { return `${value}vmin`; }
-        static vmax(value) { return `${value}vmax`; }
-        static deg(value) { return `${value}deg`; }
-        static rad(value) { return `${value}rad`; }
-        static grad(value) { return `${value}grad`; }
-        static turn(value) { return `${value}turn`; }
-        static s(value) { return `${value}s`; }
-        static ms(value) { return `${value}ms`; }
-    }
-    $.$mol_style_unit = $mol_style_unit;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    const { per } = $mol_style_unit;
-    class $mol_style_func extends $mol_decor {
-        name;
-        constructor(name, value) {
-            super(value);
-            this.name = name;
-        }
-        prefix() { return this.name + '('; }
-        postfix() { return ')'; }
-        static linear_gradient(value) {
-            return new $mol_style_func('linear-gradient', value);
-        }
-        static radial_gradient(value) {
-            return new $mol_style_func('radial-gradient', value);
-        }
-        static calc(value) {
-            return new $mol_style_func('calc', value);
-        }
-        static vary(name, defaultValue) {
-            return new $mol_style_func('var', defaultValue ? [name, defaultValue] : name);
-        }
-        static url(href) {
-            return new $mol_style_func('url', JSON.stringify(href));
-        }
-        static hsla(hue, saturation, lightness, alpha) {
-            return new $mol_style_func('hsla', [hue, per(saturation), per(lightness), alpha]);
-        }
-        static clamp(min, mid, max) {
-            return new $mol_style_func('clamp', [min, mid, max]);
-        }
-        static rgba(red, green, blue, alpha) {
-            return new $mol_style_func('rgba', [red, green, blue, alpha]);
-        }
-        static scale(zoom) {
-            return new $mol_style_func('scale', [zoom]);
-        }
-        static linear(...breakpoints) {
-            return new $mol_style_func("linear", breakpoints.map((e) => Array.isArray(e)
-                ? String(e[0]) +
-                    " " +
-                    (typeof e[1] === "number" ? e[1] + "%" : e[1].toString())
-                : String(e)));
-        }
-        static cubic_bezier(x1, y1, x2, y2) {
-            return new $mol_style_func('cubic-bezier', [x1, y1, x2, y2]);
-        }
-        static steps(value, step_position) {
-            return new $mol_style_func('steps', [value, step_position]);
-        }
-        static blur(value) {
-            return new $mol_style_func('blur', value ?? "");
-        }
-        static brightness(value) {
-            return new $mol_style_func('brightness', value ?? "");
-        }
-        static contrast(value) {
-            return new $mol_style_func('contrast', value ?? "");
-        }
-        static drop_shadow(color, x_offset, y_offset, blur_radius) {
-            return new $mol_style_func("drop-shadow", blur_radius
-                ? [color, x_offset, y_offset, blur_radius]
-                : [color, x_offset, y_offset]);
-        }
-        static grayscale(value) {
-            return new $mol_style_func('grayscale', value ?? "");
-        }
-        static hue_rotate(value) {
-            return new $mol_style_func('hue-rotate', value ?? "");
-        }
-        static invert(value) {
-            return new $mol_style_func('invert', value ?? "");
-        }
-        static opacity(value) {
-            return new $mol_style_func('opacity', value ?? "");
-        }
-        static sepia(value) {
-            return new $mol_style_func('sepia', value ?? "");
-        }
-        static saturate(value) {
-            return new $mol_style_func('saturate', value ?? "");
-        }
-    }
-    $.$mol_style_func = $mol_style_func;
-})($ || ($ = {}));
-
-;
-"use strict";
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_style_prop(prefix, keys) {
-        const record = keys.reduce((rec, key) => {
-            rec[key] = $mol_style_func.vary(`--${prefix}_${key}`);
-            return rec;
-        }, {});
-        return record;
-    }
-    $.$mol_style_prop = $mol_style_prop;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_theme = $mol_style_prop('mol_theme', [
-        'back',
-        'hover',
-        'card',
-        'current',
-        'special',
-        'text',
-        'control',
-        'shade',
-        'line',
-        'focus',
-        'field',
-        'image',
-        'spirit',
-    ]);
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/theme/theme.css", ":root {\n\t--mol_theme_hue: 240deg;\n\t--mol_theme_hue_spread: 90deg;\n\tcolor-scheme: dark light;\n}\n\n:where([mol_theme]) {\n\tcolor: var(--mol_theme_text);\n\tfill: var(--mol_theme_text);\n\tbackground-color: var(--mol_theme_back);\n}\n\t\n:root, [mol_theme=\"$mol_theme_dark\"], :where([mol_theme=\"$mol_theme_dark\"]) [mol_theme]  {\n\n\t--mol_theme_luma: -1;\n\t--mol_theme_image: invert(1) hue-rotate( 180deg );\n\t--mol_theme_spirit: hsl( 0deg, 0%, 0%, .75 );\n\n\t--mol_theme_back: hsl( var(--mol_theme_hue), 20%, 10% );\n\t--mol_theme_card: hsl( var(--mol_theme_hue), 50%, 20%, .25 );\n\t--mol_theme_field: hsl( var(--mol_theme_hue), 50%, 8%, .25 );\n\t--mol_theme_hover: hsl( var(--mol_theme_hue), 0%, 50%, .1 );\n\t\n\t--mol_theme_text: hsl( var(--mol_theme_hue), 0%, 80% );\n\t--mol_theme_shade: hsl( var(--mol_theme_hue), 0%, 60%, 1 );\n\t--mol_theme_line: hsl( var(--mol_theme_hue), 0%, 50%, .25 );\n\t--mol_theme_focus: hsl( calc( var(--mol_theme_hue) + 180deg ), 100%, 65% );\n\t\n\t--mol_theme_control: hsl( var(--mol_theme_hue), 60%, 65% );\n\t--mol_theme_current: hsl( calc( var(--mol_theme_hue) - var(--mol_theme_hue_spread) ), 60%, 65% );\n\t--mol_theme_special: hsl( calc( var(--mol_theme_hue) + var(--mol_theme_hue_spread) ), 60%, 65% );\n\n} @supports( color: oklch( 0% 0 0deg ) ) {\n:root, [mol_theme=\"$mol_theme_dark\"], :where([mol_theme=\"$mol_theme_dark\"]) [mol_theme]  {\n\t\n\t--mol_theme_back: oklch( 20% .03 var(--mol_theme_hue) );\n\t--mol_theme_card: oklch( 30% .05 var(--mol_theme_hue) / .25 );\n\t--mol_theme_field: oklch( 15% 0 var(--mol_theme_hue) / .25 );\n\t--mol_theme_hover: oklch( 70% 0 var(--mol_theme_hue) / .1 );\n\t\n\t--mol_theme_text: oklch( 80% 0 var(--mol_theme_hue) );\n\t--mol_theme_shade: oklch( 60% 0 var(--mol_theme_hue) );\n\t--mol_theme_line: oklch( 60% 0 var(--mol_theme_hue) / .25 );\n\t--mol_theme_focus: oklch( 80% .2 calc( var(--mol_theme_hue) + 180deg ) );\n\t\n\t--mol_theme_control: oklch( 70% .1 var(--mol_theme_hue) );\n\t--mol_theme_current: oklch( 70% .2 calc( var(--mol_theme_hue) - var(--mol_theme_hue_spread) ) );\n\t--mol_theme_special: oklch( 70% .2 calc( var(--mol_theme_hue) + var(--mol_theme_hue_spread) ) );\n\n} }\n\n[mol_theme=\"$mol_theme_light\"], :where([mol_theme=\"$mol_theme_light\"]) [mol_theme] {\n\t\n\t--mol_theme_luma: 1;\n\t--mol_theme_image: none;\n\t--mol_theme_spirit: hsl( 0deg, 0%, 100%, .75 );\n\t\n\t--mol_theme_back: hsl( var(--mol_theme_hue), 20%, 92% );\n\t--mol_theme_card: hsl( var(--mol_theme_hue), 50%, 100%, .5 );\n\t--mol_theme_field: hsl( var(--mol_theme_hue), 50%, 100%, .75 );\n\t--mol_theme_hover: hsl( var(--mol_theme_hue), 0%, 50%, .1 );\n\t\n\t--mol_theme_text: hsl( var(--mol_theme_hue), 0%, 0% );\n\t--mol_theme_shade: hsl( var(--mol_theme_hue), 0%, 40%, 1 );\n\t--mol_theme_line: hsl( var(--mol_theme_hue), 0%, 50%, .25 );\n\t--mol_theme_focus: hsl( calc( var(--mol_theme_hue) + 180deg ), 100%, 40% );\n\t\n\t--mol_theme_control: hsl( var(--mol_theme_hue), 80%, 30% );\n\t--mol_theme_current: hsl( calc( var(--mol_theme_hue) - var(--mol_theme_hue_spread) ), 80%, 30% );\n\t--mol_theme_special: hsl( calc( var(--mol_theme_hue) + var(--mol_theme_hue_spread) ), 80%, 30% );\n\n} @supports( color: oklch( 0% 0 0deg ) ) {\n[mol_theme=\"$mol_theme_light\"], :where([mol_theme=\"$mol_theme_light\"]) [mol_theme] {\n\t--mol_theme_back: oklch( 92% .01 var(--mol_theme_hue) );\n\t--mol_theme_card: oklch( 99% .01 var(--mol_theme_hue) / .5 );\n\t--mol_theme_field: oklch( 100% 0 var(--mol_theme_hue) / .5 );\n\t--mol_theme_hover: oklch( 70% 0 var(--mol_theme_hue) / .1 );\n\t\n\t--mol_theme_text: oklch( 20% 0 var(--mol_theme_hue) );\n\t--mol_theme_shade: oklch( 60% 0 var(--mol_theme_hue) );\n\t--mol_theme_line: oklch( 50% 0 var(--mol_theme_hue) / .25 );\n\t--mol_theme_focus: oklch( 60% .2 calc( var(--mol_theme_hue) + 180deg ) );\n\t\n\t--mol_theme_control: oklch( 40% .15 var(--mol_theme_hue) );\n\t--mol_theme_current: oklch( 50% .2 calc( var(--mol_theme_hue) - var(--mol_theme_hue_spread) ) );\n\t--mol_theme_special: oklch( 50% .2 calc( var(--mol_theme_hue) + var(--mol_theme_hue_spread) ) );\n\n} }\n\n:where( :root, [mol_theme=\"$mol_theme_dark\"] ) [mol_theme=\"$mol_theme_base\"] {\n\t--mol_theme_back: oklch( 25% .075 var(--mol_theme_hue) );\n\t--mol_theme_card: oklch( 35% .1 var(--mol_theme_hue) / .25 );\n}\n:where( [mol_theme=\"$mol_theme_light\"] ) [mol_theme=\"$mol_theme_base\"] {\n\t--mol_theme_back: oklch( 85% .075 var(--mol_theme_hue) );\n\t--mol_theme_card: oklch( 98% .03 var(--mol_theme_hue) / .25 );\n}\n\n:where( :root, [mol_theme=\"$mol_theme_dark\"] ) [mol_theme=\"$mol_theme_current\"] {\n\t--mol_theme_back: oklch( 25% .05 calc( var(--mol_theme_hue) - var(--mol_theme_hue_spread) ) );\n\t--mol_theme_card: oklch( 35% .1 calc( var(--mol_theme_hue) - var(--mol_theme_hue_spread) ) / .25 );\n}\n:where( [mol_theme=\"$mol_theme_light\"] ) [mol_theme=\"$mol_theme_current\"] {\n\t--mol_theme_back: oklch( 85% .05 calc( var(--mol_theme_hue) - var(--mol_theme_hue_spread) ) );\n\t--mol_theme_card: oklch( 98% .03 calc( var(--mol_theme_hue) - var(--mol_theme_hue_spread) ) / .25 );\n}\n\n:where( :root, [mol_theme=\"$mol_theme_dark\"] ) [mol_theme=\"$mol_theme_special\"] {\n\t--mol_theme_back: oklch( 25% .05 calc( var(--mol_theme_hue) + var(--mol_theme_hue_spread) ) );\n\t--mol_theme_card: oklch( 35% .1 calc( var(--mol_theme_hue) + var(--mol_theme_hue_spread) ) / .25 );\n}\n:where( [mol_theme=\"$mol_theme_light\"] ) [mol_theme=\"$mol_theme_special\"] {\n\t--mol_theme_back: oklch( 85% .05 calc( var(--mol_theme_hue) + var(--mol_theme_hue_spread) ) );\n\t--mol_theme_card: oklch( 98% .03 calc( var(--mol_theme_hue) + var(--mol_theme_hue_spread) ) / .25 );\n}\n\n:where( :root, [mol_theme=\"$mol_theme_dark\"] ) [mol_theme=\"$mol_theme_accent\"] {\n\t--mol_theme_back: oklch( 35% .1 calc( var(--mol_theme_hue) + 180deg ) );\n\t--mol_theme_card: oklch( 45% .15 calc( var(--mol_theme_hue) + 180deg ) / .25 );\n}\n:where( [mol_theme=\"$mol_theme_light\"] ) [mol_theme=\"$mol_theme_accent\"] {\n\t--mol_theme_back: oklch( 83% .1 calc( var(--mol_theme_hue) + 180deg ) );\n\t--mol_theme_card: oklch( 98% .03 calc( var(--mol_theme_hue) + 180deg ) / .25 );\n}\n\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_gap = $mol_style_prop('mol_gap', [
-        'block',
-        'text',
-        'round',
-        'space',
-        'blur',
-    ]);
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/gap/gap.css", ":root {\n\t--mol_gap_block: .75rem;\n\t--mol_gap_text: .5rem .75rem;\n\t--mol_gap_round: .25rem;\n\t--mol_gap_space: .25rem;\n\t--mol_gap_blur: .5rem;\n}\n");
+    $mol_style_attach("mol/view/view/view.css", "[mol_view] {\n\ttransition-property: height, width, min-height, min-width, max-width, max-height, transform;\n\ttransition-duration: .2s;\n\ttransition-timing-function: ease-out;\n\t-webkit-appearance: none;\n\tbox-sizing: border-box;\n\tdisplay: flex;\n\tflex-shrink: 0;\n\tcontain: style;\n\tscrollbar-color: var(--mol_theme_line) transparent;\n\tscrollbar-width: thin;\n}\t\n\n[mol_view]::selection {\n\tbackground: var(--mol_theme_line);\n}\t\n\n[mol_view]::-webkit-scrollbar {\n\twidth: .25rem;\n\theight: .25rem;\n}\n\n[mol_view]::-webkit-scrollbar-corner {\n\tbackground-color: var(--mol_theme_line);\n}\n\n[mol_view]::-webkit-scrollbar-track {\n\tbackground-color: transparent;\n}\n\n[mol_view]::-webkit-scrollbar-thumb {\n\tbackground-color: var(--mol_theme_line);\n\tborder-radius: var(--mol_gap_round);\n}\n\n[mol_view] > * {\n\tword-break: inherit;\n}\n\n[mol_view_root] {\n\tmargin: 0;\n\tpadding: 0;\n\twidth: 100%;\n\theight: 100%;\n\tbox-sizing: border-box;\n\tfont-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n\tfont-size: 1rem;\n\tline-height: 1.5rem;\n\tbackground: var(--mol_theme_back);\n\tcolor: var(--mol_theme_text);\n\tcontain: unset; /** Fixes bg ignoring when applied to body on Chrome */\n\ttab-size: 4;\n\toverscroll-behavior: contain; /** Disable navigation gestures **/\n}\n\n@media print {\n\t[mol_view_root] {\n\t\theight: auto;\n\t}\n}\n[mol_view][mol_view_error]:not([mol_view_error=\"Promise\"], [mol_view_error=\"$mol_promise_blocker\"]) {\n\tbackground-image: repeating-linear-gradient(\n\t\t-45deg,\n\t\t#f92323,\n\t\t#f92323 .5rem,\n\t\t#ff3d3d .5rem,\n\t\t#ff3d3d 1.5rem\n\t);\n\tcolor: black;\n\talign-items: center;\n\tjustify-content: center;\n}\n\n@keyframes mol_view_wait {\n\tfrom {\n\t\topacity: .25;\n\t}\n\t20% {\n\t\topacity: .75;\n\t}\n\tto {\n\t\topacity: .25;\n\t}\n}\n\n:where([mol_view][mol_view_error=\"$mol_promise_blocker\"]),\n:where([mol_view][mol_view_error=\"Promise\"]) {\n\tbackground: var(--mol_theme_hover);\n}\n\n[mol_view][mol_view_error=\"Promise\"] {\n\tanimation: mol_view_wait 1s steps(20,end) infinite;\n}\n");
 })($ || ($ = {}));
 
 ;
@@ -2658,31 +2799,57 @@ var $;
         static Root(id) {
             return new this;
         }
-        autorun() {
+        static roots() {
+            return [...$mol_dom.document.querySelectorAll('[mol_view_root]:not([mol_view_root=""])')].map((node, index) => {
+                const name = node.getAttribute('mol_view_root');
+                const View = this.$[name];
+                if (!View) {
+                    $mol_fail_log(new Error(`Autobind unknown view class`, { cause: { name } }));
+                    return null;
+                }
+                const view = View.Root(index);
+                view.dom_node(node);
+                return view;
+            }).filter($mol_guard_defined);
+        }
+        static auto() {
+            const roots = this.roots();
+            if (!roots.length)
+                return;
+            for (const root of roots) {
+                try {
+                    root.dom_tree();
+                }
+                catch (error) {
+                    $mol_fail_log(error);
+                }
+            }
             try {
-                this.dom_tree();
-                document.title = this.title();
+                document.title = roots[0].title();
+            }
+            catch (error) {
+                $mol_fail_log(error);
+            }
+            descr: try {
+                const descr = roots[0].hint();
+                if (!descr)
+                    break descr;
+                const head = $mol_dom.document.head;
+                let node = head.querySelector('meta[name="description"]');
+                if (node)
+                    node.content = descr;
+                else
+                    head.append($mol_jsx("meta", { name: "description", content: descr }));
             }
             catch (error) {
                 $mol_fail_log(error);
             }
         }
-        static autobind() {
-            const nodes = $mol_dom_context.document.querySelectorAll('[mol_view_root]:not([mol_view_root=""])');
-            for (let i = nodes.length - 1; i >= 0; --i) {
-                const name = nodes.item(i).getAttribute('mol_view_root');
-                const View = $[name];
-                if (!View) {
-                    console.error(`Can not attach view. Class not found: ${name}`);
-                    continue;
-                }
-                const view = View.Root(i);
-                view.dom_node(nodes.item(i));
-                view.autorun();
-            }
-        }
         title() {
             return this.toString().match(/.*\.(\w+)/)?.[1] ?? this.toString();
+        }
+        hint() {
+            return '';
         }
         focused(next) {
             let node = this.dom_node();
@@ -3017,9 +3184,6 @@ var $;
     }
     __decorate([
         $mol_mem
-    ], $mol_view.prototype, "autorun", null);
-    __decorate([
-        $mol_mem
     ], $mol_view.prototype, "title", null);
     __decorate([
         $mol_mem
@@ -3071,7 +3235,10 @@ var $;
     ], $mol_view, "Root", null);
     __decorate([
         $mol_mem
-    ], $mol_view, "autobind", null);
+    ], $mol_view, "roots", null);
+    __decorate([
+        $mol_mem
+    ], $mol_view, "auto", null);
     __decorate([
         $mol_memo.method
     ], $mol_view, "view_classes", null);
@@ -3082,14 +3249,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/view/view/view.css", "[mol_view] {\n\ttransition-property: height, width, min-height, min-width, max-width, max-height, transform;\n\ttransition-duration: .2s;\n\ttransition-timing-function: ease-out;\n\t-webkit-appearance: none;\n\tbox-sizing: border-box;\n\tdisplay: flex;\n\tflex-shrink: 0;\n\tcontain: style;\n\tscrollbar-color: var(--mol_theme_line) transparent;\n\tscrollbar-width: thin;\n}\t\n\n[mol_view]::selection {\n\tbackground: var(--mol_theme_line);\n}\t\n\n[mol_view]::-webkit-scrollbar {\n\twidth: .25rem;\n\theight: .25rem;\n}\n\n[mol_view]::-webkit-scrollbar-corner {\n\tbackground-color: var(--mol_theme_line);\n}\n\n[mol_view]::-webkit-scrollbar-track {\n\tbackground-color: transparent;\n}\n\n[mol_view]::-webkit-scrollbar-thumb {\n\tbackground-color: var(--mol_theme_line);\n\tborder-radius: var(--mol_gap_round);\n}\n\n[mol_view] > * {\n\tword-break: inherit;\n}\n\n[mol_view_root] {\n\tmargin: 0;\n\tpadding: 0;\n\twidth: 100%;\n\theight: 100%;\n\tbox-sizing: border-box;\n\tfont-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n\tfont-size: 1rem;\n\tline-height: 1.5rem;\n\tbackground: var(--mol_theme_back);\n\tcolor: var(--mol_theme_text);\n\tcontain: unset; /** Fixes bg ignoring when applied to body on Chrome */\n\ttab-size: 4;\n\toverscroll-behavior: contain; /** Disable navigation gestures **/\n}\n\n@media print {\n\t[mol_view_root] {\n\t\theight: auto;\n\t}\n}\n[mol_view][mol_view_error]:not([mol_view_error=\"Promise\"], [mol_view_error=\"$mol_promise_blocker\"]) {\n\tbackground-image: repeating-linear-gradient(\n\t\t-45deg,\n\t\t#f92323,\n\t\t#f92323 .5rem,\n\t\t#ff3d3d .5rem,\n\t\t#ff3d3d 1.5rem\n\t);\n\tcolor: black;\n\talign-items: center;\n\tjustify-content: center;\n}\n\n@keyframes mol_view_wait {\n\tfrom {\n\t\topacity: .25;\n\t}\n\t20% {\n\t\topacity: .75;\n\t}\n\tto {\n\t\topacity: .25;\n\t}\n}\n\n:where([mol_view][mol_view_error=\"$mol_promise_blocker\"]),\n:where([mol_view][mol_view_error=\"Promise\"]) {\n\tbackground: var(--mol_theme_hover);\n}\n\n[mol_view][mol_view_error=\"Promise\"] {\n\tanimation: mol_view_wait 1s steps(20,end) infinite;\n}\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_dom_context.document?.addEventListener('DOMContentLoaded', () => $mol_view.autobind(), { once: true });
+    $mol_dom_context.document?.addEventListener('DOMContentLoaded', () => $mol_view.auto(), { once: true });
 })($ || ($ = {}));
 
 ;
@@ -21520,130 +21680,6 @@ var $;
 	};
 	($mol_mem(($.$mol_button_share.prototype), "Icon"));
 
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_jsx_prefix = '';
-    $.$mol_jsx_crumbs = '';
-    $.$mol_jsx_booked = null;
-    $.$mol_jsx_document = {
-        getElementById: () => null,
-        createElementNS: (space, name) => $mol_dom_context.document.createElementNS(space, name),
-        createDocumentFragment: () => $mol_dom_context.document.createDocumentFragment(),
-    };
-    $.$mol_jsx_frag = '';
-    function $mol_jsx(Elem, props, ...childNodes) {
-        const id = props && props.id || '';
-        const guid = id ? $.$mol_jsx_prefix ? $.$mol_jsx_prefix + '/' + id : id : $.$mol_jsx_prefix;
-        const crumbs_self = id ? $.$mol_jsx_crumbs.replace(/(\S+)/g, `$1_${id.replace(/\/.*/i, '')}`) : $.$mol_jsx_crumbs;
-        if (Elem && $.$mol_jsx_booked) {
-            if ($.$mol_jsx_booked.has(id)) {
-                $mol_fail(new Error(`JSX already has tag with id ${JSON.stringify(guid)}`));
-            }
-            else {
-                $.$mol_jsx_booked.add(id);
-            }
-        }
-        let node = guid ? $.$mol_jsx_document.getElementById(guid) : null;
-        if ($.$mol_jsx_prefix) {
-            const prefix_ext = $.$mol_jsx_prefix;
-            const booked_ext = $.$mol_jsx_booked;
-            const crumbs_ext = $.$mol_jsx_crumbs;
-            for (const field in props) {
-                const func = props[field];
-                if (typeof func !== 'function')
-                    continue;
-                const wrapper = function (...args) {
-                    const prefix = $.$mol_jsx_prefix;
-                    const booked = $.$mol_jsx_booked;
-                    const crumbs = $.$mol_jsx_crumbs;
-                    try {
-                        $.$mol_jsx_prefix = prefix_ext;
-                        $.$mol_jsx_booked = booked_ext;
-                        $.$mol_jsx_crumbs = crumbs_ext;
-                        return func.call(this, ...args);
-                    }
-                    finally {
-                        $.$mol_jsx_prefix = prefix;
-                        $.$mol_jsx_booked = booked;
-                        $.$mol_jsx_crumbs = crumbs;
-                    }
-                };
-                $mol_func_name_from(wrapper, func);
-                props[field] = wrapper;
-            }
-        }
-        if (typeof Elem !== 'string') {
-            if ('prototype' in Elem) {
-                const view = node && node[String(Elem)] || new Elem;
-                Object.assign(view, props);
-                view[Symbol.toStringTag] = guid;
-                view.childNodes = childNodes;
-                if (!view.ownerDocument)
-                    view.ownerDocument = $.$mol_jsx_document;
-                view.className = (crumbs_self ? crumbs_self + ' ' : '') + (Elem['name'] || Elem);
-                node = view.valueOf();
-                node[String(Elem)] = view;
-                return node;
-            }
-            else {
-                const prefix = $.$mol_jsx_prefix;
-                const booked = $.$mol_jsx_booked;
-                const crumbs = $.$mol_jsx_crumbs;
-                try {
-                    $.$mol_jsx_prefix = guid;
-                    $.$mol_jsx_booked = new Set;
-                    $.$mol_jsx_crumbs = (crumbs_self ? crumbs_self + ' ' : '') + (Elem['name'] || Elem);
-                    return Elem(props, ...childNodes);
-                }
-                finally {
-                    $.$mol_jsx_prefix = prefix;
-                    $.$mol_jsx_booked = booked;
-                    $.$mol_jsx_crumbs = crumbs;
-                }
-            }
-        }
-        if (!node) {
-            node = Elem
-                ? $.$mol_jsx_document.createElementNS(props?.xmlns ?? 'http://www.w3.org/1999/xhtml', Elem)
-                : $.$mol_jsx_document.createDocumentFragment();
-        }
-        $mol_dom_render_children(node, [].concat(...childNodes));
-        if (!Elem)
-            return node;
-        if (guid)
-            node.id = guid;
-        for (const key in props) {
-            if (key === 'id')
-                continue;
-            if (typeof props[key] === 'string') {
-                if (typeof node[key] === 'string')
-                    node[key] = props[key];
-                node.setAttribute(key, props[key]);
-            }
-            else if (props[key] &&
-                typeof props[key] === 'object' &&
-                Reflect.getPrototypeOf(props[key]) === Reflect.getPrototypeOf({})) {
-                if (typeof node[key] === 'object') {
-                    Object.assign(node[key], props[key]);
-                    continue;
-                }
-            }
-            else {
-                node[key] = props[key];
-            }
-        }
-        if ($.$mol_jsx_crumbs)
-            node.className = (props?.['class'] ? props['class'] + ' ' : '') + crumbs_self;
-        return node;
-    }
-    $.$mol_jsx = $mol_jsx;
-})($ || ($ = {}));
 
 ;
 "use strict";

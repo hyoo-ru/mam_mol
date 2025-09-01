@@ -15,6 +15,351 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    var $mol_dom_context: typeof globalThis;
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    var $mol_dom: typeof globalThis;
+}
+
+declare namespace $ {
+    function $mol_style_attach(id: string, text: string): HTMLStyleElement | null;
+}
+
+declare namespace $ {
+    class $mol_promise<Result = void> extends Promise<Result> {
+        done: (value: Result | PromiseLike<Result>) => void;
+        fail: (reason?: any) => void;
+        constructor(executor?: (done: (value: Result | PromiseLike<Result>) => void, fail: (reason?: any) => void) => void);
+    }
+}
+
+declare namespace $ {
+    class $mol_promise_blocker<Result> extends $mol_promise<Result> {
+        static [Symbol.toStringTag]: string;
+    }
+}
+
+declare namespace $ {
+    class $mol_decor<Value> {
+        readonly value: Value;
+        constructor(value: Value);
+        prefix(): string;
+        valueOf(): Value;
+        postfix(): string;
+        toString(): string;
+    }
+}
+
+declare namespace $ {
+    type $mol_style_unit_length = '%' | 'px' | 'cm' | 'mm' | 'Q' | 'in' | 'pc' | 'pt' | 'cap' | 'ch' | 'em' | 'rem' | 'ex' | 'ic' | 'lh' | 'rlh' | 'vh' | 'vw' | 'vi' | 'vb' | 'vmin' | 'vmax';
+    type $mol_style_unit_angle = 'deg' | 'rad' | 'grad' | 'turn';
+    type $mol_style_unit_time = 's' | 'ms';
+    type $mol_style_unit_any = $mol_style_unit_length | $mol_style_unit_angle | $mol_style_unit_time;
+    type $mol_style_unit_str<Quanity extends $mol_style_unit_any = $mol_style_unit_any> = `${number}${Quanity}`;
+    class $mol_style_unit<Literal extends $mol_style_unit_any> extends $mol_decor<number> {
+        readonly literal: Literal;
+        constructor(value: number, literal: Literal);
+        postfix(): Literal;
+        static per(value: number): `${number}%`;
+        static px(value: number): `${number}px`;
+        static mm(value: number): `${number}mm`;
+        static cm(value: number): `${number}cm`;
+        static Q(value: number): `${number}Q`;
+        static in(value: number): `${number}in`;
+        static pc(value: number): `${number}pc`;
+        static pt(value: number): `${number}pt`;
+        static cap(value: number): `${number}cap`;
+        static ch(value: number): `${number}ch`;
+        static em(value: number): `${number}em`;
+        static rem(value: number): `${number}rem`;
+        static ex(value: number): `${number}ex`;
+        static ic(value: number): `${number}ic`;
+        static lh(value: number): `${number}lh`;
+        static rlh(value: number): `${number}rlh`;
+        static vh(value: number): `${number}vh`;
+        static vw(value: number): `${number}vw`;
+        static vi(value: number): `${number}vi`;
+        static vb(value: number): `${number}vb`;
+        static vmin(value: number): `${number}vmin`;
+        static vmax(value: number): `${number}vmax`;
+        static deg(value: number): `${number}deg`;
+        static rad(value: number): `${number}rad`;
+        static grad(value: number): `${number}grad`;
+        static turn(value: number): `${number}turn`;
+        static s(value: number): `${number}s`;
+        static ms(value: number): `${number}ms`;
+    }
+}
+
+declare namespace $ {
+    type $mol_style_func_name = 'calc' | 'hsla' | 'rgba' | 'var' | 'clamp' | 'scale' | 'cubic-bezier' | 'linear' | 'steps' | $mol_style_func_image | $mol_style_func_filter;
+    type $mol_style_func_image = 'url' | 'linear-gradient' | 'radial-gradient' | 'conic-gradient';
+    type $mol_style_func_filter = 'blur' | 'brightness' | 'contrast' | 'drop-shadow' | 'grayscale' | 'hue-rotate' | 'invert' | 'opacity' | 'sepia' | 'saturate';
+    class $mol_style_func<Name extends $mol_style_func_name, Value = unknown> extends $mol_decor<Value> {
+        readonly name: Name;
+        constructor(name: Name, value: Value);
+        prefix(): string;
+        postfix(): string;
+        static linear_gradient<Value>(value: Value): $mol_style_func<"linear-gradient", Value>;
+        static radial_gradient<Value>(value: Value): $mol_style_func<"radial-gradient", Value>;
+        static calc<Value>(value: Value): $mol_style_func<"calc", Value>;
+        static vary<Name extends string, Value extends string>(name: Name, defaultValue?: Value): $mol_style_func<"var", Name | (Name | Value)[]>;
+        static url<Href extends string>(href: Href): $mol_style_func<"url", string>;
+        static hsla(hue: number, saturation: number, lightness: number, alpha: number): $mol_style_func<"hsla", (number | `${number}%`)[]>;
+        static clamp(min: $mol_style_unit_str<any>, mid: $mol_style_unit_str<any>, max: $mol_style_unit_str<any>): $mol_style_func<"clamp", `${number}${any}`[]>;
+        static rgba(red: number, green: number, blue: number, alpha: number): $mol_style_func<"rgba", number[]>;
+        static scale(zoom: number): $mol_style_func<"scale", number[]>;
+        static linear(...breakpoints: Array<number | [number, number | $mol_style_unit_str<'%'>]>): $mol_style_func<"linear", string[]>;
+        static cubic_bezier(x1: number, y1: number, x2: number, y2: number): $mol_style_func<"cubic-bezier", number[]>;
+        static steps(value: number, step_position: 'jump-start' | 'jump-end' | 'jump-none' | 'jump-both' | 'start' | 'end'): $mol_style_func<"steps", (number | "end" | "start" | "jump-start" | "jump-end" | "jump-none" | "jump-both")[]>;
+        static blur(value?: $mol_style_unit_str<$mol_style_unit_length>): $mol_style_func<"blur", string>;
+        static brightness(value?: number | $mol_style_unit_str<'%'>): $mol_style_func<"brightness", string | number>;
+        static contrast(value?: number | $mol_style_unit_str<'%'>): $mol_style_func<"contrast", string | number>;
+        static drop_shadow(color: $mol_style_properties_color, x_offset: $mol_style_unit_str<$mol_style_unit_length>, y_offset: $mol_style_unit_str<$mol_style_unit_length>, blur_radius?: $mol_style_unit_str<$mol_style_unit_length>): $mol_style_func<"drop-shadow", (`${number}%` | `${number}px` | `${number}mm` | `${number}cm` | `${number}Q` | `${number}in` | `${number}pc` | `${number}pt` | `${number}cap` | `${number}ch` | `${number}em` | `${number}rem` | `${number}ex` | `${number}ic` | `${number}lh` | `${number}rlh` | `${number}vh` | `${number}vw` | `${number}vi` | `${number}vb` | `${number}vmin` | `${number}vmax` | $mol_style_properties_color)[]>;
+        static grayscale(value?: number | $mol_style_unit_str<'%'>): $mol_style_func<"grayscale", string | number>;
+        static hue_rotate(value?: 0 | $mol_style_unit_str<$mol_style_unit_angle>): $mol_style_func<"hue-rotate", string | 0>;
+        static invert(value?: number | $mol_style_unit_str<'%'>): $mol_style_func<"invert", string | number>;
+        static opacity(value?: number | $mol_style_unit_str<'%'>): $mol_style_func<"opacity", string | number>;
+        static sepia(value?: number | $mol_style_unit_str<'%'>): $mol_style_func<"sepia", string | number>;
+        static saturate(value?: number | $mol_style_unit_str<'%'>): $mol_style_func<"saturate", string | number>;
+    }
+}
+
+declare namespace $ {
+    type $mol_type_override<Base, Over> = Omit<Base, keyof Over> & Over;
+}
+
+declare namespace $ {
+    export type $mol_style_properties = Partial<$mol_type_override<CSSStyleDeclaration, Overrides>>;
+    type Common = 'inherit' | 'initial' | 'unset' | 'revert' | 'revert-layer' | 'none' | $mol_style_func<'var'>;
+    export type $mol_style_properties_color = 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'black' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'white' | 'whitesmoke' | 'yellow' | 'yellowgreen' | 'transparent' | 'currentcolor' | $mol_style_func<'hsla' | 'rgba' | 'var'> | `#${string}`;
+    type Length = 0 | `${number}${$mol_style_unit_length}` | $mol_style_func<'calc' | 'var' | 'clamp'>;
+    type Size = 'auto' | 'max-content' | 'min-content' | 'fit-content' | Length | Common;
+    type Directions<Value> = Value | readonly [Value, Value] | {
+        top?: Value;
+        right?: Value;
+        bottom?: Value;
+        left?: Value;
+    };
+    type Single_animation_composition = 'replace' | 'add' | 'accumulate';
+    type Single_animation_direction = 'normal' | 'reverse' | 'alternate' | 'alternate-reverse';
+    type Single_animation_fill_mode = 'none' | 'forwards' | 'backwards' | 'both';
+    type Single_animation_iteration_count = 'infinite' | number;
+    type Single_animation_play_state = 'running' | 'paused';
+    type Easing_function = Linear_easing_function | Cubic_bezier_easing_function | Step_easing_function;
+    type Linear_easing_function = 'linear' | $mol_style_func<'linear'>;
+    type Cubic_bezier_easing_function = 'ease' | 'ease-in' | 'ease-out' | 'ease-in-out' | $mol_style_func<'cubic-bezier'>;
+    type Step_easing_function = 'step-start' | 'step-end' | $mol_style_func<'steps'>;
+    type Compat_auto = 'searchfield' | 'textarea' | 'push-button' | 'slider-horizontal' | 'checkbox' | 'radio' | 'menulist' | 'listbox' | 'meter' | 'progress-bar' | 'button';
+    type Compat_special = 'textfield' | 'menulist-button';
+    type Mix_blend_mode = Blend_mode | 'plus-darker' | 'plus-lighter';
+    type Blend_mode = 'normal' | 'multiply' | 'screen' | 'overlay' | 'darken' | 'lighten' | 'color-dodge' | 'color-burn' | 'hard-light' | 'soft-light' | 'difference' | 'exclusion' | 'hue' | 'saturation' | 'color' | 'luminosity';
+    type Box = 'border-box' | 'padding-box' | 'content-box';
+    type Baseline_position = 'baseline' | `${'first' | 'last'} baseline`;
+    type Content_distribution = 'space-between' | 'space-around' | 'space-evenly' | 'stretch';
+    type Self_position = 'center' | 'start' | 'end' | 'self-start' | 'self-end' | 'flex-start' | 'flex-end';
+    type Content_position = 'center' | 'start' | 'end' | 'flex-start' | 'flex-end';
+    type Span_align = 'none' | 'start' | 'end' | 'center' | $mol_style_func<'var'>;
+    type Snap_axis = 'x' | 'y' | 'block' | 'inline' | 'both' | $mol_style_func<'var'>;
+    type Overflow = 'visible' | 'hidden' | 'clip' | 'scroll' | 'auto' | 'overlay' | Common;
+    type Overflow_position = 'unsafe' | 'safe';
+    type ContainRule = 'size' | 'layout' | 'style' | 'paint' | $mol_style_func<'var'>;
+    type Repeat = 'repeat-x' | 'repeat-y' | 'repeat' | 'space' | 'round' | 'no-repeat' | $mol_style_func<'var'>;
+    type BG_size = Length | 'auto' | 'contain' | 'cover';
+    interface Overrides {
+        accentColor?: $mol_style_properties_color | Common;
+        align?: {
+            content?: 'normal' | Baseline_position | Content_distribution | Content_position | `${Overflow_position} ${Content_position}` | Common;
+            items?: 'normal' | 'stretch' | Baseline_position | Self_position | `${Overflow_position} ${Self_position}` | Common;
+            self?: 'auto' | 'normal' | 'stretch' | Baseline_position | Self_position | `${Overflow_position} ${Self_position}` | Common;
+        };
+        justify?: {
+            content?: 'normal' | Baseline_position | Content_distribution | Content_position | `${Overflow_position} ${Content_position}` | Common;
+            items?: 'normal' | 'stretch' | Baseline_position | Self_position | `${Overflow_position} ${Self_position}` | Common;
+            self?: 'auto' | 'normal' | 'stretch' | Baseline_position | Self_position | `${Overflow_position} ${Self_position}` | Common;
+        };
+        all?: Common;
+        animation?: {
+            composition?: Single_animation_composition | Single_animation_composition[][] | Common;
+            delay?: $mol_style_unit_str<$mol_style_unit_time> | $mol_style_unit_str<$mol_style_unit_time>[][] | Common;
+            direction?: Single_animation_direction | Single_animation_direction[][] | Common;
+            duration?: $mol_style_unit_str<$mol_style_unit_time> | $mol_style_unit_str<$mol_style_unit_time>[][] | Common;
+            fillMode?: Single_animation_fill_mode | Single_animation_fill_mode[][] | Common;
+            iterationCount?: Single_animation_iteration_count | Single_animation_iteration_count[][] | Common;
+            name?: 'none' | string & {} | ('none' | string & {})[][] | Common;
+            playState?: Single_animation_play_state | Single_animation_play_state[][] | Common;
+            timingFunction?: Easing_function | Easing_function[][] | Common;
+        };
+        appearance?: 'none' | 'auto' | Compat_auto | Compat_special | Common;
+        aspectRatio?: 'auto' | number | `${number} / ${number}`;
+        backdropFilter: $mol_style_func<$mol_style_func_filter> | $mol_style_func<'url'> | ($mol_style_func<$mol_style_func_filter> | $mol_style_func<'url'>)[][] | 'none' | Common;
+        backfaceVisibility: 'visible' | 'hidden' | Common;
+        justifyContent?: 'start' | 'end' | 'flex-start' | 'flex-end' | 'left' | 'right' | 'space-between' | 'space-around' | 'space-evenly' | 'normal' | 'stretch' | 'center' | Common;
+        gap?: Length;
+        background?: 'none' | {
+            attachment?: 'scroll' | 'fixed' | 'local' | ('scroll' | 'fixed' | 'local')[][] | Common;
+            blendMode?: Mix_blend_mode | Mix_blend_mode[][] | Common;
+            clip?: Box | Box[][] | Common;
+            color?: $mol_style_properties_color | Common;
+            image?: readonly (readonly [$mol_style_func<$mol_style_func_image> | string & {}])[] | 'none' | Common;
+            repeat?: Repeat | [Repeat, Repeat] | Common;
+            position?: 'left' | 'right' | 'top' | 'bottom' | 'center' | Common;
+            size?: (BG_size | [BG_size] | [BG_size, BG_size])[];
+        };
+        box?: {
+            shadow?: readonly ([
+                ...[inset: 'inset'] | [],
+                x: Length,
+                y: Length,
+                blur: Length,
+                spread: Length,
+                color: $mol_style_properties_color
+            ] | {
+                inset?: boolean;
+                x: Length;
+                y: Length;
+                blur: Length;
+                spread: Length;
+                color: $mol_style_properties_color;
+            })[] | 'none' | Common;
+        };
+        font?: {
+            style?: 'normal' | 'italic' | Common;
+            weight?: 'normal' | 'bold' | 'lighter' | 'bolder' | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | Common;
+            size?: 'xx-small' | 'x-small' | 'small' | 'medium' | 'large' | 'x-large' | 'xx-large' | 'xxx-large' | 'smaller' | 'larger' | Length | Common;
+            family?: string & {} | 'serif' | 'sans-serif' | 'monospace' | 'cursive' | 'fantasy' | 'system-ui' | 'ui-serif' | 'ui-sans-serif' | 'ui-monospace' | 'ui-rounded' | 'emoji' | 'math' | 'fangsong' | Common;
+        };
+        color?: $mol_style_properties_color | Common;
+        display?: 'block' | 'inline' | 'run-in' | 'list-item' | 'none' | 'flow' | 'flow-root' | 'table' | 'flex' | 'grid' | 'contents' | 'table-row-group' | 'table-header-group' | 'table-footer-group' | 'table-column-group' | 'table-row' | 'table-cell' | 'table-column' | 'table-caption' | 'inline-block' | 'inline-table' | 'inline-flex' | 'inline-grid' | 'ruby' | 'ruby-base' | 'ruby-text' | 'ruby-base-container' | 'ruby-text-container' | Common;
+        overflow?: Overflow | {
+            x?: Overflow | Common;
+            y?: Overflow | Common;
+            anchor?: 'auto' | 'none' | Common;
+        };
+        contain?: 'none' | 'strict' | 'content' | ContainRule | readonly ContainRule[] | Common;
+        whiteSpace?: 'normal' | 'nowrap' | 'break-spaces' | 'pre' | 'pre-wrap' | 'pre-line' | Common;
+        webkitOverflowScrolling?: 'auto' | 'touch' | Common;
+        scrollbar?: {
+            color?: readonly [$mol_style_properties_color, $mol_style_properties_color] | 'auto' | Common;
+            width?: 'auto' | 'thin' | 'none' | Common;
+        };
+        scroll?: {
+            snap?: {
+                type: 'none' | Snap_axis | readonly [Snap_axis, 'mandatory' | 'proximity'] | Common;
+                stop: 'normal' | 'always' | Common;
+                align: Span_align | readonly [Span_align, Span_align] | Common;
+            };
+            padding?: Directions<Length | 'auto'>;
+        };
+        width?: Size;
+        minWidth?: Size;
+        maxWidth?: Size;
+        height?: Size;
+        minHeight?: Size;
+        maxHeight?: Size;
+        margin?: Directions<Length | 'auto'>;
+        padding?: Directions<Length | 'auto'>;
+        position?: 'static' | 'relative' | 'absolute' | 'sticky' | 'fixed' | Common;
+        top?: Length | 'auto' | Common;
+        right?: Length | 'auto' | Common;
+        bottom?: Length | 'auto' | Common;
+        left?: Length | 'auto' | Common;
+        border?: Directions<{
+            radius?: Length | [Length, Length];
+            style?: 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | Common;
+            color?: $mol_style_properties_color | Common;
+            width?: Length | Common;
+        }>;
+        flex?: 'none' | 'auto' | {
+            grow?: number | Common;
+            shrink?: number | Common;
+            basis?: Size | Common;
+            direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse' | Common;
+            wrap?: 'wrap' | 'nowrap' | 'wrap-reverse' | Common;
+        };
+        zIndex: number | Common;
+        opacity: number | Common;
+    }
+    export {};
+}
+
+declare namespace $ {
+    function $mol_style_prop<Keys extends string[]>(prefix: string, keys: Keys): Record<Keys[number], $mol_style_func<"var", unknown>>;
+}
+
+declare namespace $ {
+    const $mol_theme: Record<"image" | "line" | "text" | "back" | "hover" | "card" | "current" | "special" | "control" | "shade" | "focus" | "field" | "spirit", $mol_style_func<"var", unknown>>;
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    let $mol_gap: Record<"text" | "blur" | "block" | "space" | "round", $mol_style_func<"var", unknown>>;
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    function $mol_fail(error: any): never;
+}
+
+declare namespace $ {
+    function $mol_func_name(this: $, func: Function): string;
+    function $mol_func_name_from<Target extends Function>(target: Target, source: Function): Target;
+}
+
+declare namespace $ {
+    function $mol_dom_render_children(el: Element | DocumentFragment, childNodes: NodeList | Array<Node | string | null>): void;
+}
+
+declare namespace $ {
+    type $mol_type_partial_deep<Val> = Val extends object ? Val extends Function ? Val : {
+        [field in keyof Val]?: $mol_type_partial_deep<Val[field]> | undefined;
+    } : Val;
+}
+
+declare namespace $ {
+    let $mol_jsx_prefix: string;
+    let $mol_jsx_crumbs: string;
+    let $mol_jsx_booked: null | Set<string>;
+    let $mol_jsx_document: $mol_jsx.JSX.ElementClass['ownerDocument'];
+    const $mol_jsx_frag = "";
+    function $mol_jsx<Props extends $mol_jsx.JSX.IntrinsicAttributes, Children extends Array<Node | string>>(Elem: string | ((props: Props, ...children: Children) => Element), props: Props, ...childNodes: Children): Element | DocumentFragment;
+    namespace $mol_jsx.JSX {
+        interface Element extends HTMLElement {
+            class?: string;
+        }
+        interface ElementClass {
+            attributes: {};
+            ownerDocument: Pick<Document, 'getElementById' | 'createElementNS' | 'createDocumentFragment'>;
+            childNodes: Array<Node | string>;
+            valueOf(): Element;
+        }
+        type OrString<Dict> = {
+            [key in keyof Dict]: Dict[key] | string;
+        };
+        type IntrinsicElements = {
+            [key in keyof ElementTagNameMap]?: $.$mol_type_partial_deep<OrString<Element & IntrinsicAttributes & ElementTagNameMap[key]>>;
+        };
+        interface IntrinsicAttributes {
+            id?: string;
+            xmlns?: string;
+        }
+        interface ElementAttributesProperty {
+            attributes: {};
+        }
+        interface ElementChildrenAttribute {
+        }
+    }
+}
+
+declare namespace $ {
     const $mol_ambient_ref: unique symbol;
     type $mol_ambient_context = $;
     function $mol_ambient(this: $ | void, overrides: Partial<$>): $;
@@ -39,10 +384,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_fail(error: any): never;
-}
-
-declare namespace $ {
     function $mol_fail_hidden(error: any): never;
 }
 
@@ -50,11 +391,6 @@ declare namespace $ {
     type $mol_type_writable<T> = {
         -readonly [P in keyof T]: T[P];
     };
-}
-
-declare namespace $ {
-    function $mol_func_name(this: $, func: Function): string;
-    function $mol_func_name_from<Target extends Function>(target: Target, source: Function): Target;
 }
 
 declare namespace $ {
@@ -382,10 +718,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    var $mol_dom_context: typeof globalThis;
-}
-
-declare namespace $ {
+    function $mol_guard_defined<T>(value: T): value is NonNullable<T>;
 }
 
 declare namespace $ {
@@ -396,10 +729,6 @@ declare namespace $ {
 
 declare namespace $ {
     function $mol_maybe<Value>(value: Value | null | undefined): Value[];
-}
-
-declare namespace $ {
-    var $mol_dom: typeof globalThis;
 }
 
 declare namespace $ {
@@ -569,10 +898,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_dom_render_children(el: Element | DocumentFragment, childNodes: NodeList | Array<Node | string | null>): void;
-}
-
-declare namespace $ {
     function $mol_dom_render_fields(el: Element, fields: {
         [key: string]: any;
     }): void;
@@ -603,283 +928,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_style_attach(id: string, text: string): HTMLStyleElement | null;
-}
-
-declare namespace $ {
-    class $mol_promise<Result = void> extends Promise<Result> {
-        done: (value: Result | PromiseLike<Result>) => void;
-        fail: (reason?: any) => void;
-        constructor(executor?: (done: (value: Result | PromiseLike<Result>) => void, fail: (reason?: any) => void) => void);
-    }
-}
-
-declare namespace $ {
-    class $mol_promise_blocker<Result> extends $mol_promise<Result> {
-        static [Symbol.toStringTag]: string;
-    }
-}
-
-declare namespace $ {
-    class $mol_decor<Value> {
-        readonly value: Value;
-        constructor(value: Value);
-        prefix(): string;
-        valueOf(): Value;
-        postfix(): string;
-        toString(): string;
-    }
-}
-
-declare namespace $ {
-    type $mol_style_unit_length = '%' | 'px' | 'cm' | 'mm' | 'Q' | 'in' | 'pc' | 'pt' | 'cap' | 'ch' | 'em' | 'rem' | 'ex' | 'ic' | 'lh' | 'rlh' | 'vh' | 'vw' | 'vi' | 'vb' | 'vmin' | 'vmax';
-    type $mol_style_unit_angle = 'deg' | 'rad' | 'grad' | 'turn';
-    type $mol_style_unit_time = 's' | 'ms';
-    type $mol_style_unit_any = $mol_style_unit_length | $mol_style_unit_angle | $mol_style_unit_time;
-    type $mol_style_unit_str<Quanity extends $mol_style_unit_any = $mol_style_unit_any> = `${number}${Quanity}`;
-    class $mol_style_unit<Literal extends $mol_style_unit_any> extends $mol_decor<number> {
-        readonly literal: Literal;
-        constructor(value: number, literal: Literal);
-        postfix(): Literal;
-        static per(value: number): `${number}%`;
-        static px(value: number): `${number}px`;
-        static mm(value: number): `${number}mm`;
-        static cm(value: number): `${number}cm`;
-        static Q(value: number): `${number}Q`;
-        static in(value: number): `${number}in`;
-        static pc(value: number): `${number}pc`;
-        static pt(value: number): `${number}pt`;
-        static cap(value: number): `${number}cap`;
-        static ch(value: number): `${number}ch`;
-        static em(value: number): `${number}em`;
-        static rem(value: number): `${number}rem`;
-        static ex(value: number): `${number}ex`;
-        static ic(value: number): `${number}ic`;
-        static lh(value: number): `${number}lh`;
-        static rlh(value: number): `${number}rlh`;
-        static vh(value: number): `${number}vh`;
-        static vw(value: number): `${number}vw`;
-        static vi(value: number): `${number}vi`;
-        static vb(value: number): `${number}vb`;
-        static vmin(value: number): `${number}vmin`;
-        static vmax(value: number): `${number}vmax`;
-        static deg(value: number): `${number}deg`;
-        static rad(value: number): `${number}rad`;
-        static grad(value: number): `${number}grad`;
-        static turn(value: number): `${number}turn`;
-        static s(value: number): `${number}s`;
-        static ms(value: number): `${number}ms`;
-    }
-}
-
-declare namespace $ {
-    type $mol_style_func_name = 'calc' | 'hsla' | 'rgba' | 'var' | 'clamp' | 'scale' | 'cubic-bezier' | 'linear' | 'steps' | $mol_style_func_image | $mol_style_func_filter;
-    type $mol_style_func_image = 'url' | 'linear-gradient' | 'radial-gradient' | 'conic-gradient';
-    type $mol_style_func_filter = 'blur' | 'brightness' | 'contrast' | 'drop-shadow' | 'grayscale' | 'hue-rotate' | 'invert' | 'opacity' | 'sepia' | 'saturate';
-    class $mol_style_func<Name extends $mol_style_func_name, Value = unknown> extends $mol_decor<Value> {
-        readonly name: Name;
-        constructor(name: Name, value: Value);
-        prefix(): string;
-        postfix(): string;
-        static linear_gradient<Value>(value: Value): $mol_style_func<"linear-gradient", Value>;
-        static radial_gradient<Value>(value: Value): $mol_style_func<"radial-gradient", Value>;
-        static calc<Value>(value: Value): $mol_style_func<"calc", Value>;
-        static vary<Name extends string, Value extends string>(name: Name, defaultValue?: Value): $mol_style_func<"var", Name | (Name | Value)[]>;
-        static url<Href extends string>(href: Href): $mol_style_func<"url", string>;
-        static hsla(hue: number, saturation: number, lightness: number, alpha: number): $mol_style_func<"hsla", (number | `${number}%`)[]>;
-        static clamp(min: $mol_style_unit_str<any>, mid: $mol_style_unit_str<any>, max: $mol_style_unit_str<any>): $mol_style_func<"clamp", `${number}${any}`[]>;
-        static rgba(red: number, green: number, blue: number, alpha: number): $mol_style_func<"rgba", number[]>;
-        static scale(zoom: number): $mol_style_func<"scale", number[]>;
-        static linear(...breakpoints: Array<number | [number, number | $mol_style_unit_str<'%'>]>): $mol_style_func<"linear", string[]>;
-        static cubic_bezier(x1: number, y1: number, x2: number, y2: number): $mol_style_func<"cubic-bezier", number[]>;
-        static steps(value: number, step_position: 'jump-start' | 'jump-end' | 'jump-none' | 'jump-both' | 'start' | 'end'): $mol_style_func<"steps", (number | "end" | "start" | "jump-start" | "jump-end" | "jump-none" | "jump-both")[]>;
-        static blur(value?: $mol_style_unit_str<$mol_style_unit_length>): $mol_style_func<"blur", string>;
-        static brightness(value?: number | $mol_style_unit_str<'%'>): $mol_style_func<"brightness", string | number>;
-        static contrast(value?: number | $mol_style_unit_str<'%'>): $mol_style_func<"contrast", string | number>;
-        static drop_shadow(color: $mol_style_properties_color, x_offset: $mol_style_unit_str<$mol_style_unit_length>, y_offset: $mol_style_unit_str<$mol_style_unit_length>, blur_radius?: $mol_style_unit_str<$mol_style_unit_length>): $mol_style_func<"drop-shadow", (`${number}%` | `${number}px` | `${number}mm` | `${number}cm` | `${number}Q` | `${number}in` | `${number}pc` | `${number}pt` | `${number}cap` | `${number}ch` | `${number}em` | `${number}rem` | `${number}ex` | `${number}ic` | `${number}lh` | `${number}rlh` | `${number}vh` | `${number}vw` | `${number}vi` | `${number}vb` | `${number}vmin` | `${number}vmax` | $mol_style_properties_color)[]>;
-        static grayscale(value?: number | $mol_style_unit_str<'%'>): $mol_style_func<"grayscale", string | number>;
-        static hue_rotate(value?: 0 | $mol_style_unit_str<$mol_style_unit_angle>): $mol_style_func<"hue-rotate", string | 0>;
-        static invert(value?: number | $mol_style_unit_str<'%'>): $mol_style_func<"invert", string | number>;
-        static opacity(value?: number | $mol_style_unit_str<'%'>): $mol_style_func<"opacity", string | number>;
-        static sepia(value?: number | $mol_style_unit_str<'%'>): $mol_style_func<"sepia", string | number>;
-        static saturate(value?: number | $mol_style_unit_str<'%'>): $mol_style_func<"saturate", string | number>;
-    }
-}
-
-declare namespace $ {
-    type $mol_type_override<Base, Over> = Omit<Base, keyof Over> & Over;
-}
-
-declare namespace $ {
-    export type $mol_style_properties = Partial<$mol_type_override<CSSStyleDeclaration, Overrides>>;
-    type Common = 'inherit' | 'initial' | 'unset' | 'revert' | 'revert-layer' | 'none' | $mol_style_func<'var'>;
-    export type $mol_style_properties_color = 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'black' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'white' | 'whitesmoke' | 'yellow' | 'yellowgreen' | 'transparent' | 'currentcolor' | $mol_style_func<'hsla' | 'rgba' | 'var'> | `#${string}`;
-    type Length = 0 | `${number}${$mol_style_unit_length}` | $mol_style_func<'calc' | 'var' | 'clamp'>;
-    type Size = 'auto' | 'max-content' | 'min-content' | 'fit-content' | Length | Common;
-    type Directions<Value> = Value | readonly [Value, Value] | {
-        top?: Value;
-        right?: Value;
-        bottom?: Value;
-        left?: Value;
-    };
-    type Single_animation_composition = 'replace' | 'add' | 'accumulate';
-    type Single_animation_direction = 'normal' | 'reverse' | 'alternate' | 'alternate-reverse';
-    type Single_animation_fill_mode = 'none' | 'forwards' | 'backwards' | 'both';
-    type Single_animation_iteration_count = 'infinite' | number;
-    type Single_animation_play_state = 'running' | 'paused';
-    type Easing_function = Linear_easing_function | Cubic_bezier_easing_function | Step_easing_function;
-    type Linear_easing_function = 'linear' | $mol_style_func<'linear'>;
-    type Cubic_bezier_easing_function = 'ease' | 'ease-in' | 'ease-out' | 'ease-in-out' | $mol_style_func<'cubic-bezier'>;
-    type Step_easing_function = 'step-start' | 'step-end' | $mol_style_func<'steps'>;
-    type Compat_auto = 'searchfield' | 'textarea' | 'push-button' | 'slider-horizontal' | 'checkbox' | 'radio' | 'menulist' | 'listbox' | 'meter' | 'progress-bar' | 'button';
-    type Compat_special = 'textfield' | 'menulist-button';
-    type Mix_blend_mode = Blend_mode | 'plus-darker' | 'plus-lighter';
-    type Blend_mode = 'normal' | 'multiply' | 'screen' | 'overlay' | 'darken' | 'lighten' | 'color-dodge' | 'color-burn' | 'hard-light' | 'soft-light' | 'difference' | 'exclusion' | 'hue' | 'saturation' | 'color' | 'luminosity';
-    type Box = 'border-box' | 'padding-box' | 'content-box';
-    type Baseline_position = 'baseline' | `${'first' | 'last'} baseline`;
-    type Content_distribution = 'space-between' | 'space-around' | 'space-evenly' | 'stretch';
-    type Self_position = 'center' | 'start' | 'end' | 'self-start' | 'self-end' | 'flex-start' | 'flex-end';
-    type Content_position = 'center' | 'start' | 'end' | 'flex-start' | 'flex-end';
-    type Span_align = 'none' | 'start' | 'end' | 'center' | $mol_style_func<'var'>;
-    type Snap_axis = 'x' | 'y' | 'block' | 'inline' | 'both' | $mol_style_func<'var'>;
-    type Overflow = 'visible' | 'hidden' | 'clip' | 'scroll' | 'auto' | 'overlay' | Common;
-    type Overflow_position = 'unsafe' | 'safe';
-    type ContainRule = 'size' | 'layout' | 'style' | 'paint' | $mol_style_func<'var'>;
-    type Repeat = 'repeat-x' | 'repeat-y' | 'repeat' | 'space' | 'round' | 'no-repeat' | $mol_style_func<'var'>;
-    type BG_size = Length | 'auto' | 'contain' | 'cover';
-    interface Overrides {
-        accentColor?: $mol_style_properties_color | Common;
-        align?: {
-            content?: 'normal' | Baseline_position | Content_distribution | Content_position | `${Overflow_position} ${Content_position}` | Common;
-            items?: 'normal' | 'stretch' | Baseline_position | Self_position | `${Overflow_position} ${Self_position}` | Common;
-            self?: 'auto' | 'normal' | 'stretch' | Baseline_position | Self_position | `${Overflow_position} ${Self_position}` | Common;
-        };
-        justify?: {
-            content?: 'normal' | Baseline_position | Content_distribution | Content_position | `${Overflow_position} ${Content_position}` | Common;
-            items?: 'normal' | 'stretch' | Baseline_position | Self_position | `${Overflow_position} ${Self_position}` | Common;
-            self?: 'auto' | 'normal' | 'stretch' | Baseline_position | Self_position | `${Overflow_position} ${Self_position}` | Common;
-        };
-        all?: Common;
-        animation?: {
-            composition?: Single_animation_composition | Single_animation_composition[][] | Common;
-            delay?: $mol_style_unit_str<$mol_style_unit_time> | $mol_style_unit_str<$mol_style_unit_time>[][] | Common;
-            direction?: Single_animation_direction | Single_animation_direction[][] | Common;
-            duration?: $mol_style_unit_str<$mol_style_unit_time> | $mol_style_unit_str<$mol_style_unit_time>[][] | Common;
-            fillMode?: Single_animation_fill_mode | Single_animation_fill_mode[][] | Common;
-            iterationCount?: Single_animation_iteration_count | Single_animation_iteration_count[][] | Common;
-            name?: 'none' | string & {} | ('none' | string & {})[][] | Common;
-            playState?: Single_animation_play_state | Single_animation_play_state[][] | Common;
-            timingFunction?: Easing_function | Easing_function[][] | Common;
-        };
-        appearance?: 'none' | 'auto' | Compat_auto | Compat_special | Common;
-        aspectRatio?: 'auto' | number | `${number} / ${number}`;
-        backdropFilter: $mol_style_func<$mol_style_func_filter> | $mol_style_func<'url'> | ($mol_style_func<$mol_style_func_filter> | $mol_style_func<'url'>)[][] | 'none' | Common;
-        backfaceVisibility: 'visible' | 'hidden' | Common;
-        justifyContent?: 'start' | 'end' | 'flex-start' | 'flex-end' | 'left' | 'right' | 'space-between' | 'space-around' | 'space-evenly' | 'normal' | 'stretch' | 'center' | Common;
-        gap?: Length;
-        background?: 'none' | {
-            attachment?: 'scroll' | 'fixed' | 'local' | ('scroll' | 'fixed' | 'local')[][] | Common;
-            blendMode?: Mix_blend_mode | Mix_blend_mode[][] | Common;
-            clip?: Box | Box[][] | Common;
-            color?: $mol_style_properties_color | Common;
-            image?: readonly (readonly [$mol_style_func<$mol_style_func_image> | string & {}])[] | 'none' | Common;
-            repeat?: Repeat | [Repeat, Repeat] | Common;
-            position?: 'left' | 'right' | 'top' | 'bottom' | 'center' | Common;
-            size?: (BG_size | [BG_size] | [BG_size, BG_size])[];
-        };
-        box?: {
-            shadow?: readonly ([
-                ...[inset: 'inset'] | [],
-                x: Length,
-                y: Length,
-                blur: Length,
-                spread: Length,
-                color: $mol_style_properties_color
-            ] | {
-                inset?: boolean;
-                x: Length;
-                y: Length;
-                blur: Length;
-                spread: Length;
-                color: $mol_style_properties_color;
-            })[] | 'none' | Common;
-        };
-        font?: {
-            style?: 'normal' | 'italic' | Common;
-            weight?: 'normal' | 'bold' | 'lighter' | 'bolder' | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | Common;
-            size?: 'xx-small' | 'x-small' | 'small' | 'medium' | 'large' | 'x-large' | 'xx-large' | 'xxx-large' | 'smaller' | 'larger' | Length | Common;
-            family?: string & {} | 'serif' | 'sans-serif' | 'monospace' | 'cursive' | 'fantasy' | 'system-ui' | 'ui-serif' | 'ui-sans-serif' | 'ui-monospace' | 'ui-rounded' | 'emoji' | 'math' | 'fangsong' | Common;
-        };
-        color?: $mol_style_properties_color | Common;
-        display?: 'block' | 'inline' | 'run-in' | 'list-item' | 'none' | 'flow' | 'flow-root' | 'table' | 'flex' | 'grid' | 'contents' | 'table-row-group' | 'table-header-group' | 'table-footer-group' | 'table-column-group' | 'table-row' | 'table-cell' | 'table-column' | 'table-caption' | 'inline-block' | 'inline-table' | 'inline-flex' | 'inline-grid' | 'ruby' | 'ruby-base' | 'ruby-text' | 'ruby-base-container' | 'ruby-text-container' | Common;
-        overflow?: Overflow | {
-            x?: Overflow | Common;
-            y?: Overflow | Common;
-            anchor?: 'auto' | 'none' | Common;
-        };
-        contain?: 'none' | 'strict' | 'content' | ContainRule | readonly ContainRule[] | Common;
-        whiteSpace?: 'normal' | 'nowrap' | 'break-spaces' | 'pre' | 'pre-wrap' | 'pre-line' | Common;
-        webkitOverflowScrolling?: 'auto' | 'touch' | Common;
-        scrollbar?: {
-            color?: readonly [$mol_style_properties_color, $mol_style_properties_color] | 'auto' | Common;
-            width?: 'auto' | 'thin' | 'none' | Common;
-        };
-        scroll?: {
-            snap?: {
-                type: 'none' | Snap_axis | readonly [Snap_axis, 'mandatory' | 'proximity'] | Common;
-                stop: 'normal' | 'always' | Common;
-                align: Span_align | readonly [Span_align, Span_align] | Common;
-            };
-            padding?: Directions<Length | 'auto'>;
-        };
-        width?: Size;
-        minWidth?: Size;
-        maxWidth?: Size;
-        height?: Size;
-        minHeight?: Size;
-        maxHeight?: Size;
-        margin?: Directions<Length | 'auto'>;
-        padding?: Directions<Length | 'auto'>;
-        position?: 'static' | 'relative' | 'absolute' | 'sticky' | 'fixed' | Common;
-        top?: Length | 'auto' | Common;
-        right?: Length | 'auto' | Common;
-        bottom?: Length | 'auto' | Common;
-        left?: Length | 'auto' | Common;
-        border?: Directions<{
-            radius?: Length | [Length, Length];
-            style?: 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | Common;
-            color?: $mol_style_properties_color | Common;
-            width?: Length | Common;
-        }>;
-        flex?: 'none' | 'auto' | {
-            grow?: number | Common;
-            shrink?: number | Common;
-            basis?: Size | Common;
-            direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse' | Common;
-            wrap?: 'wrap' | 'nowrap' | 'wrap-reverse' | Common;
-        };
-        zIndex: number | Common;
-        opacity: number | Common;
-    }
-    export {};
-}
-
-declare namespace $ {
-    function $mol_style_prop<Keys extends string[]>(prefix: string, keys: Keys): Record<Keys[number], $mol_style_func<"var", unknown>>;
-}
-
-declare namespace $ {
-    const $mol_theme: Record<"image" | "line" | "text" | "field" | "focus" | "back" | "hover" | "card" | "current" | "special" | "control" | "shade" | "spirit", $mol_style_func<"var", unknown>>;
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-    let $mol_gap: Record<"text" | "blur" | "block" | "space" | "round", $mol_style_func<"var", unknown>>;
-}
-
-declare namespace $ {
 }
 
 declare namespace $ {
@@ -889,9 +937,10 @@ declare namespace $ {
     function $mol_view_state_key(suffix: string): string;
     class $mol_view extends $mol_object {
         static Root<This extends typeof $mol_view>(this: This, id: number): InstanceType<This>;
-        autorun(): void;
-        static autobind(): void;
+        static roots(): $mol_view[];
+        static auto(): void;
         title(): string;
+        hint(): string;
         focused(next?: boolean): boolean;
         state_key(suffix?: string): string;
         dom_name(): string;
@@ -954,9 +1003,6 @@ declare namespace $ {
     type $mol_view_all = $mol_type_pick<$, typeof $mol_view>;
 }
 
-declare namespace $ {
-}
-
 interface Window {
     cordova: any;
 }
@@ -964,7 +1010,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    let $mol_layer: Record<"focus" | "float" | "hover" | "speck" | "popup", $mol_style_func<"var", unknown>>;
+    let $mol_layer: Record<"float" | "hover" | "focus" | "speck" | "popup", $mol_style_func<"var", unknown>>;
 }
 
 declare namespace $ {
