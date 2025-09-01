@@ -112,7 +112,7 @@ namespace $ {
 			const trimed = await this.decrypt( closed, salt )
 			if( trimed.byteLength !== closed.byteLength - 1 ) throw new Error( 'Length of opened buffer should be ' + ( closed.byteLength - 1 ) )
 			
-			const opened = new Uint8Array( 16 )
+			const opened = new Uint8Array( closed.byteLength )
 			opened[0] = 0xFF
 			opened.set( trimed, 1 )
 			
