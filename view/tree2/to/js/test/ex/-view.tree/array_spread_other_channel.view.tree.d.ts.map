@@ -1,9 +1,0 @@
-{
-	"version": 3,
-	"sources": [
-		"mol/view/tree2/to/js/test/ex/array_spread_other_channel.view.tree"
-	],
-	"mappings": "AAAA;AAAA;AAAA,AAAA,kEAAqD,oBAArD;AACC,AAAA,UAAI;AAEJ,AAAA,UAAI;AAHL;AAAA;AAAA;",
-	"file": "array_spread_other_channel.view.tree.d.ts",
-	"sourceRoot": "../../../../../../../.."
-}

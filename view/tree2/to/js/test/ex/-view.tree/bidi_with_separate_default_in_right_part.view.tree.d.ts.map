@@ -1,9 +1,0 @@
-{
-	"version": 3,
-	"sources": [
-		"mol/view/tree2/to/js/test/ex/bidi_with_separate_default_in_right_part.view.tree"
-	],
-	"mappings": "AAAA;AAAA;AAAA,AAAA,wFAA2E,oBAA3E;AACC,AAAA,YAAG,OAAH,IAAG;AACH,AAAA,YAAO,YAFR,0EAEQ,OAAP,IAAO,YAFR,0EAEQ;AAFR;AAAA;AAAA;",
-	"file": "bidi_with_separate_default_in_right_part.view.tree.d.ts",
-	"sourceRoot": "../../../../../../../.."
-}

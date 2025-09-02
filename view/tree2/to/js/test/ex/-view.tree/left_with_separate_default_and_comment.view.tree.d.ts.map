@@ -1,9 +1,0 @@
-{
-	"version": 3,
-	"sources": [
-		"mol/view/tree2/to/js/test/ex/left_with_separate_default_and_comment.view.tree"
-	],
-	"mappings": "AAAA;AAAA;AAAA,AAAA,sFAAyE,oBAAzE;AACC,AAAA,WAAK;AADN;AAAA;AAKE;AAAA,AAAK;AAAA;AAAL,cADG,wEACH;AAAA;AAHF,sFAAyE,oBAAzE;AACC,AAAA,cAAQ;AACR,AAAA,UAAI;AAFL;AAFA;AAAA;",
-	"file": "left_with_separate_default_and_comment.view.tree.d.ts",
-	"sourceRoot": "../../../../../../../.."
-}

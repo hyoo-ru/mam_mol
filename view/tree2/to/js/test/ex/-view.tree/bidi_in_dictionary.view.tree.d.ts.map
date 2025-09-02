@@ -1,9 +1,0 @@
-{
-	"version": 3,
-	"sources": [
-		"mol/view/tree2/to/js/test/ex/bidi_in_dictionary.view.tree"
-	],
-	"mappings": "AAAA;AAAA;AAAA,AAAA,kEAAqD,oBAArD;AAEa,AAAA,cAAK,GAAL,IAAK;AADjB,AAAA,YAAM;AAAA,AACL,iBAAW,YAFb,oDAEa,SAAX,IAAW,YAFb,oDAEa,SAAX;AADK;AADP;AAAA;AAAA;",
-	"file": "bidi_in_dictionary.view.tree.d.ts",
-	"sourceRoot": "../../../../../../../.."
-}

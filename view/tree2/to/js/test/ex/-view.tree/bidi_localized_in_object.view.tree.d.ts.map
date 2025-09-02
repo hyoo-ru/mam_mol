@@ -1,9 +1,0 @@
-{
-	"version": 3,
-	"sources": [
-		"mol/view/tree2/to/js/test/ex/bidi_localized_in_object.view.tree"
-	],
-	"mappings": "AAAA;AAAA;AAAA,AAAA,wEAA2D,oBAA3D;AAEW,AAAA,gBAAU,MAAV,IAAU;AADpB,AAAA,UAAI;AAAA,AACH,eAAS,YAFX,0DAEW,WAAT,IAAS,YAFX,0DAEW,WAAT;AADG;AADL;AAAA;AAAA;",
-	"file": "bidi_localized_in_object.view.tree.d.ts",
-	"sourceRoot": "../../../../../../../.."
-}

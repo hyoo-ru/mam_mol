@@ -1,9 +1,0 @@
-{
-	"version": 3,
-	"sources": [
-		"mol/view/tree2/to/js/test/ex/structural_quoted_props.view.tree"
-	],
-	"mappings": "AAAA;AAAA;AAAA,AAAA,uEAA0D,oBAA1D;AACC,AAAA,UAAI;AAAA,AACH,SAAG,MAAH;AACA,UAAI,mBAAJ;AAFG;AADL;AAAA;AAAA;",
-	"file": "structural_quoted_props.view.tree.d.ts",
-	"sourceRoot": "../../../../../../../.."
-}

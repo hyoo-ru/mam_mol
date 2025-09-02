@@ -1,9 +1,0 @@
-{
-	"version": 3,
-	"sources": [
-		"mol/view/tree2/to/js/test/ex/simple_mutable_and_read_only.view.tree"
-	],
-	"mappings": "AAAA;AAAA;AAAA,AAAA,4EAA+D,oBAA/D;AACC,AAAA,eAAS;AACT,AAAA,kBAAS,GAAT,IAAS;AAFV;AAAA;AAAA;",
-	"file": "simple_mutable_and_read_only.view.tree.d.ts",
-	"sourceRoot": "../../../../../../../.."
-}

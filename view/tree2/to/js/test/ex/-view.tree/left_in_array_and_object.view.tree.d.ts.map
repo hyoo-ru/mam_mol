@@ -1,9 +1,0 @@
-{
-	"version": 3,
-	"sources": [
-		"mol/view/tree2/to/js/test/ex/left_in_array_and_object.view.tree"
-	],
-	"mappings": "AAAA;AAAA;AAAA,AAAA,wEAA2D,oBAA3D;AACC,AAAA,WAAK;AADN;AAAA;AAOG;AAAA,AAAQ,cALX,0DAKW;AAAA;AAAR,cADM,0DACN;AAAA;AALH,wEAA2D,oBAA3D;AAKW,AAAA,cAAQ;AADd,AAAA,UAAI;AAHR,AAAA,UAAI;AAAA,AACH,WAAQ,YAFV,0DAEU,SAAR;AADG;AAEJ,AAAA,UAAI;AAHL;AAFA;AAAA;",
-	"file": "left_in_array_and_object.view.tree.d.ts",
-	"sourceRoot": "../../../../../../../.."
-}

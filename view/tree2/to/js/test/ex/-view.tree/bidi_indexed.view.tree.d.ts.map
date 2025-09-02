@@ -1,9 +1,0 @@
-{
-	"version": 3,
-	"sources": [
-		"mol/view/tree2/to/js/test/ex/bidi_indexed.view.tree"
-	],
-	"mappings": "AAAA;AAAA;AAAA,AAAA,4DAA+C,oBAA/C;AACe,AAAA,yBAAQ,GAAR,IAAQ;AAAtB,AAAA,2BAAc,YADf,8CACe,WAAd,IAAc,YADf,8CACe;AADf;AAAA;AAAA;",
-	"file": "bidi_indexed.view.tree.d.ts",
-	"sourceRoot": "../../../../../../../.."
-}

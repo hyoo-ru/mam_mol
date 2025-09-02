@@ -1,9 +1,0 @@
-{
-	"version": 3,
-	"sources": [
-		"mol/view/tree2/to/js/test/ex/bidi_chaining.view.tree"
-	],
-	"mappings": "AAAA;AAAA;AAAA,AAAA,6DAAgD,oBAAhD;AACe,AAAA,YAAG,GAAH,IAAG;AAAV,AAAA,YAAO,YADf,+CACe,OAAP,IAAO,YADf,+CACe;AAAd,AAAA,YAAO,YADR,+CACQ,OAAP,IAAO,YADR,+CACQ;AADR;AAAA;AAAA;",
-	"file": "bidi_chaining.view.tree.d.ts",
-	"sourceRoot": "../../../../../../../.."
-}

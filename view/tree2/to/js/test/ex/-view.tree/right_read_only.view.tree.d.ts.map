@@ -1,9 +1,0 @@
-{
-	"version": 3,
-	"sources": [
-		"mol/view/tree2/to/js/test/ex/right_read_only.view.tree"
-	],
-	"mappings": "AAAA;AAAA;AAAA,AAAA,+DAAkD,oBAAlD;AACC,AAAA,qBAAI,GAAJ,IAAI;AADL;AAAA;AAIS;AAAA,AAAA,cAFT,iDAES;AAAA;AAAP,cADD,YADD,iDACC,SACC;AAAO;AAAA;AAAA,AAAA,cAFT,iDAES;AAAA;AAAP,cADD,YADD,iDACC,SACC;AAAO;AAFT,+DAAkD,oBAAlD;AAES,AAAA,qBAAP,YADD,YADD,iDACC,SACC,OAAO,IAAP,YADD,YADD,iDACC,SACC;AADD,AAAA,UAAI;AADL;AAFA;AAAA;",
-	"file": "right_read_only.view.tree.d.ts",
-	"sourceRoot": "../../../../../../../.."
-}

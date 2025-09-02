@@ -1,9 +1,0 @@
-{
-	"version": 3,
-	"sources": [
-		"mol/view/tree2/to/js/test/ex/simple_string.view.tree"
-	],
-	"mappings": "AAAA;AAAA;AAAA,AAAA,6DAAgD,oBAAhD;AACC,AAAA,gBAAW;AAGX,AAAA,gBAAa;AAJd;AAAA;AAAA;",
-	"file": "simple_string.view.tree.d.ts",
-	"sourceRoot": "../../../../../../../.."
-}

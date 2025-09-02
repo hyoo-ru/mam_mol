@@ -1,9 +1,0 @@
-{
-	"version": 3,
-	"sources": [
-		"mol/view/tree2/to/js/test/ex/array_with_types.view.tree"
-	],
-	"mappings": "AAAA;AAAA;AAAA,AAAA,gEAAmD,oBAAnD;AACC,AAAA,UAAI;AADL;AAAA;AAAA;",
-	"file": "array_with_types.view.tree.d.ts",
-	"sourceRoot": "../../../../../../../.."
-}

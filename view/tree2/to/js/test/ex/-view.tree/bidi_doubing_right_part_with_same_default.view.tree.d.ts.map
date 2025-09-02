@@ -1,9 +1,0 @@
-{
-	"version": 3,
-	"sources": [
-		"mol/view/tree2/to/js/test/ex/bidi_doubing_right_part_with_same_default.view.tree"
-	],
-	"mappings": "AAAA;AAAA;AAAA,AAAA,yFAA4E,oBAA5E;AAEQ,AAAA,YAAG,OAAH,IAAG;AADV,AAAA,YAAO,YADR,2EACQ,OAAP,IAAO,YADR,2EACQ;AACP,AAAA,YAAO,YAFR,2EAEQ,OAAP,IAAO,YAFR,2EAEQ;AAFR;AAAA;AAAA;",
-	"file": "bidi_doubing_right_part_with_same_default.view.tree.d.ts",
-	"sourceRoot": "../../../../../../../.."
-}

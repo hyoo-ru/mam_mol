@@ -1,9 +1,0 @@
-{
-	"version": 3,
-	"sources": [
-		"mol/view/tree2/to/js/test/ex/structural_complex_key.view.tree"
-	],
-	"mappings": "AAAA;AAAA;AAAA,AAAA,sEAAyD,oBAAzD;AACC,AAAA,iBAAW;AAAA,AACT,mBACC,MADD;AAEA,WACC,MADD;AAED,WACE,MADF;AALU;AADZ;AAAA;AAAA;",
-	"file": "structural_complex_key.view.tree.d.ts",
-	"sourceRoot": "../../../../../../../.."
-}

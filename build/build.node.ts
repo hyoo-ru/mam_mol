@@ -636,7 +636,10 @@ namespace $ {
 			})
 		}
 		
+		@ $mol_mem_key
 		modEnsure( path : string ) { return this.ensurer().ensure(path) }
+		
+		@ $mol_mem_key
 		modMeta( path : string ) { return this.ensurer().meta(path) }
 
 		@ $mol_mem_key

@@ -1,9 +1,0 @@
-{
-	"version": 3,
-	"sources": [
-		"mol/view/tree2/to/js/test/ex/left_read_only.view.tree"
-	],
-	"mappings": "AAAA;AAAA;AAAA,AAAA,8DAAiD,oBAAjD;AACS,AAAA,eAAM,MAAN,IAAM;AAAd,AAAA,WAAQ,YADT,gDACS;AADT;AAAA;AAAA;",
-	"file": "left_read_only.view.tree.d.ts",
-	"sourceRoot": "../../../../../../../.."
-}

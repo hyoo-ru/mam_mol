@@ -1,9 +1,0 @@
-{
-	"version": 3,
-	"sources": [
-		"mol/view/tree2/to/js/test/ex/array_of_array_or_object.view.tree"
-	],
-	"mappings": "AAAA;AAAA;AAAA,AAAA,wEAA2D,oBAA3D;AACC,AAAA,cAAQ;AADT;AAAA;AAAA;",
-	"file": "array_of_array_or_object.view.tree.d.ts",
-	"sourceRoot": "../../../../../../../.."
-}

@@ -1,9 +1,0 @@
-{
-	"version": 3,
-	"sources": [
-		"mol/view/tree2/to/js/test/ex/array_boolean.view.tree"
-	],
-	"mappings": "AAAA;AAAA;AAAA,AACK;AAAA,AACH;AAAA;AADG;AAAA;AAAA;AAAA,AAEH;AAAA;AAFG;AAAA;AADL,6DAAgD,oBAAhD;AACC,AAAA,UAAI;AADL;AAAA;AAAA;",
-	"file": "array_boolean.view.tree.d.ts",
-	"sourceRoot": "../../../../../../../.."
-}

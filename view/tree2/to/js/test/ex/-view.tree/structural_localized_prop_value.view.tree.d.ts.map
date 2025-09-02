@@ -1,9 +1,0 @@
-{
-	"version": 3,
-	"sources": [
-		"mol/view/tree2/to/js/test/ex/structural_localized_prop_value.view.tree"
-	],
-	"mappings": "AAAA;AAAA;AAAA,AAAA,+EAAkE,oBAAlE;AACC,AAAA,UAAI;AAAA,AACH,UAAO,MAAP;AACA,UAAI;AAAA,AACH,YAAQ,MAAR;AADG,GAAJ;AAFG;AADL;AAAA;AAAA;",
-	"file": "structural_localized_prop_value.view.tree.d.ts",
-	"sourceRoot": "../../../../../../../.."
-}

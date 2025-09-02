@@ -1,9 +1,0 @@
-{
-	"version": 3,
-	"sources": [
-		"mol/view/tree2/to/js/test/ex/right_indexed.view.tree"
-	],
-	"mappings": "AAAA;AAAA;AAAA,AAAA,6DAAgD,oBAAhD;AACC,AAAA,YAAG;AAAA,AACF,WAAK,MAAL;AADE,GAAH,IAAG;AAAA,AACF,WAAK,MAAL;AADE;AADJ;AAAA;AAKO;AAAA,AAAA,cAFP,+CAEO;AAAA;AADN,cADD,+CACC;AACM;AAFP,6DAAgD,oBAAhD;AAEO,AAAA,eAAL,YADD,YADD,+CACC,SACC;AADD,AAAA,iBAAK;AADN;AAHA;AAAA;",
-	"file": "right_indexed.view.tree.d.ts",
-	"sourceRoot": "../../../../../../../.."
-}

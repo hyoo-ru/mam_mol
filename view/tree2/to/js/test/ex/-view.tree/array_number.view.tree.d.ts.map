@@ -1,9 +1,0 @@
-{
-	"version": 3,
-	"sources": [
-		"mol/view/tree2/to/js/test/ex/array_number.view.tree"
-	],
-	"mappings": "AAAA;AAAA;AAAA,AAAA,4DAA+C,oBAA/C;AACC,AAAA,UAAI;AADL;AAAA;AAAA;",
-	"file": "array_number.view.tree.d.ts",
-	"sourceRoot": "../../../../../../../.."
-}
