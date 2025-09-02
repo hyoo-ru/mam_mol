@@ -6862,7 +6862,9 @@ var $;
                 };
                 const tree = this.$.$mol_tree2_from_string(source.text(), source.path());
                 tree.select('deploy').kids.forEach(deploy => {
-                    addFilesRecursive(root.resolve(deploy.text().replace(/^\//, '')));
+                    const mod = root.resolve(deploy.text().replace(/^\//, ''));
+                    this.modEnsure(mod.path());
+                    addFilesRecursive(mod);
                 });
             }
             return targets;
