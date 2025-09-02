@@ -46,8 +46,8 @@
 	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 	font-size: 1rem;
 	line-height: 1.5rem;
-	background: var(--mol_theme_back);
-	color: var(--mol_theme_text);
+	/* background: var(--mol_theme_back);
+	color: var(--mol_theme_text); */
 	contain: unset; /** Fixes bg ignoring when applied to body on Chrome */
 	tab-size: 4;
 	overscroll-behavior: contain; /** Disable navigation gestures **/
