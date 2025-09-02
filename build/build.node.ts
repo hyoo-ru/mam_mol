@@ -636,7 +636,10 @@ namespace $ {
 			})
 		}
 		
+		@ $mol_mem_key
 		modEnsure( path : string ) { return this.ensurer().ensure(path) }
+		
+		@ $mol_mem_key
 		modMeta( path : string ) { return this.ensurer().meta(path) }
 
 		@ $mol_mem_key
@@ -1317,7 +1320,9 @@ namespace $ {
 				const tree = this.$.$mol_tree2_from_string( source.text() , source.path() )
 
 				tree.select( 'deploy' ).kids.forEach( deploy => {
-					addFilesRecursive(root.resolve(deploy.text().replace( /^\// , '' )))
+					const mod = root.resolve( deploy.text().replace( /^\// , '' ) )
+					this.modEnsure( mod.path() )
+					addFilesRecursive( mod )
 				} )
 				
 			}

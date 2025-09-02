@@ -1,3 +1,4 @@
+/** @jsx $mol_jsx */
 namespace $ {
 
 	export type $mol_view_content = $mol_view|Node|string|number|boolean|null
@@ -25,36 +26,60 @@ namespace $ {
 		static Root< This extends typeof $mol_view >( this : This , id: number ) {
 			return new this as InstanceType< This >
 		}
+		
+		@ $mol_mem
+		static roots() {
+			
+			return [ ... $mol_dom.document.querySelectorAll( '[mol_view_root]:not([mol_view_root=""])' ) ].map( ( node, index ) => {
+
+				const name = node.getAttribute( 'mol_view_root' )!
+				
+				const View = (this.$ as any)[ name ] as typeof $mol_view
+				if( !View ) {
+					$mol_fail_log( new Error( `Autobind unknown view class`, { cause: { name } } ) )
+					return null
+				}
+				
+				const view = View.Root( index )
+				view.dom_node( node )
+				return view
+				
+			} ).filter( $mol_guard_defined )
+			
+		}
 
 		@ $mol_mem
-		autorun() {
+		static auto() {
+			
+			const roots = this.roots()
+			if( !roots.length ) return
+			
+			for( const root of roots ) {
+				try {
+					root.dom_tree()
+				} catch( error ) {
+					$mol_fail_log( error )
+				}
+			}
+			
 			try {
-				this.dom_tree()
-				document.title = this.title()
+				document.title = roots[0].title()
 			} catch( error ) {
 				$mol_fail_log( error )
 			}
-		}
-		
-		@ $mol_mem
-		static autobind() {
 			
-			const nodes = $mol_dom_context.document.querySelectorAll( '[mol_view_root]:not([mol_view_root=""])' )
-			
-			for( let i = nodes.length - 1 ; i >= 0 ; --i ) {
-
-				const name = nodes.item( i ).getAttribute( 'mol_view_root' )!
+			descr: try {
 				
-				const View = ($ as any)[ name ] as typeof $mol_view
-				if( !View ) {
-					console.error( `Can not attach view. Class not found: ${ name }` )
-					continue
-				}
+				const descr = roots[0].hint()
+				if( !descr ) break descr
 				
-				const view = View.Root( i )
-				view.dom_node( nodes.item( i ) )
-				view.autorun()
+				const head = $mol_dom.document.head
+				let node = head.querySelector( 'meta[name="description"]' ) as HTMLMetaElement | null
+				if( node ) node.content = descr
+				else head.append( <meta name="description" content={ descr } /> )
 				
+			} catch( error ) {
+				$mol_fail_log( error )
 			}
 			
 		}
@@ -62,6 +87,10 @@ namespace $ {
 		@ $mol_mem
 		title() {
 			return this.toString().match( /.*\.(\w+)/ )?.[1] ?? this.toString()
+		}
+		
+		hint() {
+			return ''
 		}
 		
 		@ $mol_mem

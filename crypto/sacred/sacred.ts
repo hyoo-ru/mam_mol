@@ -99,19 +99,24 @@ namespace $ {
 			).catch( $mol_crypto_restack ) )
 		}
 		
-		/** Encrypts Sacred. 16 bytes */
-		async close( sacred: DataView< ArrayBuffer >, salt: BufferSource ) {
-			if( sacred.getUint8(0) !== 0xFF ) throw new Error( 'Closable buffer should starts with 0xFF' )
-			const buf = new Uint8Array( sacred.buffer, sacred.byteOffset + 1, sacred.byteLength - 1 )
-			return this.encrypt( buf, salt )
+		/** Encrypts 0xFF prefixed buffer. 16 bytes */
+		async close( opened: DataView< ArrayBuffer >, salt: BufferSource ) {
+			if( opened.getUint8(0) !== 0xFF ) throw new Error( 'Closable buffer should starts with 0xFF' )
+			const trimed = new Uint8Array( opened.buffer, opened.byteOffset + 1, opened.byteLength - 1 )
+			return this.encrypt( trimed, salt )
 		}
 		
-		/** Decrypts Sacred. 16 bytes */
-		async open( buf: Uint8Array< ArrayBuffer >, salt: BufferSource ) {
-			const buf2 = new Uint8Array( 16 )
-			buf2[0] = 0xFF
-			buf2.set( await this.decrypt( buf, salt ), 1 )
-			return buf2
+		/** Decrypts 0xFF prefixed buffer. 16 bytes */
+		async open( closed: Uint8Array< ArrayBuffer >, salt: BufferSource ) {
+			
+			const trimed = await this.decrypt( closed, salt )
+			if( trimed.byteLength !== closed.byteLength - 1 ) throw new Error( 'Length of opened buffer should be ' + ( closed.byteLength - 1 ) )
+			
+			const opened = new Uint8Array( closed.byteLength )
+			opened[0] = 0xFF
+			opened.set( trimed, 1 )
+			
+			return opened
 		}
 		
 	}
