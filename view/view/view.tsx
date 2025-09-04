@@ -297,7 +297,7 @@ namespace $ {
 		}
 		
 		auto() {
-			return []
+			return [] as any
 		}
 
 		@ $mol_mem
