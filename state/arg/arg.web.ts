@@ -8,25 +8,25 @@ namespace $ {
 			
 			if( next === undefined ) {
 				
-				next = $mol_dom_context.location.href
+				next = $mol_dom.location.href
 				
 			} else if( !/^about:srcdoc/.test( next ) ) {
 				
 				new $mol_after_frame( ()=> {
 					
 					const next = this.href()
-					const prev = $mol_dom_context.location.href
+					const prev = $mol_dom.location.href
 					if( next === prev ) return
 					
-					const history = $mol_dom_context.history
-					history.replaceState( history.state, $mol_dom_context.document.title, next )
+					const history = $mol_dom.history
+					history.replaceState( history.state, $mol_dom.document.title, next )
 					
 				} )
 				
 			}
 			
-			if( $mol_dom_context.parent !== $mol_dom_context.self ) {
-				$mol_dom_context.parent.postMessage( [ 'hashchange', next ], '*' )
+			if( $mol_dom.parent && ( $mol_dom.parent !== $mol_dom.self ) ) {
+				$mol_dom.parent.postMessage( [ 'hashchange', next ], '*' )
 			}
 			
 			return next
@@ -39,7 +39,7 @@ namespace $ {
 		
 		@ $mol_mem
 		static href_absolute(): string {
-			return new URL( this.href(), $mol_dom_context.location.href ).toString()
+			return new URL( this.href(), $mol_dom.location.href ).toString()
 		}
 		
 		@ $mol_mem
@@ -115,7 +115,7 @@ namespace $ {
 
 		@ $mol_action
 		static go( next : { [ key : string ] : string | null } ) {
-			$mol_dom_context.location.href = this.link( next )
+			$mol_dom.location.href = this.link( next )
 		}
 		
 		static encode( str : string ) {
@@ -146,7 +146,7 @@ namespace $ {
 	}
 
 	function $mol_state_arg_change( ) {
-		$mol_state_arg.href( $mol_dom_context.location.href )
+		$mol_state_arg.href( $mol_dom.location.href )
 	}
 
 	self.addEventListener( 'hashchange' , $mol_state_arg_change )
