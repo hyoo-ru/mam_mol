@@ -67,6 +67,7 @@ namespace $ {
 					
 					const headers = new Headers( response.headers )
 					headers.set( "$mol_offline", "" )
+					headers.set( "Origin-Agent-Cluster", "?1" ) // prevent thread sharing
 					// headers.set( "Cross-Origin-Embedder-Policy", "credentialless" )
 					// headers.set( "Cross-Origin-Resource-Policy", "cross-origin" )
 					// headers.set( "Cross-Origin-Opener-Policy", "same-origin" )
