@@ -74,7 +74,7 @@
 	--mol_theme_back: oklch( 92% .01 var(--mol_theme_hue) );
 	--mol_theme_card: oklch( 99% .01 var(--mol_theme_hue) / .5 );
 	--mol_theme_field: oklch( 100% 0 var(--mol_theme_hue) / .5 );
-	--mol_theme_hover: oklch( 70% 0 var(--mol_theme_hue) / .1 );
+	--mol_theme_hover: oklch( 50% 0 var(--mol_theme_hue) / .1 );
 	
 	--mol_theme_text: oklch( 20% 0 var(--mol_theme_hue) );
 	--mol_theme_shade: oklch( 60% 0 var(--mol_theme_hue) );
