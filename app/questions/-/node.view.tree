@@ -325,6 +325,7 @@ $mol_image $mol_view
 	attr *any
 		^
 		src <= uri \
+		hint <= hint
 		alt <= title
 		loading <= loading \lazy
 		decoding <= decoding \async
