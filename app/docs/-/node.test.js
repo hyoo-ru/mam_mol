@@ -10191,7 +10191,7 @@ var $;
 			return {
 				...(super.attr()), 
 				"src": (this.uri()), 
-				"hint": (this.hint()), 
+				"title": (this.hint()), 
 				"alt": (this.title()), 
 				"loading": (this.loading()), 
 				"decoding": (this.decoding()), 
