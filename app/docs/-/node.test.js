@@ -17049,7 +17049,7 @@ var $;
             simple() {
                 const value = this.value();
                 if (typeof value === 'number')
-                    return value.toLocaleString('en').replaceAll(',', '_');
+                    return value.toLocaleString('en', { maximumSignificantDigits: 21 }).replaceAll(',', '_');
                 if (typeof value === 'bigint')
                     return value.toLocaleString('en').replaceAll(',', '_');
                 return value ? String(value) : JSON.stringify(value) ?? 'undefined';
