@@ -3707,6 +3707,12 @@ var $;
                         rules.push(`${key} ${query} {\n`);
                     }
                 }
+                else if (key === '@starting-style') {
+                    const styles = config[key];
+                    rules.push('}\n');
+                    make_class(prefix, path, styles);
+                    rules.push(`${key} {\n`);
+                }
                 else if (key[0] === '[' && key[key.length - 1] === ']') {
                     const attr = key.slice(1, -1);
                     const vals = config[key];
