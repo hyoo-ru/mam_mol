@@ -106,20 +106,18 @@ namespace $.$$ {
 			return Object.keys(this.state()).some(field => this.value_changed(field))
 		}
 
-		override submit_allowed() {
-			return this.changed() && super.submit_allowed()
-		}
-
 		override reset(next?: unknown) {
 			this.state(null)
 		}
 
 		@ $mol_mem
 		override result( next = '' ) {
-			this.changed()
+			this.state()
+
 			return next
 		}
 		
+		@ $mol_mem
 		override buttons() {
 			return [
 				this.Submit(),
@@ -130,7 +128,7 @@ namespace $.$$ {
 
 		@ $mol_action
 		override submit( next? : Event ) {
-			if (! this.submit_allowed() && this.changed() ) {
+			if (! this.submit_allowed() ) {
 				this.result(this.message_invalid())
 				return
 			}
