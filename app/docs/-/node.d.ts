@@ -15153,7 +15153,6 @@ declare namespace $.$$ {
         value_changed(field: string): boolean;
         state(next?: Record<string, Value | null> | null): Record<string, Value | null>;
         changed(): boolean;
-        submit_allowed(): boolean;
         reset(next?: unknown): void;
         result(next?: string): string;
         buttons(): ($mol_button_minor | $.$mol_status)[];

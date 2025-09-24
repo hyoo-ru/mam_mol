@@ -30738,14 +30738,11 @@ var $;
             changed() {
                 return Object.keys(this.state()).some(field => this.value_changed(field));
             }
-            submit_allowed() {
-                return this.changed() && super.submit_allowed();
-            }
             reset(next) {
                 this.state(null);
             }
             result(next = '') {
-                this.changed();
+                this.state();
                 return next;
             }
             buttons() {
@@ -30756,7 +30753,7 @@ var $;
                 ];
             }
             submit(next) {
-                if (!this.submit_allowed() && this.changed()) {
+                if (!this.submit_allowed()) {
                     this.result(this.message_invalid());
                     return;
                 }
@@ -30803,6 +30800,9 @@ var $;
         __decorate([
             $mol_mem
         ], $mol_form_draft.prototype, "result", null);
+        __decorate([
+            $mol_mem
+        ], $mol_form_draft.prototype, "buttons", null);
         __decorate([
             $mol_action
         ], $mol_form_draft.prototype, "submit", null);
