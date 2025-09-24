@@ -9,7 +9,6 @@ $mol_form_draft_demo_article $mol_object2
 $mol_form_draft_demo $mol_example
 	title \Article draft form demo
 	-
-	message_done \Done
 	bid_required* \Required
 	bid_swearing* \No swearing
 	bid_short* \> 5 letters
@@ -87,17 +86,6 @@ $mol_form_draft_demo $mol_example
 					<= Type_field
 				<= Content_field
 				<= Friends_field
-			buttons /
-				<= Publish $mol_button_major
-					title \Publish
-					click? <=> publish?
-					enabled <= publish_allowed
-				<= Result $mol_status
-					message <= result? \
-				<= Reset $mol_button_minor
-					title \Сбросить
-					click? <=> reset?
-					enabled <= changed
 	tags /
 		\$mol_form_field
 		\$mol_button
