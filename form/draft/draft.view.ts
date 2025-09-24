@@ -126,11 +126,11 @@ namespace $.$$ {
 			]
 		}
 
-		@ $mol_action
+		@ $mol_mem
 		override submit( next? : Event ) {
 			if (! this.submit_allowed() ) {
 				this.result(this.message_invalid())
-				return
+				return null
 			}
 
 			const tasks = Object.entries( this.state() ).map(
@@ -150,7 +150,7 @@ namespace $.$$ {
 			
 			this.reset()
 			this.result( this.message_done() )
-			
+			return next ?? null
 		}
 		
 	}
