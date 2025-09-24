@@ -153,6 +153,7 @@ namespace $.$$ {
 				
 			} catch (e) {
 				if ($mol_promise_like(e)) $mol_fail_hidden(e)
+				$mol_fail_log(e)
 				this.result(e as Error)
 
 				return false
