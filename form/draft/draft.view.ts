@@ -113,19 +113,17 @@ namespace $.$$ {
 			return next
 		}
 		
-		override reset_content() {
+		override buttons() {
+			let changed = false
 			try {
-				if (! this.changed()) return []
-			} catch (e) {
-				if ($mol_promise_like(e)) return []
-				$mol_fail_hidden(e)
-			}
+				changed = this.changed()
+			} catch (e) {}
 
-			return super.reset_content()
-		}
-
-		override result_content() {
-			return this.result() ? super.result_content() : []
+			return [
+				this.Submit(),
+				... changed ? [ this.Reset() ] : [],
+				... this.result() ? [ this.Result() ] : [],
+			]
 		}
 
 		@ $mol_action
