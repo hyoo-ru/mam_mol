@@ -130,8 +130,8 @@ namespace $.$$ {
 
 		@ $mol_action
 		override submit( next? : Event ) {
-			if (! this.submit_allowed()) {
-				this.result(this.message_fail())
+			if (! this.submit_allowed() && this.changed() ) {
+				this.result(this.message_invalid())
 				return
 			}
 
