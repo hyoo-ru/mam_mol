@@ -32,18 +32,6 @@ namespace $.$$ {
 		bid_swearing( field: string ) {
 			return /\bfuck/.test( this.value_str( field ) ) ?  super.bid_swearing( field ) : ''
 		}
-		
-		@ $mol_mem
-		result( next = '' ) {
-			this.changed()
-			return next
-		}
-		
-		@ $mol_action
-		publish() {
-			super.publish()
-			this.result( this.message_done() )
-		}
 
 	}
 }

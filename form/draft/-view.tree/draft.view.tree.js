@@ -1,10 +1,53 @@
 	($.$mol_form_draft) = class $mol_form_draft extends ($.$mol_form) {
+		submit_title(){
+			return (this.$.$mol_locale.text("$mol_form_draft_submit_title"));
+		}
+		submit_hint(){
+			return "";
+		}
+		Submit(){
+			const obj = new this.$.$mol_button_major();
+			(obj.title) = () => ((this.submit_title()));
+			(obj.hint) = () => ((this.submit_hint()));
+			(obj.click) = (next) => ((this.submit(next)));
+			return obj;
+		}
+		reset_title(){
+			return (this.$.$mol_locale.text("$mol_form_draft_reset_title"));
+		}
+		Reset_icon(){
+			const obj = new this.$.$mol_icon_restore();
+			return obj;
+		}
+		Reset(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.hint) = () => ((this.reset_title()));
+			(obj.sub) = () => ([(this.Reset_icon())]);
+			(obj.click) = (next) => ((this.reset(next)));
+			return obj;
+		}
+		result(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		Result(){
+			const obj = new this.$.$mol_status();
+			(obj.message) = () => ((this.result()));
+			return obj;
+		}
 		model(){
 			const obj = new this.$.$mol_object2();
 			return obj;
 		}
 		changed(){
 			return false;
+		}
+		state(){
+			return {};
+		}
+		value(id, next){
+			if(next !== undefined) return next;
+			return null;
 		}
 		value_str(id, next){
 			if(next !== undefined) return next;
@@ -33,8 +76,27 @@
 			if(next !== undefined) return next;
 			return null;
 		}
+		message_done(){
+			return (this.$.$mol_locale.text("$mol_form_draft_message_done"));
+		}
+		message_invalid(){
+			return (this.$.$mol_locale.text("$mol_form_draft_message_invalid"));
+		}
+		buttons(){
+			return [
+				(this.Submit()), 
+				(this.Reset()), 
+				(this.Result())
+			];
+		}
 	};
+	($mol_mem(($.$mol_form_draft.prototype), "Submit"));
+	($mol_mem(($.$mol_form_draft.prototype), "Reset_icon"));
+	($mol_mem(($.$mol_form_draft.prototype), "Reset"));
+	($mol_mem(($.$mol_form_draft.prototype), "result"));
+	($mol_mem(($.$mol_form_draft.prototype), "Result"));
 	($mol_mem(($.$mol_form_draft.prototype), "model"));
+	($mol_mem_key(($.$mol_form_draft.prototype), "value"));
 	($mol_mem_key(($.$mol_form_draft.prototype), "value_str"));
 	($mol_mem_key(($.$mol_form_draft.prototype), "value_bool"));
 	($mol_mem_key(($.$mol_form_draft.prototype), "value_number"));

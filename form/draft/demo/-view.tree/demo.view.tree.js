@@ -161,29 +161,6 @@
 				(this.Friends_field())
 			];
 		}
-		Publish(){
-			const obj = new this.$.$mol_button_major();
-			(obj.title) = () => ("Publish");
-			(obj.click) = (next) => ((this.publish(next)));
-			(obj.enabled) = () => ((this.publish_allowed()));
-			return obj;
-		}
-		result(next){
-			if(next !== undefined) return next;
-			return "";
-		}
-		Result(){
-			const obj = new this.$.$mol_status();
-			(obj.message) = () => ((this.result()));
-			return obj;
-		}
-		Reset(){
-			const obj = new this.$.$mol_button_minor();
-			(obj.title) = () => ("Сбросить");
-			(obj.click) = (next) => ((this.reset(next)));
-			(obj.enabled) = () => ((this.changed()));
-			return obj;
-		}
 		Form(){
 			const obj = new this.$.$mol_form_draft();
 			(obj.model) = () => ((this.model()));
@@ -196,18 +173,10 @@
 				(this.Friends_field())
 			]);
 			(obj.body) = () => ((this.form_body()));
-			(obj.buttons) = () => ([
-				(this.Publish()), 
-				(this.Result()), 
-				(this.Reset())
-			]);
 			return obj;
 		}
 		title(){
 			return "Article draft form demo";
-		}
-		message_done(){
-			return "Done";
 		}
 		bid_required(id){
 			return "Required";
@@ -254,10 +223,6 @@
 	($mol_mem(($.$mol_form_draft_demo.prototype), "Friends"));
 	($mol_mem(($.$mol_form_draft_demo.prototype), "Friends_field"));
 	($mol_mem(($.$mol_form_draft_demo.prototype), "Config"));
-	($mol_mem(($.$mol_form_draft_demo.prototype), "Publish"));
-	($mol_mem(($.$mol_form_draft_demo.prototype), "result"));
-	($mol_mem(($.$mol_form_draft_demo.prototype), "Result"));
-	($mol_mem(($.$mol_form_draft_demo.prototype), "Reset"));
 	($mol_mem(($.$mol_form_draft_demo.prototype), "Form"));
 
 //# sourceMappingURL=demo.view.tree.js.map

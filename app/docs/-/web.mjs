@@ -30539,13 +30539,67 @@ var $;
 })($ || ($ = {}));
 
 ;
+	($.$mol_icon_restore) = class $mol_icon_restore extends ($.$mol_icon) {
+		path(){
+			return "M13,3A9,9 0 0,0 4,12H1L4.89,15.89L4.96,16.03L9,12H6A7,7 0 0,1 13,5A7,7 0 0,1 20,12A7,7 0 0,1 13,19C11.07,19 9.32,18.21 8.06,16.94L6.64,18.36C8.27,20 10.5,21 13,21A9,9 0 0,0 22,12A9,9 0 0,0 13,3Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
 	($.$mol_form_draft) = class $mol_form_draft extends ($.$mol_form) {
+		submit_title(){
+			return (this.$.$mol_locale.text("$mol_form_draft_submit_title"));
+		}
+		submit_hint(){
+			return "";
+		}
+		Submit(){
+			const obj = new this.$.$mol_button_major();
+			(obj.title) = () => ((this.submit_title()));
+			(obj.hint) = () => ((this.submit_hint()));
+			(obj.click) = (next) => ((this.submit(next)));
+			return obj;
+		}
+		reset_title(){
+			return (this.$.$mol_locale.text("$mol_form_draft_reset_title"));
+		}
+		Reset_icon(){
+			const obj = new this.$.$mol_icon_restore();
+			return obj;
+		}
+		Reset(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.hint) = () => ((this.reset_title()));
+			(obj.sub) = () => ([(this.Reset_icon())]);
+			(obj.click) = (next) => ((this.reset(next)));
+			return obj;
+		}
+		result(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		Result(){
+			const obj = new this.$.$mol_status();
+			(obj.message) = () => ((this.result()));
+			return obj;
+		}
 		model(){
 			const obj = new this.$.$mol_object2();
 			return obj;
 		}
 		changed(){
 			return false;
+		}
+		state(){
+			return {};
+		}
+		value(id, next){
+			if(next !== undefined) return next;
+			return null;
 		}
 		value_str(id, next){
 			if(next !== undefined) return next;
@@ -30574,8 +30628,27 @@ var $;
 			if(next !== undefined) return next;
 			return null;
 		}
+		message_done(){
+			return (this.$.$mol_locale.text("$mol_form_draft_message_done"));
+		}
+		message_invalid(){
+			return (this.$.$mol_locale.text("$mol_form_draft_message_invalid"));
+		}
+		buttons(){
+			return [
+				(this.Submit()), 
+				(this.Reset()), 
+				(this.Result())
+			];
+		}
 	};
+	($mol_mem(($.$mol_form_draft.prototype), "Submit"));
+	($mol_mem(($.$mol_form_draft.prototype), "Reset_icon"));
+	($mol_mem(($.$mol_form_draft.prototype), "Reset"));
+	($mol_mem(($.$mol_form_draft.prototype), "result"));
+	($mol_mem(($.$mol_form_draft.prototype), "Result"));
 	($mol_mem(($.$mol_form_draft.prototype), "model"));
+	($mol_mem_key(($.$mol_form_draft.prototype), "value"));
 	($mol_mem_key(($.$mol_form_draft.prototype), "value_str"));
 	($mol_mem_key(($.$mol_form_draft.prototype), "value_bool"));
 	($mol_mem_key(($.$mol_form_draft.prototype), "value_number"));
@@ -30647,13 +30720,20 @@ var $;
                 return this.state_pick(field, next) ?? this.model_pick(field);
             }
             value_changed(field) {
-                const next = this.state_pick(field);
-                const prev = this.model_pick(field);
-                const next_norm = normalize_val(prev, next);
-                return !$mol_compare_deep(next_norm, prev);
+                const prev = $mol_wire_probe(() => this.value_changed(field));
+                try {
+                    const next = this.state_pick(field);
+                    const prev = this.model_pick(field);
+                    const next_norm = normalize_val(prev, next);
+                    return !$mol_compare_deep(next_norm, prev);
+                }
+                catch (e) {
+                    $mol_fail_log(e);
+                    return prev ?? false;
+                }
             }
             state(next) {
-                return $mol_state_local.value(`${this}.state()`, next) ?? {};
+                return this.$.$mol_state_local.value(`${this}.state()`, next) ?? {};
             }
             changed() {
                 return Object.keys(this.state()).some(field => this.value_changed(field));
@@ -30664,7 +30744,22 @@ var $;
             reset(next) {
                 this.state(null);
             }
+            result(next = '') {
+                this.changed();
+                return next;
+            }
+            buttons() {
+                return [
+                    this.Submit(),
+                    ...this.changed() ? [this.Reset()] : [],
+                    ...this.result() ? [this.Result()] : [],
+                ];
+            }
             submit(next) {
+                if (!this.submit_allowed() && this.changed()) {
+                    this.result(this.message_invalid());
+                    return;
+                }
                 const tasks = Object.entries(this.state()).map(([field, next]) => () => {
                     const prev = this.model_pick(field);
                     return {
@@ -30675,6 +30770,7 @@ var $;
                 const normalized = $mol_wire_race(...tasks);
                 $mol_wire_race(...normalized.map(({ field, next }) => () => this.model_pick(field, next)));
                 this.reset();
+                this.result(this.message_done());
             }
         }
         __decorate([
@@ -30705,6 +30801,9 @@ var $;
             $mol_mem
         ], $mol_form_draft.prototype, "changed", null);
         __decorate([
+            $mol_mem
+        ], $mol_form_draft.prototype, "result", null);
+        __decorate([
             $mol_action
         ], $mol_form_draft.prototype, "submit", null);
         $$.$mol_form_draft = $mol_form_draft;
@@ -30715,7 +30814,12 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/form/draft/draft.view.css", "[mol_form_draft] {\n\twidth: 100%;\n}\n");
+    var $$;
+    (function ($$) {
+        $mol_style_define($mol_form_draft, {
+            width: '100%',
+        });
+    })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
 ;
@@ -31072,29 +31176,6 @@ var $;
 				(this.Friends_field())
 			];
 		}
-		Publish(){
-			const obj = new this.$.$mol_button_major();
-			(obj.title) = () => ("Publish");
-			(obj.click) = (next) => ((this.publish(next)));
-			(obj.enabled) = () => ((this.publish_allowed()));
-			return obj;
-		}
-		result(next){
-			if(next !== undefined) return next;
-			return "";
-		}
-		Result(){
-			const obj = new this.$.$mol_status();
-			(obj.message) = () => ((this.result()));
-			return obj;
-		}
-		Reset(){
-			const obj = new this.$.$mol_button_minor();
-			(obj.title) = () => ("Сбросить");
-			(obj.click) = (next) => ((this.reset(next)));
-			(obj.enabled) = () => ((this.changed()));
-			return obj;
-		}
 		Form(){
 			const obj = new this.$.$mol_form_draft();
 			(obj.model) = () => ((this.model()));
@@ -31107,18 +31188,10 @@ var $;
 				(this.Friends_field())
 			]);
 			(obj.body) = () => ((this.form_body()));
-			(obj.buttons) = () => ([
-				(this.Publish()), 
-				(this.Result()), 
-				(this.Reset())
-			]);
 			return obj;
 		}
 		title(){
 			return "Article draft form demo";
-		}
-		message_done(){
-			return "Done";
 		}
 		bid_required(id){
 			return "Required";
@@ -31165,10 +31238,6 @@ var $;
 	($mol_mem(($.$mol_form_draft_demo.prototype), "Friends"));
 	($mol_mem(($.$mol_form_draft_demo.prototype), "Friends_field"));
 	($mol_mem(($.$mol_form_draft_demo.prototype), "Config"));
-	($mol_mem(($.$mol_form_draft_demo.prototype), "Publish"));
-	($mol_mem(($.$mol_form_draft_demo.prototype), "result"));
-	($mol_mem(($.$mol_form_draft_demo.prototype), "Result"));
-	($mol_mem(($.$mol_form_draft_demo.prototype), "Reset"));
 	($mol_mem(($.$mol_form_draft_demo.prototype), "Form"));
 
 
@@ -31203,14 +31272,6 @@ var $;
             bid_swearing(field) {
                 return /\bfuck/.test(this.value_str(field)) ? super.bid_swearing(field) : '';
             }
-            result(next = '') {
-                this.changed();
-                return next;
-            }
-            publish() {
-                super.publish();
-                this.result(this.message_done());
-            }
         }
         __decorate([
             $mol_mem
@@ -31227,12 +31288,6 @@ var $;
         __decorate([
             $mol_mem_key
         ], $mol_form_draft_demo.prototype, "bid_swearing", null);
-        __decorate([
-            $mol_mem
-        ], $mol_form_draft_demo.prototype, "result", null);
-        __decorate([
-            $mol_action
-        ], $mol_form_draft_demo.prototype, "publish", null);
         $$.$mol_form_draft_demo = $mol_form_draft_demo;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));

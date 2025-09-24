@@ -4178,9 +4178,13 @@ $mol_form_demo $mol_example
 	aspects /
 		\Widget/Form
 
+$mol_icon_restore $mol_icon path \M13,3A9,9 0 0,0 4,12H1L4.89,15.89L4.96,16.03L9,12H6A7,7 0 0,1 13,5A7,7 0 0,1 20,12A7,7 0 0,1 13,19C11.07,19 9.32,18.21 8.06,16.94L6.64,18.36C8.27,20 10.5,21 13,21A9,9 0 0,0 22,12A9,9 0 0,0 13,3Z
+
 $mol_form_draft $mol_form
 	model $mol_object2
 	changed false
+	state *
+	value*? null
 	value_str*? \
 	value_bool*? false
 	value_number*? 0
@@ -4188,7 +4192,19 @@ $mol_form_draft $mol_form
 	list_string*? /string
 	value_changed* false
 	reset? null
-
+	message_done @ \Done
+	message_invalid @ \Form is not valid
+	buttons /$mol_view
+		<= Submit $mol_button_major
+			title <= submit_title @ \Save
+			hint <= submit_hint \
+			click? <=> submit?
+		<= Reset $mol_button_minor
+			hint <= reset_title @ \Reset
+			sub / <= Reset_icon $mol_icon_restore
+			click? <=> reset?
+		<= Result $mol_status
+			message <= result? \
 
 $mol_select_list $mol_view
 	value? /string
@@ -4223,7 +4239,6 @@ $mol_form_draft_demo_article $mol_object2
 $mol_form_draft_demo $mol_example
 	title \Article draft form demo
 	-
-	message_done \Done
 	bid_required* \Required
 	bid_swearing* \No swearing
 	bid_short* \> 5 letters
@@ -4301,17 +4316,6 @@ $mol_form_draft_demo $mol_example
 					<= Type_field
 				<= Content_field
 				<= Friends_field
-			buttons /
-				<= Publish $mol_button_major
-					title \Publish
-					click? <=> publish?
-					enabled <= publish_allowed
-				<= Result $mol_status
-					message <= result? \
-				<= Reset $mol_button_minor
-					title \Сбросить
-					click? <=> reset?
-					enabled <= changed
 	tags /
 		\$mol_form_field
 		\$mol_button

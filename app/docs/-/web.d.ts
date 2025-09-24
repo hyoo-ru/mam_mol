@@ -15009,9 +15009,63 @@ declare namespace $ {
 
 declare namespace $ {
 
+	export class $mol_icon_restore extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=restore.view.tree.d.ts.map
+declare namespace $ {
+
+	type $mol_button_major__title_mol_form_draft_1 = $mol_type_enforce<
+		ReturnType< $mol_form_draft['submit_title'] >
+		,
+		ReturnType< $mol_button_major['title'] >
+	>
+	type $mol_button_major__hint_mol_form_draft_2 = $mol_type_enforce<
+		ReturnType< $mol_form_draft['submit_hint'] >
+		,
+		ReturnType< $mol_button_major['hint'] >
+	>
+	type $mol_button_major__click_mol_form_draft_3 = $mol_type_enforce<
+		ReturnType< $mol_form_draft['submit'] >
+		,
+		ReturnType< $mol_button_major['click'] >
+	>
+	type $mol_button_minor__hint_mol_form_draft_4 = $mol_type_enforce<
+		ReturnType< $mol_form_draft['reset_title'] >
+		,
+		ReturnType< $mol_button_minor['hint'] >
+	>
+	type $mol_button_minor__sub_mol_form_draft_5 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_button_minor['sub'] >
+	>
+	type $mol_button_minor__click_mol_form_draft_6 = $mol_type_enforce<
+		ReturnType< $mol_form_draft['reset'] >
+		,
+		ReturnType< $mol_button_minor['click'] >
+	>
+	type $mol_status__message_mol_form_draft_7 = $mol_type_enforce<
+		ReturnType< $mol_form_draft['result'] >
+		,
+		ReturnType< $mol_status['message'] >
+	>
 	export class $mol_form_draft extends $mol_form {
+		submit_title( ): string
+		submit_hint( ): string
+		Submit( ): $mol_button_major
+		reset_title( ): string
+		Reset_icon( ): $mol_icon_restore
+		Reset( ): $mol_button_minor
+		result( next?: string ): string
+		Result( ): $mol_status
 		model( ): $mol_object2
 		changed( ): boolean
+		state( ): Record<string, any>
+		value( id: any, next?: any ): any
 		value_str( id: any, next?: string ): string
 		value_bool( id: any, next?: boolean ): boolean
 		value_number( id: any, next?: number ): number
@@ -15019,6 +15073,9 @@ declare namespace $ {
 		list_string( id: any, next?: readonly(string)[] ): readonly(string)[]
 		value_changed( id: any): boolean
 		reset( next?: any ): any
+		message_done( ): string
+		message_invalid( ): string
+		buttons( ): readonly($mol_view)[]
 	}
 	
 }
@@ -15041,12 +15098,14 @@ declare namespace $.$$ {
         changed(): boolean;
         submit_allowed(): boolean;
         reset(next?: unknown): void;
+        result(next?: string): string;
+        buttons(): ($mol_button_minor | $.$mol_status)[];
         submit(next?: Event): void;
     }
     export {};
 }
 
-declare namespace $ {
+declare namespace $.$$ {
 }
 
 declare namespace $ {
@@ -15379,60 +15438,20 @@ declare namespace $ {
 		,
 		ReturnType< $mol_form_group['sub'] >
 	>
-	type $mol_button_major__title_mol_form_draft_demo_37 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_button_major['title'] >
-	>
-	type $mol_button_major__click_mol_form_draft_demo_38 = $mol_type_enforce<
-		ReturnType< $mol_form_draft_demo['publish'] >
-		,
-		ReturnType< $mol_button_major['click'] >
-	>
-	type $mol_button_major__enabled_mol_form_draft_demo_39 = $mol_type_enforce<
-		ReturnType< $mol_form_draft_demo['publish_allowed'] >
-		,
-		ReturnType< $mol_button_major['enabled'] >
-	>
-	type $mol_status__message_mol_form_draft_demo_40 = $mol_type_enforce<
-		ReturnType< $mol_form_draft_demo['result'] >
-		,
-		ReturnType< $mol_status['message'] >
-	>
-	type $mol_button_minor__title_mol_form_draft_demo_41 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_button_minor['title'] >
-	>
-	type $mol_button_minor__click_mol_form_draft_demo_42 = $mol_type_enforce<
-		ReturnType< $mol_form_draft_demo['reset'] >
-		,
-		ReturnType< $mol_button_minor['click'] >
-	>
-	type $mol_button_minor__enabled_mol_form_draft_demo_43 = $mol_type_enforce<
-		ReturnType< $mol_form_draft_demo['changed'] >
-		,
-		ReturnType< $mol_button_minor['enabled'] >
-	>
-	type $mol_form_draft__model_mol_form_draft_demo_44 = $mol_type_enforce<
+	type $mol_form_draft__model_mol_form_draft_demo_37 = $mol_type_enforce<
 		ReturnType< $mol_form_draft_demo['model'] >
 		,
 		ReturnType< $mol_form_draft['model'] >
 	>
-	type $mol_form_draft__form_fields_mol_form_draft_demo_45 = $mol_type_enforce<
+	type $mol_form_draft__form_fields_mol_form_draft_demo_38 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_form_draft['form_fields'] >
 	>
-	type $mol_form_draft__body_mol_form_draft_demo_46 = $mol_type_enforce<
+	type $mol_form_draft__body_mol_form_draft_demo_39 = $mol_type_enforce<
 		ReturnType< $mol_form_draft_demo['form_body'] >
 		,
 		ReturnType< $mol_form_draft['body'] >
-	>
-	type $mol_form_draft__buttons_mol_form_draft_demo_47 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_form_draft['buttons'] >
 	>
 	export class $mol_form_draft_demo extends $mol_example {
 		model( ): $mol_form_draft_demo_article
@@ -15457,13 +15476,8 @@ declare namespace $ {
 		Friends_field( ): $mol_form_field
 		Config( ): $mol_form_group
 		form_body( ): readonly(any)[]
-		Publish( ): $mol_button_major
-		result( next?: string ): string
-		Result( ): $mol_status
-		Reset( ): $mol_button_minor
 		Form( ): $mol_form_draft
 		title( ): string
-		message_done( ): string
 		bid_required( id: any): string
 		bid_swearing( id: any): string
 		bid_short( id: any): string
@@ -15483,8 +15497,6 @@ declare namespace $.$$ {
         bid_short(field: string): string;
         bid_long(field: string): string;
         bid_swearing(field: string): string;
-        result(next?: string): string;
-        publish(): void;
     }
 }
 
