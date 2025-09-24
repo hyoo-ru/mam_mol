@@ -1,5 +1,5 @@
 [mol_view] {
-	transition-property: height, width, min-height, min-width, max-width, max-height, transform;
+	transition-property: height, width, min-height, min-width, max-width, max-height, transform, scale, translate, rotate;
 	transition-duration: .2s;
 	transition-timing-function: ease-out;
 	-webkit-appearance: none;
