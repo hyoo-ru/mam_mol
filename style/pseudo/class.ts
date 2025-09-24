@@ -23,8 +23,6 @@ namespace $ {
 	| ':indeterminate'
 	| ':in-range'
 	| ':invalid'
-	| `:is(${string})`
-	| `:lang(${string})`
 	| ':last-child'
 	| ':last-of-type'
 	| ':left'
@@ -48,6 +46,5 @@ namespace $ {
 	| ':target'
 	| ':valid'
 	| ':visited'
-	| `:where(${string})`
 
 }
