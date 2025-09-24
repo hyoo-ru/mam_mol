@@ -140,12 +140,11 @@ namespace $.$$ {
 				}
 			)
 
-			if (! this.submit_allowed() ) {
-				this.result(this.message_invalid())
-				return false
-			}
-
+			
 			try {
+				if (! this.submit_allowed() ) {
+					throw new Error(this.message_invalid())
+				}
 
 				const normalized = $mol_wire_race(...tasks)
 	
