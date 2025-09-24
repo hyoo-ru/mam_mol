@@ -23,5 +23,6 @@ $mol_form_draft $mol_form
 				sub / <= Reset_icon $mol_icon_restore
 				click? <=> reset?
 				enabled <= changed
-		<= Result $mol_status
-			message <= result? \
+		^ result_content /$mol_view
+			<= Result $mol_status
+				message <= result? \

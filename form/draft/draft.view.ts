@@ -124,6 +124,10 @@ namespace $.$$ {
 			return super.reset_content()
 		}
 
+		override result_content() {
+			return this.result() ? super.result_content() : []
+		}
+
 		@ $mol_action
 		override submit( next? : Event ) {
 			
