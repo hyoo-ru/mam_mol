@@ -75,7 +75,7 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem_key
-		value<T extends Value>( field: string, next?: T | null ): T {
+		override value<T extends Value>( field: string, next?: T | null ): T {
 			if (Array.isArray(next) && next.length === 0 && ! this.model_pick(field)) next = null
 			return this.state_pick(field, next) as T ?? this.model_pick(field)
 		}
@@ -90,8 +90,8 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		state( next?: Record< string, Value | null > | null ) {
-			return $mol_state_local.value( `${ this }.state()`, next ) ?? {}
+		override state( next?: Record< string, Value | null > | null ) {
+			return this.$.$mol_state_local.value( `${ this }.state()`, next ) ?? {}
 		}
 		
 		@ $mol_mem
@@ -105,6 +105,23 @@ namespace $.$$ {
 
 		override reset(next?: unknown) {
 			this.state(null)
+		}
+
+		@ $mol_mem
+		override result( next = '' ) {
+			this.changed()
+			return next
+		}
+		
+		override reset_content() {
+			try {
+				if (! this.changed()) return []
+			} catch (e) {
+				if ($mol_promise_like(e)) return []
+				$mol_fail_hidden(e)
+			}
+
+			return super.reset_content()
 		}
 
 		@ $mol_action
@@ -126,6 +143,7 @@ namespace $.$$ {
 			$mol_wire_race(...normalized.map(({ field, next }) => () => this.model_pick( field, next )))
 			
 			this.reset()
+			this.result( this.message_done() )
 			
 		}
 		
