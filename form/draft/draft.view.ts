@@ -113,17 +113,6 @@ namespace $.$$ {
 			return next
 		}
 		
-		override reset_content() {
-			try {
-				if (! this.changed()) return []
-			} catch (e) {
-				if ($mol_promise_like(e)) return []
-				$mol_fail_hidden(e)
-			}
-
-			return super.reset_content()
-		}
-
 		@ $mol_action
 		override submit( next? : Event ) {
 			

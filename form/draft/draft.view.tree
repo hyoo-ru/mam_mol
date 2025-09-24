@@ -17,11 +17,10 @@ $mol_form_draft $mol_form
 			hint <= submit_hint \
 			click? <=> submit?
 			enabled <= submit_allowed
-		^ reset_content /
-			<= Reset $mol_button_minor
-				hint <= reset_title @ \Reset
-				sub / <= Reset_icon $mol_icon_restore
-				click? <=> reset?
-				enabled <= changed
+		<= Reset $mol_button_minor
+			hint <= reset_title @ \Reset
+			sub / <= Reset_icon $mol_icon_restore
+			click? <=> reset?
+			enabled <= changed
 		<= Result $mol_status
 			message <= result? \
