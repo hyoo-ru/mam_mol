@@ -30741,9 +30741,11 @@ var $;
             reset(next) {
                 this.state(null);
             }
-            result(next = '') {
+            result(next) {
                 this.state();
-                return next;
+                if (next instanceof Error)
+                    next = next.message || this.message_invalid();
+                return next ?? '';
             }
             buttons() {
                 return [
@@ -30753,10 +30755,6 @@ var $;
                 ];
             }
             submit(next) {
-                if (!this.submit_allowed()) {
-                    this.result(this.message_invalid());
-                    return;
-                }
                 const tasks = Object.entries(this.state()).map(([field, next]) => () => {
                     const prev = this.model_pick(field);
                     return {
@@ -30764,10 +30762,23 @@ var $;
                         next: normalize_val(prev, next)
                     };
                 });
-                const normalized = $mol_wire_race(...tasks);
-                $mol_wire_race(...normalized.map(({ field, next }) => () => this.model_pick(field, next)));
+                try {
+                    if (!this.submit_allowed()) {
+                        throw new Error(this.message_invalid());
+                    }
+                    const normalized = $mol_wire_race(...tasks);
+                    $mol_wire_race(...normalized.map(({ field, next }) => () => this.model_pick(field, next)));
+                }
+                catch (e) {
+                    if ($mol_promise_like(e))
+                        $mol_fail_hidden(e);
+                    $mol_fail_log(e);
+                    this.result(e);
+                    return false;
+                }
                 this.reset();
                 this.result(this.message_done());
+                return true;
             }
         }
         __decorate([

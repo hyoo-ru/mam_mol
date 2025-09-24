@@ -15097,9 +15097,9 @@ declare namespace $.$$ {
         state(next?: Record<string, Value | null> | null): Record<string, Value | null>;
         changed(): boolean;
         reset(next?: unknown): void;
-        result(next?: string): string;
+        result(next?: string | Error): string;
         buttons(): ($mol_button_minor | $.$mol_status)[];
-        submit(next?: Event): void;
+        submit(next?: Event): boolean;
     }
     export {};
 }
