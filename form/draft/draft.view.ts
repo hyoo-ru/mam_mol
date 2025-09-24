@@ -96,9 +96,13 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		override changed() {
-			return Object.keys(this.state()).some(field => this.value_changed(field))
+			try {
+				return Object.keys(this.state()).some(field => this.value_changed(field))
+			} catch (e) {
+				return false
+			}
 		}
-		
+
 		override submit_allowed() {
 			return this.changed() && super.submit_allowed()
 		}
@@ -114,14 +118,9 @@ namespace $.$$ {
 		}
 		
 		override buttons() {
-			let changed = false
-			try {
-				changed = this.changed()
-			} catch (e) {}
-
 			return [
 				this.Submit(),
-				... changed ? [ this.Reset() ] : [],
+				... this.changed() ? [ this.Reset() ] : [],
 				... this.result() ? [ this.Result() ] : [],
 			]
 		}
