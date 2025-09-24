@@ -111,10 +111,11 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		override result( next = '' ) {
+		override result( next?: string | Error ) {
 			this.state()
+			if (next instanceof Error) next = next.message || this.message_invalid()
 
-			return next
+			return next ?? ''
 		}
 		
 		@ $mol_mem
@@ -126,13 +127,8 @@ namespace $.$$ {
 			]
 		}
 
-		@ $mol_mem
+		@ $mol_action
 		override submit( next? : Event ) {
-			if (! this.submit_allowed() ) {
-				this.result(this.message_invalid())
-				return null
-			}
-
 			const tasks = Object.entries( this.state() ).map(
 				([ field, next ]) => () => {
 					const prev = this.model_pick(field)
@@ -144,13 +140,28 @@ namespace $.$$ {
 				}
 			)
 
-			const normalized = $mol_wire_race(...tasks)
+			if (! this.submit_allowed() ) {
+				this.result(this.message_invalid())
+				return false
+			}
 
-			$mol_wire_race(...normalized.map(({ field, next }) => () => this.model_pick( field, next )))
-			
+			try {
+
+				const normalized = $mol_wire_race(...tasks)
+	
+				$mol_wire_race(...normalized.map(({ field, next }) => () => this.model_pick( field, next )))
+				
+			} catch (e) {
+				if ($mol_promise_like(e)) $mol_fail_hidden(e)
+				this.result(e as Error)
+
+				return false
+			}
+
 			this.reset()
 			this.result( this.message_done() )
-			return next ?? null
+
+			return true
 		}
 		
 	}
