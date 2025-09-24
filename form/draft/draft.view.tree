@@ -11,16 +11,15 @@ $mol_form_draft $mol_form
 	value_changed* false
 	reset? null
 	message_done @ \Done
+	message_fail @ \Form is not valid
 	buttons /$mol_view
 		<= Submit $mol_button_major
 			title <= submit_title @ \Save
 			hint <= submit_hint \
 			click? <=> submit?
-			enabled <= submit_allowed
 		<= Reset $mol_button_minor
 			hint <= reset_title @ \Reset
 			sub / <= Reset_icon $mol_icon_restore
 			click? <=> reset?
-			enabled <= changed
 		<= Result $mol_status
 			message <= result? \

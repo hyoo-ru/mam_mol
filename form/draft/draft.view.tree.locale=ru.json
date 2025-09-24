@@ -1,5 +1,6 @@
 {
 	"$mol_form_draft_submit_title": "Сохранить",
 	"$mol_form_draft_reset_title": "Сбросить",
-	"$mol_form_draft_message_done": "Сохранено"
+	"$mol_form_draft_message_done": "Сохранено",
+	"$mol_form_draft_message_fail": "В форме есть ошибки"
 }

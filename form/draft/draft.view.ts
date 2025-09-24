@@ -130,7 +130,11 @@ namespace $.$$ {
 
 		@ $mol_action
 		override submit( next? : Event ) {
-			
+			if (! this.submit_allowed()) {
+				this.result(this.message_fail())
+				return
+			}
+
 			const tasks = Object.entries( this.state() ).map(
 				([ field, next ]) => () => {
 					const prev = this.model_pick(field)
