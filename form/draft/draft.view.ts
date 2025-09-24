@@ -81,12 +81,19 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem_key
-		override value_changed(field: string) {
-			const next = this.state_pick(field)
-			const prev = this.model_pick(field)
-			const next_norm = normalize_val(prev, next)
+		override value_changed(field: string): boolean {
+			const prev = $mol_wire_probe(() => this.value_changed(field))
 
-			return ! $mol_compare_deep(next_norm, prev)
+			try {
+				const next = this.state_pick(field)
+				const prev = this.model_pick(field)
+				const next_norm = normalize_val(prev, next)
+	
+				return ! $mol_compare_deep(next_norm, prev)
+			} catch (e) {
+				$mol_fail_log(e)
+				return prev ?? false
+			}
 		}
 		
 		@ $mol_mem
@@ -96,11 +103,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		override changed() {
-			try {
-				return Object.keys(this.state()).some(field => this.value_changed(field))
-			} catch (e) {
-				return false
-			}
+			return Object.keys(this.state()).some(field => this.value_changed(field))
 		}
 
 		override submit_allowed() {
