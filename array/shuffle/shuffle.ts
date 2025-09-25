@@ -4,13 +4,12 @@ namespace $ {
 		array: readonly Item[],
 	) {
 
-		const res = array.slice()
+		const res = new Array( array.length )
 
-		for( let index = res.length - 1; index > 0; index-- ) {
-			const index_swap = Math.floor( Math.random() * ( index + 1 ) )
-			const temp = res[ index ]
-			res[ index ] = res[ index_swap ]
-			res[ index_swap ] = temp
+		for( let i = 0; i < res.length; ++i ) {
+			const j = Math.floor( Math.random() * ( i+1 ) )
+			if( i !== j ) res[i] = res[j]
+			res[j] = array[i]
 		}
 
 		return res
