@@ -1,2 +1,5 @@
 include \/mol/tree2/lib
+include \/mol/view/tree2/to/dts
 include \/mol/view/tree2/to/js
+include \/mol/view/tree2/to/locale
+include \/mol/view/tree2/to/text
