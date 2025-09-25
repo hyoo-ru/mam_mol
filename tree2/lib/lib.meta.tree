@@ -12,3 +12,4 @@ include \/mol/tree2/to/json
 include \/mol/tree2/to/stream
 include \/mol/tree2/xml/from/dom
 include \/mol/tree2/xml/to/text
+include \/mol/view/tree2/to/js
