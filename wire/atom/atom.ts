@@ -90,10 +90,23 @@ namespace $ {
 		}
 		
 		/**
-		 * Update fiber value through another temp fiber.
+		 * Update atom value through another temp fiber.
 		 */
 		@ $mol_wire_method
 		resync( args: Args ) {
+			
+			// enforce pulling tasks abort
+			for(
+				let cursor = this.pub_from;
+				cursor < this.sub_from;
+				cursor += 2
+			) {
+				const pub = this.data[ cursor ] as $mol_wire_pub
+				if( pub && pub instanceof $mol_wire_task ) {
+					pub.destructor()
+				}
+			}
+			
 			return this.put( this.task.call( this.host!, ... args ) )
 		}
 		
