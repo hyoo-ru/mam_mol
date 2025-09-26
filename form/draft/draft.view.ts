@@ -128,7 +128,7 @@ namespace $.$$ {
 		}
 
 		@ $mol_action
-		override submit( next? : Event ) {
+		override save(next?: Event) {
 			const tasks = Object.entries( this.state() ).map(
 				([ field, next ]) => () => {
 					const prev = this.model_pick(field)
@@ -139,16 +139,21 @@ namespace $.$$ {
 					}
 				}
 			)
+			const normalized = $mol_wire_race(...tasks)
 
+			$mol_wire_race(...normalized.map(({ field, next }) => () => this.model_pick( field, next )))
+
+			return null
+		}
+
+		@ $mol_action
+		override submit( next? : Event ) {
 			
 			try {
 				if (! this.submit_allowed() ) {
 					throw new Error(this.message_invalid())
 				}
-
-				const normalized = $mol_wire_race(...tasks)
-	
-				$mol_wire_race(...normalized.map(({ field, next }) => () => this.model_pick( field, next )))
+				this.save(next)
 				
 			} catch (e) {
 				if ($mol_promise_like(e)) $mol_fail_hidden(e)
@@ -160,6 +165,7 @@ namespace $.$$ {
 
 			this.reset()
 			this.result( this.message_done() )
+			this.done(next)
 
 			return true
 		}
