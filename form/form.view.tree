@@ -5,7 +5,6 @@ $mol_form $mol_list
 		^
 		keydown?event <=> keydown?event null
 	save?event null
-	done?event null
 	message_done @ \Done
 	message_invalid @ \Form is not valid
 	rows /

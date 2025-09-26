@@ -58,7 +58,6 @@ namespace $.$$ {
 			}
 
 			this.result( this.message_done() )
-			this.done(next)
 
 			return true
 		}

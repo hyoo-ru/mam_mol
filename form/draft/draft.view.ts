@@ -144,6 +144,7 @@ namespace $.$$ {
 			$mol_wire_race(...normalized.map(({ field, next }) => () => this.model_pick( field, next )))
 
 			this.reset()
+			this.done(next)
 
 			return null
 		}
