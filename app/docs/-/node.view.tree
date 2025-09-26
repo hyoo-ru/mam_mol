@@ -1968,12 +1968,20 @@ $mol_form $mol_list
 	event *
 		^
 		keydown?event <=> keydown?event null
-	submit?event null
+	save?event null
+	message_done @ \Saved
+	message_invalid @ \Form is not valid
 	rows /
 		<= Body $mol_list
 			sub <= body <= form_fields /$mol_form_field
 		<= Foot $mol_row
 			sub <= foot <= buttons /$mol_view
+				<= Submit $mol_button_major
+					title <= submit_title @ \Save
+					hint <= submit_hint \
+					click? <=> submit? null
+				<= Result $mol_status
+					message <= result? null
 
 $mol_audio_demo_sample $mol_example_small
 	title \WebAudio API sample example
@@ -4192,19 +4200,13 @@ $mol_form_draft $mol_form
 	list_string*? /string
 	value_changed* false
 	reset? null
-	message_done @ \Done
-	message_invalid @ \Form is not valid
+	done?event null
 	buttons /$mol_view
-		<= Submit $mol_button_major
-			title <= submit_title @ \Save
-			hint <= submit_hint \
-			click? <=> submit?
+		<= Submit
 		<= Reset $mol_button_minor
 			hint <= reset_title @ \Reset
 			sub / <= Reset_icon $mol_icon_restore
 			click? <=> reset?
-		<= Result $mol_status
-			message <= result? \
 
 $mol_select_list $mol_view
 	value? /string

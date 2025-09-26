@@ -1,6 +1,3 @@
 {
-	"$mol_form_draft_submit_title": "Save",
-	"$mol_form_draft_reset_title": "Reset",
-	"$mol_form_draft_message_done": "Done",
-	"$mol_form_draft_message_invalid": "Form is not valid"
+	"$mol_form_draft_reset_title": "Reset"
 }
