@@ -213,10 +213,13 @@ namespace $ {
 						result = wrappers.get( result )!
 					} else {
 						
+						const put = ( v: any )=> {
+							if( this.cache === result ) this.absorb()
+							return v
+						}
+						
 						wrappers.set( result, result = Object.assign(
-							result.finally( ()=> {
-								if( this.cache === result ) this.absorb()
-							} ),
+							result.then( put, put ),
 							{ destructor: ( result as any ).destructor || (()=> {}) }
 						) )
 						
