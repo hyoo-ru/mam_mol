@@ -9,6 +9,7 @@ $mol_form_draft $mol_form
 	dictionary_bool*? *
 	list_string*? /string
 	value_changed* false
+	reset? null
 	buttons /$mol_view
 		<= Submit
 		<= Reset $mol_button_minor

@@ -57,7 +57,6 @@ namespace $.$$ {
 				return false
 			}
 
-			this.reset()
 			this.result( this.message_done() )
 			this.done(next)
 
