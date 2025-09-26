@@ -146,29 +146,5 @@ namespace $.$$ {
 			return null
 		}
 
-		@ $mol_action
-		override submit( next? : Event ) {
-			
-			try {
-				if (! this.submit_allowed() ) {
-					throw new Error(this.message_invalid())
-				}
-				this.save(next)
-				
-			} catch (e) {
-				if ($mol_promise_like(e)) $mol_fail_hidden(e)
-				$mol_fail_log(e)
-				this.result(e as Error)
-
-				return false
-			}
-
-			this.reset()
-			this.result( this.message_done() )
-			this.done(next)
-
-			return true
-		}
-		
 	}
 }
