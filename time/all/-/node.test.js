@@ -2054,10 +2054,12 @@ var $;
                         result = wrappers.get(result);
                     }
                     else {
-                        wrappers.set(result, result = Object.assign(result.finally(() => {
+                        const put = (v) => {
                             if (this.cache === result)
                                 this.absorb();
-                        }), { destructor: result.destructor || (() => { }) }));
+                            return v;
+                        };
+                        wrappers.set(result, result = Object.assign(result.then(put, put), { destructor: result.destructor || (() => { }) }));
                         const error = new Error(`Promise in ${this}`);
                         Object.defineProperty(result, 'stack', { get: () => error.stack });
                     }
