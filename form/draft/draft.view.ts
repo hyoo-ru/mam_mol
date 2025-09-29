@@ -75,41 +75,60 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem_key
-		value<T extends Value>( field: string, next?: T | null ): T {
+		override value<T extends Value>( field: string, next?: T | null ): T {
 			if (Array.isArray(next) && next.length === 0 && ! this.model_pick(field)) next = null
 			return this.state_pick(field, next) as T ?? this.model_pick(field)
 		}
 
 		@ $mol_mem_key
-		override value_changed(field: string) {
-			const next = this.state_pick(field)
-			const prev = this.model_pick(field)
-			const next_norm = normalize_val(prev, next)
+		override value_changed(field: string): boolean {
+			const prev = $mol_wire_probe(() => this.value_changed(field))
 
-			return ! $mol_compare_deep(next_norm, prev)
+			try {
+				const next = this.state_pick(field)
+				const prev = this.model_pick(field)
+				const next_norm = normalize_val(prev, next)
+	
+				return ! $mol_compare_deep(next_norm, prev)
+			} catch (e) {
+				$mol_fail_log(e)
+				return prev ?? false
+			}
 		}
 		
 		@ $mol_mem
-		state( next?: Record< string, Value | null > | null ) {
-			return $mol_state_local.value( `${ this }.state()`, next ) ?? {}
+		override state( next?: Record< string, Value | null > | null ) {
+			return this.$.$mol_state_local.value( `${ this }.state()`, next ) ?? {}
 		}
 		
 		@ $mol_mem
 		override changed() {
 			return Object.keys(this.state()).some(field => this.value_changed(field))
 		}
-		
-		override submit_allowed() {
-			return this.changed() && super.submit_allowed()
-		}
 
 		override reset(next?: unknown) {
 			this.state(null)
 		}
 
+		@ $mol_mem
+		override result( next?: string | Error ) {
+			this.state()
+			if (next instanceof Error) next = next.message || this.message_invalid()
+
+			return next ?? ''
+		}
+		
+		@ $mol_mem
+		override buttons() {
+			return [
+				this.Submit(),
+				... this.changed() ? [ this.Reset() ] : [],
+				... this.result() ? [ this.Result() ] : [],
+			]
+		}
+
 		@ $mol_action
-		override submit( next? : Event ) {
-			
+		override save(next?: Event) {
 			const tasks = Object.entries( this.state() ).map(
 				([ field, next ]) => () => {
 					const prev = this.model_pick(field)
@@ -120,14 +139,15 @@ namespace $.$$ {
 					}
 				}
 			)
-
 			const normalized = $mol_wire_race(...tasks)
 
 			$mol_wire_race(...normalized.map(({ field, next }) => () => this.model_pick( field, next )))
-			
+
 			this.reset()
-			
+			this.done(next)
+
+			return null
 		}
-		
+
 	}
 }

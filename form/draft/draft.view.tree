@@ -1,6 +1,8 @@
 $mol_form_draft $mol_form
 	model $mol_object2
 	changed false
+	state *
+	value*? null
 	value_str*? \
 	value_bool*? false
 	value_number*? 0
@@ -8,4 +10,10 @@ $mol_form_draft $mol_form
 	list_string*? /string
 	value_changed* false
 	reset? null
-
+	done?event null
+	buttons /$mol_view
+		<= Submit
+		<= Reset $mol_button_minor
+			hint <= reset_title @ \Reset
+			sub / <= Reset_icon $mol_icon_restore
+			click? <=> reset?

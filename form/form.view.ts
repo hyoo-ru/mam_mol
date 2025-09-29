@@ -24,6 +24,43 @@ namespace $.$$ {
 		keydown( next : KeyboardEvent ) {
 			if( next.ctrlKey && next.keyCode === $mol_keyboard_code.enter && !this.submit_blocked() ) this.submit( next )
 		}
+
+		@ $mol_mem
+		override result( next?: string | Error ) {
+			if (next instanceof Error) next = next.message || this.message_invalid()
+
+			return next ?? ''
+		}
+
+		@ $mol_mem
+		override buttons() {
+			return [
+				this.Submit(),
+				... this.result() ? [ this.Result() ] : [],
+			]
+		}
+
+		@ $mol_action
+		override submit( next? : Event ) {
+			
+			try {
+				if (! this.submit_allowed() ) {
+					throw new Error(this.message_invalid())
+				}
+				this.save(next)
+				
+			} catch (e) {
+				if ($mol_promise_like(e)) $mol_fail_hidden(e)
+				$mol_fail_log(e)
+				this.result(e as Error)
+
+				return false
+			}
+
+			this.result( this.message_done() )
+
+			return true
+		}
 		
 	}
 }

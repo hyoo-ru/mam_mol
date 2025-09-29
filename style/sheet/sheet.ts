@@ -102,6 +102,13 @@ namespace $ {
 
 					}
 
+				} else if( key === '@starting-style' ) {
+
+					const styles = (config as any)[key] as any
+					rules.push('}\n')
+					make_class( prefix , path , styles )
+					rules.push( `${ key } {\n` )
+
 				} else if( key[0] === '[' && key[key.length-1] === ']' ) {
 
 					const attr = key.slice( 1, -1 )
