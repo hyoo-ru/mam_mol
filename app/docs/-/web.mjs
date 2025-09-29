@@ -20463,7 +20463,7 @@ var $;
 ;
 	($.$mol_email) = class $mol_email extends ($.$mol_string) {
 		type(){
-			return "email";
+			return "text";
 		}
 		keyboard(){
 			return "email";

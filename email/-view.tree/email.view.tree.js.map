@@ -4,7 +4,7 @@
 		"mol/email/email.view.tree"
 	],
 	"sourcesContent": [
-		"$mol_email $mol_string\n\ttype \\email\n\tkeyboard \\email\n\thint \\E-mail\n"
+		"$mol_email $mol_string\n\ttype \\text\n\tkeyboard \\email\n\thint \\E-mail\n\n"
 	],
-	"mappings": "AAAA,AAAA,mCAAW,wBAAX;AAAA,AACC;AAAA,AAAA,UAAM,OAAN;AAAA;AACA;AAAA,AAAA,UAAU,OAAV;AAAA;AACA;AAAA,AAAA,UAAM,QAAN;AAAA;AAHD,CAAA;"
+	"mappings": "AAAA,AAAA,mCAAW,wBAAX;AAAA,AACC;AAAA,AAAA,UAAM,MAAN;AAAA;AACA;AAAA,AAAA,UAAU,OAAV;AAAA;AACA;AAAA,AAAA,UAAM,QAAN;AAAA;AAHD,CAAA;"
 }
