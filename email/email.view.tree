@@ -1,0 +1,4 @@
+$mol_email $mol_string
+	type \email
+	keyboard \email
+	hint \E-mail
