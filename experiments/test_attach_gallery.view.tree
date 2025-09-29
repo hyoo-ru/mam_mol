@@ -1,0 +1,15 @@
+$test_attach_gallery $mol_view
+	sub /
+		<= Title $mol_text
+			text \Test: $mol_attach with $mol_gallery integration
+		<= Description $mol_text
+			text \When more than 3 items are added, the gallery should split into two columns
+		<= Attach_test $mol_attach
+			items? <=> attach_items? /
+				\https://picsum.photos/200/200?random=1
+				\https://picsum.photos/200/200?random=2
+				\https://picsum.photos/200/200?random=3
+				\https://picsum.photos/200/200?random=4
+				\https://picsum.photos/200/200?random=5
+		<= Note $mol_text
+			text \The above should show 5 items in two columns (3 in left, 2 in right)

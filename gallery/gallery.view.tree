@@ -1,16 +1,6 @@
 $mol_gallery $mol_view
-	items? /string
-	sub <= content /$mol_view
-	Add $mol_button_open
-		title <= attach_title \
-		files? <=> attach_new? null
-	Item* $mol_button_minor
-		click?event <=> item_drop*?event null
-		sub /
-			<= Image* $mol_image
-				title \
-				uri <= item_uri* \
+	sub <= items /$mol_view
 	Side* $mol_gallery
 		style *
 			flexGrow <= side_size* \1
-		content <= side_content* /$mol_view
+		items <= side_items* /$mol_view

@@ -4,30 +4,3 @@
 	align-items: stretch;
     align-content: stretch;
 }
-
-[mol_gallery_item] {
-	width: 6rem;
-	height: 6rem;
-	border-radius: var(--mol_gap_round);
-	padding: 0;
-}
-
-[mol_gallery_image] {
-	background: var(--mol_theme_card);
-	width: 100%;
-	height: 100%;
-}
-
-[mol_gallery_add] {
-	background: var(--mol_theme_card);
-	width: 6rem;
-	height: 6rem;
-	align-items: center;
-	justify-content: center;
-	overflow: hidden;
-}
-
-[mol_gallery_add_icon] {
-	width: 50%;
-	height: 50%;
-}
