@@ -373,6 +373,7 @@
     "$mol_hash_numbers",
     "$mol_bar_demo",
     "$mol_bar",
+    "$mol_email",
     "$mol_check_box",
     "$mol_icon_tick",
     "$mol_bench_demo",

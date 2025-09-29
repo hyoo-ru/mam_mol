@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/email/email.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,wBAAW,oBAAX;AACC,AAAA,WAAM;AACN,AAAA,eAAU;AACV,AAAA,WAAM;AAHP;AAAA;AAAA;",
+	"file": "email.view.tree.d.ts",
+	"sourceRoot": "../../.."
+}

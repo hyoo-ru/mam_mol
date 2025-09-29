@@ -20564,6 +20564,23 @@ var $;
 "use strict";
 
 ;
+	($.$mol_email) = class $mol_email extends ($.$mol_string) {
+		type(){
+			return "email";
+		}
+		keyboard(){
+			return "email";
+		}
+		hint(){
+			return "E-mail";
+		}
+	};
+
+
+;
+"use strict";
+
+;
 	($.$mol_icon_tick) = class $mol_icon_tick extends ($.$mol_icon) {
 		path(){
 			return "M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z";
@@ -20596,16 +20613,12 @@ var $;
 
 ;
 	($.$mol_bar_demo) = class $mol_bar_demo extends ($.$mol_example_small) {
-		mail_hint(){
-			return "E-mail";
-		}
 		mail(next){
 			if(next !== undefined) return next;
 			return "";
 		}
 		Two_mail(){
-			const obj = new this.$.$mol_string();
-			(obj.hint) = () => ((this.mail_hint()));
+			const obj = new this.$.$mol_email();
 			(obj.value) = (next) => ((this.mail(next)));
 			return obj;
 		}
@@ -20623,8 +20636,7 @@ var $;
 			return obj;
 		}
 		Three_mail(){
-			const obj = new this.$.$mol_string();
-			(obj.hint) = () => ((this.mail_hint()));
+			const obj = new this.$.$mol_email();
 			(obj.value) = (next) => ((this.mail(next)));
 			return obj;
 		}
