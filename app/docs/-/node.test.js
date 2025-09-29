@@ -4094,13 +4094,13 @@ var $;
             };
         }
         static get method() {
-            return (obj, name, descr) => {
+            return (obj, name, descr = Reflect.getOwnPropertyDescriptor(obj, name)) => {
                 descr.value = this.func(descr.value);
                 return descr;
             };
         }
         static get field() {
-            return (obj, name, descr) => {
+            return (obj, name, descr = Reflect.getOwnPropertyDescriptor(obj, name)) => {
                 descr.get = descr.set = this.func(descr.get);
                 return descr;
             };
