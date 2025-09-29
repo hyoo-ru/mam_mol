@@ -42,7 +42,7 @@ namespace $ {
 			return (
 				obj : object,
 				name : PropertyKey,
-				descr : PropertyDescriptor,
+				descr = Reflect.getOwnPropertyDescriptor( obj, name )!,
 			) => {
 				descr.value = this.func( descr.value! )
 				return descr
@@ -53,14 +53,14 @@ namespace $ {
 		static get field() {
 			
 			return <
-				Host ,
+				Host extends object ,
 				Field extends keyof Host ,
 				Args extends any[] ,
 				Result ,
 			>(
 				obj : Host ,
 				name : Field ,
-				descr : TypedPropertyDescriptor< Result >
+				descr = Reflect.getOwnPropertyDescriptor( obj, name )! as  TypedPropertyDescriptor< Result >
 			) => {
 				descr.get = descr.set = this.func( descr.get! )
 				return descr
