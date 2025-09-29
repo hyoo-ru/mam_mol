@@ -3,14 +3,14 @@ $mol_bar_demo $mol_example_small
 	sub /
 		<= Two $mol_bar
 			sub /
-				<= Two_mail $mol_string
+				<= Two_mail $mol_email
 					hint <= mail_hint \E-mail
 					value? <=> mail? \
 				<= Two_submit $mol_button_minor
 					title <= submit_title \Submit
 		<= Three $mol_bar
 			sub /
-				<= Three_mail $mol_string
+				<= Three_mail $mol_email
 					hint <= mail_hint \E-mail
 					value? <=> mail? \
 				<= Three_confirm $mol_check_box
