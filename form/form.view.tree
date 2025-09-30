@@ -15,6 +15,7 @@ $mol_form $mol_list
 				<= Submit $mol_button_major
 					title <= submit_title @ \Save
 					hint <= submit_hint \
+					event_activate? => submit_event_activate?
 					click? <=> submit? null
 				<= Result $mol_status
 					message <= result? null
