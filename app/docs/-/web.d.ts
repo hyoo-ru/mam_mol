@@ -1936,8 +1936,10 @@ declare namespace $ {
 	>
 	export class $mol_button extends $mol_view {
 		event_activate( next?: any ): any
+		activate( next?: ReturnType< $mol_button['event_activate'] > ): ReturnType< $mol_button['event_activate'] >
 		clicks( next?: any ): any
 		event_key_press( next?: any ): any
+		key_press( next?: ReturnType< $mol_button['event_key_press'] > ): ReturnType< $mol_button['event_key_press'] >
 		disabled( ): boolean
 		tab_index( ): number
 		hint( ): string
@@ -1947,9 +1949,9 @@ declare namespace $ {
 		click( next?: any ): any
 		event_click( next?: any ): any
 		event( ): ({ 
-			click( next?: ReturnType< $mol_button['event_activate'] > ): ReturnType< $mol_button['event_activate'] >,
+			click( next?: ReturnType< $mol_button['activate'] > ): ReturnType< $mol_button['activate'] >,
 			dblclick( next?: ReturnType< $mol_button['clicks'] > ): ReturnType< $mol_button['clicks'] >,
-			keydown( next?: ReturnType< $mol_button['event_key_press'] > ): ReturnType< $mol_button['event_key_press'] >,
+			keydown( next?: ReturnType< $mol_button['key_press'] > ): ReturnType< $mol_button['key_press'] >,
 		})  & ReturnType< $mol_view['event'] >
 		attr( ): ({ 
 			'disabled': ReturnType< $mol_button['disabled'] >,
@@ -1969,7 +1971,7 @@ declare namespace $.$$ {
         status(next?: any[]): any[];
         disabled(): boolean;
         event_activate(next: Event): void;
-        event_key_press(event: KeyboardEvent): void;
+        event_key_press(event: KeyboardEvent): any;
         tab_index(): number;
         error(): string;
         hint_safe(): string;
@@ -8298,27 +8300,32 @@ declare namespace $ {
 		,
 		ReturnType< $mol_list['sub'] >
 	>
-	type $mol_button_major__title_mol_form_2 = $mol_type_enforce<
+	type __mol_form_2 = $mol_type_enforce<
+		Parameters< $mol_form['submit_activate'] >[0]
+		,
+		Parameters< ReturnType< $mol_form['Submit'] >['activate'] >[0]
+	>
+	type $mol_button_major__title_mol_form_3 = $mol_type_enforce<
 		ReturnType< $mol_form['submit_title'] >
 		,
 		ReturnType< $mol_button_major['title'] >
 	>
-	type $mol_button_major__hint_mol_form_3 = $mol_type_enforce<
+	type $mol_button_major__hint_mol_form_4 = $mol_type_enforce<
 		ReturnType< $mol_form['submit_hint'] >
 		,
 		ReturnType< $mol_button_major['hint'] >
 	>
-	type $mol_button_major__click_mol_form_4 = $mol_type_enforce<
+	type $mol_button_major__click_mol_form_5 = $mol_type_enforce<
 		ReturnType< $mol_form['submit'] >
 		,
 		ReturnType< $mol_button_major['click'] >
 	>
-	type $mol_status__message_mol_form_5 = $mol_type_enforce<
+	type $mol_status__message_mol_form_6 = $mol_type_enforce<
 		ReturnType< $mol_form['result'] >
 		,
 		ReturnType< $mol_status['message'] >
 	>
-	type $mol_row__sub_mol_form_6 = $mol_type_enforce<
+	type $mol_row__sub_mol_form_7 = $mol_type_enforce<
 		ReturnType< $mol_form['foot'] >
 		,
 		ReturnType< $mol_row['sub'] >
@@ -8330,6 +8337,7 @@ declare namespace $ {
 		Body( ): $mol_list
 		submit_title( ): string
 		submit_hint( ): string
+		submit_activate( next?: ReturnType< ReturnType< $mol_form['Submit'] >['activate'] > ): ReturnType< ReturnType< $mol_form['Submit'] >['activate'] >
 		submit( next?: any ): any
 		Submit( ): $mol_button_major
 		result( next?: any ): any

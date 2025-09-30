@@ -3,6 +3,9 @@
 			if(next !== undefined) return next;
 			return null;
 		}
+		activate(next){
+			return (this.event_activate(next));
+		}
 		clicks(next){
 			if(next !== undefined) return next;
 			return null;
@@ -10,6 +13,9 @@
 		event_key_press(next){
 			if(next !== undefined) return next;
 			return null;
+		}
+		key_press(next){
+			return (this.event_key_press(next));
 		}
 		disabled(){
 			return false;
@@ -40,9 +46,9 @@
 		event(){
 			return {
 				...(super.event()), 
-				"click": (next) => (this.event_activate(next)), 
+				"click": (next) => (this.activate(next)), 
 				"dblclick": (next) => (this.clicks(next)), 
-				"keydown": (next) => (this.event_key_press(next))
+				"keydown": (next) => (this.key_press(next))
 			};
 		}
 		attr(){

@@ -20,6 +20,9 @@
 		submit_hint(){
 			return "";
 		}
+		submit_activate(next){
+			return (this.Submit().activate(next));
+		}
 		submit(next){
 			if(next !== undefined) return next;
 			return null;
