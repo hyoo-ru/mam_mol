@@ -7,6 +7,10 @@ namespace $.$$ {
 			return this.graphs().filter( graph => graph.Sample()) as readonly $mol_plot_graph[]
 		}
 
+		graph_legends() {
+			return this.graphs_front().map( ( graph , index )=> this.Graph_legend( index ) ) as readonly $mol_view[]
+		}
+
 		@ $mol_mem
 		switch_options() {
 			const options: Record<string, string> = {}
@@ -22,6 +26,13 @@ namespace $.$$ {
 
 		Graph_sample( index : number ) {
 			return this.graphs_front()[ index ].Sample()
+		}
+
+		option_label( index: number ) {
+			return [
+				this.Graph_sample_box( index ),
+				this.Graph_title( index )
+			]
 		}
 
 	}
