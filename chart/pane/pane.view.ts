@@ -2,6 +2,10 @@ namespace $.$$ {
 
 	export class $mol_chart_pane extends $.$mol_chart_pane {
 
+		graph_hue( index : number ) {
+			return ( 360 + ( this.hue_base() + this.hue_shift() * index ) % 360 ) % 360
+		}
+
 		@ $mol_mem
 		graphs_colored() {
 			const graphs = this.graphs_visible()
