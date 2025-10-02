@@ -319,9 +319,11 @@ namespace $ {
 						
 					if( resp.code() === 429 ) continue // rate limit
 					
-					if( resp.code() === 400 ) $mol_fail( new Error(
-						RespFail( resp.json() as any ).error.message
-					) )
+					if( resp.code() === 400 ) {
+						const message = RespFail( resp.json() as any ).error.message
+						this.history([ ... history, { role: 'assistant', content: '📛 ' + message } ])
+						$mol_fail( new Error( message ) )
+					}
 					
 					$mol_fail_hidden( error )
 
