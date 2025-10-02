@@ -3,7 +3,6 @@ $mol_plot_pane $mol_svg_root
 	-
 	hue_base? +NaN
 	hue_shift? 111
-	graph_focused? -1
 	-
 	gap_hor 48
 	gap_vert 24

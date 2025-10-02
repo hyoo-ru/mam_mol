@@ -37,12 +37,10 @@ namespace $.$$ {
 		@ $mol_mem
 		graphs_colored() {
 			const graphs = this.graphs_visible()
-			const focused = this.graph_focused()
 			for (let index = 0; index < graphs.length; index++) {
 				graphs[index].hue( this.graph_hue( index ) )
-				graphs[index].focused( focused === index )
 			}
-			
+
 			return graphs
 		}
 		

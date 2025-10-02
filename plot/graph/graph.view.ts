@@ -66,9 +66,7 @@ namespace $.$$ {
 		
 		color() {
 			const hue = this.hue()
-			if( !hue ) return ''
-			const lightness = this.focused() ? 50 : 35
-			return `hsl( ${ hue } , 100% , ${ lightness }% )`
+			return hue ? `hsl( ${ hue } , 100% , 35% )` : ''
 		}
 		
 		front() {
