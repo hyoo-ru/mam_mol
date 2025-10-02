@@ -1,7 +1,7 @@
 $mol_chart_legend $mol_list
 	graphs /$mol_plot_graph
 	graphs_front /$mol_plot_graph
-	graph_focused? ""
+	graph_focused? \
 	rows /
 		<= Switch $mol_switch
 			value? <=> graph_focused?

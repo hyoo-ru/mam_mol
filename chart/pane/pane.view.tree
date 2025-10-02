@@ -1,2 +1,2 @@
 $mol_chart_pane $mol_plot_pane
-	graph_focused? ""
+	graph_focused? \
