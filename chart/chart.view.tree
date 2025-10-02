@@ -5,8 +5,8 @@ $mol_chart $mol_view
 	gap_right <= gap_hor
 	gap_bottom <= gap_vert
 	gap_top <= gap_vert
-	graphs /$mol_chart_graph
-	graph_focused? -1
+	graphs /$mol_plot_graph
+	graph_focused? ""
 	sub /
 		<= Legend $mol_chart_legend
 			graphs <= graphs_colored

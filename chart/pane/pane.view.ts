@@ -9,11 +9,20 @@ namespace $.$$ {
 		@ $mol_mem
 		graphs_colored() {
 			const graphs = this.graphs_visible()
-			const focused = this.graph_focused()
+			const focused_str = this.graph_focused()
+			const focused = focused_str === "" ? -1 : Number(focused_str)
+
 			for (let index = 0; index < graphs.length; index++) {
-				graphs[index].hue( this.graph_hue( index ) )
-				if( graphs[index] instanceof $mol_chart_graph ) {
-					(graphs[index] as $mol_chart_graph).focused( focused === index )
+				const hue = this.graph_hue( index )
+				const is_focused = focused === index
+
+				graphs[index].hue( hue )
+
+				// Override color method for this graph
+				graphs[index].color = () => {
+					if (!hue) return ''
+					const lightness = is_focused ? 50 : 35
+					return `hsl( ${ hue } , 100% , ${ lightness }% )`
 				}
 			}
 
