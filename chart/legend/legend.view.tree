@@ -3,16 +3,17 @@ $mol_chart_legend $mol_scroll
 	graphs_front /$mol_plot_graph
 	graph_focused? \
 	sub /
+		<= Switch $mol_switch
+			value? <=> graph_focused?
+			options <= switch_options *
 		<= Gallery $mol_gallery items <= graph_legends /$mol_view
 	-
-	Graph_legend* $mol_switch
-		value? <=> graph_focused?
-		options <= switch_options *
-		Option* $mol_check
-			label <= option_label* /
-				<= Graph_sample_box* $mol_view
-					sub /
-						<= Graph_sample* null
-				<= Graph_title* $mol_view
-					sub /
-						<= graph_title* \
+	Graph_legend* $mol_button_minor
+		click?event <=> graph_focus*?event null
+		sub /
+			<= Graph_sample_box* $mol_view
+				sub /
+					<= Graph_sample* null
+			<= Graph_title* $mol_view
+				sub /
+					<= graph_title* \

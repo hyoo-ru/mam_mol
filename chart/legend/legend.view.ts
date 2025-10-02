@@ -28,11 +28,9 @@ namespace $.$$ {
 			return this.graphs_front()[ index ].Sample()
 		}
 
-		option_label( index: number ) {
-			return [
-				this.Graph_sample_box( index ),
-				this.Graph_title( index )
-			]
+		graph_focus( index : number, event?: Event ) {
+			const current = this.graph_focused()
+			this.graph_focused( current === String(index) ? '' : String(index) )
 		}
 
 	}
