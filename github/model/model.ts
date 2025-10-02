@@ -105,6 +105,12 @@ namespace $ {
 		}) ),
 	})
 	
+	const RespFail = $mol_data_record({
+		error: $mol_data_record({
+			message: $mol_data_string,
+		}),
+	})
+	
 	
 	type Primitive< Type extends 'string' | 'number' | 'integer' | 'boolean' > = Readonly<{
 		type: Type
@@ -306,16 +312,24 @@ namespace $ {
 					this.history([ ... history, message ])
 					return JSON.parse( message.content ?? 'null' )
 				
-				} catch( error ) {
+				} catch( error: any ) {
 
-					if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
-					$mol_fail_log( error )
+					const resp = error.cause as $mol_fetch_response
+					if( !resp ) return $mol_fail_hidden( error )
+						
+					if( resp.code() === 429 ) continue // rate limit
+					
+					if( resp.code() === 400 ) $mol_fail( new Error(
+						RespFail( resp.json() as any ).error.message
+					) )
+					
+					$mol_fail_hidden( error )
 
 				}
 			
 			}
 			
-			return this.$.$mol_fail( new Error( 'No alive model' ) )
+			return this.$.$mol_fail( new Error( 'No alive token' ) )
 			
 		}
 		
