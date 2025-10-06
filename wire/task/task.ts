@@ -90,6 +90,11 @@ namespace $ {
 			return next
 		}
 		
+		destructor() {
+			super.destructor()
+			this.cursor = $mol_wire_cursor.final
+		}
+		
 	}
-
+	
 }
