@@ -1167,6 +1167,7 @@ var $;
         }
         destructor() {
             super.destructor();
+            $mol_wire_fiber.planning.delete(this);
             if (!$mol_owning_check(this, this.cache))
                 return;
             try {
