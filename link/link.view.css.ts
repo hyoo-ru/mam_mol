@@ -50,6 +50,12 @@ namespace $ {
 			}
 		},
 		
+		':empty': {
+			'::after': {
+				content: '"\u00A0"',
+			},
+		},
+		
 	} )
 
 }
