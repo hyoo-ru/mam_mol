@@ -3391,7 +3391,6 @@ var $;
         }
         dom_node_actual() {
             const node = this.dom_node();
-            $mol_dom_render_styles(node, this.style_size());
             const attr = this.attr();
             const style = this.style();
             $mol_dom_render_attributes(node, attr);
@@ -3490,12 +3489,6 @@ var $;
         attr() {
             return {
                 mol_theme: this.theme() ?? undefined,
-            };
-        }
-        style_size() {
-            return {
-                minHeight: this.minimal_height(),
-                minWidth: this.minimal_width(),
             };
         }
         style() {
