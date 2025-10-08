@@ -9845,6 +9845,7 @@ var $;
             },
             Rows: {
                 padding: $mol_gap.text,
+                minWidth: 0,
             },
             Row: {
                 font: {
