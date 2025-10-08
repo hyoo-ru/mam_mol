@@ -44,7 +44,8 @@ namespace $.$$ {
 
 		@ $mol_mem_key
 		row_content( path: number[] ) {
-			return this.tokens( path ).map( (t,i)=> this.Token([ ... path, i ]) )
+			const content = this.tokens( path ).map( (t,i)=> this.Token([ ... path, i ]) )
+			return content.length ? content : [ '\n' ]
 		}
 
 		Token( path: number[] ) {
