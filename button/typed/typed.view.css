@@ -21,3 +21,6 @@
 	color: var(--mol_theme_focus);
 }
 
+[mol_button_typed]:empty::after {
+	content: "\u00A0";
+}
