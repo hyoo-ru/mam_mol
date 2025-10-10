@@ -28863,7 +28863,7 @@ var $;
                 const moment = this.value_moment();
                 if (val === undefined)
                     return moment?.toString('YYYY-MM-DD hh:mm') ?? '';
-                const moment2 = $mol_try(() => val && new $mol_time_moment(val).merge({ offset: new $mol_time_moment().offset })) || null;
+                const moment2 = val && $mol_try(() => new $mol_time_moment(val)) || null;
                 if (moment2 instanceof Error)
                     return val;
                 this.value_moment(moment2);
