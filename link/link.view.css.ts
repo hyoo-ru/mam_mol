@@ -52,7 +52,7 @@ namespace $ {
 		
 		':empty': {
 			'::after': {
-				content: '"\00A0"',
+				content: '"\u00A0"',
 			},
 		},
 		
