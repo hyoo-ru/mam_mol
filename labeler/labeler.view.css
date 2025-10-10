@@ -16,8 +16,5 @@
 [mol_labeler_content] {
 	display: flex;
 	padding: var(--mol_gap_text);
-}
-
-[mol_labeler_content]:empty::after {
-	content: "\00A0";
+	min-height: 2.5rem;
 }
