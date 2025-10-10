@@ -13,7 +13,3 @@
 	color: var(--mol_theme_focus);
 	text-shadow: 0 0;
 }
-
-[mol_dimmer]:empty::after {
-	content: "\00A0";
-}
