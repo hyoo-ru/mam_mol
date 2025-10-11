@@ -16,4 +16,5 @@
 [mol_labeler_content] {
 	display: flex;
 	padding: var(--mol_gap_text);
+	min-height: 2.5rem;
 }

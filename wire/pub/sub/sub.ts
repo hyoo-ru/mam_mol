@@ -127,7 +127,7 @@ namespace $ {
 			this.data.length = this.sub_from 
 			this.cursor = this.pub_from
 			this.track_cut()
-			this.cursor = $mol_wire_cursor.final
+			this.cursor = $mol_wire_cursor.stale
 			
 		}
 		

@@ -6,6 +6,8 @@
 	gap: var(--mol_gap_space);
 	user-select: none;
 	cursor: pointer;
+	min-width: 2.5rem;
+	min-height: 2.5rem;
 }
 
 [mol_button_typed][disabled] {
@@ -20,4 +22,3 @@
 [mol_button_typed]:active {
 	color: var(--mol_theme_focus);
 }
-

@@ -1,0 +1,13 @@
+$mol_view_tree2_to_js_test_ex_simple_factory_inheritance_bar $mol_object
+	config *
+		ips /
+			\127.0.0.1
+
+$mol_view_tree2_to_js_test_ex_simple_factory_inheritance_foo $mol_object
+	Having $mol_view_tree2_to_js_test_ex_simple_factory_inheritance_bar
+		config *
+			ips /
+				^
+				\0.0.0.0
+				^ addon /
+					\1.1.1.1

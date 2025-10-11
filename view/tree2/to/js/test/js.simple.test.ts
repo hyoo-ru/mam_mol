@@ -145,6 +145,18 @@ sub
 			)
 		},
 
+		'simple factory inheritance'( $ ) {
+			
+			const _foo = $mol_view_tree2_to_js_test_ex_simple_factory_inheritance_foo
+			const foo = _foo.make({ $ })
+
+			$mol_assert_equal(
+				foo.Having().config(),
+				{ ips: [ '127.0.0.1', '0.0.0.0', '1.1.1.1' ] },
+			)
+			
+		},
+
 		'simple nan' ($) {
 			const _foo = $mol_view_tree2_to_js_test_ex_simple_nan_foo
 			const foo = _foo.make({ $ })

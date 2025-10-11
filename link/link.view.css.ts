@@ -12,6 +12,7 @@ namespace $ {
 		boxSizing: 'border-box',
 		position: 'relative',
 		minWidth: rem(2.5),
+		minHeight: rem(2.5),
 		gap: $mol_gap.space,
 		
 		border: {
