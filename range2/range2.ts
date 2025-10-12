@@ -186,6 +186,10 @@ namespace $ {
 			return $mol_fail( new TypeError( `Mutable sort is forbidden. Use toSorted instead.`  ) )
 		}
 		
+		indexOf( needle: Item ) {
+			return this.findIndex( item => item === needle )
+		}
+		
 		[Symbol.toPrimitive]() {
 			return $mol_guid()
 		}
