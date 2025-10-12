@@ -2136,17 +2136,18 @@ declare namespace $ {
 		ReturnType< $mol_view['style'] >
 	>
 	export class $mol_list extends $mol_view {
-		rows( ): readonly($mol_view)[]
 		gap_before( ): number
+		Gap_before( ): $mol_view
+		Empty( ): $mol_view
 		gap_after( ): number
+		Gap_after( ): $mol_view
+		rows( ): readonly($mol_view)[]
 		render_visible_only( ): boolean
 		render_over( ): number
 		sub( ): ReturnType< $mol_list['rows'] >
-		Empty( ): $mol_view
-		Gap_before( ): $mol_view
-		Gap_after( ): $mol_view
 		item_height_min( id: any): number
 		item_width_min( id: any): number
+		view_window_shift( next?: number ): number
 		view_window( ): readonly(any)[]
 	}
 	
@@ -14330,6 +14331,7 @@ declare namespace $ {
         every<Narrow extends Item, Context = null>(check: (value: Item, index: number, array: Item[]) => value is Narrow, context?: Context): this is Narrow[];
         reverse(): never;
         sort(): never;
+        indexOf(needle: Item): number;
         [Symbol.toPrimitive](): string;
     }
 }
