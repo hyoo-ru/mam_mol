@@ -6760,6 +6760,7 @@ var $;
             },
             Body_content: {
                 padding: $mol_gap.block,
+                minHeight: 0,
                 flex: {
                     direction: 'column',
                     shrink: 1,
