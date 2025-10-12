@@ -1,5 +1,6 @@
 [mol_embed_native] {
 	min-width: 0;
+	min-height: 0;
 	max-width: 100%;
 	max-height: 100vh;
 	object-fit: cover;
