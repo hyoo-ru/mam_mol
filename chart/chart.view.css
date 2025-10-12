@@ -3,6 +3,7 @@
 	flex-direction: column;
 	align-self: stretch;
 	flex: 1 1 auto;
+	min-height: 0;
 }
 
 [mol_chart_plot] {
