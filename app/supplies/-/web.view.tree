@@ -97,13 +97,7 @@ $mol_form_field $mol_labeler
 	content / <= control null
 
 $mol_speck $mol_view
-	minimal_width 12
-	attr *
-		^
-		mol_theme <= theme \$mol_theme_accent
-	style *
-		^
-		minHeight \1em
+	theme \$mol_theme_accent
 	sub /
 		<= value null
 
