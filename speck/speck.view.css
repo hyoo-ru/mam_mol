@@ -4,6 +4,7 @@
 	margin: -0.5rem -0.2rem;
 	align-self: flex-start;
 	min-height: 1em;
+	min-width: .75rem;
 	vertical-align: sub;
 	padding: 0 .2rem;
 	position: absolute;

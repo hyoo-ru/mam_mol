@@ -10,7 +10,17 @@ namespace $.$$ {
 		@ $mol_mem
 		sub() {
 			const rows = this.rows()
-			return ( rows.length === 0 ) ? [ this.Empty() ] : rows
+			const next = ( rows.length === 0 ) ? [ this.Empty() ] : rows
+			
+			const prev = $mol_mem_cached( ()=> this.sub() )
+			const [ start, end ] = $mol_mem_cached( ()=> this.view_window() ) ?? [ 0, 0 ]
+			
+			if( prev && $mol_mem_cached( ()=> prev[ start ] !== next[ start ] ) ) {
+				const index = $mol_mem_cached( ()=> next.indexOf( prev[ start ] ) ) ?? -1
+				if( index >= 0 ) this.view_window_shift( index - start )
+			}
+			
+			return next
 		}
 
 		render_visible_only() {
@@ -29,6 +39,9 @@ namespace $.$$ {
 			if( next ) return next
 			
 			let [ min , max ] = $mol_mem_cached( ()=> this.view_window() ) ?? [ 0 , 0 ]
+			const shift = this.view_window_shift()
+			min += shift
+			max += shift
 
 			let max2 = max = Math.min( max , kids.length )
 			let min2 = min = Math.max( 0 , Math.min( min , max - 1 ) )

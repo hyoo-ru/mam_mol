@@ -9,6 +9,7 @@
 	align-content: stretch; */
 	transition: none;
 	min-height: 1.5rem;
+	/* will-change: contents; */
 }
 
 [mol_list_gap_before] ,
