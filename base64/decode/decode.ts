@@ -1,4 +1,5 @@
 namespace $ {
+
 	type Uint8ArrayAdvanced = typeof Uint8Array & {
 		fromBase64(str: string, options?: {
 			alphabet?: 'base64url' | 'base64'

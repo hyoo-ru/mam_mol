@@ -3,7 +3,7 @@ namespace $ {
 	const decoders = {} as { [ key in $mol_charset_encoding ]?: TextDecoder }
 
 	export function $mol_charset_decode(
-		buffer: BufferSource,
+		buffer: AllowSharedBufferSource,
 		encoding: $mol_charset_encoding = 'utf8',
 	) {
 		

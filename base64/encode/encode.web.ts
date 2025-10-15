@@ -13,10 +13,15 @@ namespace $ {
 
 	const base_encode = $.$mol_base64_encode
 
-	export function $mol_base64_encode_web(str: string | Uint8Array<ArrayBuffer>): string {
-		if ('toBase64' in Uint8Array.prototype) return base_encode(str)
+	export function $mol_base64_encode_web(str: string | Uint8Array<ArrayBuffer>, options?: $mol_base64_encode_options): string {
+		if ('toBase64' in Uint8Array.prototype) return base_encode(str, options)
 
-		return $mol_dom_context.btoa(binary_string(str))
+		let encoded = $mol_dom_context.btoa(binary_string(str))
+
+		if (options?.alphabet === 'base64url') encoded = encoded.replace(/\+/g, '-').replace(/\//g, '_')
+		if (options?.omitPadding) return encoded.replace(/\=/g, '')
+
+		return encoded
 	}
 
 	$.$mol_base64_encode = $mol_base64_encode_web
