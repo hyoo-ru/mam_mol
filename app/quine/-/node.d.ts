@@ -2768,6 +2768,7 @@ declare namespace $ {
 
 	export class $mol_image extends $mol_view {
 		uri( ): string
+		title( ): string
 		loading( ): string
 		decoding( ): string
 		cors( ): any

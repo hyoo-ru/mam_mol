@@ -2,6 +2,9 @@
 		uri(){
 			return "";
 		}
+		title(){
+			return "";
+		}
 		loading(){
 			return "lazy";
 		}

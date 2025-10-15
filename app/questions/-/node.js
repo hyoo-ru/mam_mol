@@ -8061,6 +8061,9 @@ var $;
 		uri(){
 			return "";
 		}
+		title(){
+			return "";
+		}
 		loading(){
 			return "lazy";
 		}

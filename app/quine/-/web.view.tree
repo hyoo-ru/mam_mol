@@ -312,7 +312,7 @@ $mol_image $mol_view
 		^
 		src <= uri \
 		title <= hint
-		alt <= title
+		alt <= title \
 		loading <= loading \lazy
 		decoding <= decoding \async
 		crossOrigin <= cors null
