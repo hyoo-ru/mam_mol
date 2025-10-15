@@ -11,7 +11,11 @@ namespace $ {
 		return binary
 	}
 
-	export function $mol_base64_encode_web(str: string | Uint8Array< ArrayBuffer >): string {
+	const base_encode = $.$mol_base64_encode
+
+	export function $mol_base64_encode_web(str: string | Uint8Array<ArrayBuffer>): string {
+		if ('toBase64' in Uint8Array.prototype) return base_encode(str)
+
 		return $mol_dom_context.btoa(binary_string(str))
 	}
 
