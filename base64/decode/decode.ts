@@ -3,7 +3,7 @@ namespace $ {
 	type Uint8ArrayAdvanced = typeof Uint8Array & {
 		fromBase64(str: string, options?: {
 			alphabet?: 'base64url' | 'base64'
-			latChunkHandling?: 'loose' | 'strict' | 'stop-before-partial'
+			lastChunkHandling?: 'loose' | 'strict' | 'stop-before-partial'
 		}): Uint8Array<ArrayBuffer>
 	}
 
