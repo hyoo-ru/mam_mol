@@ -261,6 +261,7 @@ declare namespace $ {
         toString(): string;
         toJSON(): string;
         [$mol_dev_format_head](): any[];
+        [$mol_dev_format_body](): null;
         get $(): any;
         emit(quant?: $mol_wire_cursor): void;
         fresh(): this | undefined;
