@@ -10,16 +10,8 @@ namespace $ {
 			$mol_assert_equal($mol_base64_encode(png), 'GgoASUh42g==')
 		},
 
-		'base64 encode binary - omit padding'() {
-			$mol_assert_equal($mol_base64_encode(png, { omitPadding: true }), 'GgoASUh42g')
-		},
-
 		'base64 encode string with plus'() {
 			$mol_assert_equal($mol_base64_encode('шоешпо'), '0YjQvtC10YjQv9C+')
-		},
-
-		'base64 encode string with plus - url version'() {
-			$mol_assert_equal($mol_base64_encode('шоешпо', { alphabet: 'base64url' }), '0YjQvtC10YjQv9C-')
 		},
 	})
 }

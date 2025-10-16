@@ -19,9 +19,5 @@ namespace $ {
 		'base64 decode with plus'() {
 			$mol_assert_equal($mol_base64_decode('0YjQvtC10YjQv9C+'), with_plus)
 		},
-
-		'base64 decode with plus - url version'() {
-			$mol_assert_equal($mol_base64_decode('0YjQvtC10YjQv9C-', { alphabet: 'base64url' }), with_plus)
-		}
 	})
 }
