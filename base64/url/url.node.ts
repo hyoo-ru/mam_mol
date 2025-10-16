@@ -1,7 +1,11 @@
 namespace $ {
 	
-	export function $mol_base64_url_encode_node( buffer: Uint8Array< ArrayBuffer > ) {
-		return $mol_base64_encode( buffer ).replace( /\+/g, '-' ).replace( /\//g, '_' ).replace( /=/g, '' )
+	export function $mol_base64_url_encode_node( str: Uint8Array< ArrayBuffer > ) {
+		if (! str) return ''
+
+		const buf = Buffer.isBuffer(str) ? str : Buffer.from(str)
+
+		return buf.toString('base64url').replace( /=/g, '' )
 	}
 
 	if ( ! ( 'toBase64' in Uint8Array.prototype ) ) {
@@ -9,7 +13,10 @@ namespace $ {
 	}
 
 	export function $mol_base64_url_decode_node( str: string ) {
-		return $mol_base64_decode( str.replace( /-/g, '+' ).replace( /_/g, '/' ) )
+		// without Uint8Array breaks $mol_compare_deep
+		const buffer = Buffer.from(str, 'base64url')
+
+		return new Uint8Array(buffer.buffer, buffer.byteOffset, buffer.byteLength)
 	}
 
 	if ( ! ( 'fromBase64' in Uint8Array ) ) {
