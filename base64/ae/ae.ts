@@ -5,7 +5,7 @@ namespace $ {
 	}
 	
 	export function $mol_base64_ae_decode( str: string ) {
-		return $mol_base64_decode( str )
+		return $mol_base64_decode( str.replace( /æ/g, '+' ).replace( /Æ/g, '/' ) )
 	}
 	
 }
