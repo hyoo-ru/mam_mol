@@ -11,7 +11,7 @@ namespace $ {
 		return binary
 	}
 
-	export function $mol_base64_encode_web(str: string | Uint8Array<ArrayBuffer>): string {
+	export function $mol_base64_encode_web(str: Uint8Array<ArrayBuffer>): string {
 		if ('toBase64' in Uint8Array.prototype) {
 			const bytes = typeof str === 'string' ? $mol_charset_encode(str) : str
 			return (bytes as unknown as { toBase64(): string }).toBase64()

@@ -3,7 +3,7 @@ namespace $ {
 
 	$mol_test({
 		'base64 encode string'() {
-			$mol_assert_equal($mol_base64_encode('Hello, ΧΨΩЫ'), 'SGVsbG8sIM6nzqjOqdCr')
+			$mol_assert_equal($mol_base64_encode($mol_charset_encode('Hello, ΧΨΩЫ')), 'SGVsbG8sIM6nzqjOqdCr')
 		},
 
 		'base64 encode binary'() {
@@ -11,7 +11,7 @@ namespace $ {
 		},
 
 		'base64 encode string with plus'() {
-			$mol_assert_equal($mol_base64_encode('шоешпо'), '0YjQvtC10YjQv9C+')
+			$mol_assert_equal($mol_base64_encode($mol_charset_encode('шоешпо')), '0YjQvtC10YjQv9C+')
 		},
 	})
 }
