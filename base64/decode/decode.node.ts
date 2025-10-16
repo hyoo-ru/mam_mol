@@ -3,7 +3,7 @@ namespace $ {
 
 	export function $mol_base64_decode_node(base64Str: string): Uint8Array< ArrayBuffer > {
 
-		base64Str = base64Str.replace( /-/g, '+' ).replace( /_/g, '/' )
+		base64Str = base64Str.replace( /[\-æ]/g, '+' ).replace( /[_Æ]/g, '/' )
 		if ('fromBase64' in Uint8Array) return base_decode(base64Str)
 		
 		// without Uint8Array breaks $mol_compare_deep
