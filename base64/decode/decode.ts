@@ -7,7 +7,7 @@ namespace $ {
 		}): Uint8Array<ArrayBuffer>
 	}
 
-	export function $mol_base64_decode(base64: string): Uint8Array< ArrayBuffer > {
-		return (Uint8Array as Uint8ArrayAdvanced).fromBase64(base64)
+	export function $mol_base64_decode(base64: string, options?: { alphabet?: 'base64url' } ): Uint8Array< ArrayBuffer > {
+		return (Uint8Array as Uint8ArrayAdvanced).fromBase64(base64, options)
 	}
 }
