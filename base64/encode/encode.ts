@@ -1,5 +1,5 @@
 namespace $ {
 	export function $mol_base64_encode(src: Uint8Array< ArrayBuffer >): string {
-		throw new Error('Not implemented')
-	}
+		return (src as unknown as { toBase64(): string }).toBase64()
+}
 }
