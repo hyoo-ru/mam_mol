@@ -12788,8 +12788,22 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_base64_url_encode(buffer) {
+        return buffer.toBase64({ alphabet: 'base64url', omitPadding: true });
+    }
+    $.$mol_base64_url_encode = $mol_base64_url_encode;
+    function $mol_base64_url_decode(str) {
+        return Uint8Array.fromBase64(str, { alphabet: 'base64url' });
+    }
+    $.$mol_base64_url_decode = $mol_base64_url_decode;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
     function $mol_base64_encode(src) {
-        throw new Error('Not implemented');
+        return src.toBase64();
     }
     $.$mol_base64_encode = $mol_base64_encode;
 })($ || ($ = {}));
@@ -12813,7 +12827,9 @@ var $;
         return $mol_dom_context.btoa(binary_string(str));
     }
     $.$mol_base64_encode_web = $mol_base64_encode_web;
-    $.$mol_base64_encode = $mol_base64_encode_web;
+    if (!('toBase64' in Uint8Array.prototype)) {
+        $.$mol_base64_encode = $mol_base64_encode_web;
+    }
 })($ || ($ = {}));
 
 ;
@@ -12821,7 +12837,7 @@ var $;
 var $;
 (function ($) {
     function $mol_base64_decode(base64) {
-        throw new Error('Not implemented');
+        return Uint8Array.fromBase64(base64);
     }
     $.$mol_base64_decode = $mol_base64_decode;
 })($ || ($ = {}));
@@ -12831,24 +12847,33 @@ var $;
 var $;
 (function ($) {
     function $mol_base64_decode_web(base64Str) {
-        return new Uint8Array($mol_dom_context.atob(base64Str).split('').map(c => c.charCodeAt(0)));
+        const buf = Uint8Array.from($mol_dom_context.atob(base64Str), c => c.charCodeAt(0));
+        return buf;
     }
     $.$mol_base64_decode_web = $mol_base64_decode_web;
-    $.$mol_base64_decode = $mol_base64_decode_web;
+    if (!('fromBase64' in Uint8Array)) {
+        $.$mol_base64_decode = $mol_base64_decode_web;
+    }
 })($ || ($ = {}));
 
 ;
 "use strict";
 var $;
 (function ($) {
-    function $mol_base64_url_encode(buffer) {
+    function $mol_base64_url_encode_web(buffer) {
         return $mol_base64_encode(buffer).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
     }
-    $.$mol_base64_url_encode = $mol_base64_url_encode;
-    function $mol_base64_url_decode(str) {
+    $.$mol_base64_url_encode_web = $mol_base64_url_encode_web;
+    if (!('toBase64' in Uint8Array.prototype)) {
+        $.$mol_base64_url_encode = $mol_base64_url_encode_web;
+    }
+    function $mol_base64_url_decode_web(str) {
         return $mol_base64_decode(str.replace(/-/g, '+').replace(/_/g, '/'));
     }
-    $.$mol_base64_url_decode = $mol_base64_url_decode;
+    $.$mol_base64_url_decode_web = $mol_base64_url_decode_web;
+    if (!('fromBase64' in Uint8Array)) {
+        $.$mol_base64_url_decode = $mol_base64_url_decode_web;
+    }
 })($ || ($ = {}));
 
 ;

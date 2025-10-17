@@ -264,8 +264,6 @@
     "$mol_crypto_native",
     "$mol_base64_url",
     "$mol_base64",
-    "$mol_base64_encode",
-    "$mol_base64_decode",
     "$hyoo_crowd_fund",
     "$mol_dict",
     "$hyoo_crowd_unit",
