@@ -1,11 +1,14 @@
 namespace $ {
 
-	export function $mol_base64_encode_node(str: string | Uint8Array< ArrayBuffer >): string {
+	export function $mol_base64_encode_node(str: Uint8Array< ArrayBuffer >): string {
 		if (! str) return ''
-		if (Buffer.isBuffer(str)) return str.toString('base64')
 
-		return Buffer.from(str as string).toString('base64')
+		const buf = Buffer.isBuffer(str) ? str : Buffer.from(str)
+
+		return buf.toString('base64')
 	}
 
-	$.$mol_base64_encode = $mol_base64_encode_node
+	if ( ! ( 'toBase64' in Uint8Array.prototype ) ) {
+		$.$mol_base64_encode = $mol_base64_encode_node
+	}
 }
