@@ -11,7 +11,8 @@
 		"@types/cors": "*",
 		"@types/body-parser": "*",
 		"@types/serve-index": "*",
-		"@types/jsdom": "27.0.0",
-		"@types/ws": "*"
+		"@types/jsdom": "*",
+		"@types/ws": "*",
+		"jsdom": "27.0.0"
 	}
 }
