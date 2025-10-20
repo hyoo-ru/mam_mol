@@ -156,7 +156,7 @@ var $node = new Proxy({ require }, {
                 const module = cache.get(name);
                 if (module)
                     return module;
-                throw import(name).then(module => cache.set(name, module));
+                throw Object.assign(import(name).then(module => cache.set(name, module)), { cause: error });
             }
             $.$mol_fail_log(error);
             return null;
