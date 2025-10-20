@@ -1243,7 +1243,7 @@ namespace $ {
 
 			for( let dep of this.nodeDeps([ path , exclude ]).keys() ) {
 				if( require('module').builtinModules.includes(dep) || dep.startsWith('node:')) continue
-				json.dependencies[ dep ] = `*`
+				json.dependencies[ dep ] ??= `*`
 			}
 			
 			json.keywords = [ ... this.graph( [ path , exclude ] ).nodes ]
