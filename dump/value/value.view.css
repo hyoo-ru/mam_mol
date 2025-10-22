@@ -1,10 +1,14 @@
 [mol_dump_value] {
-	min-height: 2.5rem;
+	min-height: 1.5rem;
 	min-width: 2.5rem;
 }
 
 [mol_dump_value_simple] {
 	padding: 0;
+}
+
+[mol_dump_value_expand_head] {
+	min-height: 1.5rem;
 }
 
 [mol_dump_value_expand_content] {
