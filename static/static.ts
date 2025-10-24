@@ -5,7 +5,7 @@ namespace $ {
 		return new Proxy(this as unknown as $, {
 			get(t, k) {
 				const Factory = t[k as keyof typeof t]
-				if (typeof Factory !== 'function') return Factory
+				if (typeof Factory !== 'function' || t === $) return Factory
 
 				let Contexted = cache.get(Factory)
 				if (Contexted) return Contexted
