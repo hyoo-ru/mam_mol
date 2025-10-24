@@ -11,7 +11,7 @@ namespace $ {
 				const val = t[k as keyof typeof t]
 				if (typeof val !== 'function') return val
 
-				const Factory = t.$mol_single[k as keyof typeof t] as typeof $mol_object2
+				const Factory = t.$mol_static[k as keyof typeof t] as typeof $mol_object2
 
 				let instance = cache.get(Factory)
 				if (instance) return instance
