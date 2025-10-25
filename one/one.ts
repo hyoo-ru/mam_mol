@@ -1,12 +1,12 @@
 
 namespace $ {
 	type Instances<Obj> = {
-		[K in keyof Obj]: Obj[K] extends typeof $mol_object2 ? InstanceType<Obj[K]> : never
+		[K in keyof Obj]: Obj[K] extends typeof Object ? InstanceType<Obj[K]> : never
 	}
 
 	export let $mol_one = {} as Instances<$>
 
-	const cache = new WeakMap<typeof $mol_object2, $mol_object2>()
+	const cache = new WeakMap<typeof Object, {}>()
 
 	Object.defineProperty($, '$mol_one', {
 		get() {
@@ -15,14 +15,14 @@ namespace $ {
 					const val = t[k as keyof typeof t]
 					if (typeof val !== 'function') return val
 
-					const Factory = t.$mol_static[k as keyof typeof t] as typeof $mol_object2
+					const Factory = t.$mol_static[k as keyof typeof t] as typeof Object
 
 					let instance = cache.get(Factory)
 
 					if (instance) return instance
 
 					instance = new Factory()
-					instance[$mol_ambient_ref] = t as $
+					;(instance as { [$mol_ambient_ref]: typeof $ } )[$mol_ambient_ref] = t
 					cache.set(Factory, instance)
 
 					return instance
