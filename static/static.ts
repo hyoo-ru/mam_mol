@@ -1,25 +1,33 @@
 namespace $ {
-	export function $mol_static_create(this: typeof $) {
-		const cache = new WeakMap<typeof $mol_object2, typeof $mol_object2>()
+	export const caches = new WeakMap<{}, WeakMap<{}, typeof Object>>()
+	export let $mol_static = $
 
-		return new Proxy(this as unknown as $, {
-			get(t, k) {
-				const Factory = t[k as keyof typeof t]
-				if (typeof Factory !== 'function' || t === $) return Factory
+	Object.defineProperty($, '$mol_static', {
+		get() {
+			return new Proxy(this, {
+				get(t: typeof $, k) {
+					const Factory = t[k as keyof typeof t]
+					if (typeof Factory !== 'function' || t === $) return Factory
 
-				let Contexted = cache.get(Factory)
-				if (Contexted) return Contexted
+					let cache = caches.get(t)
+					if (! cache) {
+						cache = new WeakMap()
+						caches.set(t, cache)
+					}
 
-				Contexted = $mol_func_name_from(class extends (Factory as typeof $mol_object2) {
-					static $ = t
-				}, Factory)
+					let Contexted = cache.get(Factory)
+					if (Contexted) return Contexted
 
-				cache.set(Factory, Contexted)
+					Contexted = $mol_func_name_from(class extends Factory {
+						static $ = t
+					}, Factory) as NonNullable<typeof Contexted>
 
-				return Contexted
-			},
-		})
-	}
+					cache.set(Factory, Contexted)
 
-	export let $mol_static = $mol_static_create.call($)
+					return Contexted
+				},
+			})
+		}
+	})
+
 }
