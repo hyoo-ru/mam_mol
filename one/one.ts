@@ -10,15 +10,16 @@ namespace $ {
 
 	function contexted<Instance extends { [$mol_ambient_ref]?: typeof $ }>(
 		this: typeof $,
-		Factory: new (...args: any) => Instance
+		Origin: new (...args: any) => Instance
 	) {
-		let instance = cache.get(Factory) as Instance | undefined
+		const Contexted = this.$mol_static(Origin)
+		let instance = cache.get(Contexted) as Instance | undefined
 
 		if (instance) return instance
 
-		instance = new Factory()
+		instance = new Contexted()
 		instance[$mol_ambient_ref] = this
-		cache.set(Factory, instance)
+		cache.set(Contexted, instance)
 
 		return instance
 	}
@@ -31,10 +32,7 @@ namespace $ {
 				get(self, k) {
 					const val = t[k as keyof typeof t]
 					if (typeof val !== 'function') return val
-
-					const Factory = t.$mol_static[k as keyof typeof t] as new (...args: any) => {}
-
-					return contexted.call(t, Factory)
+					return contexted.call(t, val)
 				}
 			})
 		}
