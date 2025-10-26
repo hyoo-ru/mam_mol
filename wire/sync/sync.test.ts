@@ -61,7 +61,7 @@ namespace $ {
 
 			await $mol_wire_async(A).a()
 			$mol_assert_equal(A.instances.length, 2)
-			$mol_assert_equal(A.instances[0] instanceof A)
+			$mol_assert_equal(A.instances[0] instanceof A, true)
 
 			$mol_assert_equal(A.instances[0], A.instances[1])
 

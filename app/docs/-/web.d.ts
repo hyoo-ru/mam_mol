@@ -6942,7 +6942,7 @@ declare namespace $ {
     function $mol_assert_fail(handler: () => any, ErrorRight: string | typeof Error | typeof Promise): any;
     function $mol_assert_like<Value>(...args: [Value, Value, ...Value[]]): void;
     function $mol_assert_unique(...args: [any, any, ...any[]]): undefined;
-    function $mol_assert_equal<Value>(...args: Value[]): undefined;
+    function $mol_assert_equal<Value>(...args: [Value, Value, ...Value[]]): undefined;
 }
 
 declare namespace $ {
