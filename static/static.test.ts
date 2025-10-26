@@ -3,8 +3,6 @@ namespace $ {
 		static test = []
 	}
 
-	const outer = $
-
 	$mol_test({
 
 		'Inherited context in static class'($) {

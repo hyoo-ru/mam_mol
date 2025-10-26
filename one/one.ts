@@ -26,6 +26,7 @@ namespace $ {
 	Object.defineProperty($, '$mol_one', {
 		get() {
 			const t = this
+
 			return new Proxy(contexted, {
 				get(self, k) {
 					const val = t[k as keyof typeof t]
@@ -33,12 +34,6 @@ namespace $ {
 
 					const Factory = t.$mol_static[k as keyof typeof t] as new (...args: any) => {}
 
-					return contexted.call(t, Factory)
-				},
-				
-				apply(self, fn, args) {
-					if (args.length !== 1 || typeof args[0] !== 'function') return fn.call(t, ...args)
-					const Factory = t.$mol_static(args[0] as new (...args: any) => {})
 					return contexted.call(t, Factory)
 				}
 			})

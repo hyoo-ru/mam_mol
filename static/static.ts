@@ -33,8 +33,9 @@ namespace $ {
 	Object.defineProperty($, '$mol_static', {
 		get() {
 			const t = this
+
 			return new Proxy(contexted as typeof $mol_static, {
-				get(self: typeof $, k) {
+				get(self, k) {
 					const Factory = t[k as keyof typeof t]
 					if (typeof Factory !== 'function' || t === $) return Factory
 					return contexted.call(t, Factory)
