@@ -4,7 +4,7 @@ namespace $ {
 	$mol_test({
 
 		'Inerited context in instance'($) {
-			$mol_assert_equal($.$mol_one_test_object.$ !== $)
+			$mol_assert_unique($.$mol_one_test_object.$, $.$mol_one.$mol_one_test_object.$)
 			$mol_assert_equal($.$mol_one.$mol_one_test_object.$ === $)
 		},
 
