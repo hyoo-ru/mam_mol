@@ -15,7 +15,7 @@ namespace $ {
 		function clone( el: Element ) {
 			
 			const re = el.cloneNode() as HTMLElement
-			if( el === root ) document.body.appendChild( re )
+			// if( el === root ) document.body.appendChild( re )
 			
 			if( el instanceof HTMLImageElement && !/^(data|blob):/.test( el.src ) ) {
 				
@@ -64,7 +64,7 @@ namespace $ {
 				re.appendChild( kid )
 			}
 			
-			if( el === root ) document.body.removeChild( re )
+			// if( el === root ) document.body.removeChild( re )
 			
 			return re
 		}
