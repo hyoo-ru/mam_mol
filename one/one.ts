@@ -37,7 +37,7 @@ namespace $ {
 				
 				apply(t: typeof $, self, args) {
 					if (args.length !== 1 || typeof args[0] !== 'function') return self.call(t, ...args)
-					const Factory = args[0] as new (...args: any) => {}
+					const Factory = t.$mol_static(args[0] as new (...args: any) => {})
 					return contexted(t, Factory)
 				}
 			})
