@@ -21918,8 +21918,6 @@ var $;
         }
         function clone(el) {
             const re = el.cloneNode();
-            if (el === root)
-                document.body.appendChild(re);
             if (el instanceof HTMLImageElement && !/^(data|blob):/.test(el.src)) {
                 const canvas = $mol_jsx("canvas", { width: el.naturalWidth, height: el.naturalHeight });
                 const context = canvas.getContext('2d');
@@ -21960,8 +21958,6 @@ var $;
                 restyle(kid, after);
                 re.appendChild(kid);
             }
-            if (el === root)
-                document.body.removeChild(re);
             return re;
         }
         const { width, height } = root.getBoundingClientRect();
