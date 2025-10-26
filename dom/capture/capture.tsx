@@ -1,11 +1,13 @@
 /** @jsx $mol_jsx */
 namespace $ {
 	
-	export async function $mol_dom_capture_svg( el: Element ) {
+	export async function $mol_dom_capture_svg( root: Element ) {
 		
 		function restyle( el: HTMLElement, styles: CSSStyleDeclaration ) {
-			for( let i= 0; i < styles.length; ++i ) {
+			const def = $mol_dom.getComputedStyle( el )
+			for( let i = 0; i < styles.length; ++i ) {
 				const prop = styles[ i ]
+				if( styles[ prop as any ] === def[ prop as any ] ) continue
 				el.style[ prop as any ] = styles[ prop as any ]
 			}
 		}
@@ -13,6 +15,7 @@ namespace $ {
 		function clone( el: Element ) {
 			
 			const re = el.cloneNode() as HTMLElement
+			if( el === root ) document.body.appendChild( re )
 			
 			if( el instanceof HTMLImageElement && !/^(data|blob):/.test( el.src ) ) {
 				
@@ -61,10 +64,15 @@ namespace $ {
 				re.appendChild( kid )
 			}
 			
+			if( el === root ) document.body.removeChild( re )
+			
 			return re
 		}
 
-		const { width, height } = el.getBoundingClientRect()
+		const { width, height } = root.getBoundingClientRect()
+		
+		const dup = clone( root )
+		dup.style.margin = '0'
 		
 		return <svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -77,7 +85,7 @@ namespace $ {
 				width={ String( width ) }
 				height={ String( height ) }
 			>
-				{ clone( el ) }
+				{ dup }
 			</foreignObject>
 		</svg>
 		
