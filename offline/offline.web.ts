@@ -52,7 +52,7 @@ namespace $ {
 					if (response.status !== 200) return response
 					
 					event.waitUntil(
-						caches.open( '$mol_offline' ).then(
+						factory_caches.open( '$mol_offline' ).then(
 							cache => cache.put( request , response )
 						)
 					)
@@ -85,7 +85,7 @@ namespace $ {
 				if (fresh) event.waitUntil( fresh.then( enrich ) )
 
 				event.respondWith(
-					caches.match( request ).then(
+					factory_caches.match( request ).then(
 						cached => request.cache === 'no-cache' || request.cache === 'reload'
 							? ( cached
 								? fresh!

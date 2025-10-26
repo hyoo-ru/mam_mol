@@ -9,7 +9,7 @@ namespace $ {
 	const cache = new WeakMap<new (...args: any) => any, {}>()
 
 	function contexted<Instance extends { [$mol_ambient_ref]?: typeof $ }>(
-		t: typeof $,
+		this: typeof $,
 		Factory: new (...args: any) => Instance
 	) {
 		let instance = cache.get(Factory) as Instance | undefined
@@ -17,7 +17,7 @@ namespace $ {
 		if (instance) return instance
 
 		instance = new Factory()
-		instance[$mol_ambient_ref] = t
+		instance[$mol_ambient_ref] = this
 		cache.set(Factory, instance)
 
 		return instance
@@ -25,20 +25,21 @@ namespace $ {
 
 	Object.defineProperty($, '$mol_one', {
 		get() {
-			return new Proxy(this, {
-				get(t: typeof $, k) {
+			const t = this
+			return new Proxy(contexted, {
+				get(self, k) {
 					const val = t[k as keyof typeof t]
 					if (typeof val !== 'function') return val
 
 					const Factory = t.$mol_static[k as keyof typeof t] as new (...args: any) => {}
 
-					return contexted(t, Factory)
+					return contexted.call(t, Factory)
 				},
 				
-				apply(t: typeof $, self, args) {
-					if (args.length !== 1 || typeof args[0] !== 'function') return self.call(t, ...args)
+				apply(self, fn, args) {
+					if (args.length !== 1 || typeof args[0] !== 'function') return fn.call(t, ...args)
 					const Factory = t.$mol_static(args[0] as new (...args: any) => {})
-					return contexted(t, Factory)
+					return contexted.call(t, Factory)
 				}
 			})
 		}
