@@ -8,7 +8,7 @@ namespace $ {
 
 	const cache = new WeakMap<new (...args: any) => any, {}>()
 
-	function contexted<Instance extends { [$mol_ambient_ref]?: typeof $ }>(
+	function singletone<Instance extends { [$mol_ambient_ref]?: typeof $ }>(
 		this: typeof $,
 		Origin: new (...args: any) => Instance
 	) {
@@ -28,11 +28,11 @@ namespace $ {
 		get() {
 			const t = this
 
-			return new Proxy(contexted, {
+			return new Proxy(singletone, {
 				get(self, k) {
 					const val = t[k as keyof typeof t]
 					if (typeof val !== 'function') return val
-					return contexted.call(t, val)
+					return singletone.call(t, val)
 				}
 			})
 		}

@@ -36,9 +36,9 @@ namespace $ {
 
 			return new Proxy(contexted as typeof $mol_static, {
 				get(self, k) {
-					const Factory = t[k as keyof typeof t]
-					if (typeof Factory !== 'function' || t === $) return Factory
-					return contexted.call(t, Factory)
+					const val = t[k as keyof typeof t]
+					if (typeof val !== 'function' || t === $) return val
+					return contexted.call(t, val)
 				},
 			})
 		}
