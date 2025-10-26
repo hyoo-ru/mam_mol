@@ -56,6 +56,6 @@ function $my_hello( this : $ , name : string ) {
 $.$my_hello( 'Jin' )
 ```
 
-## Common pitfals
+## Common pitfalls
 
 With static classes or singletones use [this.$.$mol_static.$my_class](../static/) or [this.$.$mol_one.$my_class](../one/)
