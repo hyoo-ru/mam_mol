@@ -2,7 +2,6 @@ namespace $ {
 	export class $mol_one_test_object extends $mol_object2 {}
 
 	$mol_test({
-
 		'Context not passed without helper'($) {
 			const custom = $.$mol_ambient({})
 			$mol_assert_unique(new custom.$mol_one_test_object().$, custom)
