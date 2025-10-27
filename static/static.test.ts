@@ -5,6 +5,16 @@ namespace $ {
 
 	$mol_test({
 
+		'Context not passed without helper'($) {
+			const custom = $.$mol_ambient({})
+			$mol_assert_unique(custom.$mol_static_test_object.$, custom)
+		},
+
+		'Context passed with helper'($) {
+			const custom = $.$mol_ambient({})
+			$mol_assert_equal(custom.$mol_static.$mol_static_test_object.$, custom)
+		},
+
 		'Inherited context in static class'($) {
 			$mol_assert_unique($.$mol_static_test_object.$, $.$mol_static.$mol_static_test_object.$)
 			$mol_assert_equal($.$mol_static.$mol_static_test_object.$, $)

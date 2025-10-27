@@ -3,8 +3,14 @@ namespace $ {
 
 	$mol_test({
 
-		'Contexts differs if instancing without helper'($) {
-			$mol_assert_unique(new $.$mol_one_test_object().$, $.$mol_one.$mol_one_test_object.$)
+		'Context not passed without helper'($) {
+			const custom = $.$mol_ambient({})
+			$mol_assert_unique(new custom.$mol_one_test_object().$, custom)
+		},
+
+		'Contexts passed with helper'($) {
+			const custom = $.$mol_ambient({})
+			$mol_assert_equal(custom.$mol_one.$mol_one_test_object.$, custom)
 		},
 
 		'Inerited context in instance'($) {
