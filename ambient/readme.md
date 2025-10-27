@@ -55,3 +55,7 @@ function $my_hello( this : $ , name : string ) {
 // call in context
 $.$my_hello( 'Jin' )
 ```
+
+## Common pitfalls
+
+With static classes or singletones use [this.$.$mol_static.$my_class](../static/) or [this.$.$mol_one.$my_class](../one/)

@@ -94,7 +94,7 @@ namespace $ {
 	 * $mol_assert_like( [1] , [1] , [2] ) // Fails because 1 !== 2
 	 * @see https://mol.hyoo.ru/#!section=docs/=9q9dv3_fgxjsf
 	 */
-	export function $mol_assert_equal< Value >( ... args : Value[] ) {
+	export function $mol_assert_equal< Value >( ... args : [ Value, Value, ... Value[] ] ) {
 		for( let i = 1 ; i < args.length ; ++i ) {
 			
 			if( $mol_compare_deep( args[0] , args[i] ) ) continue
