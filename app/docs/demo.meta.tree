@@ -6,6 +6,7 @@ include \/mol/offline/install
 include \/mol/app/demo
 
 include \/jin/keyboard/demo
+include \/rise/demo
 include \/hyoo/crowd/text/demo
 
 include \/mol/app/hello/demo

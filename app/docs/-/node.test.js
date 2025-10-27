@@ -12767,6 +12767,2766 @@ var $;
 "use strict";
 
 ;
+	($.$rise_drag) = class $rise_drag extends ($.$mol_plugin) {
+		pointerdown(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		dragged(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		x(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		y(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		repos_x(id){
+			return 1;
+		}
+		repos_y(id){
+			return 1;
+		}
+		on_drag(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		on_drag_start(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		on_drag_end(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		drag(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		drag_start(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		drag_end(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		use_buttons(){
+			return [0];
+		}
+		event(){
+			return {...(super.event()), "pointerdown": (next) => (this.pointerdown(next))};
+		}
+		attr(){
+			return {...(super.attr()), "rise_dragged": (this.dragged())};
+		}
+		drags_synced(){
+			return [];
+		}
+	};
+	($mol_mem(($.$rise_drag.prototype), "pointerdown"));
+	($mol_mem(($.$rise_drag.prototype), "dragged"));
+	($mol_mem(($.$rise_drag.prototype), "x"));
+	($mol_mem(($.$rise_drag.prototype), "y"));
+	($mol_mem(($.$rise_drag.prototype), "on_drag"));
+	($mol_mem(($.$rise_drag.prototype), "on_drag_start"));
+	($mol_mem(($.$rise_drag.prototype), "on_drag_end"));
+	($mol_mem(($.$rise_drag.prototype), "drag"));
+	($mol_mem(($.$rise_drag.prototype), "drag_start"));
+	($mol_mem(($.$rise_drag.prototype), "drag_end"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $rise_drag extends $.$rise_drag {
+            repos_x(val) {
+                return val;
+            }
+            repos_y(val) {
+                return val;
+            }
+            start_event;
+            start_pos;
+            drag_start(event) {
+                this.start_event = event;
+                this.start_pos = { x: this.x(), y: this.y() };
+                this.dragged(true);
+                this.on_drag_start(event);
+            }
+            drag(event) {
+                this.x(this.start_pos.x + this.repos_x(event.x - this.start_event.x));
+                this.y(this.start_pos.y + this.repos_y(event.y - this.start_event.y));
+                this.on_drag(event);
+            }
+            drag_end(event) {
+                this.dragged(false);
+                this.on_drag_end(event);
+            }
+            pointerdown(event) {
+                if (!this.use_buttons().includes(event.button))
+                    return;
+                this.drag_start(event);
+                this.drags_synced().forEach(d => d.drag_start(event));
+                const mousemove = new $mol_dom_listener(this.$.$mol_dom_context.document, 'mousemove', $mol_wire_async(event => {
+                    this.drag(event);
+                    this.drags_synced().forEach(d => d.drag(event));
+                }));
+                const mouseup = new $mol_dom_listener(this.$.$mol_dom_context.document, 'mouseup', $mol_wire_async(event => {
+                    this.drag_end(event);
+                    this.drags_synced().forEach(d => d.drag_end(event));
+                    mouseup?.destructor();
+                    mousemove?.destructor();
+                }));
+            }
+        }
+        $$.$rise_drag = $rise_drag;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$mol_card) = class $mol_card extends ($.$mol_list) {
+		status(){
+			return "";
+		}
+		content(){
+			return [(this.title())];
+		}
+		Content(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this.content()));
+			return obj;
+		}
+		status_text(){
+			return (this.status());
+		}
+		Status(){
+			const obj = new this.$.$mol_view();
+			(obj.minimal_height) = () => (30);
+			(obj.sub) = () => ([(this.status_text())]);
+			return obj;
+		}
+		attr(){
+			return {...(super.attr()), "mol_card_status_type": (this.status())};
+		}
+		rows(){
+			return [(this.Content()), (this.Status())];
+		}
+	};
+	($mol_mem(($.$mol_card.prototype), "Content"));
+	($mol_mem(($.$mol_card.prototype), "Status"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_card extends $.$mol_card {
+            rows() {
+                return [
+                    this.Content(),
+                    ...this.status_text() ? [this.Status()] : [],
+                ];
+            }
+        }
+        $$.$mol_card = $mol_card;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/card/card.view.css", "[mol_card] {\n\tbackground: var(--mol_theme_card);\n\tcolor: var(--mol_theme_text);\n\tborder-radius: var(--mol_gap_round);\n\tdisplay: flex;\n\tflex: 0 1 auto;\n\tflex-direction: column;\n\tposition: relative;\n\tbox-shadow: 0 0 0.5rem 0rem hsla(0,0%,0%,.125);\n\t/* overflow: hidden; */\n}\n\n[mol_card_content] {\n\tflex: 1 1 auto;\n\tborder-radius: var(--mol_gap_round);\n\tmargin: 0;\n\tpadding: var(--mol_gap_block);\n}\n\n[mol_card_status] {\n\tbackground: var(--mol_theme_line);\n\tpadding: var(--mol_gap_text);\n\tmargin: 0;\n}\n\n[mol_card_status] {\n\tbackground: var(--mol_theme_line);\n}\n");
+})($ || ($ = {}));
+
+;
+	($.$rise_drag_view) = class $rise_drag_view extends ($.$mol_view) {
+		on_drag_start(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		on_drag_end(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		on_drag(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		dragged(){
+			return (this.Drag().dragged());
+		}
+		y(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		x(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		drags_synced(){
+			return [];
+		}
+		repos_x(id){
+			return 1;
+		}
+		repos_y(id){
+			return 1;
+		}
+		Drag(){
+			const obj = new this.$.$rise_drag();
+			(obj.on_drag_start) = (next) => ((this.on_drag_start(next)));
+			(obj.on_drag_end) = (next) => ((this.on_drag_end(next)));
+			(obj.on_drag) = (next) => ((this.on_drag(next)));
+			(obj.y) = (next) => ((this.y(next)));
+			(obj.x) = (next) => ((this.x(next)));
+			(obj.drags_synced) = () => ((this.drags_synced()));
+			(obj.repos_x) = (id) => ((this.repos_x(id)));
+			(obj.repos_y) = (id) => ((this.repos_y(id)));
+			return obj;
+		}
+		plugins(){
+			return [...(super.plugins()), (this.Drag())];
+		}
+		style(){
+			return {...(super.style()), "userSelect": "none"};
+		}
+	};
+	($mol_mem(($.$rise_drag_view.prototype), "on_drag_start"));
+	($mol_mem(($.$rise_drag_view.prototype), "on_drag_end"));
+	($mol_mem(($.$rise_drag_view.prototype), "on_drag"));
+	($mol_mem(($.$rise_drag_view.prototype), "y"));
+	($mol_mem(($.$rise_drag_view.prototype), "x"));
+	($mol_mem(($.$rise_drag_view.prototype), "Drag"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $rise_drag_view extends $.$rise_drag_view {
+            repos_x(val) {
+                return val;
+            }
+            repos_y(val) {
+                return val;
+            }
+        }
+        $$.$rise_drag_view = $rise_drag_view;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$rise_drag_absolute) = class $rise_drag_absolute extends ($.$rise_drag_view) {
+		top(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		left(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		top_px(){
+			return "0px";
+		}
+		left_px(){
+			return "0px";
+		}
+		y(next){
+			return (this.top(next));
+		}
+		x(next){
+			return (this.left(next));
+		}
+		style(){
+			return {
+				...(super.style()), 
+				"position": "absolute", 
+				"top": (this.top_px()), 
+				"left": (this.left_px())
+			};
+		}
+	};
+	($mol_mem(($.$rise_drag_absolute.prototype), "top"));
+	($mol_mem(($.$rise_drag_absolute.prototype), "left"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $rise_drag_absolute extends $.$rise_drag_absolute {
+            top_px() {
+                return this.top() + 'px';
+            }
+            left_px() {
+                return this.left() + 'px';
+            }
+        }
+        $$.$rise_drag_absolute = $rise_drag_absolute;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$rise_drag_demo) = class $rise_drag_demo extends ($.$mol_example_small) {
+		Card(){
+			const obj = new this.$.$mol_card();
+			(obj.title) = () => ("Draggable");
+			return obj;
+		}
+		Draggable(){
+			const obj = new this.$.$rise_drag_absolute();
+			(obj.sub) = () => ([(this.Card())]);
+			(obj.drags_synced) = () => ([(this.Synced_drag())]);
+			return obj;
+		}
+		top(next){
+			if(next !== undefined) return next;
+			return 100;
+		}
+		left(next){
+			if(next !== undefined) return next;
+			return 100;
+		}
+		Synced_drag(){
+			return (this.Synced().Drag());
+		}
+		Synced_card(){
+			const obj = new this.$.$mol_card();
+			(obj.title) = () => ("Synced");
+			return obj;
+		}
+		Synced(){
+			const obj = new this.$.$rise_drag_absolute();
+			(obj.top) = (next) => ((this.top(next)));
+			(obj.left) = (next) => ((this.left(next)));
+			(obj.sub) = () => ([(this.Synced_card())]);
+			return obj;
+		}
+		sub(){
+			return [(this.Draggable()), (this.Synced())];
+		}
+		tags(){
+			return ["drag"];
+		}
+		aspects(){
+			return ["Widget"];
+		}
+	};
+	($mol_mem(($.$rise_drag_demo.prototype), "Card"));
+	($mol_mem(($.$rise_drag_demo.prototype), "Draggable"));
+	($mol_mem(($.$rise_drag_demo.prototype), "top"));
+	($mol_mem(($.$rise_drag_demo.prototype), "left"));
+	($mol_mem(($.$rise_drag_demo.prototype), "Synced_card"));
+	($mol_mem(($.$rise_drag_demo.prototype), "Synced"));
+
+
+;
+"use strict";
+
+;
+	($.$rise_resize) = class $rise_resize extends ($.$mol_view) {
+		drag_body(){
+			return [];
+		}
+		x(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		y(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		on_drag_start(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		on_drag_end(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		dragged(){
+			return (this.Drag_view().dragged());
+		}
+		drags_synced(){
+			return [];
+		}
+		Drag(){
+			return (this.Drag_view().Drag());
+		}
+		repos_x(id){
+			return 1;
+		}
+		repos_y(id){
+			return 1;
+		}
+		Drag_view(){
+			const obj = new this.$.$rise_drag_view();
+			(obj.minimal_height) = () => (0);
+			(obj.sub) = () => ((this.drag_body()));
+			(obj.x) = (next) => ((this.x(next)));
+			(obj.y) = (next) => ((this.y(next)));
+			(obj.on_drag_start) = (next) => ((this.on_drag_start(next)));
+			(obj.on_drag_end) = (next) => ((this.on_drag_end(next)));
+			(obj.drags_synced) = () => ((this.drags_synced()));
+			(obj.repos_x) = (id) => ((this.repos_x(id)));
+			(obj.repos_y) = (id) => ((this.repos_y(id)));
+			return obj;
+		}
+		controls(){
+			return [];
+		}
+		resize_start(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		resize_end(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		top_edge_y(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		Top_edge(){
+			const obj = new this.$.$rise_resize_edge();
+			(obj.repos_x) = (id) => ((this.repos_x(id)));
+			(obj.repos_y) = (id) => ((this.repos_y(id)));
+			(obj.on_drag_start) = (next) => ((this.resize_start(next)));
+			(obj.on_drag_end) = (next) => ((this.resize_end(next)));
+			(obj.y) = (next) => ((this.top_edge_y(next)));
+			return obj;
+		}
+		left_edge_x(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		Left_edge(){
+			const obj = new this.$.$rise_resize_edge();
+			(obj.repos_x) = (id) => ((this.repos_x(id)));
+			(obj.repos_y) = (id) => ((this.repos_y(id)));
+			(obj.on_drag_start) = (next) => ((this.resize_start(next)));
+			(obj.on_drag_end) = (next) => ((this.resize_end(next)));
+			(obj.x) = (next) => ((this.left_edge_x(next)));
+			return obj;
+		}
+		bottom_edge_y(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		Bottom_edge(){
+			const obj = new this.$.$rise_resize_edge();
+			(obj.repos_x) = (id) => ((this.repos_x(id)));
+			(obj.repos_y) = (id) => ((this.repos_y(id)));
+			(obj.on_drag_start) = (next) => ((this.resize_start(next)));
+			(obj.on_drag_end) = (next) => ((this.resize_end(next)));
+			(obj.y) = (next) => ((this.bottom_edge_y(next)));
+			return obj;
+		}
+		right_edge_x(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		Right_edge(){
+			const obj = new this.$.$rise_resize_edge();
+			(obj.repos_x) = (id) => ((this.repos_x(id)));
+			(obj.repos_y) = (id) => ((this.repos_y(id)));
+			(obj.on_drag_start) = (next) => ((this.resize_start(next)));
+			(obj.on_drag_end) = (next) => ((this.resize_end(next)));
+			(obj.x) = (next) => ((this.right_edge_x(next)));
+			return obj;
+		}
+		Top_left_edge(){
+			const obj = new this.$.$rise_resize_edge();
+			(obj.repos_x) = (id) => ((this.repos_x(id)));
+			(obj.repos_y) = (id) => ((this.repos_y(id)));
+			(obj.on_drag_start) = (next) => ((this.resize_start(next)));
+			(obj.on_drag_end) = (next) => ((this.resize_end(next)));
+			(obj.y) = (next) => ((this.top_edge_y(next)));
+			(obj.x) = (next) => ((this.left_edge_x(next)));
+			return obj;
+		}
+		Top_right_edge(){
+			const obj = new this.$.$rise_resize_edge();
+			(obj.repos_x) = (id) => ((this.repos_x(id)));
+			(obj.repos_y) = (id) => ((this.repos_y(id)));
+			(obj.on_drag_start) = (next) => ((this.resize_start(next)));
+			(obj.on_drag_end) = (next) => ((this.resize_end(next)));
+			(obj.y) = (next) => ((this.top_edge_y(next)));
+			(obj.x) = (next) => ((this.right_edge_x(next)));
+			return obj;
+		}
+		Bottom_left_edge(){
+			const obj = new this.$.$rise_resize_edge();
+			(obj.repos_x) = (id) => ((this.repos_x(id)));
+			(obj.repos_y) = (id) => ((this.repos_y(id)));
+			(obj.on_drag_start) = (next) => ((this.resize_start(next)));
+			(obj.on_drag_end) = (next) => ((this.resize_end(next)));
+			(obj.y) = (next) => ((this.bottom_edge_y(next)));
+			(obj.x) = (next) => ((this.left_edge_x(next)));
+			return obj;
+		}
+		Bottom_right_edge(){
+			const obj = new this.$.$rise_resize_edge();
+			(obj.repos_x) = (id) => ((this.repos_x(id)));
+			(obj.repos_y) = (id) => ((this.repos_y(id)));
+			(obj.on_drag_start) = (next) => ((this.resize_start(next)));
+			(obj.on_drag_end) = (next) => ((this.resize_end(next)));
+			(obj.y) = (next) => ((this.bottom_edge_y(next)));
+			(obj.x) = (next) => ((this.right_edge_x(next)));
+			return obj;
+		}
+		edges(){
+			return [
+				(this.Top_edge()), 
+				(this.Left_edge()), 
+				(this.Bottom_edge()), 
+				(this.Right_edge()), 
+				(this.Top_left_edge()), 
+				(this.Top_right_edge()), 
+				(this.Bottom_left_edge()), 
+				(this.Bottom_right_edge())
+			];
+		}
+		vals_to_sticks(){
+			return null;
+		}
+		top_px(){
+			return "0px";
+		}
+		left_px(){
+			return "0px";
+		}
+		height_px(){
+			return "20px";
+		}
+		width_px(){
+			return "20px";
+		}
+		sub(){
+			return [
+				(this.Drag_view()), 
+				...(this.controls()), 
+				...(this.edges())
+			];
+		}
+		resizing(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		height_min(){
+			return 20;
+		}
+		width_min(){
+			return 20;
+		}
+		height(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		width(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		top(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		left(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		stick_threshold(){
+			return 10;
+		}
+		x_stick(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		y_stick(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		bottom_edge_y_stick(next){
+			if(next !== undefined) return next;
+			return (this.height_min());
+		}
+		right_edge_x_stick(next){
+			if(next !== undefined) return next;
+			return (this.width_min());
+		}
+		top_edge_y_stick(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		left_edge_x_stick(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		stickable(next){
+			if(next !== undefined) return next;
+			return true;
+		}
+		sticks_y(){
+			return [];
+		}
+		sticks_x(){
+			return [];
+		}
+		auto(){
+			return [(this.vals_to_sticks())];
+		}
+		style(){
+			return {
+				...(super.style()), 
+				"top": (this.top_px()), 
+				"left": (this.left_px()), 
+				"height": (this.height_px()), 
+				"width": (this.width_px())
+			};
+		}
+	};
+	($mol_mem(($.$rise_resize.prototype), "x"));
+	($mol_mem(($.$rise_resize.prototype), "y"));
+	($mol_mem(($.$rise_resize.prototype), "on_drag_start"));
+	($mol_mem(($.$rise_resize.prototype), "on_drag_end"));
+	($mol_mem(($.$rise_resize.prototype), "Drag_view"));
+	($mol_mem(($.$rise_resize.prototype), "resize_start"));
+	($mol_mem(($.$rise_resize.prototype), "resize_end"));
+	($mol_mem(($.$rise_resize.prototype), "top_edge_y"));
+	($mol_mem(($.$rise_resize.prototype), "Top_edge"));
+	($mol_mem(($.$rise_resize.prototype), "left_edge_x"));
+	($mol_mem(($.$rise_resize.prototype), "Left_edge"));
+	($mol_mem(($.$rise_resize.prototype), "bottom_edge_y"));
+	($mol_mem(($.$rise_resize.prototype), "Bottom_edge"));
+	($mol_mem(($.$rise_resize.prototype), "right_edge_x"));
+	($mol_mem(($.$rise_resize.prototype), "Right_edge"));
+	($mol_mem(($.$rise_resize.prototype), "Top_left_edge"));
+	($mol_mem(($.$rise_resize.prototype), "Top_right_edge"));
+	($mol_mem(($.$rise_resize.prototype), "Bottom_left_edge"));
+	($mol_mem(($.$rise_resize.prototype), "Bottom_right_edge"));
+	($mol_mem(($.$rise_resize.prototype), "resizing"));
+	($mol_mem(($.$rise_resize.prototype), "height"));
+	($mol_mem(($.$rise_resize.prototype), "width"));
+	($mol_mem(($.$rise_resize.prototype), "top"));
+	($mol_mem(($.$rise_resize.prototype), "left"));
+	($mol_mem(($.$rise_resize.prototype), "x_stick"));
+	($mol_mem(($.$rise_resize.prototype), "y_stick"));
+	($mol_mem(($.$rise_resize.prototype), "bottom_edge_y_stick"));
+	($mol_mem(($.$rise_resize.prototype), "right_edge_x_stick"));
+	($mol_mem(($.$rise_resize.prototype), "top_edge_y_stick"));
+	($mol_mem(($.$rise_resize.prototype), "left_edge_x_stick"));
+	($mol_mem(($.$rise_resize.prototype), "stickable"));
+	($.$rise_resize_edge) = class $rise_resize_edge extends ($.$rise_drag_view) {};
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $rise_resize extends $.$rise_resize {
+            repos_x(val) {
+                return val;
+            }
+            repos_y(val) {
+                return val;
+            }
+            to_stick(sticks, val, shift) {
+                if (!this.stickable())
+                    return val;
+                for (const stick of sticks) {
+                    const to_stick = stick - (val + shift);
+                    if (Math.abs(to_stick) < this.stick_threshold()) {
+                        return val + to_stick;
+                    }
+                }
+                return val;
+            }
+            to_stick_x(val, shift) {
+                return this.to_stick(this.sticks_x(), val, shift);
+            }
+            to_stick_y(val, shift) {
+                return this.to_stick(this.sticks_y(), val, shift);
+            }
+            y(next) {
+                if (next === undefined)
+                    return 0;
+                const top_stick = this.to_stick_y(next, this.top_edge_y_stick());
+                if (top_stick == next) {
+                    const bottom_stick = this.to_stick_y(next, this.top_edge_y_stick() + this.height());
+                    this.y_stick(bottom_stick);
+                }
+                else {
+                    this.y_stick(top_stick);
+                }
+                return next;
+            }
+            x(next) {
+                if (next === undefined)
+                    return 0;
+                const left_stick = this.to_stick_x(next, this.left_edge_x_stick());
+                if (left_stick == next) {
+                    const right_stick = this.to_stick_x(next, this.left_edge_x_stick() + this.width());
+                    this.x_stick(right_stick);
+                }
+                else {
+                    this.x_stick(left_stick);
+                }
+                return next;
+            }
+            top_edge_y(next) {
+                if (next === undefined)
+                    return 0;
+                const limit = this.bottom_edge_y_stick() - this.height_min();
+                const top_edge_y_stick = Math.min(this.to_stick_y(next, this.y_stick()), limit);
+                this.top_edge_y_stick(top_edge_y_stick);
+                return next;
+            }
+            bottom_edge_y(next) {
+                if (next === undefined)
+                    return 0;
+                const limit = this.top_edge_y_stick() + this.height_min();
+                const bottom_edge_y_stick = Math.max(this.to_stick_y(next, this.top() - this.top_edge_y_stick()), limit);
+                this.bottom_edge_y_stick(bottom_edge_y_stick);
+                return next;
+            }
+            left_edge_x(next) {
+                if (next === undefined)
+                    return 0;
+                const limit = this.right_edge_x_stick() - this.width_min();
+                const left_edge_x_stick = Math.min(this.to_stick_x(next, this.x_stick()), limit);
+                this.left_edge_x_stick(left_edge_x_stick);
+                return next;
+            }
+            right_edge_x(next) {
+                if (next === undefined)
+                    return 0;
+                const limit = this.left_edge_x_stick() + this.width_min();
+                let right_edge_x_stick = Math.max(this.to_stick_x(next, this.left() - this.left_edge_x_stick()), limit);
+                this.right_edge_x_stick(right_edge_x_stick);
+                return next;
+            }
+            top(next) {
+                if (next !== undefined) {
+                    this.y_stick(next - this.top_edge_y_stick());
+                }
+                return this.y_stick() + this.top_edge_y_stick();
+            }
+            left(next) {
+                if (next !== undefined) {
+                    this.x_stick(next - this.left_edge_x_stick());
+                }
+                return this.x_stick() + this.left_edge_x_stick();
+            }
+            width(next) {
+                if (next !== undefined) {
+                    console.log('next', next);
+                    this.right_edge_x_stick(next + this.left_edge_x_stick());
+                }
+                return this.right_edge_x_stick() - this.left_edge_x_stick();
+            }
+            height(next) {
+                if (next !== undefined) {
+                    this.bottom_edge_y_stick(next + this.top_edge_y_stick());
+                }
+                return this.bottom_edge_y_stick() - this.top_edge_y_stick();
+            }
+            height_px() {
+                return this.height() + 'px';
+            }
+            width_px() {
+                return this.width() + 'px';
+            }
+            top_px() {
+                return this.top() + 'px';
+            }
+            left_px() {
+                return this.left() + 'px';
+            }
+            on_drag_end() {
+                this.vals_to_sticks();
+            }
+            resize_start(next) {
+                this.resizing(true);
+            }
+            resize_end() {
+                this.on_drag_end();
+                this.resizing(false);
+            }
+            vals_to_sticks() {
+                this.x(this.x_stick());
+                this.y(this.y_stick());
+                this.bottom_edge_y(this.bottom_edge_y_stick());
+                this.right_edge_x(this.right_edge_x_stick());
+                this.top_edge_y(this.top_edge_y_stick());
+                this.left_edge_x(this.left_edge_x_stick());
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $rise_resize.prototype, "y", null);
+        __decorate([
+            $mol_mem
+        ], $rise_resize.prototype, "x", null);
+        __decorate([
+            $mol_mem
+        ], $rise_resize.prototype, "top_edge_y", null);
+        __decorate([
+            $mol_mem
+        ], $rise_resize.prototype, "bottom_edge_y", null);
+        __decorate([
+            $mol_mem
+        ], $rise_resize.prototype, "left_edge_x", null);
+        __decorate([
+            $mol_mem
+        ], $rise_resize.prototype, "right_edge_x", null);
+        __decorate([
+            $mol_mem
+        ], $rise_resize.prototype, "top", null);
+        __decorate([
+            $mol_mem
+        ], $rise_resize.prototype, "left", null);
+        __decorate([
+            $mol_mem
+        ], $rise_resize.prototype, "width", null);
+        __decorate([
+            $mol_mem
+        ], $rise_resize.prototype, "height", null);
+        __decorate([
+            $mol_mem
+        ], $rise_resize.prototype, "height_px", null);
+        __decorate([
+            $mol_mem
+        ], $rise_resize.prototype, "width_px", null);
+        __decorate([
+            $mol_mem
+        ], $rise_resize.prototype, "top_px", null);
+        __decorate([
+            $mol_mem
+        ], $rise_resize.prototype, "left_px", null);
+        __decorate([
+            $mol_action
+        ], $rise_resize.prototype, "vals_to_sticks", null);
+        $$.$rise_resize = $rise_resize;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const Edge_size = 10;
+        const Top_edge = {
+            top: `-${Edge_size / 2}px`,
+            height: `${Edge_size}px`,
+        };
+        const Left_edge = {
+            left: `-${Edge_size / 2}px`,
+            width: `${Edge_size}px`,
+        };
+        const Right_edge = {
+            right: `-${Edge_size / 2}px`,
+            width: `${Edge_size}px`,
+        };
+        const Bottom_edge = {
+            bottom: `-${Edge_size / 2}px`,
+            height: `${Edge_size}px`,
+        };
+        $mol_style_define($rise_resize, {
+            position: 'absolute',
+            transition: 'none',
+            Drag_view: {
+                position: 'absolute',
+                width: '100%',
+                height: '100%',
+            },
+            Top_edge: {
+                cursor: 'ns-resize',
+                left: 0,
+                ...Top_edge,
+                width: '100%',
+            },
+            Top_left_edge: {
+                cursor: 'nwse-resize',
+                ...Top_edge,
+                ...Left_edge,
+            },
+            Top_right_edge: {
+                cursor: 'nesw-resize',
+                ...Top_edge,
+                ...Right_edge,
+            },
+            Left_edge: {
+                cursor: 'ew-resize',
+                ...Left_edge,
+                height: '100%',
+            },
+            Bottom_edge: {
+                cursor: 'ns-resize',
+                ...Bottom_edge,
+                width: '100%',
+            },
+            Bottom_left_edge: {
+                cursor: 'nesw-resize',
+                ...Bottom_edge,
+                ...Left_edge,
+            },
+            Bottom_right_edge: {
+                cursor: 'nwse-resize',
+                ...Bottom_edge,
+                ...Right_edge,
+            },
+            Right_edge: {
+                cursor: 'ew-resize',
+                ...Right_edge,
+                height: '100%',
+            },
+        });
+        $mol_style_define($rise_resize_edge, {
+            position: 'absolute',
+            zIndex: $mol_layer.float,
+            userSelect: 'none',
+            opacity: 0.1,
+            ":hover": {
+                background: {
+                    color: $mol_theme.shade,
+                },
+            },
+            '[rise_dragged]': {
+                'true': {
+                    background: {
+                        color: $mol_theme.line,
+                    },
+                    ":hover": {
+                        background: {
+                            color: $mol_theme.line,
+                        },
+                    },
+                },
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$mol_icon_tick) = class $mol_icon_tick extends ($.$mol_icon) {
+		path(){
+			return "M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_check_box) = class $mol_check_box extends ($.$mol_check) {
+		Icon(){
+			const obj = new this.$.$mol_icon_tick();
+			return obj;
+		}
+	};
+	($mol_mem(($.$mol_check_box.prototype), "Icon"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/check/box/box.view.css", "[mol_check_box_icon] {\n\tborder-radius: var(--mol_gap_round);\n\tbox-shadow: inset 0 0 0 1px var(--mol_theme_line);\n\tcolor: var(--mol_theme_shade);\n\theight: 1rem;\n\talign-self: center;\n}\n\n[mol_check]:not([mol_check_checked]) > [mol_check_box_icon] {\n\tfill: transparent;\n}\n\n[mol_check]:not([disabled]) > [mol_check_box_icon] {\n\tbackground: var(--mol_theme_field);\n\tcolor: var(--mol_theme_text);\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+	($.$rise_resize_demo) = class $rise_resize_demo extends ($.$mol_example_small) {
+		height(){
+			return (this.Resize().height());
+		}
+		width(){
+			return (this.Resize().width());
+		}
+		top(){
+			return (this.Resize().top());
+		}
+		left(){
+			return (this.Resize().left());
+		}
+		x(){
+			return (this.Resize().x());
+		}
+		y(){
+			return (this.Resize().y());
+		}
+		bottom_edge_y(){
+			return (this.Resize().bottom_edge_y());
+		}
+		right_edge_x(){
+			return (this.Resize().right_edge_x());
+		}
+		top_edge_y(){
+			return (this.Resize().top_edge_y());
+		}
+		left_edge_x(){
+			return (this.Resize().left_edge_x());
+		}
+		x_stick(){
+			return (this.Resize().x_stick());
+		}
+		y_stick(){
+			return (this.Resize().y_stick());
+		}
+		bottom_edge_y_stick(){
+			return (this.Resize().bottom_edge_y_stick());
+		}
+		right_edge_x_stick(){
+			return (this.Resize().right_edge_x_stick());
+		}
+		top_edge_y_stick(){
+			return (this.Resize().top_edge_y_stick());
+		}
+		left_edge_x_stick(){
+			return (this.Resize().left_edge_x_stick());
+		}
+		stickable(next){
+			return (this.Resize().stickable(next));
+		}
+		Stickable(){
+			const obj = new this.$.$mol_check_box();
+			(obj.title) = () => ("Stickable");
+			(obj.checked) = (next) => ((this.stickable(next)));
+			return obj;
+		}
+		content(){
+			return "";
+		}
+		Content(){
+			const obj = new this.$.$mol_text();
+			(obj.text) = () => ((this.content()));
+			return obj;
+		}
+		sticks_y(){
+			return [
+				0, 
+				100, 
+				450
+			];
+		}
+		sticks_x(){
+			return [
+				0, 
+				100, 
+				450
+			];
+		}
+		Resize(){
+			const obj = new this.$.$rise_resize();
+			(obj.height_min) = () => (150);
+			(obj.width_min) = () => (150);
+			(obj.drag_body) = () => ([(this.Stickable()), (this.Content())]);
+			(obj.sticks_y) = () => ((this.sticks_y()));
+			(obj.sticks_x) = () => ((this.sticks_x()));
+			return obj;
+		}
+		sticks(){
+			return [];
+		}
+		stick_left(id){
+			return "";
+		}
+		stick_top(id){
+			return "";
+		}
+		sub(){
+			return [(this.Resize()), ...(this.sticks())];
+		}
+		Stick_x(id){
+			const obj = new this.$.$mol_view();
+			(obj.style) = () => ({"left": (this.stick_left(id))});
+			return obj;
+		}
+		Stick_y(id){
+			const obj = new this.$.$mol_view();
+			(obj.style) = () => ({"top": (this.stick_top(id))});
+			return obj;
+		}
+		tags(){
+			return ["resize"];
+		}
+		aspects(){
+			return ["Widget"];
+		}
+	};
+	($mol_mem(($.$rise_resize_demo.prototype), "Stickable"));
+	($mol_mem(($.$rise_resize_demo.prototype), "Content"));
+	($mol_mem(($.$rise_resize_demo.prototype), "Resize"));
+	($mol_mem_key(($.$rise_resize_demo.prototype), "Stick_x"));
+	($mol_mem_key(($.$rise_resize_demo.prototype), "Stick_y"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $rise_resize_demo extends $.$rise_resize_demo {
+            content() {
+                return '' +
+                    '! height\n  ! ' + this.height() + '\n' +
+                    '! width\n  ! ' + this.width() + '\n' +
+                    '! top\n  ! ' + this.top() + '\n' +
+                    '! left\n  ! ' + this.left() + '\n' +
+                    '! x\n  ! ' + this.x() + '\n    ! ' + this.x_stick() + '\n' +
+                    '! right_edge_x\n  ! ' + this.right_edge_x() + '\n    ! ' + this.right_edge_x_stick() + '\n' +
+                    '! left_edge_x\n  ! ' + this.left_edge_x() + '\n    ! ' + this.left_edge_x_stick() + '\n' +
+                    '! y\n  ! ' + this.y() + '\n    ! ' + this.y_stick() + '\n' +
+                    '! bottom_edge_y\n  ! ' + this.bottom_edge_y() + '\n    ! ' + this.bottom_edge_y_stick() + '\n' +
+                    '! top_edge_y\n  ! ' + this.top_edge_y() + '\n    ! ' + this.top_edge_y_stick() + '\n';
+            }
+            sticks() {
+                return [
+                    ...this.sticks_x().map(x => this.Stick_x(x)),
+                    ...this.sticks_y().map(y => this.Stick_y(y)),
+                ];
+            }
+            stick_left(x) {
+                return x + 'px';
+            }
+            stick_top(y) {
+                return y + 'px';
+            }
+        }
+        __decorate([
+            $mol_mem_key
+        ], $rise_resize_demo.prototype, "stick_left", null);
+        __decorate([
+            $mol_mem_key
+        ], $rise_resize_demo.prototype, "stick_top", null);
+        $$.$rise_resize_demo = $rise_resize_demo;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const Stick = {
+            position: 'absolute',
+            background: {
+                color: 'red',
+            },
+            opacity: 0.2,
+        };
+        $mol_style_define($rise_resize_demo, {
+            position: 'relative',
+            height: '100%',
+            Resize: {
+                background: {
+                    color: $mol_theme.card,
+                },
+                Drag_view: {
+                    flex: {
+                        direction: 'column',
+                    },
+                    overflow: 'hidden',
+                },
+            },
+            Stick_x: {
+                ...Stick,
+                height: '100%',
+                width: '1px',
+            },
+            Stick_y: {
+                ...Stick,
+                width: '100%',
+                height: '1px',
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$rise_resize_ratio) = class $rise_resize_ratio extends ($.$rise_resize) {
+		left_top_edge_ratio_x(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		Left_top_edge_ratio(){
+			const obj = new this.$.$rise_resize_edge();
+			(obj.repos_x) = (id) => ((this.repos_x(id)));
+			(obj.repos_y) = (id) => ((this.repos_y(id)));
+			(obj.on_drag_start) = (next) => ((this.resize_start(next)));
+			(obj.on_drag_end) = (next) => ((this.resize_end(next)));
+			(obj.x) = (next) => ((this.left_top_edge_ratio_x(next)));
+			return obj;
+		}
+		left_bottom_edge_ratio_x(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		Left_bottom_edge_ratio(){
+			const obj = new this.$.$rise_resize_edge();
+			(obj.repos_x) = (id) => ((this.repos_x(id)));
+			(obj.repos_y) = (id) => ((this.repos_y(id)));
+			(obj.on_drag_start) = (next) => ((this.resize_start(next)));
+			(obj.on_drag_end) = (next) => ((this.resize_end(next)));
+			(obj.x) = (next) => ((this.left_bottom_edge_ratio_x(next)));
+			return obj;
+		}
+		right_bottom_edge_ratio_x(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		Right_bottom_edge_ratio(){
+			const obj = new this.$.$rise_resize_edge();
+			(obj.repos_x) = (id) => ((this.repos_x(id)));
+			(obj.repos_y) = (id) => ((this.repos_y(id)));
+			(obj.on_drag_start) = (next) => ((this.resize_start(next)));
+			(obj.on_drag_end) = (next) => ((this.resize_end(next)));
+			(obj.x) = (next) => ((this.right_bottom_edge_ratio_x(next)));
+			return obj;
+		}
+		right_top_edge_ratio_x(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		Right_top_edge_ratio(){
+			const obj = new this.$.$rise_resize_edge();
+			(obj.repos_x) = (id) => ((this.repos_x(id)));
+			(obj.repos_y) = (id) => ((this.repos_y(id)));
+			(obj.on_drag_start) = (next) => ((this.resize_start(next)));
+			(obj.on_drag_end) = (next) => ((this.resize_end(next)));
+			(obj.x) = (next) => ((this.right_top_edge_ratio_x(next)));
+			return obj;
+		}
+		top_left_edge_ratio_y(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		Top_left_edge_ratio(){
+			const obj = new this.$.$rise_resize_edge();
+			(obj.repos_x) = (id) => ((this.repos_x(id)));
+			(obj.repos_y) = (id) => ((this.repos_y(id)));
+			(obj.on_drag_start) = (next) => ((this.resize_start(next)));
+			(obj.on_drag_end) = (next) => ((this.resize_end(next)));
+			(obj.y) = (next) => ((this.top_left_edge_ratio_y(next)));
+			return obj;
+		}
+		top_right_edge_ratio_y(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		Top_right_edge_ratio(){
+			const obj = new this.$.$rise_resize_edge();
+			(obj.repos_x) = (id) => ((this.repos_x(id)));
+			(obj.repos_y) = (id) => ((this.repos_y(id)));
+			(obj.on_drag_start) = (next) => ((this.resize_start(next)));
+			(obj.on_drag_end) = (next) => ((this.resize_end(next)));
+			(obj.y) = (next) => ((this.top_right_edge_ratio_y(next)));
+			return obj;
+		}
+		bottom_left_edge_ratio_y(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		Bottom_left_edge_ratio(){
+			const obj = new this.$.$rise_resize_edge();
+			(obj.repos_x) = (id) => ((this.repos_x(id)));
+			(obj.repos_y) = (id) => ((this.repos_y(id)));
+			(obj.on_drag_start) = (next) => ((this.resize_start(next)));
+			(obj.on_drag_end) = (next) => ((this.resize_end(next)));
+			(obj.y) = (next) => ((this.bottom_left_edge_ratio_y(next)));
+			return obj;
+		}
+		bottom_right_edge_ratio_y(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		Bottom_right_edge_ratio(){
+			const obj = new this.$.$rise_resize_edge();
+			(obj.repos_x) = (id) => ((this.repos_x(id)));
+			(obj.repos_y) = (id) => ((this.repos_y(id)));
+			(obj.on_drag_start) = (next) => ((this.resize_start(next)));
+			(obj.on_drag_end) = (next) => ((this.resize_end(next)));
+			(obj.y) = (next) => ((this.bottom_right_edge_ratio_y(next)));
+			return obj;
+		}
+		ratio(){
+			return 0;
+		}
+		edges_ratio(){
+			return [
+				(this.Left_top_edge_ratio()), 
+				(this.Left_bottom_edge_ratio()), 
+				(this.Right_bottom_edge_ratio()), 
+				(this.Right_top_edge_ratio()), 
+				(this.Top_left_edge_ratio()), 
+				(this.Top_right_edge_ratio()), 
+				(this.Bottom_left_edge_ratio()), 
+				(this.Bottom_right_edge_ratio())
+			];
+		}
+	};
+	($mol_mem(($.$rise_resize_ratio.prototype), "left_top_edge_ratio_x"));
+	($mol_mem(($.$rise_resize_ratio.prototype), "Left_top_edge_ratio"));
+	($mol_mem(($.$rise_resize_ratio.prototype), "left_bottom_edge_ratio_x"));
+	($mol_mem(($.$rise_resize_ratio.prototype), "Left_bottom_edge_ratio"));
+	($mol_mem(($.$rise_resize_ratio.prototype), "right_bottom_edge_ratio_x"));
+	($mol_mem(($.$rise_resize_ratio.prototype), "Right_bottom_edge_ratio"));
+	($mol_mem(($.$rise_resize_ratio.prototype), "right_top_edge_ratio_x"));
+	($mol_mem(($.$rise_resize_ratio.prototype), "Right_top_edge_ratio"));
+	($mol_mem(($.$rise_resize_ratio.prototype), "top_left_edge_ratio_y"));
+	($mol_mem(($.$rise_resize_ratio.prototype), "Top_left_edge_ratio"));
+	($mol_mem(($.$rise_resize_ratio.prototype), "top_right_edge_ratio_y"));
+	($mol_mem(($.$rise_resize_ratio.prototype), "Top_right_edge_ratio"));
+	($mol_mem(($.$rise_resize_ratio.prototype), "bottom_left_edge_ratio_y"));
+	($mol_mem(($.$rise_resize_ratio.prototype), "Bottom_left_edge_ratio"));
+	($mol_mem(($.$rise_resize_ratio.prototype), "bottom_right_edge_ratio_y"));
+	($mol_mem(($.$rise_resize_ratio.prototype), "Bottom_right_edge_ratio"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $rise_resize_ratio extends $.$rise_resize_ratio {
+            top_edge_y_by_ratio() {
+                const height_next = this.width() / this.ratio();
+                const top_edge_y_stick = this.bottom_edge_y_stick() - height_next;
+                this.top_edge_y_stick(top_edge_y_stick);
+            }
+            bottom_edge_y_by_ratio() {
+                const height_next = this.width() / this.ratio();
+                const bottom_edge_y_stick = height_next + this.top_edge_y_stick();
+                this.bottom_edge_y_stick(bottom_edge_y_stick);
+            }
+            left_edge_x_by_ratio() {
+                const width_next = this.height() * this.ratio();
+                const left_edge_x_stick = this.right_edge_x_stick() - width_next;
+                this.left_edge_x_stick(left_edge_x_stick);
+            }
+            right_edge_x_by_ratio() {
+                const width_next = this.height() * this.ratio();
+                const right_edge_x_stick = width_next + this.left_edge_x_stick();
+                this.right_edge_x_stick(right_edge_x_stick);
+            }
+            left_top_edge_ratio_x(next) {
+                if (next === undefined)
+                    return 0;
+                this.left_edge_x(next);
+                this.top_edge_y_by_ratio();
+                return next;
+            }
+            left_bottom_edge_ratio_x(next) {
+                if (next === undefined)
+                    return 0;
+                this.left_edge_x(next);
+                this.bottom_edge_y_by_ratio();
+                return next;
+            }
+            right_bottom_edge_ratio_x(next) {
+                if (next === undefined)
+                    return 0;
+                this.right_edge_x(next);
+                this.bottom_edge_y_by_ratio();
+                return next;
+            }
+            top_left_edge_ratio_y(next) {
+                if (next === undefined)
+                    return 0;
+                this.top_edge_y(next);
+                this.left_edge_x_by_ratio();
+                return next;
+            }
+            right_top_edge_ratio_x(next) {
+                if (next === undefined)
+                    return 0;
+                this.right_edge_x(next);
+                this.top_edge_y_by_ratio();
+                return next;
+            }
+            top_right_edge_ratio_y(next) {
+                if (next === undefined)
+                    return 0;
+                this.top_edge_y(next);
+                this.right_edge_x_by_ratio();
+                return next;
+            }
+            bottom_left_edge_ratio_y(next) {
+                if (next === undefined)
+                    return 0;
+                this.bottom_edge_y(next);
+                this.left_edge_x_by_ratio();
+                return next;
+            }
+            bottom_right_edge_ratio_y(next) {
+                if (next === undefined)
+                    return 0;
+                this.bottom_edge_y(next);
+                this.right_edge_x_by_ratio();
+                return next;
+            }
+            edges() {
+                return this.ratio() ? this.edges_ratio() : super.edges();
+            }
+            vals_to_sticks() {
+                this.x(this.x_stick());
+                this.y(this.y_stick());
+                if (this.ratio()) {
+                    this.left_bottom_edge_ratio_x(this.left_edge_x_stick());
+                    this.left_top_edge_ratio_x(this.left_edge_x_stick());
+                    this.right_bottom_edge_ratio_x(this.right_edge_x_stick());
+                    this.right_top_edge_ratio_x(this.right_edge_x_stick());
+                    this.top_left_edge_ratio_y(this.top_edge_y_stick());
+                    this.top_right_edge_ratio_y(this.top_edge_y_stick());
+                    this.bottom_left_edge_ratio_y(this.bottom_edge_y_stick());
+                    this.bottom_right_edge_ratio_y(this.bottom_edge_y_stick());
+                }
+                else {
+                    this.bottom_edge_y(this.bottom_edge_y_stick());
+                    this.right_edge_x(this.right_edge_x_stick());
+                    this.top_edge_y(this.top_edge_y_stick());
+                    this.left_edge_x(this.left_edge_x_stick());
+                }
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $rise_resize_ratio.prototype, "left_top_edge_ratio_x", null);
+        __decorate([
+            $mol_mem
+        ], $rise_resize_ratio.prototype, "left_bottom_edge_ratio_x", null);
+        __decorate([
+            $mol_mem
+        ], $rise_resize_ratio.prototype, "right_bottom_edge_ratio_x", null);
+        __decorate([
+            $mol_mem
+        ], $rise_resize_ratio.prototype, "top_left_edge_ratio_y", null);
+        __decorate([
+            $mol_mem
+        ], $rise_resize_ratio.prototype, "right_top_edge_ratio_x", null);
+        __decorate([
+            $mol_mem
+        ], $rise_resize_ratio.prototype, "top_right_edge_ratio_y", null);
+        __decorate([
+            $mol_mem
+        ], $rise_resize_ratio.prototype, "bottom_left_edge_ratio_y", null);
+        __decorate([
+            $mol_mem
+        ], $rise_resize_ratio.prototype, "bottom_right_edge_ratio_y", null);
+        __decorate([
+            $mol_mem
+        ], $rise_resize_ratio.prototype, "edges", null);
+        __decorate([
+            $mol_action
+        ], $rise_resize_ratio.prototype, "vals_to_sticks", null);
+        $$.$rise_resize_ratio = $rise_resize_ratio;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const Edge_size = 10;
+        const Top_edge = {
+            top: `-${Edge_size / 2}px`,
+            height: `${Edge_size}px`,
+        };
+        const Left_edge = {
+            left: `-${Edge_size / 2}px`,
+            width: `${Edge_size}px`,
+        };
+        const Right_edge = {
+            right: `-${Edge_size / 2}px`,
+            width: `${Edge_size}px`,
+        };
+        const Bottom_edge = {
+            bottom: `-${Edge_size / 2}px`,
+            height: `${Edge_size}px`,
+        };
+        $mol_style_define($rise_resize_ratio, {
+            Left_top_edge_ratio: {
+                cursor: 'nwse-resize',
+                ...Left_edge,
+                height: '50%',
+            },
+            Left_bottom_edge_ratio: {
+                cursor: 'nesw-resize',
+                ...Left_edge,
+                height: '50%',
+                top: '50%',
+            },
+            Right_bottom_edge_ratio: {
+                cursor: 'nwse-resize',
+                ...Right_edge,
+                height: '50%',
+                top: '50%',
+            },
+            Right_top_edge_ratio: {
+                cursor: 'nesw-resize',
+                ...Right_edge,
+                height: '50%',
+            },
+            Top_left_edge_ratio: {
+                cursor: 'nwse-resize',
+                ...Top_edge,
+                width: '50%',
+            },
+            Top_right_edge_ratio: {
+                cursor: 'nesw-resize',
+                ...Top_edge,
+                width: '50%',
+                left: '50%',
+            },
+            Bottom_left_edge_ratio: {
+                cursor: 'nesw-resize',
+                ...Bottom_edge,
+                width: '50%',
+            },
+            Bottom_right_edge_ratio: {
+                cursor: 'nwse-resize',
+                ...Bottom_edge,
+                width: '50%',
+                left: '50%',
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$rise_resize_ratio_demo) = class $rise_resize_ratio_demo extends ($.$mol_example_small) {
+		height(){
+			return (this.Resize().height());
+		}
+		width(){
+			return (this.Resize().width());
+		}
+		top(){
+			return (this.Resize().top());
+		}
+		left(){
+			return (this.Resize().left());
+		}
+		x(){
+			return (this.Resize().x());
+		}
+		y(){
+			return (this.Resize().y());
+		}
+		bottom_edge_y(){
+			return (this.Resize().bottom_edge_y());
+		}
+		right_edge_x(){
+			return (this.Resize().right_edge_x());
+		}
+		top_edge_y(){
+			return (this.Resize().top_edge_y());
+		}
+		left_edge_x(){
+			return (this.Resize().left_edge_x());
+		}
+		x_stick(){
+			return (this.Resize().x_stick());
+		}
+		y_stick(){
+			return (this.Resize().y_stick());
+		}
+		bottom_edge_y_stick(){
+			return (this.Resize().bottom_edge_y_stick());
+		}
+		right_edge_x_stick(){
+			return (this.Resize().right_edge_x_stick());
+		}
+		top_edge_y_stick(){
+			return (this.Resize().top_edge_y_stick());
+		}
+		left_edge_x_stick(){
+			return (this.Resize().left_edge_x_stick());
+		}
+		content(){
+			return "";
+		}
+		Content(){
+			const obj = new this.$.$mol_text();
+			(obj.text) = () => ((this.content()));
+			return obj;
+		}
+		sticks_y(){
+			return [
+				0, 
+				100, 
+				450
+			];
+		}
+		sticks_x(){
+			return [
+				0, 
+				100, 
+				450
+			];
+		}
+		Resize(){
+			const obj = new this.$.$rise_resize_ratio();
+			(obj.height_min) = () => (150);
+			(obj.width_min) = () => (150);
+			(obj.ratio) = () => (1);
+			(obj.drag_body) = () => ([(this.Content())]);
+			(obj.sticks_y) = () => ((this.sticks_y()));
+			(obj.sticks_x) = () => ((this.sticks_x()));
+			return obj;
+		}
+		sticks(){
+			return [];
+		}
+		stick_left(id){
+			return "";
+		}
+		stick_top(id){
+			return "";
+		}
+		sub(){
+			return [(this.Resize()), ...(this.sticks())];
+		}
+		Stick_x(id){
+			const obj = new this.$.$mol_view();
+			(obj.style) = () => ({"left": (this.stick_left(id))});
+			return obj;
+		}
+		Stick_y(id){
+			const obj = new this.$.$mol_view();
+			(obj.style) = () => ({"top": (this.stick_top(id))});
+			return obj;
+		}
+		tags(){
+			return ["resize"];
+		}
+		aspects(){
+			return ["Widget"];
+		}
+	};
+	($mol_mem(($.$rise_resize_ratio_demo.prototype), "Content"));
+	($mol_mem(($.$rise_resize_ratio_demo.prototype), "Resize"));
+	($mol_mem_key(($.$rise_resize_ratio_demo.prototype), "Stick_x"));
+	($mol_mem_key(($.$rise_resize_ratio_demo.prototype), "Stick_y"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $rise_resize_ratio_demo extends $.$rise_resize_ratio_demo {
+            content() {
+                return '' +
+                    '! height\n  ! ' + this.height() + '\n' +
+                    '! width\n  ! ' + this.width() + '\n' +
+                    '! top\n  ! ' + this.top() + '\n' +
+                    '! left\n  ! ' + this.left() + '\n' +
+                    '! x\n  ! ' + this.x() + '\n    ! ' + this.x_stick() + '\n' +
+                    '! right_edge_x\n  ! ' + this.right_edge_x() + '\n    ! ' + this.right_edge_x_stick() + '\n' +
+                    '! left_edge_x\n  ! ' + this.left_edge_x() + '\n    ! ' + this.left_edge_x_stick() + '\n' +
+                    '! y\n  ! ' + this.y() + '\n    ! ' + this.y_stick() + '\n' +
+                    '! bottom_edge_y\n  ! ' + this.bottom_edge_y() + '\n    ! ' + this.bottom_edge_y_stick() + '\n' +
+                    '! top_edge_y\n  ! ' + this.top_edge_y() + '\n    ! ' + this.top_edge_y_stick() + '\n';
+            }
+            sticks() {
+                return [
+                    ...this.sticks_x().map(x => this.Stick_x(x)),
+                    ...this.sticks_y().map(y => this.Stick_y(y)),
+                ];
+            }
+            stick_left(x) {
+                return x + 'px';
+            }
+            stick_top(y) {
+                return y + 'px';
+            }
+        }
+        __decorate([
+            $mol_mem_key
+        ], $rise_resize_ratio_demo.prototype, "stick_left", null);
+        __decorate([
+            $mol_mem_key
+        ], $rise_resize_ratio_demo.prototype, "stick_top", null);
+        $$.$rise_resize_ratio_demo = $rise_resize_ratio_demo;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const Stick = {
+            position: 'absolute',
+            background: {
+                color: 'red',
+            },
+            opacity: 0.2,
+        };
+        $mol_style_define($rise_resize_ratio_demo, {
+            position: 'relative',
+            height: '100%',
+            Resize: {
+                background: {
+                    color: $mol_theme.card,
+                },
+            },
+            Stick_x: {
+                ...Stick,
+                height: '100%',
+                width: '1px',
+            },
+            Stick_y: {
+                ...Stick,
+                width: '100%',
+                height: '1px',
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$rise_toggle) = class $rise_toggle extends ($.$mol_check) {
+		minimal_height(){
+			return 24;
+		}
+		minimal_width(){
+			return 24;
+		}
+		sub(){
+			return [];
+		}
+	};
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("rise/toggle/toggle.view.css", "[rise_toggle] {\n    background-color: var(--mol_theme_shade);\n    width: 2.5rem;\n    height: 1.375rem;\n    border-radius: 2rem;\n    cursor: pointer;\n    position: relative;\n    transition: 0.2s;\n}\n[rise_toggle]:hover {\n    background-color: var(--mol_theme_shade);\n}\n[rise_toggle]::before {\n    position: absolute;\n    content: '';\n    background-color: var(--mol_theme_back);\n    width: 1.25rem;\n    height: 1.25rem;\n    border-radius: 2rem;\n    margin: -0.625rem;\n    transition: 0.2s;\n}\n\n[rise_toggle]:where([mol_check_checked]) {\n    background-color: var(--mol_theme_current);\n}\n[rise_toggle]:where([mol_check_checked]):hover {\n    background-color: var(--mol_theme_current);\n}\n[rise_toggle]:where([mol_check_checked])::before {\n    transform: translateX(1rem);\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+	($.$rise_toggle_demo) = class $rise_toggle_demo extends ($.$mol_example_small) {
+		Toggle(){
+			const obj = new this.$.$rise_toggle();
+			return obj;
+		}
+		sub(){
+			return [(this.Toggle())];
+		}
+		tags(){
+			return ["toggle"];
+		}
+		aspects(){
+			return ["Widget"];
+		}
+	};
+	($mol_mem(($.$rise_toggle_demo.prototype), "Toggle"));
+
+
+;
+"use strict";
+
+;
+	($.$rise_range) = class $rise_range extends ($.$mol_view) {
+		label_min(){
+			return "";
+		}
+		Min(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.label_min())]);
+			return obj;
+		}
+		label_medium(){
+			return "";
+		}
+		Medium(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.label_medium())]);
+			return obj;
+		}
+		label_max(){
+			return "";
+		}
+		Max(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.label_max())]);
+			return obj;
+		}
+		Labels(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([
+				(this.Min()), 
+				(this.Medium()), 
+				(this.Max())
+			]);
+			return obj;
+		}
+		disabled(){
+			return false;
+		}
+		min(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		max(next){
+			if(next !== undefined) return next;
+			return 10;
+		}
+		step(next){
+			if(next !== undefined) return next;
+			return 1;
+		}
+		value(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		event_input(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Input(){
+			const obj = new this.$.$rise_range_input();
+			(obj.disabled) = () => ((this.disabled()));
+			(obj.min) = () => ((this.min()));
+			(obj.max) = () => ((this.max()));
+			(obj.step) = () => ((this.step()));
+			(obj.value) = (next) => ((this.value(next)));
+			(obj.event_input) = (next) => ((this.event_input(next)));
+			return obj;
+		}
+		Value(){
+			const obj = new this.$.$rise_range_value();
+			(obj.sub) = () => ([(this.value())]);
+			(obj.disabled) = () => ((this.disabled()));
+			return obj;
+		}
+		Current(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Value())]);
+			return obj;
+		}
+		percent(){
+			return "0%";
+		}
+		minimal_height(){
+			return 48;
+		}
+		unit(){
+			return "";
+		}
+		medium(next){
+			if(next !== undefined) return next;
+			return 5;
+		}
+		enabled(){
+			return true;
+		}
+		sub(){
+			return [
+				(this.Labels()), 
+				(this.Input()), 
+				(this.Current())
+			];
+		}
+		attr(){
+			return {...(super.attr()), "disabled": (this.disabled())};
+		}
+		style(){
+			return {...(super.style()), "--rise_range_percent": (this.percent())};
+		}
+	};
+	($mol_mem(($.$rise_range.prototype), "Min"));
+	($mol_mem(($.$rise_range.prototype), "Medium"));
+	($mol_mem(($.$rise_range.prototype), "Max"));
+	($mol_mem(($.$rise_range.prototype), "Labels"));
+	($mol_mem(($.$rise_range.prototype), "min"));
+	($mol_mem(($.$rise_range.prototype), "max"));
+	($mol_mem(($.$rise_range.prototype), "step"));
+	($mol_mem(($.$rise_range.prototype), "value"));
+	($mol_mem(($.$rise_range.prototype), "event_input"));
+	($mol_mem(($.$rise_range.prototype), "Input"));
+	($mol_mem(($.$rise_range.prototype), "Value"));
+	($mol_mem(($.$rise_range.prototype), "Current"));
+	($mol_mem(($.$rise_range.prototype), "medium"));
+	($.$rise_range_input) = class $rise_range_input extends ($.$mol_view) {
+		disabled(){
+			return false;
+		}
+		min(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		max(next){
+			if(next !== undefined) return next;
+			return 10;
+		}
+		step(next){
+			if(next !== undefined) return next;
+			return 1;
+		}
+		value(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		event_input(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		dom_name(){
+			return "input";
+		}
+		attr(){
+			return {
+				...(super.attr()), 
+				"type": "range", 
+				"disabled": (this.disabled())
+			};
+		}
+		field(){
+			return {
+				...(super.field()), 
+				"min": (this.min()), 
+				"max": (this.max()), 
+				"step": (this.step()), 
+				"value": (this.value())
+			};
+		}
+		event(){
+			return {...(super.event()), "input": (next) => (this.event_input(next))};
+		}
+	};
+	($mol_mem(($.$rise_range_input.prototype), "min"));
+	($mol_mem(($.$rise_range_input.prototype), "max"));
+	($mol_mem(($.$rise_range_input.prototype), "step"));
+	($mol_mem(($.$rise_range_input.prototype), "value"));
+	($mol_mem(($.$rise_range_input.prototype), "event_input"));
+	($.$rise_range_value) = class $rise_range_value extends ($.$mol_view) {
+		disabled(){
+			return false;
+		}
+		attr(){
+			return {...(super.attr()), "disabled": (this.disabled())};
+		}
+	};
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $rise_range extends $.$rise_range {
+            event_input(event) {
+                const el = event.target;
+                this.value(Number(el.value));
+            }
+            medium() {
+                return Math.round((this.min() + this.max()) / 2);
+            }
+            label_min() {
+                return this.min() + ' ' + this.unit();
+            }
+            label_max() {
+                return this.max() + ' ' + this.unit();
+            }
+            label_medium() {
+                return this.medium() + ' ' + this.unit();
+            }
+            percent() {
+                const val = this.value() - this.min();
+                const range = this.max() - this.min();
+                return (val / range) * 100 + '%';
+            }
+            disabled() {
+                return !this.enabled();
+            }
+        }
+        __decorate([
+            $mol_action
+        ], $rise_range.prototype, "event_input", null);
+        $$.$rise_range = $rise_range;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const Thumb_size = $mol_gap.block;
+        const Track_height = $mol_gap.space;
+        const Track_margin = $mol_gap.block;
+        $mol_style_define($rise_range, {
+            flex: {
+                grow: 1,
+                direction: 'column',
+            },
+            padding: {
+                top: $mol_gap.space,
+                bottom: $mol_gap.space,
+            },
+            Labels: {
+                pointerEvents: 'none',
+                left: 0,
+                right: 0,
+                justify: {
+                    content: 'space-between',
+                },
+            },
+            Current: {
+                pointerEvents: 'none',
+                position: 'relative',
+                height: '1.5rem',
+                margin: {
+                    left: $mol_style_func.calc(`${Thumb_size} / 2`),
+                    right: $mol_style_func.calc(`${Thumb_size} / 2`),
+                },
+            },
+            '[disabled]': {
+                'true': {
+                    Value: {
+                        color: $mol_theme.shade,
+                    },
+                },
+            },
+            Value: {
+                position: 'absolute',
+                left: $mol_style_func.vary('--rise_range_percent'),
+                transform: 'translateX(-50%)',
+                color: $mol_theme.current,
+            },
+        });
+        const Track = {
+            height: Track_height,
+            border: {
+                radius: $mol_gap.round,
+            },
+            background: {
+                color: $mol_theme.line,
+            },
+        };
+        const Thumb = {
+            height: Thumb_size,
+            width: Thumb_size,
+            margin: {
+                top: $mol_style_func.calc(`(${Track_height} - ${Thumb_size}) / 2`),
+            },
+            appearance: 'none',
+            border: {
+                radius: '50%',
+            },
+            background: {
+                color: $mol_theme.current,
+            },
+        };
+        $mol_style_define($rise_range_input, {
+            height: $mol_style_func.calc(`${Thumb_size} + 2 * ${Track_margin}`),
+            margin: {
+                top: $mol_style_func.calc(`-1 * ${Track_margin} / 2 - var(--mol_gap_space)`),
+                bottom: $mol_style_func.calc(`-1 * ${Track_margin} / 2`),
+                left: 0,
+                right: 0,
+            },
+            '::-webkit-slider-runnable-track': Track,
+            ['::-moz-range-track']: Track,
+            '::-webkit-slider-thumb': Thumb,
+            ['::-moz-range-thumb']: Thumb,
+            appearance: 'none',
+            background: {
+                color: 'transparent',
+            },
+            cursor: 'pointer',
+            ':disabled': {
+                cursor: 'default',
+                '::-webkit-slider-thumb': {
+                    background: {
+                        color: $mol_theme.shade,
+                    },
+                },
+                ['::-moz-range-thumb']: {
+                    background: {
+                        color: $mol_theme.shade,
+                    },
+                },
+            },
+            ':focus': {
+                outline: 'none',
+            },
+        });
+        $mol_style_define($rise_range_value, {
+            '[disabled]': {
+                'true': {
+                    color: $mol_theme.shade,
+                },
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$mol_icon_chevron_left) = class $mol_icon_chevron_left extends ($.$mol_icon) {
+		path(){
+			return "M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_icon_chevron_right) = class $mol_icon_chevron_right extends ($.$mol_icon) {
+		path(){
+			return "M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_number) = class $mol_number extends ($.$mol_view) {
+		precision(){
+			return 1;
+		}
+		event_dec(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		event_inc(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		event_dec_boost(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		event_inc_boost(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Hotkey(){
+			const obj = new this.$.$mol_hotkey();
+			(obj.key) = () => ({
+				"down": (next) => (this.event_dec(next)), 
+				"up": (next) => (this.event_inc(next)), 
+				"pageDown": (next) => (this.event_dec_boost(next)), 
+				"pageUp": (next) => (this.event_inc_boost(next))
+			});
+			return obj;
+		}
+		dec_enabled(){
+			return (this.enabled());
+		}
+		dec_icon(){
+			const obj = new this.$.$mol_icon_chevron_left();
+			return obj;
+		}
+		Dec(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.event_click) = (next) => ((this.event_dec(next)));
+			(obj.enabled) = () => ((this.dec_enabled()));
+			(obj.sub) = () => ([(this.dec_icon())]);
+			return obj;
+		}
+		type(){
+			return "text";
+		}
+		value_string(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		hint(){
+			return " ";
+		}
+		string_enabled(){
+			return (this.enabled());
+		}
+		submit(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		String(){
+			const obj = new this.$.$mol_string();
+			(obj.type) = () => ((this.type()));
+			(obj.keyboard) = () => ("decimal");
+			(obj.value) = (next) => ((this.value_string(next)));
+			(obj.hint) = () => ((this.hint()));
+			(obj.enabled) = () => ((this.string_enabled()));
+			(obj.submit) = (next) => ((this.submit(next)));
+			return obj;
+		}
+		inc_enabled(){
+			return (this.enabled());
+		}
+		inc_icon(){
+			const obj = new this.$.$mol_icon_chevron_right();
+			return obj;
+		}
+		Inc(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.event_click) = (next) => ((this.event_inc(next)));
+			(obj.enabled) = () => ((this.inc_enabled()));
+			(obj.sub) = () => ([(this.inc_icon())]);
+			return obj;
+		}
+		precision_view(){
+			return (this.precision());
+		}
+		precision_change(){
+			return (this.precision());
+		}
+		boost(){
+			return 10;
+		}
+		value_min(){
+			return -Infinity;
+		}
+		value_max(){
+			return +Infinity;
+		}
+		value(next){
+			if(next !== undefined) return next;
+			return +NaN;
+		}
+		enabled(){
+			return true;
+		}
+		plugins(){
+			return [(this.Hotkey())];
+		}
+		sub(){
+			return [
+				(this.Dec()), 
+				(this.String()), 
+				(this.Inc())
+			];
+		}
+	};
+	($mol_mem(($.$mol_number.prototype), "event_dec"));
+	($mol_mem(($.$mol_number.prototype), "event_inc"));
+	($mol_mem(($.$mol_number.prototype), "event_dec_boost"));
+	($mol_mem(($.$mol_number.prototype), "event_inc_boost"));
+	($mol_mem(($.$mol_number.prototype), "Hotkey"));
+	($mol_mem(($.$mol_number.prototype), "dec_icon"));
+	($mol_mem(($.$mol_number.prototype), "Dec"));
+	($mol_mem(($.$mol_number.prototype), "value_string"));
+	($mol_mem(($.$mol_number.prototype), "submit"));
+	($mol_mem(($.$mol_number.prototype), "String"));
+	($mol_mem(($.$mol_number.prototype), "inc_icon"));
+	($mol_mem(($.$mol_number.prototype), "Inc"));
+	($mol_mem(($.$mol_number.prototype), "value"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/number/number.css", "[mol_number] {\n\tdisplay: flex;\n\tflex: 0 1 auto;\n\tposition: relative;\n\talign-items: stretch;\n\tmax-width: 100%;\n}\n\n[mol_number_string] {\n\tappearance: textfield;\n\tflex: 1 1 7rem;\n\twidth: 7rem;\n}\n\n[mol_number_string]::-webkit-inner-spin-button {\n\tdisplay: none;\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_number extends $.$mol_number {
+            value_limited(val) {
+                if (Number.isNaN(val))
+                    return this.value(val);
+                if (val === undefined)
+                    return this.value();
+                const min = this.value_min();
+                const max = this.value_max();
+                if (val < min)
+                    return this.value(min);
+                if (val > max)
+                    return this.value(max);
+                return this.value(val);
+            }
+            event_dec(next) {
+                this.value_limited((this.value_limited() || 0) - this.precision_change());
+                next?.preventDefault();
+            }
+            event_inc(next) {
+                this.value_limited((this.value_limited() || 0) + this.precision_change());
+                next?.preventDefault();
+            }
+            event_dec_boost(next) {
+                this.value_limited((this.value_limited() || 0) - this.precision_change() * this.boost());
+                next?.preventDefault();
+            }
+            event_inc_boost(next) {
+                this.value_limited((this.value_limited() || 0) + this.precision_change() * this.boost());
+                next?.preventDefault();
+            }
+            round(val) {
+                if (Number.isNaN(val))
+                    return '';
+                if (val === 0)
+                    return '0';
+                if (!val)
+                    return '';
+                const precision_view = this.precision_view();
+                if (!precision_view)
+                    return val.toFixed();
+                if (precision_view >= 1) {
+                    return (val / precision_view).toFixed();
+                }
+                else {
+                    const fixed_number = Math.log10(1 / precision_view);
+                    return val.toFixed(Math.ceil(fixed_number));
+                }
+            }
+            value_string(next) {
+                const current = this.round(this.value_limited());
+                if (next === undefined)
+                    return current;
+                const precision = this.precision_view();
+                if (precision - Math.floor(precision) === 0)
+                    next = next.replace(/[.,]/g, '');
+                next = (this.value_min() < 0 && next.startsWith('-') ? '-' : '')
+                    + next.replace(/,/g, '.').replace(/[^\d\.]/g, '').replace(/^0{2,}/, '0');
+                let dot_pos = next.indexOf('.');
+                if (dot_pos !== -1) {
+                    const prev = $mol_wire_probe(() => this.value_string()) ?? '';
+                    const dot_pos_prev = prev.indexOf('.');
+                    if (dot_pos_prev === dot_pos)
+                        dot_pos = next.lastIndexOf('.');
+                    const frac = next.slice(dot_pos + 1).replace(/\./g, '');
+                    next = (next.slice(0, dot_pos) || '0').replace(/\./g, '') + '.' + frac;
+                }
+                if (Number.isNaN(Number(next)))
+                    return next;
+                if (next.endsWith('.'))
+                    return next;
+                if (next.endsWith('-'))
+                    return next;
+                this.value_limited(Number(next || Number.NaN));
+                return next;
+            }
+            dec_enabled() {
+                return this.enabled() && (!((this.value() || 0) <= this.value_min()));
+            }
+            inc_enabled() {
+                return this.enabled() && (!((this.value() || 0) >= this.value_max()));
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_number.prototype, "value_string", null);
+        __decorate([
+            $mol_mem
+        ], $mol_number.prototype, "dec_enabled", null);
+        __decorate([
+            $mol_mem
+        ], $mol_number.prototype, "inc_enabled", null);
+        $$.$mol_number = $mol_number;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$rise_range_demo) = class $rise_range_demo extends ($.$mol_example_small) {
+		Number(){
+			const obj = new this.$.$mol_number();
+			(obj.value) = (next) => ((this.value(next)));
+			(obj.value_min) = () => ((this.min()));
+			(obj.value_max) = () => ((this.max()));
+			return obj;
+		}
+		value(next){
+			if(next !== undefined) return next;
+			return 10;
+		}
+		min(){
+			return 0;
+		}
+		max(){
+			return 10;
+		}
+		Range(){
+			const obj = new this.$.$rise_range();
+			(obj.value) = (next) => ((this.value(next)));
+			(obj.min) = () => ((this.min()));
+			(obj.max) = () => ((this.max()));
+			return obj;
+		}
+		Range_disabled(){
+			const obj = new this.$.$rise_range();
+			(obj.value) = (next) => ((this.value(next)));
+			(obj.disabled) = () => (true);
+			(obj.min) = () => ((this.min()));
+			(obj.max) = () => ((this.max()));
+			return obj;
+		}
+		List(){
+			const obj = new this.$.$mol_list();
+			(obj.sub) = () => ([
+				(this.Number()), 
+				(this.Range()), 
+				(this.Range_disabled())
+			]);
+			return obj;
+		}
+		sub(){
+			return [(this.List())];
+		}
+		tags(){
+			return ["range"];
+		}
+		aspects(){
+			return ["Widget"];
+		}
+	};
+	($mol_mem(($.$rise_range_demo.prototype), "Number"));
+	($mol_mem(($.$rise_range_demo.prototype), "value"));
+	($mol_mem(($.$rise_range_demo.prototype), "Range"));
+	($mol_mem(($.$rise_range_demo.prototype), "Range_disabled"));
+	($mol_mem(($.$rise_range_demo.prototype), "List"));
+
+
+;
+"use strict";
+
+;
+	($.$mol_check_list) = class $mol_check_list extends ($.$mol_view) {
+		option_checked(id, next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		option_title(id){
+			return "";
+		}
+		option_label(id){
+			return [(this.option_title(id))];
+		}
+		enabled(){
+			return true;
+		}
+		option_enabled(id){
+			return (this.enabled());
+		}
+		option_hint(id){
+			return "";
+		}
+		items(){
+			return [];
+		}
+		dictionary(){
+			return {};
+		}
+		Option(id){
+			const obj = new this.$.$mol_check();
+			(obj.checked) = (next) => ((this.option_checked(id, next)));
+			(obj.label) = () => ((this.option_label(id)));
+			(obj.enabled) = () => ((this.option_enabled(id)));
+			(obj.hint) = () => ((this.option_hint(id)));
+			(obj.minimal_height) = () => (24);
+			return obj;
+		}
+		options(){
+			return {};
+		}
+		keys(){
+			return [];
+		}
+		sub(){
+			return (this.items());
+		}
+	};
+	($mol_mem_key(($.$mol_check_list.prototype), "option_checked"));
+	($mol_mem_key(($.$mol_check_list.prototype), "Option"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_check_list extends $.$mol_check_list {
+            options() {
+                return {};
+            }
+            dictionary(next) {
+                return next ?? {};
+            }
+            option_checked(id, next) {
+                const prev = this.dictionary();
+                if (next === undefined)
+                    return prev[id] ?? null;
+                const next_rec = { ...prev, [id]: next };
+                if (next === null)
+                    delete next_rec[id];
+                return this.dictionary(next_rec)[id] ?? null;
+            }
+            keys() {
+                return Object.keys(this.options());
+            }
+            items() {
+                return this.keys().map(key => this.Option(key));
+            }
+            option_title(key) {
+                return this.options()[key] || key;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_check_list.prototype, "keys", null);
+        __decorate([
+            $mol_mem
+        ], $mol_check_list.prototype, "items", null);
+        $$.$mol_check_list = $mol_check_list;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/check/list/list.view.css", "[mol_check_list] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tflex: 1 1 auto;\n\tborder-radius: var(--mol_gap_round);\n\tgap: 1px;\n}\n\n[mol_check_list_option] {\n\tflex: 0 1 auto;\n}\n\n[mol_check_list_option]:where([mol_check_checked=\"true\"]) {\n\ttext-shadow: 0 0;\n\tcolor: var(--mol_theme_current);\n}\n\n[mol_check_list_option]:where([mol_check_checked=\"true\"][disabled]) {\n\tcolor: var(--mol_theme_text);\n}\n");
+})($ || ($ = {}));
+
+;
+	($.$mol_switch) = class $mol_switch extends ($.$mol_check_list) {
+		value(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+	};
+	($mol_mem(($.$mol_switch.prototype), "value"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_switch extends $.$mol_switch {
+            value(next) {
+                return $mol_state_session.value(`${this}.value()`, next) ?? '';
+            }
+            option_checked(key, next) {
+                if (next === undefined)
+                    return this.value() == key;
+                this.value(next ? key : '');
+                return next;
+            }
+        }
+        $$.$mol_switch = $mol_switch;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$rise_radio) = class $rise_radio extends ($.$mol_switch) {
+		Circle_inner(id){
+			const obj = new this.$.$mol_view();
+			return obj;
+		}
+		circle_inner(id){
+			return [(this.Circle_inner(id))];
+		}
+		Circle(id){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this.circle_inner(id)));
+			return obj;
+		}
+		option_label(id){
+			return [(this.Circle(id)), (this.option_title(id))];
+		}
+	};
+	($mol_mem_key(($.$rise_radio.prototype), "Circle_inner"));
+	($mol_mem_key(($.$rise_radio.prototype), "Circle"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $rise_radio extends $.$rise_radio {
+            circle_inner(id) {
+                return this.option_checked(id) ? super.circle_inner(id) : [];
+            }
+        }
+        __decorate([
+            $mol_mem_key
+        ], $rise_radio.prototype, "circle_inner", null);
+        $$.$rise_radio = $rise_radio;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($rise_radio, {
+            gap: '1rem',
+            Circle: {
+                height: '1rem',
+                width: '1rem',
+                border: {
+                    radius: '50%',
+                },
+                justify: {
+                    content: 'center'
+                },
+                align: {
+                    items: 'center'
+                },
+                box: {
+                    shadow: [['inset', 0, 0, 0, '1px', $mol_theme.control]],
+                },
+            },
+            Option: {
+                padding: 0,
+                '[mol_check_checked]': {
+                    true: {
+                        ['Circle']: {
+                            box: {
+                                shadow: [['inset', 0, 0, 0, '1px', $mol_theme.current]],
+                            },
+                        },
+                    },
+                },
+            },
+            Circle_inner: {
+                height: '.5rem',
+                width: '.5rem',
+                background: {
+                    color: $mol_theme.current,
+                },
+                border: {
+                    radius: '50%',
+                },
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$rise_radio_demo) = class $rise_radio_demo extends ($.$mol_example_small) {
+		Radio(){
+			const obj = new this.$.$rise_radio();
+			(obj.options) = () => ([
+				"Option1", 
+				"Option2", 
+				"Option3"
+			]);
+			return obj;
+		}
+		sub(){
+			return [(this.Radio())];
+		}
+		tags(){
+			return ["radio"];
+		}
+		aspects(){
+			return ["Widget"];
+		}
+	};
+	($mol_mem(($.$rise_radio_demo.prototype), "Radio"));
+
+
+;
+"use strict";
+
+;
+	($.$rise_demo) = class $rise_demo extends ($.$mol_app_demo) {
+		menu_title(){
+			return "$rise";
+		}
+		sources_uri(){
+			return "https://github.com/stan-donarise/mam_rise";
+		}
+	};
+
+
+;
+"use strict";
+
+;
 "use strict";
 
 ;
@@ -15997,273 +18757,6 @@ var $;
 var $;
 (function ($) {
     $mol_style_attach("mol/select/select.view.css", "[mol_select] {\n\tdisplay: flex;\n\tword-break: normal;\n\talign-self: flex-start;\n}\n\n[mol_select_option_row] {\n\tmin-width: 100%;\n\tpadding: 0;\n\tjustify-content: flex-start;\n}\n\n[mol_select_bubble] {\n\tmin-width: 100%;\n}\n\n[mol_select_filter] {\n\tflex: 1 0 auto;\n\talign-self: stretch;\n}\n\n[mol_select_option_label] {\n\tpadding: var(--mol_gap_text);\n\ttext-align: left;\n\tmin-height: 1.5em;\n\tdisplay: block;\n\twhite-space: nowrap;\n}\n\n[mol_select_clear_option_content] {\n\tpadding: .5em 1rem .5rem 0;\n\ttext-align: left;\n\tbox-shadow: var(--mol_theme_line);\n\tflex: 1 0 auto;\n}\n\n[mol_select_no_options] {\n\tpadding: var(--mol_gap_text);\n\ttext-align: left;\n\tdisplay: block;\n\tcolor: var(--mol_theme_shade);\n}\n\n[mol_select_trigger] {\n\tpadding: 0;\n\tflex: 1 1 auto;\n\tdisplay: flex;\n}\n\n[mol_select_trigger] > * {\n\tmargin-right: -1rem;\n}\n\n[mol_select_trigger] > *:last-child {\n\tmargin-right: 0;\n}\n\n[mol_select_menu] {\n\tdisplay: flex;\n\tflex-direction: column;\n}\n\n");
-})($ || ($ = {}));
-
-;
-	($.$mol_icon_chevron_left) = class $mol_icon_chevron_left extends ($.$mol_icon) {
-		path(){
-			return "M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z";
-		}
-	};
-
-
-;
-"use strict";
-
-;
-	($.$mol_icon_chevron_right) = class $mol_icon_chevron_right extends ($.$mol_icon) {
-		path(){
-			return "M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z";
-		}
-	};
-
-
-;
-"use strict";
-
-;
-	($.$mol_number) = class $mol_number extends ($.$mol_view) {
-		precision(){
-			return 1;
-		}
-		event_dec(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		event_inc(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		event_dec_boost(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		event_inc_boost(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Hotkey(){
-			const obj = new this.$.$mol_hotkey();
-			(obj.key) = () => ({
-				"down": (next) => (this.event_dec(next)), 
-				"up": (next) => (this.event_inc(next)), 
-				"pageDown": (next) => (this.event_dec_boost(next)), 
-				"pageUp": (next) => (this.event_inc_boost(next))
-			});
-			return obj;
-		}
-		dec_enabled(){
-			return (this.enabled());
-		}
-		dec_icon(){
-			const obj = new this.$.$mol_icon_chevron_left();
-			return obj;
-		}
-		Dec(){
-			const obj = new this.$.$mol_button_minor();
-			(obj.event_click) = (next) => ((this.event_dec(next)));
-			(obj.enabled) = () => ((this.dec_enabled()));
-			(obj.sub) = () => ([(this.dec_icon())]);
-			return obj;
-		}
-		type(){
-			return "text";
-		}
-		value_string(next){
-			if(next !== undefined) return next;
-			return "";
-		}
-		hint(){
-			return " ";
-		}
-		string_enabled(){
-			return (this.enabled());
-		}
-		submit(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		String(){
-			const obj = new this.$.$mol_string();
-			(obj.type) = () => ((this.type()));
-			(obj.keyboard) = () => ("decimal");
-			(obj.value) = (next) => ((this.value_string(next)));
-			(obj.hint) = () => ((this.hint()));
-			(obj.enabled) = () => ((this.string_enabled()));
-			(obj.submit) = (next) => ((this.submit(next)));
-			return obj;
-		}
-		inc_enabled(){
-			return (this.enabled());
-		}
-		inc_icon(){
-			const obj = new this.$.$mol_icon_chevron_right();
-			return obj;
-		}
-		Inc(){
-			const obj = new this.$.$mol_button_minor();
-			(obj.event_click) = (next) => ((this.event_inc(next)));
-			(obj.enabled) = () => ((this.inc_enabled()));
-			(obj.sub) = () => ([(this.inc_icon())]);
-			return obj;
-		}
-		precision_view(){
-			return (this.precision());
-		}
-		precision_change(){
-			return (this.precision());
-		}
-		boost(){
-			return 10;
-		}
-		value_min(){
-			return -Infinity;
-		}
-		value_max(){
-			return +Infinity;
-		}
-		value(next){
-			if(next !== undefined) return next;
-			return +NaN;
-		}
-		enabled(){
-			return true;
-		}
-		plugins(){
-			return [(this.Hotkey())];
-		}
-		sub(){
-			return [
-				(this.Dec()), 
-				(this.String()), 
-				(this.Inc())
-			];
-		}
-	};
-	($mol_mem(($.$mol_number.prototype), "event_dec"));
-	($mol_mem(($.$mol_number.prototype), "event_inc"));
-	($mol_mem(($.$mol_number.prototype), "event_dec_boost"));
-	($mol_mem(($.$mol_number.prototype), "event_inc_boost"));
-	($mol_mem(($.$mol_number.prototype), "Hotkey"));
-	($mol_mem(($.$mol_number.prototype), "dec_icon"));
-	($mol_mem(($.$mol_number.prototype), "Dec"));
-	($mol_mem(($.$mol_number.prototype), "value_string"));
-	($mol_mem(($.$mol_number.prototype), "submit"));
-	($mol_mem(($.$mol_number.prototype), "String"));
-	($mol_mem(($.$mol_number.prototype), "inc_icon"));
-	($mol_mem(($.$mol_number.prototype), "Inc"));
-	($mol_mem(($.$mol_number.prototype), "value"));
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/number/number.css", "[mol_number] {\n\tdisplay: flex;\n\tflex: 0 1 auto;\n\tposition: relative;\n\talign-items: stretch;\n\tmax-width: 100%;\n}\n\n[mol_number_string] {\n\tappearance: textfield;\n\tflex: 1 1 7rem;\n\twidth: 7rem;\n}\n\n[mol_number_string]::-webkit-inner-spin-button {\n\tdisplay: none;\n}\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_number extends $.$mol_number {
-            value_limited(val) {
-                if (Number.isNaN(val))
-                    return this.value(val);
-                if (val === undefined)
-                    return this.value();
-                const min = this.value_min();
-                const max = this.value_max();
-                if (val < min)
-                    return this.value(min);
-                if (val > max)
-                    return this.value(max);
-                return this.value(val);
-            }
-            event_dec(next) {
-                this.value_limited((this.value_limited() || 0) - this.precision_change());
-                next?.preventDefault();
-            }
-            event_inc(next) {
-                this.value_limited((this.value_limited() || 0) + this.precision_change());
-                next?.preventDefault();
-            }
-            event_dec_boost(next) {
-                this.value_limited((this.value_limited() || 0) - this.precision_change() * this.boost());
-                next?.preventDefault();
-            }
-            event_inc_boost(next) {
-                this.value_limited((this.value_limited() || 0) + this.precision_change() * this.boost());
-                next?.preventDefault();
-            }
-            round(val) {
-                if (Number.isNaN(val))
-                    return '';
-                if (val === 0)
-                    return '0';
-                if (!val)
-                    return '';
-                const precision_view = this.precision_view();
-                if (!precision_view)
-                    return val.toFixed();
-                if (precision_view >= 1) {
-                    return (val / precision_view).toFixed();
-                }
-                else {
-                    const fixed_number = Math.log10(1 / precision_view);
-                    return val.toFixed(Math.ceil(fixed_number));
-                }
-            }
-            value_string(next) {
-                const current = this.round(this.value_limited());
-                if (next === undefined)
-                    return current;
-                const precision = this.precision_view();
-                if (precision - Math.floor(precision) === 0)
-                    next = next.replace(/[.,]/g, '');
-                next = (this.value_min() < 0 && next.startsWith('-') ? '-' : '')
-                    + next.replace(/,/g, '.').replace(/[^\d\.]/g, '').replace(/^0{2,}/, '0');
-                let dot_pos = next.indexOf('.');
-                if (dot_pos !== -1) {
-                    const prev = $mol_wire_probe(() => this.value_string()) ?? '';
-                    const dot_pos_prev = prev.indexOf('.');
-                    if (dot_pos_prev === dot_pos)
-                        dot_pos = next.lastIndexOf('.');
-                    const frac = next.slice(dot_pos + 1).replace(/\./g, '');
-                    next = (next.slice(0, dot_pos) || '0').replace(/\./g, '') + '.' + frac;
-                }
-                if (Number.isNaN(Number(next)))
-                    return next;
-                if (next.endsWith('.'))
-                    return next;
-                if (next.endsWith('-'))
-                    return next;
-                this.value_limited(Number(next || Number.NaN));
-                return next;
-            }
-            dec_enabled() {
-                return this.enabled() && (!((this.value() || 0) <= this.value_min()));
-            }
-            inc_enabled() {
-                return this.enabled() && (!((this.value() || 0) >= this.value_max()));
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_number.prototype, "value_string", null);
-        __decorate([
-            $mol_mem
-        ], $mol_number.prototype, "dec_enabled", null);
-        __decorate([
-            $mol_mem
-        ], $mol_number.prototype, "inc_enabled", null);
-        $$.$mol_number = $mol_number;
-    })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
 ;
@@ -20580,37 +23073,6 @@ var $;
 "use strict";
 
 ;
-	($.$mol_icon_tick) = class $mol_icon_tick extends ($.$mol_icon) {
-		path(){
-			return "M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z";
-		}
-	};
-
-
-;
-"use strict";
-
-;
-	($.$mol_check_box) = class $mol_check_box extends ($.$mol_check) {
-		Icon(){
-			const obj = new this.$.$mol_icon_tick();
-			return obj;
-		}
-	};
-	($mol_mem(($.$mol_check_box.prototype), "Icon"));
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/check/box/box.view.css", "[mol_check_box_icon] {\n\tborder-radius: var(--mol_gap_round);\n\tbox-shadow: inset 0 0 0 1px var(--mol_theme_line);\n\tcolor: var(--mol_theme_shade);\n\theight: 1rem;\n\talign-self: center;\n}\n\n[mol_check]:not([mol_check_checked]) > [mol_check_box_icon] {\n\tfill: transparent;\n}\n\n[mol_check]:not([disabled]) > [mol_check_box_icon] {\n\tbackground: var(--mol_theme_field);\n\tcolor: var(--mol_theme_text);\n}\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-
-;
 	($.$mol_bar_demo) = class $mol_bar_demo extends ($.$mol_example_small) {
 		mail(next){
 			if(next !== undefined) return next;
@@ -23287,67 +25749,6 @@ var $;
         }
         $$.$mol_calendar_demo_simple = $mol_calendar_demo_simple;
     })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-	($.$mol_card) = class $mol_card extends ($.$mol_list) {
-		status(){
-			return "";
-		}
-		content(){
-			return [(this.title())];
-		}
-		Content(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ((this.content()));
-			return obj;
-		}
-		status_text(){
-			return (this.status());
-		}
-		Status(){
-			const obj = new this.$.$mol_view();
-			(obj.minimal_height) = () => (30);
-			(obj.sub) = () => ([(this.status_text())]);
-			return obj;
-		}
-		attr(){
-			return {...(super.attr()), "mol_card_status_type": (this.status())};
-		}
-		rows(){
-			return [(this.Content()), (this.Status())];
-		}
-	};
-	($mol_mem(($.$mol_card.prototype), "Content"));
-	($mol_mem(($.$mol_card.prototype), "Status"));
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_card extends $.$mol_card {
-            rows() {
-                return [
-                    this.Content(),
-                    ...this.status_text() ? [this.Status()] : [],
-                ];
-            }
-        }
-        $$.$mol_card = $mol_card;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/card/card.view.css", "[mol_card] {\n\tbackground: var(--mol_theme_card);\n\tcolor: var(--mol_theme_text);\n\tborder-radius: var(--mol_gap_round);\n\tdisplay: flex;\n\tflex: 0 1 auto;\n\tflex-direction: column;\n\tposition: relative;\n\tbox-shadow: 0 0 0.5rem 0rem hsla(0,0%,0%,.125);\n\t/* overflow: hidden; */\n}\n\n[mol_card_content] {\n\tflex: 1 1 auto;\n\tborder-radius: var(--mol_gap_round);\n\tmargin: 0;\n\tpadding: var(--mol_gap_block);\n}\n\n[mol_card_status] {\n\tbackground: var(--mol_theme_line);\n\tpadding: var(--mol_gap_text);\n\tmargin: 0;\n}\n\n[mol_card_status] {\n\tbackground: var(--mol_theme_line);\n}\n");
 })($ || ($ = {}));
 
 ;
@@ -26976,108 +29377,6 @@ var $;
 "use strict";
 
 ;
-	($.$mol_check_list) = class $mol_check_list extends ($.$mol_view) {
-		option_checked(id, next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		option_title(id){
-			return "";
-		}
-		option_label(id){
-			return [(this.option_title(id))];
-		}
-		enabled(){
-			return true;
-		}
-		option_enabled(id){
-			return (this.enabled());
-		}
-		option_hint(id){
-			return "";
-		}
-		items(){
-			return [];
-		}
-		dictionary(){
-			return {};
-		}
-		Option(id){
-			const obj = new this.$.$mol_check();
-			(obj.checked) = (next) => ((this.option_checked(id, next)));
-			(obj.label) = () => ((this.option_label(id)));
-			(obj.enabled) = () => ((this.option_enabled(id)));
-			(obj.hint) = () => ((this.option_hint(id)));
-			(obj.minimal_height) = () => (24);
-			return obj;
-		}
-		options(){
-			return {};
-		}
-		keys(){
-			return [];
-		}
-		sub(){
-			return (this.items());
-		}
-	};
-	($mol_mem_key(($.$mol_check_list.prototype), "option_checked"));
-	($mol_mem_key(($.$mol_check_list.prototype), "Option"));
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_check_list extends $.$mol_check_list {
-            options() {
-                return {};
-            }
-            dictionary(next) {
-                return next ?? {};
-            }
-            option_checked(id, next) {
-                const prev = this.dictionary();
-                if (next === undefined)
-                    return prev[id] ?? null;
-                const next_rec = { ...prev, [id]: next };
-                if (next === null)
-                    delete next_rec[id];
-                return this.dictionary(next_rec)[id] ?? null;
-            }
-            keys() {
-                return Object.keys(this.options());
-            }
-            items() {
-                return this.keys().map(key => this.Option(key));
-            }
-            option_title(key) {
-                return this.options()[key] || key;
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_check_list.prototype, "keys", null);
-        __decorate([
-            $mol_mem
-        ], $mol_check_list.prototype, "items", null);
-        $$.$mol_check_list = $mol_check_list;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/check/list/list.view.css", "[mol_check_list] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tflex: 1 1 auto;\n\tborder-radius: var(--mol_gap_round);\n\tgap: 1px;\n}\n\n[mol_check_list_option] {\n\tflex: 0 1 auto;\n}\n\n[mol_check_list_option]:where([mol_check_checked=\"true\"]) {\n\ttext-shadow: 0 0;\n\tcolor: var(--mol_theme_current);\n}\n\n[mol_check_list_option]:where([mol_check_checked=\"true\"][disabled]) {\n\tcolor: var(--mol_theme_text);\n}\n");
-})($ || ($ = {}));
-
-;
 	($.$mol_check_list_demo) = class $mol_check_list_demo extends ($.$mol_example_small) {
 		right(id, next){
 			if(next !== undefined) return next;
@@ -29014,40 +31313,6 @@ var $;
 var $;
 (function ($) {
     $mol_style_attach("mol/date/demo/demo.view.css", "[mol_date_demo_formatted] {\n\tpadding: var(--mol_gap_text);\n}\n");
-})($ || ($ = {}));
-
-;
-	($.$mol_switch) = class $mol_switch extends ($.$mol_check_list) {
-		value(next){
-			if(next !== undefined) return next;
-			return "";
-		}
-	};
-	($mol_mem(($.$mol_switch.prototype), "value"));
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_switch extends $.$mol_switch {
-            value(next) {
-                return $mol_state_session.value(`${this}.value()`, next) ?? '';
-            }
-            option_checked(key, next) {
-                if (next === undefined)
-                    return this.value() == key;
-                this.value(next ? key : '');
-                return next;
-            }
-        }
-        $$.$mol_switch = $mol_switch;
-    })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
 ;

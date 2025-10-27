@@ -21,6 +21,13 @@
 	include \/mol/view/tree/test
 \/mol/app/demo/main
 	deploy \/mol/readme.md
+\/rise/demo
+	include \/rise/drag/demo
+	include \/rise/resize/demo
+	include \/rise/resize/ratio/demo
+	include \/rise/toggle/demo
+	include \/rise/range/demo
+	include \/rise/radio/demo
 \/hyoo
 	pack about git \https://github.com/hyoo-ru/about.hyoo.ru.git
 	pack artist git \https://github.com/hyoo-ru/artist.hyoo.ru.git
@@ -146,6 +153,7 @@
 	include \/mol/offline/install
 	include \/mol/app/demo
 	include \/jin/keyboard/demo
+	include \/rise/demo
 	include \/hyoo/crowd/text/demo
 	include \/mol/app/hello/demo
 	include \/mol/app/questions/demo

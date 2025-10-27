@@ -1181,6 +1181,509 @@ $jin_keyboard_demo $mol_example_small
 		\Widget/Control
 
 
+$rise_drag $mol_plugin
+	x? 0
+	y? 0
+	repos_x* 1
+	repos_y* 1
+	-
+	on_drag? null
+	on_drag_start? null
+	on_drag_end? null
+	-
+	drag? null
+	drag_start? null
+	drag_end? null
+	-
+	use_buttons /
+		0 - \left
+		-\ 1 - \right
+		-\ 2 - \middle
+	-
+	event *
+		^
+		pointerdown? <=> pointerdown? null
+	attr *
+		^
+		rise_dragged <= dragged? false
+	-
+	drags_synced /$rise_drag
+
+$mol_card $mol_list
+	attr *
+		^
+		mol_card_status_type <= status \
+	rows /$mol_view
+		<= Content $mol_view
+			sub <= content /$mol_view_content
+				<= title
+		<= Status $mol_view
+			minimal_height 30
+			sub /
+				<= status_text <= status \
+
+$rise_drag_view $mol_view
+	plugins /
+		^
+		<= Drag $rise_drag
+			on_drag_start? <=> on_drag_start? null
+			on_drag_end? <=> on_drag_end? null
+			on_drag? <=> on_drag? null
+			dragged => dragged
+			y? <=> y? 0
+			x? <=> x? 0
+			drags_synced <= drags_synced /$rise_drag
+			repos_x* <= repos_x* 1
+			repos_y* <= repos_y* 1
+	style *
+		^
+		userSelect \none
+
+$rise_drag_absolute $rise_drag_view
+	y? <=> top? 0
+	x? <=> left? 0
+	style *
+		^
+		position \absolute
+		top <= top_px \0px
+		left <= left_px \0px
+
+$rise_drag_demo $mol_example_small
+	sub /
+		<= Draggable $rise_drag_absolute
+			sub /
+				<= Card $mol_card
+					title \Draggable
+			drags_synced /
+				<= Synced_drag
+		<= Synced $rise_drag_absolute
+			top? <=> top? 100
+			left? <=> left? 100
+			Drag => Synced_drag
+			sub /
+				<= Synced_card $mol_card
+					title \Synced
+	tags /
+		\drag
+	aspects /
+		\Widget
+
+$rise_resize $mol_view
+	sub /
+		<= Drag_view $rise_drag_view
+			minimal_height 0
+			sub <= drag_body /
+			x? <=> x? 0
+			y? <=> y? 0
+			on_drag_start? <=> on_drag_start? null
+			on_drag_end? <=> on_drag_end? null
+			dragged => dragged
+			drags_synced <= drags_synced /$rise_drag
+			Drag => Drag
+			repos_x* <= repos_x* 1
+			repos_y* <= repos_y* 1
+		^ controls /
+		^ edges /
+			<= Top_edge $rise_resize_edge
+				repos_x* <= repos_x*
+				repos_y* <= repos_y*
+				on_drag_start? <=> resize_start? null
+				on_drag_end? <=> resize_end? null
+				y? <=> top_edge_y? 0
+			<= Left_edge $rise_resize_edge
+				repos_x* <= repos_x*
+				repos_y* <= repos_y*
+				on_drag_start? <=> resize_start? null
+				on_drag_end? <=> resize_end? null
+				x? <=> left_edge_x? 0
+			<= Bottom_edge $rise_resize_edge
+				repos_x* <= repos_x*
+				repos_y* <= repos_y*
+				on_drag_start? <=> resize_start? null
+				on_drag_end? <=> resize_end? null
+				y? <=> bottom_edge_y? 0
+			<= Right_edge $rise_resize_edge
+				repos_x* <= repos_x*
+				repos_y* <= repos_y*
+				on_drag_start? <=> resize_start? null
+				on_drag_end? <=> resize_end? null
+				x? <=> right_edge_x? 0
+			<= Top_left_edge $rise_resize_edge
+				repos_x* <= repos_x*
+				repos_y* <= repos_y*
+				on_drag_start? <=> resize_start? null
+				on_drag_end? <=> resize_end? null
+				y? <=> top_edge_y? 0
+				x? <=> left_edge_x? 0
+			<= Top_right_edge $rise_resize_edge
+				repos_x* <= repos_x*
+				repos_y* <= repos_y*
+				on_drag_start? <=> resize_start? null
+				on_drag_end? <=> resize_end? null
+				y? <=> top_edge_y? 0
+				x? <=> right_edge_x? 0
+			<= Bottom_left_edge $rise_resize_edge
+				repos_x* <= repos_x*
+				repos_y* <= repos_y*
+				on_drag_start? <=> resize_start? null
+				on_drag_end? <=> resize_end? null
+				y? <=> bottom_edge_y? 0
+				x? <=> left_edge_x? 0
+			<= Bottom_right_edge $rise_resize_edge
+				repos_x* <= repos_x*
+				repos_y* <= repos_y*
+				on_drag_start? <=> resize_start? null
+				on_drag_end? <=> resize_end? null
+				y? <=> bottom_edge_y? 0
+				x? <=> right_edge_x? 0
+	resizing? false
+	-
+	height_min 20
+	width_min 20
+	-
+	height? 0
+	width? 0
+	top? 0
+	left? 0
+	-
+	stick_threshold 10
+	-
+	x_stick? 0
+	y_stick? 0
+	bottom_edge_y_stick? <= height_min
+	right_edge_x_stick? <= width_min
+	top_edge_y_stick? 0
+	left_edge_x_stick? 0
+	-
+	stickable? true
+	sticks_y /number
+	sticks_x /number
+	auto / <= vals_to_sticks null
+	-
+	style *
+		^
+		top <= top_px \0px
+		left <= left_px \0px
+		height <= height_px \20px
+		width <= width_px \20px
+
+$rise_resize_edge $rise_drag_view
+
+$mol_icon_tick $mol_icon path \M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z
+
+$mol_check_box $mol_check
+	Icon $mol_icon_tick
+
+$rise_resize_demo $mol_example_small
+	sub /
+		<= Resize $rise_resize
+			height_min 150
+			width_min 150
+			height => height
+			width => width
+			top => top
+			left => left
+			x => x
+			y => y
+			bottom_edge_y => bottom_edge_y
+			right_edge_x => right_edge_x
+			top_edge_y => top_edge_y
+			left_edge_x => left_edge_x
+			x_stick => x_stick
+			y_stick => y_stick
+			bottom_edge_y_stick => bottom_edge_y_stick
+			right_edge_x_stick => right_edge_x_stick
+			top_edge_y_stick => top_edge_y_stick
+			left_edge_x_stick => left_edge_x_stick
+			stickable? => stickable?
+			drag_body /
+				<= Stickable $mol_check_box
+					title \Stickable
+					checked? <=> stickable?
+				<= Content $mol_text
+					text <= content \
+			sticks_y <= sticks_y /
+				0
+				100
+				450
+			sticks_x <= sticks_x /
+				0
+				100
+				450
+		^ sticks /
+	Stick_x* $mol_view
+		style *
+			left <= stick_left* \
+	Stick_y* $mol_view
+		style *
+			top <= stick_top* \
+	tags /
+		\resize
+	aspects /
+		\Widget
+
+$rise_resize_ratio $rise_resize
+	ratio 0
+	edges_ratio /
+		<= Left_top_edge_ratio $rise_resize_edge
+			repos_x* <= repos_x*
+			repos_y* <= repos_y*
+			on_drag_start? <=> resize_start?
+			on_drag_end? <=> resize_end?
+			x? <=> left_top_edge_ratio_x? 0
+		<= Left_bottom_edge_ratio $rise_resize_edge
+			repos_x* <= repos_x*
+			repos_y* <= repos_y*
+			on_drag_start? <=> resize_start?
+			on_drag_end? <=> resize_end?
+			x? <=> left_bottom_edge_ratio_x? 0
+		<= Right_bottom_edge_ratio $rise_resize_edge
+			repos_x* <= repos_x*
+			repos_y* <= repos_y*
+			on_drag_start? <=> resize_start?
+			on_drag_end? <=> resize_end?
+			x? <=> right_bottom_edge_ratio_x? 0
+		<= Right_top_edge_ratio $rise_resize_edge
+			repos_x* <= repos_x*
+			repos_y* <= repos_y*
+			on_drag_start? <=> resize_start?
+			on_drag_end? <=> resize_end?
+			x? <=> right_top_edge_ratio_x? 0
+		<= Top_left_edge_ratio $rise_resize_edge
+			repos_x* <= repos_x*
+			repos_y* <= repos_y*
+			on_drag_start? <=> resize_start?
+			on_drag_end? <=> resize_end?
+			y? <=> top_left_edge_ratio_y? 0
+		<= Top_right_edge_ratio $rise_resize_edge
+			repos_x* <= repos_x*
+			repos_y* <= repos_y*
+			on_drag_start? <=> resize_start?
+			on_drag_end? <=> resize_end?
+			y? <=> top_right_edge_ratio_y? 0
+		<= Bottom_left_edge_ratio $rise_resize_edge
+			repos_x* <= repos_x*
+			repos_y* <= repos_y*
+			on_drag_start? <=> resize_start?
+			on_drag_end? <=> resize_end?
+			y? <=> bottom_left_edge_ratio_y? 0
+		<= Bottom_right_edge_ratio $rise_resize_edge
+			repos_x* <= repos_x*
+			repos_y* <= repos_y*
+			on_drag_start? <=> resize_start?
+			on_drag_end? <=> resize_end?
+			y? <=> bottom_right_edge_ratio_y? 0
+
+$rise_resize_ratio_demo $mol_example_small
+	sub /
+		<= Resize $rise_resize_ratio
+			height_min 150
+			width_min 150
+			ratio 1
+			height => height
+			width => width
+			top => top
+			left => left
+			x => x
+			y => y
+			bottom_edge_y => bottom_edge_y
+			right_edge_x => right_edge_x
+			top_edge_y => top_edge_y
+			left_edge_x => left_edge_x
+			x_stick => x_stick
+			y_stick => y_stick
+			bottom_edge_y_stick => bottom_edge_y_stick
+			right_edge_x_stick => right_edge_x_stick
+			top_edge_y_stick => top_edge_y_stick
+			left_edge_x_stick => left_edge_x_stick
+			drag_body /
+				<= Content $mol_text
+					text <= content \
+			sticks_y <= sticks_y /
+				0
+				100
+				450
+			sticks_x <= sticks_x /
+				0
+				100
+				450
+		^ sticks /
+	Stick_x* $mol_view
+		style *
+			left <= stick_left* \
+	Stick_y* $mol_view
+		style *
+			top <= stick_top* \
+	tags /
+		\resize
+	aspects /
+		\Widget
+
+$rise_toggle $mol_check
+	minimal_height 24
+	minimal_width 24
+	sub /
+
+$rise_toggle_demo $mol_example_small
+	sub /
+		<= Toggle $rise_toggle
+	tags /
+		\toggle
+	aspects /
+		\Widget
+
+$rise_range $mol_view
+	minimal_height 48
+	unit \
+	medium? 5
+	enabled true
+	sub /
+		<= Labels $mol_view
+			sub /
+				<= Min $mol_view
+					sub / <= label_min \
+				<= Medium $mol_view
+					sub / <= label_medium \
+				<= Max $mol_view
+					sub / <= label_max \
+		<= Input $rise_range_input
+			disabled <= disabled false
+			min <= min? 0
+			max <= max? 10
+			step <= step? 1
+			value? <=> value? 0
+			event_input? <=> event_input? null
+		<= Current $mol_view
+			sub /
+				<= Value $rise_range_value
+					sub / <= value
+					disabled <= disabled
+	attr *
+		^
+		disabled <= disabled
+	style *
+		^
+		--rise_range_percent <= percent \0%
+
+$rise_range_input $mol_view
+	dom_name \input
+	attr *
+		^
+		type \range
+		disabled <= disabled false
+	field *
+		^
+		min <= min? 0
+		max <= max? 10
+		step <= step? 1
+		value <= value? 0
+	event *
+		^
+		input? <=> event_input? null
+
+$rise_range_value $mol_view
+	attr *
+		^
+		disabled <= disabled false
+
+$mol_icon_chevron_left $mol_icon path \M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z
+
+$mol_icon_chevron_right $mol_icon path \M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z
+
+$mol_number $mol_view
+	precision_view <= precision 1
+	precision_change <= precision 1
+	boost 10
+	value_min -Infinity
+	value_max +Infinity
+	value? +NaN
+	enabled true
+	plugins /
+		<= Hotkey $mol_hotkey
+			key *
+				down? <=> event_dec? null
+				up? <=> event_inc? null
+				pageDown? <=> event_dec_boost? null
+				pageUp? <=> event_inc_boost? null
+	sub /
+		<= Dec $mol_button_minor
+			event_click? <=> event_dec? null
+			enabled <= dec_enabled <= enabled
+			sub / <= dec_icon $mol_icon_chevron_left
+		<= String $mol_string
+			- \ we don't want native number controls in mobile devices
+			- \ https://stackoverflow.com/questions/3790935/can-i-hide-the-html5-number-input-s-spin-box
+			type <= type \text
+			keyboard \decimal
+			value? <=> value_string? \
+			hint <= hint \ 
+			enabled <= string_enabled <= enabled
+			submit? <=> submit? null
+		<= Inc $mol_button_minor
+			event_click? <=> event_inc? null
+			enabled <= inc_enabled <= enabled
+			sub / <= inc_icon $mol_icon_chevron_right
+
+$rise_range_demo $mol_example_small
+	sub /
+		<= List $mol_list
+			sub /
+				<= Number $mol_number
+					value? <=> value?
+					value_min <= min
+					value_max <= max
+				<= Range $rise_range
+					value? <=> value? 10
+					min <= min 0
+					max <= max 10
+				<= Range_disabled $rise_range
+					value? <=> value?
+					disabled true
+					min <= min
+					max <= max
+	tags /
+		\range
+	aspects /
+		\Widget
+
+$mol_check_list $mol_view
+	dictionary *
+	Option* $mol_check
+		checked? <=> option_checked*? false
+		label <= option_label* /
+			<= option_title* \
+		enabled <= option_enabled* <= enabled true
+		hint <= option_hint* \
+		minimal_height 24
+	options *
+	keys /string
+	sub <= items /$mol_check
+
+$mol_switch $mol_check_list
+	value? \
+
+$rise_radio $mol_switch
+	option_label* /
+		<= Circle* $mol_view
+			sub <= circle_inner* / <= Circle_inner* $mol_view
+		<= option_title*
+
+$rise_radio_demo $mol_example_small
+	sub /
+		<= Radio $rise_radio
+			options /
+				\Option1
+				\Option2
+				\Option3
+	tags /
+		\radio
+	aspects /
+		\Widget
+
+$rise_demo $mol_app_demo
+	menu_title \$rise
+	sources_uri \https://github.com/stan-donarise/mam_rise
+
 $mol_button_major $mol_button_minor
 	theme \$mol_theme_base
 
@@ -1488,44 +1991,6 @@ $mol_select $mol_pick
 		submit?event <=> submit?event null
 		enabled <= enabled true
 	Trigger_icon $mol_icon_dots_vertical
-
-$mol_icon_chevron_left $mol_icon path \M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z
-
-$mol_icon_chevron_right $mol_icon path \M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z
-
-$mol_number $mol_view
-	precision_view <= precision 1
-	precision_change <= precision 1
-	boost 10
-	value_min -Infinity
-	value_max +Infinity
-	value? +NaN
-	enabled true
-	plugins /
-		<= Hotkey $mol_hotkey
-			key *
-				down? <=> event_dec? null
-				up? <=> event_inc? null
-				pageDown? <=> event_dec_boost? null
-				pageUp? <=> event_inc_boost? null
-	sub /
-		<= Dec $mol_button_minor
-			event_click? <=> event_dec? null
-			enabled <= dec_enabled <= enabled
-			sub / <= dec_icon $mol_icon_chevron_left
-		<= String $mol_string
-			- \ we don't want native number controls in mobile devices
-			- \ https://stackoverflow.com/questions/3790935/can-i-hide-the-html5-number-input-s-spin-box
-			type <= type \text
-			keyboard \decimal
-			value? <=> value_string? \
-			hint <= hint \ 
-			enabled <= string_enabled <= enabled
-			submit? <=> submit? null
-		<= Inc $mol_button_minor
-			event_click? <=> event_inc? null
-			enabled <= inc_enabled <= enabled
-			sub / <= inc_icon $mol_icon_chevron_right
 
 $mol_app_report $mol_page
 	title @ \Pump #1337 - Technical passport
@@ -2099,11 +2564,6 @@ $mol_email $mol_string
 	hint \E-mail
 
 
-$mol_icon_tick $mol_icon path \M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z
-
-$mol_check_box $mol_check
-	Icon $mol_icon_tick
-
 $mol_bar_demo $mol_example_small
 	title \Group of controls as one control
 	sub /
@@ -2640,19 +3100,6 @@ $mol_calendar_demo_simple $mol_example_small
 	aspects /
 		\Widget/Grid
 		\Type/Date
-
-$mol_card $mol_list
-	attr *
-		^
-		mol_card_status_type <= status \
-	rows /$mol_view
-		<= Content $mol_view
-			sub <= content /$mol_view_content
-				<= title
-		<= Status $mol_view
-			minimal_height 30
-			sub /
-				<= status_text <= status \
 
 $mol_card_demo $mol_example_small
 	title \Cards with optional status
@@ -3289,19 +3736,6 @@ $mol_check_box_demo $mol_example_small
 		\Widget/Control/Button
 		\Type/Boolean
 
-$mol_check_list $mol_view
-	dictionary *
-	Option* $mol_check
-		checked? <=> option_checked*? false
-		label <= option_label* /
-			<= option_title* \
-		enabled <= option_enabled* <= enabled true
-		hint <= option_hint* \
-		minimal_height 24
-	options *
-	keys /string
-	sub <= items /$mol_check
-
 $mol_check_list_demo $mol_example_small
 	title \Set of toggles
 	sub /
@@ -3845,9 +4279,6 @@ $mol_date_demo $mol_example_small
 	aspects /
 		\Widget/Control/Button/Picker
 		\Type/Date
-
-$mol_switch $mol_check_list
-	value? \
 
 $mol_deck $mol_list
 	items /$mol_view
