@@ -12,7 +12,7 @@ namespace $ {
 		},
 
 		'Returns instance'($) {
-			$mol_assert_equal($.$mol_one.$mol_one_test_object instanceof $mol_one_test_object)
+			$mol_assert_equal($.$mol_one.$mol_one_test_object instanceof $mol_one_test_object, true)
 		},
 
 		'Caching instance'($) {
