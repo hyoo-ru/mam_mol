@@ -99,6 +99,12 @@ namespace $ {
 			$mol_fail( new Error( `Wrong uint64 value ${ next }` ) )
 		}
 		
+		/** 2-byte float little-endian channel for offset. */
+		float16( offset: number, next?: number ) {
+			if( next !== undefined ) this.setFloat16( offset, next, true )
+			return this.getFloat16( offset, true )
+		}
+		
 		/** 4-byte float little-endian channel for offset. */
 		float32( offset: number, next?: number ) {
 			if( next !== undefined ) this.setFloat32( offset, next, true )
