@@ -11,3 +11,6 @@ $mol_embed_any $mol_view
 	Rutube $mol_embed_rutube
 		title <= title \
 		uri <= uri \
+	Vklive $mol_embed_vklive
+		title <= title \
+		uri <= uri \
