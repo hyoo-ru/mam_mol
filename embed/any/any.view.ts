@@ -13,6 +13,7 @@ namespace $.$$ {
 				if( /^https:\/\/www\.youtube\.com\//.test( uri ) ) return 'youtube'
 				if( /^https:\/\/youtu\.be\//.test( uri ) ) return 'youtube'
 				if( /^https:\/\/rutube\.ru\//.test( uri ) ) return 'rutube'
+				if( /^https:\/\/live\.vkvideo\.ru\//.test( uri ) ) return 'vklive'
 				
 			} catch( error ) {
 				$mol_fail_log( error )
@@ -28,6 +29,7 @@ namespace $.$$ {
 				case 'image': return [ this.Image() ]
 				case 'youtube': return [ this.Youtube() ]
 				case 'rutube': return [ this.Rutube() ]
+				case 'vklive': return [ this.Vklive() ]
 				default: return [ this.Object() ]
 			}
 		}

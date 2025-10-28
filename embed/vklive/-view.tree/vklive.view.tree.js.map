@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/embed/vklive/vklive.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_embed_vklive $mol_embed_service\n"
+	],
+	"mappings": "AAAA,AAAA,iDAAkB,+BAAlB,EAAA;"
+}

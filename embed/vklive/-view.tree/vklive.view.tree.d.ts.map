@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/embed/vklive/vklive.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,+BAAkB,2BAAlB;AAAA;AAAA;AAAA;",
+	"file": "vklive.view.tree.d.ts",
+	"sourceRoot": "../../../.."
+}
