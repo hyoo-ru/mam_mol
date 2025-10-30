@@ -3123,6 +3123,22 @@ var $;
         return pos - from;
     }
     $.$mol_charset_encode_to = $mol_charset_encode_to;
+    function $mol_charset_encode_size(str) {
+        let size = 0;
+        for (let i = 0; i < str.length; i++) {
+            let code = str.charCodeAt(i);
+            if (code < 0x80)
+                size += 1;
+            else if (code < 0x800)
+                size += 2;
+            else if (code < 0xd800 || code >= 0xe000)
+                size += 3;
+            else
+                size += 4;
+        }
+        return size;
+    }
+    $.$mol_charset_encode_size = $mol_charset_encode_size;
 })($ || ($ = {}));
 
 ;
@@ -5238,6 +5254,7 @@ var $;
             Body_content: {
                 padding: $mol_gap.block,
                 minHeight: 0,
+                minWidth: 0,
                 flex: {
                     direction: 'column',
                     shrink: 1,

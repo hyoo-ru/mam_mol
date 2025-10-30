@@ -954,6 +954,7 @@ declare namespace $ {
 declare namespace $ {
     function $mol_charset_encode(str: string): Uint8Array<ArrayBuffer>;
     function $mol_charset_encode_to(str: string, buf: Uint8Array<ArrayBuffer>, from?: number): number;
+    function $mol_charset_encode_size(str: string): number;
 }
 
 declare namespace $ {
