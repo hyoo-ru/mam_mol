@@ -15,5 +15,14 @@ namespace $ {
 			$mol_assert_equal( x.foo() , 2 )
 		} ,
 			
+		'Context in instance inherits from class'($) {
+			const custom = $.$mol_ambient({})
+			class X extends $.$mol_object {
+				static $ = custom
+			}
+
+			$mol_assert_equal(new X().$, custom)
+		},
+
 	} )
 }
