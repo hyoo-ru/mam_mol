@@ -395,8 +395,7 @@ namespace $ {
 			return names
 		}
 		
-		@ $mol_mem
-		theme( next = null as null | string ) {
+		theme( next?: string | null ) {
 			return next
 		}
 		
@@ -410,7 +409,7 @@ namespace $ {
 		
 		attr() {
 			return {
-				mol_theme: this.theme() ?? undefined,
+				mol_theme: this.theme(),
 			} as {}
 		}
 		
