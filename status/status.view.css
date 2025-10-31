@@ -2,6 +2,8 @@
 	padding: var(--mol_gap_text);
 	border-radius: var(--mol_gap_round);
 	display: block;
+	flex-shrink: 1;
+	word-wrap: break-word;
 }
 
 [mol_status]:not([mol_view_error="Promise"]) {

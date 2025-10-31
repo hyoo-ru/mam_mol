@@ -4573,7 +4573,7 @@ var $;
             }
             return names;
         }
-        theme(next = null) {
+        theme(next) {
             return next;
         }
         attr_static() {
@@ -4584,7 +4584,7 @@ var $;
         }
         attr() {
             return {
-                mol_theme: this.theme() ?? undefined,
+                mol_theme: this.theme(),
             };
         }
         style() {
@@ -4719,9 +4719,6 @@ var $;
     __decorate([
         $mol_memo.method
     ], $mol_view.prototype, "view_names", null);
-    __decorate([
-        $mol_mem
-    ], $mol_view.prototype, "theme", null);
     __decorate([
         $mol_mem
     ], $mol_view.prototype, "event_async", null);

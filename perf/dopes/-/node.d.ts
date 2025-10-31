@@ -1292,7 +1292,7 @@ declare namespace $ {
         static view_names(suffix: string): string[];
         view_names_owned(): string[];
         view_names(): Set<string>;
-        theme(next?: null | string): string | null;
+        theme(next?: string | null): string | null | undefined;
         attr_static(): {
             [key: string]: string | number | boolean | null;
         };
