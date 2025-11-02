@@ -41,8 +41,7 @@ namespace $ {
 
 			const buffer = this.buffer()
 
-			const native = this.native
-			const mime = native.headers.get( 'content-type' ) || ''
+			const mime = this.mime() || ''
 			const [,charset] = /charset=(.*)/.exec( mime ) || [, 'utf-8']
 			
 			const decoder = new TextDecoder( charset )
@@ -86,6 +85,13 @@ namespace $ {
 			super()
 		}
 
+		@ $mol_action
+		static make(
+			...params: ConstructorParameters<typeof $mol_fetch_request>
+		) {
+			return new this(...params)
+		}
+
 		response_async( ) {
 			const controller = new AbortController()
 			let done = false
@@ -122,9 +128,8 @@ namespace $ {
 
 	export class $mol_fetch extends $mol_object2 {
 		
-		@ $mol_action
 		static request( input: RequestInfo, init?: RequestInit ) {
-			return new $mol_fetch_request( input , init )
+			return this.$.$mol_fetch_request.make( input , init )
 		}
 
 		static response( input: RequestInfo, init?: RequestInit ) {
