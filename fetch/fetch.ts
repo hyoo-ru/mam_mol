@@ -112,7 +112,7 @@ namespace $ {
 			
 		}
 
-		@ $mol_action
+		@ $mol_memo.method
 		response() {
 			return new this.$.$mol_fetch_response( $mol_wire_sync( this ).response_async() )
 		}
