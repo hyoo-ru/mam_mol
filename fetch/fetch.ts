@@ -2,7 +2,7 @@ namespace $ {
 
 	export class $mol_fetch_response extends $mol_object2 {
 
-		constructor( readonly native : Response ) {
+		constructor( readonly native : Response, readonly request: $mol_fetch_request ) {
 			super()
 		}
 
@@ -81,25 +81,16 @@ namespace $ {
 
 	export class $mol_fetch_request extends $mol_object2 {
 
-		constructor( readonly input : RequestInfo , readonly init : RequestInit = {} ) {
+		constructor( readonly native: Request ) {
 			super()
-		}
-
-		@ $mol_action
-		static make(
-			...params: ConstructorParameters<typeof $mol_fetch_request>
-		) {
-			return new this(...params)
 		}
 
 		response_async( ) {
 			const controller = new AbortController()
 			let done = false
 			
-			const promise = fetch( this.input , {
-				...this.init,
-				signal: controller!.signal,
-			} ).finally( ()=> {
+			const request = new Request(this.native, { signal: controller.signal })
+			const promise = fetch( request ).finally( ()=> {
 				done = true
 			} )
 			
@@ -114,7 +105,7 @@ namespace $ {
 
 		@ $mol_action
 		response() {
-			return new this.$.$mol_fetch_response( $mol_wire_sync( this ).response_async() )
+			return new this.$.$mol_fetch_response( $mol_wire_sync( this ).response_async(), this )
 		}
 
 		success() {
@@ -122,14 +113,15 @@ namespace $ {
 			const response = this.response()
 			if( response.status() === 'success' ) return response
 			
-			throw new Error( response.message(), { cause: this } )
+			throw new Error( response.message(), { cause: response } )
 		}
 	}
 
 	export class $mol_fetch extends $mol_object2 {
 		
+		@ $mol_action
 		static request( input: RequestInfo, init?: RequestInit ) {
-			return this.$.$mol_fetch_request.make( input , init )
+			return new this.$.$mol_fetch_request( new Request(input , init) )
 		}
 
 		static response( input: RequestInfo, init?: RequestInit ) {
