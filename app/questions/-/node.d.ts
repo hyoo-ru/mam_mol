@@ -3800,7 +3800,8 @@ declare namespace $ {
 declare namespace $ {
     class $mol_fetch_response extends $mol_object2 {
         readonly native: Response;
-        constructor(native: Response);
+        readonly request: $mol_fetch_request;
+        constructor(native: Response, request: $mol_fetch_request);
         status(): "success" | "unknown" | "inform" | "redirect" | "wrong" | "failed";
         code(): number;
         ok(): boolean;
@@ -3817,10 +3818,8 @@ declare namespace $ {
         html(): Document;
     }
     class $mol_fetch_request extends $mol_object2 {
-        readonly input: RequestInfo;
-        readonly init: RequestInit;
-        constructor(input: RequestInfo, init?: RequestInit);
-        static make(...params: ConstructorParameters<typeof $mol_fetch_request>): $mol_fetch_request;
+        readonly native: Request;
+        constructor(native: Request);
         response_async(): Promise<Response> & {
             destructor: () => void;
         };

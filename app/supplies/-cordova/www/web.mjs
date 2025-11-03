@@ -5429,9 +5429,11 @@ var $;
 (function ($) {
     class $mol_fetch_response extends $mol_object2 {
         native;
-        constructor(native) {
+        request;
+        constructor(native, request) {
             super();
             this.native = native;
+            this.request = request;
         }
         status() {
             const types = ['unknown', 'inform', 'success', 'redirect', 'wrong', 'failed'];
@@ -5498,23 +5500,16 @@ var $;
     ], $mol_fetch_response.prototype, "html", null);
     $.$mol_fetch_response = $mol_fetch_response;
     class $mol_fetch_request extends $mol_object2 {
-        input;
-        init;
-        constructor(input, init = {}) {
+        native;
+        constructor(native) {
             super();
-            this.input = input;
-            this.init = init;
-        }
-        static make(...params) {
-            return new this(...params);
+            this.native = native;
         }
         response_async() {
             const controller = new AbortController();
             let done = false;
-            const promise = fetch(this.input, {
-                ...this.init,
-                signal: controller.signal,
-            }).finally(() => {
+            const request = new Request(this.native, { signal: controller.signal });
+            const promise = fetch(request).finally(() => {
                 done = true;
             });
             return Object.assign(promise, {
@@ -5525,25 +5520,22 @@ var $;
             });
         }
         response() {
-            return new this.$.$mol_fetch_response($mol_wire_sync(this).response_async());
+            return new this.$.$mol_fetch_response($mol_wire_sync(this).response_async(), this);
         }
         success() {
             const response = this.response();
             if (response.status() === 'success')
                 return response;
-            throw new Error(response.message(), { cause: this });
+            throw new Error(response.message(), { cause: response });
         }
     }
     __decorate([
         $mol_action
     ], $mol_fetch_request.prototype, "response", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch_request, "make", null);
     $.$mol_fetch_request = $mol_fetch_request;
     class $mol_fetch extends $mol_object2 {
         static request(input, init) {
-            return this.$.$mol_fetch_request.make(input, init);
+            return new this.$.$mol_fetch_request(new Request(input, init));
         }
         static response(input, init) {
             return this.request(input, init).response();
@@ -5576,6 +5568,9 @@ var $;
             return this.success(input, init).html();
         }
     }
+    __decorate([
+        $mol_action
+    ], $mol_fetch, "request", null);
     $.$mol_fetch = $mol_fetch;
 })($ || ($ = {}));
 
