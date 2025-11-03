@@ -2,7 +2,7 @@ namespace $ {
 
 	export class $mol_fetch_response extends $mol_object2 {
 
-		constructor( readonly native : Response ) {
+		constructor( readonly native : Response, readonly request: Request ) {
 			super()
 		}
 
@@ -81,7 +81,7 @@ namespace $ {
 
 	export class $mol_fetch_request extends $mol_object2 {
 
-		constructor( readonly input : RequestInfo , readonly init : RequestInit = {} ) {
+		constructor( input : RequestInfo , init : RequestInit = {}, readonly native = new Request(input, init) ) {
 			super()
 		}
 
@@ -96,10 +96,8 @@ namespace $ {
 			const controller = new AbortController()
 			let done = false
 			
-			const promise = fetch( this.input , {
-				...this.init,
-				signal: controller!.signal,
-			} ).finally( ()=> {
+			const request = new Request(this.native, { signal: controller.signal })
+			const promise = fetch( request ).finally( ()=> {
 				done = true
 			} )
 			
@@ -114,7 +112,7 @@ namespace $ {
 
 		@ $mol_action
 		response() {
-			return new this.$.$mol_fetch_response( $mol_wire_sync( this ).response_async() )
+			return new this.$.$mol_fetch_response( $mol_wire_sync( this ).response_async(), this.native )
 		}
 
 		success() {
