@@ -81,15 +81,8 @@ namespace $ {
 
 	export class $mol_fetch_request extends $mol_object2 {
 
-		constructor( input : RequestInfo , init : RequestInit = {}, readonly native = new Request(input, init) ) {
+		constructor( readonly native: Request ) {
 			super()
-		}
-
-		@ $mol_action
-		static make(
-			...params: ConstructorParameters<typeof $mol_fetch_request>
-		) {
-			return new this(...params)
 		}
 
 		response_async( ) {
@@ -126,8 +119,9 @@ namespace $ {
 
 	export class $mol_fetch extends $mol_object2 {
 		
+		@ $mol_action
 		static request( input: RequestInfo, init?: RequestInit ) {
-			return this.$.$mol_fetch_request.make( input , init )
+			return new this.$.$mol_fetch_request( new Request(input , init) )
 		}
 
 		static response( input: RequestInfo, init?: RequestInit ) {
