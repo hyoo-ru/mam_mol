@@ -4626,8 +4626,10 @@ $mol_icon_restore $mol_icon path \M13,3A9,9 0 0,0 4,12H1L4.89,15.89L4.96,16.03L9
 
 $mol_form_draft $mol_form
 	model $mol_object2
+	model_pick*? null
 	changed false
 	state *
+	state_pick*? null
 	value*? null
 	value_str*? \
 	value_bool*? false

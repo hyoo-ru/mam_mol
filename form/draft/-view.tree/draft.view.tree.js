@@ -17,11 +17,19 @@
 			const obj = new this.$.$mol_object2();
 			return obj;
 		}
+		model_pick(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
 		changed(){
 			return false;
 		}
 		state(){
 			return {};
+		}
+		state_pick(id, next){
+			if(next !== undefined) return next;
+			return null;
 		}
 		value(id, next){
 			if(next !== undefined) return next;
@@ -65,6 +73,8 @@
 	($mol_mem(($.$mol_form_draft.prototype), "Reset_icon"));
 	($mol_mem(($.$mol_form_draft.prototype), "Reset"));
 	($mol_mem(($.$mol_form_draft.prototype), "model"));
+	($mol_mem_key(($.$mol_form_draft.prototype), "model_pick"));
+	($mol_mem_key(($.$mol_form_draft.prototype), "state_pick"));
 	($mol_mem_key(($.$mol_form_draft.prototype), "value"));
 	($mol_mem_key(($.$mol_form_draft.prototype), "value_str"));
 	($mol_mem_key(($.$mol_form_draft.prototype), "value_bool"));

@@ -20,8 +20,10 @@ declare namespace $ {
 		Reset_icon( ): $mol_icon_restore
 		Reset( ): $mol_button_minor
 		model( ): $mol_object2
+		model_pick( id: any, next?: any ): any
 		changed( ): boolean
 		state( ): Record<string, any>
+		state_pick( id: any, next?: any ): any
 		value( id: any, next?: any ): any
 		value_str( id: any, next?: string ): string
 		value_bool( id: any, next?: boolean ): boolean

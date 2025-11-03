@@ -1464,6 +1464,7 @@ declare namespace $ {
         constructor(native: Response);
         status(): "success" | "unknown" | "inform" | "redirect" | "wrong" | "failed";
         code(): number;
+        ok(): boolean;
         message(): string;
         headers(): Headers;
         mime(): string | null;
@@ -1476,10 +1477,19 @@ declare namespace $ {
         xhtml(): Document;
         html(): Document;
     }
-    class $mol_fetch extends $mol_object2 {
-        static request(input: RequestInfo, init?: RequestInit): Promise<Response> & {
+    class $mol_fetch_request extends $mol_object2 {
+        readonly input: RequestInfo;
+        readonly init: RequestInit;
+        constructor(input: RequestInfo, init?: RequestInit);
+        static make(...params: ConstructorParameters<typeof $mol_fetch_request>): $mol_fetch_request;
+        response_async(): Promise<Response> & {
             destructor: () => void;
         };
+        response(): $mol_fetch_response;
+        success(): $mol_fetch_response;
+    }
+    class $mol_fetch extends $mol_object2 {
+        static request(input: RequestInfo, init?: RequestInit): $mol_fetch_request;
         static response(input: RequestInfo, init?: RequestInit): $mol_fetch_response;
         static success(input: RequestInfo, init?: RequestInit): $mol_fetch_response;
         static stream(input: RequestInfo, init?: RequestInit): ReadableStream<Uint8Array<ArrayBuffer>> | null;
@@ -16417,8 +16427,10 @@ declare namespace $ {
 		Reset_icon( ): $mol_icon_restore
 		Reset( ): $mol_button_minor
 		model( ): $mol_object2
+		model_pick( id: any, next?: any ): any
 		changed( ): boolean
 		state( ): Record<string, any>
+		state_pick( id: any, next?: any ): any
 		value( id: any, next?: any ): any
 		value_str( id: any, next?: string ): string
 		value_bool( id: any, next?: boolean ): boolean
