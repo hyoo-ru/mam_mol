@@ -80,13 +80,13 @@ namespace $ {
 
 	export class $mol_fetch_request extends $mol_object {
 
-		readonly native!: Request
+		native() { return new Request('') }
 
-		response_async( ) {
+		response_async( native: Request ) {
 			const controller = new AbortController()
 			let done = false
 			
-			const request = new Request(this.native, { signal: controller.signal })
+			const request = new Request(native, { signal: controller.signal })
 			const promise = fetch( request ).finally( ()=> {
 				done = true
 			} )
@@ -103,7 +103,7 @@ namespace $ {
 		@ $mol_action
 		response() {
 			return this.$.$mol_fetch_response.make({
-				native: $mol_wire_sync( this ).response_async(),
+				native: $mol_wire_sync( this ).response_async(this.native()),
 				request: this
 			})
 		}
@@ -122,7 +122,7 @@ namespace $ {
 		@ $mol_action
 		static request( input: RequestInfo, init?: RequestInit ) {
 			return this.$.$mol_fetch_request.make({
-				native: new Request(input , init)
+				native: () => new Request(input , init)
 			})
 		}
 
