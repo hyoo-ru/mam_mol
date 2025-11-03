@@ -11630,7 +11630,7 @@ var $;
         }
     }
     __decorate([
-        $mol_memo.method
+        $mol_action
     ], $mol_fetch_request.prototype, "response", null);
     __decorate([
         $mol_action
