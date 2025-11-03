@@ -2,7 +2,7 @@ namespace $ {
 
 	export class $mol_fetch_response extends $mol_object2 {
 
-		constructor( readonly native : Response, readonly request: Request ) {
+		constructor( readonly native : Response, readonly request: $mol_fetch_request ) {
 			super()
 		}
 
@@ -112,7 +112,7 @@ namespace $ {
 
 		@ $mol_action
 		response() {
-			return new this.$.$mol_fetch_response( $mol_wire_sync( this ).response_async(), this.native )
+			return new this.$.$mol_fetch_response( $mol_wire_sync( this ).response_async(), this )
 		}
 
 		success() {
@@ -120,7 +120,7 @@ namespace $ {
 			const response = this.response()
 			if( response.status() === 'success' ) return response
 			
-			throw new Error( response.message(), { cause: this } )
+			throw new Error( response.message(), { cause: response } )
 		}
 	}
 
