@@ -1,10 +1,9 @@
 namespace $ {
 
-	export class $mol_fetch_response extends $mol_object2 {
+	export class $mol_fetch_response extends $mol_object {
 
-		constructor( readonly native : Response, readonly request: $mol_fetch_request ) {
-			super()
-		}
+		readonly native !: Response
+		readonly request !: $mol_fetch_request
 
 		status() {
 			const types = [ 'unknown', 'inform', 'success', 'redirect', 'wrong', 'failed' ] as const
@@ -79,11 +78,9 @@ namespace $ {
 
 	}
 
-	export class $mol_fetch_request extends $mol_object2 {
+	export class $mol_fetch_request extends $mol_object {
 
-		constructor( readonly native: Request ) {
-			super()
-		}
+		readonly native!: Request
 
 		response_async( ) {
 			const controller = new AbortController()
@@ -105,7 +102,10 @@ namespace $ {
 
 		@ $mol_action
 		response() {
-			return new this.$.$mol_fetch_response( $mol_wire_sync( this ).response_async(), this )
+			return this.$.$mol_fetch_response.make({
+				native: $mol_wire_sync( this ).response_async(),
+				request: this
+			})
 		}
 
 		success() {
@@ -117,11 +117,13 @@ namespace $ {
 		}
 	}
 
-	export class $mol_fetch extends $mol_object2 {
+	export class $mol_fetch extends $mol_object {
 		
 		@ $mol_action
 		static request( input: RequestInfo, init?: RequestInit ) {
-			return new this.$.$mol_fetch_request( new Request(input , init) )
+			return this.$.$mol_fetch_request.make({
+				native: new Request(input , init)
+			})
 		}
 
 		static response( input: RequestInfo, init?: RequestInit ) {

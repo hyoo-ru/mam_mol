@@ -1757,10 +1757,9 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_fetch_response extends $mol_object2 {
+    class $mol_fetch_response extends $mol_object {
         readonly native: Response;
         readonly request: $mol_fetch_request;
-        constructor(native: Response, request: $mol_fetch_request);
         status(): "success" | "unknown" | "inform" | "redirect" | "wrong" | "failed";
         code(): number;
         ok(): boolean;
@@ -1776,16 +1775,15 @@ declare namespace $ {
         xhtml(): Document;
         html(): Document;
     }
-    class $mol_fetch_request extends $mol_object2 {
+    class $mol_fetch_request extends $mol_object {
         readonly native: Request;
-        constructor(native: Request);
         response_async(): Promise<Response> & {
             destructor: () => void;
         };
         response(): $mol_fetch_response;
         success(): $mol_fetch_response;
     }
-    class $mol_fetch extends $mol_object2 {
+    class $mol_fetch extends $mol_object {
         static request(input: RequestInfo, init?: RequestInit): $mol_fetch_request;
         static response(input: RequestInfo, init?: RequestInit): $mol_fetch_response;
         static success(input: RequestInfo, init?: RequestInit): $mol_fetch_response;

@@ -5427,14 +5427,9 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_fetch_response extends $mol_object2 {
+    class $mol_fetch_response extends $mol_object {
         native;
         request;
-        constructor(native, request) {
-            super();
-            this.native = native;
-            this.request = request;
-        }
         status() {
             const types = ['unknown', 'inform', 'success', 'redirect', 'wrong', 'failed'];
             return types[Math.floor(this.native.status / 100)];
@@ -5499,12 +5494,8 @@ var $;
         $mol_action
     ], $mol_fetch_response.prototype, "html", null);
     $.$mol_fetch_response = $mol_fetch_response;
-    class $mol_fetch_request extends $mol_object2 {
+    class $mol_fetch_request extends $mol_object {
         native;
-        constructor(native) {
-            super();
-            this.native = native;
-        }
         response_async() {
             const controller = new AbortController();
             let done = false;
@@ -5520,7 +5511,10 @@ var $;
             });
         }
         response() {
-            return new this.$.$mol_fetch_response($mol_wire_sync(this).response_async(), this);
+            return this.$.$mol_fetch_response.make({
+                native: $mol_wire_sync(this).response_async(),
+                request: this
+            });
         }
         success() {
             const response = this.response();
@@ -5533,9 +5527,11 @@ var $;
         $mol_action
     ], $mol_fetch_request.prototype, "response", null);
     $.$mol_fetch_request = $mol_fetch_request;
-    class $mol_fetch extends $mol_object2 {
+    class $mol_fetch extends $mol_object {
         static request(input, init) {
-            return new this.$.$mol_fetch_request(new Request(input, init));
+            return this.$.$mol_fetch_request.make({
+                native: new Request(input, init)
+            });
         }
         static response(input, init) {
             return this.request(input, init).response();
