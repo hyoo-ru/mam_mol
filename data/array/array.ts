@@ -17,7 +17,7 @@ namespace $ {
 				} catch( error: any ) {
 
 					if( $mol_promise_like(error) ) return $mol_fail_hidden( error )
-					error = new $mol_error_mix('Array item invalid', { index, message: error.message }, error)
+					error = new $mol_error_mix('Array item invalid', { index }, error)
 
 					return $mol_fail( error )
 

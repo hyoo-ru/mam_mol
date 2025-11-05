@@ -28,7 +28,7 @@ namespace $ {
 				} catch( error: any ) {
 
 					if( $mol_promise_like(error) ) return $mol_fail_hidden( error )
-					error = new $mol_error_mix('Record field invalid', { field, message: error.message }, error)
+					error = new $mol_error_mix('Record field invalid', { field }, error)
 
 					return $mol_fail( error )
 
