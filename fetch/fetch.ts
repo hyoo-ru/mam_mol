@@ -19,7 +19,7 @@ namespace $ {
 		}
 		
 		message() {
-			return this.native.statusText || $mol_rest_code[this.code()] || `${this.code()}`
+			return $mol_rest_code[this.code()] || `${this.code()}`
 		}
 
 		headers() {
