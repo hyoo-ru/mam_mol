@@ -8,7 +8,7 @@ namespace $ {
 
 		return $mol_data_setup( ( val : readonly Parameters< Sub >[0][] ) => {
 			
-			if( !Array.isArray( val ) ) return $mol_fail( new $mol_data_error( 'Is not an array', { value: val } ) )
+			if( !Array.isArray( val ) ) return $mol_fail( new $mol_data_error( `${ val } is not an array` ) )
 			
 			return val.map( ( item , index )=> {
 
@@ -16,16 +16,9 @@ namespace $ {
 					return sub( item )
 				} catch( error: any ) {
 
-					if( $mol_promise_like(error) ) return $mol_fail_hidden( error )
-
-					const parent = typeof (error as Error).cause === 'object' && Array.isArray(error.cause?.path)
-						? error.cause.path as (string | number)[]
-						: []
-
-					const path = [index, ... parent]
-
-					error = new $mol_data_error('Array item invalid', { path }, error)
-
+					if( error instanceof Promise ) return $mol_fail_hidden( error )
+					
+					error.message = `[${ index }] ${ error.message }`
 					return $mol_fail( error )
 
 				}

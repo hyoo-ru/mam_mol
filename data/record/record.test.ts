@@ -37,7 +37,7 @@ namespace $ {
 				const User = $mol_data_record({ age : $mol_data_number , name : $mol_data_string })
 				User( { age : 0 } as any )
 
-			} , 'Record field invalid' )
+			} , '["name"] undefined is not a string' )
 		} ,
 
 		'Shrinks deep record' () {
@@ -46,7 +46,7 @@ namespace $ {
 				const User = $mol_data_record({ wife : $mol_data_record({ age : $mol_data_number }) })
 				User( { wife : { } } as any )
 
-			} , 'Record field invalid' )
+			} , '["wife"] ["age"] undefined is not a number' )
 		} ,
 
 	})

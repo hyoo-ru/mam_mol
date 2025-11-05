@@ -27,16 +27,9 @@ namespace $ {
 						sub[field]( ( val as Input )[ field as any as keyof Input ] )
 				} catch( error: any ) {
 
-					if( $mol_promise_like(error) ) return $mol_fail_hidden( error )
-
-					const parent = typeof (error as Error).cause === 'object' && Array.isArray(error.cause?.path)
-						? error.cause.path as (string | number)[]
-						: []
-
-					const path = [field, ... parent ]
-
-					error = new $mol_data_error('Record field invalid', { path }, error)
-
+					if( error instanceof Promise ) return $mol_fail_hidden( error )
+					
+					error.message = `[${ JSON.stringify( field ) }] ${ error.message }`
 					return $mol_fail( error )
 
 				}
