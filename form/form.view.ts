@@ -27,7 +27,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		override result( next?: string | Error ) {
-			if (next instanceof Error) next = this.errors()[next.message] || this.form_invalid()
+			if (next instanceof Error) next = this.errors()[next.message] || next.message || this.form_invalid()
 
 			return next ?? ''
 		}
