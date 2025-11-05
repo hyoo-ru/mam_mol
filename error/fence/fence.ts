@@ -1,7 +1,7 @@
 namespace $ {
 	export function $mol_error_fence<Data>(
 		task: () => Data,
-		fallback: (parent: Error) => Error | Data | null | undefined
+		fallback: (parent: Error) => Error | Data
 	) {
 		try {
 			return task()
@@ -9,7 +9,7 @@ namespace $ {
 			if (! (error instanceof Error) ) $mol_fail_hidden(error)
 
 			try {
-				error = fallback(error) ?? error
+				error = fallback(error)
 			} catch (sub_error) {
 				$mol_fail_log(sub_error)
 			}
