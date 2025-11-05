@@ -27,7 +27,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		override result( next?: string | Error ) {
-			if (next instanceof Error) next = next.message || this.message_invalid()
+			if (next instanceof Error) next = this.errors()[next.message] || next.message || this.form_invalid()
 
 			return next ?? ''
 		}
@@ -45,7 +45,7 @@ namespace $.$$ {
 			
 			try {
 				if (! this.submit_allowed() ) {
-					throw new Error(this.message_invalid())
+					throw new Error('Form invalid')
 				}
 				this.save(next)
 				
