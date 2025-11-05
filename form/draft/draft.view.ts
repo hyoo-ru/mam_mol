@@ -113,7 +113,7 @@ namespace $.$$ {
 		@ $mol_mem
 		override result( next?: string | Error ) {
 			this.state()
-			if (next instanceof Error) next = next.message || this.message_invalid()
+			if (next instanceof Error) next = this.errors()[next.message] || this.form_invalid()
 
 			return next ?? ''
 		}
