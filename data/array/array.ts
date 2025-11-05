@@ -24,7 +24,7 @@ namespace $ {
 
 					const path = [index, ... parent]
 
-					error = new $mol_error_mix('Array item invalid', { path }, error)
+					error = new $mol_data_error('Array item invalid', { path }, error)
 
 					return $mol_fail( error )
 

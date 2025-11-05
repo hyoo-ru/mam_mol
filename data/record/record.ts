@@ -35,7 +35,7 @@ namespace $ {
 
 					const path = [field, ... parent ]
 
-					error = new $mol_error_mix('Record field invalid', { path }, error)
+					error = new $mol_data_error('Record field invalid', { path }, error)
 
 					return $mol_fail( error )
 
