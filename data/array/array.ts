@@ -8,7 +8,7 @@ namespace $ {
 
 		return $mol_data_setup( ( val : readonly Parameters< Sub >[0][] ) => {
 			
-			if( !Array.isArray( val ) ) return $mol_fail( new $mol_data_error( `${ val } is not an array` ) )
+			if( !Array.isArray( val ) ) return $mol_fail( new $mol_data_error( 'Is not an array', { value: val } ) )
 			
 			return val.map( ( item , index )=> {
 

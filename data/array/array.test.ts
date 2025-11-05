@@ -12,7 +12,7 @@ namespace $ {
 		'Is not array' () {
 			$mol_assert_fail( ()=> {
 				$mol_data_array( $mol_data_number )( { [0] : 1 , length : 1 , map : ()=> {} } as any as number[] )
-			} , '[object Object] is not an array' )
+			} , 'Is not an array' )
 		} ,
 
 		'Has wrong item' () {
