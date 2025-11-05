@@ -7,7 +7,7 @@ namespace $ {
 			if( msg.uri().pathname === '/' ) {
 				msg.reply( $node.fs.readFileSync( './mol/rest/demo/index.html' ), { type: 'text/html' } )
 			} else {
-				msg.reply( null, { code: $mol_rest_code.Not_Found } )
+				msg.reply( null, { code: $mol_rest_code['Not Found'] } )
 			}
 		}
 		
@@ -63,7 +63,7 @@ namespace $ {
 			const id = this._id( msg )
 			
 			const obj = this._objects[ id ]
-			if( obj === undefined ) return msg.reply( null, { code: $mol_rest_code.Not_Found } )
+			if( obj === undefined ) return msg.reply( null, { code: $mol_rest_code['Not Found'] } )
 			
 			msg.reply( obj )
 			
@@ -96,7 +96,7 @@ namespace $ {
 			const id = this._id( msg )
 			
 			const obj = this._objects[ id ]
-			if( obj === undefined ) return msg.reply( null, { code: $mol_rest_code.Not_Found } )
+			if( obj === undefined ) return msg.reply( null, { code: $mol_rest_code['Not Found'] } )
 			
 			delete this._objects[ id ]
 			
