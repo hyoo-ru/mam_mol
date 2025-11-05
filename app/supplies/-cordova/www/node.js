@@ -6355,6 +6355,9 @@ var $;
 			if(next !== undefined) return next;
 			return null;
 		}
+		form_invalid(){
+			return (this.$.$mol_locale.text("$mol_form_form_invalid"));
+		}
 		form_fields(){
 			return [];
 		}
@@ -6422,8 +6425,8 @@ var $;
 		message_done(){
 			return (this.$.$mol_locale.text("$mol_form_message_done"));
 		}
-		message_invalid(){
-			return (this.$.$mol_locale.text("$mol_form_message_invalid"));
+		errors(){
+			return {"Form invalid": (this.form_invalid())};
 		}
 		rows(){
 			return [(this.Body()), (this.Foot())];
@@ -6438,6 +6441,13 @@ var $;
 	($mol_mem(($.$mol_form.prototype), "Foot"));
 	($mol_mem(($.$mol_form.prototype), "save"));
 
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/form/form.view.css", "[mol_form] {\r\n\tgap: var(--mol_gap_block);\r\n}\r\n\r\n[mol_form_body] {\r\n\tgap: var(--mol_gap_block);\r\n}");
+})($ || ($ = {}));
 
 ;
 "use strict";
@@ -6465,7 +6475,7 @@ var $;
             }
             result(next) {
                 if (next instanceof Error)
-                    next = next.message || this.message_invalid();
+                    next = this.errors()[next.message] || next.message || this.form_invalid();
                 return next ?? '';
             }
             buttons() {
@@ -6477,7 +6487,7 @@ var $;
             submit(next) {
                 try {
                     if (!this.submit_allowed()) {
-                        throw new Error(this.message_invalid());
+                        throw new Error('Form invalid');
                     }
                     this.save(next);
                 }
@@ -6509,13 +6519,6 @@ var $;
         ], $mol_form.prototype, "submit", null);
         $$.$mol_form = $mol_form;
     })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/form/form.view.css", "[mol_form] {\r\n\tgap: var(--mol_gap_block);\r\n}\r\n\r\n[mol_form_body] {\r\n\tgap: var(--mol_gap_block);\r\n}");
 })($ || ($ = {}));
 
 ;

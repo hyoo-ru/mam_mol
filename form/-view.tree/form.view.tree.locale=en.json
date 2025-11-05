@@ -1,5 +1,5 @@
 {
+	"$mol_form_form_invalid": "Form is not valid",
 	"$mol_form_submit_title": "Save",
-	"$mol_form_message_done": "Saved",
-	"$mol_form_message_invalid": "Form is not valid"
+	"$mol_form_message_done": "Saved"
 }

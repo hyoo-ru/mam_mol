@@ -37,6 +37,7 @@ declare namespace $ {
 	>
 	export class $mol_form extends $mol_list {
 		keydown( next?: any ): any
+		form_invalid( ): string
 		form_fields( ): readonly($mol_form_field)[]
 		body( ): ReturnType< $mol_form['form_fields'] >
 		Body( ): $mol_list
@@ -57,7 +58,7 @@ declare namespace $ {
 		})  & ReturnType< $mol_list['event'] >
 		save( next?: any ): any
 		message_done( ): string
-		message_invalid( ): string
+		errors( ): Record<string, string>
 		rows( ): readonly(any)[]
 	}
 	

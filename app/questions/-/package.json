@@ -218,6 +218,8 @@
     "$mol_page",
     "$mol_html_decode",
     "$mol_fetch",
+    "$mol_rest_code",
+    "$mol_rest",
     "$mol_dom_parse"
   ],
   "dependencies": {
