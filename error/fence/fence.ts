@@ -1,20 +1,20 @@
 namespace $ {
 	export function $mol_error_fence<Data>(
-		cb: () => Data,
-		catcher: (parent: Error) => Error | null | undefined
+		task: () => Data,
+		fallback: (parent: Error) => Error | Data | null | undefined
 	) {
 		try {
-			return cb()
-		} catch (e) {
-			if (! (e instanceof Error) ) $mol_fail_hidden(e)
+			return task()
+		} catch (error) {
+			if (! (error instanceof Error) ) $mol_fail_hidden(error)
 
 			try {
-				e = catcher(e) ?? e
-			} catch (e2) {
-				$mol_fail_log(e2)
+				error = fallback(error) ?? error
+			} catch (sub_error) {
+				$mol_fail_log(sub_error)
 			}
 
-			$mol_fail_hidden(e)
+			return error instanceof Error ? $mol_fail_hidden(error) : error as Data
 		}
 	}
 }
