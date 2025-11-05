@@ -17,7 +17,14 @@ namespace $ {
 				} catch( error: any ) {
 
 					if( $mol_promise_like(error) ) return $mol_fail_hidden( error )
-					error = new $mol_error_mix('Array item invalid', { index }, error)
+
+					const parent = typeof (error as Error).cause === 'object' && Array.isArray(error.cause?.path)
+						? error.cause.path as (string | number)[]
+						: []
+
+					const path = [index, ... parent]
+
+					error = new $mol_error_mix('Array item invalid', { path }, error)
 
 					return $mol_fail( error )
 

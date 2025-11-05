@@ -28,7 +28,14 @@ namespace $ {
 				} catch( error: any ) {
 
 					if( $mol_promise_like(error) ) return $mol_fail_hidden( error )
-					error = new $mol_error_mix('Record field invalid', { field }, error)
+
+					const parent = typeof (error as Error).cause === 'object' && Array.isArray(error.cause?.path)
+						? error.cause.path as (string | number)[]
+						: []
+
+					const path = [field, ... parent ]
+
+					error = new $mol_error_mix('Record field invalid', { path }, error)
 
 					return $mol_fail( error )
 
