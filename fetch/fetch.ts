@@ -19,7 +19,7 @@ namespace $ {
 		}
 		
 		message() {
-			return this.native.statusText || `HTTP Error ${ this.code() }`
+			return this.native.statusText || $mol_rest_code[this.code()] || `${this.code()}`
 		}
 
 		headers() {
