@@ -18,13 +18,13 @@ namespace $ {
 		'Has wrong item' () {
 			$mol_assert_fail( ()=> {
 				$mol_data_array( $mol_data_number )( [ 1 , '1' as any as number ] )
-			} , '[1] 1 is not a number' )
+			} , 'Array item invalid' )
 		} ,
 
 		'Has wrong deep item' () {
 			$mol_assert_fail( ()=> {
 				$mol_data_array( $mol_data_array( $mol_data_number ) )( [ [] , [ 0 , 0 , false ] ] as any )
-			} , '[1] [2] false is not a number' )
+			} , 'Array item invalid' )
 		} ,
 
 	})
