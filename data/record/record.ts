@@ -27,9 +27,9 @@ namespace $ {
 						sub[field]( ( val as Input )[ field as any as keyof Input ] )
 				} catch( error: any ) {
 
-					if( error instanceof Promise ) return $mol_fail_hidden( error )
-					
-					error.message = `[${ JSON.stringify( field ) }] ${ error.message }`
+					if( $mol_promise_like(error) ) return $mol_fail_hidden( error )
+					error = new $mol_error_mix('Record field invalid', { field, message: error.message }, error)
+
 					return $mol_fail( error )
 
 				}
