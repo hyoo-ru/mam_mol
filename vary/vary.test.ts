@@ -205,6 +205,15 @@ namespace $.$$ {
 			
 		},
 		
+		"vary pack Date"( $ ) {
+			
+			check(
+				new Date( '2025-01-02T03:04:05.678' ),
+				[ tupl|1, list|1, text|9, ... str('unix_time'), fp64, ... new Uint8Array( new Float64Array([ 1735776245.678 ]).buffer ) ],
+			)
+			
+		},
+		
 		"vary pack custom class"( $ ) {
 			
 			class Foo {
@@ -220,7 +229,7 @@ namespace $.$$ {
 				
 			}
 			
-			$mol_vary.register(
+			$mol_vary.type(
 				( a = 0, b = 0 )=> new Foo( a, b ),
 				foo => [
 					[ 'a', 'b' ],
