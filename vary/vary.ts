@@ -735,13 +735,13 @@ namespace $ {
 		],
 	)
 	
-	/** Native Date support */
-	$mol_vary.type(
-		( ts = 0 )=> new Date( ts * 1000 ),
-		obj => [
-			[ 'unix_time' ],
-			[ obj.valueOf() / 1000 ],
-		],
-	)
+	// /** Native Date support */
+	// $mol_vary.type(
+	// 	( ts = 0 )=> new Date( ts * 1000 ),
+	// 	obj => [
+	// 		[ 'unix_time' ],
+	// 		[ obj.valueOf() / 1000 ],
+	// 	],
+	// )
 	
 }

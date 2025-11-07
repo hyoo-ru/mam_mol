@@ -205,14 +205,14 @@ namespace $.$$ {
 			
 		},
 		
-		"vary pack Date"( $ ) {
+		// "vary pack Date"( $ ) { // native date is unstable
 			
-			check(
-				new Date( '2025-01-02T03:04:05.678' ),
-				[ tupl|1, list|1, text|9, ... str('unix_time'), fp64, ... new Uint8Array( new Float64Array([ 1735776245.678 ]).buffer ) ],
-			)
+		// 	check(
+		// 		new Date( '2025-01-02T03:04:05.678' ),
+		// 		[ tupl|1, list|1, text|9, ... str('unix_time'), fp64, ... new Uint8Array( new Float64Array([ 1735776245.678 ]).buffer ) ],
+		// 	)
 			
-		},
+		// },
 		
 		"vary pack custom class"( $ ) {
 			
