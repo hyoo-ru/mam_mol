@@ -142,7 +142,7 @@ namespace $.$$ {
 			)
 			check(
 				new Float32Array([ 1.5 ]),
-				[ blob|2, fp32, ... new Uint8Array( new Float32Array([ 1.5 ]).buffer ) ],
+				[ blob|4, fp32, ... new Uint8Array( new Float32Array([ 1.5 ]).buffer ) ],
 			)
 			check(
 				new Float64Array([ 1.5 ]),
@@ -192,6 +192,15 @@ namespace $.$$ {
 			check(
 				new Map< any, any >([ [ 'foo', 1 ], [ 2, 'bar' ] ]),
 				[ tupl|2, list|2, text|4, ... str('keys'), text|4, ... str('vals'), list|2, text|3, ... str('foo'), 2, list|2, 1, text|3, ... str('bar') ],
+			)
+			
+		},
+		
+		"vary pack Set"( $ ) {
+			
+			check(
+				new Set([ 7, 'foo' ]),
+				[ tupl|1, list|1, text|4, ... str('vals'), list|2, 7, text|3, ... str('foo') ],
 			)
 			
 		},
