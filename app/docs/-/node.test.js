@@ -23082,7 +23082,10 @@ var $;
 var $;
 (function ($) {
     function $mol_hash_string(str, seed = 0) {
-        return $mol_hash_numbers([...str].map(ch => ch.codePointAt(0)));
+        let nums = new Array(str.length);
+        for (let i = 0; i < str.length; ++i)
+            nums[i] = str.charCodeAt(i);
+        return $mol_hash_numbers(nums);
     }
     $.$mol_hash_string = $mol_hash_string;
 })($ || ($ = {}));
