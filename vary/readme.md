@@ -11,11 +11,13 @@
 
 ## Comparison
 
-|             | VaryPack | MsgPack | CBOR2 | JSON
-|-------------|----------|---------|-------|--------
-| Language    | TS       | JS      | TS    | Native
-| Performance | 5x       | 10x     | 1x    | 15x
-| Size        | 1x       | 2x      | 2x    | 4x
+[Benchmark](https://perf.js.hyoo.ru/#!bench=j1peaq_k376h9) results:
+
+| **Chrome 140** | VaryPack | MsgPack | CBOR2 | JSON
+|----------------|----------|---------|-------|--------
+| Language       | TS       | JS      | TS    | Native
+| Performance    | 1        | x2.5    | /3    | x4
+| Size           | 1        | x1.5    | x1.5  | x2.5
 
 ## API
 
