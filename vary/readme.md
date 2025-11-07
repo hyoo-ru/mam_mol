@@ -13,11 +13,8 @@
 
 [Benchmark](https://perf.js.hyoo.ru/#!bench=j1peaq_k376h9) results:
 
-| **Chrome 140** | VaryPack | MsgPack | CBOR2 | JSON
-|----------------|----------|---------|-------|--------
-| Language       | TS       | JS      | TS    | Native
-| Performance    | 1        | x2.5    | /3    | x4
-| Size           | 1        | x1.5    | x1.5  | x2.5
+### Chrome 140
+![](https://habrastorage.org/webt/7x/np/yb/7xnpybsfmozfeaexormj7b2v45a.png)
 
 ## API
 
