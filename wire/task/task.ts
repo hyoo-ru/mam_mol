@@ -35,7 +35,6 @@ namespace $ {
 				const key = ( (host as any)?.[ Symbol.toStringTag ] ?? host ) + ( '.' + task.name + '<#>' )
 				const next = new $mol_wire_task( key, task, host, args )
 				
-				// Disabled because non-idempotency is required for try-catch
 				if( existen?.temp ) {
 					$$.$mol_log3_warn({
 						place: '$mol_wire_task',
@@ -45,6 +44,7 @@ namespace $ {
 						next,
 						hint: 'Maybe required additional memoization',
 					})
+					existen.destructor()
 				}
 				
 				return next
