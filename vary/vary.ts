@@ -334,7 +334,7 @@ namespace $ {
 							else if( val instanceof Int32Array ) pos += pack.tlen( pos, 'sint', ~$mol_vary_len[4] )
 							else if( val instanceof BigInt64Array ) pos += pack.tlen( pos, 'sint', ~$mol_vary_len[8] )
 							
-							else if( val instanceof Float16Array ) pos += pack.tlen( pos, 'spec', $mol_vary_spec.fp16 )
+							// else if( val instanceof Float16Array ) pos += pack.tlen( pos, 'spec', $mol_vary_spec.fp16 )
 							else if( val instanceof Float32Array ) pos += pack.tlen( pos, 'spec', $mol_vary_spec.fp32 )
 							else if( val instanceof Float64Array ) pos += pack.tlen( pos, 'spec', $mol_vary_spec.fp64 )
 						
@@ -446,7 +446,7 @@ namespace $ {
 					case $mol_vary_tip.sint | ~$mol_vary_len[4] + 256: return read_buffer( len, Int32Array )
 					case $mol_vary_tip.sint | ~$mol_vary_len[8] + 256: return read_buffer( len, BigInt64Array )
 					
-					case $mol_vary_tip.spec | $mol_vary_spec.fp16: return read_buffer( len, Float16Array )
+					// case $mol_vary_tip.spec | $mol_vary_spec.fp16: return read_buffer( len, Float16Array )
 					case $mol_vary_tip.spec | $mol_vary_spec.fp32: return read_buffer( len, Float32Array )
 					case $mol_vary_tip.spec | $mol_vary_spec.fp64: return read_buffer( len, Float64Array )
 					
@@ -723,6 +723,15 @@ namespace $ {
 		obj => [
 			[ 'keys', 'vals' ],
 			[ [ ... obj.keys() ], [ ... obj.values() ] ],
+		],
+	)
+	
+	/** Native Set support */
+	$mol_vary.register(
+		( vals = [] as readonly any[] )=> new Set( vals ),
+		obj => [
+			[ 'vals' ],
+			[ [ ... obj.values() ] ],
 		],
 	)
 	

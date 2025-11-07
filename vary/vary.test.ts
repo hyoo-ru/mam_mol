@@ -141,8 +141,8 @@ namespace $.$$ {
 				[ blob|8, sint|~l8, -128, 255, 255, 255, 255, 255, 255, 255 ],
 			)
 			check(
-				new Float16Array([ 1.5 ]),
-				[ blob|2, fp16, ... new Uint8Array( new Float16Array([ 1.5 ]).buffer ) ],
+				new Float32Array([ 1.5 ]),
+				[ blob|2, fp32, ... new Uint8Array( new Float32Array([ 1.5 ]).buffer ) ],
 			)
 			check(
 				new Float64Array([ 1.5 ]),
