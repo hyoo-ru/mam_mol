@@ -696,7 +696,7 @@ namespace $ {
 		static riches = new Map< string/*shape*/, ( ... vals: readonly any[] )=> object >()
 		
 		/** Adds custom types support. */
-		static register<
+		static type<
 			const Instance extends object,
 			const Keys extends readonly any[],
 			const Vals extends readonly any[],
@@ -718,7 +718,7 @@ namespace $ {
 	}
 	
 	/** Native Map support */
-	$mol_vary.register(
+	$mol_vary.type(
 		( keys = [] as readonly any[], vals = [] as readonly any[] )=> new Map( keys.map( ( k, i )=> [ k, vals[i] ] ) ),
 		obj => [
 			[ 'keys', 'vals' ],
@@ -727,7 +727,7 @@ namespace $ {
 	)
 	
 	/** Native Set support */
-	$mol_vary.register(
+	$mol_vary.type(
 		( vals = [] as readonly any[] )=> new Set( vals ),
 		obj => [
 			[ 'vals' ],
@@ -736,7 +736,7 @@ namespace $ {
 	)
 	
 	/** Native Date support */
-	$mol_vary.register(
+	$mol_vary.type(
 		( ts = 0 )=> new Date( ts * 1000 ),
 		obj => [
 			[ 'unix_time' ],

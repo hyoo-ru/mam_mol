@@ -229,7 +229,7 @@ namespace $.$$ {
 				
 			}
 			
-			$mol_vary.register(
+			$mol_vary.type(
 				( a = 0, b = 0 )=> new Foo( a, b ),
 				foo => [
 					[ 'a', 'b' ],

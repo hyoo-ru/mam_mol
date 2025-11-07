@@ -7,7 +7,7 @@
 - **Total deduplication**: equal strucrures are stored as links to first entry.
 - **Intergated schema**: schema always stored with data.
 - **Structural typing**: data mapped to classes by schema.
-- **Direct Acyclic Graph model**: same strucures may have different placements without cost.
+- **Direct Acyclic Graph model**: same structures may have different placements without cost.
 
 ## Comparison
 
@@ -47,11 +47,11 @@ class Foo {
 	
 }
 
-$mol_vary.register(
-	( a = 0, b = 0 )=> new Foo( a, b ),
-	foo => [
-		[ 'a', 'b' ],
-		[ foo.a, foo.b ],
+$mol_vary.type(
+	( a = 0, b = 0 )=> new Foo( a, b ), // factory
+	foo => [ // extractor
+		[ 'a', 'b' ], // keys
+		[ foo.a, foo.b ], // vals
 	],
 )
 ```
