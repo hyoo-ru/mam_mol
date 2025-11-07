@@ -59,6 +59,15 @@ namespace $ {
 	/** VaryPack - simple fast compact data binarization format. */
 	export class $mol_vary extends DataView< ArrayBuffer > {
 		
+		static buffer = new Uint8Array( 4096 )
+		static buffer_view = new this( this.buffer.buffer )
+		
+		static allocate( size: number )  {
+			if( this.buffer.byteLength > size ) return
+			this.buffer = new Uint8Array( Math.ceil( size / 4096 ) * 4096 )
+			this.buffer_view = new this( this.buffer.buffer )
+		}
+		
 		/** Packs any data to Uint8Array with deduplication. */
 		static pack( data: unknown ) {
 			
@@ -238,8 +247,9 @@ namespace $ {
 			
 			calc( data )
 			
-			const buf = new Uint8Array( size )
-			const pack = new this( buf.buffer )
+			this.allocate( size )
+			const buf = this.buffer
+			const pack = this.buffer_view
 			const embedded = new Set< number >()
 			
 			let pos = 0
@@ -390,7 +400,7 @@ namespace $ {
 			
 			dump( data )
 			
-			return buf
+			return buf.slice( 0, size )
 			
 		}
 		
