@@ -111,7 +111,7 @@ namespace $ {
 						else if( Array.isArray( val ) ) res = $mol_hash_numbers( val.map( hash ), $mol_vary_tip.list )
 						else {
 							const [ keys, vals ] = lean( val )
-							res = $mol_hash_numbers( [ hash( keys ), ... vals.map( hash ) ], $mol_vary_tip.tupl )
+							res = $mol_hash_numbers( vals.map( hash ), hash( keys ) )
 						}
 						
 						hashes.set( val, res )
