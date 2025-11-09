@@ -4,14 +4,14 @@
 
 ## Key Features
 
-- **Total deduplication**: equal strucrures are stored as links to first entry.
+- **Deduplication by reference**: same structures are stored as links to first entry.
 - **Intergated schema**: schema always stored with data.
 - **Structural typing**: data mapped to classes by schema.
-- **Direct Acyclic Graph model**: same structures may have different placements without cost.
+- **Decentralized extensibility**: custom types support without central registry.
 
 ## Comparison
 
-| **Chrome 140** | $mol_vary | msgpackr | cbor-x | JSON
+|                | $mol_vary | msgpackr | cbor-x | JSON
 |----------------|-----------|----------|--------|--------
 | Language       | TS        | JS       | TS     | Native
 | Performance    | 1         | x2.5     | x2     | x0.8
@@ -53,10 +53,8 @@ class Foo {
 }
 
 $mol_vary.type(
+	[ 'a', 'b' ], // keys for schema
 	( a = 0, b = 0 )=> new Foo( a, b ), // factory
-	foo => [ // extractor
-		[ 'a', 'b' ], // keys
-		[ foo.a, foo.b ], // vals
-	],
+	foo => [ foo.a, foo.b ], // vals extractor
 )
 ```
