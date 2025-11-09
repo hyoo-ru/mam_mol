@@ -41,6 +41,7 @@ namespace $ {
 			let capacity = 0
 			
 			const acquire = ( size: number )=> {
+				if( size < 0 ) return
 				capacity += size
 				if( buffer.byteLength >= capacity ) return
 				const buffer2 = new Uint8Array( Math.ceil( capacity / 4096 ) * 4096 )
@@ -56,27 +57,26 @@ namespace $ {
 			const dump_snum = ( tip: number, val: number | bigint )=> {
 				if( val >= -28 ) {
 					pack.setInt8( pos ++, tip | Number( val ) )
-					release(9)
+					release(8)
 				} else if( val >= -(2**7) ) {
 					pack.setInt8( pos ++, tip | ( -1 - $mol_vary_len[1] ) )
 					pack.setInt8( pos, Number( val ) )
 					pos += 1
-					release(8)
+					release(7)
 				} else if( val >= -(2**15) ) {
 					pack.setInt8( pos ++, tip | ( -1 - $mol_vary_len[2] ) )
 					pack.setInt16( pos, Number( val ), true )
 					pos += 2
-					release(7)
+					release(6)
 				} else if( val >= -(2**31) ) {
 					pack.setInt8( pos ++, tip | ( -1 - $mol_vary_len[4] ) )
 					pack.setInt32( pos, Number( val ), true )
 					pos += 4
-					release(5)
+					release(4)
 				} else if( val >= -(2n**63n) ) {
 					pack.setInt8( pos ++, tip | ( -1 - $mol_vary_len[8] ) )
 					pack.setBigInt64( pos, BigInt( val ), true )
 					pos += 8
-					release(1)
 				} else {
 					$mol_fail( new Error( 'Number too low', { cause: val } ) )
 				}
@@ -85,27 +85,26 @@ namespace $ {
 			const dump_unum = ( tip: number, val: number | bigint )=> {
 				if( val < 28 ) {
 					pack.setUint8( pos ++, tip | Number( val ) )
-					release(9)
+					release(8)
 				} else if( val < 2**8 ) {
 					pack.setUint8( pos ++, tip | $mol_vary_len[1] )
 					pack.setUint8( pos, Number( val ) )
 					pos += 1
-					release(8)
+					release(7)
 				} else if( val < 2**16 ) {
 					pack.setUint8( pos ++, tip | $mol_vary_len[2] )
 					pack.setUint16( pos, Number( val ), true )
 					pos += 2
-					release(7)
+					release(6)
 				} else if( val < 2**32 ) {
 					pack.setUint8( pos ++, tip | $mol_vary_len[4] )
 					pack.setUint32( pos, Number( val ), true )
 					pos += 4
-					release(5)
+					release(4)
 				} else if( val < 2n**64n ) {
 					pack.setUint8( pos ++, tip | $mol_vary_len[8] )
 					pack.setBigUint64( pos, BigInt( val ), true )
 					pos += 8
-					release(1)
 				} else {
 					$mol_fail( new Error( 'Number too high', { cause: val } ) )
 				}
@@ -122,7 +121,7 @@ namespace $ {
 				acquire( val.length * 3 )
 				const len = $mol_charset_encode_to( val, buffer, pos )
 				pos += len
-				release( val.length * 3 - len - 1 )
+				release( val.length * 3 - len )
 				
 				if( val.length ) offsets.set( val, offsets.size )
 				return
@@ -170,7 +169,7 @@ namespace $ {
 				}
 			
 				dump_unum( $mol_vary_tip.list, val.length )
-				acquire( val.length * 10 )
+				acquire( val.length * 9 )
 				for( const item of val ) dump( item )
 			
 				if( val.length ) offsets.set( val, offsets.size )
@@ -189,8 +188,7 @@ namespace $ {
 				const vals = lean ? lean( val ) : Object.values( val )
 			
 				dump_unum( $mol_vary_tip.tupl, vals.length )
-				// dump( keys )
-				acquire( vals.length * 2 * 10 )
+				acquire( vals.length * 2 * 9 )
 				for( const item of keys ) dump( item )
 				for( const item of vals ) dump( item )
 				
@@ -206,13 +204,13 @@ namespace $ {
 					
 					case 'undefined': {
 						pack.setUint8( pos ++, $mol_vary_spec.both )
-						release( 9 )
+						release( 8 )
 						return
 					}
 					
 					case 'boolean': {
 						pack.setUint8( pos ++, val ? $mol_vary_spec.true : $mol_vary_spec.fake )
-						release( 9 )
+						release( 8 )
 						return
 					}
 					
@@ -221,7 +219,6 @@ namespace $ {
 							pack.setUint8( pos ++, $mol_vary_spec.fp64 )
 							pack.setFloat64( pos, val, true )
 							pos += 8
-							release( 1 )
 							return
 						}
 					}
@@ -241,7 +238,7 @@ namespace $ {
 					case 'object': {
 						
 						if( !val ) {
-							release( 9 )
+							release( 8 )
 							return pack.setUint8( pos ++, $mol_vary_spec.none )
 						}
 						if( ArrayBuffer.isView( val ) ) return dump_buffer( val as ArrayBufferView< ArrayBuffer > )
