@@ -212,9 +212,10 @@ namespace $.$$ {
 		
 		"vary pack Date"( $ ) { // native date is unstable
 			
+			const date = new Date( '2025-01-02T03:04:05.678' )
 			check(
-				new Date( '2025-01-02T03:04:05.678' ),
-				[ tupl|1, text|9, ... str('unix_time'), fp64, ... new Uint8Array( new Float64Array([ 1735776245.678 ]).buffer ) ],
+				date,
+				[ tupl|1, text|9, ... str('unix_time'), fp64, ... new Uint8Array( new Float64Array([ date.valueOf() / 1000 ]).buffer ) ],
 			)
 			
 		},
