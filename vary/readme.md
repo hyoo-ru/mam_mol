@@ -11,10 +11,16 @@
 
 ## Comparison
 
+| **Chrome 140** | $mol_vary | msgpackr | cbor-x | JSON
+|----------------|-----------|----------|--------|--------
+| Language       | TS        | JS       | TS     | Native
+| Performance    | 1         | x2.5     | x2     | x0.8
+| Size           | 1         | x2       | x2     | x2.5
+
 [Benchmark](https://perf.js.hyoo.ru/#!bench=j1peaq_k376h9) results:
 
 ### Chrome 140
-![](https://habrastorage.org/webt/7x/np/yb/7xnpybsfmozfeaexormj7b2v45a.png)
+![](https://habrastorage.org/webt/gy/gd/lb/gygdlbfdqad8gdhbf-qddktgqh8.png)
 
 ## API
 
