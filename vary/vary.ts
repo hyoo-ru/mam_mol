@@ -28,368 +28,226 @@ namespace $ {
 		fp64 = $mol_vary_tip.spec | 31,
 	}
 	
-	function num_len( num: number | bigint ) {
-		
-		if( typeof num === 'number' && !Number.isInteger( num ) ) return 8
-		
-		if( num < 0 ) {
-			
-			if( num >= -28 ) return 0
-			if( num >= -(2**7) ) return 1
-			if( num >= -(2**15) ) return 2
-			if( num >= -(2**31) ) return 4
-			if( num >= -(2n**63n) ) return 8
-			
-			$mol_fail( new Error( `Too low numb ${ num }` ) )
-			
-		} else {
-			
-			if( num < 28 ) return 0
-			if( num < 2**8 ) return 1
-			if( num < 2**16 ) return 2
-			if( num < 2**32 ) return 4
-			if( num < 2n**64n ) return 8
-			
-			$mol_fail( new Error( `Too high numb ${ num }` ) )
-			
-		}
-		
-	}
+	let offsets = new Map< unknown, number >()
+	let sizes = new Map< string, number >()
 	
 	/** VaryPack - simple fast compact data binarization format. */
 	export class $mol_vary extends DataView< ArrayBuffer > {
 		
-		static buffer = new Uint8Array( 4096 )
-		static buffer_view = new this( this.buffer.buffer )
-		
-		static allocate( size: number )  {
-			if( this.buffer.byteLength > size ) return
-			this.buffer = new Uint8Array( Math.ceil( size / 4096 ) * 4096 )
-			this.buffer_view = new this( this.buffer.buffer )
-		}
-		
 		/** Packs any data to Uint8Array with deduplication. */
 		static pack( data: unknown ) {
 			
-			const leaned = new WeakMap< object, readonly[ keys: readonly any[], vals: readonly any[] ] >()
-			const lean = ( val: object ): readonly[ keys: readonly any[], vals: readonly any[] ] => {
-				
-				let tupl = leaned.get( val )
-				if( tupl ) return tupl
-				
-				leaned.set( val, tupl = this.lean( val ) )
-				return tupl
-				
-			}
-			
-			const hashes = new Map< unknown, number >()
-			/** Recursive hash for deduplication */
-			const hash = ( val: unknown ): number => {
-				
-				switch( typeof val ) {
-					
-					case 'undefined':
-						return 0
-					
-					case 'number':
-					case 'boolean':
-						return Number( val )
-					
-					case 'number':
-						return val
-					
-					case 'bigint':
-						return $mol_hash_numbers( $mol_bigint_encode( val ), $mol_vary_tip.sint )
-					
-					case 'string': {
-						let res = hashes.get( val )
-						if( res != null ) return res
-						res = $mol_hash_string( val, $mol_vary_tip.text )
-						hashes.set( val, res )
-						return res
-					}
-					
-					case 'object': {
-						
-						if( !val ) return $mol_vary_spec.none
-					
-						let res = hashes.get( val )
-						if( res != null ) return res
-						
-						if( ArrayBuffer.isView( val ) ) res = $mol_hash_numbers( new Uint8Array( val.buffer, val.byteOffset, val.byteLength ), $mol_vary_tip.blob )
-						else if( Array.isArray( val ) ) res = $mol_hash_numbers( val.map( hash ), $mol_vary_tip.list )
-						else {
-							const [ keys, vals ] = lean( val )
-							res = $mol_hash_numbers( vals.map( hash ), hash( keys ) )
-						}
-						
-						hashes.set( val, res )
-						return res
-					}
-					
-				}
-				$mol_fail( new Error( `Unsupported type` ) )
-			}
-			
-			let size = 0
-			const offsets = new Map< number /*hash*/, number >()
-			const sizes = new Map< string, number >()
-			const stream = [] as unknown[]
-			
-			/** Reserve size for embedding first entry or link to existen one.*/
-			const dedup = ( val: unknown, len: number )=> {
-				
-				const key = hash( val )
-				let offset = offsets.get( key )
-				
-				if( offset === undefined ) { // embed first
-					
-					offsets.set( key, offset = stream.length )
-					stream.push( val )
-					size += len
-					
-					return true
-					
-				} else { // link to exists
-					
-					size += 1 + num_len( offset )
-					return false
-					
-				}
-				
-			}
-			
-			/** Recursive calculates required buffer size. */
-			const calc = ( val: unknown )=> {
-				
-				if( val == null ) {
-					size += 1
-					return true
-				}
-				
-				switch( typeof val ) {
-					
-					case 'boolean':
-						size += 1
-						return true
-					
-					case 'number':
-					case 'bigint':
-						size += 1 + num_len( val )
-						return true
-					
-					case 'string': {
-						
-						let len = sizes.get( val )
-						if( len == null ) sizes.set( val, len = $mol_charset_encode_size( val ) )
-						
-						if( !len ) { // always embed redundant
-							size += 1
-							return true
-						}
-						
-						return dedup( val, 1 + num_len( len ) + len )
-						
-					}
-					
-					case 'object': {
-						
-						if( ArrayBuffer.isView( val ) ) {
-							
-							if( !val.byteLength ) { // always embed redundant
-								size += 2
-								return true
-							}
-							
-							return dedup( val, 2 + num_len( val.byteLength ) + val.byteLength )
-							
-						}
-						
-						if( Array.isArray( val ) ) {
-							
-							if( !val.length ) { // always embed redundant
-								size += 1
-								return true
-							}
-							
-							const key = hash( val )
-							let offset = offsets.get( key )
-							if( offset === undefined ) {
-								for( const item of val ) calc( item )
-							}
-						
-							return dedup( val, 1 + num_len( val.length ) )
-							
-						}
-						
-						const [ keys, vals ] = lean( val )
-						
-						if( !vals.length ) { // always embed redundant
-							size += 2
-							return true
-						}
-							
-						const key = hash( val )
-						let offset = offsets.get( key )
-						if( offset === undefined ) {
-							calc( keys )
-							for( const item of vals ) calc( item )
-						}
-					
-						return dedup( val, 1 + num_len( vals.length ) )
-						
-					}
-					
-				}
-				
-				$mol_fail( new Error( `Unsupported type` ) )
-			}
-			
-			calc( data )
-			
-			this.allocate( size )
-			const buf = this.buffer
-			const pack = this.buffer_view
-			const embedded = new Set< number >()
-			
 			let pos = 0
+			let capacity = 0
+			
+			const acquire = ( size: number )=> {
+				capacity += size
+				if( buffer.byteLength >= capacity ) return
+				const buffer2 = new Uint8Array( Math.ceil( capacity / 4096 ) * 4096 )
+				buffer2.set( buffer )
+				buffer = buffer2
+				pack = new DataView( buffer.buffer )
+			}
+			
+			const release = ( size: number )=> {
+				capacity -= size
+			}
+			
+			const dump_snum = ( tip: number, val: number | bigint )=> {
+				if( val >= -28 ) {
+					pack.setInt8( pos ++, tip | Number( val ) )
+					release(9)
+				} else if( val >= -(2**7) ) {
+					pack.setInt8( pos ++, tip | ( -1 - $mol_vary_len[1] ) )
+					pack.setInt8( pos, Number( val ) )
+					pos += 1
+					release(8)
+				} else if( val >= -(2**15) ) {
+					pack.setInt8( pos ++, tip | ( -1 - $mol_vary_len[2] ) )
+					pack.setInt16( pos, Number( val ), true )
+					pos += 2
+					release(7)
+				} else if( val >= -(2**31) ) {
+					pack.setInt8( pos ++, tip | ( -1 - $mol_vary_len[4] ) )
+					pack.setInt32( pos, Number( val ), true )
+					pos += 4
+					release(5)
+				} else if( val >= -(2n**63n) ) {
+					pack.setInt8( pos ++, tip | ( -1 - $mol_vary_len[8] ) )
+					pack.setBigInt64( pos, BigInt( val ), true )
+					pos += 8
+					release(1)
+				} else {
+					$mol_fail( new Error( 'Number too low', { cause: val } ) )
+				}
+			}
+			
+			const dump_unum = ( tip: number, val: number | bigint )=> {
+				if( val < 28 ) {
+					pack.setUint8( pos ++, tip | Number( val ) )
+					release(9)
+				} else if( val < 2**8 ) {
+					pack.setUint8( pos ++, tip | $mol_vary_len[1] )
+					pack.setUint8( pos, Number( val ) )
+					pos += 1
+					release(8)
+				} else if( val < 2**16 ) {
+					pack.setUint8( pos ++, tip | $mol_vary_len[2] )
+					pack.setUint16( pos, Number( val ), true )
+					pos += 2
+					release(7)
+				} else if( val < 2**32 ) {
+					pack.setUint8( pos ++, tip | $mol_vary_len[4] )
+					pack.setUint32( pos, Number( val ), true )
+					pos += 4
+					release(5)
+				} else if( val < 2n**64n ) {
+					pack.setUint8( pos ++, tip | $mol_vary_len[8] )
+					pack.setBigUint64( pos, BigInt( val ), true )
+					pos += 8
+					release(1)
+				} else {
+					$mol_fail( new Error( 'Number too high', { cause: val } ) )
+				}
+			}
+			
+			const dump_string = ( val: string )=> {
+				
+				if( val.length ) {
+					const offset = offsets.get( val )
+					if( offset !== undefined ) return dump_unum( $mol_vary_tip.link, offset )
+				}
+				
+				dump_unum( $mol_vary_tip.text, val.length )
+				acquire( val.length * 3 )
+				const len = $mol_charset_encode_to( val, buffer, pos )
+				pos += len
+				release( val.length * 3 - len - 1 )
+				
+				if( val.length ) offsets.set( val, offsets.size )
+				return
+			
+			}
+			
+			const dump_buffer = ( val: ArrayBufferView< ArrayBuffer > )=> {
+				
+				if( val.byteLength ) {
+					const offset = offsets.get( val )
+					if( offset !== undefined ) return dump_unum( $mol_vary_tip.link, offset )
+				}
+				
+				dump_unum( $mol_vary_tip.blob, val.byteLength )
+				
+				if( val instanceof Uint8Array ) pack.setUint8( pos ++, $mol_vary_tip.uint | $mol_vary_len[1] )
+				else if( val instanceof Uint16Array ) pack.setUint8( pos ++, $mol_vary_tip.uint | $mol_vary_len[2] )
+				else if( val instanceof Uint32Array ) pack.setUint8( pos ++, $mol_vary_tip.uint | $mol_vary_len[4] )
+				else if( val instanceof BigUint64Array ) pack.setUint8( pos ++, $mol_vary_tip.uint | $mol_vary_len[8] )
+				
+				else if( val instanceof Int8Array ) pack.setUint8( pos ++, $mol_vary_tip.sint | ~$mol_vary_len[1] )
+				else if( val instanceof Int16Array ) pack.setUint8( pos ++, $mol_vary_tip.sint | ~$mol_vary_len[2] )
+				else if( val instanceof Int32Array ) pack.setUint8( pos ++, $mol_vary_tip.sint | ~$mol_vary_len[4] )
+				else if( val instanceof BigInt64Array ) pack.setUint8( pos ++, $mol_vary_tip.sint | ~$mol_vary_len[8] )
+				
+				// else if( val instanceof Float16Array ) pos += pack.tlen( pos, 'spec', $mol_vary_spec.fp16 ) // compatibility issues
+				else if( val instanceof Float32Array ) pack.setUint8( pos ++, $mol_vary_spec.fp32 )
+				else if( val instanceof Float64Array ) pack.setUint8( pos ++, $mol_vary_spec.fp64 )
+			
+				else $mol_fail( new Error( `Unsupported type` ) )
+				
+				const src = ( val instanceof Uint8Array ) ? val : new Uint8Array( val.buffer, val.byteOffset, val.byteLength )
+				acquire( val.byteLength )
+				buffer.set( src, pos )
+				pos += val.byteLength
+					
+				if( val.byteLength ) offsets.set( val, offsets.size )
+			}
+			
+			const dump_list = ( val: any[] )=> {
+				
+				if( val.length ) {
+					const offset = offsets.get( val )
+					if( offset !== undefined ) return dump_unum( $mol_vary_tip.link, offset )
+				}
+			
+				dump_unum( $mol_vary_tip.list, val.length )
+				acquire( val.length * 10 )
+				for( const item of val ) dump( item )
+			
+				if( val.length ) offsets.set( val, offsets.size )
+				
+			}
+			
+			const dump_object = ( val: object )=> {
+				
+				const offset = offsets.get( val )
+				if( offset !== undefined ) return dump_unum( $mol_vary_tip.link, offset )
+				
+				const proto = Reflect.getPrototypeOf( val )!
+				const lean = this.leanes.get( proto )
+				
+				const keys = lean ? this.keys.get( proto )! : Object.keys( val )
+				const vals = lean ? lean( val ) : Object.values( val )
+			
+				dump_unum( $mol_vary_tip.tupl, vals.length )
+				// dump( keys )
+				acquire( vals.length * 2 * 10 )
+				for( const item of keys ) dump( item )
+				for( const item of vals ) dump( item )
+				
+				if( vals.length ) offsets.set( val, offsets.size )
+			}
+			
 			/** Recursive fills buffer with data. */
 			const dump = ( val: unknown )=> {
 				
-				if( pos >= size ) $mol_fail( new Error( 'Wrong buffer length', { cause: buf } ) )
+				// if( pos >= size ) $mol_fail( new Error( 'Wrong buffer length', { cause: buffer } ) )
 				
 				switch( typeof val ) {
 					
 					case 'undefined': {
-						pack.tlen( pos, 'spec', $mol_vary_spec.both )
-						pos += 1
+						pack.setUint8( pos ++, $mol_vary_spec.both )
+						release( 9 )
 						return
 					}
 					
 					case 'boolean': {
-						
-						pack.tlen( pos, 'spec', val ? $mol_vary_spec.true : $mol_vary_spec.fake )
-						pos += 1
-						
+						pack.setUint8( pos ++, val ? $mol_vary_spec.true : $mol_vary_spec.fake )
+						release( 9 )
 						return
 					}
 					
 					case 'number': {
-						
 						if( !Number.isInteger( val ) ) {
-							pos += pack.tfp( pos, 'spec', val )
-						} else if( val < 0 ) {
-							pos += pack.tint( pos, 'sint', val )
-						} else {
-							pos += pack.tnat( pos, 'uint', val )
+							pack.setUint8( pos ++, $mol_vary_spec.fp64 )
+							pack.setFloat64( pos, val, true )
+							pos += 8
+							release( 1 )
+							return
 						}
-						
-						return
 					}
-						
 					case 'bigint': {
 						
 						if( val < 0 ) {
-							pos += pack.tint( pos, 'sint', val )
+							dump_snum( $mol_vary_tip.sint, val )
 						} else {
-							pos += pack.tnat( pos, 'uint', val )
+							dump_unum( $mol_vary_tip.uint, val )
 						}
 						
 						return
 					}
 					
-					case 'string': {
-						
-						const key = hash( val )
-						
-						if( embedded.has( key ) ) {
-							pos += pack.tnat( pos, 'link', offsets.get( key )! )
-							return
-						}
-						
-						pos += pack.tnat( pos, 'text', sizes.get( val )! )
-						pos += $mol_charset_encode_to( val, buf, pos )
-						
-						if( val.length ) embedded.add( key )
-						return
-						
-					}
+					case 'string': return dump_string( val )
 					
 					case 'object': {
 						
 						if( !val ) {
-							pack.tlen( pos, 'spec', $mol_vary_spec.none )
-							pos += 1
-							return
+							release( 9 )
+							return pack.setUint8( pos ++, $mol_vary_spec.none )
 						}
-					
-						if( ArrayBuffer.isView( val ) ) {
-							
-							const key = hash( val )
-							
-							if( embedded.has( key ) ) {
-								pos += pack.tnat( pos, 'link', offsets.get( key )! )
-								return
-							}
-							
-							pos += pack.tnat( pos, 'blob', val.byteLength )
-							
-							if( val instanceof Uint8Array ) pos += pack.tlen( pos, 'uint', $mol_vary_len[1] )
-							else if( val instanceof Uint16Array ) pos += pack.tlen( pos, 'uint', $mol_vary_len[2] )
-							else if( val instanceof Uint32Array ) pos += pack.tlen( pos, 'uint', $mol_vary_len[4] )
-							else if( val instanceof BigUint64Array ) pos += pack.tlen( pos, 'uint', $mol_vary_len[8] )
-							
-							else if( val instanceof Int8Array ) pos += pack.tlen( pos, 'sint', ~$mol_vary_len[1] )
-							else if( val instanceof Int16Array ) pos += pack.tlen( pos, 'sint', ~$mol_vary_len[2] )
-							else if( val instanceof Int32Array ) pos += pack.tlen( pos, 'sint', ~$mol_vary_len[4] )
-							else if( val instanceof BigInt64Array ) pos += pack.tlen( pos, 'sint', ~$mol_vary_len[8] )
-							
-							// else if( val instanceof Float16Array ) pos += pack.tlen( pos, 'spec', $mol_vary_spec.fp16 )
-							else if( val instanceof Float32Array ) pos += pack.tlen( pos, 'spec', $mol_vary_spec.fp32 )
-							else if( val instanceof Float64Array ) pos += pack.tlen( pos, 'spec', $mol_vary_spec.fp64 )
+						if( ArrayBuffer.isView( val ) ) return dump_buffer( val as ArrayBufferView< ArrayBuffer > )
+						if( Array.isArray( val ) ) return dump_list( val )
 						
-							else $mol_fail( new Error( `Unsupported type` ) )
-							
-							buf.set( new Uint8Array( val.buffer, val.byteOffset, val.byteLength ), pos )
-							pos += val.byteLength
-								
-							if( val.byteLength ) embedded.add( key )
-							return
-							
-						}
-						
-						if( Array.isArray( val ) ) {
-							
-							const key = hash( val )
-							
-							if( embedded.has( key ) ) {
-								pos += pack.tnat( pos, 'link', offsets.get( key )! )
-								return
-							}
-							
-							pos += pack.tnat( pos, 'list', val.length )
-							for( const item of val ) dump( item )
-						
-							if( val.length ) embedded.add( key )
-							return
-						
-						}
-						
-						const key = hash( val )
-						
-						if( embedded.has( key ) ) {
-							pos += pack.tnat( pos, 'link', offsets.get( key )! )
-							return
-						}
-						
-						const [ keys, vals ] = lean( val )
-					
-						pos += pack.tnat( pos, 'tupl', vals.length )
-						dump( keys )
-						for( const item of vals ) dump( item )
-							
-						if( vals.length ) embedded.add( key )
-						return
+						return dump_object( val )
 						
 					}
 					
@@ -400,7 +258,10 @@ namespace $ {
 			
 			dump( data )
 			
-			return buf.slice( 0, size )
+			offsets = new Map
+			sizes = new Map
+			
+			return buffer.slice( 0, pos )
 			
 		}
 		
@@ -411,23 +272,65 @@ namespace $ {
 			const stream = [] as unknown[]
 			let pos = 0;
 			
-			const read_unum = ()=> {
-				const num = pack.unum( pos )
-				pos += 1 + pack.ulen( pos )
-				return num
+			const read_unum = ( kind: number )=> {
+				
+				++ pos
+				const num = kind & 0b11111
+				if( num < 28 ) return num
+				
+				let res = 0 as number | bigint
+				
+				if( num === 28 ) {
+					res = pack.getUint8( pos )
+					pos += 1
+				} else if( num === 29 ) {
+					res= pack.getUint16( pos, true )
+					pos += 2
+				} else if( num === 30 ) {
+					res = pack.getUint32( pos, true )
+					pos += 4
+				} else if( num === 31 ) {
+					res = pack.getBigUint64( pos, true )
+					if( res <= Number.MAX_SAFE_INTEGER ) res = Number( res )
+					pos += 8
+				} else {
+					$mol_fail( new Error( 'Unsupported unum', { cause: { num } } ) )
+				}
+				
+				return res
 			}
 			
-			const read_snum = ()=> {
-				const num = pack.snum( pos )
-				pos += 1 + pack.slen( pos )
-				return num
+			const read_snum = ( kind: number )=> {
+				
+				const num = pack.getInt8( pos ++ )
+				if( num >= -28 ) return num
+				
+				let res = 0 as number | bigint
+				
+				if( num === -29 ) {
+					res = pack.getInt8( pos )
+					pos += 1
+				} else if( num === -30 ) {
+					res= pack.getInt16( pos, true )
+					pos += 2
+				} else if( num === -31 ) {
+					res = pack.getInt32( pos, true )
+					pos += 4
+				} else if( num === -32 ) {
+					res = pack.getBigInt64( pos, true )
+					if( res >= Number.MIN_SAFE_INTEGER && res <= Number.MAX_SAFE_INTEGER ) res = Number( res )
+					pos += 8
+				} else {
+					$mol_fail( new Error( 'Unsupported snum', { cause: { num } } ) )
+				}
+				
+				return res
 			}
 			
-			const read_text = ()=> {
-				const len = read_unum() as number
-				const bin = new Uint8Array( buf.buffer, pack.byteOffset + pos, len )
-				pos += len
-				const text = $mol_charset_decode( bin )
+			const read_text = ( kind: number )=> {
+				const len = read_unum( kind ) as number
+				const [ text, bytes ] = $mol_charset_decode_from( buf, pack.byteOffset + pos, len )
+				pos += bytes
 				if( text.length ) stream.push( text )
 				return text
 			}
@@ -439,100 +342,108 @@ namespace $ {
 				return bin
 			}
 			
-			const read_blob = ()=> {
+			const read_blob = ( kind: number )=> {
 				
-				const len = read_unum() as number
-				const kind = pack.getUint8( pos ++ )
+				const len = read_unum( kind ) as number
+				const kind_item = pack.getUint8( pos ++ )
 				
-				switch( kind ) {
+				switch( kind_item ) {
 					
-					case $mol_vary_tip.uint | $mol_vary_len[1]: return read_buffer( len, Uint8Array )
-					case $mol_vary_tip.uint | $mol_vary_len[2]: return read_buffer( len, Uint16Array )
-					case $mol_vary_tip.uint | $mol_vary_len[4]: return read_buffer( len, Uint32Array )
-					case $mol_vary_tip.uint | $mol_vary_len[8]: return read_buffer( len, BigUint64Array )
+					case $mol_vary_len[1]: return read_buffer( len, Uint8Array )
+					case $mol_vary_len[2]: return read_buffer( len, Uint16Array )
+					case $mol_vary_len[4]: return read_buffer( len, Uint32Array )
+					case $mol_vary_len[8]: return read_buffer( len, BigUint64Array )
 					
-					case $mol_vary_tip.sint | ~$mol_vary_len[1] + 256: return read_buffer( len, Int8Array )
-					case $mol_vary_tip.sint | ~$mol_vary_len[2] + 256: return read_buffer( len, Int16Array )
-					case $mol_vary_tip.sint | ~$mol_vary_len[4] + 256: return read_buffer( len, Int32Array )
-					case $mol_vary_tip.sint | ~$mol_vary_len[8] + 256: return read_buffer( len, BigInt64Array )
+					case ~$mol_vary_len[1] + 256: return read_buffer( len, Int8Array )
+					case ~$mol_vary_len[2] + 256: return read_buffer( len, Int16Array )
+					case ~$mol_vary_len[4] + 256: return read_buffer( len, Int32Array )
+					case ~$mol_vary_len[8] + 256: return read_buffer( len, BigInt64Array )
 					
-					// case $mol_vary_tip.spec | $mol_vary_spec.fp16: return read_buffer( len, Float16Array )
+					case $mol_vary_tip.spec | $mol_vary_spec.fp16: return read_buffer( len, Float16Array )
 					case $mol_vary_tip.spec | $mol_vary_spec.fp32: return read_buffer( len, Float32Array )
 					case $mol_vary_tip.spec | $mol_vary_spec.fp64: return read_buffer( len, Float64Array )
 					
 					default:
-						$mol_fail( new Error( 'Unsupported blob kind', { cause: { kind } } ) )
+						$mol_fail( new Error( 'Unsupported blob item kind', { cause: { kind_item } } ) )
 				}
 				
 			}
 			
-			const read_list = ()=> {
-				const len = read_unum() as number
-				const list = [] as any[]
-				for( let i = 0; i < len; ++i ) list.push( read_vary() )
+			const read_list = ( kind: number )=> {
+				const len = read_unum( kind ) as number
+				const list = new Array( len ) as any[]
+				for( let i = 0; i < len; ++i ) list[i] = read_vary()
 				if( len ) stream.push( list )
 				return list
 			}
 			
-			const read_link = ()=> {
-				const index = read_unum() as number
+			const read_link = ( kind: number )=> {
+				const index = read_unum( kind ) as number
 				if( index >= stream.length ) $mol_fail( new Error( 'Too large index', { cause: { index, exists: stream.length } } ) )
 				return stream[ index ]
 			}
 			
-			const read_tupl = ()=> {
+			const read_tupl = ( kind: number )=> {
 				
-				const len = read_unum() as number
+				const len = read_unum( kind ) as number
 				
-				const keys = pack.tip( pos ) === 'link' ? read_link() : read_list()
-				if( !Array.isArray( keys ) ) $mol_fail( new Error( 'Wrong tupl shape type', { cause: { type: typeof keys } } ) )
+				const keys = new Array( len ) as any[]
+				const vals = new Array( len ) as any[]
 				
-				const vals = Array.from( { length: len }, ()=> read_vary() )
+				for( let i = 0; i < len; ++i ) keys[i] = read_vary()
+				for( let i = 0; i < len; ++i ) vals[i] = read_vary()
 				
-				const obj = this.rich( keys, vals )
+				const shape = JSON.stringify([ keys, vals.map( v => typeof v ) ])
+				
+				let obj
+				const rich = this.riches.get( shape )
+				if( rich ) {
+					obj = rich( ... vals )
+				} else {
+					obj = {} as any
+					for( let i = 0; i < len; ++i ) obj[ keys[i] ] = vals[i]
+				}
+				
 				if( vals.length ) stream.push( obj )
 				
 				return obj
 			}
 			
-			const read_spec = ()=> {
+			const read_spec = ( kind: number )=> {
 				
-				const kind = pack.getUint8( pos )
-				const spec = $mol_vary_spec[ kind ] as keyof typeof $mol_vary_spec 
-				
-				switch( spec ) {
+				switch( kind ) {
 					
-					case 'none':
+					case $mol_vary_spec.none:
 						++ pos
 						return null
 					
-					case 'fake':
+					case $mol_vary_spec.fake:
 						++ pos
 						return false
 					
-					case 'true':
+					case $mol_vary_spec.true:
 						++ pos
 						return true
 					
-					case 'both':
+					case $mol_vary_spec.both:
 						++ pos
 						return undefined
 					
-					case 'fp16': {
-						const val = pack.getFloat16( pos + 1, true )
-						pos += 3
+					case $mol_vary_spec.fp64: {
+						const val = pack.getFloat64( ++ pos, true )
+						pos += 8
 						return val
 					}
 					
-					case 'fp32': {
-						const val = pack.getFloat32( pos + 1, true )
-						pos += 5
+					case $mol_vary_spec.fp32: {
+						const val = pack.getFloat32( ++ pos, true )
+						pos += 4
 						return val
 					}
 					
-					case 'fp64': {
-						const val = pack.getFloat64( pos + 1, true )
-						pos += 9
+					case $mol_vary_spec.fp16: {
+						const val = pack.getFloat16( ++ pos, true )
+						pos += 2
 						return val
 					}
 					
@@ -545,18 +456,19 @@ namespace $ {
 			
 			const read_vary = ()=> {
 				
-				const tip = pack.tip( pos )
+				const kind = pack.getUint8( pos )
+				const tip = kind & 0b111_00000
 				
 				switch( tip ) {
 					
-					case 'uint': return read_unum()
-					case 'sint': return read_snum()
-					case 'link': return read_link()
-					case 'text': return read_text()
-					case 'list': return read_list()
-					case 'blob': return read_blob()
-					case 'tupl': return read_tupl()
-					case 'spec': return read_spec()
+					case $mol_vary_tip.uint: return read_unum( kind )
+					case $mol_vary_tip.sint: return read_snum( kind )
+					case $mol_vary_tip.link: return read_link( kind )
+					case $mol_vary_tip.text: return read_text( kind )
+					case $mol_vary_tip.list: return read_list( kind )
+					case $mol_vary_tip.blob: return read_blob( kind )
+					case $mol_vary_tip.tupl: return read_tupl( kind )
+					case $mol_vary_tip.spec: return read_spec( kind )
 					
 					default: $mol_fail( new Error( 'Unsupported tip', { cause: { tip } } ) )
 				}
@@ -566,143 +478,8 @@ namespace $ {
 			return read_vary()
 		}
 		
-		tlen( pos: number, tip: keyof typeof $mol_vary_tip, len: number ) {
-			this.setUint8( pos, $mol_vary_tip[ tip ] | len )
-			return 1
-		}
-		
-		tnat( pos: number, tip: keyof typeof $mol_vary_tip, num: number | bigint ) {
-			
-			const len = num_len( num )
-			this.tlen( pos, tip, len ? $mol_vary_len[ len ] : Number( num ) )
-			
-			switch( len ) {
-				case 0: break
-				case 1: this.setUint8( pos + 1, Number( num ) ); break
-				case 2: this.setUint16( pos + 1, Number( num ), true ); break
-				case 4: this.setUint32( pos + 1, Number( num ), true ); break
-				case 8: this.setBigUint64( pos + 1, BigInt( num ), true ); break
-				default: $mol_fail( new Error( 'Unsupported uint len', { cause: { len } } ) )
-			}
-
-			return 1 + len
-		}
-		
-		tint( pos: number, tip: keyof typeof $mol_vary_tip, num: number | bigint ) {
-			
-			const len = num_len( num )
-			this.tlen( pos, tip, len ? - $mol_vary_len[ len ] -1 : Number( num ) )
-			
-			switch( len ) {
-				case 0: break
-				case 1: this.setInt8( pos + 1, Number( num ) ); break
-				case 2: this.setInt16( pos + 1, Number( num ), true ); break
-				case 4: this.setInt32( pos + 1, Number( num ), true ); break
-				case 8: this.setBigInt64( pos + 1, BigInt( num ), true ); break
-				default: $mol_fail( new Error( 'Unsupported sint len', { cause: { len } } ) )
-			}
-
-			return 1 + len
-		}
-		
-		tfp( pos: number, tip: keyof typeof $mol_vary_tip, num: number ) {
-			
-			const len = num_len( num )
-			this.tlen( pos, tip, len ? $mol_vary_len[ len ] : Number( num ) )
-			
-			switch( len ) {
-				case 2: this.setFloat16( pos + 1, num, true ); break
-				case 4: this.setFloat32( pos + 1, num, true ); break
-				case 8: this.setFloat64( pos + 1, num, true ); break
-				default: $mol_fail( new Error( 'Unsupported fp len', { cause: { len } } ) )
-			}
-
-			return 1 + len
-		}
-		
-		tip( pos: number ) {
-			return $mol_vary_tip[ this.getUint8( pos ) & 0b111_00000 ] as keyof typeof $mol_vary_tip
-		}
-		
-		ulen( pos: number ) {
-			const num = this.getUint8( pos ) & 0b11111
-			if( num < 28 ) return 0
-			switch( num ) {
-				case 28: return 1
-				case 29: return 2
-				case 30: return 4
-				case 31: return 8
-				default: $mol_fail( new Error( 'Impossible!' ) )
-			}
-		}
-		
-		slen( pos: number ) {
-			const num = this.getInt8( pos )
-			if( num > -29 ) return 0
-			switch( num ) {
-				case -29: return 1
-				case -30: return 2
-				case -31: return 4
-				case -32: return 8
-				default: $mol_fail( new Error( 'Impossible!' ) )
-			}
-		}
-		
-		unum( pos: number ) {
-			const num = this.getUint8( pos ) & 0b11111
-			if( num < 28 ) return num
-			switch( num ) {
-				case 28: return this.getUint8( pos + 1 )
-				case 29: return this.getUint16( pos + 1, true )
-				case 30: return this.getUint32( pos + 1, true )
-				case 31:
-					const val = this.getBigUint64( pos + 1, true )
-					if( val > Number.MAX_SAFE_INTEGER ) return val
-					return Number( val )
-				default: $mol_fail( new Error( 'Unsupported len', { cause: { num } } ) )
-			}
-		}
-		
-		snum( pos: number ) {
-			const num = this.getInt8( pos )
-			if( num > -29 ) return num
-			switch( num ) {
-				case -29: return this.getInt8( pos + 1 )
-				case -30: return this.getInt16( pos + 1, true )
-				case -31: return this.getInt32( pos + 1, true )
-				case -32:
-					const val = this.getBigInt64( pos + 1, true )
-					if( val > Number.MAX_SAFE_INTEGER ) return val
-					if( val < Number.MIN_SAFE_INTEGER ) return val
-					return Number( val )
-				default: $mol_fail( new Error( 'Unsupported len', { cause: { num } } ) )
-			}
-		}
-		
-		/** Converts internal keys&vals to high level object. */
-		static rich( keys: any[], vals: any[] ): object {
-			
-			const shape = JSON.stringify([ keys, vals.map( v => typeof v ) ])
-			const rich = this.riches.get( shape )
-			if( rich ) return rich( ... vals )
-			
-			const pairs = keys.map( ( key, index ) => [ key, vals[ index ] ] )
-			const obj = Object.fromEntries( pairs )
-			
-			return obj
-		}
-		 
-		/** Converts high level object to internal keys&vals representation. */
-		static lean( val: object ): readonly[ keys: readonly any[], vals: readonly any[] ] {
-			
-			const proto = Reflect.getPrototypeOf( val )!
-			const lean = this.leanes.get( proto )
-			if( lean ) return lean( val )
-			
-			return [ Object.keys( val ), Object.values( val ) ]
-		}
-		
-		static leanes = new Map< object, ( val: any )=> readonly[ keys: readonly any[], vals: readonly any[] ] >()
+		static leanes = new Map< object, ( val: any )=> readonly any[] >()
+		static keys = new Map< object, readonly string[] >()
 		static riches = new Map< string/*shape*/, ( ... vals: readonly any[] )=> object >()
 		
 		/** Adds custom types support. */
@@ -711,47 +488,46 @@ namespace $ {
 			const Keys extends readonly any[],
 			const Vals extends readonly any[],
 		>(
+			keys: Keys,
 			rich: ( ( ... vals: Vals )=> Instance ) | ( ()=> Instance ),
-			lean: ( obj: Instance )=> readonly[ Keys, Vals ],
+			lean: ( obj: Instance )=> Vals,
 		) {
 			
 			const obj = rich()
 			const proto = Reflect.getPrototypeOf( obj )!
 			
-			const [ keys, vals ] = lean( obj )
+			const vals = lean( obj )
 			const shape = JSON.stringify( [ keys, vals.map( v => typeof v ) ] )
 			
 			this.leanes.set( proto, lean )
+			this.keys.set( proto, keys )
 			this.riches.set( shape, rich )
 		}
 		
 	}
 	
+	let buffer = new Uint8Array( 128 )
+	let pack = new DataView( buffer.buffer )
+	
 	/** Native Map support */
 	$mol_vary.type(
+		[ 'keys', 'vals' ],
 		( keys = [] as readonly any[], vals = [] as readonly any[] )=> new Map( keys.map( ( k, i )=> [ k, vals[i] ] ) ),
-		obj => [
-			[ 'keys', 'vals' ],
-			[ [ ... obj.keys() ], [ ... obj.values() ] ],
-		],
+		obj => [ [ ... obj.keys() ], [ ... obj.values() ] ],
 	)
 	
 	/** Native Set support */
 	$mol_vary.type(
+		[ 'vals' ],
 		( vals = [] as readonly any[] )=> new Set( vals ),
-		obj => [
-			[ 'vals' ],
-			[ [ ... obj.values() ] ],
-		],
+		obj => [ [ ... obj.values() ] ],
 	)
 	
-	// /** Native Date support */
-	// $mol_vary.type(
-	// 	( ts = 0 )=> new Date( ts * 1000 ),
-	// 	obj => [
-	// 		[ 'unix_time' ],
-	// 		[ obj.valueOf() / 1000 ],
-	// 	],
-	// )
+	/** Native Date support */
+	$mol_vary.type(
+		[ 'unix_time' ],
+		( ts = 0 )=> new Date( ts * 1000 ),
+		obj => [ obj.valueOf() / 1000 ],
+	)
 	
 }
