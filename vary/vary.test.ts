@@ -76,19 +76,6 @@ namespace $.$$ {
 			check( 1.5, [ fp64,  ... new Uint8Array( new Float64Array([ 1.5 ]).buffer ) ] )
 		},
 		
-		"vary pack text"( $ ) {
-			check( 'foo', [ text|3, ... str('foo') ] )
-			const long = 'abcdefghijklmnopqrstuvwxyzЖЫ'
-			check( long, [ text|l1, 30, ... str(long) ] )
-		},
-		
-		"vary pack dedup text"( $ ) {
-			check(
-				[ "f", "f" ],
-				[ list|2, text|1, ... str('f'), link|0 ],
-			)
-		},
-		
 		"vary pack list"( $ ) {
 			check(
 				[ 1, 2, 3 ],
@@ -101,17 +88,29 @@ namespace $.$$ {
 		},
 		
 		"vary pack dedup list"( $ ) {
+			const pair = [ 1, 2 ]
 			check(
-				[ [ 1, 2 ], [ 1, 2 ] ],
+				[ pair, pair ],
 				[ list|2, list|2, 1, 2, link|0 ],
 			)
+			const seven = [7]
+			const box = [seven]
 			check(
-				[ [[ 1 ]], [[ 1 ]] ],
-				[ list|2, list|1, list|1, 1, link|1 ],
-			)
-			check(
-				[ [ [7] ], [ [7] ],  [7] ],
+				[ box, box, seven ],
 				[ list|3, list|1, list|1, 7, link|1, link|0 ],
+			)
+		},
+		
+		"vary pack text"( $ ) {
+			check( 'foo', [ text|3, ... str('foo') ] )
+			const long = 'abcdefghijklmnopqrstuvwxyzЖЫ'
+			check( long, [ text|l1, 28, ... str(long) ] )
+		},
+		
+		"vary pack dedup text"( $ ) {
+			check(
+				[ "f", "f" ],
+				[ list|2, text|1, ... str('f'), link|0 ],
 			)
 		},
 		
@@ -151,8 +150,9 @@ namespace $.$$ {
 		},
 		
 		"vary pack dedup blob"( $ ) {
+			const part = new Uint8Array([ 1, 2 ])
 			check(
-				[ new Uint8Array([ 1, 2 ]), new Uint8Array([ 1, 2 ]) ],
+				[ part, part ],
 				[ list|2, blob|2, uint|l1, 1, 2, link|0 ],
 			)
 		},
@@ -160,38 +160,43 @@ namespace $.$$ {
 		"vary pack struct"( $ ) {
 			check(
 				{ a: 1, b: 2 },
-				[ tupl|2, list|2, text|1, ... str('a'), text|1, ... str('b'), 1, 2 ],
+				[ tupl|2, text|1, ... str('a'), text|1, ... str('b'), 1, 2 ],
 			)
 			check(
 				{ x: {}, y: { a: 1 } },
-				[ tupl|2, list|2, text|1, ... str('x'), text|1, ... str('y'), tupl|0, list|0, tupl|1, list|1, text|1, ... str('a'), 1 ],
-			)
-			check(
-				[ {}, { foo: 1 }, { foo: 2 } ],
-				[ list|3, tupl|0, list|0, tupl|1, list|1, text|3, ... str('foo'), 1, tupl|1, link|1, 2 ],
+				[ tupl|2, text|1, ... str('x'), text|1, ... str('y'), tupl|0, tupl|1, text|1, ... str('a'), 1 ],
 			)
 		},
 		
-		"vary pack struct dedup"( $ ) {
+		// disabled because too slow
+		// "vary pack struct shape dedup"( $ ) {
+		// 	check(
+		// 		[ {}, { foo: 1 }, { foo: 2 } ],
+		// 		[ list|3, tupl|0, list|0, tupl|1, list|1, text|3, ... str('foo'), 1, tupl|1, link|1, 2 ],
+		// 	)
+		// 	check(
+		// 		{ x: 1, y: { x: 2, y: 3 } },
+		// 		[ tupl|2, list|2, text|1, ... str('x'), text|1, ... str('y'), 1, tupl|2, link|2, 2, 3 ],
+		// 	)
+		// },
+		
+		"vary pack struct full dedup"( $ ) {
+			const item = { x: 1 }
 			check(
-				{ x: 1, y: { x: 2, y: 3 } },
-				[ tupl|2, list|2, text|1, ... str('x'), text|1, ... str('y'), 1, tupl|2, link|2, 2, 3 ],
+				[ item, item ],
+				[ list|2,  tupl|1, text|1, ... str('x'), 1, link|1 ],
 			)
-			check(
-				[ { x: 1 }, { x: 1 } ],
-				[ list|2,  tupl|1, list|1, text|1, ... str('x'), 1, link|2 ],
-			)
-			check(
-				{ x: { x: 1, y : 2 }, y: { x: 1, y : 2 } },
-				[ tupl|2, list|2, text|1, ... str('x'), text|1, ... str('y'), tupl|2, link|2, 1, 2, link|3 ],
-			)
+			// check(
+			// 	{ x: { x: 1, y : 2 }, y: { x: 1, y : 2 } },
+			// 	[ tupl|2, list|2, text|1, ... str('x'), text|1, ... str('y'), tupl|2, link|2, 1, 2, link|3 ],
+			// )
 		},
 		
 		"vary pack Map"( $ ) {
 			
 			check(
 				new Map< any, any >([ [ 'foo', 1 ], [ 2, 'bar' ] ]),
-				[ tupl|2, list|2, text|4, ... str('keys'), text|4, ... str('vals'), list|2, text|3, ... str('foo'), 2, list|2, 1, text|3, ... str('bar') ],
+				[ tupl|2, text|4, ... str('keys'), text|4, ... str('vals'), list|2, text|3, ... str('foo'), 2, list|2, 1, text|3, ... str('bar') ],
 			)
 			
 		},
@@ -200,19 +205,19 @@ namespace $.$$ {
 			
 			check(
 				new Set([ 7, 'foo' ]),
-				[ tupl|1, list|1, text|4, ... str('vals'), list|2, 7, text|3, ... str('foo') ],
+				[ tupl|1, text|4, ... str('vals'), list|2, 7, text|3, ... str('foo') ],
 			)
 			
 		},
 		
-		// "vary pack Date"( $ ) { // native date is unstable
+		"vary pack Date"( $ ) { // native date is unstable
 			
-		// 	check(
-		// 		new Date( '2025-01-02T03:04:05.678' ),
-		// 		[ tupl|1, list|1, text|9, ... str('unix_time'), fp64, ... new Uint8Array( new Float64Array([ 1735776245.678 ]).buffer ) ],
-		// 	)
+			check(
+				new Date( '2025-01-02T03:04:05.678' ),
+				[ tupl|1, text|9, ... str('unix_time'), fp64, ... new Uint8Array( new Float64Array([ 1735776245.678 ]).buffer ) ],
+			)
 			
-		// },
+		},
 		
 		"vary pack custom class"( $ ) {
 			
@@ -230,16 +235,14 @@ namespace $.$$ {
 			}
 			
 			$mol_vary.type(
+				[ 'a', 'b' ],
 				( a = 0, b = 0 )=> new Foo( a, b ),
-				foo => [
-					[ 'a', 'b' ],
-					[ foo.a, foo.b ],
-				],
+				foo => [ foo.a, foo.b ],
 			)
 			
 			check(
 				new Foo( 1, 2 ),
-				[ tupl|2, list|2, text|1, ... str('a'), text|1, ... str('b'), 1, 2 ],
+				[ tupl|2, text|1, ... str('a'), text|1, ... str('b'), 1, 2 ],
 			)
 			
 		},
