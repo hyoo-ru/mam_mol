@@ -390,7 +390,7 @@ namespace $ {
 				for( let i = 0; i < len; ++i ) keys[i] = read_vary()
 				for( let i = 0; i < len; ++i ) vals[i] = read_vary()
 				
-				const shape = JSON.stringify([ keys, vals.map( v => typeof v ) ])
+				const shape = JSON.stringify( keys )
 				
 				let obj
 				const rich = this.riches.get( shape )
@@ -494,7 +494,7 @@ namespace $ {
 			const proto = Reflect.getPrototypeOf( obj )!
 			
 			const vals = lean( obj )
-			const shape = JSON.stringify( [ keys, vals.map( v => typeof v ) ] )
+			const shape = JSON.stringify( keys )
 			
 			this.leanes.set( proto, lean )
 			this.keys.set( proto, keys )
