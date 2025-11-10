@@ -275,10 +275,9 @@ namespace $ {
 				let res = 0 as number | bigint
 				
 				if( num === 28 ) {
-					res = pack.getUint8( pos )
-					pos += 1
+					res = buffer[ pos ++ ]
 				} else if( num === 29 ) {
-					res= pack.getUint16( pos, true )
+					res = pack.getUint16( pos, true )
 					pos += 2
 				} else if( num === 30 ) {
 					res = pack.getUint32( pos, true )
@@ -339,7 +338,7 @@ namespace $ {
 			const read_blob = ( kind: number )=> {
 				
 				const len = read_unum( kind ) as number
-				const kind_item = pack.getUint8( pos ++ )
+				const kind_item = buffer[ pos ++ ]
 				
 				switch( kind_item ) {
 					
@@ -450,7 +449,7 @@ namespace $ {
 			
 			const read_vary = ()=> {
 				
-				const kind = pack.getUint8( pos )
+				const kind = buffer[ pos ]
 				const tip = kind & 0b111_00000
 				
 				switch( tip ) {
