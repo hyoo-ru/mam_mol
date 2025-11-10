@@ -492,8 +492,6 @@ namespace $ {
 			
 			const obj = rich()
 			const proto = Reflect.getPrototypeOf( obj )!
-			
-			const vals = lean( obj )
 			const shape = JSON.stringify( keys )
 			
 			this.leanes.set( proto, lean )
@@ -515,7 +513,7 @@ namespace $ {
 	
 	/** Native Set support */
 	$mol_vary.type(
-		[ 'vals' ],
+		[ 'set' ],
 		( vals = [] as readonly any[] )=> new Set( vals ),
 		obj => [ [ ... obj.values() ] ],
 	)
