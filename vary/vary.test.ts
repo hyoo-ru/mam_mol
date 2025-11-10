@@ -24,11 +24,11 @@ namespace $.$$ {
 			check( NaN, [ fp64, ... new Uint8Array( new Float64Array([ NaN ]).buffer ) ] )
 			check( Infinity, [ fp64, ... new Uint8Array( new Float64Array([ Infinity ]).buffer ) ] )
 			check( -Infinity, [ fp64, ... new Uint8Array( new Float64Array([ -Infinity ]).buffer ) ] )
-			check( -0, [ fp64, ... new Uint8Array( new Float64Array([ -0 ]).buffer ) ] )
 		},
 		
 		"vary pack uint0"( $ ) {
 			check( 0, [ 0 ] )
+			check( -0, [ 0 ] ) // -0 is normalized to 0
 			check( 27, [ 27 ] )
 		},
 		
