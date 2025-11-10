@@ -247,7 +247,7 @@ namespace $.$$ {
 
 			check(
 				new Set([ 7, 'foo' ]),
-				[ tupl|1, text|4, ... str('vals'), list|2, 7, text|3, ... str('foo') ],
+				[ tupl|1, text|3, ... str('set'), list|2, 7, text|3, ... str('foo') ],
 			)
 
 		},
@@ -259,7 +259,7 @@ namespace $.$$ {
 			)
 		},
 		
-		"vary pack Date"( $ ) { // native date is unstable
+		"vary pack Date"( $ ) {
 			
 			const date = new Date( '2025-01-02T03:04:05.678' )
 			check(
