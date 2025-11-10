@@ -30,16 +30,34 @@ namespace $ {
 	
 	let offsets = new Map< unknown, number >()
 	let sizes = new Map< string, number >()
+
+	// Cache for TypedArray type checks to avoid repeated instanceof
+	const typedArrayTypes = [
+		{ check: (val: any): val is Uint8Array => val instanceof Uint8Array, tag: $mol_vary_tip.uint | $mol_vary_len[1] },
+		{ check: (val: any): val is Uint16Array => val instanceof Uint16Array, tag: $mol_vary_tip.uint | $mol_vary_len[2] },
+		{ check: (val: any): val is Uint32Array => val instanceof Uint32Array, tag: $mol_vary_tip.uint | $mol_vary_len[4] },
+		{ check: (val: any): val is BigUint64Array => val instanceof BigUint64Array, tag: $mol_vary_tip.uint | $mol_vary_len[8] },
+		{ check: (val: any): val is Int8Array => val instanceof Int8Array, tag: $mol_vary_tip.sint | ~$mol_vary_len[1] },
+		{ check: (val: any): val is Int16Array => val instanceof Int16Array, tag: $mol_vary_tip.sint | ~$mol_vary_len[2] },
+		{ check: (val: any): val is Int32Array => val instanceof Int32Array, tag: $mol_vary_tip.sint | ~$mol_vary_len[4] },
+		{ check: (val: any): val is BigInt64Array => val instanceof BigInt64Array, tag: $mol_vary_tip.sint | ~$mol_vary_len[8] },
+		{ check: (val: any): val is Float32Array => val instanceof Float32Array, tag: $mol_vary_spec.fp32 },
+		{ check: (val: any): val is Float64Array => val instanceof Float64Array, tag: $mol_vary_spec.fp64 },
+	] as const
 	
 	/** VaryPack - simple fast compact data binarization format. */
 	export class $mol_vary extends DataView< ArrayBuffer > {
 		
 		/** Packs any data to Uint8Array with deduplication. */
 		static pack( data: unknown ) {
-			
+
+			// Use local variables for better performance
+			let localOffsets = new Map< unknown, number >()
 			let pos = 0
 			let capacity = 0
-			
+			let buffer = new Uint8Array( 256 ) // Start with smaller buffer
+			let pack = new DataView( buffer.buffer )
+
 			const acquire = ( size: number )=> {
 				if( size < 0 ) return
 				capacity += size
@@ -111,88 +129,87 @@ namespace $ {
 			}
 			
 			const dump_string = ( val: string )=> {
-				
+
 				if( val.length ) {
-					const offset = offsets.get( val )
+					const offset = localOffsets.get( val )
 					if( offset !== undefined ) return dump_unum( $mol_vary_tip.link, offset )
 				}
-				
+
 				dump_unum( $mol_vary_tip.text, val.length )
 				acquire( val.length * 3 )
 				const len = $mol_charset_encode_to( val, buffer, pos )
 				pos += len
 				release( val.length * 3 - len )
-				
-				if( val.length ) offsets.set( val, offsets.size )
+
+				if( val.length ) localOffsets.set( val, localOffsets.size )
 				return
-			
+
 			}
 			
 			const dump_buffer = ( val: ArrayBufferView< ArrayBuffer > )=> {
-				
+
 				if( val.byteLength ) {
-					const offset = offsets.get( val )
+					const offset = localOffsets.get( val )
 					if( offset !== undefined ) return dump_unum( $mol_vary_tip.link, offset )
 				}
-				
+
 				dump_unum( $mol_vary_tip.blob, val.byteLength )
-				
-				if( val instanceof Uint8Array ) pack.setUint8( pos ++, $mol_vary_tip.uint | $mol_vary_len[1] )
-				else if( val instanceof Uint16Array ) pack.setUint8( pos ++, $mol_vary_tip.uint | $mol_vary_len[2] )
-				else if( val instanceof Uint32Array ) pack.setUint8( pos ++, $mol_vary_tip.uint | $mol_vary_len[4] )
-				else if( val instanceof BigUint64Array ) pack.setUint8( pos ++, $mol_vary_tip.uint | $mol_vary_len[8] )
-				
-				else if( val instanceof Int8Array ) pack.setUint8( pos ++, $mol_vary_tip.sint | ~$mol_vary_len[1] )
-				else if( val instanceof Int16Array ) pack.setUint8( pos ++, $mol_vary_tip.sint | ~$mol_vary_len[2] )
-				else if( val instanceof Int32Array ) pack.setUint8( pos ++, $mol_vary_tip.sint | ~$mol_vary_len[4] )
-				else if( val instanceof BigInt64Array ) pack.setUint8( pos ++, $mol_vary_tip.sint | ~$mol_vary_len[8] )
-				
-				// else if( val instanceof Float16Array ) pos += pack.tlen( pos, 'spec', $mol_vary_spec.fp16 ) // compatibility issues
-				else if( val instanceof Float32Array ) pack.setUint8( pos ++, $mol_vary_spec.fp32 )
-				else if( val instanceof Float64Array ) pack.setUint8( pos ++, $mol_vary_spec.fp64 )
-			
-				else $mol_fail( new Error( `Unsupported type` ) )
-				
+
+				// Optimized type detection using early exit
+				let typeTag: number | undefined
+				for( const type of typedArrayTypes ) {
+					if( type.check( val ) ) {
+						typeTag = type.tag
+						break
+					}
+				}
+
+				if( typeTag !== undefined ) {
+					pack.setUint8( pos ++, typeTag )
+				} else {
+					$mol_fail( new Error( `Unsupported type` ) )
+				}
+
 				const src = ( val instanceof Uint8Array ) ? val : new Uint8Array( val.buffer, val.byteOffset, val.byteLength )
 				acquire( val.byteLength )
 				buffer.set( src, pos )
 				pos += val.byteLength
-					
-				if( val.byteLength ) offsets.set( val, offsets.size )
+
+				if( val.byteLength ) localOffsets.set( val, localOffsets.size )
 			}
 			
 			const dump_list = ( val: any[] )=> {
-				
+
 				if( val.length ) {
-					const offset = offsets.get( val )
+					const offset = localOffsets.get( val )
 					if( offset !== undefined ) return dump_unum( $mol_vary_tip.link, offset )
 				}
-			
+
 				dump_unum( $mol_vary_tip.list, val.length )
 				acquire( val.length * 9 )
 				for( const item of val ) dump( item )
-			
-				if( val.length ) offsets.set( val, offsets.size )
-				
+
+				if( val.length ) localOffsets.set( val, localOffsets.size )
+
 			}
 			
 			const dump_object = ( val: object )=> {
-				
-				const offset = offsets.get( val )
+
+				const offset = localOffsets.get( val )
 				if( offset !== undefined ) return dump_unum( $mol_vary_tip.link, offset )
-				
+
 				const proto = Reflect.getPrototypeOf( val )!
 				const lean = this.leanes.get( proto )
-				
+
 				const keys = lean ? this.keys.get( proto )! : Object.keys( val )
 				const vals = lean ? lean( val ) : Object.values( val )
-			
+
 				dump_unum( $mol_vary_tip.tupl, vals.length )
 				acquire( vals.length * 2 * 9 )
 				for( const item of keys ) dump( item )
 				for( const item of vals ) dump( item )
-				
-				if( vals.length ) offsets.set( val, offsets.size )
+
+				if( vals.length ) localOffsets.set( val, localOffsets.size )
 			}
 			
 			/** Recursive fills buffer with data. */
@@ -252,14 +269,11 @@ namespace $ {
 				
 				$mol_fail( new Error( `Unsupported type` ) )
 			}
-			
+
 			dump( data )
-			
-			offsets = new Map
-			sizes = new Map
-			
+
 			return buffer.slice( 0, pos )
-			
+
 		}
 		
 		/** Parses buffer to rich runtime structures. */
