@@ -13,14 +13,15 @@
 
 - VaryPack: [$mol_vary](https://github.com/hyoo-ru/mam_mol/tree/master/vary) - reference implementation.
 - CBOR: [cbor-x](https://github.com/kriszyp/cbor-x) - fastest implementation.
-- MsgPack: [msgpackr](https://github.com/kriszyp/msgpackr/tree/master) - fastest implementaion with all required extensions (which incompatible with other libs).
+- MsgPack: [msgpackr](https://github.com/kriszyp/msgpackr) - fastest implementaion with all required extensions (which incompatible with other libs).
 
-|                | $mol_vary | cbor-x   | msgpackr
-|----------------|-----------|----------|---------
-| Language       | ✅ TS     | ✅ TS   | ❌ JS
-| Performance    | 🆗 100%   | 🆗 100% | ✅ +25%
-| Size           | 🆗 100%   | ❌ +33% | ✅ +25%
-| Compatible     | ✅ std    | ✅ std  | ❌ ext
+|                | $mol_vary | cbor-x    | msgpackr
+|----------------|-----------|-----------|---------
+| Language       | ✅ TS     | ✅ TS    | ❌ JS
+| Performance    | 🆗 100%   | 🆗 100%  | ✅ +25%
+| Packed Size    | 🆗 100%   | ❌ +33%  | ✅ +25%
+| Lib Size       | ✅ 3KB    | ❌ 11 KB | ❌ 11 KB
+| Compatible     | ✅ std    | ✅ std   | ❌ ext
 
 [Benchmark](https://perf.js.hyoo.ru/#!bench=j1peaq_k376h9) results:
 
