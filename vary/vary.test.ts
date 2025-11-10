@@ -12,12 +12,19 @@ namespace $.$$ {
 	}
 	
 	$mol_test({
-		
+
 		"vary pack logical"( $ ) {
 			check( null, [ spec|none ] )
 			check( true, [ $mol_vary_spec.true ] )
 			check( false, [ $mol_vary_spec.fake ] )
 			check( undefined, [ spec|both ] )
+		},
+
+		"vary pack special floats"( $ ) {
+			check( NaN, [ fp64, ... new Uint8Array( new Float64Array([ NaN ]).buffer ) ] )
+			check( Infinity, [ fp64, ... new Uint8Array( new Float64Array([ Infinity ]).buffer ) ] )
+			check( -Infinity, [ fp64, ... new Uint8Array( new Float64Array([ -Infinity ]).buffer ) ] )
+			check( -0, [ fp64, ... new Uint8Array( new Float64Array([ -0 ]).buffer ) ] )
 		},
 		
 		"vary pack uint0"( $ ) {
@@ -102,9 +109,16 @@ namespace $.$$ {
 		},
 		
 		"vary pack text"( $ ) {
+			check( '', [ text|0 ] )
 			check( 'foo', [ text|3, ... str('foo') ] )
 			const long = 'abcdefghijklmnopqrstuvwxyzЖЫ'
 			check( long, [ text|l1, 28, ... str(long) ] )
+		},
+
+		"vary pack text unicode"( $ ) {
+			check( '🎉', [ text|4, ... str('🎉') ] )
+			check( '你好', [ text|6, ... str('你好') ] )
+			check( '🔥✨💡', [ text|12, ... str('🔥✨💡') ] )
 		},
 		
 		"vary pack dedup text"( $ ) {
@@ -122,6 +136,14 @@ namespace $.$$ {
 			check(
 				new Int8Array([ -128, 127 ]),
 				[ blob|2, sint|~l1, -128, 127 ],
+			)
+			check(
+				new Uint16Array([ 255 ]),
+				[ blob|2, uint|l2, 255, 0 ],
+			)
+			check(
+				new Int16Array([ -128 ]),
+				[ blob|2, sint|~l2, -128, 255 ],
 			)
 			check(
 				new Uint32Array([ 255 ]),
@@ -146,6 +168,17 @@ namespace $.$$ {
 			check(
 				new Float64Array([ 1.5 ]),
 				[ blob|8, fp64, ... new Uint8Array( new Float64Array([ 1.5 ]).buffer ) ],
+			)
+		},
+
+		"vary pack blob empty"( $ ) {
+			check(
+				new Uint8Array([]),
+				[ blob|0, uint|l1 ],
+			)
+			check(
+				new Float32Array([]),
+				[ blob|0, fp32 ],
 			)
 		},
 		
@@ -193,21 +226,35 @@ namespace $.$$ {
 		},
 		
 		"vary pack Map"( $ ) {
-			
+
 			check(
 				new Map< any, any >([ [ 'foo', 1 ], [ 2, 'bar' ] ]),
 				[ tupl|2, text|4, ... str('keys'), text|4, ... str('vals'), list|2, text|3, ... str('foo'), 2, list|2, 1, text|3, ... str('bar') ],
 			)
-			
+
+		},
+
+		"vary pack Map empty"( $ ) {
+			check(
+				new Map(),
+				[ tupl|2, text|4, ... str('keys'), text|4, ... str('vals'), list|0, list|0 ],
+			)
 		},
 		
 		"vary pack Set"( $ ) {
-			
+
 			check(
 				new Set([ 7, 'foo' ]),
 				[ tupl|1, text|4, ... str('vals'), list|2, 7, text|3, ... str('foo') ],
 			)
-			
+
+		},
+
+		"vary pack Set empty"( $ ) {
+			check(
+				new Set(),
+				[ tupl|1, text|4, ... str('vals'), list|0 ],
+			)
 		},
 		
 		"vary pack Date"( $ ) { // native date is unstable
@@ -221,32 +268,77 @@ namespace $.$$ {
 		},
 		
 		"vary pack custom class"( $ ) {
-			
+
 			class Foo {
-				
+
 				constructor(
 					readonly a: number,
 					readonly b: number,
 				) {}
-				
+
 				;[ Symbol.iterator ]() { // deep comparable
 					return [ this.a, this.b ].values()
 				}
-				
+
 			}
-			
+
 			$mol_vary.type(
 				[ 'a', 'b' ],
 				( a = 0, b = 0 )=> new Foo( a, b ),
 				foo => [ foo.a, foo.b ],
 			)
-			
+
 			check(
 				new Foo( 1, 2 ),
 				[ tupl|2, text|1, ... str('a'), text|1, ... str('b'), 1, 2 ],
 			)
-			
+
 		},
-		
+
+		"vary pack list empty"( $ ) {
+			check( [], [ list|0 ] )
+		},
+
+		"vary pack struct empty"( $ ) {
+			check( {}, [ tupl|0 ] )
+		},
+
+		"vary pack nested mixed"( $ ) {
+			check(
+				{ a: [ 1, 2, { b: 'test' } ], c: true },
+				[ tupl|2, text|1, ... str('a'), text|1, ... str('c'), list|3, 1, 2, tupl|1, text|1, ... str('b'), text|4, ... str('test'), $mol_vary_spec.true ],
+			)
+		},
+
+		"vary pack deeply nested"( $ ) {
+			check(
+				[ [ [ [ 1 ] ] ] ],
+				[ list|1, list|1, list|1, list|1, 1 ],
+			)
+		},
+
+		"vary pack mixed types in list"( $ ) {
+			check(
+				[ 1, 'two', true, null, undefined, 1.5 ],
+				[ list|6, 1, text|3, ... str('two'), $mol_vary_spec.true, spec|none, spec|both, fp64, ... new Uint8Array( new Float64Array([ 1.5 ]).buffer ) ],
+			)
+		},
+
+		"vary pack uint boundary values"( $ ) {
+			check( 27, [ 27 ] )
+			check( 28, [ uint|l1, 28 ] )
+			check( 255, [ uint|l1, 255 ] )
+			check( 256, [ uint|l2, 0, 1 ] )
+			check( 65535, [ uint|l2, 255, 255 ] )
+			check( 65536, [ uint|l4, 0, 0, 1, 0 ] )
+		},
+
+		"vary pack sint boundary values"( $ ) {
+			check( -28, [ -28 ] )
+			check( -29, [ sint|~l1, -29 ] )
+			check( -128, [ sint|~l1, 128 ] )
+			check( -129, [ sint|~l2, 127, 255 ] )
+		},
+
 	})
 }
