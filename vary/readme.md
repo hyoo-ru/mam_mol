@@ -69,4 +69,8 @@ $mol_vary.type(
 
 ### Binary Layout
 
-![](./diagram/spec.png)
+![](./diagram/layout.png)
+
+### Examples
+
+![](./diagram/examples.png)
