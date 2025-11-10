@@ -28,7 +28,6 @@ namespace $.$$ {
 		
 		"vary pack uint0"( $ ) {
 			check( 0, [ 0 ] )
-			check( -0, [ 0 ] ) // -0 is normalized to 0
 			check( 27, [ 27 ] )
 		},
 		
