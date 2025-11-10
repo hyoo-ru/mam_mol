@@ -11,16 +11,21 @@
 
 ## Comparison
 
-|                | $mol_vary | msgpackr | cbor-x | JSON
-|----------------|-----------|----------|--------|--------
-| Language       | TS        | JS       | TS     | Native
-| Performance    | 1         | x2.5     | x2     | x0.8
-| Size           | 1         | x2       | x2     | x2.5
+- VaryPack: [$mol_vary](https://github.com/hyoo-ru/mam_mol/tree/master/vary) - reference implementation.
+- CBOR: [cbor-x](https://github.com/kriszyp/cbor-x) - fastest implementation.
+- MsgPack: [msgpackr](https://github.com/kriszyp/msgpackr/tree/master) - fastest implementaion with all required extensions (which incompatible with other libs).
+
+|                | $mol_vary | cbor-x   | msgpackr
+|----------------|-----------|----------|---------
+| Language       | ✅ TS     | ✅ TS   | ❌ JS
+| Performance    | 🆗 100%   | 🆗 100% | ✅ +25%
+| Size           | 🆗 100%   | ❌ +33% | ✅ +25%
+| Compatible     | ✅ std    | ✅ std  | ❌ ext
 
 [Benchmark](https://perf.js.hyoo.ru/#!bench=j1peaq_k376h9) results:
 
 ### Chrome 140
-![](https://habrastorage.org/webt/gy/gd/lb/gygdlbfdqad8gdhbf-qddktgqh8.png)
+![](https://habrastorage.org/webt/mc/f_/9a/mcf_9andknqrhseh7u09kugoevo.png)
 
 ## API
 
