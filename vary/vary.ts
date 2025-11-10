@@ -28,8 +28,8 @@ namespace $ {
 		fp64 = $mol_vary_tip.spec | 31,
 	}
 	
-	let offsets = new Map< unknown, number >()
-	let sizes = new Map< string, number >()
+	let buffer = new Uint8Array( 256 )
+	let pack = new DataView( buffer.buffer )
 	
 	/** VaryPack - simple fast compact data binarization format. */
 	export class $mol_vary extends DataView< ArrayBuffer > {
@@ -39,6 +39,7 @@ namespace $ {
 			
 			let pos = 0
 			let capacity = 0
+			const offsets = new Map< unknown, number >()
 			
 			const acquire = ( size: number )=> {
 				if( size < 0 ) return
@@ -84,25 +85,24 @@ namespace $ {
 			
 			const dump_unum = ( tip: number, val: number | bigint )=> {
 				if( val < 28 ) {
-					pack.setUint8( pos ++, tip | Number( val ) )
+					buffer[ pos ++ ] = tip | Number( val )
 					release(8)
 				} else if( val < 2**8 ) {
-					pack.setUint8( pos ++, tip | $mol_vary_len[1] )
-					pack.setUint8( pos, Number( val ) )
-					pos += 1
+					buffer[ pos ++ ] = tip | $mol_vary_len[1]
+					buffer[ pos ++ ] = Number( val )
 					release(7)
 				} else if( val < 2**16 ) {
-					pack.setUint8( pos ++, tip | $mol_vary_len[2] )
+					buffer[ pos ++ ] = tip | $mol_vary_len[2]
 					pack.setUint16( pos, Number( val ), true )
 					pos += 2
 					release(6)
 				} else if( val < 2**32 ) {
-					pack.setUint8( pos ++, tip | $mol_vary_len[4] )
+					buffer[ pos ++ ] = tip | $mol_vary_len[4]
 					pack.setUint32( pos, Number( val ), true )
 					pos += 4
 					release(4)
 				} else if( val < 2n**64n ) {
-					pack.setUint8( pos ++, tip | $mol_vary_len[8] )
+					buffer[ pos ++ ] = tip | $mol_vary_len[8]
 					pack.setBigUint64( pos, BigInt( val ), true )
 					pos += 8
 				} else {
@@ -137,19 +137,19 @@ namespace $ {
 				
 				dump_unum( $mol_vary_tip.blob, val.byteLength )
 				
-				if( val instanceof Uint8Array ) pack.setUint8( pos ++, $mol_vary_tip.uint | $mol_vary_len[1] )
-				else if( val instanceof Uint16Array ) pack.setUint8( pos ++, $mol_vary_tip.uint | $mol_vary_len[2] )
-				else if( val instanceof Uint32Array ) pack.setUint8( pos ++, $mol_vary_tip.uint | $mol_vary_len[4] )
-				else if( val instanceof BigUint64Array ) pack.setUint8( pos ++, $mol_vary_tip.uint | $mol_vary_len[8] )
+				if( val instanceof Uint8Array ) buffer[ pos ++ ] = $mol_vary_tip.uint | $mol_vary_len[1]
+				else if( val instanceof Uint16Array ) buffer[ pos ++ ] = $mol_vary_tip.uint | $mol_vary_len[2]
+				else if( val instanceof Uint32Array ) buffer[ pos ++ ] = $mol_vary_tip.uint | $mol_vary_len[4]
+				else if( val instanceof BigUint64Array ) buffer[ pos ++ ] = $mol_vary_tip.uint | $mol_vary_len[8]
 				
-				else if( val instanceof Int8Array ) pack.setUint8( pos ++, $mol_vary_tip.sint | ~$mol_vary_len[1] )
-				else if( val instanceof Int16Array ) pack.setUint8( pos ++, $mol_vary_tip.sint | ~$mol_vary_len[2] )
-				else if( val instanceof Int32Array ) pack.setUint8( pos ++, $mol_vary_tip.sint | ~$mol_vary_len[4] )
-				else if( val instanceof BigInt64Array ) pack.setUint8( pos ++, $mol_vary_tip.sint | ~$mol_vary_len[8] )
+				else if( val instanceof Int8Array ) buffer[ pos ++ ] = $mol_vary_tip.sint | ~$mol_vary_len[1]
+				else if( val instanceof Int16Array ) buffer[ pos ++ ] = $mol_vary_tip.sint | ~$mol_vary_len[2]
+				else if( val instanceof Int32Array ) buffer[ pos ++ ] = $mol_vary_tip.sint | ~$mol_vary_len[4]
+				else if( val instanceof BigInt64Array ) buffer[ pos ++ ] = $mol_vary_tip.sint | ~$mol_vary_len[8]
 				
 				// else if( val instanceof Float16Array ) pos += pack.tlen( pos, 'spec', $mol_vary_spec.fp16 ) // compatibility issues
-				else if( val instanceof Float32Array ) pack.setUint8( pos ++, $mol_vary_spec.fp32 )
-				else if( val instanceof Float64Array ) pack.setUint8( pos ++, $mol_vary_spec.fp64 )
+				else if( val instanceof Float32Array ) buffer[ pos ++ ] = $mol_vary_spec.fp32
+				else if( val instanceof Float64Array ) buffer[ pos ++ ] = $mol_vary_spec.fp64
 			
 				else $mol_fail( new Error( `Unsupported type` ) )
 				
@@ -203,20 +203,20 @@ namespace $ {
 				switch( typeof val ) {
 					
 					case 'undefined': {
-						pack.setUint8( pos ++, $mol_vary_spec.both )
+						buffer[ pos ++ ] = $mol_vary_spec.both
 						release( 8 )
 						return
 					}
 					
 					case 'boolean': {
-						pack.setUint8( pos ++, val ? $mol_vary_spec.true : $mol_vary_spec.fake )
+						buffer[ pos ++ ] = val ? $mol_vary_spec.true : $mol_vary_spec.fake
 						release( 8 )
 						return
 					}
 					
 					case 'number': {
 						if( !Number.isInteger( val ) ) {
-							pack.setUint8( pos ++, $mol_vary_spec.fp64 )
+							buffer[ pos ++ ] = $mol_vary_spec.fp64
 							pack.setFloat64( pos, val, true )
 							pos += 8
 							return
@@ -239,7 +239,7 @@ namespace $ {
 						
 						if( !val ) {
 							release( 8 )
-							return pack.setUint8( pos ++, $mol_vary_spec.none )
+							return buffer[ pos ++ ] = $mol_vary_spec.none
 						}
 						if( ArrayBuffer.isView( val ) ) return dump_buffer( val as ArrayBufferView< ArrayBuffer > )
 						if( Array.isArray( val ) ) return dump_list( val )
@@ -254,9 +254,6 @@ namespace $ {
 			}
 			
 			dump( data )
-			
-			offsets = new Map
-			sizes = new Map
 			
 			return buffer.slice( 0, pos )
 			
@@ -500,9 +497,6 @@ namespace $ {
 		}
 		
 	}
-	
-	let buffer = new Uint8Array( 128 )
-	let pack = new DataView( buffer.buffer )
 	
 	/** Native Map support */
 	$mol_vary.type(
