@@ -1,6 +1,6 @@
 # $mol_vary
 
-> VaryPack - simple fast compact data binarization format.
+> Reference implementation of VaryPack - simple fast compact data binarization format.
 
 ## Key Features
 
@@ -8,6 +8,8 @@
 - **Intergated schema**: schema always stored with data. AKA "schema less".
 - **Structural typing**: data mapped to classes by schema. Unique feature!
 - **Decentralized extensibility**: custom types support without central registry. Unique feature!
+- **Single-pass**: used auto-growable internal buffer.
+- **Easy debug**: tiny ints are packed as is, special types are packed as char.
 
 ## Comparison
 
@@ -26,9 +28,19 @@
 [Benchmark](https://perf.js.hyoo.ru/#!bench=j1peaq_k376h9) results:
 
 ### Chrome 142
-![](https://habrastorage.org/webt/3d/yn/-l/3dyn-lnwpeonokeof7ugd3domtw.png)
+![](https://habrastorage.org/webt/qk/nm/vg/qknmvgaazzoe2y5nuyyla88cq3s.png)
 
 ## API
+
+### Usage from NPM
+
+Install [mol_vary](https://www.npmjs.com/package/mol_vary):
+
+```sh
+npm install mol_vary
+```
+
+Add import: 
 
 ```ts
 import { $mol_vary } from 'mol_vary'
@@ -37,7 +49,7 @@ import { $mol_vary } from 'mol_vary'
 ### Binarization
 
 ```ts
-const buffer = $mol_vary.pack( any_data )
+const buffer = $mol_vary.pack( data )
 ```
 
 ### Pasing
@@ -59,7 +71,7 @@ class Foo {
 }
 
 $mol_vary.type(
-	[ 'a', 'b' ], // keys for schema
+	[ 'a', 'b' ], // keys as schema
 	( a = 0, b = 0 )=> new Foo( a, b ), // factory
 	foo => [ foo.a, foo.b ], // vals extractor
 )
