@@ -55,27 +55,26 @@ namespace $ {
 				capacity -= size
 			}
 			
-			const dump_snum = ( tip: number, val: number | bigint )=> {
+			const dump_snum = ( val: number | bigint )=> {
 				if( val >= -28 ) {
-					pack.setInt8( pos ++, tip | Number( val ) )
+					buffer[ pos ++ ] = Number( val )
 					release(8)
 				} else if( val >= -(2**7) ) {
-					pack.setInt8( pos ++, tip | ( -1 - $mol_vary_len[1] ) )
-					pack.setInt8( pos, Number( val ) )
-					pos += 1
+					buffer[ pos ++ ] = ~$mol_vary_len[1]
+					buffer[ pos ++ ] = Number( val )
 					release(7)
 				} else if( val >= -(2**15) ) {
-					pack.setInt8( pos ++, tip | ( -1 - $mol_vary_len[2] ) )
+					buffer[ pos ++ ] = ~$mol_vary_len[2]
 					pack.setInt16( pos, Number( val ), true )
 					pos += 2
 					release(6)
 				} else if( val >= -(2**31) ) {
-					pack.setInt8( pos ++, tip | ( -1 - $mol_vary_len[4] ) )
+					buffer[ pos ++ ] = ~$mol_vary_len[4]
 					pack.setInt32( pos, Number( val ), true )
 					pos += 4
 					release(4)
 				} else if( val >= -(2n**63n) ) {
-					pack.setInt8( pos ++, tip | ( -1 - $mol_vary_len[8] ) )
+					buffer[ pos ++ ] = ~$mol_vary_len[8]
 					pack.setBigInt64( pos, BigInt( val ), true )
 					pos += 8
 				} else {
@@ -225,7 +224,7 @@ namespace $ {
 					case 'bigint': {
 						
 						if( val < 0 ) {
-							dump_snum( $mol_vary_tip.sint, val )
+							dump_snum( val )
 						} else {
 							dump_unum( $mol_vary_tip.uint, val )
 						}
