@@ -255,7 +255,7 @@ namespace $.$$ {
 		"vary pack Set empty"( $ ) {
 			check(
 				new Set(),
-				[ tupl|1, text|4, ... str('vals'), list|0 ],
+				[ tupl|1, text|3, ... str('set'), list|0 ],
 			)
 		},
 		
