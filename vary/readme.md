@@ -18,15 +18,15 @@
 |                | $mol_vary | cbor-x      | msgpackr
 |----------------|-----------|-------------|---------
 | Language       | ✅ TS     | ✅ TS      | ❌ JS
-| Performance    | 🆗 100%   | 🆗 100%    | ✅ +25%
-| Packed Size    | 🆗 100%   | ❌ +33%    | ✅ +25%
+| Performance    | 🆗 100%   | 🆗 100%    | 🆗 100%
+| Packed Size    | 🆗 100%   | ❌ +33%    | ❌ +25%
 | Lib Size       | ✅ 3KB    | ❌ 11 KB   | ❌ 11 KB
 | Compatibility  | ✅ std    | ⭕ ext-std | ❌ ext
 
 [Benchmark](https://perf.js.hyoo.ru/#!bench=j1peaq_k376h9) results:
 
-### Chrome 140
-![](https://habrastorage.org/webt/mc/f_/9a/mcf_9andknqrhseh7u09kugoevo.png)
+### Chrome 142
+![](https://habrastorage.org/webt/3d/yn/-l/3dyn-lnwpeonokeof7ugd3domtw.png)
 
 ## API
 
@@ -64,3 +64,9 @@ $mol_vary.type(
 	foo => [ foo.a, foo.b ], // vals extractor
 )
 ```
+
+## Internals
+
+### Binary Layout
+
+![](./diagram/spec.png)
