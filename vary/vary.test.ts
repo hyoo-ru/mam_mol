@@ -115,9 +115,12 @@ namespace $.$$ {
 		},
 
 		"vary pack text unicode"( $ ) {
-			check( '🎉', [ text|4, ... str('🎉') ] )
-			check( '你好', [ text|6, ... str('你好') ] )
-			check( '🔥✨💡', [ text|12, ... str('🔥✨💡') ] )
+			const emoji1 = '🎉'
+			const emoji2 = '你好'
+			const emoji3 = '🔥✨💡'
+			check( emoji1, [ text|l1, emoji1.length, ... str(emoji1) ] )
+			check( emoji2, [ text|l1, emoji2.length, ... str(emoji2) ] )
+			check( emoji3, [ text|l1, emoji3.length, ... str(emoji3) ] )
 		},
 		
 		"vary pack dedup text"( $ ) {
