@@ -27,9 +27,6 @@ namespace $ {
 		fp32 = $mol_vary_tip.spec | 30,
 		fp64 = $mol_vary_tip.spec | 31,
 	}
-	
-	let offsets = new Map< unknown, number >()
-	let sizes = new Map< string, number >()
 
 	// Cache for TypedArray type checks to avoid repeated instanceof
 	const typedArrayTypes = [
@@ -44,6 +41,9 @@ namespace $ {
 		{ check: (val: any): val is Float32Array => val instanceof Float32Array, tag: $mol_vary_spec.fp32 },
 		{ check: (val: any): val is Float64Array => val instanceof Float64Array, tag: $mol_vary_spec.fp64 },
 	] as const
+
+	let buffer = new Uint8Array( 256 )
+	let pack = new DataView( buffer.buffer )
 	
 	/** VaryPack - simple fast compact data binarization format. */
 	export class $mol_vary extends DataView< ArrayBuffer > {
@@ -51,12 +51,9 @@ namespace $ {
 		/** Packs any data to Uint8Array with deduplication. */
 		static pack( data: unknown ) {
 
-			// Use local variables for better performance
-			let localOffsets = new Map< unknown, number >()
 			let pos = 0
 			let capacity = 0
-			let buffer = new Uint8Array( 256 ) // Start with smaller buffer
-			let pack = new DataView( buffer.buffer )
+			const offsets = new Map< unknown, number >()
 
 			const acquire = ( size: number )=> {
 				if( size < 0 ) return
@@ -72,27 +69,26 @@ namespace $ {
 				capacity -= size
 			}
 			
-			const dump_snum = ( tip: number, val: number | bigint )=> {
+			const dump_snum = ( val: number | bigint )=> {
 				if( val >= -28 ) {
-					pack.setInt8( pos ++, tip | Number( val ) )
+					buffer[ pos ++ ] = Number( val )
 					release(8)
 				} else if( val >= -(2**7) ) {
-					pack.setInt8( pos ++, tip | ( -1 - $mol_vary_len[1] ) )
-					pack.setInt8( pos, Number( val ) )
-					pos += 1
+					buffer[ pos ++ ] = ~$mol_vary_len[1]
+					buffer[ pos ++ ] = Number( val )
 					release(7)
 				} else if( val >= -(2**15) ) {
-					pack.setInt8( pos ++, tip | ( -1 - $mol_vary_len[2] ) )
+					buffer[ pos ++ ] = ~$mol_vary_len[2]
 					pack.setInt16( pos, Number( val ), true )
 					pos += 2
 					release(6)
 				} else if( val >= -(2**31) ) {
-					pack.setInt8( pos ++, tip | ( -1 - $mol_vary_len[4] ) )
+					buffer[ pos ++ ] = ~$mol_vary_len[4]
 					pack.setInt32( pos, Number( val ), true )
 					pos += 4
 					release(4)
 				} else if( val >= -(2n**63n) ) {
-					pack.setInt8( pos ++, tip | ( -1 - $mol_vary_len[8] ) )
+					buffer[ pos ++ ] = ~$mol_vary_len[8]
 					pack.setBigInt64( pos, BigInt( val ), true )
 					pos += 8
 				} else {
@@ -102,25 +98,24 @@ namespace $ {
 			
 			const dump_unum = ( tip: number, val: number | bigint )=> {
 				if( val < 28 ) {
-					pack.setUint8( pos ++, tip | Number( val ) )
+					buffer[ pos ++ ] = tip | Number( val )
 					release(8)
 				} else if( val < 2**8 ) {
-					pack.setUint8( pos ++, tip | $mol_vary_len[1] )
-					pack.setUint8( pos, Number( val ) )
-					pos += 1
+					buffer[ pos ++ ] = tip | $mol_vary_len[1]
+					buffer[ pos ++ ] = Number( val )
 					release(7)
 				} else if( val < 2**16 ) {
-					pack.setUint8( pos ++, tip | $mol_vary_len[2] )
+					buffer[ pos ++ ] = tip | $mol_vary_len[2]
 					pack.setUint16( pos, Number( val ), true )
 					pos += 2
 					release(6)
 				} else if( val < 2**32 ) {
-					pack.setUint8( pos ++, tip | $mol_vary_len[4] )
+					buffer[ pos ++ ] = tip | $mol_vary_len[4]
 					pack.setUint32( pos, Number( val ), true )
 					pos += 4
 					release(4)
 				} else if( val < 2n**64n ) {
-					pack.setUint8( pos ++, tip | $mol_vary_len[8] )
+					buffer[ pos ++ ] = tip | $mol_vary_len[8]
 					pack.setBigUint64( pos, BigInt( val ), true )
 					pos += 8
 				} else {
@@ -131,7 +126,7 @@ namespace $ {
 			const dump_string = ( val: string )=> {
 
 				if( val.length ) {
-					const offset = localOffsets.get( val )
+					const offset = offsets.get( val )
 					if( offset !== undefined ) return dump_unum( $mol_vary_tip.link, offset )
 				}
 
@@ -141,7 +136,7 @@ namespace $ {
 				pos += len
 				release( val.length * 3 - len )
 
-				if( val.length ) localOffsets.set( val, localOffsets.size )
+				if( val.length ) offsets.set( val, offsets.size )
 				return
 
 			}
@@ -149,7 +144,7 @@ namespace $ {
 			const dump_buffer = ( val: ArrayBufferView< ArrayBuffer > )=> {
 
 				if( val.byteLength ) {
-					const offset = localOffsets.get( val )
+					const offset = offsets.get( val )
 					if( offset !== undefined ) return dump_unum( $mol_vary_tip.link, offset )
 				}
 
@@ -165,7 +160,7 @@ namespace $ {
 				}
 
 				if( typeTag !== undefined ) {
-					pack.setUint8( pos ++, typeTag )
+					buffer[ pos ++ ] = typeTag
 				} else {
 					$mol_fail( new Error( `Unsupported type` ) )
 				}
@@ -175,13 +170,13 @@ namespace $ {
 				buffer.set( src, pos )
 				pos += val.byteLength
 
-				if( val.byteLength ) localOffsets.set( val, localOffsets.size )
+				if( val.byteLength ) offsets.set( val, offsets.size )
 			}
 			
 			const dump_list = ( val: any[] )=> {
 
 				if( val.length ) {
-					const offset = localOffsets.get( val )
+					const offset = offsets.get( val )
 					if( offset !== undefined ) return dump_unum( $mol_vary_tip.link, offset )
 				}
 
@@ -189,13 +184,13 @@ namespace $ {
 				acquire( val.length * 9 )
 				for( const item of val ) dump( item )
 
-				if( val.length ) localOffsets.set( val, localOffsets.size )
+				if( val.length ) offsets.set( val, offsets.size )
 
 			}
 			
 			const dump_object = ( val: object )=> {
 
-				const offset = localOffsets.get( val )
+				const offset = offsets.get( val )
 				if( offset !== undefined ) return dump_unum( $mol_vary_tip.link, offset )
 
 				const proto = Reflect.getPrototypeOf( val )!
@@ -209,7 +204,7 @@ namespace $ {
 				for( const item of keys ) dump( item )
 				for( const item of vals ) dump( item )
 
-				if( vals.length ) localOffsets.set( val, localOffsets.size )
+				if( vals.length ) offsets.set( val, offsets.size )
 			}
 			
 			/** Recursive fills buffer with data. */
@@ -220,20 +215,20 @@ namespace $ {
 				switch( typeof val ) {
 					
 					case 'undefined': {
-						pack.setUint8( pos ++, $mol_vary_spec.both )
+						buffer[ pos ++ ] = $mol_vary_spec.both
 						release( 8 )
 						return
 					}
 					
 					case 'boolean': {
-						pack.setUint8( pos ++, val ? $mol_vary_spec.true : $mol_vary_spec.fake )
+						buffer[ pos ++ ] = val ? $mol_vary_spec.true : $mol_vary_spec.fake
 						release( 8 )
 						return
 					}
 					
 					case 'number': {
 						if( !Number.isInteger( val ) ) {
-							pack.setUint8( pos ++, $mol_vary_spec.fp64 )
+							buffer[ pos ++ ] = $mol_vary_spec.fp64
 							pack.setFloat64( pos, val, true )
 							pos += 8
 							return
@@ -242,7 +237,7 @@ namespace $ {
 					case 'bigint': {
 						
 						if( val < 0 ) {
-							dump_snum( $mol_vary_tip.sint, val )
+							dump_snum( val )
 						} else {
 							dump_unum( $mol_vary_tip.uint, val )
 						}
@@ -256,7 +251,7 @@ namespace $ {
 						
 						if( !val ) {
 							release( 8 )
-							return pack.setUint8( pos ++, $mol_vary_spec.none )
+							return buffer[ pos ++ ] = $mol_vary_spec.none
 						}
 						if( ArrayBuffer.isView( val ) ) return dump_buffer( val as ArrayBufferView< ArrayBuffer > )
 						if( Array.isArray( val ) ) return dump_list( val )
@@ -292,10 +287,9 @@ namespace $ {
 				let res = 0 as number | bigint
 				
 				if( num === 28 ) {
-					res = pack.getUint8( pos )
-					pos += 1
+					res = buffer[ pos ++ ]
 				} else if( num === 29 ) {
-					res= pack.getUint16( pos, true )
+					res = pack.getUint16( pos, true )
 					pos += 2
 				} else if( num === 30 ) {
 					res = pack.getUint32( pos, true )
@@ -356,7 +350,7 @@ namespace $ {
 			const read_blob = ( kind: number )=> {
 				
 				const len = read_unum( kind ) as number
-				const kind_item = pack.getUint8( pos ++ )
+				const kind_item = buffer[ pos ++ ]
 				
 				switch( kind_item ) {
 					
@@ -467,7 +461,7 @@ namespace $ {
 			
 			const read_vary = ()=> {
 				
-				const kind = pack.getUint8( pos )
+				const kind = buffer[ pos ]
 				const tip = kind & 0b111_00000
 				
 				switch( tip ) {
@@ -514,9 +508,6 @@ namespace $ {
 		}
 		
 	}
-	
-	let buffer = new Uint8Array( 128 )
-	let pack = new DataView( buffer.buffer )
 	
 	/** Native Map support */
 	$mol_vary.type(

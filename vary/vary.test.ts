@@ -212,10 +212,16 @@ namespace $.$$ {
 		
 		"vary pack Date"( $ ) {
 			
-			const date = new Date( '2025-01-02T03:04:05.678' )
+			const date1 = new Date( '2025-01-02T03:04:05' )
 			check(
-				date,
-				[ tupl|1, text|9, ... str('unix_time'), fp64, ... new Uint8Array( new Float64Array([ date.valueOf() / 1000 ]).buffer ) ],
+				date1,
+				[ tupl|1, text|9, ... str('unix_time'), uint|l4, ... new Uint8Array( new Uint32Array([ date1.valueOf() / 1000 ]).buffer ) ],
+			)
+			
+			const date2 = new Date( '2025-01-02T03:04:05.678' )
+			check(
+				date2,
+				[ tupl|1, text|9, ... str('unix_time'), fp64, ... new Uint8Array( new Float64Array([ date2.valueOf() / 1000 ]).buffer ) ],
 			)
 			
 		},
