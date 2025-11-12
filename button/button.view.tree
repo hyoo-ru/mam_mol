@@ -2,7 +2,7 @@ $mol_button $mol_view
 	enabled true
 	click?event null
 	event_click?event null
-	status? /null|Error|Promise
+	status? /
 	event *
 		^
 		click?event <=> activate?event <=> event_activate?event null

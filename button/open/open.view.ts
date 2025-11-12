@@ -1,6 +1,5 @@
 namespace $.$$ {
 	export class $mol_button_open extends $.$mol_button_open {
-		@ $mol_mem
 		override files_handled(next?: readonly File[]) {
 			try {
 				const files = this.files(next)
