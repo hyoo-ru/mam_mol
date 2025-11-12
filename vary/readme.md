@@ -11,6 +11,12 @@
 - **Single-pass**: used auto-growable internal buffer.
 - **Easy debug**: tiny ints are packed as is, special types are packed as char.
 
+## Supported types
+
+- Primitives: `null`, `undefined`, `boolean`, `number`, `bigint` (up to 8B), `string`.
+- Buffers: `Uint8Array`, `Uint16Array`, `Uint32Array`, `BigUint64Array`, `Int8Array`, `Int16Array`, `Int32Array`, `BigInt64Array`, `Float16Array` (only read), `Float32Array`, `Float64Array`.
+- Objects: `Array`, `Object`, `Date`, `Map`, `Set`, `Element`.
+
 ## Comparison
 
 - VaryPack: [$mol_vary](https://github.com/hyoo-ru/mam_mol/tree/master/vary) - reference implementation.

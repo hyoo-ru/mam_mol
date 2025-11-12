@@ -32,7 +32,7 @@ namespace $ {
 	let pack = new DataView( buffer.buffer )
 	
 	/** VaryPack - simple fast compact data binarization format. */
-	export class $mol_vary extends DataView< ArrayBuffer > {
+	export class $mol_vary extends Object {
 		
 		/** Packs any data to Uint8Array with deduplication. */
 		static pack( data: unknown ) {
@@ -254,9 +254,9 @@ namespace $ {
 		}
 		
 		/** Parses buffer to rich runtime structures. */
-		static take( buf: Uint8Array< ArrayBuffer > ): unknown {
+		static take( buffer: Uint8Array< ArrayBuffer > ): unknown {
 			
-			const pack = new $mol_vary( buf.buffer, buf.byteOffset, buf.byteLength )
+			const pack = new DataView( buffer.buffer, buffer.byteOffset, buffer.byteLength )
 			const stream = [] as unknown[]
 			let pos = 0;
 			
@@ -269,7 +269,7 @@ namespace $ {
 				let res = 0 as number | bigint
 				
 				if( num === 28 ) {
-					res = buffer[ pos ++ ]
+					res = pack.getUint8( pos ++ )
 				} else if( num === 29 ) {
 					res = pack.getUint16( pos, true )
 					pos += 2
@@ -316,14 +316,14 @@ namespace $ {
 			
 			const read_text = ( kind: number )=> {
 				const len = read_unum( kind ) as number
-				const [ text, bytes ] = $mol_charset_decode_from( buf, pack.byteOffset + pos, len )
+				const [ text, bytes ] = $mol_charset_decode_from( buffer, pack.byteOffset + pos, len )
 				pos += bytes
 				if( text.length ) stream.push( text )
 				return text
 			}
 			
 			const read_buffer = ( len: number, TypedArray: new( buf: ArrayBuffer )=> ArrayBufferView< ArrayBuffer > )=> {
-				const bin = new TypedArray( buf.slice( pos, pos + len ).buffer )
+				const bin = new TypedArray( buffer.slice( pos, pos + len ).buffer )
 				pos += len
 				if( len ) stream.push( bin )
 				return bin
@@ -332,7 +332,7 @@ namespace $ {
 			const read_blob = ( kind: number )=> {
 				
 				const len = read_unum( kind ) as number
-				const kind_item = buffer[ pos ++ ]
+				const kind_item = pack.getUint8( pos ++ )
 				
 				switch( kind_item ) {
 					
@@ -443,7 +443,7 @@ namespace $ {
 			
 			const read_vary = ()=> {
 				
-				const kind = buffer[ pos ]
+				const kind = pack.getUint8( pos )
 				const tip = kind & 0b111_00000
 				
 				switch( tip ) {
@@ -462,7 +462,10 @@ namespace $ {
 				
 			}
 			
-			return read_vary()
+			const result = read_vary()
+			if( pos !== buffer.byteLength ) $mol_fail( new Error( 'Buffer too large', { cause: { size: buffer.byteLength, taken: pos, result } } ) )
+			
+			return result
 		}
 		
 		static riches = new Map< string/*shape*/, ( ... vals: readonly any[] )=> object >()
