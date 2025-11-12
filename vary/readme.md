@@ -13,8 +13,8 @@
 
 ## Supported types
 
-- Primitives: `null`, `undefined`, `boolean`, `number`, `bigint` (up to 8B), `string`.
-- Buffers: `Uint8Array`, `Uint16Array`, `Uint32Array`, `BigUint64Array`, `Int8Array`, `Int16Array`, `Int32Array`, `BigInt64Array`, `Float16Array` (only read), `Float32Array`, `Float64Array`.
+- Primitives: `null`, `undefined`, `boolean`, `number`, `bigint` (up to 264B), `string`.
+- Buffers: `Uint8Array`, `Uint16Array`, `Uint32Array`, `BigUint64Array`, `Int8Array`, `Int16Array`, `Int32Array`, `BigInt64Array`, `Float16Array`, `Float32Array`, `Float64Array`.
 - Objects: `Array`, `Object`, `Date`, `Map`, `Set`, `Element`.
 
 ## Comparison
