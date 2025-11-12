@@ -11,6 +11,12 @@
 - **Single-pass**: used auto-growable internal buffer.
 - **Easy debug**: tiny ints are packed as is, special types are packed as char.
 
+## Supported types
+
+- Primitives: `null`, `undefined`, `boolean`, `number`, `bigint` (up to 8B), `string`.
+- Buffers: `Uint8Array`, `Uint16Array`, `Uint32Array`, `BigUint64Array`, `Int8Array`, `Int16Array`, `Int32Array`, `BigInt64Array`, `Float16Array` (only read), `Float32Array`, `Float64Array`.
+- Objects: `Array`, `Object`, `Date`, `Map`, `Set`, `Element`.
+
 ## Comparison
 
 - VaryPack: [$mol_vary](https://github.com/hyoo-ru/mam_mol/tree/master/vary) - reference implementation.
@@ -19,11 +25,11 @@
 
 |                | $mol_vary | cbor-x      | msgpackr
 |----------------|-----------|-------------|---------
-| Language       | ✅ TS     | ✅ TS      | ❌ JS
-| Performance    | 🆗 100%   | 🆗 100%    | 🆗 100%
-| Packed Size    | 🆗 100%   | ❌ +33%    | ❌ +25%
-| Lib Size       | ✅ 3KB    | ❌ 11 KB   | ❌ 11 KB
-| Compatibility  | ✅ std    | ⭕ ext-std | ❌ ext
+| Language       | ✅ TS     | ✅ TS      | ❌ JS    
+| Performance    | ✅ 100%   | ✅ 100%    | ✅ 100%  
+| Packed Size    | ✅ 100%   | ❌ +33%    | ❌ +25%  
+| Lib Size       | ✅ 3KB    | ❌ 11 KB   | ❌ 11 KB 
+| Compatibility  | ✅ std    | ⭕ ext-std | ❌ ext   
 
 [Benchmark](https://perf.js.hyoo.ru/#!bench=j1peaq_k376h9) results:
 
@@ -71,9 +77,10 @@ class Foo {
 }
 
 $mol_vary.type(
-	[ 'a', 'b' ], // keys as schema
-	( a = 0, b = 0 )=> new Foo( a, b ), // factory
-	foo => [ foo.a, foo.b ], // vals extractor
+	Foo, // Instance super class
+	[ 'a', 'b' ], // Keys as shape
+	foo => [ foo.a, foo.b ], // Vals extractor
+	( a, b )=> new Foo( a, b ), // Factory from vals
 )
 ```
 

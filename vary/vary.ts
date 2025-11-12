@@ -32,7 +32,7 @@ namespace $ {
 	let pack = new DataView( buffer.buffer )
 	
 	/** VaryPack - simple fast compact data binarization format. */
-	export class $mol_vary extends DataView< ArrayBuffer > {
+	export class $mol_vary extends Object {
 		
 		/** Packs any data to Uint8Array with deduplication. */
 		static pack( data: unknown ) {
@@ -105,7 +105,7 @@ namespace $ {
 					pack.setBigUint64( pos, BigInt( val ), true )
 					pos += 8
 				} else {
-					$mol_fail( new Error( 'Number too high', { cause: val } ) )
+					$mol_fail( new Error( 'Number too high', { cause: { val } } ) )
 				}
 			}
 			
@@ -180,11 +180,8 @@ namespace $ {
 				const offset = offsets.get( val )
 				if( offset !== undefined ) return dump_unum( $mol_vary_tip.link, offset )
 				
-				const proto = Reflect.getPrototypeOf( val )!
-				const lean = this.leanes.get( proto )
-				
-				const keys = lean ? this.keys.get( proto )! : Object.keys( val )
-				const vals = lean ? lean( val ) : Object.values( val )
+				const keys = ( val as any )[ $mol_vary_keys ] ?? Object.keys( val )
+				const vals = ( val as any )[ $mol_vary_lean ]?.( val ) ?? Object.values( val )
 			
 				dump_unum( $mol_vary_tip.tupl, vals.length )
 				acquire( vals.length * 2 * 9 )
@@ -196,8 +193,6 @@ namespace $ {
 			
 			/** Recursive fills buffer with data. */
 			const dump = ( val: unknown )=> {
-				
-				// if( pos >= size ) $mol_fail( new Error( 'Wrong buffer length', { cause: buffer } ) )
 				
 				switch( typeof val ) {
 					
@@ -259,9 +254,9 @@ namespace $ {
 		}
 		
 		/** Parses buffer to rich runtime structures. */
-		static take( buf: Uint8Array< ArrayBuffer > ): unknown {
+		static take( buffer: Uint8Array< ArrayBuffer > ): unknown {
 			
-			const pack = new $mol_vary( buf.buffer, buf.byteOffset, buf.byteLength )
+			const pack = new DataView( buffer.buffer, buffer.byteOffset, buffer.byteLength )
 			const stream = [] as unknown[]
 			let pos = 0;
 			
@@ -274,7 +269,7 @@ namespace $ {
 				let res = 0 as number | bigint
 				
 				if( num === 28 ) {
-					res = buffer[ pos ++ ]
+					res = pack.getUint8( pos ++ )
 				} else if( num === 29 ) {
 					res = pack.getUint16( pos, true )
 					pos += 2
@@ -321,14 +316,14 @@ namespace $ {
 			
 			const read_text = ( kind: number )=> {
 				const len = read_unum( kind ) as number
-				const [ text, bytes ] = $mol_charset_decode_from( buf, pack.byteOffset + pos, len )
+				const [ text, bytes ] = $mol_charset_decode_from( buffer, pack.byteOffset + pos, len )
 				pos += bytes
 				if( text.length ) stream.push( text )
 				return text
 			}
 			
 			const read_buffer = ( len: number, TypedArray: new( buf: ArrayBuffer )=> ArrayBufferView< ArrayBuffer > )=> {
-				const bin = new TypedArray( buf.slice( pos, pos + len ).buffer )
+				const bin = new TypedArray( buffer.slice( pos, pos + len ).buffer )
 				pos += len
 				if( len ) stream.push( bin )
 				return bin
@@ -337,7 +332,7 @@ namespace $ {
 			const read_blob = ( kind: number )=> {
 				
 				const len = read_unum( kind ) as number
-				const kind_item = buffer[ pos ++ ]
+				const kind_item = pack.getUint8( pos ++ )
 				
 				switch( kind_item ) {
 					
@@ -448,7 +443,7 @@ namespace $ {
 			
 			const read_vary = ()=> {
 				
-				const kind = buffer[ pos ]
+				const kind = pack.getUint8( pos )
 				const tip = kind & 0b111_00000
 				
 				switch( tip ) {
@@ -467,11 +462,12 @@ namespace $ {
 				
 			}
 			
-			return read_vary()
+			const result = read_vary()
+			if( pos !== buffer.byteLength ) $mol_fail( new Error( 'Buffer too large', { cause: { size: buffer.byteLength, taken: pos, result } } ) )
+			
+			return result
 		}
 		
-		static leanes = new Map< object, ( val: any )=> readonly any[] >()
-		static keys = new Map< object, readonly string[] >()
 		static riches = new Map< string/*shape*/, ( ... vals: readonly any[] )=> object >()
 		
 		/** Adds custom types support. */
@@ -480,41 +476,63 @@ namespace $ {
 			const Keys extends readonly any[],
 			const Vals extends readonly any[],
 		>(
+			Class: new( ... vals: any[] )=> Instance,
 			keys: Keys,
-			rich: ( ( ... vals: Vals )=> Instance ) | ( ()=> Instance ),
 			lean: ( obj: Instance )=> Vals,
+			rich: ( ... vals: Vals )=> Instance,
 		) {
-			
-			const obj = rich()
-			const proto = Reflect.getPrototypeOf( obj )!
-			const shape = JSON.stringify( keys )
-			
-			this.leanes.set( proto, lean )
-			this.keys.set( proto, keys )
-			this.riches.set( shape, rich )
+			this.riches.set( JSON.stringify( keys ), rich )
+			;( Class.prototype as any )[ $mol_vary_lean ] = lean
+			;( Class.prototype as any )[ $mol_vary_keys ] = keys
 		}
 		
 	}
 	
+	export const $mol_vary_lean = Symbol.for( '$mol_vary_lean' )
+	export const $mol_vary_keys = Symbol.for( '$mol_vary_keys' )
+	
 	/** Native Map support */
 	$mol_vary.type(
+		Map,
 		[ 'keys', 'vals' ],
-		( keys = [] as readonly any[], vals = [] as readonly any[] )=> new Map( keys.map( ( k, i )=> [ k, vals[i] ] ) ),
 		obj => [ [ ... obj.keys() ], [ ... obj.values() ] ],
+		( keys, vals )=> new Map( keys.map( ( k, i )=> [ k, vals[i] ] ) ),
 	)
 	
 	/** Native Set support */
 	$mol_vary.type(
+		Set,
 		[ 'set' ],
-		( vals = [] as readonly any[] )=> new Set( vals ),
 		obj => [ [ ... obj.values() ] ],
+		vals => new Set( vals ),
 	)
 	
 	/** Native Date support */
 	$mol_vary.type(
+		Date,
 		[ 'unix_time' ],
-		( ts = 0 )=> new Date( ts * 1000 ),
 		obj => [ obj.valueOf() / 1000 ],
+		ts => new Date( ts * 1000 ),
+	)
+	
+	/** Native Element support */
+	$mol_vary.type(
+		$mol_dom.Element,
+		[ 'elem', 'keys', 'vals', 'kids' ],
+		node => {
+			const attrs = [ ... node.attributes ]
+			const kids = [ ... node.childNodes ].map( kid => kid instanceof $mol_dom.Text ? kid.nodeValue! : kid )
+			return [ node.nodeName, attrs.map( attr => attr.nodeName ), attrs.map( attr => attr.nodeValue! ), kids ]
+		},
+		( name, keys, vals, kids )=> {
+			const el = $mol_dom.document.createElement( name )
+			for( let i = 0; i < keys.length; ++i ) el.setAttribute( keys[i], vals[i] )
+			for( let kid of kids ) {
+				if( typeof kid === 'string' ) kid = $mol_dom.document.createTextNode( kid )
+				el.appendChild( kid )
+			}
+			return el
+		},
 	)
 	
 }

@@ -1,3 +1,4 @@
+/** @jsx $mol_jsx */
 namespace $.$$ {
 	
 	const { uint, link, spec, blob, text, list, tupl, sint } = $mol_vary_tip
@@ -44,6 +45,11 @@ namespace $.$$ {
 			check( 256**4, [ uint|l8, 0, 0, 0, 0, 1, 0, 0, 0 ] )
 			check( Number.MAX_SAFE_INTEGER, [ uint|l8, 255, 255, 255, 255, 255, 255, 31, 0 ] )
 			check( 256n**8n-1n, [ uint|l8, 255, 255, 255, 255, 255, 255, 255, 255 ] )
+		},
+		
+		"vary pack with wrong size"( $ ) {
+			$mol_assert_fail( ()=> $mol_vary.take( new Uint8Array([ uint|l1 ]) ), Error )
+			$mol_assert_fail( ()=> $mol_vary.take( new Uint8Array([ uint|l1, 200, 300 ]) ), 'Buffer too large' )
 		},
 		
 		"vary pack sint0"( $ ) {
@@ -226,6 +232,54 @@ namespace $.$$ {
 			
 		},
 		
+		"vary pack Node"( $ ) {
+			
+			check(
+				<span/>,
+				[
+					tupl|4, text|4, ... str('elem'), text|4, ... str('keys'), text|4, ... str('vals'), text|4, ... str('kids'),
+						text|4, ... str('SPAN'), list|0, list|0, list|0
+				],
+			)
+			
+			check(
+				<svg/>,
+				[
+					tupl|4, text|4, ... str('elem'), text|4, ... str('keys'), text|4, ... str('vals'), text|4, ... str('kids'),
+						text|3, ... str('SVG'), list|0, list|0, list|0
+				],
+			)
+			
+			check(
+				<span tabIndex="0" />,
+				[
+					tupl|4, text|4, ... str('elem'), text|4, ... str('keys'), text|4, ... str('vals'), text|4, ... str('kids'),
+						text|4, ... str('SPAN'), list|1, text|8, ... str('tabindex'), list|1, text|1, ... str('0'), list|0
+				],
+			)
+			
+			check(
+				<span>text</span>,
+				[
+					tupl|4, text|4, ... str('elem'), text|4, ... str('keys'), text|4, ... str('vals'), text|4, ... str('kids'),
+						text|4, ... str('SPAN'), list|0, list|0, list|1,
+							text|4, ... str('text')
+				],
+			)
+			
+			check(
+				<div><span/> </div>,
+				[
+					tupl|4, text|4, ... str('elem'), text|4, ... str('keys'), text|4, ... str('vals'), text|4, ... str('kids'),
+						text|3, ... str('DIV'), list|0, list|0, list|2,
+							tupl|4, link|0, link|1, link|2, link|3,
+								text|4, ... str('SPAN'), list|0, list|0, list|0,
+							text|1, ... str(' '),
+				],
+			)
+			
+		},
+		
 		"vary pack custom class"( $ ) {
 			
 			class Foo {
@@ -242,9 +296,10 @@ namespace $.$$ {
 			}
 			
 			$mol_vary.type(
+				Foo,
 				[ 'a', 'b' ],
-				( a = 0, b = 0 )=> new Foo( a, b ),
 				foo => [ foo.a, foo.b ],
+				( a = 0, b = 0 )=> new Foo( a, b ),
 			)
 			
 			check(
