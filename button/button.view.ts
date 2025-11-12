@@ -6,9 +6,6 @@ namespace $.$$ {
 	 */
 	export class $mol_button extends $.$mol_button {
 
-		@ $mol_mem
-		status( next = [ null as any ] ) { return next }
-		
 		disabled() {
 			return !this.enabled()
 		}
