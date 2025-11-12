@@ -17,13 +17,13 @@
 - CBOR: [cbor-x](https://github.com/kriszyp/cbor-x) - fastest implementation with all required extensions (which are standardized, although its don't have wide support).
 - MsgPack: [msgpackr](https://github.com/kriszyp/msgpackr) - fastest implementaion with all required extensions (which incompatible with other libs).
 
-|                | $mol_vary | cbor-x      | msgpackr
-|----------------|-----------|-------------|---------
-| Language       | ✅ TS     | ✅ TS      | ❌ JS
-| Performance    | 🆗 100%   | 🆗 100%    | 🆗 100%
-| Packed Size    | 🆗 100%   | ❌ +33%    | ❌ +25%
-| Lib Size       | ✅ 3KB    | ❌ 11 KB   | ❌ 11 KB
-| Compatibility  | ✅ std    | ⭕ ext-std | ❌ ext
+|                | $mol_vary | cbor-x      | msgpackr | bson
+|----------------|-----------|-------------|----------|-----
+| Language       | ✅ TS     | ✅ TS      | ❌ JS    | ✅ TS
+| Performance    | ✅ 100%   | ✅ 100%    | ✅ 100%  | ❌ 30%
+| Packed Size    | ✅ 100%   | ❌ +33%    | ❌ +25%  | ❌ +160%
+| Lib Size       | ✅ 3KB    | ❌ 11 KB   | ❌ 11 KB | ❌ 21 KB
+| Compatibility  | ✅ std    | ⭕ ext-std | ❌ ext   | ❌ domain-ext
 
 [Benchmark](https://perf.js.hyoo.ru/#!bench=j1peaq_k376h9) results:
 
@@ -71,9 +71,10 @@ class Foo {
 }
 
 $mol_vary.type(
-	[ 'a', 'b' ], // keys as schema
-	( a = 0, b = 0 )=> new Foo( a, b ), // factory
-	foo => [ foo.a, foo.b ], // vals extractor
+	Foo, // Instance super class
+	[ 'a', 'b' ], // Keys as shape
+	foo => [ foo.a, foo.b ], // Vals extractor
+	( a, b )=> new Foo( a, b ), // Factory from vals
 )
 ```
 
