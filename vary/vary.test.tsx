@@ -47,6 +47,11 @@ namespace $.$$ {
 			check( 256n**8n-1n, [ uint|l8, 255, 255, 255, 255, 255, 255, 255, 255 ] )
 		},
 		
+		"vary pack with wrong size"( $ ) {
+			$mol_assert_fail( ()=> $mol_vary.take( new Uint8Array([ uint|l1 ]) ), Error )
+			$mol_assert_fail( ()=> $mol_vary.take( new Uint8Array([ uint|l1, 200, 300 ]) ), 'Buffer too large' )
+		},
+		
 		"vary pack sint0"( $ ) {
 			check( -1, [ -1 ] )
 			check( -28, [ -28 ] )
