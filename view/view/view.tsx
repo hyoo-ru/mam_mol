@@ -258,6 +258,7 @@ namespace $ {
 			} catch( error: any ) {
 				
 				$mol_fail_log( error )
+				const error_id = $mol_fail_catch_id(error)
 				const mol_view_error = $mol_promise_like(error)
 					? (error as any).constructor[Symbol.toStringTag] ?? 'Promise'
 					: error.name || error.constructor.name
@@ -266,7 +267,8 @@ namespace $ {
 				if( $mol_promise_like( error ) ) break render
 				
 				try {
-					const message = error.message || error
+					let message = error.message || error
+					if (error_id) message += ` #${error_id}`
 					;( node as HTMLElement ).innerText = message.replace( /^|$/mg, '\xA0\xA0' )
 				} catch {}
 				
