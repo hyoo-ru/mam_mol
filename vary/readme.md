@@ -22,6 +22,7 @@
 - VaryPack: [$mol_vary](https://github.com/hyoo-ru/mam_mol/tree/master/vary) - reference implementation.
 - CBOR: [cbor-x](https://github.com/kriszyp/cbor-x) - fastest implementation with all required extensions (which are standardized, although its don't have wide support).
 - MsgPack: [msgpackr](https://github.com/kriszyp/msgpackr) - fastest implementaion with all required extensions (which incompatible with other libs).
+- BSON: [bson](https://github.com/mongodb/js-bson) - basic implementation only.
 
 |                | $mol_vary | cbor-x      | msgpackr | bson
 |----------------|-----------|-------------|----------|-----
