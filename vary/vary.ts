@@ -39,7 +39,7 @@ namespace $ {
 		static pack( data: unknown ) {
 			
 			let pos = 0
-			let capacity = 0
+			let capacity = 9
 			const offsets = new Map< unknown, number >()
 			
 			const acquire = ( size: number )=> {
@@ -181,6 +181,7 @@ namespace $ {
 				if( offset !== undefined ) return dump_unum( $mol_vary_tip.link, offset )
 				
 				dump_unum( $mol_vary_tip.blob, val.byteLength )
+				acquire( 1 + val.byteLength )
 				
 				if( val instanceof Uint8Array ) buffer[ pos ++ ] = $mol_vary_tip.uint | $mol_vary_len.L1
 				else if( val instanceof Uint16Array ) buffer[ pos ++ ] = $mol_vary_tip.uint | $mol_vary_len.L2
@@ -199,7 +200,6 @@ namespace $ {
 				else $mol_fail( new Error( `Unsupported type` ) )
 				
 				const src = ( val instanceof Uint8Array ) ? val : new Uint8Array( val.buffer, val.byteOffset, val.byteLength )
-				acquire( val.byteLength )
 				buffer.set( src, pos )
 				pos += val.byteLength
 				
@@ -219,17 +219,26 @@ namespace $ {
 				
 			}
 			
+			const shapes = new Map< string, any[] >()
+			const shape = ( val: any )=> {
+				const keys1 = Object.keys( val )
+				const key = keys1.join('\0')
+				const keys2 = shapes.get( key ) 
+				if( keys2 ) return keys2
+				shapes.set( key, keys1 )
+				return keys1
+			}
+			
 			const dump_object = ( val: object )=> {
 				
 				const offset = offsets.get( val )
 				if( offset !== undefined ) return dump_unum( $mol_vary_tip.link, offset )
 				
-				const keys = ( val as any )[ $mol_vary_keys ] ?? Object.keys( val )
-				const vals = ( val as any )[ $mol_vary_lean ]?.( val ) ?? Object.values( val )
+				const [ keys, vals ] = ( val as any )[ $mol_vary_lean ]?.( val ) ?? [ shape( val ), Object.values( val ) ]
 			
 				dump_unum( $mol_vary_tip.tupl, vals.length )
-				acquire( vals.length * 2 * 9 )
-				for( const item of keys ) dump( item )
+				acquire( (vals.length+1) * 9 )
+				dump_list( keys )
 				for( const item of vals ) dump( item )
 				
 				offsets.set( val, offsets.size )
@@ -287,6 +296,8 @@ namespace $ {
 			}
 			
 			dump( data )
+			
+			if( pos !== capacity ) $mol_fail( new Error( 'Wrong reserved capacity', { cause: { capacity, size: pos, data } } ) )
 			
 			return buffer.slice( 0, pos )
 			
@@ -420,10 +431,8 @@ namespace $ {
 				
 				const len = read_unum( kind ) as number
 				
-				const keys = new Array( len ) as any[]
+				const keys = read_vary()
 				const vals = new Array( len ) as any[]
-				
-				for( let i = 0; i < len; ++i ) keys[i] = read_vary()
 				for( let i = 0; i < len; ++i ) vals[i] = read_vary()
 				
 				const shape = JSON.stringify( keys )
@@ -531,14 +540,12 @@ namespace $ {
 			rich: ( ... vals: Vals )=> Instance,
 		) {
 			this.riches.set( JSON.stringify( keys ), rich )
-			;( Class.prototype as any )[ $mol_vary_lean ] = lean
-			;( Class.prototype as any )[ $mol_vary_keys ] = keys
+			;( Class.prototype as any )[ $mol_vary_lean ] = ( val:  Instance )=> [ keys, lean( val ) ]
 		}
 		
 	}
 	
 	export const $mol_vary_lean = Symbol.for( '$mol_vary_lean' )
-	export const $mol_vary_keys = Symbol.for( '$mol_vary_keys' )
 	
 	/** Native Map support */
 	$mol_vary.type(

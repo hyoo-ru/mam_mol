@@ -191,43 +191,43 @@ namespace $.$$ {
 		"vary pack struct"( $ ) {
 			check(
 				{ a: 1, b: 2 },
-				[ tupl|2, text|1, ... str('a'), text|1, ... str('b'), 1, 2 ],
+				[ tupl|2, list|2, text|1, ... str('a'), text|1, ... str('b'), 1, 2 ],
 			)
 			check(
 				{ x: {}, y: { a: 1 } },
-				[ tupl|2, text|1, ... str('x'), text|1, ... str('y'), tupl|0, tupl|1, text|1, ... str('a'), 1 ],
+				[ tupl|2, list|2, text|1, ... str('x'), text|1, ... str('y'), tupl|0, list|0, tupl|1, list|1, text|1, ... str('a'), 1 ],
 			)
 		},
 		
-		// disabled because too slow
-		// "vary pack struct shape dedup"( $ ) {
-		// 	check(
-		// 		[ {}, { foo: 1 }, { foo: 2 } ],
-		// 		[ list|3, tupl|0, list|0, tupl|1, list|1, text|3, ... str('foo'), 1, tupl|1, link|1, 2 ],
-		// 	)
-		// 	check(
-		// 		{ x: 1, y: { x: 2, y: 3 } },
-		// 		[ tupl|2, list|2, text|1, ... str('x'), text|1, ... str('y'), 1, tupl|2, link|2, 2, 3 ],
-		// 	)
-		// },
+		"vary pack struct shape dedup"( $ ) {
+			check(
+				[ {}, { foo: 1 }, { foo: 2 } ],
+				[ list|3, tupl|0, list|0, tupl|1, list|1, text|3, ... str('foo'), 1, tupl|1, link|3, 2 ],
+			)
+			check(
+				{ x: 1, y: { x: 2, y: 3 } },
+				[ tupl|2, list|2, text|1, ... str('x'), text|1, ... str('y'), 1, tupl|2, link|2, 2, 3 ],
+			)
+		},
 		
 		"vary pack struct full dedup"( $ ) {
 			const item = { x: 1 }
 			check(
 				[ item, item ],
-				[ list|2,  tupl|1, text|1, ... str('x'), 1, link|1 ],
+				[ list|2,  tupl|1, list|1, text|1, ... str('x'), 1, link|2 ],
 			)
-			// check(
-			// 	{ x: { x: 1, y : 2 }, y: { x: 1, y : 2 } },
-			// 	[ tupl|2, list|2, text|1, ... str('x'), text|1, ... str('y'), tupl|2, link|2, 1, 2, link|3 ],
-			// )
+			const part = { x: 1, y : 2 }
+			check(
+				{ x: part, y: part },
+				[ tupl|2, list|2, text|1, ... str('x'), text|1, ... str('y'), tupl|2, link|2, 1, 2, link|3 ],
+			)
 		},
 		
 		"vary pack Map"( $ ) {
 			
 			check(
 				new Map< any, any >([ [ 'foo', 1 ], [ 2, 'bar' ] ]),
-				[ tupl|2, text|4, ... str('keys'), text|4, ... str('vals'), list|2, text|3, ... str('foo'), 2, list|2, 1, text|3, ... str('bar') ],
+				[ tupl|2, list|2, text|4, ... str('keys'), text|4, ... str('vals'), list|2, text|3, ... str('foo'), 2, list|2, 1, text|3, ... str('bar') ],
 			)
 			
 		},
@@ -236,7 +236,7 @@ namespace $.$$ {
 			
 			check(
 				new Set([ 7, 'foo' ]),
-				[ tupl|1, text|3, ... str('set'), list|2, 7, text|3, ... str('foo') ],
+				[ tupl|1, list|1, text|3, ... str('set'), list|2, 7, text|3, ... str('foo') ],
 			)
 			
 		},
@@ -246,13 +246,13 @@ namespace $.$$ {
 			const date1 = new Date( '2025-01-02T03:04:05' )
 			check(
 				date1,
-				[ tupl|1, text|9, ... str('unix_time'), uint|L4, ... new Uint8Array( new Uint32Array([ date1.valueOf() / 1000 ]).buffer ) ],
+				[ tupl|1, list|1, text|9, ... str('unix_time'), uint|L4, ... new Uint8Array( new Uint32Array([ date1.valueOf() / 1000 ]).buffer ) ],
 			)
 			
 			const date2 = new Date( '2025-01-02T03:04:05.678' )
 			check(
 				date2,
-				[ tupl|1, text|9, ... str('unix_time'), fp64, ... new Uint8Array( new Float64Array([ date2.valueOf() / 1000 ]).buffer ) ],
+				[ tupl|1, list|1, text|9, ... str('unix_time'), fp64, ... new Uint8Array( new Float64Array([ date2.valueOf() / 1000 ]).buffer ) ],
 			)
 			
 		},
@@ -262,7 +262,7 @@ namespace $.$$ {
 			check(
 				<span/>,
 				[
-					tupl|4, text|4, ... str('elem'), text|4, ... str('keys'), text|4, ... str('vals'), text|4, ... str('kids'),
+					tupl|4, list|4, text|4, ... str('elem'), text|4, ... str('keys'), text|4, ... str('vals'), text|4, ... str('kids'),
 						text|4, ... str('SPAN'), list|0, list|0, list|0
 				],
 			)
@@ -270,7 +270,7 @@ namespace $.$$ {
 			check(
 				<svg/>,
 				[
-					tupl|4, text|4, ... str('elem'), text|4, ... str('keys'), text|4, ... str('vals'), text|4, ... str('kids'),
+					tupl|4, list|4, text|4, ... str('elem'), text|4, ... str('keys'), text|4, ... str('vals'), text|4, ... str('kids'),
 						text|3, ... str('SVG'), list|0, list|0, list|0
 				],
 			)
@@ -278,7 +278,7 @@ namespace $.$$ {
 			check(
 				<span tabIndex="0" />,
 				[
-					tupl|4, text|4, ... str('elem'), text|4, ... str('keys'), text|4, ... str('vals'), text|4, ... str('kids'),
+					tupl|4, list|4, text|4, ... str('elem'), text|4, ... str('keys'), text|4, ... str('vals'), text|4, ... str('kids'),
 						text|4, ... str('SPAN'), list|1, text|8, ... str('tabindex'), list|1, text|1, ... str('0'), list|0
 				],
 			)
@@ -286,7 +286,7 @@ namespace $.$$ {
 			check(
 				<span>text</span>,
 				[
-					tupl|4, text|4, ... str('elem'), text|4, ... str('keys'), text|4, ... str('vals'), text|4, ... str('kids'),
+					tupl|4, list|4, text|4, ... str('elem'), text|4, ... str('keys'), text|4, ... str('vals'), text|4, ... str('kids'),
 						text|4, ... str('SPAN'), list|0, list|0, list|1,
 							text|4, ... str('text')
 				],
@@ -295,10 +295,9 @@ namespace $.$$ {
 			check(
 				<div><span/> </div>,
 				[
-					tupl|4, text|4, ... str('elem'), text|4, ... str('keys'), text|4, ... str('vals'), text|4, ... str('kids'),
+					tupl|4, list|4, text|4, ... str('elem'), text|4, ... str('keys'), text|4, ... str('vals'), text|4, ... str('kids'),
 						text|3, ... str('DIV'), list|0, list|0, list|2,
-							tupl|4, link|0, link|1, link|2, link|3,
-								text|4, ... str('SPAN'), list|0, list|0, list|0,
+							tupl|4, link|4, text|4, ... str('SPAN'), list|0, list|0, list|0,
 							text|1, ... str(' '),
 				],
 			)
@@ -329,7 +328,7 @@ namespace $.$$ {
 			
 			check(
 				new Foo( 1, 2 ),
-				[ tupl|2, text|1, ... str('a'), text|1, ... str('b'), 1, 2 ],
+				[ tupl|2, list|2, text|1, ... str('a'), text|1, ... str('b'), 1, 2 ],
 			)
 			
 		},
