@@ -114,6 +114,24 @@ namespace $.$$ {
 			)
 		},
 		
+		"vary pack dedup uint"( $ ) {
+			check(
+				[ 28, 28 ],
+				[ list|2, uint|L1, 28, link|0 ],
+			)
+			check(
+				[ 2n**64n, 2n**64n ],
+				[ list|2, sint|-LA, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, link|0 ],
+			)
+		},
+		
+		"vary pack dedup float"( $ ) {
+			check(
+				[ 1.5, 1.5 ],
+				[ list|2, fp64,  ... new Uint8Array( new Float64Array([ 1.5 ]).buffer ), link|0 ],
+			)
+		},
+		
 		"vary pack text"( $ ) {
 			check( 'foo', [ text|3, ... str('foo') ] )
 			const long = 'abcdefghijklmnopqrstuvwxyzЖЫ'

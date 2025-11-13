@@ -26,8 +26,8 @@
 |                | $mol_vary | cbor-x      | msgpackr
 |----------------|-----------|-------------|---------
 | Language       | ✅ TS     | ✅ TS      | ❌ JS    
-| Performance    | ✅ 100%   | ✅ 100%    | ✅ 100%  
-| Packed Size    | ✅ 100%   | ❌ +33%    | ❌ +25%  
+| Performance    | ✅ 100%   | ✅ 100%    | ✅ 110%  
+| Packed Size    | ✅ 100%   | ❌ +40%    | ❌ +30%  
 | Lib Size       | ✅ 3KB    | ❌ 11 KB   | ❌ 11 KB 
 | Compatibility  | ✅ std    | ⭕ ext-std | ❌ ext   
 
