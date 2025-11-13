@@ -7,6 +7,9 @@
 			if(next !== undefined) return next;
 			return [];
 		}
+		files_handled(next){
+			return (this.files(next));
+		}
 		accept(){
 			return "";
 		}
@@ -15,7 +18,7 @@
 		}
 		Native(){
 			const obj = new this.$.$mol_button_open_native();
-			(obj.files) = (next) => ((this.files(next)));
+			(obj.files) = (next) => ((this.files_handled(next)));
 			(obj.accept) = () => ((this.accept()));
 			(obj.multiple) = () => ((this.multiple()));
 			return obj;

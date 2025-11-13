@@ -133,6 +133,7 @@
     "$mol_dom_render_attributes",
     "$mol_dom_render_events",
     "$mol_plugin",
+    "$mol_error_message",
     "$mol_dom_render_styles",
     "$mol_dom_render_fields",
     "$mol_type_pick",
