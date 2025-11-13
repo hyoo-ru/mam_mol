@@ -2,13 +2,13 @@ $mol_button_open $mol_button_minor
 	sub /
 		<= Icon $mol_icon_upload
 		<= Native $mol_button_open_native
-			files?next <=> files?next /
+			files? <=> files_handled? <=> files? /File
 			accept <= accept \
 			multiple <= multiple true
 
 $mol_button_open_native $mol_view
 	dom_name \input
-	files?next /
+	files? /File
 	attr *
 		type \file
 		accept <= accept \
