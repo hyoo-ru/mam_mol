@@ -26,10 +26,10 @@
 |                | $mol_vary | cbor-x      | msgpackr
 |----------------|-----------|-------------|---------
 | Language       | ✅ TS     | ✅ TS+DTS  | ❌ JS+DTS
-| Performance    | ⭕ 100%   | ✅ 120%    | ✅ 120%  
-| Packed Size    | ✅ 100%   | ❌ +40%    | ❌ +30%  
-| Lib Size       | ✅ 3KB    | ❌ 11 KB   | ❌ 11 KB 
-| Compatibility  | ✅ std    | ⭕ ext-std | ❌ ext   
+| Performance    | ⭕ 100%   | ✅ 120%    | ✅ 120%
+| Packed Size    | ✅ 100%   | ❌ +40%    | ❌ +30%
+| Lib Size       | ✅ 4KB    | ❌ 11 KB   | ❌ 11 KB
+| Compatibility  | ✅ std    | ⭕ ext-std | ❌ ext
 
 [Benchmark](https://perf.js.hyoo.ru/#!bench=j1peaq_k376h9) results:
 
