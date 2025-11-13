@@ -266,8 +266,7 @@ namespace $ {
 				if( $mol_promise_like( error ) ) break render
 				
 				try {
-					const message = error.message || error
-					;( node as HTMLElement ).innerText = message.replace( /^|$/mg, '\xA0\xA0' )
+					;( node as HTMLElement ).innerText = this.$.$mol_error_message(error).replace( /^|$/mg, '\xA0\xA0' )
 				} catch {}
 				
 			}

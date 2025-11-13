@@ -6,9 +6,6 @@ namespace $.$$ {
 	 */
 	export class $mol_button extends $.$mol_button {
 
-		@ $mol_mem
-		status( next = [ null as any ] ) { return next }
-		
 		disabled() {
 			return !this.enabled()
 		}
@@ -25,7 +22,7 @@ namespace $.$$ {
 				this.status([ null ])
 				
 			} catch( error: any ) {
-				
+				// Calling actions from catch section, if throwing promise breaks idempotency
 				Promise.resolve().then( ()=> this.status([ error ]) )
 				$mol_fail_hidden( error )
 				
@@ -45,14 +42,13 @@ namespace $.$$ {
 
 		error() {
 
-			const [ error ] = this.status()
+			const error = this.status()?.[0]
 			if( !error ) return ''
 
-			if( error instanceof Promise ) {
+			if( $mol_promise_like(error) ) {
 				return $mol_fail_hidden( error )
 			}
-			
-			return String( error.message ?? error )
+			return this.$.$mol_error_message( error )
 
 		}
 		

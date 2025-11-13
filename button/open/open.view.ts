@@ -1,4 +1,18 @@
 namespace $.$$ {
+	export class $mol_button_open extends $.$mol_button_open {
+		override files_handled(next?: readonly File[]) {
+			try {
+				const files = this.files(next)
+				this.status([ null ])
+
+				return files
+			} catch (error) {
+				// Calling actions from catch section, if throwing promise breaks idempotency
+				Promise.resolve().then( ()=> this.status([ error ]) )
+				$mol_fail_hidden(error)
+			}
+		}
+	}
 
 	/**
 	 * File open button
