@@ -45,12 +45,10 @@ namespace $.$$ {
 			const error = this.status()?.[0]
 			if( !error ) return ''
 
-			if( error instanceof Promise ) {
+			if( $mol_promise_like(error) ) {
 				return $mol_fail_hidden( error )
 			}
-			const error_id = $mol_fail_catch_id(error)
-			
-			return String( error.message ?? error ) + (error_id ? ` #${error_id}` : '')
+			return this.$.$mol_error_message( error )
 
 		}
 		
