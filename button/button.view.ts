@@ -22,7 +22,7 @@ namespace $.$$ {
 				this.status([ null ])
 				
 			} catch( error: any ) {
-				
+				// Calling actions from catch section, if throwing promise breaks idempotency
 				Promise.resolve().then( ()=> this.status([ error ]) )
 				$mol_fail_hidden( error )
 				
