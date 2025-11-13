@@ -56,21 +56,20 @@ namespace $ {
 				capacity -= size
 			}
 			
-			const dump_bint = ( val: bigint )=> {
-				const buf = $mol_bigint_encode( val as bigint )
-				acquire( buf.byteLength - 7 )
-				if( buf.byteLength > 264 ) $mol_fail( new Error( 'Number too high', { cause: { val } } ) )
-				buffer[ pos ++ ] = - $mol_vary_len.LA
-				buffer[ pos ++ ] = buf.byteLength - 9
-				buffer.set( buf, pos )
-				pos += buf.byteLength
-			}
-			
 			const dump_unum = ( tip: number, val: number | bigint )=> {
+				
 				if( val < $mol_vary_len.L1 ) {
 					buffer[ pos ++ ] = tip | Number( val )
 					release(8)
-				} else if( val < 2**8 ) {
+					return
+				}
+				
+				if( tip == $mol_vary_tip.uint ) {
+					const offset = offsets.get( val )
+					if( offset !== undefined ) return dump_unum( $mol_vary_tip.link, offset )
+				}
+				
+				if( val < 2**8 ) {
 					buffer[ pos ++ ] = tip | $mol_vary_len.L1
 					buffer[ pos ++ ] = Number( val )
 					release(7)
@@ -91,13 +90,23 @@ namespace $ {
 				} else {
 					dump_bint( val as bigint )
 				}
+				
+				if( tip == $mol_vary_tip.uint ) offsets.set( val, offsets.size )
+				
 			}
 			
 			const dump_snum = ( val: number | bigint )=> {
+				
 				if( val > - $mol_vary_len.L1 ) {
 					buffer[ pos ++ ] = Number( val )
 					release(8)
-				} else if( val >= -(2**7) ) {
+					return 
+				}
+				
+				const offset = offsets.get( val )
+				if( offset !== undefined ) return dump_unum( $mol_vary_tip.link, offset )
+				
+				if( val >= -(2**7) ) {
 					buffer[ pos ++ ] = - $mol_vary_len.L1
 					buffer[ pos ++ ] = Number( val )
 					release(7)
@@ -118,14 +127,42 @@ namespace $ {
 				} else {
 					dump_bint( val as bigint )
 				}
+				
+				offsets.set( val, offsets.size )
+				
+			}
+			
+			const dump_bint = ( val: bigint )=> {
+				
+				const buf = $mol_bigint_encode( val as bigint )
+				
+				if( buf.byteLength > 264 ) $mol_fail( new Error( 'Number too high', { cause: { val } } ) )
+				acquire( buf.byteLength - 7 )
+				
+				buffer[ pos ++ ] = - $mol_vary_len.LA
+				buffer[ pos ++ ] = buf.byteLength - 9
+				
+				buffer.set( buf, pos )
+				pos += buf.byteLength
+				
+			}
+			
+			const dump_float = ( val: number )=> {
+				
+				const offset = offsets.get( val )
+				if( offset !== undefined ) return dump_unum( $mol_vary_tip.link, offset )
+					
+				buffer[ pos ++ ] = $mol_vary_spec.fp64
+				pack.setFloat64( pos, val, true )
+				pos += 8
+				
+				offsets.set( val, offsets.size )
 			}
 			
 			const dump_string = ( val: string )=> {
 				
-				if( val.length ) {
-					const offset = offsets.get( val )
-					if( offset !== undefined ) return dump_unum( $mol_vary_tip.link, offset )
-				}
+				const offset = offsets.get( val )
+				if( offset !== undefined ) return dump_unum( $mol_vary_tip.link, offset )
 				
 				dump_unum( $mol_vary_tip.text, val.length )
 				acquire( val.length * 3 )
@@ -133,17 +170,15 @@ namespace $ {
 				pos += len
 				release( val.length * 3 - len )
 				
-				if( val.length ) offsets.set( val, offsets.size )
+				offsets.set( val, offsets.size )
 				return
 			
 			}
 			
 			const dump_buffer = ( val: ArrayBufferView< ArrayBuffer > )=> {
 				
-				if( val.byteLength ) {
-					const offset = offsets.get( val )
-					if( offset !== undefined ) return dump_unum( $mol_vary_tip.link, offset )
-				}
+				const offset = offsets.get( val )
+				if( offset !== undefined ) return dump_unum( $mol_vary_tip.link, offset )
 				
 				dump_unum( $mol_vary_tip.blob, val.byteLength )
 				
@@ -167,22 +202,20 @@ namespace $ {
 				acquire( val.byteLength )
 				buffer.set( src, pos )
 				pos += val.byteLength
-					
-				if( val.byteLength ) offsets.set( val, offsets.size )
+				
+				offsets.set( val, offsets.size )
 			}
 			
 			const dump_list = ( val: any[] )=> {
 				
-				if( val.length ) {
-					const offset = offsets.get( val )
-					if( offset !== undefined ) return dump_unum( $mol_vary_tip.link, offset )
-				}
+				const offset = offsets.get( val )
+				if( offset !== undefined ) return dump_unum( $mol_vary_tip.link, offset )
 			
 				dump_unum( $mol_vary_tip.list, val.length )
 				acquire( val.length * 9 )
 				for( const item of val ) dump( item )
 			
-				if( val.length ) offsets.set( val, offsets.size )
+				offsets.set( val, offsets.size )
 				
 			}
 			
@@ -199,7 +232,7 @@ namespace $ {
 				for( const item of keys ) dump( item )
 				for( const item of vals ) dump( item )
 				
-				if( vals.length ) offsets.set( val, offsets.size )
+				offsets.set( val, offsets.size )
 			}
 			
 			/** Recursive fills buffer with data. */
@@ -220,12 +253,7 @@ namespace $ {
 					}
 					
 					case 'number': {
-						if( !Number.isInteger( val ) ) {
-							buffer[ pos ++ ] = $mol_vary_spec.fp64
-							pack.setFloat64( pos, val, true )
-							pos += 8
-							return
-						}
+						if( !Number.isInteger( val ) ) return dump_float( val )
 					}
 					case 'bigint': {
 						
@@ -295,6 +323,8 @@ namespace $ {
 					$mol_fail( new Error( 'Unsupported unum', { cause: { num } } ) )
 				}
 				
+				if( ( kind & 0b111_00000 ) === $mol_vary_tip.uint ) stream.push( res )
+				
 				return res
 			}
 			
@@ -325,6 +355,8 @@ namespace $ {
 					$mol_fail( new Error( 'Unsupported snum', { cause: { num } } ) )
 				}
 				
+				stream.push( res )
+				
 				return res
 			}
 			
@@ -332,14 +364,14 @@ namespace $ {
 				const len = read_unum( kind ) as number
 				const [ text, bytes ] = $mol_charset_decode_from( buffer, pack.byteOffset + pos, len )
 				pos += bytes
-				if( text.length ) stream.push( text )
+				stream.push( text )
 				return text
 			}
 			
 			const read_buffer = ( len: number, TypedArray: new( buf: ArrayBuffer )=> ArrayBufferView< ArrayBuffer > )=> {
 				const bin = new TypedArray( buffer.slice( pos, pos + len ).buffer )
 				pos += len
-				if( len ) stream.push( bin )
+				stream.push( bin )
 				return bin
 			}
 			
@@ -374,7 +406,7 @@ namespace $ {
 				const len = read_unum( kind ) as number
 				const list = new Array( len ) as any[]
 				for( let i = 0; i < len; ++i ) list[i] = read_vary()
-				if( len ) stream.push( list )
+				stream.push( list )
 				return list
 			}
 			
@@ -405,7 +437,7 @@ namespace $ {
 					for( let i = 0; i < len; ++i ) obj[ keys[i] ] = vals[i]
 				}
 				
-				if( vals.length ) stream.push( obj )
+				stream.push( obj )
 				
 				return obj
 			}
@@ -432,18 +464,21 @@ namespace $ {
 					
 					case $mol_vary_spec.fp64: {
 						const val = pack.getFloat64( ++ pos, true )
+						stream.push( val )
 						pos += 8
 						return val
 					}
 					
 					case $mol_vary_spec.fp32: {
 						const val = pack.getFloat32( ++ pos, true )
+						stream.push( val )
 						pos += 4
 						return val
 					}
 					
 					case $mol_vary_spec.fp16: {
 						const val = pack.getFloat16( ++ pos, true )
+						stream.push( val )
 						pos += 2
 						return val
 					}
