@@ -221,13 +221,50 @@ namespace $ {
 				
 			}
 			
-			const shapes = new Map< string, any[] >()
+			// Dictionary tree for POJO shapes (replaces string-based lookup)
+			type ShapeNode = Map<string, ShapeNode | any[]>
+			const shapes: ShapeNode = new Map()
 			const shape = ( val: any )=> {
 				const keys1 = Object.keys( val )
-				const key = keys1.join('\0')
-				const keys2 = shapes.get( key ) 
-				if( keys2 ) return keys2
-				shapes.set( key, keys1 )
+
+				// Handle empty object case
+				if (keys1.length === 0) {
+					const cached = shapes.get('') as any[] | undefined
+					if (cached) return cached
+					shapes.set('', keys1)
+					return keys1
+				}
+
+				// Traverse tree to find cached keys or create path
+				let node: ShapeNode | any[] | undefined = shapes
+				for (const key of keys1) {
+					if (!node || Array.isArray(node)) break
+					node = node.get(key)
+				}
+
+				// If we found cached keys at the end of the path, return them
+				if (node && Array.isArray(node)) return node
+
+				// Otherwise, build the tree path and store keys1 at the end
+				let current = shapes
+				for (let i = 0; i < keys1.length; i++) {
+					const key = keys1[i]
+					const isLast = i === keys1.length - 1
+
+					if (isLast) {
+						// Store the keys array at the terminal node
+						current.set(key, keys1)
+					} else {
+						// Get or create intermediate node
+						let next = current.get(key)
+						if (!next || Array.isArray(next)) {
+							next = new Map()
+							current.set(key, next)
+						}
+						current = next as ShapeNode
+					}
+				}
+
 				return keys1
 			}
 			
