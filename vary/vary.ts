@@ -444,8 +444,9 @@ namespace $ {
 					if( !node ) break
 				}
 
-				if( typeof node === 'function' ) {
-					obj = node( ... vals )
+				const rich = (typeof node === 'function') ? node : undefined
+				if( rich ) {
+					obj = rich( ... vals )
 				} else {
 					obj = {} as any
 					for( let i = 0; i < len; ++i ) obj[ keys[i] ] = vals[i]
