@@ -438,15 +438,14 @@ namespace $ {
 				for( let i = 0; i < len; ++i ) vals[i] = read_vary()
 
 				let obj
-				let node = this.riches
+				let node: any = this.riches
 				for( const key of keys ) {
 					node = node?.get( key )
 					if( !node ) break
 				}
-				const rich = ( typeof node === 'function' ) ? node : undefined
 
-				if( rich ) {
-					obj = rich( ... vals )
+				if( typeof node === 'function' ) {
+					obj = node( ... vals )
 				} else {
 					obj = {} as any
 					for( let i = 0; i < len; ++i ) obj[ keys[i] ] = vals[i]
