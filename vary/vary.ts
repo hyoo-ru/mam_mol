@@ -34,7 +34,9 @@ namespace $ {
 	
 	/** VaryPack - simple fast compact data binarization format. */
 	export class $mol_vary extends Object {
-		
+
+		static riches = new Map< any, any >()
+
 		/** Packs any data to Uint8Array with deduplication. */
 		static pack( data: unknown ) {
 			
@@ -428,26 +430,30 @@ namespace $ {
 			}
 			
 			const read_tupl = ( kind: number )=> {
-				
+
 				const len = read_unum( kind ) as number
-				
+
 				const keys = read_vary()
 				const vals = new Array( len ) as any[]
 				for( let i = 0; i < len; ++i ) vals[i] = read_vary()
-				
-				const shape = JSON.stringify( keys )
-				
+
 				let obj
-				const rich = this.riches.get( shape )
+				let node = this.riches
+				for( const key of keys ) {
+					node = node?.get( key )
+					if( !node ) break
+				}
+				const rich = ( typeof node === 'function' ) ? node : undefined
+
 				if( rich ) {
 					obj = rich( ... vals )
 				} else {
 					obj = {} as any
 					for( let i = 0; i < len; ++i ) obj[ keys[i] ] = vals[i]
 				}
-				
+
 				stream.push( obj )
-				
+
 				return obj
 			}
 			
@@ -525,9 +531,7 @@ namespace $ {
 			
 			return result
 		}
-		
-		static riches = new Map< string/*shape*/, ( ... vals: readonly any[] )=> object >()
-		
+
 		/** Adds custom types support. */
 		static type<
 			const Instance extends object,
@@ -539,10 +543,23 @@ namespace $ {
 			lean: ( obj: Instance )=> Vals,
 			rich: ( ... vals: Vals )=> Instance,
 		) {
-			this.riches.set( JSON.stringify( keys ), rich )
+			let node = this.riches
+			for( let i = 0; i < keys.length - 1; i++ ) {
+				const key = keys[i]
+				let next = node.get( key )
+				if( !next ) {
+					next = new Map()
+					node.set( key, next )
+				}
+				node = next
+			}
+			// Set the rich function at the final key
+			if( keys.length > 0 ) {
+				node.set( keys[ keys.length - 1 ], rich )
+			}
 			;( Class.prototype as any )[ $mol_vary_lean ] = ( val:  Instance )=> [ keys, lean( val ) ]
 		}
-		
+
 	}
 	
 	export const $mol_vary_lean = Symbol.for( '$mol_vary_lean' )
