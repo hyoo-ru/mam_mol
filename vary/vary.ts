@@ -35,6 +35,9 @@ namespace $ {
 	/** VaryPack - simple fast compact data binarization format. */
 	export class $mol_vary extends Object {
 
+		// Symbol to mark terminal value in dictionary tree (eliminates polymorphism)
+		static readonly $mol_vary_tree_value = Symbol('tree_value')
+
 		static riches = new Map< any, any >()
 
 		/** Packs any data to Uint8Array with deduplication. */
@@ -221,49 +224,46 @@ namespace $ {
 				
 			}
 			
-			// Dictionary tree for POJO shapes (replaces string-based lookup)
-			type ShapeNode = Map<string, ShapeNode | any[]>
-			const shapes: ShapeNode = new Map()
+			// Dictionary tree for POJO shapes (no polymorphism - all nodes are Maps)
+			const shapes = new Map<any, any>()
+			const VALUE = $mol_vary.$mol_vary_tree_value
 			const shape = ( val: any )=> {
 				const keys1 = Object.keys( val )
 
 				// Handle empty object case
 				if (keys1.length === 0) {
-					const cached = shapes.get('') as any[] | undefined
+					const cached = shapes.get(VALUE)
 					if (cached) return cached
-					shapes.set('', keys1)
+					shapes.set(VALUE, keys1)
 					return keys1
 				}
 
-				// Traverse tree to find cached keys or create path
-				let node: ShapeNode | any[] | undefined = shapes
+				// Traverse tree to find cached keys
+				let node = shapes
 				for (const key of keys1) {
-					if (!node || Array.isArray(node)) break
 					node = node.get(key)
+					if (!node) break
 				}
 
-				// If we found cached keys at the end of the path, return them
-				if (node && Array.isArray(node)) return node
+				// If we found a node, check if it has a cached value
+				if (node) {
+					const cached = node.get(VALUE)
+					if (cached) return cached
+				}
 
 				// Otherwise, build the tree path and store keys1 at the end
 				let current = shapes
-				for (let i = 0; i < keys1.length; i++) {
-					const key = keys1[i]
-					const isLast = i === keys1.length - 1
-
-					if (isLast) {
-						// Store the keys array at the terminal node
-						current.set(key, keys1)
-					} else {
-						// Get or create intermediate node
-						let next = current.get(key)
-						if (!next || Array.isArray(next)) {
-							next = new Map()
-							current.set(key, next)
-						}
-						current = next as ShapeNode
+				for (const key of keys1) {
+					let next = current.get(key)
+					if (!next) {
+						next = new Map()
+						current.set(key, next)
 					}
+					current = next
 				}
+
+				// Store the keys array using the special symbol
+				current.set(VALUE, keys1)
 
 				return keys1
 			}
@@ -481,7 +481,8 @@ namespace $ {
 					if( !node ) break
 				}
 
-				const rich = (typeof node === 'function') ? node : undefined
+				// Get the rich function from the tree using the special symbol (no polymorphism)
+				const rich = node?.get( this.$mol_vary_tree_value )
 				if( rich ) {
 					obj = rich( ... vals )
 				} else {
@@ -581,8 +582,7 @@ namespace $ {
 			rich: ( ... vals: Vals )=> Instance,
 		) {
 			let node = this.riches
-			for( let i = 0; i < keys.length - 1; i++ ) {
-				const key = keys[i]
+			for( const key of keys ) {
 				let next = node.get( key )
 				if( !next ) {
 					next = new Map()
@@ -590,10 +590,8 @@ namespace $ {
 				}
 				node = next
 			}
-			// Set the rich function at the final key
-			if( keys.length > 0 ) {
-				node.set( keys[ keys.length - 1 ], rich )
-			}
+			// Set the rich function using the special symbol (no polymorphism)
+			node.set( this.$mol_vary_tree_value, rich )
 			;( Class.prototype as any )[ $mol_vary_lean ] = ( val:  Instance )=> [ keys, lean( val ) ]
 		}
 
