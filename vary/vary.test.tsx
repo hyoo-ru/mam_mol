@@ -257,21 +257,13 @@ namespace $.$$ {
 			
 		},
 		
-		"vary pack Node"( $ ) {
+		"vary pack DOM Node"( $ ) {
 			
 			check(
 				<span/>,
 				[
 					tupl|4, list|4, text|4, ... str('elem'), text|4, ... str('keys'), text|4, ... str('vals'), text|4, ... str('kids'),
 						text|4, ... str('SPAN'), list|0, list|0, list|0
-				],
-			)
-			
-			check(
-				<svg/>,
-				[
-					tupl|4, list|4, text|4, ... str('elem'), text|4, ... str('keys'), text|4, ... str('vals'), text|4, ... str('kids'),
-						text|3, ... str('SVG'), list|0, list|0, list|0
 				],
 			)
 			
@@ -302,6 +294,28 @@ namespace $.$$ {
 				],
 			)
 			
+		},
+		
+		"vary pack DOM Comment"( $ ) {
+			check(
+				<div>{ $mol_dom.document.createComment( 'foo' )  }</div>,
+				[
+					tupl|4, list|4, text|4, ... str('elem'), text|4, ... str('keys'), text|4, ... str('vals'), text|4, ... str('kids'),
+						text|3, ... str('DIV'), list|0, list|0, list|1,
+							tupl|1, list|1, text|8, ... str('#comment'), text|3, ... str('foo'),
+				],
+			)
+		},
+		
+		"vary pack DOM PI"( $ ) {
+			check(
+				<div>{ $mol_dom.document.createProcessingInstruction( 'foo', 'bar' )  }</div>,
+				[
+					tupl|4, list|4, text|4, ... str('elem'), text|4, ... str('keys'), text|4, ... str('vals'), text|4, ... str('kids'),
+						text|3, ... str('DIV'), list|0, list|0, list|1,
+							tupl|2, list|2, text|6, ... str('target'), text|4, ... str('text'), text|3, ... str('foo'), text|3, ... str('bar'),
+				],
+			)
 		},
 		
 		"vary pack custom class"( $ ) {
