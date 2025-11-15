@@ -34,7 +34,36 @@ namespace $ {
 	
 	/** VaryPack - simple fast compact data binarization format. */
 	export class $mol_vary extends Object {
-		
+
+		// Symbol to mark terminal value in dictionary tree (eliminates polymorphism)
+		static readonly $mol_vary_tree_value = Symbol('tree_value')
+
+		static riches = new Map< any, any >()
+
+		/** Helper function to build dictionary tree path and set terminal value */
+		static tree_set( tree: Map<any, any>, keys: readonly any[], value: any ): void {
+			let node = tree
+			for( const key of keys ) {
+				let next = node.get( key )
+				if( !next ) {
+					next = new Map()
+					node.set( key, next )
+				}
+				node = next
+			}
+			node.set( this.$mol_vary_tree_value, value )
+		}
+
+		/** Helper function to traverse dictionary tree and get terminal value */
+		static tree_get( tree: Map<any, any>, keys: readonly any[] ): any {
+			let node: any = tree
+			for( const key of keys ) {
+				node = node?.get( key )
+				if( !node ) return undefined
+			}
+			return node?.get( this.$mol_vary_tree_value )
+		}
+
 		/** Packs any data to Uint8Array with deduplication. */
 		static pack( data: unknown ) {
 			
@@ -227,13 +256,26 @@ namespace $ {
 				
 			}
 			
-			const shapes = new Map< string, any[] >()
+			// Dictionary tree for POJO shapes (no polymorphism - all nodes are Maps)
+			const shapes = new Map<any, any>()
+			const VALUE = $mol_vary.$mol_vary_tree_value
 			const shape = ( val: any )=> {
 				const keys1 = Object.keys( val )
-				const key = keys1.join('\0')
-				const keys2 = shapes.get( key ) 
-				if( keys2 ) return keys2
-				shapes.set( key, keys1 )
+
+				// Handle empty object case
+				if (keys1.length === 0) {
+					const cached = shapes.get(VALUE)
+					if (cached) return cached
+					shapes.set(VALUE, keys1)
+					return keys1
+				}
+
+				// Try to get cached keys
+				const cached = $mol_vary.tree_get( shapes, keys1 )
+				if (cached) return cached
+
+				// Otherwise, store and return keys1
+				$mol_vary.tree_set( shapes, keys1, keys1 )
 				return keys1
 			}
 			
@@ -443,26 +485,24 @@ namespace $ {
 			}
 			
 			const read_tupl = ( kind: number )=> {
-				
+
 				const len = read_unum( kind ) as number
-				
+
 				const keys = read_vary()
 				const vals = new Array( len ) as any[]
 				for( let i = 0; i < len; ++i ) vals[i] = read_vary()
-				
-				const shape = JSON.stringify( keys )
-				
+
 				let obj
-				const rich = this.riches.get( shape )
+				const rich = this.tree_get( this.riches, keys )
 				if( rich ) {
 					obj = rich( ... vals )
 				} else {
 					obj = {} as any
 					for( let i = 0; i < len; ++i ) obj[ keys[i] ] = vals[i]
 				}
-				
+
 				stream.push( obj )
-				
+
 				return obj
 			}
 			
@@ -540,9 +580,7 @@ namespace $ {
 			
 			return result
 		}
-		
-		static riches = new Map< string/*shape*/, ( ... vals: readonly any[] )=> object >()
-		
+
 		/** Adds custom types support. */
 		static type<
 			const Instance extends object,
@@ -554,10 +592,10 @@ namespace $ {
 			lean: ( obj: Instance )=> Vals,
 			rich: ( ... vals: Vals )=> Instance,
 		) {
-			this.riches.set( JSON.stringify( keys ), rich )
+			this.tree_set( this.riches, keys, rich )
 			;( Class.prototype as any )[ $mol_vary_lean ] = ( val:  Instance )=> [ keys, lean( val ) ]
 		}
-		
+
 	}
 	
 	export const $mol_vary_lean = Symbol.for( '$mol_vary_lean' )
