@@ -591,4 +591,20 @@ namespace $ {
 		},
 	)
 	
+	/** Native Comment support */
+	$mol_vary.type(
+		$mol_dom.Comment,
+		[ '#comment' ],
+		node => [ node.nodeValue! ],
+		text => $mol_dom.document.createComment( text ),
+	)
+	
+	/** Native PI support */
+	$mol_vary.type(
+		$mol_dom.ProcessingInstruction,
+		[ 'target', 'text' ],
+		node => [ node.nodeName, node.nodeValue! ],
+		( target, text )=> $mol_dom.document.createProcessingInstruction( target, text ),
+	)
+	
 }
