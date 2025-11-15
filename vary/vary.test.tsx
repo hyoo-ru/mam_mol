@@ -114,6 +114,12 @@ namespace $.$$ {
 			)
 		},
 		
+		"vary pack cyclic list"( $ ) {
+			const foo = [] as any[]
+			foo.push([ foo ])
+			$mol_assert_fail( ()=> $mol_vary.pack( foo ), 'Cyclic refs' )
+		},
+		
 		"vary pack dedup uint"( $ ) {
 			check(
 				[ 28, 28 ],
@@ -221,6 +227,12 @@ namespace $.$$ {
 				{ x: part, y: part },
 				[ tupl|2, list|2, text|1, ... str('x'), text|1, ... str('y'), tupl|2, link|2, 1, 2, link|3 ],
 			)
+		},
+		
+		"vary pack cyclic struct"( $ ) {
+			const foo = { bar: null as any }
+			foo.bar = foo
+			$mol_assert_fail( ()=> $mol_vary.pack( foo ), 'Cyclic refs' )
 		},
 		
 		"vary pack Map"( $ ) {

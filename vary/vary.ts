@@ -41,6 +41,7 @@ namespace $ {
 			let pos = 0
 			let capacity = 9
 			const offsets = new Map< unknown, number >()
+			const stack = [] as any[]
 			
 			const acquire = ( size: number )=> {
 				if( size < 0 ) return
@@ -210,10 +211,17 @@ namespace $ {
 				
 				const offset = offsets.get( val )
 				if( offset !== undefined ) return dump_unum( $mol_vary_tip.link, offset )
-			
+				
 				dump_unum( $mol_vary_tip.list, val.length )
 				acquire( val.length * 9 )
+				
+				if( stack.includes( val ) ) $mol_fail( new Error( 'Cyclic refs', { cause: { stack, val } } ) ) 
+				stack.push( val )
+				
 				for( const item of val ) dump( item )
+				
+				if( stack.at(-1) !== val ) $mol_fail( new Error( 'Broken stack', { cause: { stack, val } } ) )
+				stack.pop()
 			
 				offsets.set( val, offsets.size )
 				
@@ -239,7 +247,14 @@ namespace $ {
 				dump_unum( $mol_vary_tip.tupl, vals.length )
 				acquire( (vals.length+1) * 9 )
 				dump_list( keys )
+				
+				if( stack.includes( val ) ) $mol_fail( new Error( 'Cyclic refs', { cause: { stack, val } } ) ) 
+				stack.push( val )
+				
 				for( const item of vals ) dump( item )
+				
+				if( stack.at(-1) !== val ) $mol_fail( new Error( 'Broken stack', { cause: { stack, val } } ) )
+				stack.pop()
 				
 				offsets.set( val, offsets.size )
 			}
