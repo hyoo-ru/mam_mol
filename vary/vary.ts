@@ -40,6 +40,30 @@ namespace $ {
 
 		static riches = new Map< any, any >()
 
+		/** Helper function to build dictionary tree path and set terminal value */
+		static tree_set( tree: Map<any, any>, keys: readonly any[], value: any ): void {
+			let node = tree
+			for( const key of keys ) {
+				let next = node.get( key )
+				if( !next ) {
+					next = new Map()
+					node.set( key, next )
+				}
+				node = next
+			}
+			node.set( this.$mol_vary_tree_value, value )
+		}
+
+		/** Helper function to traverse dictionary tree and get terminal value */
+		static tree_get( tree: Map<any, any>, keys: readonly any[] ): any {
+			let node: any = tree
+			for( const key of keys ) {
+				node = node?.get( key )
+				if( !node ) return undefined
+			}
+			return node?.get( this.$mol_vary_tree_value )
+		}
+
 		/** Packs any data to Uint8Array with deduplication. */
 		static pack( data: unknown ) {
 			
@@ -238,33 +262,12 @@ namespace $ {
 					return keys1
 				}
 
-				// Traverse tree to find cached keys
-				let node = shapes
-				for (const key of keys1) {
-					node = node.get(key)
-					if (!node) break
-				}
+				// Try to get cached keys
+				const cached = $mol_vary.tree_get( shapes, keys1 )
+				if (cached) return cached
 
-				// If we found a node, check if it has a cached value
-				if (node) {
-					const cached = node.get(VALUE)
-					if (cached) return cached
-				}
-
-				// Otherwise, build the tree path and store keys1 at the end
-				let current = shapes
-				for (const key of keys1) {
-					let next = current.get(key)
-					if (!next) {
-						next = new Map()
-						current.set(key, next)
-					}
-					current = next
-				}
-
-				// Store the keys array using the special symbol
-				current.set(VALUE, keys1)
-
+				// Otherwise, store and return keys1
+				$mol_vary.tree_set( shapes, keys1, keys1 )
 				return keys1
 			}
 			
@@ -475,14 +478,7 @@ namespace $ {
 				for( let i = 0; i < len; ++i ) vals[i] = read_vary()
 
 				let obj
-				let node: any = this.riches
-				for( const key of keys ) {
-					node = node?.get( key )
-					if( !node ) break
-				}
-
-				// Get the rich function from the tree using the special symbol (no polymorphism)
-				const rich = node?.get( this.$mol_vary_tree_value )
+				const rich = this.tree_get( this.riches, keys )
 				if( rich ) {
 					obj = rich( ... vals )
 				} else {
@@ -581,17 +577,7 @@ namespace $ {
 			lean: ( obj: Instance )=> Vals,
 			rich: ( ... vals: Vals )=> Instance,
 		) {
-			let node = this.riches
-			for( const key of keys ) {
-				let next = node.get( key )
-				if( !next ) {
-					next = new Map()
-					node.set( key, next )
-				}
-				node = next
-			}
-			// Set the rich function using the special symbol (no polymorphism)
-			node.set( this.$mol_vary_tree_value, rich )
+			this.tree_set( this.riches, keys, rich )
 			;( Class.prototype as any )[ $mol_vary_lean ] = ( val:  Instance )=> [ keys, lean( val ) ]
 		}
 
