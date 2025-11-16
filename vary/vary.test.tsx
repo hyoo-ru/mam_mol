@@ -196,8 +196,8 @@ namespace $.$$ {
 		
 		"vary pack struct"( $ ) {
 			check(
-				{ a: 1, b: 2 },
-				[ tupl|2, list|2, text|1, ... str('a'), text|1, ... str('b'), 1, 2 ],
+				{ x: 1, y: 2 },
+				[ tupl|2, list|2, text|1, ... str('x'), text|1, ... str('y'), 1, 2 ],
 			)
 			check(
 				{ x: {}, y: { a: 1 } },
@@ -347,14 +347,14 @@ namespace $.$$ {
 			
 			$mol_vary.type(
 				Foo,
-				[ 'a', 'b' ],
+				[ 'custom_a', 'custom_b' ],
 				foo => [ foo.a, foo.b ],
 				( a = 0, b = 0 )=> new Foo( a, b ),
 			)
 			
 			check(
 				new Foo( 1, 2 ),
-				[ tupl|2, list|2, text|1, ... str('a'), text|1, ... str('b'), 1, 2 ],
+				[ tupl|2, list|2, text|8, ... str('custom_a'), text|8, ... str('custom_b'), 1, 2 ],
 			)
 			
 		},

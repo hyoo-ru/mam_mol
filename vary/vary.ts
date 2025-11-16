@@ -446,20 +446,20 @@ namespace $ {
 				
 				const len = read_unum( kind ) as number
 				
-				const keys = read_vary()
+				const keys = read_vary() as readonly string[]
 				const vals = new Array( len ) as any[]
 				for( let i = 0; i < len; ++i ) vals[i] = read_vary()
 				
-				const shape = JSON.stringify( keys )
+				const node = this.rich_node( keys )
+				let rich = node.get( null )
 				
-				let obj
-				const rich = this.riches.get( shape )
-				if( rich ) {
-					obj = rich( ... vals )
-				} else {
-					obj = {} as any
+				if( !rich ) node.set( null, rich = ( ... vals: readonly any[] )=> {
+					const obj = {} as any
 					for( let i = 0; i < len; ++i ) obj[ keys[i] ] = vals[i]
-				}
+					return obj
+				} )
+				
+				const obj = rich( ... vals )
 				
 				stream.push( obj )
 				
@@ -541,7 +541,23 @@ namespace $ {
 			return result
 		}
 		
-		static riches = new Map< string/*shape*/, ( ... vals: readonly any[] )=> object >()
+		static rich_index = new Map< string | null, any >([
+			[ null, ()=> ({}) ]
+		])
+		
+		static rich_node( keys: readonly string[] ) {
+			
+			let node = this.rich_index
+			for( const key of keys ) {
+				let sub = node.get( key )
+				
+				if( sub ) node = sub
+				else node.set( key, node = new Map )
+				
+			}
+			
+			return node
+		}
 		
 		/** Adds custom types support. */
 		static type<
@@ -554,7 +570,7 @@ namespace $ {
 			lean: ( obj: Instance )=> Vals,
 			rich: ( ... vals: Vals )=> Instance,
 		) {
-			this.riches.set( JSON.stringify( keys ), rich )
+			this.rich_node( keys ).set( null, rich )
 			;( Class.prototype as any )[ $mol_vary_lean ] = ( val:  Instance )=> [ keys, lean( val ) ]
 		}
 		
