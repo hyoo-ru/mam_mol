@@ -76,12 +76,20 @@ class Foo {
 	
 }
 
-$mol_vary.type(
+// Make isolated Vary
+const Vary = $mol_vary.room()
+
+// Add custom type support
+Vary.type(
 	Foo, // Instance super class
 	[ 'a', 'b' ], // Keys as shape
 	foo => [ foo.a, foo.b ], // Vals extractor
-	( a, b )=> new Foo( a, b ), // Factory from vals
+	([ a, b ])=> new Foo( a, b ), // Factory from vals
 )
+
+// Usage
+const buffer = Vary.pack( data_source )
+const data_restored = Vary.take( buffer )
 ```
 
 ## Internals
