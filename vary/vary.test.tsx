@@ -6,10 +6,10 @@ namespace $.$$ {
 	const { L1, L2, L4, L8, LA } = $mol_vary_len
 	const str = $mol_charset_encode
 	
-	function check( vary: unknown, ideal: readonly number[] ) {
-		const pack = $mol_vary.pack( vary )
+	function check( vary: unknown, ideal: readonly number[], Vary = $mol_vary ) {
+		const pack = Vary.pack( vary )
 		$mol_assert_equal( pack, new Uint8Array( ideal ) )
-		$mol_assert_equal( $mol_vary.take( pack ), vary )
+		$mol_assert_equal( Vary.take( pack ), vary )
 	}
 	
 	$mol_test({
@@ -345,16 +345,32 @@ namespace $.$$ {
 				
 			}
 			
-			$mol_vary.type(
-				Foo,
-				[ 'custom_a', 'custom_b' ],
-				foo => [ foo.a, foo.b ],
-				( a = 0, b = 0 )=> new Foo( a, b ),
+			const Vary = $mol_vary.room()
+			
+			Vary.type({
+				type: Foo,
+				keys: [ 'summ', 'diff' ],
+				lean: foo => [ foo.a + foo.b, foo.a - foo.b ],
+				rich: ([ summ, diff ])=> new Foo( ( summ + diff )/2, ( summ - diff )/2 ),
+			})
+			
+			// restore
+			check(
+				new Foo( 4, 2 ),
+				[ tupl|2, list|2, text|4, ... str('summ'), text|4, ... str('diff'), 6, 2 ],
+				Vary,
 			)
 			
-			check(
-				new Foo( 1, 2 ),
-				[ tupl|2, list|2, text|8, ... str('custom_a'), text|8, ... str('custom_b'), 1, 2 ],
+			// isolated
+			$mol_assert_equal(
+				$mol_vary.take( $mol_vary.pack( new Foo( 4, 2 ) ) ),
+				{ summ: 6, diff: 2 } as any,
+			)
+			
+			// inherited
+			$mol_assert_equal(
+				Vary.take( Vary.pack( new Map([[ 1, 2 ]]) ) ),
+				new Map([[ 1, 2 ]]),
 			)
 			
 		},
