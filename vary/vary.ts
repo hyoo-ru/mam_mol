@@ -27,9 +27,9 @@ namespace $ {
 		fp16 = 'H'.charCodeAt(0),
 		fp32 = 'S'.charCodeAt(0),
 		fp64 = 'D'.charCodeAt(0),
+		f128 = 'Q'.charCodeAt(0),
+		f256 = 'O'.charCodeAt(0),
 	}
-	
-	export const $mol_vary_lean = Symbol.for( '$mol_vary_lean' )
 	
 	const pojo_maker = ( keys: readonly any[] )=> ( vals: readonly any[] )=> {
 		const obj = {} as any
@@ -40,6 +40,8 @@ namespace $ {
 	/** VaryPack - simple fast compact data binarization format. */
 	export class $mol_vary_class extends Object {
 		
+		lean_symbol = Symbol( '$mol_vary_lean' )
+	
 		array = new Uint8Array( 256 )
 		buffer = new DataView( this.array.buffer )
 		
@@ -250,7 +252,7 @@ namespace $ {
 				const offset = offsets.get( val )
 				if( offset !== undefined ) return dump_unum( $mol_vary_tip.link, offset )
 				
-				const [ keys, vals ] = ( val as any )[ $mol_vary_lean ]?.( val ) ?? [ shape( val ), Object.values( val ) ]
+				const [ keys, vals ] = this.lean_find( val )?.( val ) ?? [ shape( val ), Object.values( val ) ]
 			
 				dump_unum( $mol_vary_tip.tupl, vals.length )
 				acquire( (vals.length+1) * 9 )
@@ -552,6 +554,7 @@ namespace $ {
 		/** Isolated Vary for custom types */
 		room() {
 			const room = new $mol_vary_class
+			Object.setPrototypeOf( room, this )
 			const index_clone = ( map: Map< string | null, any > ): Map<any,any> => new Map(
 				[ ... map ].map(
 					([ k, v ])=> [ k, k === null ? v : index_clone( v ) ]
@@ -575,6 +578,17 @@ namespace $ {
 			return node
 		}
 		
+		lean_find( val: any ) {
+			
+			const lean = val[ this.lean_symbol ]
+			if( lean ) return lean
+			
+			const sup = Object.getPrototypeOf( this )
+			if( sup === Object.prototype ) return
+			
+			return sup.lean_find( val )
+		}
+		
 		/** Adds custom types support. */
 		type<
 			const Instance extends object,
@@ -587,7 +601,7 @@ namespace $ {
 			rich: ( vals: Vals )=> Instance,
 		}) {
 			this.rich_node( keys ).set( null, rich )
-			;( type.prototype as any )[ $mol_vary_lean ] = ( val: Instance )=> [ keys, lean( val ) ]
+			;( type.prototype as any )[ this.lean_symbol ] = ( val: Instance )=> [ keys, lean( val ) ]
 		}
 		
 	}

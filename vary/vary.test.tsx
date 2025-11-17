@@ -330,7 +330,7 @@ namespace $.$$ {
 			)
 		},
 		
-		"vary pack custom class"( $ ) {
+		"vary pack custom types in rooms"( $ ) {
 			
 			class Foo {
 				
@@ -364,7 +364,7 @@ namespace $.$$ {
 			// isolated
 			$mol_assert_equal(
 				$mol_vary.take( $mol_vary.pack( new Foo( 4, 2 ) ) ),
-				{ summ: 6, diff: 2 } as any,
+				{ a: 4, b: 2 } as any,
 			)
 			
 			// inherited
