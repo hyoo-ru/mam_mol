@@ -8,8 +8,8 @@ namespace $.$$ {
 	
 	function check( vary: unknown, ideal: readonly number[], Vary = $mol_vary ) {
 		const pack = Vary.pack( vary )
-		$mol_assert_equal( pack, new Uint8Array( ideal ) )
 		$mol_assert_equal( Vary.take( pack ), vary )
+		$mol_assert_equal( pack, new Uint8Array( ideal ) )
 	}
 	
 	$mol_test({
