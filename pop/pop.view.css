@@ -18,7 +18,7 @@
 	width: max-content;
 	/* height: max-content; */
 	flex-direction: column;
-	max-width: 80vw;
+	max-width: calc( 100vw - var(--mol_gap_page) );
 	max-height: 80vw;
 	contain: paint;
 	transition-property: opacity;

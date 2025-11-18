@@ -7,6 +7,7 @@ namespace $ {
 	export let $mol_gap = $mol_style_prop(
 		'mol_gap',
 		[
+			'page',
 			'block',
 			'text',
 			'round',
