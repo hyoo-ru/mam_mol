@@ -632,40 +632,14 @@ namespace $ {
 		rich: ([ ts ])=> new Date( ts * 1000 ),
 	})
 	
-	/** Native Element support */
-	$mol_vary.type({
-		type: $mol_dom.Element,
-		keys: [ 'elem', 'keys', 'vals', 'kids' ],
-		lean: node => {
-			const attrs = [ ... node.attributes ]
-			const kids = [ ... node.childNodes ].map( kid => kid instanceof $mol_dom.Text ? kid.nodeValue! : kid )
-			return [ node.nodeName, attrs.map( attr => attr.nodeName ), attrs.map( attr => attr.nodeValue! ), kids ]
-		},
-		rich: ([ name, keys, vals, kids ])=> {
-			const el = $mol_dom.document.createElement( name )
-			for( let i = 0; i < keys.length; ++i ) el.setAttribute( keys[i], vals[i] )
-			for( let kid of kids ) {
-				if( typeof kid === 'string' ) kid = $mol_dom.document.createTextNode( kid )
-				el.appendChild( kid )
-			}
-			return el
-		},
-	})
-	
-	/** Native Comment support */
-	$mol_vary.type({
-		type: $mol_dom.Comment,
-		keys: [ '#comment' ],
-		lean: node => [ node.nodeValue! ],
-		rich: ([ text ]) => $mol_dom.document.createComment( text ),
-	})
-	
-	/** Native PI support */
-	$mol_vary.type({
-		type: $mol_dom.ProcessingInstruction,
-		keys: [ 'target', 'text' ],
-		lean: node => [ node.nodeName, node.nodeValue! ],
-		rich: ([ target, text ])=> $mol_dom.document.createProcessingInstruction( target, text ),
-	})
+	if( 'Element' in $mol_dom ) { // Absent in workers
+		/** Native Element support */
+		$mol_vary.type({
+			type: $mol_dom.Element,
+			keys: [ 'XML' ],
+			lean: node => [ $mol_dom_serialize( node ) ],
+			rich: ([ text ]) => $mol_dom_parse( text, 'application/xml' ).documentElement,
+		})
+	}
 	
 }
