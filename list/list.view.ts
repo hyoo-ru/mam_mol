@@ -39,7 +39,10 @@ namespace $.$$ {
 			if( next ) return next
 			
 			let [ min , max ] = $mol_mem_cached( ()=> this.view_window() ) ?? [ 0 , 0 ]
+			
 			const shift = this.view_window_shift()
+			this.view_window_shift( 0 )
+			
 			min += shift
 			max += shift
 
@@ -60,7 +63,7 @@ namespace $.$$ {
 
 			// change nothing when already covers all limits
 			if( top <= limit_top && bottom >= limit_bottom ) {
-				return [ min2 - shift, max2 - shift ]
+				return [ min2, max2 ]
 			}
 
 			// jumps when fully over limits
@@ -112,7 +115,7 @@ namespace $.$$ {
 				++ max2
 			}
 			
-			return [ min2 - shift, max2 - shift ]
+			return [ min2, max2 ]
 		}
 		
 		item_height_min( index: number ) {
