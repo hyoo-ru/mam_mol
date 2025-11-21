@@ -46,7 +46,7 @@ namespace $ {
 		buffer = new DataView( this.array.buffer )
 		
 		/** Packs any data to Uint8Array with deduplication. */
-		pack( data: unknown ) {
+		pack( data: readonly unknown[] ) {
 			
 			let pos = 0
 			let capacity = 9
@@ -320,7 +320,11 @@ namespace $ {
 				$mol_fail( new Error( `Unsupported type` ) )
 			}
 			
-			dump( data )
+			for( const item of data ) {
+				dump( item )
+				if( stack.length ) $mol_fail( new Error( 'Stack underflow', { cause: { stack, item } } ) )
+				offsets.clear()
+			}
 			
 			if( pos !== capacity ) $mol_fail( new Error( 'Wrong reserved capacity', { cause: { capacity, size: pos, data } } ) )
 			
@@ -541,8 +545,8 @@ namespace $ {
 				
 			}
 			
-			const result = read_vary()
-			if( pos !== array.byteLength ) $mol_fail( new Error( 'Buffer too large', { cause: { size: array.byteLength, taken: pos, result } } ) )
+			const result = [] as unknown[]
+			while( pos < array.byteLength ) result.push( read_vary() )
 			
 			return result
 		}

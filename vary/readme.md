@@ -55,13 +55,13 @@ import { $mol_vary } from 'mol_vary'
 ### Binarization
 
 ```ts
-const buffer = $mol_vary.pack( data )
+const buffer = $mol_vary.pack( list )
 ```
 
 ### Pasing
 
 ```ts
-const data = $mol_vary.take( buffer )
+const list = $mol_vary.take( buffer )
 ```
 
 ### Register custom types
@@ -88,8 +88,8 @@ Vary.type(
 )
 
 // Usage
-const buffer = Vary.pack( data_source )
-const data_restored = Vary.take( buffer )
+const buffer = Vary.pack([ new Foo( 3, 4 ) ])
+const foo = Vary.take( buffer )[0]
 ```
 
 ## Internals
