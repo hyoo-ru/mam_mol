@@ -60,7 +60,7 @@ namespace $.$$ {
 
 			// change nothing when already covers all limits
 			if( top <= limit_top && bottom >= limit_bottom ) {
-				return [ min2 , max2 ]
+				return [ min2 - shift, max2 - shift ]
 			}
 
 			// jumps when fully over limits
@@ -112,7 +112,7 @@ namespace $.$$ {
 				++ max2
 			}
 			
-			return [ min2 , max2 ]
+			return [ min2 - shift, max2 - shift ]
 		}
 		
 		item_height_min( index: number ) {
