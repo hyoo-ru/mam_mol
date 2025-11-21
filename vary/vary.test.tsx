@@ -7,8 +7,8 @@ namespace $.$$ {
 	const str = $mol_charset_encode
 	
 	function check( vary: unknown, ideal: readonly number[], Vary = $mol_vary ) {
-		const pack = Vary.pack( vary )
-		$mol_assert_equal( Vary.take( pack ), vary )
+		const pack = Vary.pack([ vary ])
+		$mol_assert_equal( Vary.take( pack ), [vary] )
 		$mol_assert_equal( pack, new Uint8Array( ideal ) )
 	}
 	
@@ -48,8 +48,9 @@ namespace $.$$ {
 		},
 		
 		"vary pack with wrong size"( $ ) {
-			$mol_assert_fail( ()=> $mol_vary.take( new Uint8Array([ uint|L1 ]) ), Error )
-			$mol_assert_fail( ()=> $mol_vary.take( new Uint8Array([ uint|L1, 200, 300 ]) ), 'Buffer too large' )
+			$mol_assert_equal( $mol_vary.take( new Uint8Array([]) ), [] )
+			$mol_assert_equal( $mol_vary.take( new Uint8Array([ uint|7 ]) ), [ 7 ] )
+			$mol_assert_equal( $mol_vary.take( new Uint8Array([ uint|7, uint|7 ]) ), [ 7, 7 ] )
 		},
 		
 		"vary pack sint0"( $ ) {
@@ -232,7 +233,7 @@ namespace $.$$ {
 		"vary pack cyclic struct"( $ ) {
 			const foo = { bar: null as any }
 			foo.bar = foo
-			$mol_assert_fail( ()=> $mol_vary.pack( foo ), 'Cyclic refs' )
+			$mol_assert_fail( ()=> $mol_vary.pack([ foo ]), 'Cyclic refs' )
 		},
 		
 		"vary pack Map"( $ ) {
@@ -272,7 +273,7 @@ namespace $.$$ {
 		"vary pack DOM Element"( $ ) {
 			$mol_assert_equal(
 				$mol_dom_serialize( <div><span/><br/> </div> ),
-				$mol_dom_serialize( $mol_vary.take( $mol_vary.pack( <div><span/><br/> </div> ) ) as Element ),
+				$mol_dom_serialize( ( $mol_vary.take( $mol_vary.pack([ <div><span/><br/> </div> ]) ) as Element[] )[0] ),
 			)
 		},
 		
@@ -309,14 +310,14 @@ namespace $.$$ {
 			
 			// isolated
 			$mol_assert_equal(
-				$mol_vary.take( $mol_vary.pack( new Foo( 4, 2 ) ) ),
-				{ a: 4, b: 2 } as any,
+				$mol_vary.take( $mol_vary.pack([ new Foo( 4, 2 ) ]) ),
+				[ { a: 4, b: 2 } ],
 			)
 			
 			// inherited
 			$mol_assert_equal(
-				Vary.take( Vary.pack( new Map([[ 1, 2 ]]) ) ),
-				new Map([[ 1, 2 ]]),
+				Vary.take( Vary.pack([ new Map([[ 1, 2 ]]) ]) ),
+				[ new Map([[ 1, 2 ]]) ],
 			)
 			
 		},
