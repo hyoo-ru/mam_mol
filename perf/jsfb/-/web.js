@@ -4260,7 +4260,7 @@ var $;
                 let top = Math.ceil(rect?.top ?? 0) + gap_before;
                 let bottom = Math.ceil(rect?.bottom ?? 0) - gap_after;
                 if (top <= limit_top && bottom >= limit_bottom) {
-                    return [min2, max2];
+                    return [min2 - shift, max2 - shift];
                 }
                 if (anchoring && ((bottom < limit_top) || (top > limit_bottom))) {
                     min = 0;
@@ -4294,7 +4294,7 @@ var $;
                     bottom2 += this.item_height_min(max2);
                     ++max2;
                 }
-                return [min2, max2];
+                return [min2 - shift, max2 - shift];
             }
             item_height_min(index) {
                 try {
