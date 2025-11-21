@@ -5560,6 +5560,7 @@ var $;
                     return next;
                 let [min, max] = $mol_mem_cached(() => this.view_window()) ?? [0, 0];
                 const shift = this.view_window_shift();
+                this.view_window_shift(0);
                 min += shift;
                 max += shift;
                 let max2 = max = Math.min(max, kids.length);
@@ -5574,7 +5575,7 @@ var $;
                 let top = Math.ceil(rect?.top ?? 0) + gap_before;
                 let bottom = Math.ceil(rect?.bottom ?? 0) - gap_after;
                 if (top <= limit_top && bottom >= limit_bottom) {
-                    return [min2 - shift, max2 - shift];
+                    return [min2, max2];
                 }
                 if (anchoring && ((bottom < limit_top) || (top > limit_bottom))) {
                     min = 0;
@@ -5608,7 +5609,7 @@ var $;
                     bottom2 += this.item_height_min(max2);
                     ++max2;
                 }
-                return [min2 - shift, max2 - shift];
+                return [min2, max2];
             }
             item_height_min(index) {
                 try {
