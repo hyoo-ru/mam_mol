@@ -8,7 +8,7 @@ namespace $ {
 		const bytes = [] as number[]
 		do {
 			
-			let byte = minus ^ Number( num % 256n )
+			let byte = minus ^ Number( num & 255n )
 			bytes.push( byte )
 			
 			if( num >>= 8n ) continue
