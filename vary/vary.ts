@@ -49,7 +49,7 @@ namespace $ {
 		pack( data: readonly unknown[] ) {
 			
 			let pos = 0
-			let capacity = 9
+			let capacity = 0
 			const offsets = new Map< unknown, number >()
 			const stack = [] as any[]
 			
@@ -147,11 +147,12 @@ namespace $ {
 				
 				const buf = $mol_bigint_encode( val as bigint )
 				
-				if( buf.byteLength > 264 ) $mol_fail( new Error( 'Number too high', { cause: { val } } ) )
-				acquire( buf.byteLength - 7 )
+				if( buf.byteLength > ( 2**16 + 8 ) ) $mol_fail( new Error( 'Number too high', { cause: { val } } ) )
+				acquire( buf.byteLength - 6 )
 				
 				this.array[ pos ++ ] = - $mol_vary_len.LA
-				this.array[ pos ++ ] = buf.byteLength - 9
+				this.buffer.setUint16( pos, buf.byteLength - 9, true )
+				pos += 2
 				
 				this.array.set( buf, pos )
 				pos += buf.byteLength
@@ -321,6 +322,7 @@ namespace $ {
 			}
 			
 			for( const item of data ) {
+				capacity += 9
 				dump( item )
 				if( stack.length ) $mol_fail( new Error( 'Stack underflow', { cause: { stack, item } } ) )
 				offsets.clear()
@@ -388,7 +390,8 @@ namespace $ {
 					if( res >= Number.MIN_SAFE_INTEGER && res <= Number.MAX_SAFE_INTEGER ) res = Number( res )
 					pos += 8
 				} else if( num === - $mol_vary_len.LA ) {
-					const len = buffer.getUint8( pos ++ ) + 9
+					const len = buffer.getUint16( pos, true ) + 9
+					pos += 2
 					res = $mol_bigint_decode( new Uint8Array( buffer.buffer, buffer.byteOffset + pos, len ) )
 					pos += len
 				} else {
@@ -546,7 +549,10 @@ namespace $ {
 			}
 			
 			const result = [] as unknown[]
-			while( pos < array.byteLength ) result.push( read_vary() )
+			while( pos < array.byteLength ) {
+				result.push( read_vary() )
+				stream.length = 0	
+			}
 			
 			return result
 		}
