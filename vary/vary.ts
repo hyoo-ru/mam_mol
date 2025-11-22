@@ -5,8 +5,8 @@ namespace $ {
 		link = 0b001 << 5,
 		spec = 0b010 << 5,
 		list = 0b011 << 5,
-		text = 0b100 << 5,
-		blob = 0b101 << 5,
+		blob = 0b100 << 5,
+		text = 0b101 << 5,
 		tupl = 0b110 << 5,
 		sint = 0b111 << 5,
 	}
