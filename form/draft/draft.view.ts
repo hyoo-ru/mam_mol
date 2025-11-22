@@ -1,9 +1,6 @@
 namespace $.$$ {
 
-	type Primitive = string | number | boolean
-
-	type Value = readonly Primitive[] | Primitive | Record<string, boolean>
-	type Model = Record<string, (next?: Value | null) => Value>
+	type Model = Record<string, (next?: $mol_form_draft_state_value | null) => $mol_form_draft_state_value>
 
 	function norm_string(val: unknown) {
 		return String(val ?? '')
@@ -17,7 +14,7 @@ namespace $.$$ {
 		return Boolean(val ?? false)
 	}
 
-	function normalize_val(prev: Value, next: Value | null) {
+	function normalize_val(prev: $mol_form_draft_state_value, next: $mol_form_draft_state_value | null) {
 		switch( typeof prev ) {
 			case 'boolean': return String( next ) === 'true'
 			case 'number': return Number( next )
@@ -66,16 +63,16 @@ namespace $.$$ {
 			return norm_bool( this.value( field, next ) )
 		}
 
-		override model_pick(field: string, next?: Value | null) {
+		override model_pick(field: string, next?: $mol_form_draft_state_value | null) {
 			return (this.model() as unknown as Model)[field](next)
 		}
 
-		override state_pick(field: string, next?: Value | null) {
+		override state_pick(field: string, next?: $mol_form_draft_state_value | null) {
 			return this.state( next === undefined ? next : { ... this.state(), [ field ]: next } )[ field ]
 		}
 
 		@ $mol_mem_key
-		override value<T extends Value>( field: string, next?: T | null ): T {
+		override value<T extends $mol_form_draft_state_value>( field: string, next?: T | null ): T {
 			if (Array.isArray(next) && next.length === 0 && ! this.model_pick(field)) next = null
 			return this.state_pick(field, next) as T ?? this.model_pick(field)
 		}
@@ -97,7 +94,7 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		override state( next?: Record< string, Value | null > | null ) {
+		override state( next?: $mol_form_draft_state ) {
 			return this.$.$mol_state_local.value( `${ this }.state()`, next ) ?? {}
 		}
 		
