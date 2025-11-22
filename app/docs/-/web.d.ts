@@ -16476,6 +16476,13 @@ declare namespace $ {
 
 //# sourceMappingURL=restore.view.tree.d.ts.map
 declare namespace $ {
+    type Primitive = string | number | boolean;
+    export type $mol_form_draft_state_value = readonly Primitive[] | Primitive | Record<string, boolean>;
+    export type $mol_form_draft_state = Record<string, $mol_form_draft_state_value | null> | null;
+    export {};
+}
+
+declare namespace $ {
 
 	type $mol_button_minor__hint_mol_form_draft_1 = $mol_type_enforce<
 		ReturnType< $mol_form_draft['reset_title'] >
@@ -16499,7 +16506,7 @@ declare namespace $ {
 		model( ): $mol_object2
 		model_pick( id: any, next?: any ): any
 		changed( ): boolean
-		state( ): Record<string, any>
+		state( next?: $mol_form_draft_state | null ): $mol_form_draft_state | null
 		state_pick( id: any, next?: any ): any
 		value( id: any, next?: any ): any
 		value_str( id: any, next?: string ): string
@@ -16517,26 +16524,23 @@ declare namespace $ {
 
 //# sourceMappingURL=draft.view.tree.d.ts.map
 declare namespace $.$$ {
-    type Primitive = string | number | boolean;
-    type Value = readonly Primitive[] | Primitive | Record<string, boolean>;
-    export class $mol_form_draft extends $.$mol_form_draft {
+    class $mol_form_draft extends $.$mol_form_draft {
         list_string(field: string, next?: readonly string[] | null): string[];
         dictionary_bool(field: string, next?: Record<string, boolean> | null): Record<string, boolean>;
         value_str(field: string, next?: string | null): string;
         value_number(field: string, next?: number | null): number;
         value_bool(field: string, next?: boolean | null): boolean;
-        model_pick(field: string, next?: Value | null): Value;
-        state_pick(field: string, next?: Value | null): Value | null;
-        value<T extends Value>(field: string, next?: T | null): T;
+        model_pick(field: string, next?: $mol_form_draft_state_value | null): $mol_form_draft_state_value;
+        state_pick(field: string, next?: $mol_form_draft_state_value | null): $mol_form_draft_state_value | null;
+        value<T extends $mol_form_draft_state_value>(field: string, next?: T | null): T;
         value_changed(field: string): boolean;
-        state(next?: Record<string, Value | null> | null): Record<string, Value | null>;
+        state(next?: $mol_form_draft_state): Record<string, $mol_form_draft_state_value | null>;
         changed(): boolean;
         reset(next?: unknown): void;
         result(next?: string | Error): string;
         buttons(): ($mol_button_minor | $.$mol_status)[];
         save(next?: Event): null;
     }
-    export {};
 }
 
 declare namespace $.$$ {

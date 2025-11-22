@@ -22,7 +22,7 @@ declare namespace $ {
 		model( ): $mol_object2
 		model_pick( id: any, next?: any ): any
 		changed( ): boolean
-		state( ): Record<string, any>
+		state( next?: $mol_form_draft_state | null ): $mol_form_draft_state | null
 		state_pick( id: any, next?: any ): any
 		value( id: any, next?: any ): any
 		value_str( id: any, next?: string ): string

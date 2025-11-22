@@ -550,6 +550,7 @@
     "$mol_form_draft_demo",
     "$mol_form_draft",
     "$mol_icon_restore",
+    "$mol_form_draft_state",
     "$mol_select_list",
     "$mol_format_demo",
     "$mol_phone",

@@ -4631,7 +4631,7 @@ $mol_form_draft $mol_form
 	model $mol_object2
 	model_pick*? null
 	changed false
-	state *
+	state? null $mol_form_draft_state
 	state_pick*? null
 	value*? null
 	value_str*? \
