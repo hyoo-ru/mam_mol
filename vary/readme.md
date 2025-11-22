@@ -26,7 +26,7 @@
 |                | $mol_vary | cbor-x      | msgpackr
 |----------------|-----------|-------------|---------
 | Language       | ✅ TS     | ✅ TS+DTS  | ❌ JS+DTS
-| Performance    | ⭕ 100%   | ✅ 120%    | ✅ 120%
+| Performance    | ⭕ 100%   | ✅ +20%    | ✅ +50%
 | Packed Size    | ✅ 100%   | ❌ +40%    | ❌ +30%
 | Lib Size       | ✅ 4KB    | ❌ 11 KB   | ❌ 11 KB
 | Compatibility  | ✅ std    | ⭕ ext-std | ❌ ext
@@ -34,7 +34,7 @@
 [Benchmark](https://perf.js.hyoo.ru/#!bench=j1peaq_k376h9) results:
 
 ### Chrome 142
-![](https://habrastorage.org/webt/gk/hr/8t/gkhr8tc39bh315ogueiwkylksiq.png)
+![](https://habrastorage.org/webt/72/hw/dl/72hwdlo7d_ijur4as3epgiynkpc.png)
 
 ## API
 
