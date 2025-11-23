@@ -405,7 +405,7 @@ namespace $ {
 			
 			const read_text = ( kind: number )=> {
 				const len = read_unum( kind ) as number
-				const [ text, bytes ] = $mol_charset_decode_from( array, buffer.byteOffset + pos, len )
+				const [ text, bytes ] = $mol_charset_decode_from( array, pos, len )
 				pos += bytes
 				stream.push( text )
 				return text
