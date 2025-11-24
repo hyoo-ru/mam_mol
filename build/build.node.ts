@@ -79,7 +79,7 @@ namespace $ {
 
 				const res = this.$.$mol_file.unwatched(() => this.$.$mol_run.spawn( { command: step.text(), dir } ), dir )
 					.stdout.toString().trim()
-				if( step.type ) content += `let ${ step.type } = ${ JSON.stringify( res ) }`
+				if( step.type ) content += `$.${ step.type } = ${ JSON.stringify( res ) }`
 
 			}
 
