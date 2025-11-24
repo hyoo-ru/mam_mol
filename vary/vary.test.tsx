@@ -286,7 +286,7 @@ namespace $.$$ {
 				
 			}
 			
-			const Vary = $mol_vary.room()
+			const Vary = $mol_vary.zone()
 			
 			Vary.type({
 				type: Foo,

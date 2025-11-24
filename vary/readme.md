@@ -77,7 +77,7 @@ class Foo {
 }
 
 // Make isolated Vary
-const Vary = $mol_vary.room()
+const Vary = $mol_vary.zone()
 
 // Add custom type support
 Vary.type(
