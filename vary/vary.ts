@@ -562,7 +562,7 @@ namespace $ {
 		])
 		
 		/** Isolated Vary for custom types */
-		room() {
+		zone() {
 			const room = new $mol_vary_class
 			Object.setPrototypeOf( room, this )
 			const index_clone = ( map: Map< string | null, any > ): Map<any,any> => new Map(
