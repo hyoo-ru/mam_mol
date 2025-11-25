@@ -183,7 +183,7 @@ namespace $ {
 
 		@ $mol_mem_key
 		override readable(opts: { start?: number, end?: number }) {
-			const { Readable } = $node['node:stream'] as typeof import('stream')
+			const { Readable } = $node['node:stream'] as typeof import('node:stream')
 			const stream = $node.fs.createReadStream(this.path(), {
 				flags: 'r',
 				autoClose: true,
@@ -197,7 +197,7 @@ namespace $ {
 
 		@ $mol_mem
 		override writable(opts?: { start?: number }) {
-			const { Writable } = $node['node:stream'] as typeof import('stream')
+			const { Writable } = $node['node:stream'] as typeof import('node:stream')
 			const stream = $node.fs.createWriteStream(this.path(), {
 				flags: 'w+',
 				autoClose: true,
