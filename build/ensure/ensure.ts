@@ -53,8 +53,6 @@ namespace $ {
 			const mod = $mol_file.absolute( path )
 			const parent = mod.parent()
 
-			if( mod.name().startsWith( 'node:' ) ) return true
-			
 			if( mod !== this.root() ) this.ensure( parent.path() )
 
 			if (mod.exists() && mod.type() !== 'dir') return false
