@@ -1588,6 +1588,7 @@ namespace $ {
 				
 				line.replace(
 					/\b(?:require|import)\(\s*['"]([^"'()]*?)['"]\s*\)/ig , ( str , path )=> {
+						if( path.startsWith( 'node:' ) ) return str
 						$mol_build_depsMerge( depends , { [ path ] : priority } )
 						return str
 					}
