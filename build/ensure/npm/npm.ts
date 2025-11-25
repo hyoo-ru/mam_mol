@@ -8,11 +8,13 @@ namespace $ {
 			const parent = mod.parent()
 			const node = this.root().resolve( 'node' )
 			const node_modules = this.root().resolve( 'node_modules' )
+			const name = mod.name()
+
 			if(
 				[ node, node_modules ].includes( parent )
-				&& ! mod.name().match(/^(@|node:)/)
+				&& ! name.match(/^(@|node:)/)
 			) {
-				$node [ mod.name() ] // force autoinstall through npm
+				$node [ name ] // force autoinstall through npm
 				return true
 			}
 			
