@@ -9,6 +9,8 @@ namespace $ {
 			const node = this.root().resolve( 'node' )
 			const node_modules = this.root().resolve( 'node_modules' )
 			
+			if( mod.name().startsWith( 'node:' ) ) return true
+			
 			if(
 				[ node, node_modules ].includes( parent )
 				&& mod.name() !== 'node'
