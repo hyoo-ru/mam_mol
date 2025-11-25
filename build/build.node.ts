@@ -44,14 +44,11 @@ namespace $ {
 					}
 					process.exit(0)
 				} catch( error: any ) {
-					if( $mol_fail_catch( error ) ) {
-						this.$.$mol_log3_fail({
-							place: '$mol_build_start' , 
-							message: error.message,
-							trace: error.stack,
-						})
-					}
-					console.error( error )
+					this.$.$mol_log3_fail({
+						place: '$mol_build_start' , 
+						message: error.message,
+						trace: error.stack,
+					})
 					process.exit(135)
 				}
 			} else {
