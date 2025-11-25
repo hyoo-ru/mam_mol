@@ -44,6 +44,7 @@ namespace $ {
 					}
 					process.exit(0)
 				} catch( error: any ) {
+					if( $mol_promise_like( error ) ) return
 					this.$.$mol_log3_fail({
 						place: '$mol_build_start' , 
 						message: error.message,
