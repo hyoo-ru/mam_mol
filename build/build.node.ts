@@ -51,8 +51,8 @@ namespace $ {
 							trace: error.stack,
 						})
 					}
-
-					process.exit(1)
+					console.error( error )
+					process.exit(135)
 				}
 			} else {
 				Promise.resolve().then( ()=> {
