@@ -2,8 +2,14 @@ namespace $ {
 	
 	setTimeout( ()=> $mol_wire_async( $mol_build ).start( process.argv.slice( 2 ) ) )
 
+	
+
 	export class $mol_build extends $mol_object {
-		
+		static is_internal(dep: string) {
+			if ( dep.startsWith('node:') ) return true
+			return require('module').builtinModules.includes(dep)
+		}
+
 		@ $mol_mem_key
 		static root( [ root, paths ] : [root: string, paths: readonly string[] ] ) {
 			this.$.$mol_file.base = root
@@ -1240,7 +1246,8 @@ namespace $ {
 			json.version = version.join( '.' )
 
 			for( let dep of this.nodeDeps([ path , exclude ]).keys() ) {
-				if( require('module').builtinModules.includes(dep) || dep.startsWith('node:')) continue
+
+				if( $mol_build.is_internal(dep) ) continue
 				json.dependencies[ dep ] ??= `*`
 			}
 			
@@ -1550,6 +1557,7 @@ namespace $ {
 				
 				line.replace(
 					/\b(?:require|import)\(\s*['"]([^"'()]*?)['"]\s*\)/ig , ( str , path )=> {
+						if ($mol_build.is_internal(path)) return str
 						path = path.replace( /(\/[^\/.]+)$/ , '$1.js' ).replace( /\/$/, '/index.js' )
 						if( path[0] === '.' ) path = '../' + path
 						$mol_build_depsMerge( depends , { [ path ] : priority } )
@@ -1588,7 +1596,7 @@ namespace $ {
 				
 				line.replace(
 					/\b(?:require|import)\(\s*['"]([^"'()]*?)['"]\s*\)/ig , ( str , path )=> {
-						if( path.startsWith( 'node:' ) ) return str
+						if ($mol_build.is_internal(path)) return str
 						$mol_build_depsMerge( depends , { [ path ] : priority } )
 						return str
 					}
