@@ -60,11 +60,39 @@ namespace $ {
 	].map( str => `github_pat_${str}` )
 	
 	export const $mol_github_model_polyglots = [
+		'xai/grok-3', // Default model
+		'xai/grok-3-mini', // Lightweight reasoning model
+		// 'openai/gpt-5', // Logic-heavy and multi-step tasks
+		// 'openai/gpt-5-chat', // Advanced, natural, multimodal conversations
+		'openai/gpt-5-mini', // Lightweight for cost-sensitive apps
+		'openai/gpt-5-nano', // Optimized for speed and low latency
 		// 'openai/gpt-4.1', // 50/D too slow
-		// 'openai/gpt-4o', // 50/D bad resp
-		'openai/gpt-4.1-mini', // 150/D
-		// 'openai/gpt-4o-mini', // 150/D bad resp
+		// 'openai/gpt-4.1-mini', // 150/D
 		// 'openai/gpt-4.1-nano', // 150/D bad resp
+		// 'openai/gpt-4o', // 50/D bad resp
+		// 'openai/gpt-4o-mini', // 150/D bad resp
+		// 'meta-llama/Llama-4-Scout-17B-16E-Instruct', // Multi-document summarization
+		// 'meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8', // Image understanding, creative writing
+		// 'meta-llama/Llama-3.3-70B-Instruct', // Enhanced reasoning, math
+		// 'meta-llama/Meta-Llama-3.1-405B-Instruct', // Multilingual dialogue
+		// 'meta-llama/Llama-3.2-90B-Vision-Instruct', // Advanced image reasoning
+		// 'meta-llama/Llama-3.2-11B-Vision-Instruct', // Image reasoning on high-res
+		// 'meta-llama/Meta-Llama-3.1-8B-Instruct', // Multilingual dialogue
+		// 'meta-llama/Meta-Llama-3-8B-Instruct', // Dialogue and text generation
+		// 'deepseek/deepseek-r1-0528', // Enhanced reasoning, function calling
+		// 'deepseek/deepseek-v3-0324', // Reasoning, function calling, code generation
+		// 'deepseek/deepseek-r1', // Reasoning tasks
+		// 'microsoft/phi-4', // Low latency scenarios
+		// 'microsoft/phi-4-reasoning', // Reasoning model
+		// 'microsoft/phi-4-multimodal-instruct', // Text, audio, image inputs
+		// 'microsoft/phi-4-mini-reasoning', // Math reasoning
+		// 'microsoft/phi-4-mini-instruct', // Reasoning, math, coding, function-calling
+		// 'cohere/command-r-plus-08-2024', // RAG-optimized for enterprise
+		// 'cohere/command-r-08-2024', // RAG and Tool Use
+		// 'cohere/command-a', // Agentic and multilingual
+		// 'mistralai/mistral-small-3.1', // Multimodal, 128k context
+		// 'mistralai/mistral-medium-3-25.05', // Reasoning, knowledge, coding, vision
+		// 'ai21/jamba-1.5-large', // 256K context, function calling, structured output
 	]
 	
 	const System = $mol_data_record({
@@ -75,14 +103,14 @@ namespace $ {
 	const Assistant = $mol_data_record({
 		role: $mol_data_const( 'assistant' ),
 		content: $mol_data_nullable( $mol_data_string ),
-		tool_calls: $mol_data_optional( $mol_data_array( $mol_data_record({
+		tool_calls: $mol_data_optional( $mol_data_nullable( $mol_data_array( $mol_data_record({
 			type: $mol_data_const( 'function' ),
 			id: $mol_data_string,
 			function: $mol_data_record({
 				name: $mol_data_string,
 				arguments: $mol_data_string,
 			}),
-		}) ) ),
+		}) ) ) ),
 	})
 	
 	const User = $mol_data_record({
@@ -317,9 +345,10 @@ namespace $ {
 					const resp = error.cause as $mol_fetch_response
 					if( !resp ) return $mol_fail_hidden( error )
 						
-					if( resp.code() === 429 ) continue // rate limit
+					const code = typeof resp.code === 'function' ? resp.code() : resp.code
+					if( code === 429 ) continue // rate limit
 					
-					if( resp.code() === 400 ) {
+					if( code === 400 ) {
 						const message = RespFail( resp.json() as any ).error.message
 						this.history([ ... history, { role: 'assistant', content: '📛 ' + message } ])
 						$mol_fail( new Error( message ) )
