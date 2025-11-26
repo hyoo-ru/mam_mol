@@ -1,6 +1,6 @@
 {
   "name": "mol_plot_all",
-  "version": "1.2.1586",
+  "version": "1.2.1587",
   "exports": {
     "node": {
       "import": "./node.mjs",
@@ -117,7 +117,6 @@
     "$mol_charset_encoding",
     "$mol_charset_encode",
     "$mol_file_transaction",
-    "$node_modules",
     "$mol_gap",
     "$mol_jsx",
     "$mol_dom_render_children",

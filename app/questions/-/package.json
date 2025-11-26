@@ -116,7 +116,6 @@
     "$mol_charset_encoding",
     "$mol_charset_encode",
     "$mol_file_transaction",
-    "$node_modules",
     "$mol_gap",
     "$mol_jsx",
     "$mol_dom_render_children",
