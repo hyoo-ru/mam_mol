@@ -332,7 +332,7 @@ namespace $ {
 				}
 				
 				const node_types = $mol_file.absolute( path ).resolve( `-node/deps.d.ts` )
-				node_types.text( 'interface $node {\n ' + types.join( '\n' ) + '\n}' )
+				node_types.text( '// @ts-nocheck\ninterface $node {\n ' + types.join( '\n' ) + '\n}' )
 				sources.push( node_types )
 			}
 
