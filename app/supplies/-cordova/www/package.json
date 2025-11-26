@@ -27,6 +27,8 @@
     "$mol_dom_context",
     "$mol_dom",
     "$node",
+    "$node_internal_check",
+    "$node_internal",
     "$mol_exec",
     "$mol_run",
     "$mol_error_mix",
@@ -72,8 +74,8 @@
     "$mol_maybe",
     "$mol_term_color",
     "$mol_term",
-    "$mol_fail_catch",
     "$mol_fail_log",
+    "$mol_fail_catch",
     "$mol_try",
     "$mol_promise_blocker",
     "$mol_promise_promise",
@@ -217,6 +219,7 @@
     "$mol_app_supplies_position"
   ],
   "dependencies": {
+    "internal": "*",
     "jsdom": "*"
   }
 }

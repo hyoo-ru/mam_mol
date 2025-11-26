@@ -19,11 +19,15 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_fail(error: any): never;
+    function $node_internal_check(name: string): boolean;
 }
 
 declare namespace $ {
     function $mol_promise_like(val: any): val is Promise<any>;
+}
+
+declare namespace $ {
+    function $mol_fail(error: any): never;
 }
 
 declare namespace $ {

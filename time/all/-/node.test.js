@@ -1075,6 +1075,20 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    const mod = require('module');
+    const internals = mod.builtinModules;
+    function $node_internal_check(name) {
+        if (name.startsWith('node:'))
+            return true;
+        return internals.includes(name);
+    }
+    $.$node_internal_check = $node_internal_check;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
     const catched = new WeakSet();
     function $mol_fail_catch(error) {
         if (typeof error !== 'object')
@@ -1143,39 +1157,44 @@ var $node = new Proxy({ require }, {
     get(target, name, wrapper) {
         if (target[name])
             return target[name];
-        if (name.startsWith('node:'))
+        const $$ = $;
+        if ($$.$node_internal_check(name, target))
             return target.require(name);
         if (name[0] === '.')
-            return target.require(name);
-        const mod = target.require('module');
-        if (mod.builtinModules.indexOf(name) >= 0)
             return target.require(name);
         try {
             target.require.resolve(name);
         }
         catch {
-            const $$ = $;
-            $$.$mol_exec('.', 'npm', 'install', '--omit=dev', name);
+            try {
+                $$.$mol_exec('.', 'npm', 'install', '--omit=dev', name);
+            }
+            catch (e) {
+                if ($$.$mol_promise_like(e))
+                    $$.$mol_fail_hidden(e);
+            }
             try {
                 $$.$mol_exec('.', 'npm', 'install', '--omit=dev', '@types/' + name);
             }
             catch (e) {
-                if ($$.$mol_fail_catch(e)) {
-                    $$.$mol_fail_log(e);
-                }
+                if ($$.$mol_promise_like(e))
+                    $$.$mol_fail_hidden(e);
+                $$.$mol_fail_log(e);
             }
         }
         try {
             return target.require(name);
         }
         catch (error) {
-            if ($.$mol_fail_catch(error) && error.code === 'ERR_REQUIRE_ESM') {
+            if ($$.$mol_promise_like(error))
+                $$.$mol_fail_hidden(error);
+            if (error && typeof error === 'object' && error.code === 'ERR_REQUIRE_ESM') {
                 const module = cache.get(name);
                 if (module)
                     return module;
                 throw Object.assign(import(name).then(module => cache.set(name, module)), { cause: error });
             }
-            $.$mol_fail_log(error);
+            $$.$mol_fail_log(error);
             return null;
         }
     },
@@ -1188,1792 +1207,6 @@ const cache = new Map();
 require = (req => Object.assign(function require(name) {
     return $node[name];
 }, req))(require);
-
-;
-"use strict";
-var $;
-(function ($) {
-    const named = new WeakSet();
-    function $mol_func_name(func) {
-        let name = func.name;
-        if (name?.length > 1)
-            return name;
-        if (named.has(func))
-            return name;
-        for (let key in this) {
-            try {
-                if (this[key] !== func)
-                    continue;
-                name = key;
-                Object.defineProperty(func, 'name', { value: name });
-                break;
-            }
-            catch { }
-        }
-        named.add(func);
-        return name;
-    }
-    $.$mol_func_name = $mol_func_name;
-    function $mol_func_name_from(target, source) {
-        Object.defineProperty(target, 'name', { value: source.name });
-        return target;
-    }
-    $.$mol_func_name_from = $mol_func_name_from;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($_1) {
-    $mol_test({
-        'FQN of anon function'($) {
-            const $$ = Object.assign($, { $mol_func_name_test: (() => () => { })() });
-            $mol_assert_equal($$.$mol_func_name_test.name, '');
-            $mol_assert_equal($$.$mol_func_name($$.$mol_func_name_test), '$mol_func_name_test');
-            $mol_assert_equal($$.$mol_func_name_test.name, '$mol_func_name_test');
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function cause_serialize(cause) {
-        return JSON.stringify(cause, null, '  ')
-            .replace(/\(/, '<')
-            .replace(/\)/, ' >');
-    }
-    function frame_normalize(frame) {
-        return (typeof frame === 'string' ? frame : cause_serialize(frame))
-            .trim()
-            .replace(/at /gm, '   at ')
-            .replace(/^(?!    +at )(.*)/gm, '    at | $1 (#)');
-    }
-    class $mol_error_mix extends AggregateError {
-        cause;
-        name = $$.$mol_func_name(this.constructor).replace(/^\$/, '') + '_Error';
-        constructor(message, cause = {}, ...errors) {
-            super(errors, message, { cause });
-            this.cause = cause;
-            const desc = Object.getOwnPropertyDescriptor(this, 'stack');
-            const stack_get = () => desc?.get?.() ?? super.stack ?? desc?.value ?? this.message;
-            Object.defineProperty(this, 'stack', {
-                get: () => stack_get() + '\n' + [
-                    this.cause ?? 'no cause',
-                    ...this.errors.flatMap(e => [
-                        String(e.stack),
-                        ...e instanceof $mol_error_mix || !e.cause ? [] : [e.cause]
-                    ])
-                ].map(frame_normalize).join('\n')
-            });
-            Object.defineProperty(this, 'cause', {
-                get: () => cause
-            });
-        }
-        static [Symbol.toPrimitive]() {
-            return this.toString();
-        }
-        static toString() {
-            return $$.$mol_func_name(this);
-        }
-        static make(...params) {
-            return new this(...params);
-        }
-    }
-    $.$mol_error_mix = $mol_error_mix;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'auto name'() {
-            class Invalid extends $mol_error_mix {
-            }
-            const mix = new Invalid('foo');
-            $mol_assert_equal(mix.name, 'Invalid_Error');
-        },
-        'simpe mix'() {
-            const mix = new $mol_error_mix('foo', {}, new Error('bar'), new Error('lol'));
-            $mol_assert_equal(mix.message, 'foo');
-            $mol_assert_equal(mix.errors.map(e => e.message), ['bar', 'lol']);
-        },
-        'provide additional info'() {
-            class Invalid extends $mol_error_mix {
-            }
-            const mix = new $mol_error_mix('Wrong password', {}, new Invalid('Too short', { value: 'p@ssw0rd', hint: '> 8 letters' }), new Invalid('Too simple', { value: 'p@ssw0rd', hint: 'need capital letter' }));
-            const hints = [];
-            if (mix instanceof $mol_error_mix) {
-                for (const er of mix.errors) {
-                    if (er instanceof Invalid) {
-                        hints.push(er.cause?.hint ?? '');
-                    }
-                }
-            }
-            $mol_assert_equal(hints, ['> 8 letters', 'need capital letter']);
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_ambient_ref = Symbol('$mol_ambient_ref');
-    function $mol_ambient(overrides) {
-        return Object.setPrototypeOf(overrides, this || $);
-    }
-    $.$mol_ambient = $mol_ambient;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_owning_map = new WeakMap();
-    function $mol_owning_allow(having) {
-        try {
-            if (!having)
-                return false;
-            if (typeof having !== 'object' && typeof having !== 'function')
-                return false;
-            if (having instanceof $mol_delegate)
-                return false;
-            if (typeof having['destructor'] !== 'function')
-                return false;
-            return true;
-        }
-        catch {
-            return false;
-        }
-    }
-    $.$mol_owning_allow = $mol_owning_allow;
-    function $mol_owning_get(having, Owner) {
-        if (!$mol_owning_allow(having))
-            return null;
-        while (true) {
-            const owner = $.$mol_owning_map.get(having);
-            if (!owner)
-                return owner;
-            if (!Owner)
-                return owner;
-            if (owner instanceof Owner)
-                return owner;
-            having = owner;
-        }
-    }
-    $.$mol_owning_get = $mol_owning_get;
-    function $mol_owning_check(owner, having) {
-        if (!$mol_owning_allow(having))
-            return false;
-        if ($.$mol_owning_map.get(having) !== owner)
-            return false;
-        return true;
-    }
-    $.$mol_owning_check = $mol_owning_check;
-    function $mol_owning_catch(owner, having) {
-        if (!$mol_owning_allow(having))
-            return false;
-        if ($.$mol_owning_map.get(having))
-            return false;
-        $.$mol_owning_map.set(having, owner);
-        return true;
-    }
-    $.$mol_owning_catch = $mol_owning_catch;
-})($ || ($ = {}));
-
-;
-"use strict";
-
-;
-"use strict";
-
-;
-"use strict";
-
-;
-"use strict";
-
-;
-"use strict";
-
-;
-"use strict";
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_object2 {
-        static $ = $;
-        [Symbol.toStringTag];
-        [$mol_ambient_ref] = null;
-        get $() {
-            if (this[$mol_ambient_ref])
-                return this[$mol_ambient_ref];
-            const owner = $mol_owning_get(this);
-            return this[$mol_ambient_ref] = owner?.$ || this.constructor.$ || $mol_object2.$;
-        }
-        set $(next) {
-            if (this[$mol_ambient_ref])
-                $mol_fail_hidden(new Error('Context already defined'));
-            this[$mol_ambient_ref] = next;
-        }
-        static create(init) {
-            const obj = new this;
-            if (init)
-                init(obj);
-            return obj;
-        }
-        static [Symbol.toPrimitive]() {
-            return this.toString();
-        }
-        static toString() {
-            return this[Symbol.toStringTag] || this.$.$mol_func_name(this);
-        }
-        static toJSON() {
-            return this.toString();
-        }
-        destructor() { }
-        static destructor() { }
-        toString() {
-            return this[Symbol.toStringTag] || this.constructor.name + '<>';
-        }
-    }
-    $.$mol_object2 = $mol_object2;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($_1) {
-    let $$;
-    (function ($$) {
-        let $;
-    })($$ = $_1.$$ || ($_1.$$ = {}));
-    $_1.$mol_object_field = Symbol('$mol_object_field');
-    class $mol_object extends $mol_object2 {
-        static make(config) {
-            return super.create(obj => {
-                for (let key in config)
-                    obj[key] = config[key];
-            });
-        }
-    }
-    $_1.$mol_object = $mol_object;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($_1) {
-    $mol_test({
-        'init with overload'() {
-            class X extends $mol_object {
-                foo() {
-                    return 1;
-                }
-            }
-            var x = X.make({
-                foo: () => 2,
-            });
-            $mol_assert_equal(x.foo(), 2);
-        },
-        'Context in instance inherits from class'($) {
-            const custom = $.$mol_ambient({});
-            class X extends $.$mol_object {
-                static $ = custom;
-            }
-            $mol_assert_equal(new X().$, custom);
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_env() {
-        return {};
-    }
-    $.$mol_env = $mol_env;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_env = function $mol_env() {
-        return this.process.env;
-    };
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_guid(length = 8, exists = () => false) {
-        for (;;) {
-            let id = Math.random().toString(36).substring(2, length + 2).toUpperCase();
-            if (exists(id))
-                continue;
-            return id;
-        }
-    }
-    $.$mol_guid = $mol_guid;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    let $mol_wire_cursor;
-    (function ($mol_wire_cursor) {
-        $mol_wire_cursor[$mol_wire_cursor["stale"] = -1] = "stale";
-        $mol_wire_cursor[$mol_wire_cursor["doubt"] = -2] = "doubt";
-        $mol_wire_cursor[$mol_wire_cursor["fresh"] = -3] = "fresh";
-        $mol_wire_cursor[$mol_wire_cursor["final"] = -4] = "final";
-    })($mol_wire_cursor = $.$mol_wire_cursor || ($.$mol_wire_cursor = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_wire_pub extends Object {
-        constructor(id = `$mol_wire_pub:${$mol_guid()}`) {
-            super();
-            this[Symbol.toStringTag] = id;
-        }
-        [Symbol.toStringTag];
-        data = [];
-        static get [Symbol.species]() {
-            return Array;
-        }
-        sub_from = 0;
-        get sub_list() {
-            const res = [];
-            for (let i = this.sub_from; i < this.data.length; i += 2) {
-                res.push(this.data[i]);
-            }
-            return res;
-        }
-        get sub_empty() {
-            return this.sub_from === this.data.length;
-        }
-        sub_on(sub, pub_pos) {
-            const pos = this.data.length;
-            this.data.push(sub, pub_pos);
-            return pos;
-        }
-        sub_off(sub_pos) {
-            if (!(sub_pos < this.data.length)) {
-                $mol_fail(new Error(`Wrong pos ${sub_pos}`));
-            }
-            const end = this.data.length - 2;
-            if (sub_pos !== end) {
-                this.peer_move(end, sub_pos);
-            }
-            this.data.length = end;
-            if (end === this.sub_from)
-                this.reap();
-        }
-        reap() { }
-        promote() {
-            $mol_wire_auto()?.track_next(this);
-        }
-        fresh() { }
-        complete() { }
-        get incompleted() {
-            return false;
-        }
-        emit(quant = $mol_wire_cursor.stale) {
-            for (let i = this.sub_from; i < this.data.length; i += 2) {
-                ;
-                this.data[i].absorb(quant, this.data[i + 1]);
-            }
-        }
-        peer_move(from_pos, to_pos) {
-            const peer = this.data[from_pos];
-            const self_pos = this.data[from_pos + 1];
-            this.data[to_pos] = peer;
-            this.data[to_pos + 1] = self_pos;
-            peer.peer_repos(self_pos, to_pos);
-        }
-        peer_repos(peer_pos, self_pos) {
-            this.data[peer_pos + 1] = self_pos;
-        }
-    }
-    $.$mol_wire_pub = $mol_wire_pub;
-})($ || ($ = {}));
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_wire_auto_sub = null;
-    function $mol_wire_auto(next = $.$mol_wire_auto_sub) {
-        return $.$mol_wire_auto_sub = next;
-    }
-    $.$mol_wire_auto = $mol_wire_auto;
-    $.$mol_wire_affected = [];
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_wire_pub_sub extends $mol_wire_pub {
-        pub_from = 0;
-        cursor = $mol_wire_cursor.stale;
-        get temp() {
-            return false;
-        }
-        get pub_list() {
-            const res = [];
-            const max = this.cursor >= 0 ? this.cursor : this.sub_from;
-            for (let i = this.pub_from; i < max; i += 2) {
-                if (this.data[i])
-                    res.push(this.data[i]);
-            }
-            return res;
-        }
-        track_on() {
-            this.cursor = this.pub_from;
-            const sub = $mol_wire_auto();
-            $mol_wire_auto(this);
-            return sub;
-        }
-        promote() {
-            if (this.cursor >= this.pub_from) {
-                $mol_fail(new Error('Circular subscription'));
-            }
-            super.promote();
-        }
-        track_next(pub) {
-            if (this.cursor < 0)
-                $mol_fail(new Error('Promo to non begun sub'));
-            if (this.cursor < this.sub_from) {
-                const next = this.data[this.cursor];
-                if (pub === undefined)
-                    return next ?? null;
-                if (next === pub) {
-                    this.cursor += 2;
-                    return next;
-                }
-                if (next) {
-                    if (this.sub_from < this.data.length) {
-                        this.peer_move(this.sub_from, this.data.length);
-                    }
-                    this.peer_move(this.cursor, this.sub_from);
-                    this.sub_from += 2;
-                }
-            }
-            else {
-                if (pub === undefined)
-                    return null;
-                if (this.sub_from < this.data.length) {
-                    this.peer_move(this.sub_from, this.data.length);
-                }
-                this.sub_from += 2;
-            }
-            this.data[this.cursor] = pub;
-            this.data[this.cursor + 1] = pub.sub_on(this, this.cursor);
-            this.cursor += 2;
-            return pub;
-        }
-        track_off(sub) {
-            $mol_wire_auto(sub);
-            if (this.cursor < 0) {
-                $mol_fail(new Error('End of non begun sub'));
-            }
-            for (let cursor = this.pub_from; cursor < this.cursor; cursor += 2) {
-                const pub = this.data[cursor];
-                pub.fresh();
-            }
-            this.cursor = $mol_wire_cursor.fresh;
-        }
-        pub_off(sub_pos) {
-            this.data[sub_pos] = undefined;
-            this.data[sub_pos + 1] = undefined;
-        }
-        destructor() {
-            for (let cursor = this.data.length - 2; cursor >= this.sub_from; cursor -= 2) {
-                const sub = this.data[cursor];
-                const pos = this.data[cursor + 1];
-                sub.pub_off(pos);
-            }
-            this.data.length = this.sub_from;
-            this.cursor = this.pub_from;
-            this.track_cut();
-            this.cursor = $mol_wire_cursor.stale;
-        }
-        track_cut() {
-            if (this.cursor < this.pub_from) {
-                $mol_fail(new Error('Cut of non begun sub'));
-            }
-            let end = this.data.length;
-            for (let cursor = this.cursor; cursor < this.sub_from; cursor += 2) {
-                const pub = this.data[cursor];
-                pub?.sub_off(this.data[cursor + 1]);
-                end -= 2;
-                if (this.sub_from <= end)
-                    this.peer_move(end, cursor);
-            }
-            this.data.length = end;
-            this.sub_from = this.cursor;
-        }
-        complete() { }
-        complete_pubs() {
-            const limit = this.cursor < 0 ? this.sub_from : this.cursor;
-            for (let cursor = this.pub_from; cursor < limit; cursor += 2) {
-                const pub = this.data[cursor];
-                if (pub?.incompleted)
-                    return;
-            }
-            for (let cursor = this.pub_from; cursor < limit; cursor += 2) {
-                const pub = this.data[cursor];
-                pub?.complete();
-            }
-        }
-        absorb(quant = $mol_wire_cursor.stale, pos = -1) {
-            if (this.cursor === $mol_wire_cursor.final)
-                return;
-            if (this.cursor >= quant)
-                return;
-            this.cursor = quant;
-            this.emit($mol_wire_cursor.doubt);
-        }
-        [$mol_dev_format_head]() {
-            return $mol_dev_format_native(this);
-        }
-        get pub_empty() {
-            return this.sub_from === this.pub_from;
-        }
-    }
-    $.$mol_wire_pub_sub = $mol_wire_pub_sub;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($_1) {
-    $mol_test({
-        'Collect deps'() {
-            const pub1 = new $mol_wire_pub;
-            const pub2 = new $mol_wire_pub;
-            const sub = new $mol_wire_pub_sub;
-            const bu1 = sub.track_on();
-            try {
-                pub1.promote();
-                pub2.promote();
-                pub2.promote();
-            }
-            finally {
-                sub.track_cut();
-                sub.track_off(bu1);
-            }
-            pub1.emit();
-            pub2.emit();
-            $mol_assert_like(sub.pub_list, [pub1, pub2, pub2]);
-            const bu2 = sub.track_on();
-            try {
-                pub1.promote();
-                pub1.promote();
-                pub2.promote();
-            }
-            finally {
-                sub.track_cut();
-                sub.track_off(bu2);
-            }
-            pub1.emit();
-            pub2.emit();
-            $mol_assert_like(sub.pub_list, [pub1, pub1, pub2]);
-        },
-        'cyclic detection'($) {
-            const sub1 = new $mol_wire_pub_sub;
-            const sub2 = new $mol_wire_pub_sub;
-            const bu1 = sub1.track_on();
-            try {
-                const bu2 = sub2.track_on();
-                try {
-                    $mol_assert_fail(() => sub1.promote(), 'Circular subscription');
-                }
-                finally {
-                    sub2.track_cut();
-                    sub2.track_off(bu2);
-                }
-            }
-            finally {
-                sub1.track_cut();
-                sub1.track_off(bu1);
-            }
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_after_mock_queue = [];
-    function $mol_after_mock_warp() {
-        const queue = $.$mol_after_mock_queue.splice(0);
-        for (const task of queue)
-            task();
-    }
-    $.$mol_after_mock_warp = $mol_after_mock_warp;
-    class $mol_after_mock_commmon extends $mol_object2 {
-        task;
-        promise = Promise.resolve();
-        cancelled = false;
-        id;
-        constructor(task) {
-            super();
-            this.task = task;
-            $.$mol_after_mock_queue.push(task);
-        }
-        destructor() {
-            const index = $.$mol_after_mock_queue.indexOf(this.task);
-            if (index >= 0)
-                $.$mol_after_mock_queue.splice(index, 1);
-        }
-    }
-    $.$mol_after_mock_commmon = $mol_after_mock_commmon;
-    class $mol_after_mock_timeout extends $mol_after_mock_commmon {
-        delay;
-        constructor(delay, task) {
-            super(task);
-            this.delay = delay;
-        }
-    }
-    $.$mol_after_mock_timeout = $mol_after_mock_timeout;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_after_tick extends $mol_object2 {
-        task;
-        static promise = null;
-        cancelled = false;
-        constructor(task) {
-            super();
-            this.task = task;
-            if (!$mol_after_tick.promise)
-                $mol_after_tick.promise = Promise.resolve().then(() => {
-                    $mol_after_tick.promise = null;
-                });
-            $mol_after_tick.promise.then(() => {
-                if (this.cancelled)
-                    return;
-                task();
-            });
-        }
-        destructor() {
-            this.cancelled = true;
-        }
-    }
-    $.$mol_after_tick = $mol_after_tick;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($_1) {
-    $mol_test_mocks.push($ => {
-        $.$mol_after_tick = $mol_after_mock_commmon;
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    const wrappers = new WeakMap();
-    class $mol_wire_fiber extends $mol_wire_pub_sub {
-        task;
-        host;
-        static warm = true;
-        static planning = new Set();
-        static reaping = new Set();
-        static plan_task = null;
-        static plan() {
-            if (this.plan_task)
-                return;
-            this.plan_task = new $mol_after_tick(() => {
-                try {
-                    this.sync();
-                }
-                finally {
-                    $mol_wire_fiber.plan_task = null;
-                }
-            });
-        }
-        static sync() {
-            while (this.planning.size) {
-                for (const fiber of this.planning) {
-                    this.planning.delete(fiber);
-                    if (fiber.cursor >= 0)
-                        continue;
-                    if (fiber.cursor === $mol_wire_cursor.final)
-                        continue;
-                    fiber.fresh();
-                }
-            }
-            while (this.reaping.size) {
-                const fibers = this.reaping;
-                this.reaping = new Set;
-                for (const fiber of fibers) {
-                    if (!fiber.sub_empty)
-                        continue;
-                    fiber.destructor();
-                }
-            }
-        }
-        cache = undefined;
-        get args() {
-            return this.data.slice(0, this.pub_from);
-        }
-        result() {
-            if ($mol_promise_like(this.cache))
-                return;
-            if (this.cache instanceof Error)
-                return;
-            return this.cache;
-        }
-        get incompleted() {
-            return $mol_promise_like(this.cache);
-        }
-        field() {
-            return this.task.name + '()';
-        }
-        constructor(id, task, host, args) {
-            super(id);
-            this.task = task;
-            this.host = host;
-            if (args)
-                this.data.push(...args);
-            this.pub_from = this.sub_from = args?.length ?? 0;
-        }
-        plan() {
-            $mol_wire_fiber.planning.add(this);
-            $mol_wire_fiber.plan();
-            return this;
-        }
-        reap() {
-            $mol_wire_fiber.reaping.add(this);
-            $mol_wire_fiber.plan();
-        }
-        toString() {
-            return this[Symbol.toStringTag];
-        }
-        toJSON() {
-            return this[Symbol.toStringTag];
-        }
-        [$mol_dev_format_head]() {
-            const cursor = {
-                [$mol_wire_cursor.stale]: '🔴',
-                [$mol_wire_cursor.doubt]: '🟡',
-                [$mol_wire_cursor.fresh]: '🟢',
-                [$mol_wire_cursor.final]: '🔵',
-            }[this.cursor] ?? this.cursor.toString();
-            return $mol_dev_format_div({}, $mol_owning_check(this, this.cache)
-                ? $mol_dev_format_shade(cursor)
-                : $mol_dev_format_shade(this[Symbol.toStringTag], cursor), $mol_dev_format_auto(this.cache));
-        }
-        [$mol_dev_format_body]() { return null; }
-        get $() {
-            return (this.host ?? this.task)['$'];
-        }
-        emit(quant = $mol_wire_cursor.stale) {
-            if (this.sub_empty)
-                this.plan();
-            else
-                super.emit(quant);
-        }
-        fresh() {
-            if (this.cursor === $mol_wire_cursor.fresh)
-                return;
-            if (this.cursor === $mol_wire_cursor.final)
-                return;
-            check: if (this.cursor === $mol_wire_cursor.doubt) {
-                for (let i = this.pub_from; i < this.sub_from; i += 2) {
-                    ;
-                    this.data[i]?.fresh();
-                    if (this.cursor !== $mol_wire_cursor.doubt)
-                        break check;
-                }
-                this.cursor = $mol_wire_cursor.fresh;
-                return;
-            }
-            const bu = this.track_on();
-            let result;
-            try {
-                switch (this.pub_from) {
-                    case 0:
-                        result = this.task.call(this.host);
-                        break;
-                    case 1:
-                        result = this.task.call(this.host, this.data[0]);
-                        break;
-                    default:
-                        result = this.task.call(this.host, ...this.args);
-                        break;
-                }
-                if ($mol_promise_like(result)) {
-                    if (wrappers.has(result)) {
-                        result = wrappers.get(result).then(a => a);
-                    }
-                    else {
-                        const put = (res) => {
-                            if (this.cache === result)
-                                this.put(res);
-                            return res;
-                        };
-                        wrappers.set(result, result = Object.assign(result.then(put, put), { destructor: result.destructor || (() => { }) }));
-                        wrappers.set(result, result);
-                        const error = new Error(`Promise in ${this}`);
-                        Object.defineProperty(result, 'stack', { get: () => error.stack });
-                    }
-                }
-            }
-            catch (error) {
-                if (error instanceof Error || $mol_promise_like(error)) {
-                    result = error;
-                }
-                else {
-                    result = new Error(String(error), { cause: error });
-                }
-                if ($mol_promise_like(result)) {
-                    if (wrappers.has(result)) {
-                        result = wrappers.get(result);
-                    }
-                    else {
-                        const put = (v) => {
-                            if (this.cache === result)
-                                this.absorb();
-                            return v;
-                        };
-                        wrappers.set(result, result = Object.assign(result.then(put, put), { destructor: result.destructor || (() => { }) }));
-                        const error = new Error(`Promise in ${this}`);
-                        Object.defineProperty(result, 'stack', { get: () => error.stack });
-                    }
-                }
-            }
-            if (!$mol_promise_like(result)) {
-                this.track_cut();
-            }
-            this.track_off(bu);
-            this.put(result);
-            return this;
-        }
-        refresh() {
-            this.cursor = $mol_wire_cursor.stale;
-            this.fresh();
-        }
-        sync() {
-            if (!$mol_wire_fiber.warm) {
-                return this.result();
-            }
-            this.promote();
-            this.fresh();
-            if (this.cache instanceof Error) {
-                return $mol_fail_hidden(this.cache);
-            }
-            if ($mol_promise_like(this.cache)) {
-                return $mol_fail_hidden(this.cache);
-            }
-            return this.cache;
-        }
-        async async_raw() {
-            while (true) {
-                this.fresh();
-                if (this.cache instanceof Error) {
-                    $mol_fail_hidden(this.cache);
-                }
-                if (!$mol_promise_like(this.cache))
-                    return this.cache;
-                await Promise.race([this.cache, this.step()]);
-                if (!$mol_promise_like(this.cache))
-                    return this.cache;
-                if (this.cursor === $mol_wire_cursor.final) {
-                    await new Promise(() => { });
-                }
-            }
-        }
-        async() {
-            const promise = this.async_raw();
-            if (!promise.destructor)
-                promise.destructor = () => this.destructor();
-            return promise;
-        }
-        step() {
-            return new Promise(done => {
-                const sub = new $mol_wire_pub_sub;
-                const prev = sub.track_on();
-                sub.track_next(this);
-                sub.track_off(prev);
-                sub.absorb = () => {
-                    done(null);
-                    setTimeout(() => sub.destructor());
-                };
-            });
-        }
-        destructor() {
-            super.destructor();
-            $mol_wire_fiber.planning.delete(this);
-            if (!$mol_owning_check(this, this.cache))
-                return;
-            try {
-                this.cache.destructor();
-            }
-            catch (result) {
-                if ($mol_promise_like(result)) {
-                    const error = new Error(`Promise in ${this}.destructor()`);
-                    Object.defineProperty(result, 'stack', { get: () => error.stack });
-                }
-                $mol_fail_hidden(result);
-            }
-        }
-    }
-    $.$mol_wire_fiber = $mol_wire_fiber;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'Sync execution'() {
-            class Sync extends $mol_object2 {
-                static calc(a, b) {
-                    return a + b;
-                }
-            }
-            __decorate([
-                $mol_wire_method
-            ], Sync, "calc", null);
-            $mol_assert_equal(Sync.calc(1, 2), 3);
-        },
-        async 'async <=> sync'() {
-            class SyncAsync extends $mol_object2 {
-                static async val(a) {
-                    return a;
-                }
-                static sum(a, b) {
-                    const syn = $mol_wire_sync(this);
-                    return syn.val(a) + syn.val(b);
-                }
-                static async calc(a, b) {
-                    return 5 + await $mol_wire_async(this).sum(a, b);
-                }
-            }
-            $mol_assert_equal(await SyncAsync.calc(1, 2), 8);
-        },
-        async 'Idempotence control'() {
-            class Idempotence extends $mol_object2 {
-                static logs_idemp = 0;
-                static logs_unidemp = 0;
-                static log_idemp() {
-                    this.logs_idemp += 1;
-                }
-                static log_unidemp() {
-                    this.logs_unidemp += 1;
-                }
-                static async val(a) {
-                    return a;
-                }
-                static sum(a, b) {
-                    this.log_idemp();
-                    this.log_unidemp();
-                    const syn = $mol_wire_sync(this);
-                    return syn.val(a) + syn.val(b);
-                }
-                static async calc(a, b) {
-                    return 5 + await $mol_wire_async(this).sum(a, b);
-                }
-            }
-            __decorate([
-                $mol_wire_method
-            ], Idempotence, "log_idemp", null);
-            $mol_assert_equal(await Idempotence.calc(1, 2), 8);
-            $mol_assert_equal(Idempotence.logs_idemp, 1);
-            $mol_assert_equal(Idempotence.logs_unidemp, 3);
-        },
-        async 'Error handling'() {
-            class Handle extends $mol_object2 {
-                static async sum(a, b) {
-                    $mol_fail(new Error('test error ' + (a + b)));
-                }
-                static check() {
-                    try {
-                        return $mol_wire_sync(Handle).sum(1, 2);
-                    }
-                    catch (error) {
-                        if ($mol_promise_like(error))
-                            $mol_fail_hidden(error);
-                        $mol_assert_equal(error.message, 'test error 3');
-                    }
-                }
-            }
-            await $mol_wire_async(Handle).check();
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_log3_area_lazy(event) {
-        const self = this.$;
-        const stack = self.$mol_log3_stack;
-        const deep = stack.length;
-        let logged = false;
-        stack.push(() => {
-            logged = true;
-            self.$mol_log3_area.call(self, event);
-        });
-        return () => {
-            if (logged)
-                self.console.groupEnd();
-            if (stack.length > deep)
-                stack.length = deep;
-        };
-    }
-    $.$mol_log3_area_lazy = $mol_log3_area_lazy;
-    $.$mol_log3_stack = [];
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_term_color {
-        static reset = this.ansi(0, 0);
-        static bold = this.ansi(1, 22);
-        static italic = this.ansi(3, 23);
-        static underline = this.ansi(4, 24);
-        static inverse = this.ansi(7, 27);
-        static hidden = this.ansi(8, 28);
-        static strike = this.ansi(9, 29);
-        static gray = this.ansi(90, 39);
-        static red = this.ansi(91, 39);
-        static green = this.ansi(92, 39);
-        static yellow = this.ansi(93, 39);
-        static blue = this.ansi(94, 39);
-        static magenta = this.ansi(95, 39);
-        static cyan = this.ansi(96, 39);
-        static Gray = (str) => this.inverse(this.gray(str));
-        static Red = (str) => this.inverse(this.red(str));
-        static Green = (str) => this.inverse(this.green(str));
-        static Yellow = (str) => this.inverse(this.yellow(str));
-        static Blue = (str) => this.inverse(this.blue(str));
-        static Magenta = (str) => this.inverse(this.magenta(str));
-        static Cyan = (str) => this.inverse(this.cyan(str));
-        static ansi(open, close) {
-            if (typeof process === 'undefined')
-                return String;
-            if (!process.stdout.isTTY)
-                return String;
-            const prefix = `\x1b[${open}m`;
-            const postfix = `\x1b[${close}m`;
-            const suffix_regexp = new RegExp(postfix.replace('[', '\\['), 'g');
-            return function colorer(str) {
-                str = String(str);
-                if (str === '')
-                    return str;
-                const suffix = str.replace(suffix_regexp, prefix);
-                return prefix + suffix + postfix;
-            };
-        }
-    }
-    $.$mol_term_color = $mol_term_color;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_log3_node_make(level, output, type, color) {
-        return function $mol_log3_logger(event) {
-            if (!event.time)
-                event = { time: new Date().toISOString(), ...event };
-            let tree = this.$mol_tree2_from_json(event);
-            tree = tree.struct(type, tree.kids);
-            let str = color(tree.toString());
-            this.console[level](str);
-            const self = this;
-            return () => self.console.groupEnd();
-        };
-    }
-    $.$mol_log3_node_make = $mol_log3_node_make;
-    $.$mol_log3_come = $mol_log3_node_make('info', 'stdout', 'come', $mol_term_color.blue);
-    $.$mol_log3_done = $mol_log3_node_make('info', 'stdout', 'done', $mol_term_color.green);
-    $.$mol_log3_fail = $mol_log3_node_make('error', 'stderr', 'fail', $mol_term_color.red);
-    $.$mol_log3_warn = $mol_log3_node_make('warn', 'stderr', 'warn', $mol_term_color.yellow);
-    $.$mol_log3_rise = $mol_log3_node_make('log', 'stdout', 'rise', $mol_term_color.magenta);
-    $.$mol_log3_area = $mol_log3_node_make('log', 'stdout', 'area', $mol_term_color.cyan);
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($_1) {
-    $mol_test_mocks.push($ => {
-        $.$mol_log3_come = () => { };
-        $.$mol_log3_done = () => { };
-        $.$mol_log3_fail = () => { };
-        $.$mol_log3_warn = () => { };
-        $.$mol_log3_rise = () => { };
-        $.$mol_log3_area = () => () => { };
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_wire_task extends $mol_wire_fiber {
-        static getter(task) {
-            return function $mol_wire_task_get(host, args) {
-                const sub = $mol_wire_auto();
-                const existen = sub?.track_next();
-                let cause = '';
-                reuse: if (existen) {
-                    if (!existen.temp)
-                        break reuse;
-                    if (existen.task !== task) {
-                        cause = 'task';
-                        break reuse;
-                    }
-                    if (existen.host !== host) {
-                        cause = 'host';
-                        break reuse;
-                    }
-                    if (!$mol_compare_deep(existen.args, args)) {
-                        cause = 'args';
-                        break reuse;
-                    }
-                    return existen;
-                }
-                const key = (host?.[Symbol.toStringTag] ?? host) + ('.' + task.name + '<#>');
-                const next = new $mol_wire_task(key, task, host, args);
-                if (existen?.temp) {
-                    $$.$mol_log3_warn({
-                        place: '$mol_wire_task',
-                        message: `Different ${cause} on restart`,
-                        sub,
-                        prev: existen,
-                        next,
-                        hint: 'Maybe required additional memoization',
-                    });
-                }
-                return next;
-            };
-        }
-        get temp() {
-            return true;
-        }
-        complete() {
-            if ($mol_promise_like(this.cache))
-                return;
-            this.destructor();
-        }
-        put(next) {
-            const prev = this.cache;
-            this.cache = next;
-            if ($mol_promise_like(next)) {
-                this.cursor = $mol_wire_cursor.fresh;
-                if (next !== prev)
-                    this.emit();
-                if ($mol_owning_catch(this, next)) {
-                    try {
-                        next[Symbol.toStringTag] = this[Symbol.toStringTag];
-                    }
-                    catch {
-                        Object.defineProperty(next, Symbol.toStringTag, { value: this[Symbol.toStringTag] });
-                    }
-                }
-                return next;
-            }
-            this.cursor = $mol_wire_cursor.final;
-            if (this.sub_empty)
-                this.destructor();
-            else if (next !== prev)
-                this.emit();
-            return next;
-        }
-        destructor() {
-            super.destructor();
-            this.cursor = $mol_wire_cursor.final;
-        }
-    }
-    $.$mol_wire_task = $mol_wire_task;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_wire_method(host, field, descr) {
-        if (!descr)
-            descr = Reflect.getOwnPropertyDescriptor(host, field);
-        const orig = descr?.value ?? host[field];
-        const sup = Reflect.getPrototypeOf(host);
-        if (typeof sup[field] === 'function') {
-            Object.defineProperty(orig, 'name', { value: sup[field].name });
-        }
-        const temp = $mol_wire_task.getter(orig);
-        const value = function (...args) {
-            const fiber = temp(this ?? null, args);
-            return fiber.sync();
-        };
-        Object.defineProperty(value, 'name', { value: orig.name + ' ' });
-        Object.assign(value, { orig });
-        const descr2 = { ...descr, value };
-        Reflect.defineProperty(host, field, descr2);
-        return descr2;
-    }
-    $.$mol_wire_method = $mol_wire_method;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_wire_async(obj) {
-        let fiber;
-        const temp = $mol_wire_task.getter(obj);
-        return new Proxy(obj, {
-            get(obj, field) {
-                const val = obj[field];
-                if (typeof val !== 'function')
-                    return val;
-                let fiber;
-                const temp = $mol_wire_task.getter(val);
-                return function $mol_wire_async(...args) {
-                    fiber?.destructor();
-                    fiber = temp(obj, args);
-                    return fiber.async();
-                };
-            },
-            apply(obj, self, args) {
-                fiber?.destructor();
-                fiber = temp(self, args);
-                return fiber.async();
-            },
-        });
-    }
-    $.$mol_wire_async = $mol_wire_async;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($_1) {
-    $mol_test({
-        'test types'($) {
-            class A {
-                static a() {
-                    return '';
-                }
-                static b() {
-                    return $mol_wire_async(this).a();
-                }
-            }
-        },
-        async 'Latest method calls wins'($) {
-            class NameLogger extends $mol_object2 {
-                static $ = $;
-                static first = [];
-                static last = [];
-                static send(next) {
-                    $mol_wire_sync(this.first).push(next);
-                    $$.$mol_wait_timeout(0);
-                    this.last.push(next);
-                }
-            }
-            const name = $mol_wire_async(NameLogger).send;
-            name('john');
-            const promise = name('jin');
-            $.$mol_after_mock_warp();
-            await promise;
-            $mol_assert_equal(NameLogger.first, ['john', 'jin']);
-            $mol_assert_equal(NameLogger.last, ['jin']);
-        },
-        async 'Latest function calls wins'($) {
-            const first = [];
-            const last = [];
-            function send_name(next) {
-                $mol_wire_sync(first).push(next);
-                $$.$mol_wait_timeout(0);
-                last.push(next);
-            }
-            const name = $mol_wire_async(send_name);
-            name('john');
-            const promise = name('jin');
-            $.$mol_after_mock_warp();
-            await promise;
-            $mol_assert_equal(first, ['john', 'jin']);
-            $mol_assert_equal(last, ['jin']);
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    const factories = new WeakMap();
-    function factory(val) {
-        let make = factories.get(val);
-        if (make)
-            return make;
-        make = $mol_func_name_from((...args) => new val(...args), val);
-        factories.set(val, make);
-        return make;
-    }
-    const getters = new WeakMap();
-    function get_prop(host, field) {
-        let props = getters.get(host);
-        let get_val = props?.[field];
-        if (get_val)
-            return get_val;
-        get_val = (next) => {
-            if (next !== undefined)
-                host[field] = next;
-            return host[field];
-        };
-        Object.defineProperty(get_val, 'name', { value: field });
-        if (!props) {
-            props = {};
-            getters.set(host, props);
-        }
-        props[field] = get_val;
-        return get_val;
-    }
-    function $mol_wire_sync(obj) {
-        return new Proxy(obj, {
-            get(obj, field) {
-                let val = obj[field];
-                const temp = $mol_wire_task.getter(typeof val === 'function' ? val : get_prop(obj, field));
-                if (typeof val !== 'function')
-                    return temp(obj, []).sync();
-                return function $mol_wire_sync(...args) {
-                    const fiber = temp(obj, args);
-                    return fiber.sync();
-                };
-            },
-            set(obj, field, next) {
-                const temp = $mol_wire_task.getter(get_prop(obj, field));
-                temp(obj, [next]).sync();
-                return true;
-            },
-            construct(obj, args) {
-                const temp = $mol_wire_task.getter(factory(obj));
-                return temp(obj, args).sync();
-            },
-            apply(obj, self, args) {
-                const temp = $mol_wire_task.getter(obj);
-                return temp(self, args).sync();
-            },
-        });
-    }
-    $.$mol_wire_sync = $mol_wire_sync;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($_1) {
-    $mol_test({
-        'test types'($) {
-            class A {
-                static a() {
-                    return Promise.resolve('');
-                }
-                static b() {
-                    return $mol_wire_sync(this).a();
-                }
-            }
-        },
-        async 'test method from host'($) {
-            let count = 0;
-            class A {
-                static a() {
-                    return $mol_wire_sync(this).b();
-                }
-                static b() { return Promise.resolve(++count); }
-            }
-            $mol_assert_equal(await $mol_wire_async(A).a(), 1, count);
-        },
-        async 'test function'($) {
-            let count = 0;
-            class A {
-                static a() {
-                    return $mol_wire_sync(this.b)();
-                }
-                static b() { return Promise.resolve(++count); }
-            }
-            $mol_assert_equal(await $mol_wire_async(A).a(), 1, count);
-        },
-        async 'test construct itself'($) {
-            class A {
-                static instances = [];
-                static a() {
-                    const a = new ($mol_wire_sync(A))();
-                    this.instances.push(a);
-                    $mol_wire_sync(this).b();
-                }
-                static b() { return Promise.resolve(); }
-            }
-            await $mol_wire_async(A).a();
-            $mol_assert_equal(A.instances.length, 2);
-            $mol_assert_equal(A.instances[0] instanceof A, true);
-            $mol_assert_equal(A.instances[0], A.instances[1]);
-        }
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_promise extends Promise {
-        done;
-        fail;
-        constructor(executor) {
-            let done;
-            let fail;
-            super((d, f) => {
-                done = d;
-                fail = f;
-                executor?.(d, f);
-            });
-            this.done = done;
-            this.fail = fail;
-        }
-    }
-    $.$mol_promise = $mol_promise;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_after_timeout extends $mol_object2 {
-        delay;
-        task;
-        id;
-        constructor(delay, task) {
-            super();
-            this.delay = delay;
-            this.task = task;
-            this.id = setTimeout(task, delay);
-        }
-        destructor() {
-            clearTimeout(this.id);
-        }
-    }
-    $.$mol_after_timeout = $mol_after_timeout;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($_1) {
-    $mol_test_mocks.push($ => {
-        $.$mol_after_timeout = $mol_after_mock_timeout;
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_after_work extends $mol_object2 {
-        delay;
-        task;
-        id;
-        constructor(delay, task) {
-            super();
-            this.delay = delay;
-            this.task = task;
-            this.id = requestIdleCallback(task, { timeout: delay });
-        }
-        destructor() {
-            cancelIdleCallback(this.id);
-        }
-    }
-    $.$mol_after_work = $mol_after_work;
-    if (typeof requestIdleCallback !== 'function') {
-        $.$mol_after_work = $mol_after_timeout;
-    }
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($_1) {
-    $mol_test_mocks.push($ => {
-        $.$mol_after_work = $mol_after_mock_timeout;
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_wait_rest_async() {
-        return new Promise(done => {
-            new this.$mol_after_work(16, () => done(null));
-        });
-    }
-    $.$mol_wait_rest_async = $mol_wait_rest_async;
-    function $mol_wait_rest() {
-        return this.$mol_wire_sync(this).$mol_wait_rest_async();
-    }
-    $.$mol_wait_rest = $mol_wait_rest;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($_1) {
-    var $$;
-    (function ($$) {
-        $mol_test_mocks.push($ => {
-            $.$mol_wait_timeout = function $mol_wait_timeout_mock(timeout) { };
-            $.$mol_wait_timeout_async = async function $mol_wait_timeout_async_mock(timeout) { };
-        });
-    })($$ = $_1.$$ || ($_1.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_wait_timeout_async(timeout) {
-        const promise = new $mol_promise();
-        const task = new this.$mol_after_timeout(timeout, () => promise.done());
-        return Object.assign(promise, {
-            destructor: () => task.destructor()
-        });
-    }
-    $.$mol_wait_timeout_async = $mol_wait_timeout_async;
-    function $mol_wait_timeout(timeout) {
-        return this.$mol_wire_sync(this).$mol_wait_timeout_async(timeout);
-    }
-    $.$mol_wait_timeout = $mol_wait_timeout;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($_1) {
-    var $$;
-    (function ($$) {
-        $mol_test_mocks.push($ => {
-            $.$mol_wait_rest = function $mol_wait_rest_mock() { };
-            $.$mol_wait_rest_async = async function $mol_wait_rest_async_mock() { };
-        });
-    })($$ = $_1.$$ || ($_1.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_run_error extends $mol_error_mix {
-    }
-    $.$mol_run_error = $mol_run_error;
-    $.$mol_run_spawn = (...args) => $node['child_process'].spawn(...args);
-    $.$mol_run_spawn_sync = (...args) => $node['child_process'].spawnSync(...args);
-    class $mol_run extends $mol_object {
-        static async_enabled() {
-            return Boolean(this.$.$mol_env()['MOL_RUN_ASYNC']);
-        }
-        static spawn(options) {
-            const sync = !this.async_enabled() || !Boolean($mol_wire_auto());
-            const env = options.env ?? this.$.$mol_env();
-            return $mol_wire_sync(this).spawn_async({ ...options, sync, env });
-        }
-        static spawn_async({ dir, sync, timeout, command, env }) {
-            const args_raw = typeof command === 'string' ? command.split(' ') : command;
-            const [app, ...args] = args_raw;
-            const opts = { shell: true, cwd: dir, env };
-            const log_object = {
-                place: `${this}.spawn()`,
-                message: 'Run',
-                command: args_raw.join(' '),
-                dir: $node.path.relative('', dir),
-            };
-            if (sync) {
-                this.$.$mol_log3_come({
-                    hint: 'Run inside fiber',
-                    ...log_object
-                });
-                let error;
-                let res;
-                try {
-                    res = this.$.$mol_run_spawn_sync(app, args, opts);
-                    error = res.error;
-                }
-                catch (err) {
-                    error = err;
-                }
-                if (!res || error || res.status) {
-                    throw new $mol_run_error(this.error_message(res), { ...log_object, status: res?.status, signal: res?.signal }, ...(error ? [error] : []));
-                }
-                return res;
-            }
-            let sub;
-            try {
-                sub = this.$.$mol_run_spawn(app, args, {
-                    ...opts,
-                    stdio: ['pipe', 'inherit', 'inherit'],
-                });
-            }
-            catch (error) {
-                throw new $mol_run_error(this.error_message(undefined), log_object, error);
-            }
-            const pid = sub.pid ?? 0;
-            this.$.$mol_log3_come({
-                ...log_object,
-                pid,
-            });
-            let timeout_kill = false;
-            let timer;
-            const std_data = [];
-            const error_data = [];
-            const add = (std_chunk, error_chunk) => {
-                if (std_chunk)
-                    std_data.push(std_chunk);
-                if (error_chunk)
-                    error_data.push(error_chunk);
-                if (!timeout)
-                    return;
-                clearTimeout(timer);
-                timer = setTimeout(() => {
-                    const signal = timeout_kill ? 'SIGKILL' : 'SIGTERM';
-                    timeout_kill = true;
-                    add();
-                    sub.kill(signal);
-                }, timeout);
-            };
-            add();
-            sub.stdout?.on('data', data => add(data));
-            sub.stderr?.on('data', data => add(undefined, data));
-            const result_promise = new Promise((done, fail) => {
-                const close = (error, status = null, signal = null) => {
-                    if (!timer && timeout)
-                        return;
-                    clearTimeout(timer);
-                    timer = undefined;
-                    const res = {
-                        pid,
-                        signal,
-                        get stdout() { return Buffer.concat(std_data); },
-                        get stderr() { return Buffer.concat(error_data); }
-                    };
-                    if (error || status || timeout_kill)
-                        return fail(new $mol_run_error(this.error_message(res) + (timeout_kill ? ', timeout' : ''), { ...log_object, pid, status, signal, timeout_kill }, ...error ? [error] : []));
-                    this.$.$mol_log3_done({
-                        ...log_object,
-                        pid,
-                    });
-                    done(res);
-                };
-                sub.on('disconnect', () => close(new Error('Disconnected')));
-                sub.on('error', err => close(err));
-                sub.on('exit', (status, signal) => close(null, status, signal));
-            });
-            return Object.assign(result_promise, { destructor: () => {
-                    clearTimeout(timer);
-                    sub.kill('SIGKILL');
-                } });
-        }
-        static error_message(res) {
-            return res?.stderr.toString() || res?.stdout.toString() || 'Run error';
-        }
-    }
-    $.$mol_run = $mol_run;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($_1) {
-    $mol_test({
-        async 'exec timeout auto kill child process'($) {
-            let close_mock = () => { };
-            const error_message = 'Run error, timeout';
-            function mol_run_spawn_sync_mock() {
-                return {
-                    output: [],
-                    stdout: error_message,
-                    stderr: '',
-                    status: 0,
-                    signal: null,
-                    pid: 123,
-                };
-            }
-            function mol_run_spawn_mock() {
-                return {
-                    on(name, cb) {
-                        if (name === 'exit')
-                            close_mock = cb;
-                    },
-                    kill() { close_mock(); }
-                };
-            }
-            const context_mock = $.$mol_ambient({
-                $mol_run_spawn_sync: mol_run_spawn_sync_mock,
-                $mol_run_spawn: mol_run_spawn_mock
-            });
-            class $mol_run_mock extends $mol_run {
-                static get $() { return context_mock; }
-                static async_enabled() {
-                    return true;
-                }
-            }
-            let message = '';
-            try {
-                const res = await $mol_wire_async($mol_run_mock).spawn({
-                    command: 'sleep 10',
-                    dir: '.',
-                    timeout: 10,
-                    env: { 'MOL_RUN_ASYNC': '1' }
-                });
-            }
-            catch (e) {
-                message = e.message;
-            }
-            $mol_assert_equal(message, error_message);
-        }
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_exec(dir, command, ...args) {
-        return this.$mol_run.spawn({ command: [command, ...args], dir });
-    }
-    $.$mol_exec = $mol_exec;
-})($ || ($ = {}));
 
 ;
 "use strict";
@@ -3043,6 +1276,15 @@ var $;
     }
     $.$mol_dom_render_children = $mol_dom_render_children;
 })($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -3283,6 +1525,21 @@ var $;
             $mol_assert_fail(() => $mol_jsx(Foo, { id: "foo" }), 'JSX already has tag with id "foo/icon"');
         },
     });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_guid(length = 8, exists = () => false) {
+        for (;;) {
+            let id = Math.random().toString(36).substring(2, length + 2).toUpperCase();
+            if (exists(id))
+                continue;
+            return id;
+        }
+    }
+    $.$mol_guid = $mol_guid;
 })($ || ($ = {}));
 
 ;
@@ -3941,6 +2198,283 @@ var $;
         },
         'three object must be alike'() {
             $mol_assert_equal({ a: 1 }, { a: 1 }, { a: 1 });
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_log3_area_lazy(event) {
+        const self = this.$;
+        const stack = self.$mol_log3_stack;
+        const deep = stack.length;
+        let logged = false;
+        stack.push(() => {
+            logged = true;
+            self.$mol_log3_area.call(self, event);
+        });
+        return () => {
+            if (logged)
+                self.console.groupEnd();
+            if (stack.length > deep)
+                stack.length = deep;
+        };
+    }
+    $.$mol_log3_area_lazy = $mol_log3_area_lazy;
+    $.$mol_log3_stack = [];
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_term_color {
+        static reset = this.ansi(0, 0);
+        static bold = this.ansi(1, 22);
+        static italic = this.ansi(3, 23);
+        static underline = this.ansi(4, 24);
+        static inverse = this.ansi(7, 27);
+        static hidden = this.ansi(8, 28);
+        static strike = this.ansi(9, 29);
+        static gray = this.ansi(90, 39);
+        static red = this.ansi(91, 39);
+        static green = this.ansi(92, 39);
+        static yellow = this.ansi(93, 39);
+        static blue = this.ansi(94, 39);
+        static magenta = this.ansi(95, 39);
+        static cyan = this.ansi(96, 39);
+        static Gray = (str) => this.inverse(this.gray(str));
+        static Red = (str) => this.inverse(this.red(str));
+        static Green = (str) => this.inverse(this.green(str));
+        static Yellow = (str) => this.inverse(this.yellow(str));
+        static Blue = (str) => this.inverse(this.blue(str));
+        static Magenta = (str) => this.inverse(this.magenta(str));
+        static Cyan = (str) => this.inverse(this.cyan(str));
+        static ansi(open, close) {
+            if (typeof process === 'undefined')
+                return String;
+            if (!process.stdout.isTTY)
+                return String;
+            const prefix = `\x1b[${open}m`;
+            const postfix = `\x1b[${close}m`;
+            const suffix_regexp = new RegExp(postfix.replace('[', '\\['), 'g');
+            return function colorer(str) {
+                str = String(str);
+                if (str === '')
+                    return str;
+                const suffix = str.replace(suffix_regexp, prefix);
+                return prefix + suffix + postfix;
+            };
+        }
+    }
+    $.$mol_term_color = $mol_term_color;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_log3_node_make(level, output, type, color) {
+        return function $mol_log3_logger(event) {
+            if (!event.time)
+                event = { time: new Date().toISOString(), ...event };
+            let tree = this.$mol_tree2_from_json(event);
+            tree = tree.struct(type, tree.kids);
+            let str = color(tree.toString());
+            this.console[level](str);
+            const self = this;
+            return () => self.console.groupEnd();
+        };
+    }
+    $.$mol_log3_node_make = $mol_log3_node_make;
+    $.$mol_log3_come = $mol_log3_node_make('info', 'stdout', 'come', $mol_term_color.blue);
+    $.$mol_log3_done = $mol_log3_node_make('info', 'stdout', 'done', $mol_term_color.green);
+    $.$mol_log3_fail = $mol_log3_node_make('error', 'stderr', 'fail', $mol_term_color.red);
+    $.$mol_log3_warn = $mol_log3_node_make('warn', 'stderr', 'warn', $mol_term_color.yellow);
+    $.$mol_log3_rise = $mol_log3_node_make('log', 'stdout', 'rise', $mol_term_color.magenta);
+    $.$mol_log3_area = $mol_log3_node_make('log', 'stdout', 'area', $mol_term_color.cyan);
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
+    $mol_test_mocks.push($ => {
+        $.$mol_log3_come = () => { };
+        $.$mol_log3_done = () => { };
+        $.$mol_log3_fail = () => { };
+        $.$mol_log3_warn = () => { };
+        $.$mol_log3_rise = () => { };
+        $.$mol_log3_area = () => () => { };
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_ambient_ref = Symbol('$mol_ambient_ref');
+    function $mol_ambient(overrides) {
+        return Object.setPrototypeOf(overrides, this || $);
+    }
+    $.$mol_ambient = $mol_ambient;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_owning_map = new WeakMap();
+    function $mol_owning_allow(having) {
+        try {
+            if (!having)
+                return false;
+            if (typeof having !== 'object' && typeof having !== 'function')
+                return false;
+            if (having instanceof $mol_delegate)
+                return false;
+            if (typeof having['destructor'] !== 'function')
+                return false;
+            return true;
+        }
+        catch {
+            return false;
+        }
+    }
+    $.$mol_owning_allow = $mol_owning_allow;
+    function $mol_owning_get(having, Owner) {
+        if (!$mol_owning_allow(having))
+            return null;
+        while (true) {
+            const owner = $.$mol_owning_map.get(having);
+            if (!owner)
+                return owner;
+            if (!Owner)
+                return owner;
+            if (owner instanceof Owner)
+                return owner;
+            having = owner;
+        }
+    }
+    $.$mol_owning_get = $mol_owning_get;
+    function $mol_owning_check(owner, having) {
+        if (!$mol_owning_allow(having))
+            return false;
+        if ($.$mol_owning_map.get(having) !== owner)
+            return false;
+        return true;
+    }
+    $.$mol_owning_check = $mol_owning_check;
+    function $mol_owning_catch(owner, having) {
+        if (!$mol_owning_allow(having))
+            return false;
+        if ($.$mol_owning_map.get(having))
+            return false;
+        $.$mol_owning_map.set(having, owner);
+        return true;
+    }
+    $.$mol_owning_catch = $mol_owning_catch;
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_object2 {
+        static $ = $;
+        [Symbol.toStringTag];
+        [$mol_ambient_ref] = null;
+        get $() {
+            if (this[$mol_ambient_ref])
+                return this[$mol_ambient_ref];
+            const owner = $mol_owning_get(this);
+            return this[$mol_ambient_ref] = owner?.$ || this.constructor.$ || $mol_object2.$;
+        }
+        set $(next) {
+            if (this[$mol_ambient_ref])
+                $mol_fail_hidden(new Error('Context already defined'));
+            this[$mol_ambient_ref] = next;
+        }
+        static create(init) {
+            const obj = new this;
+            if (init)
+                init(obj);
+            return obj;
+        }
+        static [Symbol.toPrimitive]() {
+            return this.toString();
+        }
+        static toString() {
+            return this[Symbol.toStringTag] || this.$.$mol_func_name(this);
+        }
+        static toJSON() {
+            return this.toString();
+        }
+        destructor() { }
+        static destructor() { }
+        toString() {
+            return this[Symbol.toStringTag] || this.constructor.name + '<>';
+        }
+    }
+    $.$mol_object2 = $mol_object2;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    const named = new WeakSet();
+    function $mol_func_name(func) {
+        let name = func.name;
+        if (name?.length > 1)
+            return name;
+        if (named.has(func))
+            return name;
+        for (let key in this) {
+            try {
+                if (this[key] !== func)
+                    continue;
+                name = key;
+                Object.defineProperty(func, 'name', { value: name });
+                break;
+            }
+            catch { }
+        }
+        named.add(func);
+        return name;
+    }
+    $.$mol_func_name = $mol_func_name;
+    function $mol_func_name_from(target, source) {
+        Object.defineProperty(target, 'name', { value: source.name });
+        return target;
+    }
+    $.$mol_func_name_from = $mol_func_name_from;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
+    $mol_test({
+        'FQN of anon function'($) {
+            const $$ = Object.assign($, { $mol_func_name_test: (() => () => { })() });
+            $mol_assert_equal($$.$mol_func_name_test.name, '');
+            $mol_assert_equal($$.$mol_func_name($$.$mol_func_name_test), '$mol_func_name_test');
+            $mol_assert_equal($$.$mol_func_name_test.name, '$mol_func_name_test');
         },
     });
 })($ || ($ = {}));
@@ -4725,6 +3259,1491 @@ var $;
             $mol_assert_equal($mol_tree2_from_json({ 'foo': false, 'bar\nbaz': 'lol' }).toString(), '*\n\tfoo false\n\t\\\n\t\t\\bar\n\t\t\\baz\n\t\t\\lol\n');
         },
     });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function cause_serialize(cause) {
+        return JSON.stringify(cause, null, '  ')
+            .replace(/\(/, '<')
+            .replace(/\)/, ' >');
+    }
+    function frame_normalize(frame) {
+        return (typeof frame === 'string' ? frame : cause_serialize(frame))
+            .trim()
+            .replace(/at /gm, '   at ')
+            .replace(/^(?!    +at )(.*)/gm, '    at | $1 (#)');
+    }
+    class $mol_error_mix extends AggregateError {
+        cause;
+        name = $$.$mol_func_name(this.constructor).replace(/^\$/, '') + '_Error';
+        constructor(message, cause = {}, ...errors) {
+            super(errors, message, { cause });
+            this.cause = cause;
+            const desc = Object.getOwnPropertyDescriptor(this, 'stack');
+            const stack_get = () => desc?.get?.() ?? super.stack ?? desc?.value ?? this.message;
+            Object.defineProperty(this, 'stack', {
+                get: () => stack_get() + '\n' + [
+                    this.cause ?? 'no cause',
+                    ...this.errors.flatMap(e => [
+                        String(e.stack),
+                        ...e instanceof $mol_error_mix || !e.cause ? [] : [e.cause]
+                    ])
+                ].map(frame_normalize).join('\n')
+            });
+            Object.defineProperty(this, 'cause', {
+                get: () => cause
+            });
+        }
+        static [Symbol.toPrimitive]() {
+            return this.toString();
+        }
+        static toString() {
+            return $$.$mol_func_name(this);
+        }
+        static make(...params) {
+            return new this(...params);
+        }
+    }
+    $.$mol_error_mix = $mol_error_mix;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'auto name'() {
+            class Invalid extends $mol_error_mix {
+            }
+            const mix = new Invalid('foo');
+            $mol_assert_equal(mix.name, 'Invalid_Error');
+        },
+        'simpe mix'() {
+            const mix = new $mol_error_mix('foo', {}, new Error('bar'), new Error('lol'));
+            $mol_assert_equal(mix.message, 'foo');
+            $mol_assert_equal(mix.errors.map(e => e.message), ['bar', 'lol']);
+        },
+        'provide additional info'() {
+            class Invalid extends $mol_error_mix {
+            }
+            const mix = new $mol_error_mix('Wrong password', {}, new Invalid('Too short', { value: 'p@ssw0rd', hint: '> 8 letters' }), new Invalid('Too simple', { value: 'p@ssw0rd', hint: 'need capital letter' }));
+            const hints = [];
+            if (mix instanceof $mol_error_mix) {
+                for (const er of mix.errors) {
+                    if (er instanceof Invalid) {
+                        hints.push(er.cause?.hint ?? '');
+                    }
+                }
+            }
+            $mol_assert_equal(hints, ['> 8 letters', 'need capital letter']);
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
+    let $$;
+    (function ($$) {
+        let $;
+    })($$ = $_1.$$ || ($_1.$$ = {}));
+    $_1.$mol_object_field = Symbol('$mol_object_field');
+    class $mol_object extends $mol_object2 {
+        static make(config) {
+            return super.create(obj => {
+                for (let key in config)
+                    obj[key] = config[key];
+            });
+        }
+    }
+    $_1.$mol_object = $mol_object;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
+    $mol_test({
+        'init with overload'() {
+            class X extends $mol_object {
+                foo() {
+                    return 1;
+                }
+            }
+            var x = X.make({
+                foo: () => 2,
+            });
+            $mol_assert_equal(x.foo(), 2);
+        },
+        'Context in instance inherits from class'($) {
+            const custom = $.$mol_ambient({});
+            class X extends $.$mol_object {
+                static $ = custom;
+            }
+            $mol_assert_equal(new X().$, custom);
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_env() {
+        return {};
+    }
+    $.$mol_env = $mol_env;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_env = function $mol_env() {
+        return this.process.env;
+    };
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    let $mol_wire_cursor;
+    (function ($mol_wire_cursor) {
+        $mol_wire_cursor[$mol_wire_cursor["stale"] = -1] = "stale";
+        $mol_wire_cursor[$mol_wire_cursor["doubt"] = -2] = "doubt";
+        $mol_wire_cursor[$mol_wire_cursor["fresh"] = -3] = "fresh";
+        $mol_wire_cursor[$mol_wire_cursor["final"] = -4] = "final";
+    })($mol_wire_cursor = $.$mol_wire_cursor || ($.$mol_wire_cursor = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_wire_pub extends Object {
+        constructor(id = `$mol_wire_pub:${$mol_guid()}`) {
+            super();
+            this[Symbol.toStringTag] = id;
+        }
+        [Symbol.toStringTag];
+        data = [];
+        static get [Symbol.species]() {
+            return Array;
+        }
+        sub_from = 0;
+        get sub_list() {
+            const res = [];
+            for (let i = this.sub_from; i < this.data.length; i += 2) {
+                res.push(this.data[i]);
+            }
+            return res;
+        }
+        get sub_empty() {
+            return this.sub_from === this.data.length;
+        }
+        sub_on(sub, pub_pos) {
+            const pos = this.data.length;
+            this.data.push(sub, pub_pos);
+            return pos;
+        }
+        sub_off(sub_pos) {
+            if (!(sub_pos < this.data.length)) {
+                $mol_fail(new Error(`Wrong pos ${sub_pos}`));
+            }
+            const end = this.data.length - 2;
+            if (sub_pos !== end) {
+                this.peer_move(end, sub_pos);
+            }
+            this.data.length = end;
+            if (end === this.sub_from)
+                this.reap();
+        }
+        reap() { }
+        promote() {
+            $mol_wire_auto()?.track_next(this);
+        }
+        fresh() { }
+        complete() { }
+        get incompleted() {
+            return false;
+        }
+        emit(quant = $mol_wire_cursor.stale) {
+            for (let i = this.sub_from; i < this.data.length; i += 2) {
+                ;
+                this.data[i].absorb(quant, this.data[i + 1]);
+            }
+        }
+        peer_move(from_pos, to_pos) {
+            const peer = this.data[from_pos];
+            const self_pos = this.data[from_pos + 1];
+            this.data[to_pos] = peer;
+            this.data[to_pos + 1] = self_pos;
+            peer.peer_repos(self_pos, to_pos);
+        }
+        peer_repos(peer_pos, self_pos) {
+            this.data[peer_pos + 1] = self_pos;
+        }
+    }
+    $.$mol_wire_pub = $mol_wire_pub;
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_wire_auto_sub = null;
+    function $mol_wire_auto(next = $.$mol_wire_auto_sub) {
+        return $.$mol_wire_auto_sub = next;
+    }
+    $.$mol_wire_auto = $mol_wire_auto;
+    $.$mol_wire_affected = [];
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_wire_pub_sub extends $mol_wire_pub {
+        pub_from = 0;
+        cursor = $mol_wire_cursor.stale;
+        get temp() {
+            return false;
+        }
+        get pub_list() {
+            const res = [];
+            const max = this.cursor >= 0 ? this.cursor : this.sub_from;
+            for (let i = this.pub_from; i < max; i += 2) {
+                if (this.data[i])
+                    res.push(this.data[i]);
+            }
+            return res;
+        }
+        track_on() {
+            this.cursor = this.pub_from;
+            const sub = $mol_wire_auto();
+            $mol_wire_auto(this);
+            return sub;
+        }
+        promote() {
+            if (this.cursor >= this.pub_from) {
+                $mol_fail(new Error('Circular subscription'));
+            }
+            super.promote();
+        }
+        track_next(pub) {
+            if (this.cursor < 0)
+                $mol_fail(new Error('Promo to non begun sub'));
+            if (this.cursor < this.sub_from) {
+                const next = this.data[this.cursor];
+                if (pub === undefined)
+                    return next ?? null;
+                if (next === pub) {
+                    this.cursor += 2;
+                    return next;
+                }
+                if (next) {
+                    if (this.sub_from < this.data.length) {
+                        this.peer_move(this.sub_from, this.data.length);
+                    }
+                    this.peer_move(this.cursor, this.sub_from);
+                    this.sub_from += 2;
+                }
+            }
+            else {
+                if (pub === undefined)
+                    return null;
+                if (this.sub_from < this.data.length) {
+                    this.peer_move(this.sub_from, this.data.length);
+                }
+                this.sub_from += 2;
+            }
+            this.data[this.cursor] = pub;
+            this.data[this.cursor + 1] = pub.sub_on(this, this.cursor);
+            this.cursor += 2;
+            return pub;
+        }
+        track_off(sub) {
+            $mol_wire_auto(sub);
+            if (this.cursor < 0) {
+                $mol_fail(new Error('End of non begun sub'));
+            }
+            for (let cursor = this.pub_from; cursor < this.cursor; cursor += 2) {
+                const pub = this.data[cursor];
+                pub.fresh();
+            }
+            this.cursor = $mol_wire_cursor.fresh;
+        }
+        pub_off(sub_pos) {
+            this.data[sub_pos] = undefined;
+            this.data[sub_pos + 1] = undefined;
+        }
+        destructor() {
+            for (let cursor = this.data.length - 2; cursor >= this.sub_from; cursor -= 2) {
+                const sub = this.data[cursor];
+                const pos = this.data[cursor + 1];
+                sub.pub_off(pos);
+            }
+            this.data.length = this.sub_from;
+            this.cursor = this.pub_from;
+            this.track_cut();
+            this.cursor = $mol_wire_cursor.stale;
+        }
+        track_cut() {
+            if (this.cursor < this.pub_from) {
+                $mol_fail(new Error('Cut of non begun sub'));
+            }
+            let end = this.data.length;
+            for (let cursor = this.cursor; cursor < this.sub_from; cursor += 2) {
+                const pub = this.data[cursor];
+                pub?.sub_off(this.data[cursor + 1]);
+                end -= 2;
+                if (this.sub_from <= end)
+                    this.peer_move(end, cursor);
+            }
+            this.data.length = end;
+            this.sub_from = this.cursor;
+        }
+        complete() { }
+        complete_pubs() {
+            const limit = this.cursor < 0 ? this.sub_from : this.cursor;
+            for (let cursor = this.pub_from; cursor < limit; cursor += 2) {
+                const pub = this.data[cursor];
+                if (pub?.incompleted)
+                    return;
+            }
+            for (let cursor = this.pub_from; cursor < limit; cursor += 2) {
+                const pub = this.data[cursor];
+                pub?.complete();
+            }
+        }
+        absorb(quant = $mol_wire_cursor.stale, pos = -1) {
+            if (this.cursor === $mol_wire_cursor.final)
+                return;
+            if (this.cursor >= quant)
+                return;
+            this.cursor = quant;
+            this.emit($mol_wire_cursor.doubt);
+        }
+        [$mol_dev_format_head]() {
+            return $mol_dev_format_native(this);
+        }
+        get pub_empty() {
+            return this.sub_from === this.pub_from;
+        }
+    }
+    $.$mol_wire_pub_sub = $mol_wire_pub_sub;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
+    $mol_test({
+        'Collect deps'() {
+            const pub1 = new $mol_wire_pub;
+            const pub2 = new $mol_wire_pub;
+            const sub = new $mol_wire_pub_sub;
+            const bu1 = sub.track_on();
+            try {
+                pub1.promote();
+                pub2.promote();
+                pub2.promote();
+            }
+            finally {
+                sub.track_cut();
+                sub.track_off(bu1);
+            }
+            pub1.emit();
+            pub2.emit();
+            $mol_assert_like(sub.pub_list, [pub1, pub2, pub2]);
+            const bu2 = sub.track_on();
+            try {
+                pub1.promote();
+                pub1.promote();
+                pub2.promote();
+            }
+            finally {
+                sub.track_cut();
+                sub.track_off(bu2);
+            }
+            pub1.emit();
+            pub2.emit();
+            $mol_assert_like(sub.pub_list, [pub1, pub1, pub2]);
+        },
+        'cyclic detection'($) {
+            const sub1 = new $mol_wire_pub_sub;
+            const sub2 = new $mol_wire_pub_sub;
+            const bu1 = sub1.track_on();
+            try {
+                const bu2 = sub2.track_on();
+                try {
+                    $mol_assert_fail(() => sub1.promote(), 'Circular subscription');
+                }
+                finally {
+                    sub2.track_cut();
+                    sub2.track_off(bu2);
+                }
+            }
+            finally {
+                sub1.track_cut();
+                sub1.track_off(bu1);
+            }
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_after_mock_queue = [];
+    function $mol_after_mock_warp() {
+        const queue = $.$mol_after_mock_queue.splice(0);
+        for (const task of queue)
+            task();
+    }
+    $.$mol_after_mock_warp = $mol_after_mock_warp;
+    class $mol_after_mock_commmon extends $mol_object2 {
+        task;
+        promise = Promise.resolve();
+        cancelled = false;
+        id;
+        constructor(task) {
+            super();
+            this.task = task;
+            $.$mol_after_mock_queue.push(task);
+        }
+        destructor() {
+            const index = $.$mol_after_mock_queue.indexOf(this.task);
+            if (index >= 0)
+                $.$mol_after_mock_queue.splice(index, 1);
+        }
+    }
+    $.$mol_after_mock_commmon = $mol_after_mock_commmon;
+    class $mol_after_mock_timeout extends $mol_after_mock_commmon {
+        delay;
+        constructor(delay, task) {
+            super(task);
+            this.delay = delay;
+        }
+    }
+    $.$mol_after_mock_timeout = $mol_after_mock_timeout;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_after_tick extends $mol_object2 {
+        task;
+        static promise = null;
+        cancelled = false;
+        constructor(task) {
+            super();
+            this.task = task;
+            if (!$mol_after_tick.promise)
+                $mol_after_tick.promise = Promise.resolve().then(() => {
+                    $mol_after_tick.promise = null;
+                });
+            $mol_after_tick.promise.then(() => {
+                if (this.cancelled)
+                    return;
+                task();
+            });
+        }
+        destructor() {
+            this.cancelled = true;
+        }
+    }
+    $.$mol_after_tick = $mol_after_tick;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
+    $mol_test_mocks.push($ => {
+        $.$mol_after_tick = $mol_after_mock_commmon;
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    const wrappers = new WeakMap();
+    class $mol_wire_fiber extends $mol_wire_pub_sub {
+        task;
+        host;
+        static warm = true;
+        static planning = new Set();
+        static reaping = new Set();
+        static plan_task = null;
+        static plan() {
+            if (this.plan_task)
+                return;
+            this.plan_task = new $mol_after_tick(() => {
+                try {
+                    this.sync();
+                }
+                finally {
+                    $mol_wire_fiber.plan_task = null;
+                }
+            });
+        }
+        static sync() {
+            while (this.planning.size) {
+                for (const fiber of this.planning) {
+                    this.planning.delete(fiber);
+                    if (fiber.cursor >= 0)
+                        continue;
+                    if (fiber.cursor === $mol_wire_cursor.final)
+                        continue;
+                    fiber.fresh();
+                }
+            }
+            while (this.reaping.size) {
+                const fibers = this.reaping;
+                this.reaping = new Set;
+                for (const fiber of fibers) {
+                    if (!fiber.sub_empty)
+                        continue;
+                    fiber.destructor();
+                }
+            }
+        }
+        cache = undefined;
+        get args() {
+            return this.data.slice(0, this.pub_from);
+        }
+        result() {
+            if ($mol_promise_like(this.cache))
+                return;
+            if (this.cache instanceof Error)
+                return;
+            return this.cache;
+        }
+        get incompleted() {
+            return $mol_promise_like(this.cache);
+        }
+        field() {
+            return this.task.name + '()';
+        }
+        constructor(id, task, host, args) {
+            super(id);
+            this.task = task;
+            this.host = host;
+            if (args)
+                this.data.push(...args);
+            this.pub_from = this.sub_from = args?.length ?? 0;
+        }
+        plan() {
+            $mol_wire_fiber.planning.add(this);
+            $mol_wire_fiber.plan();
+            return this;
+        }
+        reap() {
+            $mol_wire_fiber.reaping.add(this);
+            $mol_wire_fiber.plan();
+        }
+        toString() {
+            return this[Symbol.toStringTag];
+        }
+        toJSON() {
+            return this[Symbol.toStringTag];
+        }
+        [$mol_dev_format_head]() {
+            const cursor = {
+                [$mol_wire_cursor.stale]: '🔴',
+                [$mol_wire_cursor.doubt]: '🟡',
+                [$mol_wire_cursor.fresh]: '🟢',
+                [$mol_wire_cursor.final]: '🔵',
+            }[this.cursor] ?? this.cursor.toString();
+            return $mol_dev_format_div({}, $mol_owning_check(this, this.cache)
+                ? $mol_dev_format_shade(cursor)
+                : $mol_dev_format_shade(this[Symbol.toStringTag], cursor), $mol_dev_format_auto(this.cache));
+        }
+        [$mol_dev_format_body]() { return null; }
+        get $() {
+            return (this.host ?? this.task)['$'];
+        }
+        emit(quant = $mol_wire_cursor.stale) {
+            if (this.sub_empty)
+                this.plan();
+            else
+                super.emit(quant);
+        }
+        fresh() {
+            if (this.cursor === $mol_wire_cursor.fresh)
+                return;
+            if (this.cursor === $mol_wire_cursor.final)
+                return;
+            check: if (this.cursor === $mol_wire_cursor.doubt) {
+                for (let i = this.pub_from; i < this.sub_from; i += 2) {
+                    ;
+                    this.data[i]?.fresh();
+                    if (this.cursor !== $mol_wire_cursor.doubt)
+                        break check;
+                }
+                this.cursor = $mol_wire_cursor.fresh;
+                return;
+            }
+            const bu = this.track_on();
+            let result;
+            try {
+                switch (this.pub_from) {
+                    case 0:
+                        result = this.task.call(this.host);
+                        break;
+                    case 1:
+                        result = this.task.call(this.host, this.data[0]);
+                        break;
+                    default:
+                        result = this.task.call(this.host, ...this.args);
+                        break;
+                }
+                if ($mol_promise_like(result)) {
+                    if (wrappers.has(result)) {
+                        result = wrappers.get(result).then(a => a);
+                    }
+                    else {
+                        const put = (res) => {
+                            if (this.cache === result)
+                                this.put(res);
+                            return res;
+                        };
+                        wrappers.set(result, result = Object.assign(result.then(put, put), { destructor: result.destructor || (() => { }) }));
+                        wrappers.set(result, result);
+                        const error = new Error(`Promise in ${this}`);
+                        Object.defineProperty(result, 'stack', { get: () => error.stack });
+                    }
+                }
+            }
+            catch (error) {
+                if (error instanceof Error || $mol_promise_like(error)) {
+                    result = error;
+                }
+                else {
+                    result = new Error(String(error), { cause: error });
+                }
+                if ($mol_promise_like(result)) {
+                    if (wrappers.has(result)) {
+                        result = wrappers.get(result);
+                    }
+                    else {
+                        const put = (v) => {
+                            if (this.cache === result)
+                                this.absorb();
+                            return v;
+                        };
+                        wrappers.set(result, result = Object.assign(result.then(put, put), { destructor: result.destructor || (() => { }) }));
+                        const error = new Error(`Promise in ${this}`);
+                        Object.defineProperty(result, 'stack', { get: () => error.stack });
+                    }
+                }
+            }
+            if (!$mol_promise_like(result)) {
+                this.track_cut();
+            }
+            this.track_off(bu);
+            this.put(result);
+            return this;
+        }
+        refresh() {
+            this.cursor = $mol_wire_cursor.stale;
+            this.fresh();
+        }
+        sync() {
+            if (!$mol_wire_fiber.warm) {
+                return this.result();
+            }
+            this.promote();
+            this.fresh();
+            if (this.cache instanceof Error) {
+                return $mol_fail_hidden(this.cache);
+            }
+            if ($mol_promise_like(this.cache)) {
+                return $mol_fail_hidden(this.cache);
+            }
+            return this.cache;
+        }
+        async async_raw() {
+            while (true) {
+                this.fresh();
+                if (this.cache instanceof Error) {
+                    $mol_fail_hidden(this.cache);
+                }
+                if (!$mol_promise_like(this.cache))
+                    return this.cache;
+                await Promise.race([this.cache, this.step()]);
+                if (!$mol_promise_like(this.cache))
+                    return this.cache;
+                if (this.cursor === $mol_wire_cursor.final) {
+                    await new Promise(() => { });
+                }
+            }
+        }
+        async() {
+            const promise = this.async_raw();
+            if (!promise.destructor)
+                promise.destructor = () => this.destructor();
+            return promise;
+        }
+        step() {
+            return new Promise(done => {
+                const sub = new $mol_wire_pub_sub;
+                const prev = sub.track_on();
+                sub.track_next(this);
+                sub.track_off(prev);
+                sub.absorb = () => {
+                    done(null);
+                    setTimeout(() => sub.destructor());
+                };
+            });
+        }
+        destructor() {
+            super.destructor();
+            $mol_wire_fiber.planning.delete(this);
+            if (!$mol_owning_check(this, this.cache))
+                return;
+            try {
+                this.cache.destructor();
+            }
+            catch (result) {
+                if ($mol_promise_like(result)) {
+                    const error = new Error(`Promise in ${this}.destructor()`);
+                    Object.defineProperty(result, 'stack', { get: () => error.stack });
+                }
+                $mol_fail_hidden(result);
+            }
+        }
+    }
+    $.$mol_wire_fiber = $mol_wire_fiber;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Sync execution'() {
+            class Sync extends $mol_object2 {
+                static calc(a, b) {
+                    return a + b;
+                }
+            }
+            __decorate([
+                $mol_wire_method
+            ], Sync, "calc", null);
+            $mol_assert_equal(Sync.calc(1, 2), 3);
+        },
+        async 'async <=> sync'() {
+            class SyncAsync extends $mol_object2 {
+                static async val(a) {
+                    return a;
+                }
+                static sum(a, b) {
+                    const syn = $mol_wire_sync(this);
+                    return syn.val(a) + syn.val(b);
+                }
+                static async calc(a, b) {
+                    return 5 + await $mol_wire_async(this).sum(a, b);
+                }
+            }
+            $mol_assert_equal(await SyncAsync.calc(1, 2), 8);
+        },
+        async 'Idempotence control'() {
+            class Idempotence extends $mol_object2 {
+                static logs_idemp = 0;
+                static logs_unidemp = 0;
+                static log_idemp() {
+                    this.logs_idemp += 1;
+                }
+                static log_unidemp() {
+                    this.logs_unidemp += 1;
+                }
+                static async val(a) {
+                    return a;
+                }
+                static sum(a, b) {
+                    this.log_idemp();
+                    this.log_unidemp();
+                    const syn = $mol_wire_sync(this);
+                    return syn.val(a) + syn.val(b);
+                }
+                static async calc(a, b) {
+                    return 5 + await $mol_wire_async(this).sum(a, b);
+                }
+            }
+            __decorate([
+                $mol_wire_method
+            ], Idempotence, "log_idemp", null);
+            $mol_assert_equal(await Idempotence.calc(1, 2), 8);
+            $mol_assert_equal(Idempotence.logs_idemp, 1);
+            $mol_assert_equal(Idempotence.logs_unidemp, 3);
+        },
+        async 'Error handling'() {
+            class Handle extends $mol_object2 {
+                static async sum(a, b) {
+                    $mol_fail(new Error('test error ' + (a + b)));
+                }
+                static check() {
+                    try {
+                        return $mol_wire_sync(Handle).sum(1, 2);
+                    }
+                    catch (error) {
+                        if ($mol_promise_like(error))
+                            $mol_fail_hidden(error);
+                        $mol_assert_equal(error.message, 'test error 3');
+                    }
+                }
+            }
+            await $mol_wire_async(Handle).check();
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_wire_task extends $mol_wire_fiber {
+        static getter(task) {
+            return function $mol_wire_task_get(host, args) {
+                const sub = $mol_wire_auto();
+                const existen = sub?.track_next();
+                let cause = '';
+                reuse: if (existen) {
+                    if (!existen.temp)
+                        break reuse;
+                    if (existen.task !== task) {
+                        cause = 'task';
+                        break reuse;
+                    }
+                    if (existen.host !== host) {
+                        cause = 'host';
+                        break reuse;
+                    }
+                    if (!$mol_compare_deep(existen.args, args)) {
+                        cause = 'args';
+                        break reuse;
+                    }
+                    return existen;
+                }
+                const key = (host?.[Symbol.toStringTag] ?? host) + ('.' + task.name + '<#>');
+                const next = new $mol_wire_task(key, task, host, args);
+                if (existen?.temp) {
+                    $$.$mol_log3_warn({
+                        place: '$mol_wire_task',
+                        message: `Different ${cause} on restart`,
+                        sub,
+                        prev: existen,
+                        next,
+                        hint: 'Maybe required additional memoization',
+                    });
+                }
+                return next;
+            };
+        }
+        get temp() {
+            return true;
+        }
+        complete() {
+            if ($mol_promise_like(this.cache))
+                return;
+            this.destructor();
+        }
+        put(next) {
+            const prev = this.cache;
+            this.cache = next;
+            if ($mol_promise_like(next)) {
+                this.cursor = $mol_wire_cursor.fresh;
+                if (next !== prev)
+                    this.emit();
+                if ($mol_owning_catch(this, next)) {
+                    try {
+                        next[Symbol.toStringTag] = this[Symbol.toStringTag];
+                    }
+                    catch {
+                        Object.defineProperty(next, Symbol.toStringTag, { value: this[Symbol.toStringTag] });
+                    }
+                }
+                return next;
+            }
+            this.cursor = $mol_wire_cursor.final;
+            if (this.sub_empty)
+                this.destructor();
+            else if (next !== prev)
+                this.emit();
+            return next;
+        }
+        destructor() {
+            super.destructor();
+            this.cursor = $mol_wire_cursor.final;
+        }
+    }
+    $.$mol_wire_task = $mol_wire_task;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_wire_async(obj) {
+        let fiber;
+        const temp = $mol_wire_task.getter(obj);
+        return new Proxy(obj, {
+            get(obj, field) {
+                const val = obj[field];
+                if (typeof val !== 'function')
+                    return val;
+                let fiber;
+                const temp = $mol_wire_task.getter(val);
+                return function $mol_wire_async(...args) {
+                    fiber?.destructor();
+                    fiber = temp(obj, args);
+                    return fiber.async();
+                };
+            },
+            apply(obj, self, args) {
+                fiber?.destructor();
+                fiber = temp(self, args);
+                return fiber.async();
+            },
+        });
+    }
+    $.$mol_wire_async = $mol_wire_async;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
+    $mol_test({
+        'test types'($) {
+            class A {
+                static a() {
+                    return '';
+                }
+                static b() {
+                    return $mol_wire_async(this).a();
+                }
+            }
+        },
+        async 'Latest method calls wins'($) {
+            class NameLogger extends $mol_object2 {
+                static $ = $;
+                static first = [];
+                static last = [];
+                static send(next) {
+                    $mol_wire_sync(this.first).push(next);
+                    $$.$mol_wait_timeout(0);
+                    this.last.push(next);
+                }
+            }
+            const name = $mol_wire_async(NameLogger).send;
+            name('john');
+            const promise = name('jin');
+            $.$mol_after_mock_warp();
+            await promise;
+            $mol_assert_equal(NameLogger.first, ['john', 'jin']);
+            $mol_assert_equal(NameLogger.last, ['jin']);
+        },
+        async 'Latest function calls wins'($) {
+            const first = [];
+            const last = [];
+            function send_name(next) {
+                $mol_wire_sync(first).push(next);
+                $$.$mol_wait_timeout(0);
+                last.push(next);
+            }
+            const name = $mol_wire_async(send_name);
+            name('john');
+            const promise = name('jin');
+            $.$mol_after_mock_warp();
+            await promise;
+            $mol_assert_equal(first, ['john', 'jin']);
+            $mol_assert_equal(last, ['jin']);
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_wire_method(host, field, descr) {
+        if (!descr)
+            descr = Reflect.getOwnPropertyDescriptor(host, field);
+        const orig = descr?.value ?? host[field];
+        const sup = Reflect.getPrototypeOf(host);
+        if (typeof sup[field] === 'function') {
+            Object.defineProperty(orig, 'name', { value: sup[field].name });
+        }
+        const temp = $mol_wire_task.getter(orig);
+        const value = function (...args) {
+            const fiber = temp(this ?? null, args);
+            return fiber.sync();
+        };
+        Object.defineProperty(value, 'name', { value: orig.name + ' ' });
+        Object.assign(value, { orig });
+        const descr2 = { ...descr, value };
+        Reflect.defineProperty(host, field, descr2);
+        return descr2;
+    }
+    $.$mol_wire_method = $mol_wire_method;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    const factories = new WeakMap();
+    function factory(val) {
+        let make = factories.get(val);
+        if (make)
+            return make;
+        make = $mol_func_name_from((...args) => new val(...args), val);
+        factories.set(val, make);
+        return make;
+    }
+    const getters = new WeakMap();
+    function get_prop(host, field) {
+        let props = getters.get(host);
+        let get_val = props?.[field];
+        if (get_val)
+            return get_val;
+        get_val = (next) => {
+            if (next !== undefined)
+                host[field] = next;
+            return host[field];
+        };
+        Object.defineProperty(get_val, 'name', { value: field });
+        if (!props) {
+            props = {};
+            getters.set(host, props);
+        }
+        props[field] = get_val;
+        return get_val;
+    }
+    function $mol_wire_sync(obj) {
+        return new Proxy(obj, {
+            get(obj, field) {
+                let val = obj[field];
+                const temp = $mol_wire_task.getter(typeof val === 'function' ? val : get_prop(obj, field));
+                if (typeof val !== 'function')
+                    return temp(obj, []).sync();
+                return function $mol_wire_sync(...args) {
+                    const fiber = temp(obj, args);
+                    return fiber.sync();
+                };
+            },
+            set(obj, field, next) {
+                const temp = $mol_wire_task.getter(get_prop(obj, field));
+                temp(obj, [next]).sync();
+                return true;
+            },
+            construct(obj, args) {
+                const temp = $mol_wire_task.getter(factory(obj));
+                return temp(obj, args).sync();
+            },
+            apply(obj, self, args) {
+                const temp = $mol_wire_task.getter(obj);
+                return temp(self, args).sync();
+            },
+        });
+    }
+    $.$mol_wire_sync = $mol_wire_sync;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
+    $mol_test({
+        'test types'($) {
+            class A {
+                static a() {
+                    return Promise.resolve('');
+                }
+                static b() {
+                    return $mol_wire_sync(this).a();
+                }
+            }
+        },
+        async 'test method from host'($) {
+            let count = 0;
+            class A {
+                static a() {
+                    return $mol_wire_sync(this).b();
+                }
+                static b() { return Promise.resolve(++count); }
+            }
+            $mol_assert_equal(await $mol_wire_async(A).a(), 1, count);
+        },
+        async 'test function'($) {
+            let count = 0;
+            class A {
+                static a() {
+                    return $mol_wire_sync(this.b)();
+                }
+                static b() { return Promise.resolve(++count); }
+            }
+            $mol_assert_equal(await $mol_wire_async(A).a(), 1, count);
+        },
+        async 'test construct itself'($) {
+            class A {
+                static instances = [];
+                static a() {
+                    const a = new ($mol_wire_sync(A))();
+                    this.instances.push(a);
+                    $mol_wire_sync(this).b();
+                }
+                static b() { return Promise.resolve(); }
+            }
+            await $mol_wire_async(A).a();
+            $mol_assert_equal(A.instances.length, 2);
+            $mol_assert_equal(A.instances[0] instanceof A, true);
+            $mol_assert_equal(A.instances[0], A.instances[1]);
+        }
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_promise extends Promise {
+        done;
+        fail;
+        constructor(executor) {
+            let done;
+            let fail;
+            super((d, f) => {
+                done = d;
+                fail = f;
+                executor?.(d, f);
+            });
+            this.done = done;
+            this.fail = fail;
+        }
+    }
+    $.$mol_promise = $mol_promise;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_after_timeout extends $mol_object2 {
+        delay;
+        task;
+        id;
+        constructor(delay, task) {
+            super();
+            this.delay = delay;
+            this.task = task;
+            this.id = setTimeout(task, delay);
+        }
+        destructor() {
+            clearTimeout(this.id);
+        }
+    }
+    $.$mol_after_timeout = $mol_after_timeout;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
+    $mol_test_mocks.push($ => {
+        $.$mol_after_timeout = $mol_after_mock_timeout;
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_after_work extends $mol_object2 {
+        delay;
+        task;
+        id;
+        constructor(delay, task) {
+            super();
+            this.delay = delay;
+            this.task = task;
+            this.id = requestIdleCallback(task, { timeout: delay });
+        }
+        destructor() {
+            cancelIdleCallback(this.id);
+        }
+    }
+    $.$mol_after_work = $mol_after_work;
+    if (typeof requestIdleCallback !== 'function') {
+        $.$mol_after_work = $mol_after_timeout;
+    }
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
+    $mol_test_mocks.push($ => {
+        $.$mol_after_work = $mol_after_mock_timeout;
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_wait_rest_async() {
+        return new Promise(done => {
+            new this.$mol_after_work(16, () => done(null));
+        });
+    }
+    $.$mol_wait_rest_async = $mol_wait_rest_async;
+    function $mol_wait_rest() {
+        return this.$mol_wire_sync(this).$mol_wait_rest_async();
+    }
+    $.$mol_wait_rest = $mol_wait_rest;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
+    var $$;
+    (function ($$) {
+        $mol_test_mocks.push($ => {
+            $.$mol_wait_timeout = function $mol_wait_timeout_mock(timeout) { };
+            $.$mol_wait_timeout_async = async function $mol_wait_timeout_async_mock(timeout) { };
+        });
+    })($$ = $_1.$$ || ($_1.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_wait_timeout_async(timeout) {
+        const promise = new $mol_promise();
+        const task = new this.$mol_after_timeout(timeout, () => promise.done());
+        return Object.assign(promise, {
+            destructor: () => task.destructor()
+        });
+    }
+    $.$mol_wait_timeout_async = $mol_wait_timeout_async;
+    function $mol_wait_timeout(timeout) {
+        return this.$mol_wire_sync(this).$mol_wait_timeout_async(timeout);
+    }
+    $.$mol_wait_timeout = $mol_wait_timeout;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
+    var $$;
+    (function ($$) {
+        $mol_test_mocks.push($ => {
+            $.$mol_wait_rest = function $mol_wait_rest_mock() { };
+            $.$mol_wait_rest_async = async function $mol_wait_rest_async_mock() { };
+        });
+    })($$ = $_1.$$ || ($_1.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_run_error extends $mol_error_mix {
+    }
+    $.$mol_run_error = $mol_run_error;
+    $.$mol_run_spawn = (...args) => $node['child_process'].spawn(...args);
+    $.$mol_run_spawn_sync = (...args) => $node['child_process'].spawnSync(...args);
+    class $mol_run extends $mol_object {
+        static async_enabled() {
+            return Boolean(this.$.$mol_env()['MOL_RUN_ASYNC']);
+        }
+        static spawn(options) {
+            const sync = !this.async_enabled() || !Boolean($mol_wire_auto());
+            const env = options.env ?? this.$.$mol_env();
+            return $mol_wire_sync(this).spawn_async({ ...options, sync, env });
+        }
+        static spawn_async({ dir, sync, timeout, command, env }) {
+            const args_raw = typeof command === 'string' ? command.split(' ') : command;
+            const [app, ...args] = args_raw;
+            const opts = { shell: true, cwd: dir, env };
+            const log_object = {
+                place: `${this}.spawn()`,
+                message: 'Run',
+                command: args_raw.join(' '),
+                dir: $node.path.relative('', dir),
+            };
+            if (sync) {
+                this.$.$mol_log3_come({
+                    hint: 'Run inside fiber',
+                    ...log_object
+                });
+                let error;
+                let res;
+                try {
+                    res = this.$.$mol_run_spawn_sync(app, args, opts);
+                    error = res.error;
+                }
+                catch (err) {
+                    error = err;
+                }
+                if (!res || error || res.status) {
+                    throw new $mol_run_error(this.error_message(res), { ...log_object, status: res?.status, signal: res?.signal }, ...(error ? [error] : []));
+                }
+                return res;
+            }
+            let sub;
+            try {
+                sub = this.$.$mol_run_spawn(app, args, {
+                    ...opts,
+                    stdio: ['pipe', 'inherit', 'inherit'],
+                });
+            }
+            catch (error) {
+                throw new $mol_run_error(this.error_message(undefined), log_object, error);
+            }
+            const pid = sub.pid ?? 0;
+            this.$.$mol_log3_come({
+                ...log_object,
+                pid,
+            });
+            let timeout_kill = false;
+            let timer;
+            const std_data = [];
+            const error_data = [];
+            const add = (std_chunk, error_chunk) => {
+                if (std_chunk)
+                    std_data.push(std_chunk);
+                if (error_chunk)
+                    error_data.push(error_chunk);
+                if (!timeout)
+                    return;
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                    const signal = timeout_kill ? 'SIGKILL' : 'SIGTERM';
+                    timeout_kill = true;
+                    add();
+                    sub.kill(signal);
+                }, timeout);
+            };
+            add();
+            sub.stdout?.on('data', data => add(data));
+            sub.stderr?.on('data', data => add(undefined, data));
+            const result_promise = new Promise((done, fail) => {
+                const close = (error, status = null, signal = null) => {
+                    if (!timer && timeout)
+                        return;
+                    clearTimeout(timer);
+                    timer = undefined;
+                    const res = {
+                        pid,
+                        signal,
+                        get stdout() { return Buffer.concat(std_data); },
+                        get stderr() { return Buffer.concat(error_data); }
+                    };
+                    if (error || status || timeout_kill)
+                        return fail(new $mol_run_error(this.error_message(res) + (timeout_kill ? ', timeout' : ''), { ...log_object, pid, status, signal, timeout_kill }, ...error ? [error] : []));
+                    this.$.$mol_log3_done({
+                        ...log_object,
+                        pid,
+                    });
+                    done(res);
+                };
+                sub.on('disconnect', () => close(new Error('Disconnected')));
+                sub.on('error', err => close(err));
+                sub.on('exit', (status, signal) => close(null, status, signal));
+            });
+            return Object.assign(result_promise, { destructor: () => {
+                    clearTimeout(timer);
+                    sub.kill('SIGKILL');
+                } });
+        }
+        static error_message(res) {
+            return res?.stderr.toString() || res?.stdout.toString() || 'Run error';
+        }
+    }
+    $.$mol_run = $mol_run;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
+    $mol_test({
+        async 'exec timeout auto kill child process'($) {
+            let close_mock = () => { };
+            const error_message = 'Run error, timeout';
+            function mol_run_spawn_sync_mock() {
+                return {
+                    output: [],
+                    stdout: error_message,
+                    stderr: '',
+                    status: 0,
+                    signal: null,
+                    pid: 123,
+                };
+            }
+            function mol_run_spawn_mock() {
+                return {
+                    on(name, cb) {
+                        if (name === 'exit')
+                            close_mock = cb;
+                    },
+                    kill() { close_mock(); }
+                };
+            }
+            const context_mock = $.$mol_ambient({
+                $mol_run_spawn_sync: mol_run_spawn_sync_mock,
+                $mol_run_spawn: mol_run_spawn_mock
+            });
+            class $mol_run_mock extends $mol_run {
+                static get $() { return context_mock; }
+                static async_enabled() {
+                    return true;
+                }
+            }
+            let message = '';
+            try {
+                const res = await $mol_wire_async($mol_run_mock).spawn({
+                    command: 'sleep 10',
+                    dir: '.',
+                    timeout: 10,
+                    env: { 'MOL_RUN_ASYNC': '1' }
+                });
+            }
+            catch (e) {
+                message = e.message;
+            }
+            $mol_assert_equal(message, error_message);
+        }
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_exec(dir, command, ...args) {
+        return this.$mol_run.spawn({ command: [command, ...args], dir });
+    }
+    $.$mol_exec = $mol_exec;
 })($ || ($ = {}));
 
 ;
