@@ -98,7 +98,6 @@ namespace $ {
 		for( let i = 1 ; i < args.length ; ++i ) {
 			
 			if( $mol_compare_deep( args[0] , args[i] ) ) continue
-			if( args[0] instanceof $mol_dom_context.Element && args[i] instanceof $mol_dom_context.Element && args[0].outerHTML === ( args[i] as Element ).outerHTML ) continue
 			
 			return $mol_fail( new Error(
 				`Equality assertion failure`,
