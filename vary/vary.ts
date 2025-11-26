@@ -229,7 +229,7 @@ namespace $ {
 				if( stack.includes( val ) ) $mol_fail( new Error( 'Cyclic refs', { cause: { stack, val } } ) ) 
 				stack.push( val )
 				
-				for( const item of val ) dump( item )
+				for( let i = 0; i < val.length; ++ i ) dump( val[i] )
 				
 				if( stack.at(-1) !== val ) $mol_fail( new Error( 'Broken stack', { cause: { stack, val } } ) )
 				stack.pop()
@@ -253,7 +253,7 @@ namespace $ {
 				const offset = offsets.get( val )
 				if( offset !== undefined ) return dump_unum( $mol_vary_tip.link, offset )
 				
-				const [ keys, vals ] = this.lean_find( val )?.( val ) ?? [ shape( val ), Object.values( val ) ]
+				const { 0: keys, 1: vals } = this.lean_find( val )?.( val ) ?? [ shape( val ), Object.values( val ) ]
 			
 				dump_unum( $mol_vary_tip.tupl, vals.length )
 				acquire( (vals.length+1) * 9 )
@@ -262,7 +262,7 @@ namespace $ {
 				if( stack.includes( val ) ) $mol_fail( new Error( 'Cyclic refs', { cause: { stack, val } } ) ) 
 				stack.push( val )
 				
-				for( const item of vals ) dump( item )
+				for( let i = 0; i < vals.length; ++ i ) dump( vals[i] )
 				
 				if( stack.at(-1) !== val ) $mol_fail( new Error( 'Broken stack', { cause: { stack, val } } ) )
 				stack.pop()
@@ -270,61 +270,50 @@ namespace $ {
 				offsets.set( val, offsets.size )
 			}
 			
-			/** Recursive fills buffer with data. */
-			const dump = ( val: unknown )=> {
-				
-				switch( typeof val ) {
-					
-					case 'undefined': {
-						this.array[ pos ++ ] = $mol_vary_spec.both
-						release( 8 )
-						return
+			const dumpers: Record< string, ( val: unknown )=> void > = {
+				undefined: ()=> {
+					this.array[ pos ++ ] = $mol_vary_spec.both
+					capacity -= 8
+				},
+				boolean: val => {
+					this.array[ pos ++ ] = val ? $mol_vary_spec.true : $mol_vary_spec.fake
+					capacity -= 8
+				},
+				number: val => {
+					if( !Number.isInteger( val ) ) dump_float( val as number )
+					else dumpers.bigint( val )
+				},
+				bigint: val => {
+					if( val as bigint < 0 ) {
+						dump_snum( val as bigint )
+					} else {
+						dump_unum( $mol_vary_tip.uint, val as bigint )
 					}
-					
-					case 'boolean': {
-						this.array[ pos ++ ] = val ? $mol_vary_spec.true : $mol_vary_spec.fake
-						release( 8 )
-						return
+				},
+				string: val => dump_string( val as string ),
+				object: val => {
+					if( !val ) {
+						capacity -= 8
+						return this.array[ pos ++ ] = $mol_vary_spec.none
 					}
+					if( Array.isArray( val ) ) return dump_list( val )
+					if( ArrayBuffer.isView( val ) ) return dump_buffer( val as ArrayBufferView< ArrayBuffer > )
 					
-					case 'number': {
-						if( !Number.isInteger( val ) ) return dump_float( val )
-					}
-					case 'bigint': {
-						
-						if( val < 0 ) {
-							dump_snum( val )
-						} else {
-							dump_unum( $mol_vary_tip.uint, val )
-						}
-						
-						return
-					}
-					
-					case 'string': return dump_string( val )
-					
-					case 'object': {
-						
-						if( !val ) {
-							release( 8 )
-							return this.array[ pos ++ ] = $mol_vary_spec.none
-						}
-						if( ArrayBuffer.isView( val ) ) return dump_buffer( val as ArrayBufferView< ArrayBuffer > )
-						if( Array.isArray( val ) ) return dump_list( val )
-						
-						return dump_object( val )
-						
-					}
-					
+					return dump_object( val )
 				}
-				
-				$mol_fail( new Error( `Unsupported type` ) )
 			}
 			
-			for( const item of data ) {
+			/** Recursive fills buffer with data. */
+			const dump = ( val: unknown )=> {
+				const dumper = dumpers[ typeof val ]
+				if( !dumper ) $mol_fail( new Error( `Unsupported type` ) )
+				dumper( val )
+			}
+			
+			for( let i = 0; i < data.length; ++ i ) {
 				capacity += 9
-				dump( item )
-				if( stack.length ) $mol_fail( new Error( 'Stack underflow', { cause: { stack, item } } ) )
+				dump( data[i] )
+				if( stack.length ) $mol_fail( new Error( 'Stack underflow', { cause: { stack, item: data[i] } } ) )
 				offsets.clear()
 			}
 			
@@ -577,11 +566,11 @@ namespace $ {
 		rich_node( keys: readonly string[] ) {
 			
 			let node = this.rich_index
-			for( const key of keys ) {
-				let sub = node.get( key )
+			for( let i = 0; i < keys.length; ++ i ) {
+				let sub = node.get( keys[i] )
 				
 				if( sub ) node = sub
-				else node.set( key, node = new Map )
+				else node.set( keys[i], node = new Map )
 				
 			}
 			
