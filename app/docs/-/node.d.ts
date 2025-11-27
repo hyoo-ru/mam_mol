@@ -18719,8 +18719,8 @@ declare namespace $ {
 declare namespace $ {
     let $hyoo_marked_flow: $mol_regexp<{
         [x: string]: string;
-        readonly table: string;
         readonly header: string;
+        readonly table: string;
         readonly list: string;
         readonly quote: string;
         readonly cut: string;
@@ -18729,8 +18729,8 @@ declare namespace $ {
         readonly win_end: string;
         readonly mac_end: string;
         readonly content: string;
-        readonly indent: string;
         readonly marker: string;
+        readonly indent: string;
         readonly kids: string;
     }>;
 }

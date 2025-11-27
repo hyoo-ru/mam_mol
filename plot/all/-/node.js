@@ -165,21 +165,7 @@ var $node = new Proxy({ require }, {
                 $$.$mol_fail_log(e);
             }
         }
-        try {
-            return target.require(name);
-        }
-        catch (error) {
-            if ($$.$mol_promise_like(error))
-                $$.$mol_fail_hidden(error);
-            if (error && typeof error === 'object' && error.code === 'ERR_REQUIRE_ESM') {
-                const module = cache.get(name);
-                if (module)
-                    return module;
-                throw Object.assign(import(name).then(module => cache.set(name, module)), { cause: error });
-            }
-            $$.$mol_fail_log(error);
-            return null;
-        }
+        return target.require(name);
     },
     set(target, name, value) {
         target[name] = value;
