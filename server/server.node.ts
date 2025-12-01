@@ -124,7 +124,8 @@ namespace $ {
 		expressFiler() {
 			return $node.express.static(
 				$node.path.resolve( this.rootPublic() ) ,{
-					maxAge : this.cacheTime()
+					maxAge : this.cacheTime(),
+					dotfiles: 'allow'
 				}
 			)
 		}
