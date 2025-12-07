@@ -189,7 +189,6 @@
     "$mol_icon_chevron_right"
   ],
   "dependencies": {
-    "internal": "*",
     "jsdom": "*"
   }
 }

@@ -209,7 +209,6 @@
     "$mol_expander"
   ],
   "dependencies": {
-    "internal": "*",
     "jsdom": "*"
   }
 }

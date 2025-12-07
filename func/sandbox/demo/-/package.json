@@ -73,7 +73,6 @@
     "$mol_try"
   ],
   "dependencies": {
-    "internal": "*",
     "jsdom": "*"
   }
 }

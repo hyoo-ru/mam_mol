@@ -155,7 +155,6 @@
     "$mol_perf_uibench_tree"
   ],
   "dependencies": {
-    "internal": "*",
     "jsdom": "*"
   }
 }

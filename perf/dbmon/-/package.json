@@ -156,7 +156,6 @@
     "$mol_state_time"
   ],
   "dependencies": {
-    "internal": "*",
     "jsdom": "*"
   }
 }

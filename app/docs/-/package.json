@@ -698,7 +698,6 @@
     "$mol_lang"
   ],
   "dependencies": {
-    "internal": "*",
     "jsdom": "*",
     "web-audio-api": "*"
   }
