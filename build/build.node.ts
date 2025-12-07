@@ -1243,6 +1243,7 @@ namespace $ {
 			for( let dep of this.nodeDeps([ path , exclude ]).keys() ) {
 
 				if( $node_internal_check(dep) ) continue
+				if( dep === 'internal' ) continue // @TODO: Prevent `internal` deps from `node:internal`.
 				json.dependencies[ dep ] ??= `*`
 			}
 			

@@ -169,13 +169,7 @@ var $node = new Proxy({ require }, {
             target.require.resolve(name);
         }
         catch {
-            try {
-                $$.$mol_exec('.', 'npm', 'install', '--omit=dev', name);
-            }
-            catch (e) {
-                if ($$.$mol_promise_like(e))
-                    $$.$mol_fail_hidden(e);
-            }
+            $$.$mol_exec('.', 'npm', 'install', '--omit=dev', name);
             try {
                 $$.$mol_exec('.', 'npm', 'install', '--omit=dev', '@types/' + name);
             }
@@ -183,6 +177,11 @@ var $node = new Proxy({ require }, {
                 if ($$.$mol_promise_like(e))
                     $$.$mol_fail_hidden(e);
                 $$.$mol_fail_log(e);
+            }
+            const mam_node_modules = target.require('node:path').join(process.cwd(), 'node_modules');
+            if (!process.env.NODE_PATH?.includes(mam_node_modules)) {
+                process.env.NODE_PATH = `${mam_node_modules}${process.env.NODE_PATH ? `:${process.env.NODE_PATH}` : ''}`;
+                target.require('node:module').Module._initPaths();
             }
         }
         return target.require(name);
