@@ -14,7 +14,7 @@ namespace $ {
 				&& mod.name() !== 'node'
 				&& ! mod.name().startsWith('@')
 			) {
-				$node [ mod.name() ] // force autoinstall through npm
+				this.$.$node_autoinstall(mod.name()) // force autoinstall through npm
 				return true
 			}
 			
@@ -22,7 +22,7 @@ namespace $ {
 				[ node, node_modules ].includes( parent.parent() )
 				&& parent.name().startsWith('@')
 			) {
-				$node [ `${parent.name()}/${mod.name()}` ] // force autoinstall through npm
+				this.$.$node_autoinstall(`${parent.name()}/${mod.name()}`) // force autoinstall through npm
 				return true
 			}
 			return false
