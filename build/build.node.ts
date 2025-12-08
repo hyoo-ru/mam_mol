@@ -368,6 +368,13 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
+		tsDiagnostics( { path , exclude , bundle } : { path : string , bundle : string , exclude : readonly string[] } ) {
+			const program = this.tsTranspiler({ path , exclude , bundle })
+			const diagnostics = $node.typescript.getPreEmitDiagnostics( program )
+			return diagnostics
+		}
+
+		@ $mol_mem_key
 		tsService( { path , exclude , bundle } : { path : string , bundle : string , exclude : readonly string[] } ) {
 
 			const paths = this.tsPaths({ path , exclude , bundle })
@@ -893,29 +900,27 @@ namespace $ {
 
 			const start = this.now()
 			var pack = $mol_file.absolute( path )
-			
+
 			var target = pack.resolve( `-/${bundle}.audit.js` )
 			var exclude_ext = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
 
-			this.tsService({ path , exclude : exclude_ext , bundle })?.recheck()
-			
+			const diagnostics = this.tsDiagnostics({ path , exclude : exclude_ext , bundle })
+
 			const errors = [] as Error[]
 
-			const paths = this.tsPaths({ path , exclude: exclude_ext , bundle })
+			for( const diagnostic of diagnostics ) {
 
-			for( const path of paths ) {
+				const error = $node.typescript.formatDiagnostic( diagnostic , {
+					getCurrentDirectory : ()=> this.root().path() ,
+					getCanonicalFileName : ( path : string )=> path.toLowerCase() ,
+					getNewLine : ()=> '\n' ,
+				})
 
-				this.js_content( path ) // recheck on file change
-
-				const error = this.js_error( path )
-				if( !error ) continue
-				
 				errors.push( new Error( error ) )
-				this.js_error( path, null ) // ts will refill it on change
 			}
-			
+
 			this.logBundle( target , Date.now() - start )
-			
+
 			if( errors.length ) {
 				const messages = errors.map( e => '  ' + e.message ).join( '\n' )
 				const error = new $mol_error_mix( `Audit fail ${ pack.relate() }\n${ messages }`, {}, ... errors )
@@ -924,7 +929,7 @@ namespace $ {
 			}
 
 			target.text( "console.info( `%cplace: $mol_build\nmessage: Audit passed`, 'color:forestgreen; font-weight:bolder' )" )
-			
+
 			return [ target ]
 		}
 
