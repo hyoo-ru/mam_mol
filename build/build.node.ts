@@ -368,13 +368,6 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		tsDiagnostics( { path , exclude , bundle } : { path : string , bundle : string , exclude : readonly string[] } ) {
-			const program = this.tsTranspiler({ path , exclude , bundle })
-			const diagnostics = $node.typescript.getPreEmitDiagnostics( program )
-			return diagnostics
-		}
-
-		@ $mol_mem_key
 		tsService( { path , exclude , bundle } : { path : string , bundle : string , exclude : readonly string[] } ) {
 
 			const paths = this.tsPaths({ path , exclude , bundle })
@@ -382,16 +375,19 @@ namespace $ {
 
 			const watchers = new Map< string , ( path : string , kind : number )=> void >()
 			let run = ()=> {}
-			
+
+			// Collect errors during recheck for synchronous retrieval
+			let errors = [] as string[]
+
 			var host = $node.typescript.createWatchCompilerHost(
 
 				paths ,
-				
+
 				{
 					... this.tsOptions(),
 					emitDeclarationOnly : true,
 				},
-				
+
 				{
 					... $node.typescript.sys ,
 					watchDirectory: ( path, cb ) => {
@@ -412,7 +408,7 @@ namespace $ {
 						return { close(){ } }
 					},
 				},
-				
+
 				$node.typescript.createSemanticDiagnosticsBuilderProgram,
 
 				( diagnostic )=> {
@@ -425,8 +421,8 @@ namespace $ {
 							getNewLine : ()=> '\n' ,
 						})
 						// console.log('XXX', error )
-						this.js_error( diagnostic.file.getSourceFile().fileName , error )
-						
+						errors.push( error )
+
 					} else {
 						const text = diagnostic.messageText
 						this.$.$mol_log3_fail({
@@ -434,19 +430,19 @@ namespace $ {
 							message: typeof text === 'string' ? text : text.messageText ,
 						})
 					}
-					
+
 				} ,
 
 				()=> {}, //watch reports
-				
+
 				[], // project refs
-				
+
 				{ // watch options
 					synchronousWatchDirectory: true,
 					watchFile: 5,
 					watchDirectory: 0,
 				},
-				
+
 			)
 
 			const service = $node.typescript.createWatchProgram( host )
@@ -455,9 +451,11 @@ namespace $ {
 
 			return {
 				recheck: ()=> {
+					// Clear errors before recheck
+					errors = []
+
 					for( const path of paths ) {
 						const version = $node.fs.statSync( path ).mtime.valueOf()
-						// this.js_error( path, null )
 						if( versions[ path ] && versions[ path ] !== version ) {
 							const watcher = watchers.get( path )
 							if( watcher ) watcher( path , 2 )
@@ -465,6 +463,9 @@ namespace $ {
 						versions[ path ] = version
 					}
 					run()
+
+					// Return collected errors
+					return errors
 				},
 				destructor : ()=> service.close()
 			}
@@ -904,18 +905,20 @@ namespace $ {
 			var target = pack.resolve( `-/${bundle}.audit.js` )
 			var exclude_ext = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
 
-			const diagnostics = this.tsDiagnostics({ path , exclude : exclude_ext , bundle })
+			// Get type errors from tsService.recheck() which returns them synchronously
+			const typeErrors = this.tsService({ path , exclude : exclude_ext , bundle })?.recheck() ?? []
 
 			const errors = [] as Error[]
 
-			for( const diagnostic of diagnostics ) {
+			const paths = this.tsPaths({ path , exclude: exclude_ext , bundle })
 
-				const error = $node.typescript.formatDiagnostic( diagnostic , {
-					getCurrentDirectory : ()=> this.root().path() ,
-					getCanonicalFileName : ( path : string )=> path.toLowerCase() ,
-					getNewLine : ()=> '\n' ,
-				})
+			// Track file dependencies for reactivity
+			for( const path of paths ) {
+				this.js_content( path )
+			}
 
+			// Add type errors from tsService
+			for( const error of typeErrors ) {
 				errors.push( new Error( error ) )
 			}
 
