@@ -405,7 +405,7 @@ namespace $ {
 					},
 				},
 				
-				$node.typescript.createSemanticDiagnosticsBuilderProgram,
+				$node.typescript.createEmitAndSemanticDiagnosticsBuilderProgram,
 
 				( diagnostic )=> {
 
