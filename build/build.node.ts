@@ -396,7 +396,6 @@ namespace $ {
 						$mol_file.relative( path ).text( data, 'virt' )
 					},
 					setTimeout : ( cb : any )=> {
-						// console.log('setTimeout' )
 						run = cb
 					} ,
 					watchFile : (path:string, cb:(path:string,kind:number)=>any )=> {
@@ -417,7 +416,6 @@ namespace $ {
 							getCanonicalFileName : ( path : string )=> path.toLowerCase() ,
 							getNewLine : ()=> '\n' ,
 						})
-						// console.log('XXX', error )
 						this.js_error( diagnostic.file.getSourceFile().fileName , error )
 						
 					} else {
