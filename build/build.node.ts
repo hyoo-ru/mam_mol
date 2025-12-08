@@ -375,16 +375,19 @@ namespace $ {
 
 			const watchers = new Map< string , ( path : string , kind : number )=> void >()
 			let run = ()=> {}
-			
+
+			// Collect errors during recheck for synchronous retrieval
+			let errors = [] as string[]
+
 			var host = $node.typescript.createWatchCompilerHost(
 
 				paths ,
-				
+
 				{
 					... this.tsOptions(),
 					emitDeclarationOnly : true,
 				},
-				
+
 				{
 					... $node.typescript.sys ,
 					watchDirectory: ( path, cb ) => {
@@ -405,7 +408,7 @@ namespace $ {
 						return { close(){ } }
 					},
 				},
-				
+
 				$node.typescript.createSemanticDiagnosticsBuilderProgram,
 
 				( diagnostic )=> {
@@ -418,8 +421,8 @@ namespace $ {
 							getNewLine : ()=> '\n' ,
 						})
 						// console.log('XXX', error )
-						this.js_error( diagnostic.file.getSourceFile().fileName , error )
-						
+						errors.push( error )
+
 					} else {
 						const text = diagnostic.messageText
 						this.$.$mol_log3_fail({
@@ -427,19 +430,19 @@ namespace $ {
 							message: typeof text === 'string' ? text : text.messageText ,
 						})
 					}
-					
+
 				} ,
 
 				()=> {}, //watch reports
-				
+
 				[], // project refs
-				
+
 				{ // watch options
 					synchronousWatchDirectory: true,
 					watchFile: 5,
 					watchDirectory: 0,
 				},
-				
+
 			)
 
 			const service = $node.typescript.createWatchProgram( host )
@@ -448,9 +451,11 @@ namespace $ {
 
 			return {
 				recheck: ()=> {
+					// Clear errors before recheck
+					errors = []
+
 					for( const path of paths ) {
 						const version = $node.fs.statSync( path ).mtime.valueOf()
-						// this.js_error( path, null )
 						if( versions[ path ] && versions[ path ] !== version ) {
 							const watcher = watchers.get( path )
 							if( watcher ) watcher( path , 2 )
@@ -458,6 +463,9 @@ namespace $ {
 						versions[ path ] = version
 					}
 					run()
+
+					// Return collected errors
+					return errors
 				},
 				destructor : ()=> service.close()
 			}
@@ -893,29 +901,29 @@ namespace $ {
 
 			const start = this.now()
 			var pack = $mol_file.absolute( path )
-			
+
 			var target = pack.resolve( `-/${bundle}.audit.js` )
 			var exclude_ext = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
 
-			this.tsService({ path , exclude : exclude_ext , bundle })?.recheck()
-			
+			// Get type errors from tsService.recheck() which returns them synchronously
+			const typeErrors = this.tsService({ path , exclude : exclude_ext , bundle })?.recheck() ?? []
+
 			const errors = [] as Error[]
 
 			const paths = this.tsPaths({ path , exclude: exclude_ext , bundle })
 
+			// Track file dependencies for reactivity
 			for( const path of paths ) {
-
-				this.js_content( path ) // recheck on file change
-
-				const error = this.js_error( path )
-				if( !error ) continue
-				
-				errors.push( new Error( error ) )
-				this.js_error( path, null ) // ts will refill it on change
+				this.js_content( path )
 			}
-			
+
+			// Add type errors from tsService
+			for( const error of typeErrors ) {
+				errors.push( new Error( error ) )
+			}
+
 			this.logBundle( target , Date.now() - start )
-			
+
 			if( errors.length ) {
 				const messages = errors.map( e => '  ' + e.message ).join( '\n' )
 				const error = new $mol_error_mix( `Audit fail ${ pack.relate() }\n${ messages }`, {}, ... errors )
@@ -924,7 +932,7 @@ namespace $ {
 			}
 
 			target.text( "console.info( `%cplace: $mol_build\nmessage: Audit passed`, 'color:forestgreen; font-weight:bolder' )" )
-			
+
 			return [ target ]
 		}
 
