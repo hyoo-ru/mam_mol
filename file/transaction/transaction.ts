@@ -1,11 +1,11 @@
 namespace $ {
 
-	export type $mol_file_transaction_mode = 'create' | 'exists_truncate' | 'exists_fail' | 'read_only'
-		| 'write_only' | 'read_write' | 'append'
+	export type $mol_file_transaction_mode = 'create' | 'exists_truncate' | 'exists_fail' | 'read_only' | 'write_only' | 'read_write' | 'append'
 
 	export type $mol_file_transaction_buffer = ArrayBufferView
 
 	export class $mol_file_transaction extends $mol_object {
+		
 		path() { return '' }
 
 		modes() { return [] as readonly $mol_file_transaction_mode[] }
@@ -15,21 +15,29 @@ namespace $ {
 			offset?: number | null,
 			length?: number | null,
 			position?: number | null,
-		}) {
-			return 0
+		}): number {
+			throw new Error('Not implemented')
 		}
 
-		read() {
-			return new Uint8Array()
+		read(): Uint8Array< ArrayBuffer > {
+			throw new Error('Not implemented')
 		}
 
-		truncate(size: number) {}
+		truncate(size: number) {
+			throw new Error('Not implemented')
+		}
 
-		close() {}
+		flush() {
+			throw new Error('Not implemented')
+		}
+		
+		close() {
+			throw new Error('Not implemented')
+		}
 
 		override destructor() {
 			this.close()
 		}
-
+		
 	}
 }

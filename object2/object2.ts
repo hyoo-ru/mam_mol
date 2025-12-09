@@ -1,4 +1,6 @@
 namespace $ {
+	
+	if( !Symbol.dispose ) ( Symbol as any ).dispose = Symbol( 'Symbol.dispose' )
 
 	export class $mol_object2 {
 		
@@ -40,6 +42,10 @@ namespace $ {
 		
 		destructor() { }
 		static destructor() { }
+		
+		[ Symbol.dispose ] () {
+			this.destructor()
+		}
 		
 		//[ Symbol.toPrimitive ]( hint: string ) {
 		//	return hint === 'number' ? this.valueOf() : this.toString()

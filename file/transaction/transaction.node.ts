@@ -51,9 +51,13 @@ namespace $ {
 			return $mol_file_node_buffer_normalize($node.fs.readFileSync(this.descr()) as Buffer< ArrayBuffer >)
 		}
 
-		override close() {
-			$node.fs.closeSync(this.descr())
+		override flush() {
+			$node.fs.fsyncSync( this.descr() )
 		}
+
+		override close() {
+			$node.fs.closeSync( this.descr() )
+		}	
 
 	}
 

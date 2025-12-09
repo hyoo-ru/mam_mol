@@ -441,6 +441,8 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    if (!Symbol.dispose)
+        Symbol.dispose = Symbol('Symbol.dispose');
     class $mol_object2 {
         static $ = $;
         [Symbol.toStringTag];
@@ -473,6 +475,9 @@ var $;
         }
         destructor() { }
         static destructor() { }
+        [Symbol.dispose]() {
+            this.destructor();
+        }
         toString() {
             return this[Symbol.toStringTag] || this.constructor.name + '<>';
         }
@@ -4177,40 +4182,25 @@ var $;
         path() { return ''; }
         modes() { return []; }
         write(options) {
-            return 0;
+            throw new Error('Not implemented');
         }
         read() {
-            return new Uint8Array();
-        }
-        truncate(size) { }
-        close() { }
-        destructor() {
-            this.close();
-        }
-    }
-    $.$mol_file_transaction = $mol_file_transaction;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_file_transaction_web extends $mol_file_transaction {
-        write(options) {
             throw new Error('Not implemented');
         }
         truncate(size) {
             throw new Error('Not implemented');
         }
-        read() {
+        flush() {
             throw new Error('Not implemented');
         }
         close() {
             throw new Error('Not implemented');
         }
+        destructor() {
+            this.close();
+        }
     }
-    $.$mol_file_transaction_web = $mol_file_transaction_web;
-    $.$mol_file_transaction = $mol_file_transaction_web;
+    $.$mol_file_transaction = $mol_file_transaction;
 })($ || ($ = {}));
 
 ;
