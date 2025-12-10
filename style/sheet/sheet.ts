@@ -88,6 +88,17 @@ namespace $ {
 						}
 					}
 
+				} else if ( key === "^" ) {
+					const parents = config[key] as any
+					class fake extends $mol_view { static name= "" }
+
+					for ( let parent of Object.keys( parents ).reverse() ) {
+						const styles = parents[parent]
+						const css = $mol_style_sheet( fake, parent === ">" ? styles : { [parent]: styles } ).replaceAll("[]", "")
+						const [ s, r ] = css.split(" {\n")
+
+						rules.push( s.trim() + ( parent === ">" ? " > " : " " ) + selector( prefix, path ) + " {\n" + r)
+					}
 				} else if( key === '@media' ) {
 
 					const media = (config as any)[key] as any
