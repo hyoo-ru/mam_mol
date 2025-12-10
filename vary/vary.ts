@@ -67,9 +67,18 @@ namespace $ {
 				capacity -= size
 			}
 			
-			const dump_unum = ( tip: number, val: number | bigint )=> {
+			const calc_size = ( val: number ) => {
+				if( val < $mol_vary_len.L1 ) return 1
+				if( val < 2**8 ) return 2
+				if( val < 2**16 ) return 3
+				if( val < 2**32 ) return 5
+				if( val < 2n**64n ) return 9
+				return $mol_fail( new Error( 'Too large number' ) )
+			}
+			
+			const dump_unum = ( tip: number, val: number | bigint, max = val )=> {
 				
-				if( val < $mol_vary_len.L1 ) {
+				if( max < $mol_vary_len.L1 ) {
 					this.array[ pos ++ ] = tip | Number( val )
 					release(8)
 					return
@@ -80,21 +89,21 @@ namespace $ {
 					if( offset !== undefined ) return dump_unum( $mol_vary_tip.link, offset )
 				}
 				
-				if( val < 2**8 ) {
+				if( max < 2**8 ) {
 					this.array[ pos ++ ] = tip | $mol_vary_len.L1
 					this.array[ pos ++ ] = Number( val )
 					release(7)
-				} else if( val < 2**16 ) {
+				} else if( max < 2**16 ) {
 					this.array[ pos ++ ] = tip | $mol_vary_len.L2
 					this.buffer.setUint16( pos, Number( val ), true )
 					pos += 2
 					release(6)
-				} else if( val < 2**32 ) {
+				} else if( max < 2**32 ) {
 					this.array[ pos ++ ] = tip | $mol_vary_len.L4
 					this.buffer.setUint32( pos, Number( val ), true )
 					pos += 4
 					release(4)
-				} else if( val < 2n**64n ) {
+				} else if( max < 2n**64n ) {
 					this.array[ pos ++ ] = tip | $mol_vary_len.L8
 					this.buffer.setBigUint64( pos, BigInt( val ), true )
 					pos += 8
@@ -176,11 +185,14 @@ namespace $ {
 				const offset = offsets.get( val )
 				if( offset !== undefined ) return dump_unum( $mol_vary_tip.link, offset )
 				
-				dump_unum( $mol_vary_tip.text, val.length )
-				acquire( val.length * 3 )
-				const len = $mol_charset_encode_to( val, this.array, pos )
+				const len_max = val.length * 3
+				const len_size = calc_size( len_max )
+				
+				acquire( len_max )
+				const len = $mol_charset_encode_to( val, this.array, pos + len_size )
+				dump_unum( $mol_vary_tip.text, len, len_max )
 				pos += len
-				release( val.length * 3 - len )
+				release( len_max - len )
 				
 				offsets.set( val, offsets.size )
 				return
@@ -394,8 +406,8 @@ namespace $ {
 			
 			const read_text = ( kind: number )=> {
 				const len = read_unum( kind ) as number
-				const [ text, bytes ] = $mol_charset_decode_from( array, pos, len )
-				pos += bytes
+				const text = $mol_charset_decode( new Uint8Array( array.buffer, array.byteOffset + pos, len ) )
+				pos += len
 				stream.push( text )
 				return text
 			}
