@@ -134,9 +134,16 @@ namespace $.$$ {
 		},
 		
 		"vary pack text"( $ ) {
+			
 			check( [ 'foo' ], [ text|3, ... str('foo') ] )
-			const long = 'abcdefghijklmnopqrstuvwxyzЖЫ'
-			check( [ long ], [ text|L1, 28, ... str(long) ] )
+			check( [ 'абв' ], [ text|6, ... str('абв') ] )
+			
+			const long_lat = 'abcdefghijklmnopqrst'
+			check( [ long_lat ], [ text|L1, 20, ... str(long_lat) ] )
+			
+			const long_cyr = 'абвгдеёжзийклмнопрст'
+			check( [ long_cyr ], [ text|L1, 40, ... str(long_cyr) ] )
+			
 		},
 		
 		"vary pack dedup text"( $ ) {
