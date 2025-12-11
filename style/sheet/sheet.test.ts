@@ -362,18 +362,31 @@ namespace $ {
 					$mol_style_sheet_test2 : {
 						display: 'inline',
 					},
+					'>' : {
+						$mol_style_sheet_test1 : {
+							backgroundColor: 'blue',
+						},
+						$mol_style_sheet_test2 : {
+							backgroundColor: 'green',
+						}
+					},
 					'@' : {
 						'aria-selected' : {
 							true : {
-								color: 'blue'
+								color: 'blue',
+							}
+						},
+						'data-checked' : {
+							true : {
+								color: 'green',
 							}
 						}
 					}
 				},
 			} )
 
-			$mol_assert_equal( sheet , '[mol_style_sheet_test2] {\n\tcolor: red;\n}\n:where([mol_style_sheet_test1]) [mol_style_sheet_test2] {\n\tdisplay: block;\n}\n:where([mol_style_sheet_test2]) [mol_style_sheet_test2] {\n\tdisplay: inline;\n}\n:where([aria-selected="true"]) [mol_style_sheet_test2] {\n\tcolor: blue;\n}\n' )
-
+			$mol_assert_equal( sheet , '[mol_style_sheet_test2] {\n\tcolor: red;\n}\n:where([mol_style_sheet_test1]) [mol_style_sheet_test2] {\n\tdisplay: block;\n}\n:where([mol_style_sheet_test2]) [mol_style_sheet_test2] {\n\tdisplay: inline;\n}\n:where([mol_style_sheet_test1]) > [mol_style_sheet_test2] {\n\tbackground-color: blue;\n}\n:where([mol_style_sheet_test2]) > [mol_style_sheet_test2] {\n\tbackground-color: green;\n}\n:where([aria-selected="true"]) [mol_style_sheet_test2] {\n\tcolor: blue;\n}\n:where([data-checked="true"]) [mol_style_sheet_test2] {\n\tcolor: green;\n}\n')
+	
 		},
 
 	})
