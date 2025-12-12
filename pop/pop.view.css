@@ -22,6 +22,8 @@
 	max-height: 80vw;
 	contain: paint;
 	transition-property: opacity;
+	/* Safari ios layer fix, https://t.me/mam_mol/170017 */
+	transform: translateZ(0);
 }
 
 :where( [mol_pop_bubble] > * ) {
