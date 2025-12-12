@@ -6974,9 +6974,9 @@ var $;
                 const rect_bubble = this.view_rect();
                 const align = this.align_vert();
                 if (align === 'bottom')
-                    return (viewport.height - rect_bubble.bottom) * .66;
+                    return (viewport.height - rect_bubble.bottom) * .75;
                 if (align === 'top')
-                    return rect_bubble.top * .66;
+                    return rect_bubble.top * .75;
                 return 0;
             }
             align() {
