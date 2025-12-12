@@ -8,7 +8,6 @@ namespace $ {
 			
 			const window = $mol_wire_sync( $node.puppeteer ).launch({
 				headless: true,
-				ignoreHTTPSErrors: true,
 				waitForInitialPage: false,
 				defaultViewport: {
 					width: 1024,
