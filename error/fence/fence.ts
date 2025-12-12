@@ -17,6 +17,7 @@ namespace $ {
 				normalized = $mol_promise_like(error) ? loading(error) : fallback(error as Error)
 			} catch (sub_error) {
 				$mol_fail_log(sub_error)
+				normalized = error
 			}
 
 			if (normalized instanceof Error || $mol_promise_like(normalized)) {
