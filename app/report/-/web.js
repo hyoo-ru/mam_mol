@@ -1671,10 +1671,25 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_try(handler) {
+        try {
+            return handler();
+        }
+        catch (error) {
+            return error;
+        }
+    }
+    $.$mol_try = $mol_try;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
     let error;
     let result;
     let handler;
-    function $mol_try(handler2) {
+    function $mol_try_web(handler2) {
         handler = handler2;
         error = undefined;
         result = undefined;
@@ -1685,7 +1700,8 @@ var $;
         result = undefined;
         return error2 || result2;
     }
-    $.$mol_try = $mol_try;
+    $.$mol_try_web = $mol_try_web;
+    $.$mol_try = $mol_try_web;
     self.addEventListener('$mol_try', (event) => {
         result = handler();
     }, true);

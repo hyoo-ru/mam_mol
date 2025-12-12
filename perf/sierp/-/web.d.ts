@@ -604,7 +604,11 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_try<Result>(handler2: () => Result): Result | Error;
+    function $mol_try<Result>(handler: () => Result): Result | Error;
+}
+
+declare namespace $ {
+    function $mol_try_web<Result>(handler2: () => Result): Result | Error;
 }
 
 declare namespace $ {
