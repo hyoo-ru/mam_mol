@@ -7,5 +7,4 @@ namespace $ {
 			return error
 		}
 	}
-	
 } 
