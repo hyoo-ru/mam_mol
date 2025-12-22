@@ -7,17 +7,19 @@ $mol_pop $mol_view
 		<= Anchor null
 	sub_visible /
 		<= Anchor
-		<= Bubble $mol_pop_bubble
-			align <= align \bottom_center
-			content <= bubble_content /$mol_view_content
-			height_max <= height_max 9999
+	Bubble $mol_pop_bubble
+		Pop <= self $mol_view
+		align <= align \bottom_center
+		content <= bubble_content /$mol_view_content
+		height_max <= height_max 9999
 
-$mol_pop_bubble $mol_view
-	sub <= content /$mol_view_content
-	style *
-		^
-		maxHeight <= height_max 9999
-	attr *
-		^
-		mol_pop_align <= align \
-		tabindex 0
+$mol_pop_bubble $mol_follower
+	Pop $mol_view
+	Sub <= Body $mol_view
+		sub <= content /$mol_view_content
+		attr *
+			mol_pop_align <= align \
+			popover \manual
+			tabindex 0
+		style *
+			maxHeight <= height_max 9999
