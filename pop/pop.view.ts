@@ -103,18 +103,13 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		override align() {
-			return super.align() as string
-		}
-
-		@ $mol_mem
 		override offset() {
-			const align = this.align()
+			const position = this.position()
 
-			if( align.startsWith( 'top' ) ) return [ .5, 0 ]
-			if( align.startsWith( 'bottom' ) ) return [ .5, 1 ]
-			if( align.startsWith( 'left' ) ) return [ 0, .5 ]
-			if( align.startsWith( 'right' ) ) return [ 1, .5 ]
+			if( position.startsWith( 'top' ) ) return [ .5, 0 ]
+			if( position.startsWith( 'bottom' ) ) return [ .5, 1 ]
+			if( position.startsWith( 'left' ) ) return [ 0, .5 ]
+			if( position.startsWith( 'right' ) ) return [ 1, .5 ]
 
 			return [ .5, .5 ]
 		}
