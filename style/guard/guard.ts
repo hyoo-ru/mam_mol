@@ -12,7 +12,7 @@ namespace $ {
 	}
 	
 	type Keys< View extends $mol_view > =
-	| '>' | '@'
+	| '>' | '@' | '^'
 	| keyof $mol_style_properties
 	| $mol_style_pseudo_element | $mol_style_pseudo_class
 	| $mol_type_keys_extract< View, ()=> $mol_view >
@@ -27,7 +27,7 @@ namespace $ {
 		: key extends keyof $mol_style_properties
 		? $mol_style_properties[ key ]
 		
-		: key extends '>' | $mol_style_pseudo_class | $mol_style_pseudo_element
+		: key extends '>' | '^' | $mol_style_pseudo_class | $mol_style_pseudo_element
 		? $mol_style_guard< View , Config[ key ] >
 		
 		: key extends '@'
