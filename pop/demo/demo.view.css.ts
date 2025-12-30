@@ -1,8 +1,5 @@
 namespace $.$$ {
 
-	const { rem } = $mol_style_unit
-	const { calc } = $mol_style_func
-
 	$mol_style_define( $mol_pop_demo , {
 
 		flex: {
@@ -14,14 +11,18 @@ namespace $.$$ {
 		Pop_area: {
 			display: 'flex',
 
-			padding: rem( 10 ),
+			padding: `10rem`,
 
 			boxShadow: `0 0 0 1px ${$mol_theme.line}`,
 
 			border: {
 				radius: $mol_gap.round
 			}
-		}
+		},
+		
+		Other: {
+			padding: $mol_gap.text,
+		},
 
 	})
 }

@@ -16,7 +16,7 @@ namespace $.$$ {
 		sub_visible() {
 			return [
 				this.Anchor() ,
-				... this.showed() ? [ this.Bubble() ] : [] ,
+				... this.showed() ? [ this.Follower() ] : [] ,
 			]
 		}
 		
@@ -27,8 +27,8 @@ namespace $.$$ {
 			const rect_bubble = this.view_rect()!
 			const align = this.align_vert()
 			
-			if( align === 'bottom' ) return ( viewport.height - rect_bubble.bottom ) * .75
-			if( align === 'top' ) return rect_bubble.top * .75
+			if( align === 'bottom' ) return ( viewport.height - rect_bubble.bottom )
+			if( align === 'top' ) return rect_bubble.top
 			
 			return 0
 		}
@@ -44,41 +44,70 @@ namespace $.$$ {
 
 		@ $mol_mem
 		align_vert() {
-			const viewport = this.view_port()
 			
 			const rect_pop = this.view_rect()
 			if( !rect_pop ) return 'suspense'
 			
-			return rect_pop.top > ( viewport.top + viewport.height / 2 ) ? 'top' : 'bottom'
+			const viewport = this.$.$mol_window.size()
+			return rect_pop.top > viewport.height / 2 ? 'top' : 'bottom'
+			
 		}
 
 		@ $mol_mem
 		align_hor() {
-			const viewport = this.view_port()
 			
 			const rect_pop = this.view_rect()
 			if( !rect_pop ) return 'suspense'
 			
-			return rect_pop.left > ( viewport.left + viewport.width / 2 ) ? 'left' : 'right'
+			const viewport = this.$.$mol_window.size()
+			return rect_pop.left > viewport.width / 2 ? 'left' : 'right'
+			
 		}
 		
 		@ $mol_mem
-		View_port() {
-			const view = new $mol_view
-			view.dom_node = ()=> {
-				let node = this.dom_node() as HTMLElement
-				while( node = node.offsetParent! as HTMLElement ) {
-					if( this.$.$mol_dom_context.getComputedStyle( node ).overflow !== 'visible' ) return node
-				}
-				return this.$.$mol_dom_context.document.documentElement
+		bubble_offset() {
+			
+			const tags = new Set( this.align().split( '_' ) )
+			if( tags.has( 'suspense' ) ) return [ 0, 0 ]
+			
+			const hor = tags.has( 'right' ) ? 'right' : tags.has( 'left' ) ? 'left' : 'center'
+			const vert = tags.has( 'bottom' ) ? 'bottom' : tags.has( 'top' ) ? 'top' : 'center'
+			
+			if( [ ... tags ][0] === hor ) {
+				return [
+					{ left: 0, center: .5, right: 1 }[ hor ],
+					{ top: 1, center: .5, bottom: 0 }[ vert ],
+				]
+			} else {
+				return [
+					{ left: 1, center: .5, right: 0 }[ hor ],
+					{ top: 0, center: .5, bottom: 1 }[ vert ],
+				]
 			}
-			return view
+			
 		}
 		
 		@ $mol_mem
-		view_port() {
-			return this.View_port().view_rect() ?? { ... this.$.$mol_window.size(), left: 0, top: 0 }
+		bubble_align() {
+			
+			const tags = new Set( this.align().split( '_' ) )
+			if( tags.has( 'suspense' ) ) return [ -.5, -.5 ]
+			
+			const hor = tags.has( 'right' ) ? 'right' : tags.has( 'left' ) ? 'left' : 'center'
+			const vert = tags.has( 'bottom' ) ? 'bottom' : tags.has( 'top' ) ? 'top' : 'center'
+			
+			return [
+				{ left: -1, center: -.5, right: 0, suspense: -.5 }[ hor ],
+				{ top: -1, center: -.5, bottom: 0, suspense: -.5 }[ vert ],
+			]
+			
 		}
-
+		
+		@ $mol_mem
+		bubble() {
+			if( !this.showed() ) return
+			;( this.Bubble().dom_node() as any ).showPopover()
+		}
+		
 	}
 }
