@@ -91,9 +91,14 @@
 			(obj.bubble_content) = () => ([(this.Content())]);
 			return obj;
 		}
+		Other(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => (["Other content"]);
+			return obj;
+		}
 		Pop_area(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.Pop())]);
+			(obj.sub) = () => ([(this.Pop()), (this.Other())]);
 			return obj;
 		}
 		title(){
@@ -126,6 +131,7 @@
 	($mol_mem(($.$mol_pop_demo.prototype), "Pop_anchor"));
 	($mol_mem(($.$mol_pop_demo.prototype), "Content"));
 	($mol_mem(($.$mol_pop_demo.prototype), "Pop"));
+	($mol_mem(($.$mol_pop_demo.prototype), "Other"));
 	($mol_mem(($.$mol_pop_demo.prototype), "Pop_area"));
 
 //# sourceMappingURL=demo.view.tree.js.map

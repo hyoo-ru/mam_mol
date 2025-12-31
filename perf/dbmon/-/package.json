@@ -152,6 +152,8 @@
     "$mol_type_enforce",
     "$mol_pop_over",
     "$mol_pop",
+    "$mol_follower",
+    "$mol_ghost",
     "$mol_layer",
     "$mol_state_time"
   ],

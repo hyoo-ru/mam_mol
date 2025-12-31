@@ -41,6 +41,7 @@ $mol_pop_demo $mol_example
 							<= bubble_hint \
 								\This is
 								\bubble_content
+			<= Other $mol_view sub / \Other content
 	tags /
 		\popup
 		\menu

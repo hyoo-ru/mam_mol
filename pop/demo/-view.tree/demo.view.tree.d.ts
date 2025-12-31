@@ -85,6 +85,11 @@ declare namespace $ {
 		,
 		ReturnType< $mol_view['sub'] >
 	>
+	type $mol_view__sub_mol_pop_demo_18 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
 	export class $mol_pop_demo extends $mol_example {
 		show_title( ): string
 		pop_showed_check_hint( ): string
@@ -117,6 +122,7 @@ declare namespace $ {
 		bubble_hint( ): string
 		Content( ): $mol_row
 		Pop( ): $mol_pop
+		Other( ): $mol_view
 		Pop_area( ): $mol_view
 		title( ): string
 		sub( ): readonly(any)[]

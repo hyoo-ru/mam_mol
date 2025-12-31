@@ -10,10 +10,6 @@
 	justify-content: flex-start;
 }
 
-[mol_select_bubble] {
-	min-width: 100%;
-}
-
 [mol_select_filter] {
 	flex: 1 0 auto;
 	align-self: stretch;

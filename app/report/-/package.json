@@ -152,6 +152,8 @@
     "$mol_select",
     "$mol_pick",
     "$mol_pop",
+    "$mol_follower",
+    "$mol_ghost",
     "$mol_layer",
     "$mol_check",
     "$mol_button_minor",
