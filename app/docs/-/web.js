@@ -39194,8 +39194,10 @@ var $;
 
 ;
 	($.$mol_pop_over_demo) = class $mol_pop_over_demo extends ($.$mol_example_small) {
-		file_title(){
-			return "File";
+		File_anchor(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => (["File"]);
+			return obj;
 		}
 		open_title(){
 			return "Open";
@@ -39233,12 +39235,14 @@ var $;
 		File(){
 			const obj = new this.$.$mol_pop_over();
 			(obj.align) = () => ("bottom_right");
-			(obj.Anchor) = () => ((this.file_title()));
+			(obj.Anchor) = () => ((this.File_anchor()));
 			(obj.bubble_content) = () => ([(this.File_menu())]);
 			return obj;
 		}
-		help_title(){
-			return "About";
+		Help_anchor(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => (["Help"]);
+			return obj;
 		}
 		updates_title(){
 			return "Updates";
@@ -39264,7 +39268,7 @@ var $;
 		Help(){
 			const obj = new this.$.$mol_pop_over();
 			(obj.align) = () => ("bottom_right");
-			(obj.Anchor) = () => ((this.help_title()));
+			(obj.Anchor) = () => ((this.Help_anchor()));
 			(obj.bubble_content) = () => ([(this.Help_menu())]);
 			return obj;
 		}
@@ -39292,11 +39296,13 @@ var $;
 			return ["Widget/Float"];
 		}
 	};
+	($mol_mem(($.$mol_pop_over_demo.prototype), "File_anchor"));
 	($mol_mem(($.$mol_pop_over_demo.prototype), "Open"));
 	($mol_mem(($.$mol_pop_over_demo.prototype), "Export"));
 	($mol_mem(($.$mol_pop_over_demo.prototype), "Save"));
 	($mol_mem(($.$mol_pop_over_demo.prototype), "File_menu"));
 	($mol_mem(($.$mol_pop_over_demo.prototype), "File"));
+	($mol_mem(($.$mol_pop_over_demo.prototype), "Help_anchor"));
 	($mol_mem(($.$mol_pop_over_demo.prototype), "Updates"));
 	($mol_mem(($.$mol_pop_over_demo.prototype), "About"));
 	($mol_mem(($.$mol_pop_over_demo.prototype), "Help_menu"));
