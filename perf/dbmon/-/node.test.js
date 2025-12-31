@@ -5668,7 +5668,7 @@ var $;
             bubble() {
                 if (!this.showed())
                     return;
-                this.Bubble().dom_node().showPopover();
+                this.Bubble().dom_node().showPopover?.();
             }
         }
         __decorate([
