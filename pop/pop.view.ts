@@ -106,7 +106,7 @@ namespace $.$$ {
 		@ $mol_mem
 		bubble() {
 			if( !this.showed() ) return
-			;( this.Bubble().dom_node() as any ).showPopover()
+			;( this.Bubble().dom_node() as any ).showPopover?.()
 		}
 		
 	}
