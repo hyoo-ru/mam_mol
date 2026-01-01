@@ -142,6 +142,32 @@ namespace $ {
 			const dir = root.resolve( req.path )
 
 			const path = dir.path()
+			
+			// Handle .well-known paths (browser/dev tools standard paths)
+			if (req.path.startsWith('/.well-known/')) {
+				const wellKnownFile = root.resolve(req.path.slice(1))
+
+				if (wellKnownFile.exists()) {
+					res.sendFile(wellKnownFile.path())
+					return true
+				}
+
+				if (req.path === '/.well-known/appspecific/com.chrome.devtools.json') {
+					const config = {
+						version: 1,
+						description: 'MAM ($mol) Framework DevTools Configuration',
+					}
+
+					res.writeHead(200, { 'Content-Type': 'application/json' })
+					res.end(JSON.stringify(config, null, 2))
+					return true
+				}
+
+				// Return 404 for other .well-known paths
+				res.writeHead(404, { 'Content-Type': 'application/json' })
+				res.end(JSON.stringify({ error: 'Not Found' }))
+				return true
+			}
 
 			// ensure загружает сорцы, делает git pull, это не стоит делать на build-папках
 			// Поэтому регулярка выше отсеивает build-папки
