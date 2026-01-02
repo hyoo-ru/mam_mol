@@ -1,7 +1,7 @@
 namespace $ {
 
 	/** Decode text from Unicode Compact Format. */
-	export function $mol_charset_ucf_decode( buffer: Uint8Array< ArrayBuffer >, mode = 0xE ) {
+	export function $mol_charset_ucf_decode( buffer: Uint8Array< ArrayBuffer >, mode = 0x0F ) {
 		
 		let text = ''
 		let pos = 0
