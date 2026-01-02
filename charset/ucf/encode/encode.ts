@@ -11,7 +11,7 @@ namespace $ {
 	function $mol_charset_ucf_encode_to( str: string, buf: Uint8Array< ArrayBuffer >, from = 0 ) {
 
 		let pos = from
-		let mode = 0xE
+		let mode = 0xF
 
 		for( let i = 0; i < str.length; i++ ) {
 			
