@@ -1,10 +1,7 @@
 namespace $ {
 
-	let buf = new Uint8Array( 2**12 ) // 4KB Mem Page
-	
 	export function $mol_charset_encode( str: string ) {
-		const capacity = str.length * 3
-		if( buf.byteLength < capacity ) buf = new Uint8Array( capacity )
+		const buf = $mol_charset_buffer( str.length * 3 )
 		return buf.slice( 0, $mol_charset_encode_to( str, buf ) )
 	}
 
