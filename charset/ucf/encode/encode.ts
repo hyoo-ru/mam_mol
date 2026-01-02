@@ -2,6 +2,7 @@ namespace $ {
 	
 	let buf = new Uint8Array( 2**12 ) // 4KB Mem Page
 
+	/** Encode text to Unicode Compact Format. */
 	export function $mol_charset_ucf_encode( str: string ) {
 		const buf = $mol_charset_buffer( str.length * 3 )
 		return buf.slice( 0, $mol_charset_ucf_encode_to( str, buf ) )
