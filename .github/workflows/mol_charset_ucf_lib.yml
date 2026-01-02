@@ -23,7 +23,7 @@ jobs:
     - uses: hyoo-ru/mam_build@master2
       with:
         package: mol
-        modules: mol/charset/ucf/lib
+        modules: charset/ucf/lib
     
     - uses: JS-DevTools/npm-publish@v1
       if: ${{ github.ref == 'refs/heads/master' }}
