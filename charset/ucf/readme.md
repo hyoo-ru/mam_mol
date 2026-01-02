@@ -11,6 +11,17 @@ bin = $mol_charset_ucf_encode( text )
 text = $mol_charset_ucf_decode( bin )
 ```
 
+## From NPM
+
+`npm install` [mol_charset_ucf_lib](https://www.npmjs.com/package/mol_charset_ucf_lib)
+
+```ts
+import {
+	$mol_charset_ucf_encode,
+	$mol_charset_ucf_decode
+} from '$mol_charset_ucf_lib'
+```
+
 # Benchmarks
 
 ## Encoding perf
