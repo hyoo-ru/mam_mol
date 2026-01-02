@@ -35,7 +35,7 @@ namespace $ {
 				code &= 0x7F
 				if( mode <= 0x08 ) code |= buffer[ pos ++ ] << 7
 				if( mode === 0x08 ) code |= buffer[ pos ++ ] << 15
-				text += String.fromCodePoint( page_offset + code )
+				text += String.fromCodePoint( page_offset | code )
 				
 			}
 			
