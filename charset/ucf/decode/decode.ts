@@ -1,7 +1,9 @@
 namespace $ {
 
+	const fast_char = `0123456789.,:;()?!-'" \n`
+	
 	/** Decode text from Unicode Compact Format. */
-	export function $mol_charset_ucf_decode( buffer: Uint8Array< ArrayBuffer >, mode = 0x0F ) {
+	export function $mol_charset_ucf_decode( buffer: Uint8Array< ArrayBuffer >, mode = 0x9C ) {
 		
 		let text = ''
 		let pos = 0
@@ -11,31 +13,30 @@ namespace $ {
 			
 			let code = buffer[ pos ++ ]
 			
-			if( code < 0x20 ) {
+			if( code < 0x80 ) { // Char Code
 				
-				if( code >= 0x0E ) {
-					mode = code
-					page_offset = ( mode - 0x0E ) << 7
-				} else if( code > 0x08 ) {
-					text += String.fromCodePoint( code )
-				} else if( code === 0x08 ) {
-					mode = 0x08
-					page_offset = 0
-				} else {
-					mode = code
-					page_offset = mode << 15
-				}
+				if( mode < 0x9C ) code |= buffer[ pos ++ ] << 7
+				if( mode === 0x97 ) code |= buffer[ pos ++ ] << 15
+				text += String.fromCodePoint( page_offset + code )
 				
-			} else if( code < 0x80 ) {
+			} else if( code < 0x97 ) { // ASCII
 				
-				text += String.fromCodePoint( code )
+				text += fast_char[ code - 0x80 ]
 				
-			} else {
+			} else if( code >= 0x9C ) { // Tiny Set
 				
-				code &= 0x7F
-				if( mode <= 0x08 ) code |= buffer[ pos ++ ] << 7
-				if( mode === 0x08 ) code |= buffer[ pos ++ ] << 15
-				text += String.fromCodePoint( page_offset | code )
+				mode = code
+				page_offset = ( mode - 0x9C ) << 7
+				
+			} else if( code === 0x97 ) { // Full Set
+				
+				mode = code
+				page_offset = 0
+				
+			} else { // Wide Set
+				
+				mode = code
+				page_offset = ( ( mode - 0x98 ) << 15 ) + 0x20_00
 				
 			}
 			
