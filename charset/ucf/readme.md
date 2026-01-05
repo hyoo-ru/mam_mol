@@ -2,7 +2,7 @@
 
 > [UCF](https://page.hyoo.ru/#!=1woher_nlk5d3) - Simple compact unicode text binarization format.
 
-![](https://habrastorage.org/webt/vt/dh/un/vtdhunkbk7tztverhjedla2bzhi.png)
+![](https://habrastorage.org/webt/se/vw/q9/sevwq91xvfyzxychsc6npcj_rdw.png)
 
 # Usage
 
@@ -24,8 +24,14 @@ import {
 
 # Benchmarks
 
+System: Chrome 143, Win 10, i7-6600U 2.60GHz
+
 ## Encoding perf
-![](https://habrastorage.org/webt/4j/nh/iz/4jnhizmmtjbomjwq45_p8vhab-i.png)
+[Online](https://perf.js.hyoo.ru/#!bench=yl2hcs_rfamzi)
+
+![](https://habrastorage.org/webt/xy/0w/qn/xy0wqnvz9vlc2uwmcbbwm98a3v0.png)
 
 ## Decoding perf
-![](https://habrastorage.org/webt/9u/xp/hb/9uxphba95qedw9wdyyd0rueesww.png)
+[Online](https://perf.js.hyoo.ru/#!bench=hlj49x_hdq7va)
+
+![](https://habrastorage.org/webt/t5/lj/7l/t5lj7lwg97tzih7cpukqg7k6j88.png)
