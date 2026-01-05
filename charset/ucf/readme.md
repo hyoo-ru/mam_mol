@@ -2,7 +2,7 @@
 
 > [UCF](https://page.hyoo.ru/#!=1woher_nlk5d3) - Simple compact unicode text binarization format.
 
-![](https://habrastorage.org/webt/se/vw/q9/sevwq91xvfyzxychsc6npcj_rdw.png)
+![](https://habrastorage.org/webt/hj/r6/lr/hjr6lrivvtdevnuwa99v8__njn0.png)
 
 # Usage
 
