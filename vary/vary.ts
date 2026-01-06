@@ -189,7 +189,7 @@ namespace $ {
 				const len_size = calc_size( len_max )
 				
 				acquire( len_max )
-				const len = $mol_charset_encode_to( val, this.array, pos + len_size )
+				const len = $mol_charset_ucf_encode_to( val, this.array, pos + len_size )
 				dump_unum( $mol_vary_tip.text, len, len_max )
 				pos += len
 				release( len_max - len )
@@ -406,7 +406,7 @@ namespace $ {
 			
 			const read_text = ( kind: number )=> {
 				const len = read_unum( kind ) as number
-				const text = $mol_charset_decode( new Uint8Array( array.buffer, array.byteOffset + pos, len ) )
+				const text = $mol_charset_ucf_decode( new Uint8Array( array.buffer, array.byteOffset + pos, len ) )
 				pos += len
 				stream.push( text )
 				return text

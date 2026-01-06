@@ -19,7 +19,7 @@ text = $mol_charset_ucf_decode( bin )
 import {
 	$mol_charset_ucf_encode,
 	$mol_charset_ucf_decode
-} from '$mol_charset_ucf_lib'
+} from 'mol_charset_ucf_lib'
 ```
 
 # Benchmarks
