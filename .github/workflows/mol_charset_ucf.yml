@@ -1,4 +1,4 @@
-name: mol_charset_ucf_lib
+name: mol_charset_ucf
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
     branches: 
       - master
     paths:
-      - '.github/workflows/mol_charset_ucf_lib.yml'
+      - '.github/workflows/mol_charset_ucf.yml'
       - 'mol/charset/ucf/**'
       - 'build/**'
   pull_request:
@@ -23,10 +23,10 @@ jobs:
     - uses: hyoo-ru/mam_build@master2
       with:
         package: mol
-        modules: charset/ucf/lib
+        modules: charset/ucf
     
     - uses: JS-DevTools/npm-publish@v1
       if: ${{ github.ref == 'refs/heads/master' }}
       with:
         token: ${{ secrets.NPM_AUTH_TOKEN }}
-        package: ./mol/charset/ucf/lib/-/package.json
+        package: ./mol/charset/ucf/-/package.json
