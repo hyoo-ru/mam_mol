@@ -82,14 +82,14 @@ namespace $ {
 				const page = ( code >> 14 ) + wide_mode
 				if( mode !== page ) write_mode( page )
 				write_remap( code & 0x7F )
-				buf[ pos ++ ] = ( code >> 7 ) & 0x7F
+				write_remap( ( code >> 7 ) & 0x7F )
 				
 			} else { // Full
 				
 				if( mode !== full_mode ) write_mode( full_mode )
 				write_remap( code & 0x7F )
-				buf[ pos ++ ] = ( code >> 7 ) & 0x7F
-				buf[ pos ++ ] = code >> 14
+				write_remap( ( code >> 7 ) & 0x7F )
+				write_remap( code >> 14 )
 				
 			}
 
@@ -107,10 +107,15 @@ namespace $ {
 		let pos = 0
 		let page_offset = 0
 		
-		while( pos < buffer.length ) {
-			
+		const read_remap = ()=> {
 			let code = buffer[ pos ++ ]
 			if( code > 0x80 ) code = ( ( mode + code ) & 0x7F ) | 0x80
+			return code
+		}
+		
+		while( pos < buffer.length ) {
+			
+			let code = read_remap()
 			
 			if( code < full_mode ) { // Char Code
 				
@@ -120,8 +125,8 @@ namespace $ {
 					}
 				} else if( !ascii_map[ code ] ) {
 					if( code >= 0x80 ) code = ascii_set[ code - 0x80 ]
-					if( mode < tiny_mode ) code |= buffer[ pos ++ ] << 7
-					if( mode === full_mode ) code |= buffer[ pos ++ ] << 14
+					if( mode < tiny_mode ) code |= read_remap() << 7
+					if( mode === full_mode ) code |= read_remap() << 14
 					code += page_offset
 				}
 				
