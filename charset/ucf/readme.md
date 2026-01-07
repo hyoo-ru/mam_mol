@@ -13,7 +13,7 @@ text = $mol_charset_ucf_decode( bin )
 
 ## From NPM
 
-`npm install` [mol_charset_ucf_lib](https://www.npmjs.com/package/mol_charset_ucf)
+`npm install` [mol_charset_ucf](https://www.npmjs.com/package/mol_charset_ucf)
 
 ```ts
 import {
