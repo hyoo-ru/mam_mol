@@ -2,7 +2,7 @@
 
 > [UCF](https://page.hyoo.ru/#!=1woher_nlk5d3) - Simple compact unicode text binarization format.
 
-![](https://habrastorage.org/webt/hj/r6/lr/hjr6lrivvtdevnuwa99v8__njn0.png)
+![](https://habrastorage.org/webt/9s/ad/dh/9saddhacydrzr0i7rlnpmucxih4.png)
 
 # Usage
 
@@ -13,13 +13,13 @@ text = $mol_charset_ucf_decode( bin )
 
 ## From NPM
 
-`npm install` [mol_charset_ucf_lib](https://www.npmjs.com/package/mol_charset_ucf_lib)
+`npm install` [mol_charset_ucf_lib](https://www.npmjs.com/package/mol_charset_ucf)
 
 ```ts
 import {
 	$mol_charset_ucf_encode,
 	$mol_charset_ucf_decode
-} from 'mol_charset_ucf_lib'
+} from 'mol_charset_ucf'
 ```
 
 # Benchmarks
