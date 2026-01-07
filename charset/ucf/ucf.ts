@@ -30,17 +30,20 @@ namespace $ {
 
 		let pos = from
 		let mode = tiny_mode
-		let high_last = mode
 		
 		const write_high = ( code: number )=> {
-			buf[ pos ++ ] = ( ( code + 128 - high_last ) & 0x7F ) | 0x80
-			high_last = code
+			buf[ pos ++ ] = ( ( code + 128 - mode ) & 0x7F ) | 0x80
 		}
 		
 		const write_remap = ( code: number )=> {
 			const fast = ascii_map[ code ]
 			if( fast ) write_high( fast )
 			else buf[ pos ++ ] = code
+		}
+		
+		const write_mode = ( m: number )=> {
+			write_high( m )
+			mode = m
 		}
 		
 		for( let i = 0; i < str.length; i++ ) {
@@ -52,7 +55,7 @@ namespace $ {
 				
 				if( mode !== tiny_mode ) {
 					const fast = ascii_map[ code ]
-					if( !fast ) write_high( mode = tiny_mode )
+					if( !fast ) write_mode( tiny_mode )
 				}
 				buf[ pos ++ ] = code
 				
@@ -64,27 +67,27 @@ namespace $ {
 				if( page === 164 ) { // diacritics
 					const fast = diacr_map[ code ]
 					if( fast ) {
-						if( mode !== tiny_mode ) write_high( mode = tiny_mode )
+						if( mode !== tiny_mode ) write_mode( tiny_mode )
 						write_high( fast )
 						continue
 					}
 				}
 				
-				if( mode !== page ) write_high( mode = page )
+				if( mode !== page ) write_mode( page )
 				write_remap( code )
 				
 			} else if( code < wide_limit ) { // Wide
 				
 				code -= wide_offset
 				const page = ( code >> 14 ) + wide_mode
-				if( mode !== page ) write_high( mode = page )
+				if( mode !== page ) write_mode( page )
 				write_remap( code & 0x7F )
 				buf[ pos ++ ] = ( code >> 7 ) & 0x7F
 				
 			} else { // Full
 				
-				if( mode !== full_mode ) write_high( mode = full_mode )
-				 write_remap( code & 0x7F )
+				if( mode !== full_mode ) write_mode( full_mode )
+				write_remap( code & 0x7F )
 				buf[ pos ++ ] = ( code >> 7 ) & 0x7F
 				buf[ pos ++ ] = code >> 14
 				
@@ -92,7 +95,7 @@ namespace $ {
 
 		}
 		
-		if( mode !== tiny_mode ) write_high( tiny_mode )
+		if( mode !== tiny_mode ) write_mode( tiny_mode )
 
 		return pos - from
 	}
@@ -103,13 +106,11 @@ namespace $ {
 		let text = ''
 		let pos = 0
 		let page_offset = 0
-		let ext_last = mode
 		
 		while( pos < buffer.length ) {
 			
 			let code = buffer[ pos ++ ]
-			
-			if( code > 0x80 ) code = ext_last = ( ( ext_last + code ) & 0x7F ) | 0x80
+			if( code > 0x80 ) code = ( ( mode + code ) & 0x7F ) | 0x80
 			
 			if( code < full_mode ) { // Char Code
 				
