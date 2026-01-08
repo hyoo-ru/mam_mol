@@ -136,13 +136,13 @@ namespace $.$$ {
 		"vary pack text"( $ ) {
 			
 			check( [ 'foo' ], [ text|3, ... str('foo') ] )
-			check( [ 'абв' ], [ text|4, ... str('абв') ] )
+			check( [ 'абв' ], [ text|5, ... str('абв') ] )
 			
 			const long_lat = 'abcdefghijklmnopqrst'
 			check( [ long_lat ], [ text|L1, 20, ... str(long_lat) ] )
 			
 			const long_cyr = 'абвгдеёжзийклмнопрст'
-			check( [ long_cyr ], [ text|L1, 21, ... str(long_cyr) ] )
+			check( [ long_cyr ], [ text|L1, 22, ... str(long_cyr) ] )
 			
 		},
 		
