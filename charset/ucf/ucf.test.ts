@@ -5,8 +5,8 @@ namespace $.$$ {
 		const ideal = new Uint8Array( bytes )
 		const actual = $mol_charset_ucf_encode( text )
 		
-		$mol_assert_equal( actual, ideal )
 		$mol_assert_equal( $mol_charset_ucf_decode( actual ), text )
+		$mol_assert_equal( actual, ideal )
 		
 	}
 	
@@ -40,9 +40,16 @@ namespace $.$$ {
 			check( 'しい', [ 0xE0, 0x57, 0x44, 0xA0 ] )
 		},
 		
-		"2B Emoji with 1B modifiers"( $ ) {
+		"2B Emoji"( $ ) {
 			check( '🏴', [ 0xFF, 0x74, 0x4B, 0x81 ] )
+		},
+		
+		"2B Emoji with 1B modifiers"( $ ) {
 			check( '🏴‍☠', [ 0xFF, 0x74, 0x4B, 0xC1, 0x0D, 0x8C, 0xA9, 0xB4 ] )
+		},
+		
+		"2B Emoji with 3B Tag"( $ ) {
+			check( '🏴\u{E007F}', [ 0xFF, 0x74, 0x4B, 0xF8, 0x7F, 0x00, 0xF3, 0x89 ] )
 		},
 		
 		"Mixed scripts"( $ ) {
