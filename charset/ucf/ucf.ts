@@ -14,7 +14,7 @@ namespace $ {
 	
 	const wide_offset = 0x0E_00
 	const wide_limit = 128 * 128 * 8 + wide_offset
-	const tine_limit = 128 * 98
+	const tiny_limit = 128 * 98
 	
 	const full_mode = 0x95
 	const wide_mode = 0x96
@@ -49,7 +49,7 @@ namespace $ {
 		for( let i = 0; i < str.length; i++ ) {
 			
 			let code = str.charCodeAt( i )
-			if( code >= 0xd800 && code < 0xe000 ) code = ( ( code - 0xd800 ) << 10 ) + str.charCodeAt( ++ i ) + 0x2400
+			if( code >= 0xD8_00 && code < 0xDC_00 ) code = ( ( code - 0xd800 ) << 10 ) + str.charCodeAt( ++ i ) + 0x2400
 			
 			if( code < 0x80 ) { // ASCII
 				
@@ -59,7 +59,7 @@ namespace $ {
 				}
 				buf[ pos ++ ] = code
 				
-			} else if( code < tine_limit ) { // Tiny
+			} else if( code < tiny_limit ) { // Tiny
 				
 				const page = ( code >> 7 ) + tiny_mode
 				code &= 0x7F
@@ -107,15 +107,21 @@ namespace $ {
 		let pos = 0
 		let page_offset = 0
 		
-		const read_remap = ()=> {
+		const read_code = ()=> {
 			let code = buffer[ pos ++ ]
 			if( code > 0x80 ) code = ( ( mode + code ) & 0x7F ) | 0x80
 			return code
 		}
 		
+		const read_remap = ()=> {
+			let code = read_code()
+			if( code >= 0x80 ) code = ascii_set[ code - 0x80 ]
+			return code
+		}
+		
 		while( pos < buffer.length ) {
 			
-			let code = read_remap()
+			let code = read_code()
 			
 			if( code < full_mode ) { // Char Code
 				
