@@ -4,7 +4,7 @@ namespace $.$$ {
 	const { uint, link, spec, blob, text, list, tupl, sint } = $mol_vary_tip
 	const { none, both, fp16, fp32, fp64 } = $mol_vary_spec
 	const { L1, L2, L4, L8, LA } = $mol_vary_len
-	const str = $mol_charset_encode
+	const str = $mol_charset_ucf_encode
 	
 	function check( vary: readonly unknown[], ideal: readonly number[], Vary = $mol_vary ) {
 		const pack = Vary.pack( vary )
@@ -136,13 +136,13 @@ namespace $.$$ {
 		"vary pack text"( $ ) {
 			
 			check( [ 'foo' ], [ text|3, ... str('foo') ] )
-			check( [ 'абв' ], [ text|6, ... str('абв') ] )
+			check( [ 'абв' ], [ text|5, ... str('абв') ] )
 			
 			const long_lat = 'abcdefghijklmnopqrst'
 			check( [ long_lat ], [ text|L1, 20, ... str(long_lat) ] )
 			
 			const long_cyr = 'абвгдеёжзийклмнопрст'
-			check( [ long_cyr ], [ text|L1, 40, ... str(long_cyr) ] )
+			check( [ long_cyr ], [ text|L1, 22, ... str(long_cyr) ] )
 			
 		},
 		

@@ -1,0 +1,32 @@
+name: mol_charset_ucf
+
+on:
+  workflow_dispatch:
+  push:
+    branches: 
+      - master
+    paths:
+      - '.github/workflows/mol_charset_ucf.yml'
+      - 'mol/charset/ucf/**'
+      - 'build/**'
+  pull_request:
+  schedule:
+    - cron: "0 7 * * *"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    
+    - uses: hyoo-ru/mam_build@master2
+      with:
+        package: mol
+        modules: charset/ucf
+    
+    - uses: JS-DevTools/npm-publish@v1
+      if: ${{ github.ref == 'refs/heads/master' }}
+      with:
+        token: ${{ secrets.NPM_AUTH_TOKEN }}
+        package: ./mol/charset/ucf/-/package.json

@@ -5,7 +5,7 @@ $mol_pop_over_demo $mol_example_small
 			sub /
 				<= File $mol_pop_over
 					align \bottom_right
-					Anchor <= file_title \File
+					Anchor <= File_anchor $mol_view sub / \File
 					bubble_content /
 						<= File_menu $mol_list
 							rows /
@@ -17,7 +17,7 @@ $mol_pop_over_demo $mol_example_small
 									title <= save_title \Save
 				<= Help $mol_pop_over
 					align \bottom_right
-					Anchor <= help_title \About
+					Anchor <= Help_anchor $mol_view sub / \Help
 					bubble_content /
 						<= Help_menu $mol_list
 							rows /
