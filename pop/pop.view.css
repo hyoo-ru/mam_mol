@@ -12,6 +12,7 @@
 [mol_pop_bubble] {
 	border: none;
 	padding: 0;
+	color: var(--mol_theme_color);
 	box-shadow: 0 0 1rem hsla(0,0%,0%,.5);
 	border-radius: var(--mol_gap_round);
 	position: fixed;
