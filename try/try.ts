@@ -4,6 +4,7 @@ namespace $ {
 		try {
 			return handler()
 		} catch( error: any ) {
+			console.error( error )
 			return error
 		}
 	}
