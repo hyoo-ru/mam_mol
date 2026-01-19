@@ -38,7 +38,7 @@ namespace $ {
 		'code-number' : /[+-]?(?:\d*\.)?\d+\w*/ ,
 		'code-call' : /\.?\w+(?=\()/ ,
 		'code-sexpr' : /\((\w+ )/ ,
-		'code-field' : /(?:(?<=\.|::|->)[a-z]\w*|(?<=[, \t] |\t)[\w-]+\??\s*:(?!\/\/|:))/ ,
+		'code-field' : /(?:(?<=\.|::|->)[a-z]\w*|(?<=[, \t] |\t)[\w-]+\??:(?!\/\/|:))/ ,
 		'code-keyword' : /(?<=^|\t|[ )(}{=] )((throw|readonly|unknown|keyof|typeof|never|from|class|struct|interface|type|function|extends|implements|module|namespace|import|export|include|require|var|val|let|const|for|do|while|until|in|out|of|new|if|then|else|switch|case|return|async|await|yield|try|catch|break|continue|get|set|public|private|protected|void|int|float|ref)( |$|;))+/ ,
 		'code-global' : /[$]+\w*|\b[A-Z][a-z0-9]+[A-Z]\w*/ ,
 		'code-word' : /\w+/ ,
