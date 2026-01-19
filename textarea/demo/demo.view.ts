@@ -20,5 +20,9 @@ namespace $.$$ {
 			
 		}
 		
+		filled_descr( next?: string ) {
+			return this.$.$mol_state_session.value( `${this}.filled_descr()`, next ) ?? super.filled_descr()
+		}
+		
 	}
 }
