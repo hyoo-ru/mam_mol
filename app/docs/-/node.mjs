@@ -9655,7 +9655,7 @@ var $;
         'code-call': /\.?\w+(?=\()/,
         'code-sexpr': /\((\w+ )/,
         'code-field': /(?:(?<=\.|::|->)[a-z]\w*|(?<=[, \t] |\t)[\w-]+\??\s*:(?!\/\/|:))/,
-        'code-keyword': /(?<=^|\t|[ )(}{=] )((throw|readonly|unknown|keyof|typeof|never|from|class|struct|interface|type|function|extends|implements|module|namespace|import|export|include|require|var|val|let|const|for|do|while|until|in|out|of|new|if|then|else|switch|case|return|async|await|yield|try|catch|break|continue|get|set|public|private|protected|string|boolean|number|null|undefined|true|false|void|int|float|ref)( |$|;))+/,
+        'code-keyword': /(?<=^|\t|[ )(}{=] )((throw|readonly|unknown|keyof|typeof|never|from|class|struct|interface|type|function|extends|implements|module|namespace|import|export|include|require|var|val|let|const|for|do|while|until|in|out|of|new|if|then|else|switch|case|return|async|await|yield|try|catch|break|continue|get|set|public|private|protected|void|int|float|ref)( |$|;))+/,
         'code-global': /[$]+\w*|\b[A-Z][a-z0-9]+[A-Z]\w*/,
         'code-word': /\w+/,
         'code-decorator': /@\s*\S+/,
