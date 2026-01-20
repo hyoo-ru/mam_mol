@@ -1,6 +1,12 @@
 namespace $.$$ {
 	$mol_test({
 		
+		"Empty release"( $ ) {
+			const pool = new $mol_memory_pool
+			pool.release( 0, 0 )
+			$mol_assert_equal( pool.acquire( 8 ), 0 )
+		},
+		
 		"linear allocation"( $ ) {
 			
 			const pool = new $mol_memory_pool
@@ -41,7 +47,7 @@ namespace $.$$ {
 			const pool = new $mol_memory_pool
 			
 			$mol_assert_fail( ()=> pool.release( 0, 2 ), 'Double release' )
-			$mol_assert_fail( ()=> pool.release( 2, 2 ), 'Double release' )
+			$mol_assert_fail( ()=> pool.release( 2, 2 ), 'Release out of allocated' )
 			
 			pool.acquire( 16 )
 			pool.release( 4, 8 )
