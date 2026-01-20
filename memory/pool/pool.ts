@@ -72,7 +72,7 @@ namespace $ {
 				prev = next
 				next = next.next
 				
-				if( !next ) $mol_fail( new Error( 'Release out of allocated' ) )
+				if( !next ) $mol_fail( new Error( 'Release out of allocated', { cause: { last: prev, from, size } } ) )
 			}
 			
 			if(( from + size > next.from )||( prev.from + prev.size > from )) {

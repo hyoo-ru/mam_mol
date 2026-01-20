@@ -21,9 +21,11 @@ namespace $ {
 		
 		if( ArrayBuffer.isView( json ) ) {
 			const buf = new Uint8Array( json.buffer, json.byteOffset, json.byteLength )
-			return $mol_tree2.data( String.fromCharCode( ... buf ) , [], span )
+			const codes = [ ... buf ].map( b => b.toString(16).toUpperCase().padStart( 2, '0' ) )
+			const str = $mol_array_chunks( codes, 8 ).map( c => c.join(' ') ).join( '\n' )
+			return $mol_tree2.data( str , [], span )
 		}
-			
+		
 		if( json instanceof Date ) {
 			return new $mol_tree2( '', json.toISOString() , [] , span )
 		}
