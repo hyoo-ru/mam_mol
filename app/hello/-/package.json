@@ -70,6 +70,8 @@
     "$mol_tree2_to_string",
     "$mol_tree2_to",
     "$mol_maybe",
+    "$mol_array_chunks",
+    "$mol_array",
     "$mol_term_color",
     "$mol_term",
     "$mol_fail_log",

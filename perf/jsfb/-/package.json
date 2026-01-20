@@ -71,6 +71,8 @@
     "$mol_tree2_to_string",
     "$mol_tree2_to",
     "$mol_maybe",
+    "$mol_array_chunks",
+    "$mol_array",
     "$mol_term_color",
     "$mol_term",
     "$mol_fail_log",
@@ -167,8 +169,7 @@
     "$mol_svg",
     "$mol_state_time",
     "$mol_svg_path",
-    "$mol_array_lottery",
-    "$mol_array"
+    "$mol_array_lottery"
   ],
   "dependencies": {
     "autoinstall": "*",
