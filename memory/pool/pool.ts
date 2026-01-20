@@ -72,11 +72,11 @@ namespace $ {
 				prev = next
 				next = next.next
 				
-				if( !next ) $mol_fail( new Error( 'Double release' ) )
+				if( !next ) $mol_fail( new Error( 'Release out of allocated' ) )
 			}
 			
 			if(( from + size > next.from )||( prev.from + prev.size > from )) {
-				$mol_fail( new Error( 'Double release' ) )
+				$mol_fail( new Error( 'Double release', { cause: { prev, next, from, size } } ) )
 			}
 			
 			const begin = prev.from + prev.size === from
