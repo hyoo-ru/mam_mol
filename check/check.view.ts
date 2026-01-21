@@ -7,9 +7,10 @@ namespace $.$$ {
 	export class $mol_check extends $.$mol_check {
 
 		click( next? : Event ) {
-			if( next?.defaultPrevented ) return
+			const event = next ? $mol_dom_event.wrap(next) : null
+			if( event?.prevented() ) return
+			event?.prevented(true)
 			this.checked( !this.checked() )
-			if( next ) next.preventDefault()
 		}
 
 		sub() {
