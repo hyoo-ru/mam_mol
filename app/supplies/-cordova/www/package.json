@@ -212,6 +212,7 @@
     "$mol_switch",
     "$mol_check_list",
     "$mol_check",
+    "$mol_dom_event",
     "$mol_state_session",
     "$mol_attach",
     "$mol_image",

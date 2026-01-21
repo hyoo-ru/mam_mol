@@ -163,6 +163,7 @@
     "$mol_support_css",
     "$mol_support",
     "$mol_check",
+    "$mol_dom_event",
     "$mol_icon_close",
     "$mol_icon",
     "$mol_svg_root",
