@@ -6,10 +6,12 @@ $mol_chart $mol_view
 	gap_bottom <= gap_vert
 	gap_top <= gap_vert
 	graphs /$mol_plot_graph
+	graph_focused? \
 	sub /
 		<= Legend $mol_chart_legend
 			graphs <= graphs_colored
-		<= Plot $mol_plot_pane
+			graph_focused? <=> graph_focused?
+		<= Plot $mol_chart_pane
 			scale_x? => zoom?
 			zoom? <=> zoom?
 			gap_left <= gap_left
@@ -18,5 +20,6 @@ $mol_chart $mol_view
 			gap_top <= gap_top
 			graphs <= graphs
 			graphs_colored => graphs_colored
+			graph_focused? <=> graph_focused?
 			hue_base <= hue_base 210
 			hue_shift <= hue_shift 163

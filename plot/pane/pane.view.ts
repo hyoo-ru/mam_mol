@@ -40,7 +40,7 @@ namespace $.$$ {
 			for (let index = 0; index < graphs.length; index++) {
 				graphs[index].hue( this.graph_hue( index ) )
 			}
-			
+
 			return graphs
 		}
 		
