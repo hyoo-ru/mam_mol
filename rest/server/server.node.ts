@@ -2,6 +2,10 @@ namespace $ {
 	
 	export class $mol_rest_server extends $mol_object {
 		
+		log() {
+			return this.$.$mol_state_arg.value( 'mol_rest_server_log' ) !== null
+		}
+		
 		@ $mol_mem
 		port() {
 			return 0
@@ -51,7 +55,7 @@ namespace $ {
 			const port = $mol_rest_port_http.make({ output: res })
 			const msg = $mol_rest_message_http.make({ port, input: req })
 			
-			$mol_wire_sync( this.$ ).$mol_log3_rise({
+			if( this.log() ) $mol_wire_sync( this.$ ).$mol_log3_rise({
 				place: this,
 				message: msg.method(),
 				url: msg.uri(),
@@ -115,7 +119,7 @@ namespace $ {
 			
 			const onclose = $mol_wire_async( ()=> {
 				
-				$mol_wire_sync( this.$ ).$mol_log3_done({
+				if( this.log() ) $mol_wire_sync( this.$ ).$mol_log3_done({
 					place: this,
 					message: 'CLOSE',
 					url: upgrade.uri(),
@@ -160,7 +164,7 @@ namespace $ {
 				'\r\n'
 			);
 			
-			$mol_wire_sync( this.$ ).$mol_log3_come({
+			if( this.log() ) $mol_wire_sync( this.$ ).$mol_log3_come({
 				place: this,
 				message: 'OPEN',
 				url: upgrade.uri(),
@@ -254,7 +258,7 @@ namespace $ {
 				const message = upgrade.derive( 'POST', data )
 				
 				if( data.length !== 0 ) {
-					this.$.$mol_log3_rise({
+					if( this.log() ) this.$.$mol_log3_rise({
 						place: this,
 						message: message.method(),
 						port: $mol_key( message.port ),
