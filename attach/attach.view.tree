@@ -1,8 +1,8 @@
 $mol_attach $mol_view
 	items? /string
 	sub /
-		<= Content $mol_row
-			sub <= content /$mol_view
+		<= Content $mol_gallery
+			items <= content /$mol_view
 	Add $mol_button_open
 		title <= attach_title \
 		files? <=> attach_new? null
