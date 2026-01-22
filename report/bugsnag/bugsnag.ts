@@ -2,7 +2,7 @@ namespace $ {
 	
 	export let $mol_report_bugsnag = ''
 	
-	globalThis.onerror = function( msg, url, line, col, err ) {
+	function report(msg: Event | string, url?: string, line?: number, col?: number, err?: Error) {
 		
 		const doc = $mol_dom_context.document
 		
@@ -55,15 +55,7 @@ namespace $ {
 		}
 		
 	}
-	
-	globalThis.onunhandledrejection = function( event ) {
-		globalThis.onerror!( 'Unhandled Rejection', '', 0, 0, event.reason )
-	} 
-	
-	const error = console.error
-	console.error = function( ... args ) {
-		globalThis.onerror!( 'Logged Error', '', 0, 0, arguments[0] )
-		error.apply( console, args )
-	}
+
+	$mol_report_handler_add(report)
 	
 }
