@@ -56,6 +56,6 @@ namespace $ {
 		
 	}
 
-	$mol_report_handler_set.add(report)
+	$mol_report_handler_all.add(report)
 	
 }

@@ -2,10 +2,10 @@ namespace $ {
 
 	type Error_handler = (event: Event | string, url?: string, line?: number, col?: number, error?: Error) => void
 
-	export const $mol_report_handler_set = new Set<Error_handler>()
+	export const $mol_report_handler_all = new Set<Error_handler>()
 
 	function handler(event: Event | string, url?: string, line?: number, col?: number, error?: Error) {
-		for (const handler of $mol_report_handler_set) {
+		for (const handler of $mol_report_handler_all) {
 			try {
 				handler(event, url, line, col, error)
 			} catch (e) {}
