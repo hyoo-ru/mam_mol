@@ -28,7 +28,8 @@ namespace $ {
 			? args[0].replaceAll( /%(?:\.\d+)?[disfcoO]/g, spec => format(secondary.shift(), spec) )
 			: format(args[0])
 
-		let result = [first, ...secondary].map(val => format(val)).join(' ')
+		secondary.unshift(first)
+		let result = secondary.map(val => format(val)).join(' ')
 
 		// strip ansi from node formatted string
 		result = result.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')
