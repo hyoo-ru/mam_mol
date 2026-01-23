@@ -1,7 +1,3 @@
-[mol_button_minor] {
+[mol_button_minor]:not([disabled]) {
 	color: var(--mol_theme_control);
-}
-
-[mol_button_minor][disabled] {
-	color: var(--mol_theme_shade);
 }

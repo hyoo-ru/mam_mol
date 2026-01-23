@@ -110,6 +110,9 @@
 			const obj = new this.$.$mol_icon_dots_vertical();
 			return obj;
 		}
+		trigger_enabled(){
+			return (this.enabled());
+		}
 	};
 	($mol_mem_key(($.$mol_select.prototype), "event_select"));
 	($mol_mem(($.$mol_select.prototype), "filter_pattern"));
