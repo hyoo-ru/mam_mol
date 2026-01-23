@@ -20,7 +20,9 @@ namespace $ {
 			
 			const native = this.native()
 			if( next && !$mol_mem_cached( ()=> this.persisted() ) ) {
-				native.persist().then( actual => {
+				this.$.$mol_wait_user_async()
+				.then( ()=> native.persist() )
+				.then( actual => {
 					
 					setTimeout( ()=> this.persisted( actual, 'cache' ), 5000 )
 					
