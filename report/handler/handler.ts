@@ -28,7 +28,7 @@ namespace $ {
 			? args[0].replaceAll( /%(?:\.\d+)?[disfcoO]/g, spec => format(cloned.shift(), spec) )
 			: ''
 
-		if (cloned.length === args.length - 1) cloned = args
+		if (cloned.length === args.length - 1 && ! result) cloned = args
 
 		result += cloned.map(val => format(val)).join(' ')
 
