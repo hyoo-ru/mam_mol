@@ -11,6 +11,7 @@ $mol_emoji_safe_demo $mol_example_large
 						Title <= Group_title* $mol_button_copy
 							title <= group_title* \
 							text <= group_emoji_text* \
+							hint \Copy all
 							Icon null
 						content / <= Emojis* $mol_view sub <= emojis* /
 							<= Emoji*0 $mol_button_copy
