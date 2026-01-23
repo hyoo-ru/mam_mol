@@ -32539,6 +32539,20 @@ var $;
 
 ;
 	($.$mol_emoji_safe_demo) = class $mol_emoji_safe_demo extends ($.$mol_example_large) {
+		filter(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		Filter(){
+			const obj = new this.$.$mol_search();
+			(obj.query) = (next) => ((this.filter(next)));
+			return obj;
+		}
+		Tools(){
+			const obj = new this.$.$mol_row();
+			(obj.sub) = () => ([(this.Filter())]);
+			return obj;
+		}
 		group_title(id){
 			return "";
 		}
@@ -32587,9 +32601,14 @@ var $;
 			(obj.rows) = () => ((this.groups()));
 			return obj;
 		}
+		Content(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ([(this.Tools()), (this.Groups())]);
+			return obj;
+		}
 		Scroll(){
 			const obj = new this.$.$mol_scroll();
-			(obj.sub) = () => ([(this.Groups())]);
+			(obj.sub) = () => ([(this.Content())]);
 			return obj;
 		}
 		title(){
@@ -32605,11 +32624,15 @@ var $;
 			return ["Media"];
 		}
 	};
+	($mol_mem(($.$mol_emoji_safe_demo.prototype), "filter"));
+	($mol_mem(($.$mol_emoji_safe_demo.prototype), "Filter"));
+	($mol_mem(($.$mol_emoji_safe_demo.prototype), "Tools"));
 	($mol_mem_key(($.$mol_emoji_safe_demo.prototype), "Group_title"));
 	($mol_mem_key(($.$mol_emoji_safe_demo.prototype), "Emoji"));
 	($mol_mem_key(($.$mol_emoji_safe_demo.prototype), "Emojis"));
 	($mol_mem_key(($.$mol_emoji_safe_demo.prototype), "Group"));
 	($mol_mem(($.$mol_emoji_safe_demo.prototype), "Groups"));
+	($mol_mem(($.$mol_emoji_safe_demo.prototype), "Content"));
 	($mol_mem(($.$mol_emoji_safe_demo.prototype), "Scroll"));
 
 
@@ -32627,13 +32650,18 @@ var $;
                 return this.$.$mol_emoji_safe();
             }
             groups() {
-                return Object.keys(this.data()).map(id => this.Group(id));
+                return Object.keys(this.data())
+                    .filter(group => this.emojis(group).length)
+                    .map(id => this.Group(id));
             }
             group_title(group) {
                 return group;
             }
             emojis(group) {
-                return Object.keys(this.data()[group]).map(emoji => this.Emoji([group, emoji]));
+                const filter = this.filter();
+                return Object.entries(this.data()[group])
+                    .filter($mol_match_text(filter, ([emoji, hints]) => [group, emoji, ...hints]))
+                    .map(([emoji]) => this.Emoji([group, emoji]));
             }
             group_emoji_text(group) {
                 return Object.keys(this.data()[group]).join('');
@@ -32668,6 +32696,16 @@ var $;
     var $$;
     (function ($$) {
         $mol_style_define($mol_emoji_safe_demo, {
+            Scroll: {
+                padding: $mol_gap.block,
+            },
+            Group: {
+                margin: $mol_gap.block,
+                padding: $mol_gap.block,
+                background: {
+                    color: $mol_theme.card,
+                },
+            },
             Group_title: {
                 textShadow: '0 0',
             },

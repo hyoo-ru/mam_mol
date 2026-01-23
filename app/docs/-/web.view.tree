@@ -4447,17 +4447,21 @@ $mol_emoji_safe_demo $mol_example_large
 	title \All safe to use emojis
 	sub /
 		<= Scroll $mol_scroll sub /
-			<= Groups $mol_list rows <= groups /
-				<= Group*0 $mol_section
-					Title <= Group_title* $mol_button_copy
-						title <= group_title* \
-						text <= group_emoji_text* \
-						Icon null
-					content / <= Emojis* $mol_view sub <= emojis* /
-						<= Emoji*0 $mol_button_copy
-							hint <= emoji_hint* \
-							title <= emoji* \
+			<= Content $mol_list rows /
+				<= Tools $mol_row sub /
+					<= Filter $mol_search
+						query? <=> filter? \
+				<= Groups $mol_list rows <= groups /
+					<= Group*0 $mol_section
+						Title <= Group_title* $mol_button_copy
+							title <= group_title* \
+							text <= group_emoji_text* \
 							Icon null
+						content / <= Emojis* $mol_view sub <= emojis* /
+							<= Emoji*0 $mol_button_copy
+								hint <= emoji_hint* \
+								title <= emoji* \
+								Icon null
 	tags /
 		\emoji
 	aspects /
