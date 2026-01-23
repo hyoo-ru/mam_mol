@@ -23,12 +23,14 @@ namespace $ {
 
 		const format = (val: string, spec = '') => spec === '%c' ? '' : typeof val === 'string' ? val : JSON.stringify(val)
 
-		let spec_index = 0
+		let cloned = args.slice(1)
 		let result = typeof args[0] === 'string'
-			? args[0].replaceAll( /%(?:\.\d+)?[disfcoO]/g, spec => format(args.at(++spec_index), spec) )
+			? args[0].replaceAll( /%(?:\.\d+)?[disfcoO]/g, spec => format(cloned.shift(), spec) )
 			: ''
 
-		if (spec_index === 0) result = args.map(val => format(val)).join(' ')
+		if (cloned.length === args.length - 1) cloned = args
+
+		result += cloned.map(val => format(val)).join(' ')
 
 		// strip ansi from node formatted string
 		result = result.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')
