@@ -26,9 +26,7 @@ namespace $ {
 		let cloned = args.slice(1)
 		let result = typeof args[0] === 'string'
 			? args[0].replaceAll( /%(?:\.\d+)?[disfcoO]/g, spec => format(cloned.shift(), spec) )
-			: ''
-
-		if (cloned.length === args.length - 1 && ! result) cloned = args
+			: format(args[0])
 
 		result += cloned.map(val => format(val)).join(' ')
 
