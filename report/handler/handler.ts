@@ -17,8 +17,28 @@ namespace $ {
 	globalThis.addEventListener('unhandledrejection', handler_promise)
 
 	const console_error = console.error
+
+
 	console.error = function console_error_custom( ... args ) {
-		handler( 'Logged Error', '', 0, 0, arguments[0] )
+		const chunks = typeof args[0] !== 'string' ? [] : args[0].split(/(%(?:\.\d+)?[disfcoO])/)
+
+		let result = chunks.length ? '' : JSON.stringify(args)
+
+		for (let i = 0, spec_index = 0; i < chunks.length; i++) {
+			const [, num, specifier] = chunks[i].match(/%(?:\.(\d+))?([disfcoO])/) ?? []
+			let val = specifier ? args[++spec_index] : chunks[i]
+
+			// strip ansi from node formatted string
+			val = val.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')
+
+			if (specifier === 'c') val = ''
+			if (specifier === 'f' || specifier === 'd' || specifier === 'i') val = Number(val).toFixed(Number(num || 0))
+			if (specifier === 'o' || specifier === 'O') val = JSON.stringify(val)
+
+			result += val
+		}
+
+		handler( result )
 		console_error.apply( console, args )
 	}
 
