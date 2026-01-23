@@ -4,11 +4,15 @@ $mol_emoji_safe_demo $mol_example_large
 		<= Scroll $mol_scroll sub /
 			<= Groups $mol_list rows <= groups /
 				<= Group*0 $mol_section
-					title <= group_title* \
-					level 5
+					Title <= Group_title* $mol_button_copy
+						title <= group_title* \
+						text <= group_emoji_text* \
+						Icon null
 					content / <= Emojis* $mol_view sub <= emojis* /
-						<= Emoji*0 $mol_chip
+						<= Emoji*0 $mol_button_copy
+							hint <= emoji_hint* \
 							title <= emoji* \
+							Icon null
 	tags /
 		\emoji
 	aspects /

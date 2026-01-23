@@ -3,9 +3,9 @@ $mol_section $mol_list
 	rows /
 		<= Head $mol_view
 			sub <= head /
-				<= Title $mol_paragraph
+				<= Title $mol_view
 					dom_name <= title_dom_name \h1
-					title <= title
+					sub / <= title
 				<= Tools $mol_view sub <= tools /
 		<= Content $mol_list
 			rows <= content /
