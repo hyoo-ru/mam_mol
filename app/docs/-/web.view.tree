@@ -567,7 +567,6 @@ $mol_button_copy $mol_button_minor
 		<= Icon $mol_icon_clipboard_outline
 		<= title \
 
-
 $mol_text_code $mol_stack
 	attr *
 		^
@@ -1798,9 +1797,9 @@ $mol_section $mol_list
 	rows /
 		<= Head $mol_view
 			sub <= head /
-				<= Title $mol_paragraph
+				<= Title $mol_view
 					dom_name <= title_dom_name \h1
-					title <= title
+					sub / <= title
 				<= Tools $mol_view sub <= tools /
 		<= Content $mol_list
 			rows <= content /
@@ -4444,25 +4443,21 @@ $mol_dump_demo $mol_example_small
 	aspects /
 		\Widget
 
-$mol_chip $mol_view
-	minimal_height 40
-	attr *
-		^
-		title <= hint \
-	sub /
-		<= title
-
 $mol_emoji_safe_demo $mol_example_large
 	title \All safe to use emojis
 	sub /
 		<= Scroll $mol_scroll sub /
 			<= Groups $mol_list rows <= groups /
 				<= Group*0 $mol_section
-					title <= group_title* \
-					level 5
+					Title <= Group_title* $mol_button_copy
+						title <= group_title* \
+						text <= group_emoji_text* \
+						Icon null
 					content / <= Emojis* $mol_view sub <= emojis* /
-						<= Emoji*0 $mol_chip
+						<= Emoji*0 $mol_button_copy
+							hint <= emoji_hint* \
 							title <= emoji* \
+							Icon null
 	tags /
 		\emoji
 	aspects /

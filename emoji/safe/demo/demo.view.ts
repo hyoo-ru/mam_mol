@@ -17,11 +17,20 @@ namespace $.$$ {
 		
 		@ $mol_mem_key
 		emojis( group: string ) {
-			return Object.keys( this.data()[ group ] ).map( id => this.Emoji( id ) )
+			return Object.keys( this.data()[ group ] ).map( emoji => this.Emoji([ group, emoji ]) )
 		}
 		
-		emoji( emoji: string ) {
+		@ $mol_mem_key
+		group_emoji_text( group: string ) {
+			return Object.keys( this.data()[ group ] ).join( '' )
+		}
+		
+		emoji( [ group, emoji ]: [ string, string ] ) {
 			return emoji
+		}
+		
+		emoji_hint( [ group, emoji ]: [ string, string ] ) {
+			return this.data()[ group ][ emoji ].join( '\n' )
 		}
 		
 	}

@@ -544,7 +544,6 @@
     "$mol_emoji_safe_demo",
     "$mol_emoji_safe",
     "$mol_emoji",
-    "$mol_chip",
     "$mol_expander_demo",
     "$mol_fetch_demo",
     "$mol_filler_demo",

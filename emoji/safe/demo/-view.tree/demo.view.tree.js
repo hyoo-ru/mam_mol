@@ -2,12 +2,27 @@
 		group_title(id){
 			return "";
 		}
+		group_emoji_text(id){
+			return "";
+		}
+		Group_title(id){
+			const obj = new this.$.$mol_button_copy();
+			(obj.title) = () => ((this.group_title(id)));
+			(obj.text) = () => ((this.group_emoji_text(id)));
+			(obj.Icon) = () => (null);
+			return obj;
+		}
+		emoji_hint(id){
+			return "";
+		}
 		emoji(id){
 			return "";
 		}
 		Emoji(id){
-			const obj = new this.$.$mol_chip();
+			const obj = new this.$.$mol_button_copy();
+			(obj.hint) = () => ((this.emoji_hint(id)));
 			(obj.title) = () => ((this.emoji(id)));
+			(obj.Icon) = () => (null);
 			return obj;
 		}
 		emojis(id){
@@ -20,8 +35,7 @@
 		}
 		Group(id){
 			const obj = new this.$.$mol_section();
-			(obj.title) = () => ((this.group_title(id)));
-			(obj.level) = () => (5);
+			(obj.Title) = () => ((this.Group_title(id)));
 			(obj.content) = () => ([(this.Emojis(id))]);
 			return obj;
 		}
@@ -51,6 +65,7 @@
 			return ["Media"];
 		}
 	};
+	($mol_mem_key(($.$mol_emoji_safe_demo.prototype), "Group_title"));
 	($mol_mem_key(($.$mol_emoji_safe_demo.prototype), "Emoji"));
 	($mol_mem_key(($.$mol_emoji_safe_demo.prototype), "Emojis"));
 	($mol_mem_key(($.$mol_emoji_safe_demo.prototype), "Group"));

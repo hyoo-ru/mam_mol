@@ -3,9 +3,9 @@
 			return "h1";
 		}
 		Title(){
-			const obj = new this.$.$mol_paragraph();
+			const obj = new this.$.$mol_view();
 			(obj.dom_name) = () => ((this.title_dom_name()));
-			(obj.title) = () => ((this.title()));
+			(obj.sub) = () => ([(this.title())]);
 			return obj;
 		}
 		tools(){

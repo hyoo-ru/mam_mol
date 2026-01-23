@@ -4,7 +4,7 @@
 		"mol/button/copy/copy.view.tree"
 	],
 	"sourcesContent": [
-		"$mol_button_copy $mol_button_minor\n\tblobs /$mol_blob\n\t\t<= text_blob? $mol_blob /\n\t\t\t/BlobPart <= text <= title\n\t\t\t* type \\text/plain\n\t\t<= html_blob? $mol_blob /\n\t\t\t/BlobPart <= html \\\n\t\t\t* type \\text/html\n\tdata *\n\tsub /\n\t\t<= Icon $mol_icon_clipboard_outline\n\t\t<= title \\\n\n"
+		"$mol_button_copy $mol_button_minor\n\tblobs /$mol_blob\n\t\t<= text_blob? $mol_blob /\n\t\t\t/BlobPart <= text <= title\n\t\t\t* type \\text/plain\n\t\t<= html_blob? $mol_blob /\n\t\t\t/BlobPart <= html \\\n\t\t\t* type \\text/html\n\tdata *\n\tsub /\n\t\t<= Icon $mol_icon_clipboard_outline\n\t\t<= title \\\n"
 	],
 	"mappings": "AAAA,AAAA,+CAAiB,8BAAjB;AAAA,AAGgB;AAAA,AAAA,UAAK,KAAG,QAAH,CAAL;AAAA;AADX;AAAA,AAAA;AAAW,oCACb,CAAU,KAAG,OAAH,CAAV,CADa,EAEb,CAAE,QAAM,YAAR,CAFa,CAAX;AAAA,UAAW,GAAX;AAAA;AAIW;AAAA,AAAA,UAAM,EAAN;AAAA;AADX;AAAA,AAAA;AAAW,oCACb,CAAU,KAAG,OAAH,CAAV,CADa,EAEb,CAAE,QAAM,WAAR,CAFa,CAAX;AAAA,UAAW,GAAX;AAAA;AAKA;AAAA,AAAK,uDAAL;AAAA,UAAK,GAAL;AAAA;AACA;AAAA,AAAA,UAAO,EAAP;AAAA;AAVJ;AAAA,AAAA,UAAM,CACL,KAAG,YAAH,CADK,EAIL,KAAG,YAAH,CAJK,CAAN;AAAA;AAOA;AAAA,AAAA,UAAK,EAAL;AAAA;AACA;AAAA,AAAA,UAAI,CACH,KAAG,OAAH,CADG,EAEH,KAAG,QAAH,CAFG,CAAJ;AAAA;AATD,CAAA;AAEK,YAFL,CAEK,2CAFL;AAKK,YALL,CAKK,2CALL;AAUK,YAVL,CAUK,sCAVL;"
 }
