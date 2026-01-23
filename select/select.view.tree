@@ -32,3 +32,4 @@ $mol_select $mol_pick
 		submit?event <=> submit?event null
 		enabled <= enabled true
 	Trigger_icon $mol_icon_dots_vertical
+	trigger_enabled <= enabled
