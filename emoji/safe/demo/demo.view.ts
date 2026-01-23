@@ -8,7 +8,9 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		groups() {
-			return Object.keys( this.data() ).map( id => this.Group( id ) )
+			return Object.keys( this.data() )
+				.filter( group => this.emojis( group ).length )
+				.map( id => this.Group( id ) )
 		}
 		
 		group_title( group: string ) {
@@ -17,7 +19,10 @@ namespace $.$$ {
 		
 		@ $mol_mem_key
 		emojis( group: string ) {
-			return Object.keys( this.data()[ group ] ).map( emoji => this.Emoji([ group, emoji ]) )
+			const filter = this.filter()
+			return Object.entries( this.data()[ group ] )
+				.filter( $mol_match_text( filter, ([ emoji, hints ])=> [ group, emoji, ... hints ] ) )
+				.map( ([ emoji ])=> this.Emoji([ group, emoji ]) )
 		}
 		
 		@ $mol_mem_key
