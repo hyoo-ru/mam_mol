@@ -107,6 +107,8 @@
     "$mol_wire_solid",
     "$mol_mem_cached",
     "$mol_wire_probe",
+    "$mol_wait_user",
+    "$mol_wait",
     "$mol_file",
     "$mol_file_base",
     "$mol_const",

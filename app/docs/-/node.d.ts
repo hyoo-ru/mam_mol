@@ -906,6 +906,11 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_wait_user_async(this: $): Promise<unknown>;
+    function $mol_wait_user(this: $): unknown;
+}
+
+declare namespace $ {
     class $mol_storage extends $mol_object2 {
         static native(): StorageManager;
         static persisted(next?: boolean, cache?: 'cache'): boolean;
@@ -3129,7 +3134,7 @@ declare namespace $.$$ {
         sub_visible(): readonly $mol_view_content[];
         message_receive(event?: MessageEvent<[string, string]>): void;
         uri_change(event: MessageEvent<[string, string]>): void;
-        auto(): ($mol_dom_listener | Window)[];
+        auto(): (Window | $mol_dom_listener)[];
     }
 }
 
@@ -18745,8 +18750,8 @@ declare namespace $ {
         readonly table: string;
         readonly header: string;
         readonly list: string;
-        readonly quote: string;
         readonly cut: string;
+        readonly quote: string;
         readonly paragraph: string;
         readonly script: string;
         readonly win_end: string;
