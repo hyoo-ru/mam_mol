@@ -1,3 +1,3 @@
-[mol_button_minor]:not([disabled]) {
+[mol_button_minor]:where(:not([disabled])) {
 	color: var(--mol_theme_control);
 }
