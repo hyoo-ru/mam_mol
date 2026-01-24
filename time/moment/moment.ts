@@ -10,7 +10,7 @@ namespace $ {
 		sunday
 	}
 	
-	export type $mol_time_moment_config = number | Date | string | {
+	export type $mol_time_moment_config = number | Date | string | readonly( number | undefined )[] | {
 		year? : number
 		month? : number
 		day? : number
@@ -67,16 +67,17 @@ namespace $ {
 				this.hour = config.getHours()
 				this.minute = config.getMinutes()
 				this.second = config.getSeconds() + config.getMilliseconds() / 1000
-				
-				const offset = - config.getTimezoneOffset()
-				this.offset = new $mol_time_duration({
-					hour : ( offset < 0 ) ? Math.ceil( offset / 60 ) : Math.floor( offset / 60 ) ,
-					minute : offset % 60
-				})
+				this.offset = new $mol_time_duration({ minute: - config.getTimezoneOffset() })
 				
 				return
 			}
-
+			
+			if( config instanceof Array ) {
+				;[ this.year, this.month, this.day, this.hour, this.minute, this.second ] = config
+				if( config[6] ) this.offset = new $mol_time_duration( config[6] * 60_000 )
+				return
+			}
+			
 			this.year = config.year
 			this.month = config.month
 			this.day = config.day
@@ -228,6 +229,10 @@ namespace $ {
 
 		toString( pattern = 'YYYY-MM-DDThh:mm:ss.sssZ' ) {
 			return super.toString( pattern )
+		}
+		
+		toArray() {
+			return [ this.year, this.month, this.day, this.hour, this.minute, this.second, this.offset?.count( 'PT1m' ) ] as const
 		}
 		
 		[ Symbol.toPrimitive ]( mode: 'default' | 'number' | 'string' ) {
@@ -450,7 +455,7 @@ namespace $ {
 			
 			'Z' : ( moment : $mol_time_moment )=> {
 				
-				const offset = moment.offset
+				const offset = moment.offset?.normal
 				if( !offset ) return ''
 				
 				let hour = offset.hour
@@ -461,7 +466,7 @@ namespace $ {
 					hour = -hour
 				}
 				
-				return sign + String( 100 + hour ).slice(1) + ':' + String( 100 + offset.minute ).slice(1)
+				return sign + hour.toString().padStart( 2, '0' ) + ':' + offset.minute.toString().padStart( 2, '0' )
 			}
 
 		}

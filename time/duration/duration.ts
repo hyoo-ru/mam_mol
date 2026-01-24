@@ -1,6 +1,6 @@
 namespace $ {
 
-	export type $mol_time_duration_config = number | string | {
+	export type $mol_time_duration_config = number | string | [ number, number, number, number, number, number ] | {
 		year? : number
 		month? : number
 		day? : number
@@ -69,12 +69,18 @@ namespace $ {
 				throw new Error( `Can not parse time duration (${ config })` )
 			}
 			
+			if( config instanceof Array ) {
+				;[ this.year, this.month, this.day, this.hour, this.minute, this.second ] = config
+				return
+			}
+			
 			this.year = config.year || 0
 			this.month = config.month || 0
 			this.day = config.day || 0
 			this.hour = config.hour || 0
 			this.minute = config.minute || 0
 			this.second = config.second || 0
+			
 		}
 
 		readonly year : number= 0
@@ -91,13 +97,13 @@ namespace $ {
 			let hour = this.hour ?? 0
 			let day = this.day ?? 0
 			
-			minute += Math.floor( second / 60 )
+			minute += Math.trunc( second / 60 )
 			second = second % 60
 			
-			hour += Math.floor( minute / 60 )
+			hour += Math.trunc( minute / 60 )
 			minute = minute % 60
 			
-			day += Math.floor( hour / 24 )
+			day += Math.trunc( hour / 24 )
 			hour = hour % 24
 			
 			return new $mol_time_duration({
@@ -152,6 +158,11 @@ namespace $ {
 			return super.toString( pattern )
 		}
 
+		toArray() {
+			return [ this.year, this.month, this.day, this.hour, this.minute, this.second ] as const
+		
+		}
+		
 		[ Symbol.toPrimitive ]( mode: 'default' | 'number' | 'string' ) {
 			return mode === 'number' ? this.valueOf() : this.toString()
 		}

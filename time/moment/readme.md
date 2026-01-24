@@ -33,6 +33,8 @@ new $mol_time_moment({
 		minute : 0 ,
 	} ,
 })
+// same
+new $mol_time_moment([ 2015, 6, 18, 17, 27, 58.65, 180 ])
 ```
 
 ## Getters
