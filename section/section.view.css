@@ -5,6 +5,7 @@
 }
 
 [mol_section_title] {
+	margin: 0;
 	padding: var(--mol_gap_text);
 	text-shadow: 0 0;
 	font-weight: normal;
