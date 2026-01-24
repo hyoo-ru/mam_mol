@@ -1,6 +1,6 @@
 namespace $ {
 
-	export type $mol_time_duration_config = number | string | [ number, number, number, number, number, number ] | {
+	export type $mol_time_duration_config = number | string | readonly[ number, number, number, number, number, number ] | {
 		year? : number
 		month? : number
 		day? : number
