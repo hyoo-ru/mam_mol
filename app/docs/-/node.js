@@ -19187,7 +19187,7 @@ var $;
             trigger_content() {
                 return [
                     ...this.option_content(this.value()),
-                    this.Trigger_icon(),
+                    ...this.trigger_enabled() ? [this.Trigger_icon()] : [],
                 ];
             }
             menu_content() {
