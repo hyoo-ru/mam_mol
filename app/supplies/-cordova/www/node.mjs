@@ -9232,7 +9232,7 @@ var $;
             if (config instanceof Array) {
                 ;
                 [this.year, this.month, this.day, this.hour, this.minute, this.second] = config;
-                if (config[6])
+                if (config[6] !== undefined)
                     this.offset = new $mol_time_duration(config[6] * 60_000);
                 return;
             }

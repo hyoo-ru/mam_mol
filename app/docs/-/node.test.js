@@ -25205,7 +25205,7 @@ var $;
             if (config instanceof Array) {
                 ;
                 [this.year, this.month, this.day, this.hour, this.minute, this.second] = config;
-                if (config[6])
+                if (config[6] !== undefined)
                     this.offset = new $mol_time_duration(config[6] * 60_000);
                 return;
             }
@@ -49114,6 +49114,11 @@ var $;
         'comparison'() {
             const iso = '2021-01-02T03:04:05.678+09:10';
             $mol_assert_equal(new $mol_time_moment(iso), new $mol_time_moment(iso));
+        },
+        'array keeps zero offset'() {
+            const moment = new $mol_time_moment('2026-01-25T16:37:36.129+00:00');
+            const restored = new $mol_time_moment(moment.toArray());
+            $mol_assert_equal(restored.offset?.count('PT1m'), 0);
         },
     });
 })($ || ($ = {}));
