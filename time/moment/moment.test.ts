@@ -91,5 +91,11 @@ namespace $ {
 			$mol_assert_equal( new $mol_time_moment( iso ), new $mol_time_moment( iso ) )
 		},
 
+		'array keeps zero offset'() {
+			const moment = new $mol_time_moment( '2026-01-25T16:37:36.129+00:00' )
+			const restored = new $mol_time_moment( moment.toArray() )
+			$mol_assert_equal( restored.offset?.count( 'PT1m' ), 0 )
+		},
+
 	} )
 }
