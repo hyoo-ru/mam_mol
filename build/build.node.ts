@@ -698,6 +698,7 @@ namespace $ {
 			
 			this.bundle([ path , 'package.json' ])
 			this.bundle([ path , 'readme.md' ])
+			this.bundle([ path , 'manifest.json' ])
 
 			this.bundleFiles( [ path , [ 'node' ] ] )
 			this.bundleCordova( [ path , [ 'node' ] ] )
@@ -775,6 +776,10 @@ namespace $ {
 			
 			if( !bundle || bundle === 'package.json' ) {
 				res = res.concat( this.bundlePackageJSON( [ path , [ 'web', 'test' ] ] ) )
+			}
+			
+			if ( !bundle || bundle === 'manifest.json' ) {
+				res = res.concat( this.bundleManifestJSON( [ path ] ) )
 			}
 			
 			if( !bundle || bundle === 'readme.md' ) {
@@ -1256,6 +1261,34 @@ namespace $ {
 			
 			return [ target ]
 		}
+		
+		@ $mol_mem_key
+		bundleManifestJSON( [ path ] : [ path : string ] ) : $mol_file[] {
+			const start = this.now()
+			const pack = $mol_file.absolute( path )
+			
+			const source_json = pack.resolve( `manifest.json` )
+			const source_web = pack.resolve( `manifest.webmanifest` )
+			
+			const targets = [] as $mol_file[]
+			
+			if( source_json.exists() ) {
+				const target = pack.resolve( `-/manifest.json` )
+				target.text( source_json.text() )
+				this.logBundle( target , Date.now() - start )
+				targets.push( target )
+			}
+			
+			if( source_web.exists() ) {
+				const target = pack.resolve( `-/manifest.webmanifest` )
+				target.text( source_web.text() )
+				this.logBundle( target , Date.now() - start )
+				targets.push( target )
+			}
+			
+			return targets
+		}
+
 		
 		@ $mol_mem_key
 		bundleIndexHtml( [ path , exclude ] : [ path : string , exclude? : readonly string[] ] ) : $mol_file[] {
