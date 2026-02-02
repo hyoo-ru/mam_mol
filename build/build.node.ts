@@ -1269,15 +1269,15 @@ namespace $ {
 			
 			const source_json = pack.resolve( `manifest.json` )
 			const source_web = pack.resolve( `manifest.webmanifest` )
-			const source_pkg = pack.resolve( `package.json` )
+			const source_pkg_gen = pack.resolve( `-/package.json` )
+			const source_pkg_src = pack.resolve( `package.json` )
+			const source_pkg = source_pkg_gen.exists() ? source_pkg_gen : source_pkg_src
 			
 			const json_source = source_json.exists() ? JSON.parse( source_json.text() ) : null
 			const web_source = source_web.exists() ? JSON.parse( source_web.text() ) : null
 			const pkg_source = source_pkg.exists() ? JSON.parse( source_pkg.text() ) : null
 			
-			if( !json_source && !web_source && !pkg_source ) return []
-			
-			const clone = <T>( data : T )=> data ? JSON.parse( JSON.stringify( data ) ) as T : data
+			const clone = ( data : any )=> data ? JSON.parse( JSON.stringify( data ) ) : data
 			
 			const empty = ( value : any )=> value == null
 				|| value === ''
@@ -1287,9 +1287,10 @@ namespace $ {
 			const merge = ( target : any , source : any )=> {
 				if( !source ) return
 				for( const [ key , value ] of Object.entries( source ) ) {
+					if( key === 'icons' ) continue
 					const current = target[ key ]
 					if( empty( current ) ) {
-						target[ key ] = value
+						target[ key ] = clone( value )
 						continue
 					}
 					if(
@@ -1387,78 +1388,70 @@ namespace $ {
 				}
 			}
 			
-			const base_keys = [
-				'name',
-				'short_name',
-				'description',
-				'version',
-				'icons',
-				'screenshots',
-				'theme_color',
-				'background_color',
-			] as const
-			
-			const common_keys = new Set< string >( base_keys )
-			if( json_source && web_source ) {
-				for( const key of Object.keys( json_source ) ) {
-					if( key in web_source ) common_keys.add( key )
-				}
-			}
-			
-			const pick = ( source : any , keys : Set< string > )=> {
-				if( !source ) return null
-				const res = {} as Record< string , any >
-				for( const key of keys ) {
-					if( source[ key ] === undefined ) continue
-					res[ key ] = source[ key ]
-				}
-				return res
-			}
-			
-			const common_no_icons = new Set( [ ... common_keys ].filter( key => key !== 'icons' ) )
-			
-			const pkg_data = pkg_source ? { ... pkg_source } : null
-			if( pkg_data ) {
-				if( pkg_data.name && pkg_data.short_name == null ) pkg_data.short_name = pkg_data.name
-				if( pkg_data.icon && pkg_data.icons == null ) pkg_data.icons = pkg_data.icon
-			}
+			const pkg_data = pkg_source ? {
+				name : pkg_source.name ,
+				short_name : pkg_source.short_name ?? pkg_source.name ,
+				version : pkg_source.version ,
+				description : pkg_source.description ,
+				icons : pkg_source.icons ?? pkg_source.icon ,
+			} : null
 			
 			const json_result = clone( json_source ) ?? {}
 			const web_result = clone( web_source ) ?? {}
 			
-			merge( json_result , pick( web_source , common_no_icons ) )
-			merge( json_result , pick( pkg_data , common_no_icons ) )
+			merge( json_result , web_source )
+			merge( json_result , pkg_data )
 			
-			merge( web_result , pick( json_source , common_no_icons ) )
-			merge( web_result , pick( pkg_data , common_no_icons ) )
+			merge( web_result , json_source )
+			merge( web_result , pkg_data )
 			
 			if( json_result.short_name == null && json_result.name ) json_result.short_name = json_result.name
 			if( web_result.short_name == null && web_result.name ) web_result.short_name = web_result.name
 			
+			const json_icons = to_ext_icons( json_result.icons )
 			const json_icons_fallback = to_ext_icons( web_source?.icons ) ?? to_ext_icons( pkg_data?.icons )
+			if( json_icons ) json_result.icons = json_icons
+			
 			if( empty( json_result.icons ) ) {
 				if( json_icons_fallback ) json_result.icons = json_icons_fallback
 			} else if( json_result.icons && typeof json_result.icons === 'object' && !Array.isArray( json_result.icons ) ) {
 				if( json_icons_fallback ) merge_icons_json( json_result.icons , json_icons_fallback )
 			}
 			
+			const web_icons = to_pwa_icons( web_result.icons )
 			const web_icons_fallback = to_pwa_icons( json_source?.icons ) ?? to_pwa_icons( pkg_data?.icons )
+			if( web_icons ) web_result.icons = web_icons
+			
 			if( empty( web_result.icons ) ) {
 				if( web_icons_fallback ) web_result.icons = web_icons_fallback
 			} else if( Array.isArray( web_result.icons ) && Array.isArray( web_icons_fallback ) ) {
 				merge_icons_web( web_result.icons , web_icons_fallback )
 			}
 			
+			if( web_result.theme_color == null ) web_result.theme_color = '#000000'
+			if( web_result.background_color == null ) web_result.background_color = '#000000'
+			if( web_result.display == null ) web_result.display = 'standalone'
+			if( web_result.start_url == null ) web_result.start_url = '.'
+			
+			if( json_result.manifest_version == null ) json_result.manifest_version = 3
+			if( web_result.manifest_version == null ) web_result.manifest_version = json_result.manifest_version ?? 3
+			
+			if( json_result.action == null ) json_result.action = {}
+			if( json_result.action.default_popup == null ) json_result.action.default_popup = 'index.html'
+			if( json_result.action.default_title == null ) {
+				json_result.action.default_title = json_result.name ?? json_result.short_name
+			}
+			
 			const targets = [] as $mol_file[]
 			
-			if( json_source || web_source || pkg_source ) {
+			{
 				const target = pack.resolve( `-/manifest.json` )
 				target.text( JSON.stringify( json_result , null , '  ' ) )
 				this.logBundle( target , Date.now() - start )
 				targets.push( target )
 			}
 			
-			if( json_source || web_source || pkg_source ) {
+			{
 				const target = pack.resolve( `-/manifest.webmanifest` )
 				target.text( JSON.stringify( web_result , null , '  ' ) )
 				this.logBundle( target , Date.now() - start )
