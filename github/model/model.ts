@@ -67,14 +67,32 @@ namespace $ {
 		// 'openai/gpt-4.1-nano', // 150/D bad resp
 	]
 	
+	const Text = $mol_data_record({
+		type: $mol_data_const( 'text' ),
+		text: $mol_data_string,
+	})
+	
+	const Image = $mol_data_record({
+		type: $mol_data_const( 'image_url' ),
+		image_url: $mol_data_record({
+			url: $mol_data_string,
+		}),
+	})
+	
+	const Content_item = $mol_data_variant( Text, Image )
+	const Content = $mol_data_variant(
+		$mol_data_string,
+		$mol_data_array( Content_item ),
+	)
+	
 	const System = $mol_data_record({
 		role: $mol_data_const( 'system' ),
-		content: $mol_data_string,
+		content: Content,
 	})
 	
 	const Assistant = $mol_data_record({
 		role: $mol_data_const( 'assistant' ),
-		content: $mol_data_nullable( $mol_data_string ),
+		content: $mol_data_nullable( Content ),
 		tool_calls: $mol_data_optional( $mol_data_array( $mol_data_record({
 			type: $mol_data_const( 'function' ),
 			id: $mol_data_string,
@@ -87,14 +105,14 @@ namespace $ {
 	
 	const User = $mol_data_record({
 		role: $mol_data_const( 'user' ),
-		content: $mol_data_string,
+		content: Content,
 	})
 	
 	const Tool = $mol_data_record({
 		role: $mol_data_const( 'tool' ),
 		// name: $mol_data_string,
 		tool_call_id: $mol_data_string,
-		content: $mol_data_string,
+		content: Content,
 	})
 	
 	const Message = $mol_data_variant( Assistant, User, Tool )
@@ -129,6 +147,13 @@ namespace $ {
 	}>
 	
 	type Type = Obj<any> | List<any> | Primitive<any>
+	
+	
+	function bloat_content( val: any ): typeof Content_item.Value {
+		if( typeof val !== 'string' ) val = JSON.stringify( val )
+		else if( val.startsWith( 'data:' ) ) return { type: 'image_url', image_url: { url: val } }
+		return { type: 'text', text: val }
+	}
 	
 	
 	/**
@@ -197,7 +222,7 @@ namespace $ {
 		
 		/** One-shot stateless prompting */
 		@ $mol_action
-		shot( prompt: any, context?: any, params?: {} ) {
+		shot( prompt: any[], context?: any, params?: {} ) {
 			const fork = this.fork()
 			if( params ) fork.params({ ... this.params(), ... params })
 			if( context ) fork.tell( context )
@@ -207,12 +232,12 @@ namespace $ {
 		
 		/** Add user prompt */
 		@ $mol_action
-		ask( text: any ) {
+		ask( chunks: any[] ) {
 			this.history([
 				... this.history(),
 				{
 					role: "user",
-					content: JSON.stringify( text ),
+					content: chunks.map( bloat_content ),
 				}
 			])
 			return this
@@ -220,12 +245,12 @@ namespace $ {
 		
 		/** Add assistant context */
 		@ $mol_action
-		tell( text: any ) {
+		tell( chunks: any[] ) {
 			this.history([
 				... this.history(),
 				{
 					role: "assistant",
-					content: JSON.stringify( text ),
+					content: chunks.map( bloat_content ),
 				}
 			])
 			return this
@@ -233,7 +258,7 @@ namespace $ {
 		
 		/** Add tools answer */
 		@ $mol_action
-		answer( id: string, data: any ) {
+		answer( id: string, chunks: any[] ) {
 			
 			const history = this.history()
 			
@@ -245,7 +270,7 @@ namespace $ {
 				{
 					role: "tool",
 					tool_call_id: id,
-					content: JSON.stringify( data ),
+					content: chunks.map( bloat_content ),
 				},
 				... history.slice( index ),
 			])
@@ -310,7 +335,8 @@ namespace $ {
 					const resp = this.request( model, key )
 					const message = resp.choices[0].message
 					this.history([ ... history, message ])
-					return JSON.parse( message.content ?? 'null' )
+					if( typeof message.content === 'string' ) return JSON.parse( message.content )
+					return message.content
 				
 				} catch( error: any ) {
 
