@@ -1,8 +1,15 @@
+[mol_attach] {
+	flex-wrap: wrap;
+}
+
 [mol_attach_item] {
-	width: 6rem;
-	height: 6rem;
+	aspect-ratio: 1;
+	height: 5rem;
 	border-radius: var(--mol_gap_round);
 	padding: 0;
+}
+[mol_attach_item]:hover {
+	opacity: .5;
 }
 
 [mol_attach_image] {
@@ -13,14 +20,9 @@
 
 [mol_attach_add] {
 	background: var(--mol_theme_card);
-	width: 6rem;
-	height: 6rem;
+	aspect-ratio: 1;
+	height: 5rem;
 	align-items: center;
 	justify-content: center;
 	overflow: hidden;
-}
-
-[mol_attach_add_icon] {
-	width: 50%;
-	height: 50%;
 }
