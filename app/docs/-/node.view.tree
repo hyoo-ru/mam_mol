@@ -2260,8 +2260,6 @@ $mol_assert_demo $mol_example_code
 		\Algorithm/Assert
 		\Testing
 
-$mol_row $mol_view
-
 $mol_icon_upload $mol_icon path \M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z
 
 $mol_button_open $mol_button_minor
@@ -2284,18 +2282,16 @@ $mol_button_open_native $mol_view
 
 $mol_attach $mol_view
 	items? /string
-	sub /
-		<= Content $mol_row
-			sub <= content /$mol_view
-	Add $mol_button_open
-		title <= attach_title \
-		files? <=> attach_new? null
-	Item* $mol_button_minor
-		click?event <=> item_drop*?event null
-		sub /
-			<= Image* $mol_image
-				title \
-				uri <= item_uri* \
+	sub <= content /$mol_view
+		<= Item*0 $mol_button_minor
+			click?event <=> item_drop*?event null
+			sub /
+				<= Image* $mol_image
+					title \
+					uri <= item_uri* \
+		<= Add $mol_button_open
+			title <= attach_title \
+			files? <=> attach_new? null
 
 $mol_attach_demo $mol_example_small
 	title \Attach files an show them
@@ -2337,6 +2333,8 @@ $mol_audio_status $mol_view
 			enabled <= wakeup_enabled false
 			hint <= status_name <= status?
 			sub / <= Icon $mol_icon_play
+
+$mol_row $mol_view
 
 $mol_audio_demo $mol_example_small
 	title \WebAudio API example

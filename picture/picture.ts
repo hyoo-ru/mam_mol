@@ -99,6 +99,14 @@ namespace $ {
 			) as any as Blob | null
 		}
 		
+		@ $mol_action
+		url(
+			type = 'image/webp' as 'image/png' | 'image/jpeg' | 'image/webp',
+			quality = .9,
+		) {
+			return this.canvas.toDataURL( type, quality )
+		}
+		
 	}
 	
 }

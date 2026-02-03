@@ -10661,21 +10661,6 @@ var $;
 
 ;
 	($.$mol_attach) = class $mol_attach extends ($.$mol_view) {
-		content(){
-			return [];
-		}
-		Content(){
-			const obj = new this.$.$mol_row();
-			(obj.sub) = () => ((this.content()));
-			return obj;
-		}
-		attach_title(){
-			return "";
-		}
-		attach_new(next){
-			if(next !== undefined) return next;
-			return null;
-		}
 		item_drop(id, next){
 			if(next !== undefined) return next;
 			return null;
@@ -10689,12 +10674,18 @@ var $;
 			(obj.uri) = () => ((this.item_uri(id)));
 			return obj;
 		}
-		items(next){
-			if(next !== undefined) return next;
-			return [];
+		Item(id){
+			const obj = new this.$.$mol_button_minor();
+			(obj.click) = (next) => ((this.item_drop(id, next)));
+			(obj.sub) = () => ([(this.Image(id))]);
+			return obj;
 		}
-		sub(){
-			return [(this.Content())];
+		attach_title(){
+			return "";
+		}
+		attach_new(next){
+			if(next !== undefined) return next;
+			return null;
 		}
 		Add(){
 			const obj = new this.$.$mol_button_open();
@@ -10702,20 +10693,23 @@ var $;
 			(obj.files) = (next) => ((this.attach_new(next)));
 			return obj;
 		}
-		Item(id){
-			const obj = new this.$.$mol_button_minor();
-			(obj.click) = (next) => ((this.item_drop(id, next)));
-			(obj.sub) = () => ([(this.Image(id))]);
-			return obj;
+		content(){
+			return [(this.Item("0")), (this.Add())];
+		}
+		items(next){
+			if(next !== undefined) return next;
+			return [];
+		}
+		sub(){
+			return (this.content());
 		}
 	};
-	($mol_mem(($.$mol_attach.prototype), "Content"));
-	($mol_mem(($.$mol_attach.prototype), "attach_new"));
 	($mol_mem_key(($.$mol_attach.prototype), "item_drop"));
 	($mol_mem_key(($.$mol_attach.prototype), "Image"));
-	($mol_mem(($.$mol_attach.prototype), "items"));
-	($mol_mem(($.$mol_attach.prototype), "Add"));
 	($mol_mem_key(($.$mol_attach.prototype), "Item"));
+	($mol_mem(($.$mol_attach.prototype), "attach_new"));
+	($mol_mem(($.$mol_attach.prototype), "Add"));
+	($mol_mem(($.$mol_attach.prototype), "items"));
 
 
 ;
@@ -10759,7 +10753,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/attach/attach.view.css", "[mol_attach_item] {\n\twidth: 6rem;\n\theight: 6rem;\n\tborder-radius: var(--mol_gap_round);\n\tpadding: 0;\n}\n\n[mol_attach_image] {\n\tbackground: var(--mol_theme_card);\n\twidth: 100%;\n\theight: 100%;\n}\n\n[mol_attach_add] {\n\tbackground: var(--mol_theme_card);\n\twidth: 6rem;\n\theight: 6rem;\n\talign-items: center;\n\tjustify-content: center;\n\toverflow: hidden;\n}\n\n[mol_attach_add_icon] {\n\twidth: 50%;\n\theight: 50%;\n}\n");
+    $mol_style_attach("mol/attach/attach.view.css", "[mol_attach] {\n\tflex-wrap: wrap;\n}\n\n[mol_attach_item] {\n\taspect-ratio: 1;\n\theight: 5rem;\n\tborder-radius: var(--mol_gap_round);\n\tpadding: 0;\n}\n[mol_attach_item]:hover {\n\topacity: .5;\n}\n\n[mol_attach_image] {\n\tbackground: var(--mol_theme_card);\n\twidth: 100%;\n\theight: 100%;\n}\n\n[mol_attach_add] {\n\tbackground: var(--mol_theme_card);\n\taspect-ratio: 1;\n\theight: 5rem;\n\talign-items: center;\n\tjustify-content: center;\n\toverflow: hidden;\n}\n");
 })($ || ($ = {}));
 
 ;

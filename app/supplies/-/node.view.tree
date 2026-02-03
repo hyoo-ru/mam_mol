@@ -536,18 +536,16 @@ $mol_button_open_native $mol_view
 
 $mol_attach $mol_view
 	items? /string
-	sub /
-		<= Content $mol_row
-			sub <= content /$mol_view
-	Add $mol_button_open
-		title <= attach_title \
-		files? <=> attach_new? null
-	Item* $mol_button_minor
-		click?event <=> item_drop*?event null
-		sub /
-			<= Image* $mol_image
-				title \
-				uri <= item_uri* \
+	sub <= content /$mol_view
+		<= Item*0 $mol_button_minor
+			click?event <=> item_drop*?event null
+			sub /
+				<= Image* $mol_image
+					title \
+					uri <= item_uri* \
+		<= Add $mol_button_open
+			title <= attach_title \
+			files? <=> attach_new? null
 
 $mol_section $mol_list
 	level 1
