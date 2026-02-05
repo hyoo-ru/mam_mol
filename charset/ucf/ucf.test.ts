@@ -62,10 +62,18 @@ namespace $.$$ {
 			] )
 		},
 		
-		"Broken string"( $ ) {
-			const bin  =new Uint8Array([ 0x88, 0x3C, 0xE2, 0x40 ])
+		"Wrong ending"( $ ) {
+			const bin = new Uint8Array([ 0x88, 0x3C, 0xE2, 0x40 ])
 			const error = $mol_assert_fail( ()=> $mol_charset_ucf_decode( bin ), 'Wrong ending' )
+			$mol_assert_equal( error.cause.mode, 166 )
 			$mol_assert_equal( error.cause.text, 'мир' )
+		},
+		
+		"Wrong byte"( $ ) {
+			const bin = new Uint8Array([ 0xFF, 0x74, 0x4B, 0x74, 0x9B, 0x81 ])
+			const error = $mol_assert_fail( ()=> $mol_charset_ucf_decode( bin ), 'Wrong byte' )
+			$mol_assert_equal( error.cause.pos, 4 )
+			$mol_assert_equal( error.cause.text, '🏴' )
 		},
 		
 	})
