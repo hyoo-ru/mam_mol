@@ -157,6 +157,10 @@ namespace $ {
 			
 		}
 		
+		if( mode !== tiny_mode ) {
+			return $mol_fail( new Error( 'Wrong ending', { cause: { text } } ) )
+		}
+		
 		return text
 	}
 

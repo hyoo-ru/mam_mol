@@ -62,5 +62,11 @@ namespace $.$$ {
 			] )
 		},
 		
+		"Broken string"( $ ) {
+			const bin  =new Uint8Array([ 0x88, 0x3C, 0xE2, 0x40 ])
+			const error = $mol_assert_fail( ()=> $mol_charset_ucf_decode( bin ), 'Wrong ending' )
+			$mol_assert_equal( error.cause.text, 'мир' )
+		},
+		
 	})
 }
