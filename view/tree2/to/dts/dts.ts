@@ -109,7 +109,7 @@ namespace $ {
 			const parent = this.$mol_view_tree2_child(klass)
 			const props = this.$mol_view_tree2_class_props(klass)
 			const aliases = [] as $mol_tree2[]
-			const context = { objects: [] as $mol_tree2[] }
+			const context = { klass: parent, prop: null as null | $mol_tree2 }
 			const klass_name = klass.type.slice(1)
 			types.push(
 				klass.struct( 'line', [
@@ -140,12 +140,12 @@ namespace $ {
 						'<=': (input) => return_type.call(this, klass.data( klass.type ), this.$mol_view_tree2_child(input)),
 						'=>': () => [],
 
-						'^': (input) => {
-							const host = input.kids.length ? klass : parent
+						'^': (input, belt, context) => {
+							const host = input.kids.length ? klass : context.klass
 							return return_type.call(
 								this,
 								host.data(host.type),
-								input.kids.length ? input.kids[0] : prop
+								input.kids.length ? input.kids[0] : ( context.prop ?? prop )
 							)
 						},
 
@@ -330,7 +330,7 @@ namespace $ {
 										type_enforce.call(
 											this,
 											over.data(`${ input.type }__${ name.value }_${klass_name}_${++assert_count}`),
-											over.hack( belt ),
+											over.hack( belt, { ... context, klass: input, prop: over } ),
 											return_type.call(
 												this,
 												input.data( input.type ),

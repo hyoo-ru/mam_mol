@@ -54,7 +54,7 @@ namespace $ {
 			$.$mol_fail = fail
 		}
 
-		$mol_fail( new Error( 'Not failed' ) )
+		$mol_fail( new Error( 'Not failed', { cause: { expect: ErrorRight } } ) )
 	}
 	
 	/** @deprecated Use $mol_assert_equal */
