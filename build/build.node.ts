@@ -1294,6 +1294,11 @@ namespace $ {
 				Object.assign( json , JSON.parse( source.text() ) )
 			}
 
+			const source_web = pack.resolve( `manifest.webmanifest` )
+			if( source_web.exists() ) {
+				Object.assign( json , JSON.parse( source_web.text() ) )
+			}
+
 			return json
 		}
 
