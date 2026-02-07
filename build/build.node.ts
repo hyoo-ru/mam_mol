@@ -697,6 +697,8 @@ namespace $ {
 			this.bundleAllNodeAudit(path)
 			
 			this.bundle([ path , 'package.json' ])
+			this.bundle([ path , 'manifest.json' ])
+			this.bundle([ path , 'manifest.webmanifest' ])
 			this.bundle([ path , 'readme.md' ])
 
 			this.bundleFiles( [ path , [ 'node' ] ] )
@@ -776,7 +778,15 @@ namespace $ {
 			if( !bundle || bundle === 'package.json' ) {
 				res = res.concat( this.bundlePackageJSON( [ path , [ 'web', 'test' ] ] ) )
 			}
-			
+
+			if( !bundle || bundle === 'manifest.json' ) {
+				res = res.concat( this.bundleManifestJSON( [ path , [ 'node' ] ] ) )
+			}
+
+			if( !bundle || bundle === 'manifest.webmanifest' ) {
+				res = res.concat( this.bundleManifestWebmanifest( [ path , [ 'node' ] ] ) )
+			}
+
 			if( !bundle || bundle === 'readme.md' ) {
 				res = res.concat( this.bundleReadmeMd( [ path , [ 'web' ] ] ) )
 			}
@@ -1257,6 +1267,68 @@ namespace $ {
 			return [ target ]
 		}
 		
+		manifestBase( [ path , exclude ] : [ path : string , exclude? : readonly string[] ] ) {
+
+			var pack = $mol_file.absolute( path )
+
+			let name = pack.relate( this.root() ).replace( /\//g , '_' )
+
+			const json = {
+				name ,
+				short_name : name ,
+				description : '' ,
+				version : '0.0.0' ,
+				manifest_version : 3 ,
+				start_url : '.' ,
+				scope : '.' ,
+				display : 'standalone' ,
+				orientation : 'any' ,
+				background_color : '#000000' ,
+				theme_color : '#000000' ,
+				icons : [] as { src : string , type : string , sizes : string }[] ,
+				categories : [] as string[] ,
+			}
+
+			const source = pack.resolve( `manifest.json` )
+			if( source.exists() ) {
+				Object.assign( json , JSON.parse( source.text() ) )
+			}
+
+			return json
+		}
+
+		@ $mol_mem_key
+		bundleManifestJSON( [ path , exclude ] : [ path : string , exclude? : readonly string[] ] ) : $mol_file[] {
+			const start = this.now()
+			var pack = $mol_file.absolute( path )
+			var target = pack.resolve( `-/manifest.json` )
+
+			const json = this.manifestBase( [ path , exclude ] )
+
+			target.text( JSON.stringify( json , null , '\t' ) )
+
+			this.logBundle( target , Date.now() - start )
+
+			return [ target ]
+		}
+
+		@ $mol_mem_key
+		bundleManifestWebmanifest( [ path , exclude ] : [ path : string , exclude? : readonly string[] ] ) : $mol_file[] {
+			const start = this.now()
+			var pack = $mol_file.absolute( path )
+			var target = pack.resolve( `-/manifest.webmanifest` )
+
+			const json = this.manifestBase( [ path , exclude ] )
+
+			delete ( json as any ).manifest_version
+
+			target.text( JSON.stringify( json , null , '\t' ) )
+
+			this.logBundle( target , Date.now() - start )
+
+			return [ target ]
+		}
+
 		@ $mol_mem_key
 		bundleIndexHtml( [ path , exclude ] : [ path : string , exclude? : readonly string[] ] ) : $mol_file[] {
 
