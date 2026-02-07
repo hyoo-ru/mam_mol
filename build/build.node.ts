@@ -698,6 +698,7 @@ namespace $ {
 			
 			this.bundle([ path , 'package.json' ])
 			this.bundle([ path , 'readme.md' ])
+			this.bundle([ path , 'manifest.json' ])
 
 			this.bundleFiles( [ path , [ 'node' ] ] )
 			this.bundleCordova( [ path , [ 'node' ] ] )
@@ -775,6 +776,10 @@ namespace $ {
 			
 			if( !bundle || bundle === 'package.json' ) {
 				res = res.concat( this.bundlePackageJSON( [ path , [ 'web', 'test' ] ] ) )
+			}
+			
+			if ( !bundle || bundle === 'manifest.json' || bundle === 'manifest.webmanifest' ) {
+				res = res.concat( this.bundleManifestJSON( [ path ] ) )
 			}
 			
 			if( !bundle || bundle === 'readme.md' ) {
@@ -1256,6 +1261,206 @@ namespace $ {
 			
 			return [ target ]
 		}
+		
+		@ $mol_mem_key
+		bundleManifestJSON( [ path ] : [ path : string ] ) : $mol_file[] {
+			const start = this.now()
+			const pack = $mol_file.absolute( path )
+			
+			const source_json = pack.resolve( `manifest.json` )
+			const source_web = pack.resolve( `manifest.webmanifest` )
+			const source_pkg_gen = pack.resolve( `-/package.json` )
+			const source_pkg_src = pack.resolve( `package.json` )
+			const source_pkg = source_pkg_gen.exists() ? source_pkg_gen : source_pkg_src
+			
+			const json_source = source_json.exists() ? JSON.parse( source_json.text() ) : null
+			const web_source = source_web.exists() ? JSON.parse( source_web.text() ) : null
+			const pkg_source = source_pkg.exists() ? JSON.parse( source_pkg.text() ) : null
+			
+			const clone = ( data : any )=> data ? JSON.parse( JSON.stringify( data ) ) : data
+			
+			const empty = ( value : any )=> value == null
+				|| value === ''
+				|| ( Array.isArray( value ) && value.length === 0 )
+				|| ( typeof value === 'object' && !Array.isArray( value ) && Object.keys( value ).length === 0 )
+			
+			const merge = ( target : any , source : any )=> {
+				if( !source ) return
+				for( const [ key , value ] of Object.entries( source ) ) {
+					if( key === 'icons' ) continue
+					const current = target[ key ]
+					if( empty( current ) ) {
+						target[ key ] = clone( value )
+						continue
+					}
+					if(
+						typeof current === 'object'
+						&& !Array.isArray( current )
+						&& typeof value === 'object'
+						&& value
+						&& !Array.isArray( value )
+					) {
+						merge( current , value )
+					}
+				}
+			}
+			
+			const icon_type = ( src : string )=> {
+				const ext = src.toLowerCase().match( /\.([a-z0-9]+)(?:\?.*)?$/ )?.[1]
+				if( !ext ) return null
+				switch( ext ) {
+					case 'png' : return 'image/png'
+					case 'jpg' : return 'image/jpeg'
+					case 'jpeg' : return 'image/jpeg'
+					case 'webp' : return 'image/webp'
+					case 'svg' : return 'image/svg+xml'
+				}
+				return null
+			}
+			
+			const to_pwa_icons = ( icons : any )=> {
+				if( !icons ) return null
+				if( Array.isArray( icons ) ) return clone( icons )
+				if( typeof icons === 'string' ) {
+					const icon = { src : icons , sizes : 'any' } as { src : string , sizes : string , type? : string }
+					const type = icon_type( icons )
+					if( type ) icon.type = type
+					return [ icon ]
+				}
+				if( typeof icons === 'object' ) {
+					const res = [] as { src : string , sizes : string , type? : string }[]
+					for( const [ size , src ] of Object.entries( icons ) ) {
+						if( typeof src !== 'string' ) continue
+						const size_num = Number( size )
+						if( !Number.isFinite( size_num ) ) continue
+						const icon = { src , sizes : `${ size_num }x${ size_num }` } as { src : string , sizes : string , type? : string }
+						const type = icon_type( src )
+						if( type ) icon.type = type
+						res.push( icon )
+					}
+					return res.length ? res : null
+				}
+				return null
+			}
+			
+			const to_ext_icons = ( icons : any )=> {
+				if( !icons ) return null
+				if( typeof icons === 'string' ) return { '128' : icons }
+				if( typeof icons === 'object' && !Array.isArray( icons ) ) return clone( icons ) as Record< string , string >
+				if( Array.isArray( icons ) ) {
+					const res = {} as Record< string , string >
+					for( const icon of icons ) {
+						if( !icon ) continue
+						const src = typeof icon === 'string' ? icon : icon.src
+						if( typeof src !== 'string' ) continue
+						const sizes = typeof icon === 'string' ? '' : String( icon.sizes ?? '' )
+						const list = sizes.split( /\s+/ ).filter( Boolean )
+						let added = false
+						for( const size of list ) {
+							const match = /^(\d+)x(\d+)$/.exec( size )
+							if( !match ) continue
+							if( match[1] !== match[2] ) continue
+							if( res[ match[1] ] ) continue
+							res[ match[1] ] = src
+							added = true
+						}
+						if( !added && !res[ '128' ] ) res[ '128' ] = src
+					}
+					return Object.keys( res ).length ? res : null
+				}
+				return null
+			}
+			
+			const merge_icons_web = ( target : any[] , source : any[] )=> {
+				const index = new Set( target.map( icon => `${ icon?.src ?? '' }|${ icon?.sizes ?? '' }` ) )
+				for( const icon of source ) {
+					const key = `${ icon?.src ?? '' }|${ icon?.sizes ?? '' }`
+					if( index.has( key ) ) continue
+					target.push( icon )
+					index.add( key )
+				}
+			}
+			
+			const merge_icons_json = ( target : Record< string , string > , source : Record< string , string > )=> {
+				for( const [ size , src ] of Object.entries( source ) ) {
+					if( target[ size ] ) continue
+					target[ size ] = src
+				}
+			}
+			
+			const pkg_data = pkg_source ? {
+				name : pkg_source.name ,
+				short_name : pkg_source.short_name ?? pkg_source.name ,
+				version : pkg_source.version ,
+				description : pkg_source.description ,
+				icons : pkg_source.icons ?? pkg_source.icon ,
+			} : null
+			
+			const json_result = clone( json_source ) ?? {}
+			const web_result = clone( web_source ) ?? {}
+			
+			merge( json_result , web_source )
+			merge( json_result , pkg_data )
+			
+			merge( web_result , json_source )
+			merge( web_result , pkg_data )
+			
+			if( json_result.short_name == null && json_result.name ) json_result.short_name = json_result.name
+			if( web_result.short_name == null && web_result.name ) web_result.short_name = web_result.name
+			
+			const json_icons = to_ext_icons( json_result.icons )
+			const json_icons_fallback = to_ext_icons( web_source?.icons ) ?? to_ext_icons( pkg_data?.icons )
+			if( json_icons ) json_result.icons = json_icons
+			
+			if( empty( json_result.icons ) ) {
+				if( json_icons_fallback ) json_result.icons = json_icons_fallback
+			} else if( json_result.icons && typeof json_result.icons === 'object' && !Array.isArray( json_result.icons ) ) {
+				if( json_icons_fallback ) merge_icons_json( json_result.icons , json_icons_fallback )
+			}
+			
+			const web_icons = to_pwa_icons( web_result.icons )
+			const web_icons_fallback = to_pwa_icons( json_source?.icons ) ?? to_pwa_icons( pkg_data?.icons )
+			if( web_icons ) web_result.icons = web_icons
+			
+			if( empty( web_result.icons ) ) {
+				if( web_icons_fallback ) web_result.icons = web_icons_fallback
+			} else if( Array.isArray( web_result.icons ) && Array.isArray( web_icons_fallback ) ) {
+				merge_icons_web( web_result.icons , web_icons_fallback )
+			}
+			
+			if( web_result.theme_color == null ) web_result.theme_color = '#000000'
+			if( web_result.background_color == null ) web_result.background_color = '#000000'
+			if( web_result.display == null ) web_result.display = 'standalone'
+			if( web_result.start_url == null ) web_result.start_url = '.'
+			
+			if( json_result.manifest_version == null ) json_result.manifest_version = 3
+			if( web_result.manifest_version == null ) web_result.manifest_version = json_result.manifest_version ?? 3
+			
+			if( json_result.action == null ) json_result.action = {}
+			if( json_result.action.default_popup == null ) json_result.action.default_popup = 'index.html'
+			if( json_result.action.default_title == null ) {
+				json_result.action.default_title = json_result.name ?? json_result.short_name
+			}
+			
+			const targets = [] as $mol_file[]
+			
+			{
+				const target = pack.resolve( `-/manifest.json` )
+				target.text( JSON.stringify( json_result , null , '  ' ) )
+				this.logBundle( target , Date.now() - start )
+				targets.push( target )
+			}
+			
+			{
+				const target = pack.resolve( `-/manifest.webmanifest` )
+				target.text( JSON.stringify( web_result , null , '  ' ) )
+				this.logBundle( target , Date.now() - start )
+				targets.push( target )
+			}
+			
+			return targets
+		}
+
 		
 		@ $mol_mem_key
 		bundleIndexHtml( [ path , exclude ] : [ path : string , exclude? : readonly string[] ] ) : $mol_file[] {
