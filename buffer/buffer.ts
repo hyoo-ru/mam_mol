@@ -7,10 +7,11 @@ namespace $ {
 			This extends typeof $mol_buffer
 		>(
 			this: This,
-			array: number | string | ArrayBufferView< ArrayBuffer >,
+			array: number | string | ArrayBufferView< ArrayBuffer > | ArrayBuffer,
 		) {
 			if( typeof array === 'number' ) array = new Uint8Array( array )
 			if( typeof array === 'string' ) array = $mol_base64_ae_decode( array )
+			if( !ArrayBuffer.isView( array ) ) array = new Uint8Array( array )
 			return new this( array.buffer, array.byteOffset, array.byteLength ) as InstanceType< This >
 		}
 		

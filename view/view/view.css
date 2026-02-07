@@ -1,3 +1,7 @@
+@view-transition {
+	navigation: auto;
+}
+
 [mol_view] {
 	transition-property: height, width, min-height, min-width, max-width, max-height, transform, scale, translate, rotate;
 	transition-duration: .2s;

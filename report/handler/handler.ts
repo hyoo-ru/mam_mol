@@ -1,8 +1,8 @@
 namespace $ {
 
-	type Error_handler = (event: Event | string, url?: string, line?: number, col?: number, error?: Error) => void
+	export type $mol_report_handler_type = (event: Event | string, url?: string, line?: number, col?: number, error?: Error) => void
 
-	export const $mol_report_handler_all = new Set<Error_handler>()
+	export const $mol_report_handler_all = new Set<$mol_report_handler_type>()
 
 	function handler(event: Event | string, url?: string, line?: number, col?: number, error?: Error) {
 		for (const handler of $mol_report_handler_all) {
@@ -13,8 +13,15 @@ namespace $ {
 	}
 	const handler_promise = (event: PromiseRejectionEvent) => handler('Unhandled Rejection', '', 0, 0, event.reason )
 
-	globalThis.addEventListener('error', handler)
-	globalThis.addEventListener('unhandledrejection', handler_promise)
+	if( 'addEventListener' in globalThis ) {
+		globalThis.addEventListener('error', handler)
+		globalThis.addEventListener('unhandledrejection', handler_promise)
+	}
+	
+	if( 'process' in globalThis ) {
+		process.on('uncaughtExceptionMonitor', handler)
+		process.on('unhandledrejection', handler_promise)
+	}
 
 	const console_error = console.error
 
