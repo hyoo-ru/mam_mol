@@ -697,6 +697,8 @@ namespace $ {
 			this.bundleAllNodeAudit(path)
 			
 			this.bundle([ path , 'package.json' ])
+			this.bundle([ path , 'manifest.json' ])
+			this.bundle([ path , 'manifest.webmanifest' ])
 			this.bundle([ path , 'readme.md' ])
 
 			this.bundleFiles( [ path , [ 'node' ] ] )
@@ -776,7 +778,15 @@ namespace $ {
 			if( !bundle || bundle === 'package.json' ) {
 				res = res.concat( this.bundlePackageJSON( [ path , [ 'web', 'test' ] ] ) )
 			}
-			
+
+			if( !bundle || bundle === 'manifest.json' ) {
+				res = res.concat( this.bundleManifestJSON( [ path , [ 'node' ] ] ) )
+			}
+
+			if( !bundle || bundle === 'manifest.webmanifest' ) {
+				res = res.concat( this.bundleManifestWebmanifest( [ path , [ 'node' ] ] ) )
+			}
+
 			if( !bundle || bundle === 'readme.md' ) {
 				res = res.concat( this.bundleReadmeMd( [ path , [ 'web' ] ] ) )
 			}
@@ -1257,6 +1267,126 @@ namespace $ {
 			return [ target ]
 		}
 		
+		manifestBase( [ path , exclude ] : [ path : string , exclude? : readonly string[] ] ) {
+
+			var pack = $mol_file.absolute( path )
+
+			let name = pack.relate( this.root() ).replace( /\//g , '_' )
+
+			const json = {
+				name ,
+				short_name : name ,
+				description : '' ,
+				version : '0.0.0' ,
+				start_url : '.' ,
+				scope : '.' ,
+				display : 'standalone' as string ,
+				orientation : 'any' as string ,
+				background_color : '#000000' ,
+				theme_color : '#000000' ,
+				categories : [] as string[] ,
+			}
+
+			const source = pack.resolve( `manifest.json` )
+			if( source.exists() ) {
+				Object.assign( json , JSON.parse( source.text() ) )
+			}
+
+			const source_web = pack.resolve( `manifest.webmanifest` )
+			if( source_web.exists() ) {
+				Object.assign( json , JSON.parse( source_web.text() ) )
+			}
+
+			delete ( json as any ).icons
+			delete ( json as any ).manifest_version
+
+			return json
+		}
+
+		@ $mol_mem_key
+		bundleManifestJSON( [ path , exclude ] : [ path : string , exclude? : readonly string[] ] ) : $mol_file[] {
+			const start = this.now()
+			var pack = $mol_file.absolute( path )
+			var target = pack.resolve( `-/manifest.json` )
+
+			const base = this.manifestBase( [ path , exclude ] )
+
+			const icons = {} as Record< string , string >
+
+			const source = pack.resolve( `manifest.json` )
+			if( source.exists() ) {
+				const parsed = JSON.parse( source.text() )
+				if( parsed.icons ) Object.assign( icons , parsed.icons )
+			}
+
+			if( Object.keys( icons ).length === 0 ) {
+				const source_web = pack.resolve( `manifest.webmanifest` )
+				if( source_web.exists() ) {
+					const parsed = JSON.parse( source_web.text() )
+					if( Array.isArray( parsed.icons ) ) {
+						for( const icon of parsed.icons ) {
+							const size = String( icon.sizes ?? '' ).replace( /x.*/ , '' )
+							if( size && icon.src ) icons[ size ] = icon.src
+						}
+					}
+				}
+			}
+
+			const json = {
+				... base ,
+				manifest_version : 3 ,
+				icons ,
+			}
+
+			target.text( JSON.stringify( json , null , '\t' ) )
+
+			this.logBundle( target , Date.now() - start )
+
+			return [ target ]
+		}
+
+		@ $mol_mem_key
+		bundleManifestWebmanifest( [ path , exclude ] : [ path : string , exclude? : readonly string[] ] ) : $mol_file[] {
+			const start = this.now()
+			var pack = $mol_file.absolute( path )
+			var target = pack.resolve( `-/manifest.webmanifest` )
+
+			const base = this.manifestBase( [ path , exclude ] )
+
+			const icons = [] as { src : string , type : string , sizes : string }[]
+
+			const source = pack.resolve( `manifest.webmanifest` )
+			if( source.exists() ) {
+				const parsed = JSON.parse( source.text() )
+				if( parsed.icons ) icons.push( ... parsed.icons )
+			}
+
+			if( icons.length === 0 ) {
+				const source_ext = pack.resolve( `manifest.json` )
+				if( source_ext.exists() ) {
+					const parsed = JSON.parse( source_ext.text() )
+					if( parsed.icons && typeof parsed.icons === 'object' && !Array.isArray( parsed.icons ) ) {
+						for( const [ size , src ] of Object.entries( parsed.icons ) ) {
+							const ext = String( src ).replace( /^.*\./ , '' )
+							const type = $mol_file_extensions[ ext ] ?? ''
+							icons.push( { src : String( src ) , sizes : `${ size }x${ size }` , type : type.replace( /;.*/ , '' ) } )
+						}
+					}
+				}
+			}
+
+			const json = {
+				... base ,
+				icons ,
+			}
+
+			target.text( JSON.stringify( json , null , '\t' ) )
+
+			this.logBundle( target , Date.now() - start )
+
+			return [ target ]
+		}
+
 		@ $mol_mem_key
 		bundleIndexHtml( [ path , exclude ] : [ path : string , exclude? : readonly string[] ] ) : $mol_file[] {
 
