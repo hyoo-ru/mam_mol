@@ -1319,6 +1319,19 @@ namespace $ {
 				if( parsed.icons ) Object.assign( icons , parsed.icons )
 			}
 
+			if( Object.keys( icons ).length === 0 ) {
+				const source_web = pack.resolve( `manifest.webmanifest` )
+				if( source_web.exists() ) {
+					const parsed = JSON.parse( source_web.text() )
+					if( Array.isArray( parsed.icons ) ) {
+						for( const icon of parsed.icons ) {
+							const size = String( icon.sizes ?? '' ).replace( /x.*/ , '' )
+							if( size && icon.src ) icons[ size ] = icon.src
+						}
+					}
+				}
+			}
+
 			const json = {
 				... base ,
 				manifest_version : 3 ,
@@ -1346,6 +1359,20 @@ namespace $ {
 			if( source.exists() ) {
 				const parsed = JSON.parse( source.text() )
 				if( parsed.icons ) icons.push( ... parsed.icons )
+			}
+
+			if( icons.length === 0 ) {
+				const source_ext = pack.resolve( `manifest.json` )
+				if( source_ext.exists() ) {
+					const parsed = JSON.parse( source_ext.text() )
+					if( parsed.icons && typeof parsed.icons === 'object' && !Array.isArray( parsed.icons ) ) {
+						for( const [ size , src ] of Object.entries( parsed.icons ) ) {
+							const ext = String( src ).replace( /^.*\./ , '' )
+							const type = $mol_file_extensions[ ext ] ?? ''
+							icons.push( { src : String( src ) , sizes : `${ size }x${ size }` , type : type.replace( /;.*/ , '' ) } )
+						}
+					}
+				}
 			}
 
 			const json = {
