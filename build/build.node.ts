@@ -1278,14 +1278,12 @@ namespace $ {
 				short_name : name ,
 				description : '' ,
 				version : '0.0.0' ,
-				manifest_version : 3 ,
 				start_url : '.' ,
 				scope : '.' ,
-				display : 'standalone' ,
-				orientation : 'any' ,
+				display : 'standalone' as string ,
+				orientation : 'any' as string ,
 				background_color : '#000000' ,
 				theme_color : '#000000' ,
-				icons : [] as { src : string , type : string , sizes : string }[] ,
 				categories : [] as string[] ,
 			}
 
@@ -1299,6 +1297,9 @@ namespace $ {
 				Object.assign( json , JSON.parse( source_web.text() ) )
 			}
 
+			delete ( json as any ).icons
+			delete ( json as any ).manifest_version
+
 			return json
 		}
 
@@ -1308,7 +1309,21 @@ namespace $ {
 			var pack = $mol_file.absolute( path )
 			var target = pack.resolve( `-/manifest.json` )
 
-			const json = this.manifestBase( [ path , exclude ] )
+			const base = this.manifestBase( [ path , exclude ] )
+
+			const icons = {} as Record< string , string >
+
+			const source = pack.resolve( `manifest.json` )
+			if( source.exists() ) {
+				const parsed = JSON.parse( source.text() )
+				if( parsed.icons ) Object.assign( icons , parsed.icons )
+			}
+
+			const json = {
+				... base ,
+				manifest_version : 3 ,
+				icons ,
+			}
 
 			target.text( JSON.stringify( json , null , '\t' ) )
 
@@ -1323,9 +1338,20 @@ namespace $ {
 			var pack = $mol_file.absolute( path )
 			var target = pack.resolve( `-/manifest.webmanifest` )
 
-			const json = this.manifestBase( [ path , exclude ] )
+			const base = this.manifestBase( [ path , exclude ] )
 
-			delete ( json as any ).manifest_version
+			const icons = [] as { src : string , type : string , sizes : string }[]
+
+			const source = pack.resolve( `manifest.webmanifest` )
+			if( source.exists() ) {
+				const parsed = JSON.parse( source.text() )
+				if( parsed.icons ) icons.push( ... parsed.icons )
+			}
+
+			const json = {
+				... base ,
+				icons ,
+			}
 
 			target.text( JSON.stringify( json , null , '\t' ) )
 
