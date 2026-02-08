@@ -90,6 +90,14 @@ namespace $ {
 			).catch( $mol_crypto_restack )
 		}
 		
+		[ Symbol.for( 'nodejs.util.inspect.custom' ) ]() {
+			return this.toJSON()
+		}
+		
+		toJSON() {
+			return this.toString()
+		}
+		
 	}
 	
 	export class $mol_crypto_key_private extends $mol_crypto_key {
@@ -163,6 +171,14 @@ namespace $ {
 				await this.native(),
 				data
 			).catch( $mol_crypto_restack ) )
+		}
+		
+		[ Symbol.for( 'nodejs.util.inspect.custom' ) ]() {
+			return this.toJSON()
+		}
+		
+		toJSON() {
+			return '$mol_crypto_key_private:' + this.public().toJSON()
 		}
 		
 	}
