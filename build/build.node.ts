@@ -1263,7 +1263,7 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		bundleManifestJSON( [ path , exclude ] : [ path : string , exclude? : readonly string[] ] ) : $mol_file[] {
+		bundleManifestJSON( [ path ] : [ path : string , exclude? : readonly string[] ] ) : $mol_file[] {
 
 			const start = this.now()
 			var pack = $mol_file.absolute( path )
@@ -1285,11 +1285,6 @@ namespace $ {
 			const source = pack.resolve( `manifest.json` )
 			if( source.exists() ) {
 				Object.assign( json , JSON.parse( source.text() ) )
-			}
-
-			const source_web = pack.resolve( `manifest.webmanifest` )
-			if( source_web.exists() ) {
-				Object.assign( json , JSON.parse( source_web.text() ) )
 			}
 
 			target.text( JSON.stringify( json , null , '\t' ) )
