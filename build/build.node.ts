@@ -698,7 +698,6 @@ namespace $ {
 			
 			this.bundle([ path , 'package.json' ])
 			this.bundle([ path , 'manifest.json' ])
-			this.bundle([ path , 'manifest.webmanifest' ])
 			this.bundle([ path , 'readme.md' ])
 
 			this.bundleFiles( [ path , [ 'node' ] ] )
@@ -781,10 +780,6 @@ namespace $ {
 			
 			if( !bundle || bundle === 'manifest.json' ) {
 				res = res.concat( this.bundleManifestJSON( [ path , [ 'node' ] ] ) )
-			}
-
-			if( !bundle || bundle === 'manifest.webmanifest' ) {
-				res = res.concat( this.bundleManifestWebmanifest( [ path , [ 'node' ] ] ) )
 			}
 
 			if( !bundle || bundle === 'readme.md' ) {
@@ -1275,145 +1270,16 @@ namespace $ {
 			var target = pack.resolve( `-/manifest.json` )
 			let name = pack.relate( this.root() ).replace( /\//g , '_' )
 
-			// Chrome extension manifest v3 — поля по спецификации Chrome Extensions.
-			// PWA-поля (display, scope, theme_color и т.д.) сюда не входят — для них есть manifest.webmanifest.
 			const json = {
-
-				// === Обязательные ===
-
-				// Версия формата манифеста — для Chrome-расширений всегда 3
-				manifest_version : 3 as const ,
-				// Название расширения — показывается в Chrome Web Store и на странице chrome://extensions (макс 75 символов)
 				name ,
-				// Версия расширения — Chrome сравнивает с предыдущей для определения необходимости обновления
-				version : '0.0.0' ,
-
-				// === Рекомендуемые ===
-
-				// Описание расширения — показывается в Chrome Web Store и на странице управления (макс 132 символа)
-				description : '' ,
-				// Иконки расширения — объект { размер: путь }, Chrome выбирает ближайший подходящий (рекомендуется 16, 32, 48, 128)
-				icons : {} as Record< string , string > ,
-				// Сокращённое название — используется где мало места, например панель расширений (макс 12 символов)
 				short_name : name ,
-				// Язык по умолчанию для локализации — обязателен если есть папка _locales, иначе не указывается
-				// default_locale : undefined ,
-
-				// === UI расширения ===
-
-				// Кнопка расширения в тулбаре — default_popup открывает HTML в попапе при клике на иконку
-				action : {
-					default_popup : 'index.html' ,
-				} as { default_popup? : string , default_icon? : string | Record< string , string > , default_title? : string } ,
-				// Страница настроек расширения — открывается через "Параметры" в контекстном меню иконки
-				options_ui : undefined as undefined | { page : string , open_in_tab? : boolean } ,
-				// Устаревший вариант options_ui — просто путь к HTML файлу настроек
-				// options_page : undefined as undefined | string ,
-				// HTML-страница для панели DevTools — добавляет вкладку в инструменты разработчика
-				devtools_page : undefined as undefined | string ,
-				// HTML-файл для боковой панели браузера (Side Panel API)
-				side_panel : undefined as undefined | { default_path : string } ,
-				// Подмена стандартных страниц Chrome — можно заменить newtab, bookmarks или history
-				chrome_url_overrides : undefined as undefined | { newtab? : string , bookmarks? : string , history? : string } ,
-
-				// === Фоновая логика ===
-
-				// Service worker расширения — фоновый скрипт который обрабатывает события (клики, алармы, сообщения)
-				background : undefined as undefined | { service_worker : string , type? : 'module' } ,
-				// Скрипты внедряемые в веб-страницы — работают в контексте страницы, имеют доступ к её DOM
-				content_scripts : undefined as undefined | { matches : string[] , js? : string[] , css? : string[] , run_at? : string , all_frames? : boolean }[] ,
-
-				// === Разрешения ===
-
-				// Разрешения на Chrome API — запрашиваются при установке (storage, tabs, alarms, notifications и т.д.)
-				permissions : [] as string[] ,
-				// Разрешения которые можно запросить позже через chrome.permissions.request()
-				optional_permissions : [] as string[] ,
-				// URL-паттерны сайтов к которым расширение получает доступ — запрашиваются при установке
-				host_permissions : [] as string[] ,
-				// URL-паттерны которые можно запросить позже — пользователь разрешает по мере необходимости
-				optional_host_permissions : [] as string[] ,
-
-				// === Сеть и безопасность ===
-
-				// Правила блокировки/модификации сетевых запросов (Declarative Net Request API)
-				declarative_net_request : undefined as undefined | { rule_resources : { id : string , enabled : boolean , path : string }[] } ,
-				// Политика безопасности контента — ограничивает какие скрипты и ресурсы может загружать расширение
-				content_security_policy : undefined as undefined | { extension_pages? : string , sandbox? : string } ,
-				// Политика встраивания кросс-доменных ресурсов на страницах расширения
-				cross_origin_embedder_policy : undefined as undefined | { value : string } ,
-				// Политика изоляции контекста — запрещает кросс-доменным документам делить browsing context
-				cross_origin_opener_policy : undefined as undefined | { value : string } ,
-				// Ресурсы расширения доступные веб-страницам — без этого страницы не могут обращаться к файлам расширения
-				web_accessible_resources : undefined as undefined | { resources : string[] , matches? : string[] , extension_ids? : string[] }[] ,
-				// Песочница — страницы расширения без доступа к Chrome API, но с возможностью использовать eval()
-				sandbox : undefined as undefined | { pages : string[] } ,
-
-				// === Коммуникация ===
-
-				// Какие сайты и расширения могут отправлять сообщения этому расширению через chrome.runtime.connect/sendMessage
-				externally_connectable : undefined as undefined | { ids? : string[] , matches? : string[] , accepts_tls_channel_id? : boolean } ,
-				// Клавиатурные сочетания расширения — глобальные или локальные хоткеи для действий
-				commands : undefined as undefined | Record< string , { suggested_key? : { default? : string , mac? : string , linux? : string , windows? : string , chromeos? : string } , description? : string } > ,
-
-				// === Ключевое слово в адресной строке ===
-
-				// Регистрирует ключевое слово в омнибоксе — пользователь вводит его и дальше текст идёт в расширение
-				omnibox : undefined as undefined | { keyword : string } ,
-
-				// === Настройки Chrome ===
-
-				// Подмена настроек Chrome — поисковик по умолчанию, домашняя страница, страница при запуске
-				chrome_settings_overrides : undefined as undefined | { search_provider? : Record< string , string > , homepage? : string , startup_pages? : string[] } ,
-
-				// === Хранилище ===
-
-				// JSON-схема для managed storage — настройки которые администратор может задать через политики
-				storage : undefined as undefined | { managed_schema : string } ,
-
-				// === Авторизация ===
-
-				// OAuth2 конфигурация — для авторизации через Google аккаунт (client_id из Google Cloud Console)
-				oauth2 : undefined as undefined | { client_id : string , scopes : string[] } ,
-
-				// === TTS ===
-
-				// Регистрирует расширение как движок синтеза речи — Chrome будет использовать его для озвучки текста
-				tts_engine : undefined as undefined | { voices : { voice_name : string , lang? : string , event_types? : string[] }[] } ,
-
-				// === Метаданные и обновление ===
-
-				// Человекочитаемая версия — "1.0 beta", "build rc2", показывается вместо version на странице управления
-				version_name : undefined as undefined | string ,
-				// URL домашней страницы расширения — без этого ссылается на страницу в Chrome Web Store
-				homepage_url : undefined as undefined | string ,
-				// URL для самостоятельного обновления — если расширение хостится вне Chrome Web Store
-				update_url : undefined as undefined | string ,
-				// Публичный ключ расширения — фиксирует ID расширения при разработке (для стабильного ID между переустановками)
-				key : undefined as undefined | string ,
-				// Минимальная версия Chrome для установки — если пользователь на старой версии, установка заблокируется
-				minimum_chrome_version : undefined as undefined | string ,
-				// Автор расширения — метаданные, не отображаются в UI
-				author : undefined as undefined | { email : string } ,
-				// Поведение в режиме инкогнито: spanning (общий процесс), split (отдельный), not_allowed (запрещено)
-				incognito : undefined as undefined | string ,
-				// Технические требования — например { "3D": { features: ["webgl"] } }
-				requirements : undefined as undefined | Record< string , Record< string , string[] > > ,
-				// Экспорт ресурсов — позволяет другим расширениям импортировать ресурсы этого расширения
-				export : undefined as undefined | { allowlist? : string[] } ,
-				// Импорт shared-модулей из другого расширения по его ID
-				import : undefined as undefined | { id : string , minimum_version? : string }[] ,
-
-				// === ChromeOS ===
-
-				// Обработчик файлов в файловом менеджере ChromeOS
-				// file_browser_handlers : undefined ,
-				// Типы файлов которые расширение обрабатывает на ChromeOS
-				// file_handlers : undefined ,
-				// Возможности провайдера файловой системы на ChromeOS
-				// file_system_provider_capabilities : undefined ,
-				// Регистрация как метод ввода (IME) на ChromeOS
-				// input_components : undefined ,
+				description : '' ,
+				id : name ,
+				start_url : '.' ,
+				display : 'standalone' as string ,
+				background_color : '#000000' ,
+				theme_color : '#000000' ,
+				share_target : undefined as undefined | { action : string , method? : string , enctype? : string , params : Record< string , string > } ,
 			}
 
 			const source = pack.resolve( `manifest.json` )
@@ -1421,110 +1287,9 @@ namespace $ {
 				Object.assign( json , JSON.parse( source.text() ) )
 			}
 
-			// Конвертируем иконки из webmanifest-формата (массив) в extension-формат (объект), если в manifest.json иконок нет
-			if( Object.keys( json.icons ).length === 0 ) {
-				const source_web = pack.resolve( `manifest.webmanifest` )
-				if( source_web.exists() ) {
-					const parsed = JSON.parse( source_web.text() )
-					if( Array.isArray( parsed.icons ) ) {
-						for( const icon of parsed.icons ) {
-							const size = String( icon.sizes ?? '' ).replace( /x.*/ , '' )
-							if( size && icon.src ) json.icons[ size ] = icon.src
-						}
-					}
-				}
-			}
-
-			target.text( JSON.stringify( json , null , '\t' ) )
-
-			this.logBundle( target , Date.now() - start )
-
-			return [ target ]
-		}
-
-		@ $mol_mem_key
-		bundleManifestWebmanifest( [ path , exclude ] : [ path : string , exclude? : readonly string[] ] ) : $mol_file[] {
-
-			const start = this.now()
-			var pack = $mol_file.absolute( path )
-			var target = pack.resolve( `-/manifest.webmanifest` )
-			let name = pack.relate( this.root() ).replace( /\//g , '_' )
-
-			// PWA Web App Manifest — поля по спецификации W3C Web Application Manifest.
-			// Chrome extension поля (manifest_version, permissions, background и т.д.) сюда не входят — для них есть manifest.json.
-			const json = {
-				// Полное название приложения — показывается при установке PWA и в списке приложений ОС
-				name ,
-				// Сокращённое название — для мест где мало места: иконка на домашнем экране, панель задач
-				short_name : name ,
-				// Описание приложения — показывается в магазинах и в диалоге установки PWA
-				description : '' ,
-				// URL который открывается при запуске приложения (относительно манифеста)
-				start_url : '.' ,
-				// Ограничивает навигацию — переход за пределы scope открывает системный браузер
-				scope : '.' ,
-				// Уникальный идентификатор приложения — нужен чтобы ОС отличала одно PWA от другого независимо от URL
-				id : '/' ,
-				// Режим отображения: fullscreen (без UI), standalone (как нативное), minimal-ui (с кнопкой назад), browser (вкладка)
-				display : 'standalone' as string ,
-				// Цепочка предпочитаемых режимов — браузер пробует по порядку, если не поддерживает — берёт display
-				display_override : [] as string[] ,
-				// Ориентация экрана: any (авто), portrait (вертикально), landscape (горизонтально)
-				orientation : 'any' as string ,
-				// Направление текста: ltr (слева направо), rtl (справа налево), auto (по содержимому)
-				dir : 'auto' as string ,
-				// Основной язык приложения в формате BCP 47 — влияет на сортировку, форматирование дат
-				lang : 'en' ,
-				// Цвет фона сплэш-экрана — показывается при запуске пока не загрузился контент
-				background_color : '#000000' ,
-				// Цвет темы для ОС — красит адресную строку, переключатель задач, статус-бар
-				theme_color : '#000000' ,
-				// Категории для магазинов — помогают пользователям находить приложение ("games", "productivity", "social")
-				categories : [] as string[] ,
-				// ID возрастного рейтинга IARC — нужен для публикации в магазинах с возрастными ограничениями
-				iarc_rating_id : '' ,
-				// Если true — ОС предложит нативное приложение из related_applications вместо PWA
-				prefer_related_applications : false ,
-				// Ссылки на нативные версии в магазинах (Play Store, App Store) — показываются при установке PWA
-				related_applications : [] as { platform : string , url : string , id? : string }[] ,
-				// Иконки приложения — массив с вариантами размеров, браузер выбирает подходящий
-				icons : [] as { src : string , sizes : string , type : string }[] ,
-				// Скриншоты для магазинов и диалога установки — пользователь видит их перед установкой
-				screenshots : [] as { src : string , sizes : string , type : string , label? : string }[] ,
-				// Быстрые действия в контекстном меню иконки (правый клик / долгое нажатие) — например "Новое сообщение"
-				shortcuts : [] as { name : string , url : string , description? : string , icons? : { src : string , sizes : string , type : string }[] }[] ,
-				// Регистрирует приложение как обработчик кастомных URL-протоколов (например web+myapp://...)
-				protocol_handlers : [] as { protocol : string , url : string }[] ,
-				// Позволяет приложению принимать данные через системное меню "Поделиться" (Web Share Target API)
-				share_target : undefined as undefined | { action : string , method? : string , enctype? : string , params : Record< string , string > } ,
-				// Управляет поведением при запуске: открыть новое окно, переиспользовать существующее, или просто сфокусировать
-				launch_handler : undefined as undefined | { client_mode : string | string[] } ,
-				// Настройка боковой панели Microsoft Edge — задаёт предпочтительную ширину панели
-				edge_side_panel : undefined as undefined | { preferred_width? : number } ,
-				// Как приложение обрабатывает клики по ссылкам: auto (решает браузер), preferred (перехватывать), not-preferred (не перехватывать)
-				handle_links : 'auto' as string ,
-				// Дополнительные домены которые считаются частью приложения — навигация на них не выходит из scope
-				scope_extensions : [] as { origin : string }[] ,
-			}
-
-			const source = pack.resolve( `manifest.webmanifest` )
-			if( source.exists() ) {
-				Object.assign( json , JSON.parse( source.text() ) )
-			}
-
-			// Конвертируем иконки из extension-формата (объект) в webmanifest-формат (массив), если в webmanifest иконок нет
-			if( json.icons.length === 0 ) {
-				const source_ext = pack.resolve( `manifest.json` )
-				if( source_ext.exists() ) {
-					const parsed = JSON.parse( source_ext.text() )
-					if( parsed.icons && typeof parsed.icons === 'object' && !Array.isArray( parsed.icons ) ) {
-						for( const [ size , src ] of Object.entries( parsed.icons ) ) {
-							const ext = String( src ).replace( /^.*\./ , '' )
-							const type = $mol_file_extensions[ ext ] ?? ''
-							json.icons.push( { src : String( src ) , sizes : `${ size }x${ size }` , type : type.replace( /;.*/ , '' ) } )
-						}
-					}
-				}
+			const source_web = pack.resolve( `manifest.webmanifest` )
+			if( source_web.exists() ) {
+				Object.assign( json , JSON.parse( source_web.text() ) )
 			}
 
 			target.text( JSON.stringify( json , null , '\t' ) )
