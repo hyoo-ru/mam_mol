@@ -1263,7 +1263,7 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		bundleManifestJSON( [ path ] : [ path : string , exclude? : readonly string[] ] ) : $mol_file[] {
+		bundleManifestJSON( [ path ] : [ path : string ] ) : $mol_file[] {
 
 			const start = this.now()
 			var pack = $mol_file.absolute( path )
@@ -1279,7 +1279,6 @@ namespace $ {
 				display : 'standalone' as string ,
 				background_color : '#000000' ,
 				theme_color : '#000000' ,
-				share_target : undefined as undefined | { action : string , method? : string , enctype? : string , params : Record< string , string > } ,
 			}
 
 			const source = pack.resolve( `manifest.json` )
