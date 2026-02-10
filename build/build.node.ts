@@ -1265,8 +1265,11 @@ namespace $ {
 		@ $mol_mem_key
 		bundleManifestJSON( [ path , exclude ] : [ path : string , exclude? : readonly string[] ] ) : $mol_file[] {
 
-			const start = this.now()
 			var pack = $mol_file.absolute( path )
+
+			if( this.sourcesAll( [ path , exclude ] ).length === 0 ) return []
+
+			const start = this.now()
 			var target = pack.resolve( `-/manifest.json` )
 			let name = pack.relate( this.root() ).replace( /\//g , '_' )
 
