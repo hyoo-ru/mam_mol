@@ -779,7 +779,7 @@ namespace $ {
 			}
 			
 			if( !bundle || bundle === 'manifest.json' ) {
-				res = res.concat( this.bundleManifestJSON( [ path, [ 'node' ] ] ) )
+				res = res.concat( this.bundleManifestJSON( [ path , [ 'node' , 'test' ] ] ) )
 			}
 
 			if( !bundle || bundle === 'readme.md' ) {
