@@ -697,6 +697,7 @@ namespace $ {
 			this.bundleAllNodeAudit(path)
 			
 			this.bundle([ path , 'package.json' ])
+			this.bundle([ path , 'manifest.json' ])
 			this.bundle([ path , 'readme.md' ])
 
 			this.bundleFiles( [ path , [ 'node' ] ] )
@@ -777,6 +778,10 @@ namespace $ {
 				res = res.concat( this.bundlePackageJSON( [ path , [ 'web', 'test' ] ] ) )
 			}
 			
+			if( !bundle || bundle === 'manifest.json' ) {
+				res = res.concat( this.bundleManifestJSON( [ path , [ 'node' , 'test' ] ] ) )
+			}
+
 			if( !bundle || bundle === 'readme.md' ) {
 				res = res.concat( this.bundleReadmeMd( [ path , [ 'web' ] ] ) )
 			}
@@ -1254,6 +1259,40 @@ namespace $ {
 			
 			this.logBundle( target , Date.now() - start )
 			
+			return [ target ]
+		}
+
+		@ $mol_mem_key
+		bundleManifestJSON( [ path , exclude ] : [ path : string , exclude? : readonly string[] ] ) : $mol_file[] {
+
+			var pack = $mol_file.absolute( path )
+
+			if( this.sourcesAll( [ path , exclude ] ).length === 0 ) return []
+
+			const start = this.now()
+			var target = pack.resolve( `-/manifest.json` )
+			let name = pack.relate( this.root() ).replace( /\//g , '_' )
+
+			const json = {
+				name ,
+				short_name : name ,
+				description : '' ,
+				id : name ,
+				start_url : '.' ,
+				display : 'standalone' as string ,
+				background_color : '#000000' ,
+				theme_color : '#000000' ,
+			}
+
+			const source = pack.resolve( `manifest.json` )
+			if( source.exists() ) {
+				Object.assign( json , JSON.parse( source.text() ) )
+			}
+
+			target.text( JSON.stringify( json , null , '\t' ) )
+
+			this.logBundle( target , Date.now() - start )
+
 			return [ target ]
 		}
 		
