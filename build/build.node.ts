@@ -779,7 +779,7 @@ namespace $ {
 			}
 			
 			if( !bundle || bundle === 'manifest.json' ) {
-				res = res.concat( this.bundleManifestJSON( [ path ] ) )
+				res = res.concat( this.bundleManifestJSON( [ path, [ 'node' ] ] ) )
 			}
 
 			if( !bundle || bundle === 'readme.md' ) {
@@ -1263,7 +1263,7 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		bundleManifestJSON( [ path ] : [ path : string ] ) : $mol_file[] {
+		bundleManifestJSON( [ path , exclude ] : [ path : string , exclude? : readonly string[] ] ) : $mol_file[] {
 
 			const start = this.now()
 			var pack = $mol_file.absolute( path )
