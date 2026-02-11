@@ -137,7 +137,17 @@ namespace $ {
 			if( this.pub_from === 0 ) {
 				;( this.host as any ?? this.task )[ this.field() ] = null
 			} else {
-				;( this.host as any ?? this.task )[ this.field() ].delete( $mol_key( this.args[0] ) )
+				
+				const key = $mol_key( this.args[0] )
+				const map = ( this.host as any ?? this.task )[ this.field() ]
+				
+				if( !map.has( key ) ) this.$.$mol_log3_warn({
+					place: this,
+					message: 'Absent key on destruction',
+					hint: 'Check for $mol_key(key) is not changed',
+				})
+				
+				map.delete( key )
 			}
 			
 		}
