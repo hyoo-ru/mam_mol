@@ -1,0 +1,10 @@
+{
+	"name": "mol_perf_dopes",
+	"short_name": "mol_perf_dopes",
+	"description": "",
+	"id": "mol_perf_dopes",
+	"start_url": ".",
+	"display": "standalone",
+	"background_color": "#000000",
+	"theme_color": "#000000"
+}

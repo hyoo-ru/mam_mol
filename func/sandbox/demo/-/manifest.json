@@ -1,0 +1,10 @@
+{
+	"name": "mol_func_sandbox_demo",
+	"short_name": "mol_func_sandbox_demo",
+	"description": "",
+	"id": "mol_func_sandbox_demo",
+	"start_url": ".",
+	"display": "standalone",
+	"background_color": "#000000",
+	"theme_color": "#000000"
+}

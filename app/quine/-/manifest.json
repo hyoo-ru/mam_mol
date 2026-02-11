@@ -1,0 +1,10 @@
+{
+	"name": "mol_app_quine",
+	"short_name": "mol_app_quine",
+	"description": "",
+	"id": "mol_app_quine",
+	"start_url": ".",
+	"display": "standalone",
+	"background_color": "#000000",
+	"theme_color": "#000000"
+}

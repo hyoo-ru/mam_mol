@@ -1,0 +1,10 @@
+{
+	"name": "mol_time_all",
+	"short_name": "mol_time_all",
+	"description": "",
+	"id": "mol_time_all",
+	"start_url": ".",
+	"display": "standalone",
+	"background_color": "#000000",
+	"theme_color": "#000000"
+}

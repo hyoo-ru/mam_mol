@@ -1,0 +1,10 @@
+{
+	"name": "mol_syntax2",
+	"short_name": "mol_syntax2",
+	"description": "",
+	"id": "mol_syntax2",
+	"start_url": ".",
+	"display": "standalone",
+	"background_color": "#000000",
+	"theme_color": "#000000"
+}
