@@ -18,6 +18,6 @@ npm install mol_key
 ```ts
 import { $mol_key as key } from 'mol_key'
 
-// {"regexp":"/foo/","elems":["04Y7LLST","XMSPWAKY"]}
+// {"regexp":/foo/,"elems":[#FEB7B7JN,#XO9QW5P0]}
 key({ regexp: /foo/, elems: [ document.head, document.body ] })
 ```

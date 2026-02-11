@@ -366,6 +366,14 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    $.$mol_key_handle = Symbol.for('$mol_key_handle');
+    $.$mol_key_store = new WeakMap();
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
     if (!Symbol.dispose)
         Symbol.dispose = Symbol('Symbol.dispose');
     class $mol_object2 {
@@ -396,6 +404,9 @@ var $;
             return this[Symbol.toStringTag] || this.$.$mol_func_name(this);
         }
         static toJSON() {
+            return this.toString();
+        }
+        static [$mol_key_handle]() {
             return this.toString();
         }
         destructor() { }

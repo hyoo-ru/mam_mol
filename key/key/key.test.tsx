@@ -23,9 +23,9 @@ namespace $ {
 		
 		'Uint8Array'() {
 			
-			$mol_assert_equal( $mol_key( new Uint8Array([ 1, 2 ]) ), '[1,2]' )
-			$mol_assert_equal( $mol_key([ new Uint8Array([ 1, 2 ]) ]), '[[1,2]]' )
-			$mol_assert_equal( $mol_key({ foo: new Uint8Array([ 1, 2 ]) }), '{"foo":[1,2]}' )
+			$mol_assert_equal( $mol_key( new Uint8Array([ 1, 2 ]) ), 'Uint8Array([1,2])' )
+			$mol_assert_equal( $mol_key([ new Uint8Array([ 1, 2 ]) ]), '[Uint8Array([1,2])]' )
+			$mol_assert_equal( $mol_key({ foo: new Uint8Array([ 1, 2 ]) }), '{"foo":Uint8Array([1,2])}' )
 			
 		},
 		
@@ -59,21 +59,35 @@ namespace $ {
 		'Custom JSON representation'() {
 			
 			class User {
-				constructor( public name: string, public age: number ) {}
-				toJSON() { return { name: this.name } }
+				toJSON() { return 'jin' }
 			}
 			
-			$mol_assert_equal( $mol_key( new User( 'jin', 18 ) ), '{"name":"jin"}' )
+			$mol_assert_unique( [ $mol_key( new User ) ], [ $mol_key( new User ) ] )
+			
+		},
+		
+		'Custom key handler'() {
+			
+			class User {
+				constructor( public name: string, public age: number ) {}
+				[ $mol_key_handle ]() { return `User(${ JSON.stringify( this.name ) })` }
+			}
+			
+			$mol_assert_equal(
+				$mol_key( [ new User( 'jin', 16 ) ] ),
+				$mol_key( [ new User( 'jin', 18 ) ] ),
+				'[User("jin")]'
+			)
 			
 		},
 		
 		'Special native classes'() {
 			
-			$mol_assert_equal( $mol_key( new Date( 'xyz' ) ), 'null' )
-			$mol_assert_equal( $mol_key( new Date( '2001-01-02T03:04:05.678Z' ) ), '"2001-01-02T03:04:05.678Z"' )
+			$mol_assert_equal( $mol_key( new Date( 'xyz' ) ), 'Date(NaN)' )
+			$mol_assert_equal( $mol_key( new Date( 12345 ) ), 'Date(12345)' )
 			
-			$mol_assert_equal( $mol_key( /./ ), '"/./"' )
-			$mol_assert_equal( $mol_key( /\./gimsu ), '"/\\\\./gimsu"' )
+			$mol_assert_equal( $mol_key( /./ ), '/./' )
+			$mol_assert_equal( $mol_key( /\./gimsu ), '/\\./gimsu' )
 			
 		},
 		

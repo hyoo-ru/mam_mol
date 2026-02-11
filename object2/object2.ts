@@ -40,6 +40,10 @@ namespace $ {
 			return this.toString()
 		}
 		
+		static [ $mol_key_handle ]() {
+			return this.toString()
+		}
+		
 		destructor() { }
 		static destructor() { }
 		
