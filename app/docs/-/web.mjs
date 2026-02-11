@@ -1487,7 +1487,7 @@ var $;
             }
         }
         containers: {
-            const key = '#' + $mol_guid();
+            const key = JSON.stringify('#' + $mol_guid());
             $mol_key_store.set(value, key);
             return key;
         }
