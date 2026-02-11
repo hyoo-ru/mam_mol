@@ -292,6 +292,10 @@ namespace $ {
 			return resource ?? $mol_rest_resource.make({})
 		}
 		
+		;[ Symbol.for( 'nodejs.util.inspect.custom' ) ]() {
+			return $mol_term_color.blue( '$mol_rest_server' )
+		}
+		
 	}
 	
 }
