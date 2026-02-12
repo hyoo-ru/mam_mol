@@ -22,13 +22,22 @@ namespace $ {
 			rows.push( row )
 			
 			for( const field of fields ) {
-				const val = String( item[ field ] ?? '' )
-				row.push( '"' + val.replace( /"/g , '""' ) + '"' )
+				row.push( String( item[ field ] ?? '' ) )
 			}
 			
 		}
 		
-		return rows.map( row => row.join( delimiter ) ).join( '\n' )
+		return $mol_csv_serial_table( rows, delimiter )
+		
+	}
+	
+	export function $mol_csv_serial_table( rows: string[][], delimiter = ',' ) {
+		
+		return rows.map( row =>
+			row.map( cell =>
+				'"' + String( cell ).replace( /"/g , '""' ) + '"'
+			).join( delimiter )
+		).join( '\n' )
 		
 	}
 	

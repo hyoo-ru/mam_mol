@@ -485,6 +485,7 @@
     "$mol_csv_parse_demo",
     "$mol_csv_parse",
     "$mol_csv",
+    "$mol_csv_syntax",
     "$mol_csv_serial_demo",
     "$mol_csv_serial",
     "$mol_data_array_demo",
