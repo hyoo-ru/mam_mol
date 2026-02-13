@@ -1273,15 +1273,19 @@ namespace $ {
 			var target = pack.resolve( `-/manifest.json` )
 			let name = pack.relate( this.root() ).replace( /\//g , '_' )
 
+			const has_webmanifest = pack.resolve( `manifest.webmanifest` ).exists()
+
 			const json = {
 				name ,
 				short_name : name ,
 				description : '' ,
-				id : name ,
-				start_url : '.' ,
-				display : 'standalone' as string ,
-				background_color : '#000000' ,
-				theme_color : '#000000' ,
+				... has_webmanifest ? {} : {
+					id : name ,
+					start_url : '.' ,
+					display : 'standalone' as string ,
+					background_color : '#000000' ,
+					theme_color : '#000000' ,
+				} ,
 			}
 
 			const source = pack.resolve( `manifest.json` )
