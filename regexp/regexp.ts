@@ -231,6 +231,7 @@ namespace $ {
 			Sources extends readonly $mol_regexp_source[]
 		>(
 			sources : Sources ,
+			flags : string = 'gsu',
 		) {
 			
 			const groups = [] as string[]
@@ -246,7 +247,7 @@ namespace $ {
 			
 			return new $mol_regexp< $mol_regexp_groups< Sources[number] > >(
 				`(?:${ chunks.join('|') })` ,
-				'' ,
+				flags ,
 				groups as any[] ,
 			)
 			

@@ -3,13 +3,13 @@ namespace $ {
 		
 		'Known language'() {
 			
-			$mol_assert_ok( $mol_spell_any.test( 'пила' ) )
+			$mol_assert_ok( $mol_spell_any.check( 'пила' ) )
 			
 		},
 		
 		'Unknown language'() {
 			
-			$mol_assert_not( $mol_spell_any.test( 'пиri' ) )
+			$mol_assert_not( $mol_spell_any.check( 'пиri' ) )
 			
 		},
 		

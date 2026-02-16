@@ -2294,7 +2294,7 @@ declare namespace $ {
         } ? $mol_type_merge<$mol_type_intersect<{ [key_3 in keyof T_1]: $mol_type_merge<Omit<{ readonly [k in Extract<keyof T_1, string>]: string; }, key_3> & { readonly [k_1 in key_3]: T_1[key_3] extends string ? T_1[key_3] : string; } & $mol_regexp_groups<T_1[key_3]>>; }[keyof T_1]>> : never : never : never>;
         static repeat<Source extends $mol_regexp_source>(source: Source, min?: number, max?: number): $mol_regexp<$mol_regexp_groups<Source>>;
         static repeat_greedy<Source extends $mol_regexp_source>(source: Source, min?: number, max?: number): $mol_regexp<$mol_regexp_groups<Source>>;
-        static vary<Sources extends readonly $mol_regexp_source[]>(sources: Sources): $mol_regexp<$mol_regexp_groups<Sources[number]>>;
+        static vary<Sources extends readonly $mol_regexp_source[]>(sources: Sources, flags?: string): $mol_regexp<$mol_regexp_groups<Sources[number]>>;
         static optional<Source extends $mol_regexp_source>(source: Source): $mol_regexp<$mol_regexp_groups<Source>>;
         static force_after(source: $mol_regexp_source): $mol_regexp<Record<string, string>>;
         static forbid_after(source: $mol_regexp_source): $mol_regexp<Record<string, string>>;
@@ -21748,30 +21748,45 @@ declare namespace $ {
         constructor(items?: string[]);
     }
     class $mol_spell extends Object {
-        static head: $mol_spell_morphs;
-        static prefix: $mol_spell_morphs;
-        static root: $mol_spell_morphs;
-        static postfix: $mol_spell_morphs;
-        static foot: $mol_spell_morphs;
-        static test(word: string): boolean;
-        static test_tail(word: string): boolean;
-        static test_body(word: string): boolean;
+        readonly head: $mol_spell_morphs;
+        readonly prefix: $mol_spell_morphs;
+        readonly root: $mol_spell_morphs;
+        readonly postfix: $mol_spell_morphs;
+        readonly foot: $mol_spell_morphs;
+        constructor(head?: $mol_spell_morphs, prefix?: $mol_spell_morphs, root?: $mol_spell_morphs, postfix?: $mol_spell_morphs, foot?: $mol_spell_morphs);
+        regexp_word(): $mol_regexp<{
+            [x: string]: string;
+            readonly head: string;
+            readonly prefix: string;
+            readonly root: string;
+            readonly postfix: string;
+            readonly foot: string;
+            readonly join: string;
+        }>;
+        regexp_token(): $mol_regexp<{
+            readonly head: string;
+            readonly prefix: string;
+            readonly root: string;
+            readonly postfix: string;
+            readonly foot: string;
+            readonly join: string;
+        }>;
+        regexp_head(): $mol_regexp<{}>;
+        regexp_prefix(): $mol_regexp<{}>;
+        regexp_root(): $mol_regexp<{}>;
+        regexp_postfix(): $mol_regexp<{}>;
+        regexp_foot(): $mol_regexp<{}>;
+        check(word: string): boolean;
+        split(word: string): string[];
     }
 }
 
 declare namespace $ {
-    class $mol_spell_ru extends $mol_spell {
-        static prefix: $mol_spell_morphs;
-        static root: $mol_spell_morphs;
-        static postfix: $mol_spell_morphs;
-        static foot: $mol_spell_morphs;
-    }
+    let $mol_spell_ru: $mol_spell;
 }
 
 declare namespace $ {
-    class $mol_spell_any extends Object {
-        static test(word: string): boolean;
-    }
+    let $mol_spell_any: $mol_spell;
 }
 
 declare namespace $ {

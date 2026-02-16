@@ -8,7 +8,7 @@ namespace $.$$ {
 			const words = new Set( this.article().toLowerCase().match( /\p{Letter}{2,}/ug )! )
 			
 			for( const word of words ) {
-				if( $mol_spell_any.test( word ) ) continue
+				if( $mol_spell_any.check( word ) ) continue
 				wrong.push( word )
 			}
 			

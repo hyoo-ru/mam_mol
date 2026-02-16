@@ -23,68 +23,76 @@ namespace $ {
 	 */
 	export class $mol_spell extends Object {
 		
-		static head = new $mol_spell_morphs
-		static prefix = new $mol_spell_morphs
-		static root = new $mol_spell_morphs
-		// static infix = new $mol_spell_morphs
-		static postfix = new $mol_spell_morphs
-		static foot = new $mol_spell_morphs
-		
-		static test( word: string ) {
-			
-			const head_max = Math.min( this.head.max, word.length - 2 )
-			
-			for( let i = head_max; i > 0; --i ) {
-				const head = word.slice( 0, i )
-				if( !this.head.has( head ) ) continue
-				if( this.test_tail( word.slice( i ) ) ) return true
-			}
-			
-			return this.test_tail( word )
+		constructor(
+			readonly head = new $mol_spell_morphs,
+			readonly prefix = new $mol_spell_morphs,
+			readonly root = new $mol_spell_morphs,
+			readonly postfix = new $mol_spell_morphs,
+			readonly foot = new $mol_spell_morphs,
+		) {
+			super()
 		}
 		
-		static test_tail( word: string ) {
-			
-			const foot_max = Math.min( this.foot.max, word.length - 2 )
-			
-			for( let i = foot_max; i > 0; --i ) {
-				const foot = word.slice( -i )
-				if( !this.foot.has( foot ) ) continue
-				if( this.test_body( word.slice( 0, -i ) ) ) return true
-			}
-			
-			return this.test_body( word )
+		@ $mol_memo.method
+		regexp_word() {
+			return $mol_regexp.from([
+				$mol_regexp.begin,
+				$mol_regexp.repeat_greedy( this.regexp_token(), 1 ),
+				$mol_regexp.end,
+			])
 		}
 		
-		static test_body( word: string ) {
-			
-			if( !word ) return true
-			
-			const prefix_max = Math.min( this.prefix.max, word.length - 2 )
-			
-			for( let i = prefix_max; i > 0; --i ) {
-				const prefix = word.slice( 0, i )
-				if( !this.prefix.has( prefix ) ) continue
-				if( this.test_body( word.slice( i ) ) ) return true
-			}
-			
-			const postfix_max = Math.min( this.postfix.max, word.length - 2 )
-			
-			for( let i = postfix_max; i > 0; --i ) {
-				const postfix = word.slice( -i )
-				if( !this.postfix.has( postfix ) ) continue
-				if( this.test_body( word.slice( 0, -i ) ) ) return true
-			}
-			
-			const root_max = Math.min( this.root.max, word.length )
-			
-			for( let i = root_max; i > 0; --i ) {
-				const root = word.slice( 0, i )
-				if( !this.root.has( root ) ) continue
-				if( this.test_body( word.slice( i ) ) ) return true
-			}
-			
-			return false
+		@ $mol_memo.method
+		regexp_token() {
+			return $mol_regexp.from([
+				{ head: $mol_regexp.repeat_greedy( this.regexp_head(), 0, 1 ) },
+				{ prefix: $mol_regexp.repeat_greedy( this.regexp_prefix() ) },
+				{ root: this.regexp_root() },
+				{ postfix: $mol_regexp.repeat_greedy( this.regexp_postfix() ) },
+				{ foot: $mol_regexp.repeat_greedy( this.regexp_foot(), 0, 1 ) },
+				{ join: [[ '-' ]] },
+			])
+		}
+		
+		@ $mol_memo.method
+		regexp_head() {
+			return $mol_regexp.vary( [ ... this.head ], 'gsu' )
+		}
+		
+		@ $mol_memo.method
+		regexp_prefix() {
+			return $mol_regexp.vary( [ ... this.prefix ], 'gsu' )
+		}
+		
+		@ $mol_memo.method
+		regexp_root() {
+			return $mol_regexp.vary( [ ... this.root ], 'gsu' )
+		}
+		
+		@ $mol_memo.method
+		regexp_postfix() {
+			return $mol_regexp.vary( [ ... this.postfix ], 'gsu' )
+		}
+		
+		@ $mol_memo.method
+		regexp_foot() {
+			return $mol_regexp.vary( [ ... this.foot ], 'gsu' )
+		}
+		
+		check( word: string ) {
+			return this.regexp_word().test( word )
+		}
+		
+		split( word: string ) {
+			const found = [ ... word.matchAll( this.regexp_token() ) ]
+			return found.flatMap( token => [
+				token.groups?.head ?? '',
+				... [ ... ( token.groups?.prefix ?? '' ).matchAll( this.regexp_prefix() ) ].map( f => f[0] ),
+				token.groups?.root ?? '',
+				... [ ... ( token.groups?.postfix ?? '' ).matchAll( this.regexp_postfix() ) ].map( f => f[0] ),
+				token.groups?.foot ?? '',
+				token.groups?.join ?? '',
+			] ).filter( Boolean )
 		}
 		
 	}

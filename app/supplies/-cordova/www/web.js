@@ -7452,14 +7452,14 @@ var $;
             };
             return regexp2;
         }
-        static vary(sources) {
+        static vary(sources, flags = 'gsu') {
             const groups = [];
             const chunks = sources.map(source => {
                 const regexp = $mol_regexp.from(source);
                 groups.push(...regexp.groups);
                 return regexp.source;
             });
-            return new $mol_regexp(`(?:${chunks.join('|')})`, '', groups);
+            return new $mol_regexp(`(?:${chunks.join('|')})`, flags, groups);
         }
         static optional(source) {
             return $mol_regexp.repeat_greedy(source, 0, 1);
