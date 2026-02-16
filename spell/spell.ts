@@ -85,14 +85,14 @@ namespace $ {
 		
 		split( word: string ) {
 			const found = [ ... word.matchAll( this.regexp_token() ) ]
-			return found.flatMap( token => [
+			return found.flatMap( token => token.groups ? [
 				token.groups?.head ?? '',
 				... [ ... ( token.groups?.prefix ?? '' ).matchAll( this.regexp_prefix() ) ].map( f => f[0] ),
 				token.groups?.root ?? '',
 				... [ ... ( token.groups?.postfix ?? '' ).matchAll( this.regexp_postfix() ) ].map( f => f[0] ),
 				token.groups?.foot ?? '',
 				token.groups?.join ?? '',
-			] ).filter( Boolean )
+			] : token[0] ).filter( Boolean )
 		}
 		
 	}

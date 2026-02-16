@@ -21,16 +21,21 @@ namespace $ {
 		},
 		
 		'Segmentation'() {
+			
 			$mol_assert_equal( $mol_spell_ru.split( 'пил' ), [ "пил" ] )
 			$mol_assert_equal( $mol_spell_ru.split( 'пила' ), [ "пил", "а" ] )
 			$mol_assert_equal( $mol_spell_ru.split( 'запил' ), [ "за", "пил" ] )
 			$mol_assert_equal( $mol_spell_ru.split( 'завопил' ), [ "за", "во", "пил" ] )
 			$mol_assert_equal( $mol_spell_ru.split( 'пилил' ), [ "пил", "ил" ] )
+			
 			$mol_assert_equal( $mol_spell_ru.split( 'пилоел' ), [ "пил", "ое", "л" ] )
 			$mol_assert_equal( $mol_spell_ru.split( 'сине-зелёное' ), [ "син", "е", "-", "зелён", "ое" ] )
 			$mol_assert_equal( $mol_spell_ru.split( 'недоперепила' ), [ "недо", "пере", "пил", "а" ] )
 			$mol_assert_equal( $mol_spell_ru.split( 'перенедоела' ), [ "пере", "недо", "е", "л", "а" ] )
 			$mol_assert_equal( $mol_spell_ru.split( 'недоперепилоперенедоела' ), [ "недо", "пере", "пил", "о", "пере", "недо", "е", "л", "а" ] )
+			
+			$mol_assert_equal( $mol_spell_ru.split( 'недперепилъ' ), [ "н", "ед", "пере", "пил", "ъ" ] )
+			
 		},
 		
 	})

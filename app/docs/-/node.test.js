@@ -41348,14 +41348,14 @@ var $;
         }
         split(word) {
             const found = [...word.matchAll(this.regexp_token())];
-            return found.flatMap(token => [
+            return found.flatMap(token => token.groups ? [
                 token.groups?.head ?? '',
                 ...[...(token.groups?.prefix ?? '').matchAll(this.regexp_prefix())].map(f => f[0]),
                 token.groups?.root ?? '',
                 ...[...(token.groups?.postfix ?? '').matchAll(this.regexp_postfix())].map(f => f[0]),
                 token.groups?.foot ?? '',
                 token.groups?.join ?? '',
-            ]).filter(Boolean);
+            ] : token[0]).filter(Boolean);
         }
     }
     __decorate([
@@ -41393,6 +41393,26 @@ var $;
 			(obj.value) = (next) => ((this.article(next)));
 			return obj;
 		}
+		Article_block(){
+			const obj = new this.$.$mol_labeler();
+			(obj.title) = () => ("Article");
+			(obj.content) = () => ([(this.Article())]);
+			return obj;
+		}
+		segments(){
+			return "";
+		}
+		Segments(){
+			const obj = new this.$.$mol_text_code();
+			(obj.text) = () => ((this.segments()));
+			return obj;
+		}
+		Segments_block(){
+			const obj = new this.$.$mol_labeler();
+			(obj.title) = () => ("Segments");
+			(obj.Content) = () => ((this.Segments()));
+			return obj;
+		}
 		report(){
 			return "";
 		}
@@ -41401,9 +41421,19 @@ var $;
 			(obj.text) = () => ((this.report()));
 			return obj;
 		}
+		Reports_block(){
+			const obj = new this.$.$mol_labeler();
+			(obj.title) = () => ("Reports");
+			(obj.Content) = () => ((this.Report()));
+			return obj;
+		}
 		List(){
 			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ([(this.Article()), (this.Report())]);
+			(obj.rows) = () => ([
+				(this.Article_block()), 
+				(this.Segments_block()), 
+				(this.Reports_block())
+			]);
 			return obj;
 		}
 		sub(){
@@ -41422,7 +41452,11 @@ var $;
 	};
 	($mol_mem(($.$mol_spell_demo.prototype), "article"));
 	($mol_mem(($.$mol_spell_demo.prototype), "Article"));
+	($mol_mem(($.$mol_spell_demo.prototype), "Article_block"));
+	($mol_mem(($.$mol_spell_demo.prototype), "Segments"));
+	($mol_mem(($.$mol_spell_demo.prototype), "Segments_block"));
 	($mol_mem(($.$mol_spell_demo.prototype), "Report"));
+	($mol_mem(($.$mol_spell_demo.prototype), "Reports_block"));
 	($mol_mem(($.$mol_spell_demo.prototype), "List"));
 
 
@@ -58574,9 +58608,12 @@ var $;
     var $$;
     (function ($$) {
         class $mol_spell_demo extends $.$mol_spell_demo {
+            words() {
+                return [...this.article().toLowerCase().match(/\p{Letter}{1,}/ug)];
+            }
             report() {
                 const wrong = [];
-                const words = new Set(this.article().toLowerCase().match(/\p{Letter}{2,}/ug));
+                const words = new Set(this.words());
                 for (const word of words) {
                     if ($mol_spell_any.check(word))
                         continue;
@@ -58584,10 +58621,19 @@ var $;
                 }
                 return wrong.join('\n');
             }
+            segments() {
+                return this.words().map(word => $mol_spell_ru.split(word).join('-')).join(' ');
+            }
         }
         __decorate([
             $mol_mem
+        ], $mol_spell_demo.prototype, "words", null);
+        __decorate([
+            $mol_mem
         ], $mol_spell_demo.prototype, "report", null);
+        __decorate([
+            $mol_mem
+        ], $mol_spell_demo.prototype, "segments", null);
         $$.$mol_spell_demo = $mol_spell_demo;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -67361,6 +67407,7 @@ var $;
             $mol_assert_equal($mol_spell_ru.split('недоперепила'), ["недо", "пере", "пил", "а"]);
             $mol_assert_equal($mol_spell_ru.split('перенедоела'), ["пере", "недо", "е", "л", "а"]);
             $mol_assert_equal($mol_spell_ru.split('недоперепилоперенедоела'), ["недо", "пере", "пил", "о", "пере", "недо", "е", "л", "а"]);
+            $mol_assert_equal($mol_spell_ru.split('недперепилъ'), ["н", "ед", "пере", "пил", "ъ"]);
         },
     });
 })($ || ($ = {}));
