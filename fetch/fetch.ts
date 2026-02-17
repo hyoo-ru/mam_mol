@@ -48,24 +48,17 @@ namespace $ {
 
 		}	
 
-		protected safe_call<V>(cb: () => V) {
-			return $mol_error_fence(
-				cb,
-				e => new $mol_error_mix(e.message, this, e),
-			)
-		}
-
 		json() {
-			return this.safe_call( () => $mol_wire_sync( this.native ).json() as unknown )
+			return $mol_error_enriched( () => $mol_wire_sync( this.native ).json() as unknown, this )
 		}	
 
 		blob() {
-			return this.safe_call( () => $mol_wire_sync( this.native ).blob() )
+			return $mol_error_enriched( () => $mol_wire_sync( this.native ).blob(), this )
 		}
 
 
 		buffer() {
-			return this.safe_call( () => $mol_wire_sync( this.native ).arrayBuffer() )
+			return $mol_error_enriched( () => $mol_wire_sync( this.native ).arrayBuffer(), this )
 		}
 
 		@ $mol_action
