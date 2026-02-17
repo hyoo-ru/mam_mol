@@ -49,16 +49,29 @@ namespace $ {
 		}	
 
 		json() {
-			return $mol_wire_sync( this.native ).json() as unknown
-		}	
+			return $mol_error_fence(
+				() => $mol_wire_sync( this.native ).json() as unknown,
+				e => this.enrich_error(e)
+			)
+		}
+
+		protected enrich_error(e: Error) {
+			return new $mol_error_mix(e.message, { request: this.request, response : this.native }, e)
+		}
 
 		blob() {
-			return $mol_wire_sync( this.native ).blob()
+			return $mol_error_fence(
+				() => $mol_wire_sync( this.native ).blob(),
+				e => this.enrich_error(e)
+			)
 		}
 
 
 		buffer() {
-			return $mol_wire_sync( this.native ).arrayBuffer()
+			return $mol_error_fence(
+				() => $mol_wire_sync( this.native ).arrayBuffer(),
+				e => this.enrich_error(e)
+			)
 		}
 
 		@ $mol_action
