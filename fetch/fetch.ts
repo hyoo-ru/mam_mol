@@ -49,16 +49,16 @@ namespace $ {
 		}	
 
 		json() {
-			return $mol_wire_sync( this.native ).json() as unknown
+			return $mol_error_enriched(this, () => $mol_wire_sync( this.native ).json() as unknown )
 		}	
 
 		blob() {
-			return $mol_wire_sync( this.native ).blob()
+			return $mol_error_enriched(this, () => $mol_wire_sync( this.native ).blob() )
 		}
 
 
 		buffer() {
-			return $mol_wire_sync( this.native ).arrayBuffer()
+			return $mol_error_enriched(this, () => $mol_wire_sync( this.native ).arrayBuffer() )
 		}
 
 		@ $mol_action
