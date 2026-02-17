@@ -51,7 +51,7 @@ namespace $ {
 		protected safe_call<V>(cb: () => V) {
 			return $mol_error_fence(
 				cb,
-				e => new $mol_error_mix(e.message, { request: this.request, response : this.native }, e),
+				e => new $mol_error_mix(e.message, { response : this }, e),
 			)
 		}
 
