@@ -432,7 +432,7 @@ namespace $ {
 	
 			const server = $node['child_process'].spawn(
 				'node',
-				[ '--enable-source-maps', '--trace-uncaught', `./${path}/-/node.js`, ... args ],
+				[ '--inspect', '--enable-source-maps', '--trace-uncaught', `./${path}/-/node.js`, ... args ],
 				{
 					stdio: [ 'pipe', 'inherit', 'inherit' ],
 				}
