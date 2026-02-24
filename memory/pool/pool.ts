@@ -104,6 +104,11 @@ namespace $ {
 			
 		}
 		
+		empty() {
+			const first = this._free.next
+			return first.next === null && first.from === 0
+		}
+		
 		acquired() {
 			
 		}
