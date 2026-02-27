@@ -656,6 +656,7 @@ namespace $ {
 			this.bundle([ path , 'web.js' ])
 			this.bundle([ path , 'web.test.js' ])
 			this.bundle([ path , 'web.test.html' ])
+			this.bundle([ path , 'web.baza' ])
 			this.bundle([ path , 'web.view.tree' ])
 			this.bundle([ path , 'web.meta.tree' ])
 			this.bundle([ path , 'web.locale=en.json' ])
@@ -673,6 +674,7 @@ namespace $ {
 			this.bundle([ path , 'node.deps.json' ])
 			this.bundle([ path , 'node.js' ])
 			this.bundle([ path , 'node.test.js' ])
+			this.bundle([ path , 'node.baza' ])
 			this.bundle([ path , 'node.view.tree' ])
 			this.bundle([ path , 'node.meta.tree' ])
 			this.bundle([ path , 'node.locale=en.json' ])
@@ -716,7 +718,7 @@ namespace $ {
 			var stages = [ 'test' , 'dev' ]
 			if( bundle ) {
 				
-				var [ bundle , tags , type , locale ] = /^(.*?)(?:\.(audit\.js|test\.js|test\.html|js|css|deps\.json|locale=(\w+)\.json))?$/.exec(
+				var [ bundle , tags , type , locale ] = /^(.*?)(?:\.(audit\.js|test\.js|test\.html|js|css|deps\.json|locale=(\w+)\.json|baza))?$/.exec(
 					bundle
 				)!
 				
@@ -756,6 +758,9 @@ namespace $ {
 					}
 					if( !type || type === 'view.tree' ) {
 						res = res.concat( this.bundleViewTree( { path , exclude , bundle : env } ) )
+					}
+					if( !type || type === 'baza' ) {
+						res = res.concat( this.bundleBaza( { path , exclude , bundle : env } ) )
 					}
 					if( !type || type === 'meta.tree' ) {
 						res = res.concat( this.bundleMetaTree( { path , exclude , bundle : env } ) )
@@ -1099,6 +1104,25 @@ namespace $ {
 			this.logBundle( target , Date.now() - start )
 			
 			return [ target ]
+		}
+		
+		@ $mol_mem_key
+		bundleBaza( { path , exclude , bundle } : { path : string , exclude? : readonly string[] , bundle : string } ) : $mol_file[] {
+			
+			const start = this.now()
+			const pack = $mol_file.absolute( path )
+			
+			const target = pack.resolve( `-/${bundle}.baza` )
+			
+			const sources = this.sourcesAll([ path , exclude ])
+				.filter( src => /baza$/.test( src.ext() ) )
+			if( sources.length === 0 ) return []
+			
+			target.buffer( new Uint8Array( sources.flatMap( src => [ ... src.buffer() ] ) ) )
+			
+			this.logBundle( target , Date.now() - start )
+			return [ target ]
+			
 		}
 		
 		@ $mol_mem_key
