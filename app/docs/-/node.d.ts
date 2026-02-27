@@ -1147,7 +1147,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    let $mol_gap: Record<"text" | "space" | "block" | "blur" | "page" | "round", $mol_style_func<"var", unknown>>;
+    let $mol_gap: Record<"text" | "space" | "block" | "emoji" | "blur" | "page" | "round", $mol_style_func<"var", unknown>>;
 }
 
 declare namespace $ {
