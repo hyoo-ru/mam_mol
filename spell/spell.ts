@@ -1,22 +1,5 @@
 namespace $ {
 	
-	export class $mol_spell_morphs extends Set<string> {
-		
-		readonly max: number = 0
-		
-		constructor( items: string[] = [] ) {
-			
-			super( items )
-			
-			for( const item of items ) {
-				if( item.length <= this.max ) continue
-				this.max = item.length
-			}
-			
-		}
-		
-	}
-	
 	/**
 	 * Draft of compact spell checker.
 	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_spell_demo
@@ -24,11 +7,11 @@ namespace $ {
 	export class $mol_spell extends Object {
 		
 		constructor(
-			readonly head = new $mol_spell_morphs,
-			readonly prefix = new $mol_spell_morphs,
-			readonly root = new $mol_spell_morphs,
-			readonly postfix = new $mol_spell_morphs,
-			readonly foot = new $mol_spell_morphs,
+			readonly head = new Set< string >,
+			readonly prefix = new Set< string >,
+			readonly root = new Set< string >,
+			readonly postfix = new Set< string >,
+			readonly foot = new Set< string >,
 		) {
 			super()
 		}
