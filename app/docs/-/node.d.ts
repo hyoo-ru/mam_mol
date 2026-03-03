@@ -21806,17 +21806,13 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_spell_morphs extends Set<string> {
-        readonly max: number;
-        constructor(items?: string[]);
-    }
     class $mol_spell extends Object {
-        readonly head: $mol_spell_morphs;
-        readonly prefix: $mol_spell_morphs;
-        readonly root: $mol_spell_morphs;
-        readonly postfix: $mol_spell_morphs;
-        readonly foot: $mol_spell_morphs;
-        constructor(head?: $mol_spell_morphs, prefix?: $mol_spell_morphs, root?: $mol_spell_morphs, postfix?: $mol_spell_morphs, foot?: $mol_spell_morphs);
+        readonly head: Set<string>;
+        readonly prefix: Set<string>;
+        readonly root: Set<string>;
+        readonly postfix: Set<string>;
+        readonly foot: Set<string>;
+        constructor(head?: Set<string>, prefix?: Set<string>, root?: Set<string>, postfix?: Set<string>, foot?: Set<string>);
         regexp_word(): $mol_regexp<{
             [x: string]: string;
             readonly head: string;

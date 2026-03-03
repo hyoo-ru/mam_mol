@@ -22,7 +22,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		segments() {
-			return this.words().map( word => $mol_spell_ru.split( word ).join( '-' ) ).join( ' ' )
+			return this.words().map( word => $mol_spell_any.split( word ).join( '-' ) ).join( ' ' )
 		}
 		
 	}

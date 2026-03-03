@@ -2,7 +2,7 @@ namespace $ {
 	
 	export let $mol_spell_ru = new $mol_spell(
 		undefined,
-		new $mol_spell_morphs([
+		new Set([
 			"противо",
 			"внутри",
 			"ультра",
@@ -91,7 +91,7 @@ namespace $ {
 			"с",
 			"у"
 		]),
-		new $mol_spell_morphs([
+		new Set([
 			"верноподданный",
 			"заблаговременн",
 			"конфиденциальн",
@@ -16637,7 +16637,7 @@ namespace $ {
 			"ёж",
 			"е",
 		]),
-		new $mol_spell_morphs([
+		new Set([
 			"енность",
 			"ествова",
 			"изирова",
@@ -17079,7 +17079,7 @@ namespace $ {
 			"ш",
 			"ы"
 		]),
-		new $mol_spell_morphs([
+		new Set([
 			"ами",
 			"еми",
 			"емя",
@@ -17128,7 +17128,8 @@ namespace $ {
 			"и",
 			"м",
 			"о",
-			"у"
+			"у",
+			"й",
 		]),
 	)
 
