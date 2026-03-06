@@ -1,8 +1,7 @@
 namespace $ {
 	export class $mol_store_session_class extends $mol_store_native {
-		@ $mol_mem
 		override native() {
-			return $mol_store_safe( () => this.$.$mol_dom_context.sessionStorage ) ?? super.native()
+			return $mol_store_safe( () => this.$.$mol_dom_context.sessionStorage )
 		}
 	}
 

@@ -1,9 +1,8 @@
 namespace $ {
 
 	export class $mol_store_local_class extends $mol_store_native {
-		@ $mol_mem
 		override native() {
-			return $mol_store_safe( () => this.$.$mol_dom_context.localStorage ) ?? super.native()
+			return $mol_store_safe( () => this.$.$mol_dom_context.localStorage )
 		}
 	}
 
