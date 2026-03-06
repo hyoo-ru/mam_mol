@@ -2,7 +2,7 @@ namespace $ {
 
 	export class $mol_store_mem_class extends $mol_store< Record< string , any > > {
 		constructor(
-			readonly id : string
+			readonly id = '$mol_store_mem'
 		) {
 			super({})
 		}
@@ -31,6 +31,6 @@ namespace $ {
 
 	}
 
-	export let $mol_store_mem : $mol_store< Record< string , any > > = new $mol_store_mem_class('$mol_store_mem')
+	export let $mol_store_mem : $mol_store< Record< string , any > > = new $mol_store_mem_class()
 
 }

@@ -1,11 +1,5 @@
 namespace $ {
 	export class $mol_store_native extends $mol_store< Record< string , any > > {
-		constructor(
-			readonly id : string
-		) {
-			super({})
-		}
-
 		native() {
 			return null as null | {
 				getItem : ( key : string ) => string | null
@@ -18,9 +12,9 @@ namespace $ {
 			return $mol_fail( new Error( 'Forbidden for storage' ) )
 		}
 
-		protected _fallback = null as null | $mol_store_mem_class
+		protected _fallback = null as null | $mol_store<Record< string, any>>
 		fallback() {
-			return this._fallback = this._fallback ?? new this.$.$mol_store_mem_class(this.id)
+			return this._fallback = this._fallback ?? new this.$.$mol_store()
 		}
 
 		@ $mol_mem_key
