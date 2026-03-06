@@ -1,8 +1,9 @@
 namespace $ {
 
-	export class $mol_store_local_class extends $mol_store_session_class {
-		override storage(): ReturnType<typeof $mol_store_mock> {
-			return this.$.$mol_dom_context.localStorage
+	export class $mol_store_local_class extends $mol_store_native {
+		@ $mol_mem
+		override native() {
+			return $mol_store_safe( () => this.$.$mol_dom_context.localStorage ) ?? super.native()
 		}
 	}
 
