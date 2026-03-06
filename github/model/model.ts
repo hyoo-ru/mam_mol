@@ -115,7 +115,7 @@ namespace $ {
 		content: Content,
 	})
 	
-	const Message = $mol_data_variant( Assistant, User, Tool )
+	const Message = $mol_data_variant( System, Assistant, User, Tool )
 	
 	const Resp = $mol_data_record({
 		choices: $mol_data_array( $mol_data_record({
@@ -186,6 +186,13 @@ namespace $ {
 		
 		// DYNAMIC STATE
 		
+		/** Actual system state */
+		@ $mol_mem
+		state( next?: readonly string[] ) {
+			$mol_wire_solid()
+			return next ?? []
+		}
+		
 		/** Additional model query params */
 		@ $mol_mem
 		params( next?: {}) {
@@ -211,6 +218,7 @@ namespace $ {
 				names: $mol_const( this.names() ),
 				rules: $mol_const( this.rules() ),
 				tools: $mol_const( this.tools() ),
+				state: ()=> this.state(),
 			})
 			
 			// dynamic state
@@ -288,6 +296,7 @@ namespace $ {
 				messages: [
 					{ role: 'system', content: this.rules() },
 					... this.history(),
+					{ role: 'system', content: this.state().map( bloat_content ) },
 				],
 				tools: [ ... this.tools() ].map( ([ name, info ])=> ({
 					type: "function",
@@ -347,7 +356,7 @@ namespace $ {
 					
 					if( resp.code() === 400 ) {
 						const message = RespFail( resp.json() as any ).error.message
-						this.history([ ... history, { role: 'assistant', content: '📛 ' + message } ])
+						this.history([ ... history, { role: 'system', content: '📛 ' + message } ])
 						$mol_fail( new Error( message ) )
 					}
 					
