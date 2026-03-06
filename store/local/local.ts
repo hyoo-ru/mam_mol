@@ -6,6 +6,6 @@ namespace $ {
 		}
 	}
 
-	export let $mol_store_local : $mol_store< Record< string , any > > = new $mol_store_local_class
+	export let $mol_store_local : $mol_store< Record< string , any > > = new $mol_store_local_class('$mol_store_local')
 
 }

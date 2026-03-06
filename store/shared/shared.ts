@@ -7,9 +7,9 @@ namespace $ {
 		@ $mol_mem_key
 		override value< Value >( key : string , next? : Value , force? : 'local' ) {
 			const session = super.value(key, next, force)
-			return this.$.$mol_store_mem.value(key, next) ?? session
+			return this.fallback().value(key, next) ?? session
 		}
 	}
 
-	export let $mol_store_shared : $mol_store< Record< string , any > > = new $mol_store_shared_class
+	export let $mol_store_shared : $mol_store< Record< string , any > > = new $mol_store_shared_class('$mol_store_shared')
 }
