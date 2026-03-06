@@ -3,7 +3,7 @@ namespace $ {
 		constructor(
 			readonly id : string
 		) {
-			super()
+			super({})
 		}
 
 		native() {

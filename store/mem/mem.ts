@@ -4,7 +4,7 @@ namespace $ {
 		constructor(
 			readonly id : string
 		) {
-			super()
+			super({})
 		}
 
 		@ $mol_mem
