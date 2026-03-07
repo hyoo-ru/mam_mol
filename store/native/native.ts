@@ -12,16 +12,11 @@ namespace $ {
 			return $mol_fail( new Error( 'Forbidden for storage' ) )
 		}
 
-		protected _fallback = null as null | $mol_store<Record< string, any>>
-		fallback() {
-			return this._fallback = this._fallback ?? new this.$.$mol_store()
-		}
-
 		@ $mol_mem_key
 		override value< Value >( key : string , next? : Value , force? : 'local' | $mol_mem_force_cache) {
 			const native = this.native()
 			if (! native) {
-				return this.fallback().value(key, next)
+				return super.value(key, next)
 			}
 
 			if( next === undefined ) return JSON.parse( native.getItem( key ) || 'null' )
