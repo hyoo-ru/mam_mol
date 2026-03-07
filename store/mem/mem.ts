@@ -1,17 +1,11 @@
 namespace $ {
 
 	export class $mol_store_mem_class extends $mol_store< Record< string , any > > {
-		constructor(
-			data_default? : Record< string , any >,
-			readonly id = '$mol_store_mem'
-		) {
-			super(data_default)
-		}
 
 		@ $mol_mem
 		bus() {
-			return new this.$.$mol_bus( this.id, ( [ key, val ]: [ string, any ] )=> {
-				console.log(this.id, key, val)
+			return new this.$.$mol_bus( '$mol_store_mem', ( [ key, val ]: [ string, any ] )=> {
+				console.log(key, val)
 				const res = this.value( key, val, 'local' )
 				if( val !== undefined ) return
 				if( res === undefined ) return
