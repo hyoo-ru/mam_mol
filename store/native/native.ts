@@ -8,10 +8,6 @@ namespace $ {
 			}
 		}
 
-		override data() {
-			return $mol_fail( new Error( 'Forbidden for storage' ) )
-		}
-
 		@ $mol_mem_key
 		override value< Value >( key : string , next? : Value , force? : 'local' | $mol_mem_force_cache) {
 			const native = this.native()
