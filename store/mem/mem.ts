@@ -2,9 +2,10 @@ namespace $ {
 
 	export class $mol_store_mem_class extends $mol_store< Record< string , any > > {
 		constructor(
+			data_default? : Record< string , any >,
 			readonly id = '$mol_store_mem'
 		) {
-			super({})
+			super(data_default)
 		}
 
 		@ $mol_mem
