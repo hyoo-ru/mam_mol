@@ -8,8 +8,21 @@ namespace $ {
 			readonly handle: ( data: Data )=> void
 		) {
 			super()
-            const channel = new BroadcastChannel( name )
-            channel.onmessage = ( event: MessageEvent< Data > )=> this.handle( event.data )
+
+			let channel
+
+			try {
+				channel = new BroadcastChannel( name )
+			} catch (error) {
+				console.warn(error)
+				channel = {
+					close() {},
+					onmessage(event: MessageEvent<Data>) {},
+					postMessage(arg: unknown) {},
+				} as BroadcastChannel
+			}
+
+			channel.onmessage = ( event: MessageEvent< Data > )=> this.handle( event.data )
 			this.channel = channel
         }
 		
