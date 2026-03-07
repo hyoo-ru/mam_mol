@@ -32,6 +32,6 @@ namespace $ {
 
 	}
 
-	export let $mol_store_mem : $mol_store< Record< string , any > > = new $mol_store_mem_class()
+	export let $mol_store_mem : $mol_store< Record< string , any > > = new $mol_store_mem_class({})
 
 }

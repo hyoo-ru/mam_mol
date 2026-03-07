@@ -5,6 +5,6 @@ namespace $ {
 		}
 	}
 
-	export let $mol_store_session : $mol_store< Record< string , any > > = new $mol_store_session_class({})
+	export let $mol_store_session : $mol_store< Record< string , any > > = new $mol_store_session_class()
 
 }
