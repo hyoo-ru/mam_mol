@@ -13504,6 +13504,9 @@ var $;
 		repos_y(id){
 			return 1;
 		}
+		pointerdown(next){
+			return (this.Drag().pointerdown(next));
+		}
 		Drag(){
 			const obj = new this.$.$rise_drag();
 			(obj.on_drag_start) = (next) => ((this.on_drag_start(next)));
@@ -13701,6 +13704,9 @@ var $;
 		repos_y(id){
 			return 1;
 		}
+		drag_pointerdown(next){
+			return (this.Drag_view().pointerdown(next));
+		}
 		Drag_view(){
 			const obj = new this.$.$rise_drag_view();
 			(obj.minimal_height) = () => (0);
@@ -13829,9 +13835,6 @@ var $;
 				(this.Bottom_right_edge())
 			];
 		}
-		vals_to_sticks(){
-			return null;
-		}
 		top_px(){
 			return "0px";
 		}
@@ -13915,7 +13918,14 @@ var $;
 			return [];
 		}
 		auto(){
-			return [(this.vals_to_sticks())];
+			return [
+				(this.x()), 
+				(this.y()), 
+				(this.left_edge_x()), 
+				(this.right_edge_x()), 
+				(this.top_edge_y()), 
+				(this.bottom_edge_y())
+			];
 		}
 		style(){
 			return {
@@ -13995,6 +14005,9 @@ var $;
                 return this.to_stick(this.sticks_y(), val, shift);
             }
             y(next) {
+                if (!this.transforming()) {
+                    return this.y_stick() ?? 0;
+                }
                 if (next === undefined)
                     return 0;
                 const top_stick = this.to_stick_y(next, this.top_edge_y_stick());
@@ -14008,6 +14021,9 @@ var $;
                 return next;
             }
             x(next) {
+                if (!this.transforming()) {
+                    return this.x_stick() ?? 0;
+                }
                 if (next === undefined)
                     return 0;
                 const left_stick = this.to_stick_x(next, this.left_edge_x_stick());
@@ -14021,6 +14037,9 @@ var $;
                 return next;
             }
             top_edge_y(next) {
+                if (!this.transforming()) {
+                    return this.top_edge_y_stick() ?? 0;
+                }
                 if (next === undefined)
                     return 0;
                 const limit = this.bottom_edge_y_stick() - this.height_min();
@@ -14029,6 +14048,9 @@ var $;
                 return next;
             }
             bottom_edge_y(next) {
+                if (!this.transforming()) {
+                    return this.bottom_edge_y_stick() ?? 0;
+                }
                 if (next === undefined)
                     return 0;
                 const limit = this.top_edge_y_stick() + this.height_min();
@@ -14037,6 +14059,9 @@ var $;
                 return next;
             }
             left_edge_x(next) {
+                if (!this.transforming()) {
+                    return this.left_edge_x_stick() ?? 0;
+                }
                 if (next === undefined)
                     return 0;
                 const limit = this.right_edge_x_stick() - this.width_min();
@@ -14045,6 +14070,9 @@ var $;
                 return next;
             }
             right_edge_x(next) {
+                if (!this.transforming()) {
+                    return this.right_edge_x_stick() ?? 0;
+                }
                 if (next === undefined)
                     return 0;
                 const limit = this.left_edge_x_stick() + this.width_min();
@@ -14066,7 +14094,6 @@ var $;
             }
             width(next) {
                 if (next !== undefined) {
-                    console.log('next', next);
                     this.right_edge_x_stick(next + this.left_edge_x_stick());
                 }
                 return this.right_edge_x_stick() - this.left_edge_x_stick();
@@ -14089,8 +14116,8 @@ var $;
             left_px() {
                 return this.left() + 'px';
             }
-            on_drag_end() {
-                this.vals_to_sticks();
+            transforming() {
+                return this.dragged() || this.resizing();
             }
             resize_start(next) {
                 this.resizing(true);
@@ -14099,15 +14126,16 @@ var $;
                 this.on_drag_end();
                 this.resizing(false);
             }
-            vals_to_sticks() {
-                this.x(this.x_stick());
-                this.y(this.y_stick());
-                this.bottom_edge_y(this.bottom_edge_y_stick());
-                this.right_edge_x(this.right_edge_x_stick());
-                this.top_edge_y(this.top_edge_y_stick());
-                this.left_edge_x(this.left_edge_x_stick());
-            }
         }
+        __decorate([
+            $mol_action
+        ], $rise_resize.prototype, "to_stick", null);
+        __decorate([
+            $mol_action
+        ], $rise_resize.prototype, "to_stick_x", null);
+        __decorate([
+            $mol_action
+        ], $rise_resize.prototype, "to_stick_y", null);
         __decorate([
             $mol_mem
         ], $rise_resize.prototype, "y", null);
@@ -14151,8 +14179,8 @@ var $;
             $mol_mem
         ], $rise_resize.prototype, "left_px", null);
         __decorate([
-            $mol_action
-        ], $rise_resize.prototype, "vals_to_sticks", null);
+            $mol_mem
+        ], $rise_resize.prototype, "transforming", null);
         $$.$rise_resize = $rise_resize;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -14729,26 +14757,6 @@ var $;
             edges() {
                 return this.ratio() ? this.edges_ratio() : super.edges();
             }
-            vals_to_sticks() {
-                this.x(this.x_stick());
-                this.y(this.y_stick());
-                if (this.ratio()) {
-                    this.left_bottom_edge_ratio_x(this.left_edge_x_stick());
-                    this.left_top_edge_ratio_x(this.left_edge_x_stick());
-                    this.right_bottom_edge_ratio_x(this.right_edge_x_stick());
-                    this.right_top_edge_ratio_x(this.right_edge_x_stick());
-                    this.top_left_edge_ratio_y(this.top_edge_y_stick());
-                    this.top_right_edge_ratio_y(this.top_edge_y_stick());
-                    this.bottom_left_edge_ratio_y(this.bottom_edge_y_stick());
-                    this.bottom_right_edge_ratio_y(this.bottom_edge_y_stick());
-                }
-                else {
-                    this.bottom_edge_y(this.bottom_edge_y_stick());
-                    this.right_edge_x(this.right_edge_x_stick());
-                    this.top_edge_y(this.top_edge_y_stick());
-                    this.left_edge_x(this.left_edge_x_stick());
-                }
-            }
         }
         __decorate([
             $mol_mem
@@ -14777,9 +14785,6 @@ var $;
         __decorate([
             $mol_mem
         ], $rise_resize_ratio.prototype, "edges", null);
-        __decorate([
-            $mol_action
-        ], $rise_resize_ratio.prototype, "vals_to_sticks", null);
         $$.$rise_resize_ratio = $rise_resize_ratio;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
