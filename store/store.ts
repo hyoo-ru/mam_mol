@@ -3,13 +3,14 @@ namespace $ {
 	export class $mol_store< Data > extends $mol_object2 {
 
 		constructor(
-			public data_default? : Data
+			public data_default = {} as Data
 		) {
 			super()
 		}
 
 		@ $mol_mem
 		data( next? : Data ) {
+			$mol_wire_solid()
 			return next === undefined ? this.data_default! : next
 		}
 
