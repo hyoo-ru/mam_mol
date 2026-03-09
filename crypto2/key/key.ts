@@ -4,9 +4,9 @@ namespace $ {
 		static size_str = 43
 		static size_bin = 32
 		
-		static from< This extends typeof $mol_crypto_key2 >(
+		static from< This extends typeof $mol_buffer >(
 			this: This,
-			serial: number | string | ArrayBufferView< ArrayBuffer >,
+			serial: number | string | ArrayBufferView< ArrayBuffer > | ArrayBuffer,
 		) {
 			
 			if( typeof serial === 'string' ) {
