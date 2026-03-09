@@ -14,7 +14,7 @@ namespace $.$$ {
 			const nonce = $mol_crypto2_nonce()
 
 			const closed = await secretA.encrypt( data, nonce )
-			const digest = $mol_crypto_hash( closed )
+			const digest = $mol_crypto2_hash( closed )
 			const sign = await Alice.signer().sign( digest )
 
 			$mol_assert_equal( true, await Alice.auditor().verify( digest, sign ) )
