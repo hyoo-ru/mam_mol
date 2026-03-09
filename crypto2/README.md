@@ -1,11 +1,14 @@
 # $mol_crypto2
 
-Simple API for effective cross platform cryptography with minimal extra size.
+Simple API for effective cross platform cryptography with minimal extra size. Uses:
 
 ## Signing & Verifying
 
-- Auditor - public key for sign verification.
-- Signer - private key for signing. Can be used as Auditor.
+Uses Ed25519.
+
+- `Auditor` = 32B public key for sign verification.
+- `Signer` = Auditor + 32B private key for signing.
+- `Sign` = 64B signature of data.
 
 ```typescript
 const Alice = await $mol_crypto2_signer.generate() // 64 B
@@ -21,8 +24,11 @@ const verified = await auditor.verify( digest, sign ) // true
 
 ## Encryption & Decryption
 
-- Socket - public key for encryption/decryption.
-- Cipher - private key for encryption/decryption. Can be used as Socket.
+Uses x25519.
+
+- `Socket` = 32B public key for encryption/decryption.
+- `Cipher` = Socket + 32B private key for encryption/decryption.
+- `Nonce` = 16B unique bytes. May be predictable.
 
 ```typescript
 const Alice = await $mol_crypto2_cipher.generate() // 64 B
@@ -32,10 +38,10 @@ const secret = Bella.secret( Alice.socket() ) // 16 B
 // const secret = Alice.secret( Bella.socket() ) // same
 
 const data = new Uint8Array([ 1, 2, 3 ]) // 3 B
-const salt = $mol_crypto_salt() // 16 B
+const nonce = $mol_crypto2_nonce() // 16 B
 
-const closed = await secret.encrypt( data, salt ) // 16 B
-const opened = await secret.decrypt( closed, salt ) // 3 B
+const closed = await secret.encrypt( data, nonce ) // 16 B
+const opened = await secret.decrypt( closed, nonce ) // 3 B
 ```
 
 ## Signing & Verifying & Encryption & Decryption
@@ -48,15 +54,15 @@ const secret = await Alice.cipher().secret( Bella.socket() ) // 16 B
 // const secret = await Bella.cipher().secret( Alice.socket() ) // same
 
 const data = new Uint8Array([ 1, 2, 3 ]) // 3 B
-const salt = $mol_crypto_salt() // 16 B
+const nonce = $mol_crypto2_nonce() // 16 B
 
-const closed = await secretA.encrypt( data, salt ) // 16 B
+const closed = await secretA.encrypt( data, nonce ) // 16 B
 const digest = $mol_crypto_hash( closed ) // 20 B
 const sign = await Alice.signer().sign( digest ) // 64 B
 
 const auditor = Alice.auditor() // 32 B
 const verified = await auditor.verify( digest, sign ) ) // true
-const opened = await secretA.decrypt( closed, salt ) ) // 3 B
+const opened = await secretA.decrypt( closed, nonce ) ) // 3 B
 ```
 
 # Usage from NPM
