@@ -15,7 +15,8 @@ const data = new Uint8Array([ 1, 2, 3 ]) // 3 B
 const digest = $mol_crypto_hash( data ) // 20 B
 const sign = await Alice.sign( digest ) // 64 B
 
-const verified = await Alice.auditor().verify( digest, sign ) // true
+const auditor = Alice.auditor() // 32 B
+const verified = await auditor.verify( digest, sign ) // true
 ```
 
 ## Encryption & Decryption
@@ -53,6 +54,19 @@ const closed = await secretA.encrypt( data, salt ) // 16 B
 const digest = $mol_crypto_hash( closed ) // 20 B
 const sign = await Alice.signer().sign( digest ) // 64 B
 
-const verified = await Alice.auditor().verify( digest, sign ) ) // true
+const auditor = Alice.auditor() // 32 B
+const verified = await auditor.verify( digest, sign ) ) // true
 const opened = await secretA.decrypt( closed, salt ) ) // 3 B
+```
+
+# Usage from NPM
+
+```
+npm install mol_crypto2_lib
+```
+
+[![](https://badgen.net/bundlephobia/minzip/mol_crypto2_lib)](https://bundlephobia.com/package/mol_crypto2_lib)
+
+```javascript
+export { $mol_crypto2_private, default as $ } from "mol_crypto2_lib"
 ```

@@ -1,4 +1,4 @@
-name: mol_crypto_lib
+name: mol_crypto2_lib
 
 on:
   workflow_dispatch:
@@ -6,8 +6,8 @@ on:
     branches: 
       - master
     paths:
-      - '.github/workflows/mol_crypto.yml'
-      - 'crypto/**'
+      - '.github/workflows/mol_crypto2.yml'
+      - 'crypto2/**'
       - 'build/**'
   pull_request:
   schedule:
@@ -20,17 +20,13 @@ jobs:
     
     steps:
     
-    - name: Environment Printer
-      uses: managedkaos/print-env@v1.0
-    
-    - name: Build apps
-      uses: hyoo-ru/mam_build@master2
+    - uses: hyoo-ru/mam_build@master2
       with:
         package: mol
-        modules: crypto/lib
+        modules: crypto2/lib
     
     - uses: JS-DevTools/npm-publish@v1
       if: ${{ github.ref == 'refs/heads/master' }}
       with:
         token: ${{ secrets.NPM_AUTH_TOKEN }}
-        package: ./mol/crypto/lib/-/package.json
+        package: ./mol/crypto2/lib/-/package.json
