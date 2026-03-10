@@ -27,7 +27,7 @@ namespace $ {
 		
 		@ $mol_mem
 		address() {
-			return this.input.socket?.remoteAddress ?? super.address()
+			return String( this.input.headers['x-forwarded-for'] ?? '' ) || this.input.socket?.remoteAddress || super.address()
 		}
 		
 		@ $mol_mem
