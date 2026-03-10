@@ -4,7 +4,6 @@ namespace $ {
 		
 		port!: $mol_rest_port
 		
-		@ $mol_mem
 		method() {
 			return 'POST'
 		}
@@ -14,12 +13,14 @@ namespace $ {
 			return new URL( `rest://localhost/` )
 		}
 		
-		@ $mol_mem
 		type() {
 			return 'application/octet-stream' as $mol_rest_port_mime
 		}
 		
-		@ $mol_mem
+		origin() {
+			return 'unknown'
+		}
+		
 		data(): null | string | Uint8Array< ArrayBuffer > | Element | object {
 			return null
 		}
@@ -74,6 +75,7 @@ namespace $ {
 				port: this.port,
 				method: $mol_const( method ),
 				uri: ()=> this.uri(),
+				origin: ()=> this.origin(),
 				data: $mol_const( data ),
 			})
 		}

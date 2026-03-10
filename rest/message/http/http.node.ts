@@ -21,6 +21,11 @@ namespace $ {
 		}
 		
 		@ $mol_mem
+		origin() {
+			return this.input.headers['origin'] ?? super.origin()
+		}
+		
+		@ $mol_mem
 		data(): null | string | Uint8Array< ArrayBuffer > | Element | object {
 			
 			const consume = $mol_wire_sync( $node['stream/consumers'] )
