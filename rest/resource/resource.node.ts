@@ -89,13 +89,9 @@ namespace $ {
 		OPEN( msg: $mol_rest_message ) {
 			const protocols = msg.protocols()
 			for( const protocol of protocols ) {
-				if( this._protocols.includes( protocol ) ) return
+				if( this._protocols.includes( protocol ) ) return protocol
 			}
-			// msg.reply( 'No supported protocol', { code: $mol_rest_code["Bad Request"] } )
-			$mol_fail( new Error( 'No supported protocol', { cause: {
-				requested: protocols,
-				supported: this._protocols,
-			} } ) )
+			return ''
 		}
 		CLOSE( msg: $mol_rest_message ) {}
 		

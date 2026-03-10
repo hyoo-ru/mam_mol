@@ -100,12 +100,23 @@ namespace $ {
 			
 			const port = $mol_rest_port_ws_node.make({ socket })
 			const upgrade = $mol_rest_message_http.make({ port, input: req })
+			let protocol = ''
 			
 			try {
 				
-				$mol_wire_sync( this.root() ).REQUEST(
+				protocol = $mol_wire_sync( this.root() ).REQUEST(
 					upgrade.derive( 'OPEN', null )
 				)
+				
+				if( !protocol ) {
+					socket.write(
+						'HTTP/1.1 400 Bad Request\r\n' +
+						'\r\n' +
+						`Unsupported Protocols: ${ upgrade.protocols() }`
+					)
+					socket.end()
+					return
+				}
 				
 			} catch( error: any ) {
 				
@@ -119,12 +130,6 @@ namespace $ {
 					casue: error.cause,
 					stack: error.stack,
 				})
-				
-				// socket.write(
-				// 	'HTTP/1.1 400 Bad Request\r\n' +
-				// 	'\r\n' +
-				// 	error.mesasge
-				// )
 				
 				socket.end()
 				return
@@ -178,6 +183,7 @@ namespace $ {
 				'Upgrade: WebSocket\r\n' +
 				'Connection: Upgrade\r\n' +
 				`Sec-WebSocket-Accept: ${key_out}\r\n` +
+				`Sec-WebSocket-Protocol: ${protocol}\r\n` +
 				'\r\n'
 			)
 			
