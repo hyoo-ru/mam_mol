@@ -25,6 +25,10 @@ namespace $ {
 			return 'unknown'
 		}
 		
+		protocols() {
+			return [] as readonly string[]
+		}
+		
 		data(): null | string | Uint8Array< ArrayBuffer > | Element | object {
 			return null
 		}
@@ -65,7 +69,9 @@ namespace $ {
 				port: this.port,
 				method: ()=> this.method(),
 				uri: $mol_const( uri ),
+				protocols: ()=> this.protocols(),
 				type: ()=> this.type(),
+				origin: ()=> this.origin(),
 				data: ()=> this.data(),
 			})
 		}
@@ -79,6 +85,8 @@ namespace $ {
 				port: this.port,
 				method: $mol_const( method ),
 				uri: ()=> this.uri(),
+				protocols: ()=> this.protocols(),
+				type: ()=> this.type(),
 				origin: ()=> this.origin(),
 				data: $mol_const( data ),
 			})
