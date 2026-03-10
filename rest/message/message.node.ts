@@ -21,6 +21,10 @@ namespace $ {
 			return 'unknown'
 		}
 		
+		address() {
+			return 'unknown'
+		}
+		
 		data(): null | string | Uint8Array< ArrayBuffer > | Element | object {
 			return null
 		}

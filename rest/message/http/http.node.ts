@@ -26,6 +26,11 @@ namespace $ {
 		}
 		
 		@ $mol_mem
+		address() {
+			return this.input.socket?.remoteAddress ?? super.address()
+		}
+		
+		@ $mol_mem
 		data(): null | string | Uint8Array< ArrayBuffer > | Element | object {
 			
 			const consume = $mol_wire_sync( $node['stream/consumers'] )
