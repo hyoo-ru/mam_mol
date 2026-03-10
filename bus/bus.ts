@@ -10,9 +10,8 @@ namespace $ {
 			super()
 
 			try {
-				const channel = new BroadcastChannel( name )
-				channel.onmessage = ( event: MessageEvent< Data > )=> this.handle( event.data )
-				this.channel = channel
+				this.channel = new BroadcastChannel( name )
+				this.channel.onmessage = ( event: MessageEvent< Data > )=> this.handle( event.data )
 			} catch (error) {
 				console.warn(error)
 			}
