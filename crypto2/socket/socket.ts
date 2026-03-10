@@ -1,6 +1,8 @@
 namespace $ {
+	/** x25519 public key for data encryption. */
 	export class $mol_crypto2_socket extends $mol_crypto2_key {
 		
+		/** Native WebAPI public key. */
 		@ $mol_memo.method
 		async native() {
 			

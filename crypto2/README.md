@@ -1,10 +1,19 @@
 # $mol_crypto2
 
-Simple API for effective cross platform cryptography with minimal extra size. Uses:
+Simple and fast API for effective cross platform cryptography with minimal extra size. Uses SHA-1 and Curve25519.
+
+## Hashing
+
+Fast sync implementation of SHA-1 (20B, 160b).
+
+```typescript
+const data = new Uint8Array([ 1, 2, 3 ]) // 3 B
+const hash = $mol_crypto2_hash( data ) // 20 B
+```
 
 ## Signing & Verifying
 
-Uses Ed25519.
+Native async implementation of Ed25519.
 
 - `Auditor` = 32B public key for sign verification.
 - `Signer` = Auditor + 32B private key for signing.
@@ -15,7 +24,7 @@ const Alice = await $mol_crypto2_signer.generate() // 64 B
 const Bella = await $mol_crypto2_signer.generate() // 64 B
 
 const data = new Uint8Array([ 1, 2, 3 ]) // 3 B
-const digest = $mol_crypto_hash( data ) // 20 B
+const digest = $mol_crypto2_hash( data ) // 20 B
 const sign = await Alice.sign( digest ) // 64 B
 
 const auditor = Alice.auditor() // 32 B
@@ -24,7 +33,7 @@ const verified = await auditor.verify( digest, sign ) // true
 
 ## Encryption & Decryption
 
-Uses x25519.
+Native async implementation of x25519.
 
 - `Socket` = 32B public key for encryption/decryption.
 - `Cipher` = Socket + 32B private key for encryption/decryption.
@@ -46,6 +55,8 @@ const opened = await secret.decrypt( closed, nonce ) // 3 B
 
 ## Signing & Verifying & Encryption & Decryption
 
+Composition of Ed25519 and x25519.
+
 ```typescript
 const Alice = await $mol_crypto2_private.generate() // 128 B
 const Bella = await $mol_crypto2_private.generate() // 128 B
@@ -57,7 +68,7 @@ const data = new Uint8Array([ 1, 2, 3 ]) // 3 B
 const nonce = $mol_crypto2_nonce() // 16 B
 
 const closed = await secretA.encrypt( data, nonce ) // 16 B
-const digest = $mol_crypto_hash( closed ) // 20 B
+const digest = $mol_crypto2_hash( closed ) // 20 B
 const sign = await Alice.signer().sign( digest ) // 64 B
 
 const auditor = Alice.auditor() // 32 B
@@ -66,6 +77,8 @@ const opened = await secretA.decrypt( closed, nonce ) ) // 3 B
 ```
 
 # Usage from NPM
+
+http://npmjs.com/package/mol_crypto2_lib
 
 ```
 npm install mol_crypto2_lib

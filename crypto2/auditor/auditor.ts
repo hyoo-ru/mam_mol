@@ -1,7 +1,8 @@
 namespace $ {
-	
+	/** Ed25519 public key for sign verifying. */
 	export class $mol_crypto2_auditor extends $mol_crypto2_key {
 		
+		/** Native WebAPI public key. */
 		@ $mol_memo.method
 		async native() {
 			
@@ -21,6 +22,7 @@ namespace $ {
 			
 		}
 		
+		/** Verifies signature of data. */
 		async verify( data: BufferSource, sign: BufferSource ) {
 			
 			return await $mol_crypto_native.subtle.verify(
@@ -33,5 +35,4 @@ namespace $ {
 		}
 		
 	}
-
 }
