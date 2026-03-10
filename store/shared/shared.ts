@@ -7,5 +7,5 @@ namespace $ {
 		}
 	}
 
-	export let $mol_store_mem_class_shared : $mol_store< Record< string , any > > = new $mol_store_shared_class()
+	export let $mol_store_shared : $mol_store< Record< string , any > > = new $mol_store_shared_class()
 }
