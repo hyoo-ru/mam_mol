@@ -85,12 +85,26 @@ namespace $ {
 			
 		// }
 		
-		OPEN( msg: $mol_rest_message ) {}
+		_protocols = [] as readonly string[]
+		OPEN( msg: $mol_rest_message ) {
+			const protocols = msg.protocols()
+			for( const protocol of protocols ) {
+				if( this._protocols.includes( protocol ) ) return
+			}
+			// msg.reply( 'No supported protocol', { code: $mol_rest_code["Bad Request"] } )
+			$mol_fail( new Error( 'No supported protocol', { cause: {
+				requested: protocols,
+				supported: this._protocols,
+			} } ) )
+		}
 		CLOSE( msg: $mol_rest_message ) {}
+		
 		HEAD( msg: $mol_rest_message ) {}
 		GET( msg: $mol_rest_message ) {}
+		
 		PUT( msg: $mol_rest_message ) {}
 		PATCH( msg: $mol_rest_message ) {}
+		
 		POST( msg: $mol_rest_message ) {}
 		DELETE( msg: $mol_rest_message ) {}
 		

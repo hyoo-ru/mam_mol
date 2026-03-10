@@ -80,6 +80,7 @@ namespace $ {
 					message: error.message ?? '',
 					origin: msg.origin(),
 					address: msg.address(),
+					casue: error.cause,
 					stack: error.stack,
 				})
 				
@@ -115,8 +116,15 @@ namespace $ {
 					message: error.message ?? '',
 					origin: upgrade.origin(),
 					address: upgrade.address(),
+					casue: error.cause,
 					stack: error.stack,
 				})
+				
+				// socket.write(
+				// 	'HTTP/1.1 400 Bad Request\r\n' +
+				// 	'\r\n' +
+				// 	error.mesasge
+				// )
 				
 				socket.end()
 				return
@@ -133,7 +141,7 @@ namespace $ {
 				})
 				
 				try {
-				
+					
 					$mol_wire_sync( this.root() ).REQUEST(
 						upgrade.derive( 'CLOSE', null )
 					)
@@ -147,6 +155,7 @@ namespace $ {
 						message: error.message ?? '',
 						origin: upgrade.origin(),
 						address: upgrade.address(),
+						casue: error.cause,
 						stack: error.stack,
 					})
 					
@@ -170,7 +179,7 @@ namespace $ {
 				'Connection: Upgrade\r\n' +
 				`Sec-WebSocket-Accept: ${key_out}\r\n` +
 				'\r\n'
-			);
+			)
 			
 			if( this.log() ) $mol_wire_sync( this.$ ).$mol_log3_come({
 				place: this,
@@ -289,6 +298,7 @@ namespace $ {
 					message: error.message ?? '',
 					origin: upgrade.origin(),
 					address: upgrade.address(),
+					casue: error.cause,
 					stack: error.stack,
 				})
 				
