@@ -11,9 +11,7 @@ namespace $ {
 		@ $mol_mem_key
 		override value< Value >( key : string , next? : Value , force? : 'local' | $mol_mem_force_cache) {
 			const native = this.native()
-			if (! native) {
-				return super.value(key, next)
-			}
+			if (! native) return super.value(key, next)
 
 			if( next === undefined ) return JSON.parse( native.getItem( key ) || 'null' )
 			
