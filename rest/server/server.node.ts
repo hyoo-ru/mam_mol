@@ -80,7 +80,7 @@ namespace $ {
 					message: error.message ?? '',
 					origin: msg.origin(),
 					address: msg.address(),
-					casue: error.cause,
+					cause: error.cause,
 					stack: error.stack,
 				})
 				
@@ -127,7 +127,7 @@ namespace $ {
 					message: error.message ?? '',
 					origin: upgrade.origin(),
 					address: upgrade.address(),
-					casue: error.cause,
+					cause: error.cause,
 					stack: error.stack,
 				})
 				
@@ -160,7 +160,7 @@ namespace $ {
 						message: error.message ?? '',
 						origin: upgrade.origin(),
 						address: upgrade.address(),
-						casue: error.cause,
+						cause: error.cause,
 						stack: error.stack,
 					})
 					
@@ -304,7 +304,7 @@ namespace $ {
 					message: error.message ?? '',
 					origin: upgrade.origin(),
 					address: upgrade.address(),
-					casue: error.cause,
+					cause: error.cause,
 					stack: error.stack,
 				})
 				
