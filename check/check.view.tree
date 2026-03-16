@@ -6,7 +6,7 @@ $mol_check $mol_button_minor
 		role <= aria_role \checkbox
 	sub /$mol_view_content
 		<= Icon null
-		<= label /
+		^ label /$mol_view_content
 			<= Title $mol_view
 				sub /
 					<= title \
