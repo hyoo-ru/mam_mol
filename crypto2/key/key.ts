@@ -13,8 +13,12 @@ namespace $ {
 			
 			if( typeof serial === 'string' ) {
 				serial = new Uint8Array(
-					serial.match( /.{43}/g )!
-						.flatMap( chunk => [ ... $mol_base64_url_decode( chunk ) ] )
+					serial.match( /.{43}/g )
+						?.flatMap( chunk => [ ... $mol_base64_url_decode( chunk ) ] )
+					?? $mol_fail( new Error( 'Str key too short', { cause: {
+						min: 43,
+						real: serial.length,
+					} } ) )
 				)
 			}
 			
@@ -23,7 +27,16 @@ namespace $ {
 		
 		/** Array view of public part. */
 		asArray() {
-			return new Uint8Array( this.buffer, this.byteOffset, ( this.constructor as typeof $mol_crypto2_key ).size_bin )
+			
+			const size = ( this.constructor as typeof $mol_crypto2_key ).size_bin
+			if( this.byteLength < size ) {
+				return $mol_fail( new Error( 'Bin key too short', { cause: {
+					min: size,
+					real: this.byteLength,
+				} } ) )
+			}
+			
+			return new Uint8Array( this.buffer, this.byteOffset, size )
 		}
 		
 		/** String representation of public part. */
