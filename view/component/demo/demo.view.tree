@@ -1,4 +1,6 @@
 $mol_view_component_demo $mol_card
+	plugins /
+		<= Theme $mol_theme_auto
 	content /
 		<= Str $mol_string value? <=> str? \foo
 		<= Num $mol_number value? <=> num? +NaN
