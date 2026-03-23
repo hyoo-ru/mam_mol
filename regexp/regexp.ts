@@ -70,7 +70,8 @@ namespace $ {
 			super( source , flags )
 		}
 		
-		*[Symbol.matchAll] (str:string): RegExpStringIterator< RegExpMatchArray & $mol_type_override< RegExpMatchArray, { groups?: { [ key in keyof Groups ] : string } } > > {
+		// RegExpMatchArray & $mol_type_override< RegExpMatchArray, { groups?: { [ key in keyof Groups ] : string } } >
+		*[Symbol.matchAll] (str:string): RegExpStringIterator< any > {
 			const index = this.lastIndex
 			this.lastIndex = 0
 			try {
