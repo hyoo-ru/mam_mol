@@ -4,8 +4,8 @@ namespace $.$$ {
 		"Composed keys"( $ ) {
 			
 			$mol_assert_equal(
-				'$mol_schema_boolean',
-				$mol_schema_boolean + '',
+				'$mol_schema_bool',
+				$mol_schema_bool + '',
 			)
 			
 			$mol_assert_equal(
@@ -17,6 +17,11 @@ namespace $.$$ {
 			$mol_assert_equal(
 				'$mol_schema_some<[$mol_schema_float,$mol_schema_string]>',
 				$mol_schema_some([ $mol_schema_float, $mol_schema_string ]) + '',
+			)
+			
+			$mol_assert_equal(
+				'$mol_schema_maybe<$mol_schema_string>',
+				$mol_schema_maybe( $mol_schema_string ) + '',
 			)
 			
 			$mol_assert_equal(
@@ -45,7 +50,7 @@ namespace $.$$ {
 			
 		},
 		
-		"String schema"( $ ) {
+		"String"( $ ) {
 			
 			$mol_assert_equal( true, $mol_schema_string.check( 'foo' ) )
 			$mol_assert_equal( false, $mol_schema_string.check( 123 ) )
@@ -55,7 +60,7 @@ namespace $.$$ {
 			
 		},
 		
-		"Integer schema"( $ ) {
+		"Integer"( $ ) {
 			
 			$mol_assert_equal( true, $mol_schema_integer.check( Number.MAX_SAFE_INTEGER ) )
 			$mol_assert_equal( true, $mol_schema_integer.check( Number.MIN_SAFE_INTEGER ) )
@@ -71,7 +76,7 @@ namespace $.$$ {
 			
 		},
 		
-		"Enum options schema"( $ ) {
+		"Enum options"( $ ) {
 			
 			const Config = $mol_schema_enum([ 123, 'foo' ])
 			
@@ -88,7 +93,7 @@ namespace $.$$ {
 			
 		},
 		
-		"Some variant schema"( $ ) {
+		"Some variant"( $ ) {
 			
 			const Config = $mol_schema_some([ $mol_schema_float, $mol_schema_string ])
 			
@@ -102,7 +107,23 @@ namespace $.$$ {
 			
 		},
 		
-		"Float range schema"( $ ) {
+		"Optional value"( $ ) {
+			
+			const Config = $mol_schema_maybe( $mol_schema_string )
+			
+			$mol_assert_equal( true, Config.check( 'foo' ) )
+			$mol_assert_equal( true, Config.check( undefined ) )
+			$mol_assert_equal( true, Config.check( null ) )
+			$mol_assert_equal( false, Config.check( 0 ) )
+			
+			$mol_assert_equal( 'foo', Config.cast( 'foo' ) )
+			$mol_assert_equal( undefined, Config.cast( undefined ) )
+			$mol_assert_equal( null, Config.cast( null ) )
+			$mol_assert_equal( undefined, Config.cast( 0 ) )
+			
+		},
+		
+		"Float range"( $ ) {
 			
 			const range = $mol_schema_range( 4, 8 )
 			
@@ -119,7 +140,7 @@ namespace $.$$ {
 			
 		},
 		
-		"Range intersection schema"( $ ) {
+		"Range intersection"( $ ) {
 			
 			const Narrow = $mol_schema_every([ $mol_schema_integer, $mol_schema_range( 1, 8 ), $mol_schema_range( 4, 10 ) ])
 			
@@ -137,7 +158,7 @@ namespace $.$$ {
 			
 		},
 		
-		"Vary Array schema"( $ ) {
+		"Array of any"( $ ) {
 			
 			$mol_assert_equal( true, $mol_schema_list.check( [] ) )
 			$mol_assert_equal( false, $mol_schema_list.check( '' ) )
@@ -147,7 +168,7 @@ namespace $.$$ {
 			
 		},
 		
-		"Typed Array schema"( $ ) {
+		"Typed Array"( $ ) {
 			
 			const Vector = $mol_schema_array( $mol_schema_float )
 			
@@ -160,7 +181,7 @@ namespace $.$$ {
 			
 		},
 		
-		"Vary Record schema"( $ ) {
+		"Any Object"( $ ) {
 			
 			$mol_assert_equal( true, $mol_schema_object.check( {} ) )
 			$mol_assert_equal( false, $mol_schema_object.check( [] ) )
@@ -170,7 +191,7 @@ namespace $.$$ {
 			
 		},
 		
-		"Typed Record schema"( $ ) {
+		"Typed Record"( $ ) {
 			
 			const User = $mol_schema_record({
 				name: $mol_schema_string,
