@@ -82,6 +82,19 @@ namespace $ {
 		}
 	}
 	
+	export function $mol_schema_maybe< Some extends typeof $mol_schema >( Some: Some ) {
+		return class $mol_schema_maybe_ extends $mol_schema_some([ $mol_schema_enum([ undefined, null ]), Some ]) {
+			
+			static Some = Some
+			
+			static toString(): string {
+				if( this !== $mol_schema_maybe_ ) return super.toString()
+				return '$mol_schema_maybe<' + $mol_key(Some) + '>'
+			}	
+			
+		}
+	}
+	
 	export function $mol_schema_every< Schemes extends readonly( typeof $mol_schema )[] >( Schemes: Schemes ) {
 		return class $mol_schema_some_ extends $mol_schema {
 			
@@ -132,7 +145,7 @@ namespace $ {
 		}
 	}
 	
-	export abstract class $mol_schema_boolean extends $mol_schema {
+	export abstract class $mol_schema_bool extends $mol_schema {
 		
 		static check( val: unknown ): val is boolean {
 			return typeof val === 'boolean'

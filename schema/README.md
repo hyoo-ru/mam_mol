@@ -13,23 +13,24 @@
 ## Leaf schemas
 
 - `$mol_schema_enum` - some of constant values (first value as default).
-- `$mol_schema_boolean` - true or false (default).
+- `$mol_schema_bool` - true or false (default).
 - `$mol_schema_string` - any string ("" as default).
 - `$mol_schema_float` - any number (NaN as default).
 - `$mol_schema_integer` - integer number (0 as default).
 - `$mol_schema_range` - range of values between min (default) and max.
-  - `$mol_schema_positive` - >= 0
-  - `$mol_schema_negative` - <= 0
-  - `$mol_schema_natural` - natural numbers from 0 (default).
+  - `$mol_schema_positive` - value >= 0
+    - `$mol_schema_natural` - natural number from 0 (default).
+  - `$mol_schema_negative` - value <= 0
 
 ## Coposition schemas
 
 - `$mol_schema_some` - some of schemas (default of first as default).
+  - `$mol_schema_maybe` - value or null or undefined (undefined as default).
 - `$mol_schema_every` - every of schemas (first default casted through all of them).
 - `$mol_schema_list` - array of any values ([] as default).
 - `$mol_schema_array` - typed by schema array ([] as default).
 - `$mol_schema_object` - any object ({} as default).
-- `$mol_schema_record` - object with typed fields (objects with default fields values by default).
+- `$mol_schema_record` - object with typed fields (object with default fields values by default).
 
 ## Complex example
 
