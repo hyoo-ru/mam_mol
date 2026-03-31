@@ -30,13 +30,13 @@ namespace $.$$ {
 			)
 			
 			$mol_assert_equal(
-				'$mol_schema_array<$mol_schema_float>',
-				$mol_schema_array( $mol_schema_float ) + '',
+				'$mol_schema_list<$mol_schema_float>',
+				$mol_schema_list( $mol_schema_float ) + '',
 			)
 			
 			$mol_assert_equal(
-				'$mol_schema_record<{"name":$mol_schema_string}>',
-				$mol_schema_record({ name: $mol_schema_string }) + '',
+				'$mol_schema_dict<{"name":$mol_schema_string}>',
+				$mol_schema_dict({ name: $mol_schema_string }) + '',
 			)
 			
 			$mol_assert_equal(
@@ -44,8 +44,8 @@ namespace $.$$ {
 				class Some extends $mol_schema_enum([ 123 ]) {} + '',
 				class Some extends $mol_schema_some([ $mol_schema_float ]) {} + '',
 				class Some extends $mol_schema_every([ $mol_schema_float ]) {} + '',
-				class Some extends $mol_schema_array( $mol_schema_float ) {} + '',
-				class Some extends $mol_schema_record({ name: $mol_schema_string }) {} + '',
+				class Some extends $mol_schema_list( $mol_schema_float ) {} + '',
+				class Some extends $mol_schema_dict({ name: $mol_schema_string }) {} + '',
 			)
 			
 		},
@@ -57,6 +57,9 @@ namespace $.$$ {
 			
 			$mol_assert_equal( 'foo', $mol_schema_string.cast( 'foo' ) )
 			$mol_assert_equal( '', $mol_schema_string.cast( 123 ) )
+			
+			$mol_assert_equal( 'foo', $mol_schema_string.guard( 'foo' ) )
+			$mol_assert_fail( ()=> $mol_schema_string.guard( 123 ), 'Wrong type' )
 			
 		},
 		
@@ -73,6 +76,11 @@ namespace $.$$ {
 			$mol_assert_equal( Number.MAX_SAFE_INTEGER, $mol_schema_integer.cast( Number.MAX_SAFE_INTEGER ) )
 			$mol_assert_equal( 0, $mol_schema_integer.cast( Number.EPSILON ) )
 			$mol_assert_equal( 0, $mol_schema_integer.cast( 1.5 ) )
+			
+			$mol_assert_equal( 0, $mol_schema_integer.guard( 0 ) )
+			$mol_assert_fail( ()=> $mol_schema_integer.guard( '' ), 'Wrong type' )
+			$mol_assert_fail( ()=> $mol_schema_integer.guard( Number.NaN ), 'Non finite' )
+			$mol_assert_fail( ()=> $mol_schema_integer.guard( 1.5 ), 'Non integer' )
 			
 		},
 		
@@ -91,6 +99,9 @@ namespace $.$$ {
 			$mol_assert_equal( 'foo', Config.cast( 'foo' ) )
 			$mol_assert_equal( 123, Config.cast( 'bar' ) )
 			
+			$mol_assert_equal( 123, Config.guard( 123 ) )
+			$mol_assert_fail( ()=> Config.guard( 321 ), 'No one option' )
+			
 		},
 		
 		"Some variant"( $ ) {
@@ -104,6 +115,9 @@ namespace $.$$ {
 			$mol_assert_equal( 123, Config.cast( 123 ) )
 			$mol_assert_equal( 'foo', Config.cast( 'foo' ) )
 			$mol_assert_equal( Number.NaN, Config.cast( true ) )
+			
+			$mol_assert_equal( 123, Config.guard( 123 ) )
+			$mol_assert_fail( ()=> Config.guard( false ), 'No one variant' )
 			
 		},
 		
@@ -121,22 +135,30 @@ namespace $.$$ {
 			$mol_assert_equal( null, Config.cast( null ) )
 			$mol_assert_equal( undefined, Config.cast( 0 ) )
 			
+			$mol_assert_equal( 'foo', Config.guard( 'foo' ) )
+			$mol_assert_fail( ()=> Config.guard( 123 ), 'No one variant' )
+			
 		},
 		
 		"Float range"( $ ) {
 			
-			const range = $mol_schema_range( 4, 8 )
+			const Range = $mol_schema_range( 4, 8 )
 			
-			$mol_assert_equal( true, range.check( 5.5 ) )
-			$mol_assert_equal( true, range.check( 4 ) )
-			$mol_assert_equal( true, range.check( 8 ) )
+			$mol_assert_equal( true, Range.check( 5.5 ) )
+			$mol_assert_equal( true, Range.check( 4 ) )
+			$mol_assert_equal( true, Range.check( 8 ) )
 			
-			$mol_assert_equal( false, range.check( 3 ) )
-			$mol_assert_equal( false, range.check( 9 ) )
+			$mol_assert_equal( false, Range.check( 3 ) )
+			$mol_assert_equal( false, Range.check( 9 ) )
 			
-			$mol_assert_equal( 4, range.cast( 3 ) )
-			$mol_assert_equal( 8, range.cast( 9 ) )
-			$mol_assert_equal( 4, range.cast( Number.NaN ) )
+			$mol_assert_equal( 4, Range.cast( 3 ) )
+			$mol_assert_equal( 8, Range.cast( 9 ) )
+			$mol_assert_equal( 4, Range.cast( Number.NaN ) )
+			
+			$mol_assert_equal( 5, Range.guard( 5 ) )
+			$mol_assert_fail( ()=> Range.guard( 2 ), 'Too small' )
+			$mol_assert_fail( ()=> Range.guard( 10 ), 'Too large' )
+			$mol_assert_fail( ()=> Range.guard( {} ), 'Uncomparable type' )
 			
 		},
 		
@@ -156,21 +178,29 @@ namespace $.$$ {
 			$mol_assert_equal( 8, Narrow.cast( 9 ) )
 			$mol_assert_equal( 4, Narrow.cast( '6' ) )
 			
+			$mol_assert_equal( 5, Narrow.guard( 5 ) )
+			$mol_assert_fail( ()=> Narrow.guard( 2 ), 'Too small' )
+			$mol_assert_fail( ()=> Narrow.guard( 10 ), 'Too large' )
+			$mol_assert_fail( ()=> Narrow.guard( '' ), 'Wrong type' )
+			
 		},
 		
 		"Array of any"( $ ) {
 			
-			$mol_assert_equal( true, $mol_schema_list.check( [] ) )
-			$mol_assert_equal( false, $mol_schema_list.check( '' ) )
+			$mol_assert_equal( true, $mol_schema_list_any.check( [] ) )
+			$mol_assert_equal( false, $mol_schema_list_any.check( '' ) )
 			
-			$mol_assert_equal( [ 123 ], $mol_schema_list.cast( [ 123 ] ) )
-			$mol_assert_equal( [], $mol_schema_list.cast( 'foo' ) )
+			$mol_assert_equal( [ 123 ], $mol_schema_list_any.cast( [ 123 ] ) )
+			$mol_assert_equal( [], $mol_schema_list_any.cast( 'foo' ) )
+			
+			$mol_assert_equal( [], $mol_schema_list_any.guard( [] ) )
+			$mol_assert_fail( ()=> $mol_schema_list_any.guard( '' ), 'Non array' )
 			
 		},
 		
 		"Typed Array"( $ ) {
 			
-			const Vector = $mol_schema_array( $mol_schema_float )
+			const Vector = $mol_schema_list( $mol_schema_float )
 			
 			$mol_assert_equal( true, Vector.check( [] ) )
 			$mol_assert_equal( true, Vector.check( [ 123 ] ) )
@@ -179,21 +209,29 @@ namespace $.$$ {
 			$mol_assert_equal( [ 123 ], Vector.cast( [ 123 ] ) )
 			$mol_assert_equal( [ 123, Number.NaN ], Vector.cast( [ 123, 'foo' ] ) )
 			
+			$mol_assert_equal( [], Vector.guard( [] ) )
+			$mol_assert_equal( [ 123 ], Vector.guard( [ 123 ] ) )
+			$mol_assert_fail( ()=> Vector.guard( 0 ), 'Non array' )
+			$mol_assert_fail( ()=> Vector.guard( [ false ] ), 'Wrong item' )
+			
 		},
 		
 		"Any Object"( $ ) {
 			
-			$mol_assert_equal( true, $mol_schema_object.check( {} ) )
-			$mol_assert_equal( false, $mol_schema_object.check( [] ) )
+			$mol_assert_equal( true, $mol_schema_dict_any.check( {} ) )
+			$mol_assert_equal( false, $mol_schema_dict_any.check( [] ) )
 			
-			$mol_assert_equal( { foo: 123 }, $mol_schema_object.cast( { foo: 123 } ) )
-			$mol_assert_equal( {}, $mol_schema_object.cast( [ 'foo', 123 ] ) )
+			$mol_assert_equal( { foo: 123 }, $mol_schema_dict_any.cast( { foo: 123 } ) )
+			$mol_assert_equal( {}, $mol_schema_dict_any.cast( [ 'foo', 123 ] ) )
+			
+			$mol_assert_equal( {}, $mol_schema_dict_any.guard( {} ) )
+			$mol_assert_fail( ()=> $mol_schema_dict_any.guard( [] ), 'Non dictionary' )
 			
 		},
 		
 		"Typed Record"( $ ) {
 			
-			const User = $mol_schema_record({
+			const User = $mol_schema_dict({
 				name: $mol_schema_string,
 				age: $mol_schema_integer,
 			})
@@ -209,6 +247,11 @@ namespace $.$$ {
 				User.cast( { name: 'foo', age: 123, height: 777 } )
 			)
 			$mol_assert_equal( { name: 'foo', age: 0 }, User.cast( { name: 'foo' } ) )
+			
+			$mol_assert_equal( { name: 'foo', age: 123 }, User.guard({ name: 'foo', age: 123 }) )
+			$mol_assert_equal( { name: 'foo', age: 123, salary: 777 }, User.guard({ name: 'foo', age: 123, salary: 777 }) )
+			$mol_assert_fail( ()=> User.guard( {} ), 'Wrong field' )
+			$mol_assert_fail( ()=> User.guard( { name: 'foo', age: 'bar'} ), 'Wrong field' )
 			
 		},
 		

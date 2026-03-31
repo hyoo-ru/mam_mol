@@ -27,33 +27,33 @@
 - `$mol_schema_some` - some of schemas (default of first as default).
   - `$mol_schema_maybe` - value or null or undefined (undefined as default).
 - `$mol_schema_every` - every of schemas (first default casted through all of them).
-- `$mol_schema_list` - array of any values ([] as default).
-- `$mol_schema_array` - typed by schema array ([] as default).
-- `$mol_schema_object` - any object ({} as default).
-- `$mol_schema_record` - object with typed fields (object with default fields values by default).
+- `$mol_schema_list_any` - array of any values ([] as default).
+  - `$mol_schema_list` - typed by schema array ([] as default).
+- `$mol_schema_dict_any` - any object ({} as default).
+  - `$mol_schema_dict` - object with typed fields (object with default fields values by default).
 
 ## Complex example
 
 ```ts
-export abstract class $my_article_search extends $mol_schema_some([
-	$mol_schema_record({
-		fail: $mol_schema_string,
-	}),
-	$mol_schema_record({
-		data: $mol_schema_array( $my_article_full ),
-	}),
-])
+export abstract class $my_user_main extends $mol_schema_dict({
+	name: $mol_schema_string,
+	age: $mol_schema_natural,
+}) {}
 
-export abstract class $my_article_full extends $mol_schema_record({
+export abstract class $my_article_full extends $mol_schema_dict({
 	title: $mol_schema_string,
 	body: $mol_schema_string,
 	author: $my_user_main,
 }) {}
 
-export abstract class $my_user_main extends $mol_schema_record({
-	name: $mol_schema_string,
-	age: $mol_schema_natural,
-}) {}
+export abstract class $my_article_search extends $mol_schema_some([
+	$mol_schema_dict({
+		data: $mol_schema_list( $my_article_full ),
+	}),
+	$mol_schema_dict({
+		fail: $mol_schema_string,
+	}),
+]) {}
 ```
 
 ```ts
