@@ -229,7 +229,7 @@ namespace $.$$ {
 			
 		},
 		
-		"Typed Record"( $ ) {
+		"Typed Dictionary"( $ ) {
 			
 			const User = $mol_schema_dict({
 				name: $mol_schema_string,
@@ -252,6 +252,34 @@ namespace $.$$ {
 			$mol_assert_equal( { name: 'foo', age: 123, salary: 777 }, User.guard({ name: 'foo', age: 123, salary: 777 }) )
 			$mol_assert_fail( ()=> User.guard( {} ), 'Wrong field' )
 			$mol_assert_fail( ()=> User.guard( { name: 'foo', age: 'bar'} ), 'Wrong field' )
+			
+		},
+		
+		"Typed Dictionary composition"( $ ) {
+			
+			const User = $mol_schema_dict({
+				name: $mol_schema_string,
+				age: $mol_schema_integer,
+			})
+			
+			const Admin = $mol_schema_dict({
+				... User.Fields,
+				space: $mol_schema_string,
+			})
+			
+			$mol_assert_equal( false, Admin.check( { name: 'foo', age: 123 } ) )
+			$mol_assert_equal( true, Admin.check( { name: 'foo', age: 123, space: 'bar' } ) )
+			
+			$mol_assert_equal(
+				{ name: 'foo', age: 123, space: '' },
+				Admin.cast({ name: 'foo', age: 123 }),
+			)
+			
+			$mol_assert_equal(
+				{ name: 'foo', age: 123, space: 'bar' },
+				Admin.guard({ name: 'foo', age: 123, space: 'bar' }),
+			)
+			$mol_assert_fail( ()=> Admin.guard({ name: 'foo', age: 123 }), 'Wrong field' )
 			
 		},
 		

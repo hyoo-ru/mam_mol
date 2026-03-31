@@ -40,10 +40,15 @@ export abstract class $my_user_main extends $mol_schema_dict({
 	age: $mol_schema_natural,
 }) {}
 
+export abstract class $my_user_full extends $mol_schema_dict({
+	... $my_user_full.Fields,
+	bio: $mol_schema_string,
+}) {}
+
 export abstract class $my_article_full extends $mol_schema_dict({
 	title: $mol_schema_string,
 	body: $mol_schema_string,
-	author: $my_user_main,
+	author: $my_user_full,
 }) {}
 
 export abstract class $my_article_search extends $mol_schema_some([
