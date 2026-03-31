@@ -219,17 +219,35 @@ namespace $ {
 			static cast( value: unknown ) {
 				if( Object.getPrototypeOf( Object.getPrototypeOf( value ) ) ) return this.default
 				const res = {} as any
-				for( const key in Fields ) res[ key ] = Fields[key].cast( ( value as any )[ key ] )
+				for( const field in Fields ) res[ field ] = Fields[ field ].cast( ( value as any )[ field ] )
 				return res as typeof this.default
 			}
 			
 			static default = Object.fromEntries(
-				Object.entries( Fields ).map( ([ key, Val ])=>[ key, Val.default ] )
+				Object.entries( Fields ).map( ([ field, Field ])=>[ field, Field.default ] )
 			) as { readonly [ key in keyof typeof Fields ]:
 				typeof Fields[ key ][ 'default' ]
 			}
 			
 		}
+	}
+	
+	export function $mol_schema_partial< Fields extends Record< string, typeof $mol_schema_any > >( Fields: Fields ) {
+		
+		const partial = {} as any
+		for( const field in Fields ) partial[ field ] = $mol_schema_maybe( Fields[ field ] )
+		
+		return class $mol_schema_partial_ extends $mol_schema_dict( partial ) {
+			
+			static Fields = Fields
+			
+			static toString(): string {
+				if( this !== $mol_schema_partial_ ) return super.toString()
+				return '$mol_schema_partial<' + $mol_key( Fields ) + '>'
+			}	
+			
+		}
+		
 	}
 	
 	export function $mol_schema_enum< Options extends readonly unknown[] >( Options: Options ) {

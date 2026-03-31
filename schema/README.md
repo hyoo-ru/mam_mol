@@ -45,7 +45,7 @@ export abstract class $my_user_full extends $mol_schema_dict({
 	bio: $mol_schema_string,
 }) {}
 
-export abstract class $my_article_full extends $mol_schema_dict({
+export abstract class $my_article_full extends $mol_schema_partial({
 	title: $mol_schema_string,
 	body: $mol_schema_string,
 	author: $my_user_full,
