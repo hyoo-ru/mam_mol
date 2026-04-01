@@ -4,7 +4,7 @@
 
 ## Schema API
 
-- `toString` - identity of schema.
+- `toString()` - identity of schema.
 - `check(val)` - type guard.
 - `guard(val)` - strict parser.
 - `cast(val)` - relaxed caster.
@@ -12,25 +12,25 @@
 
 ## Leaf schemas
 
-- `$mol_schema_enum` - some of constant values (first value as default).
+- `$mol_schema_enum(...options)` - some of constant values (first value as default).
 - `$mol_schema_boolean` - true or false (default).
 - `$mol_schema_string` - any string ("" as default).
-  - `$mol_schema_pattern` - string that matched to regexp ("" as default).
+  - `$mol_schema_pattern(...regexp)` - string that matched to regexp ("" as default).
 - `$mol_schema_float` - any number (NaN as default).
 - `$mol_schema_integer` - integer number (0 as default).
-- `$mol_schema_range` - range of values between min (default) and max.
+- `$mol_schema_range(min,max)` - range of values between min (default) and max.
   - `$mol_schema_positive` - value >= 0
     - `$mol_schema_natural` - natural number from 0 (default).
   - `$mol_schema_negative` - value <= 0
 
-## Coposition schemas
+## Composition schemas
 
-- `$mol_schema_some` - some of schemas (default of first as default).
-  - `$mol_schema_maybe` - value or null or undefined (undefined as default).
-- `$mol_schema_every` - every of schemas for same value (first default casted through all of them).
-- `$mol_schema_list` - array of same types schema ([] as default).
-- `$mol_schema_dict` - key-value dictionary schema ({} as default).
-- `$mol_schema_record` - object with typed fields (object with default fields values by default).
+- `$mol_schema_some(...variants)` - some of schemas (default of first as default).
+  - `$mol_schema_maybe(schema)` - value or null or undefined (undefined as default).
+- `$mol_schema_every(...schemas)` - every of schemas for same value (first default casted through all of them).
+- `$mol_schema_list(item)` - array of same types schema ([] as default).
+- `$mol_schema_dict(key,val)` - key-value dictionary schema ({} as default).
+- `$mol_schema_record({...fields})` - object with typed fields (object with default fields values by default).
 
 ## Complex example
 
