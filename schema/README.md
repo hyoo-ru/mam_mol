@@ -13,8 +13,9 @@
 ## Leaf schemas
 
 - `$mol_schema_enum` - some of constant values (first value as default).
-- `$mol_schema_bool` - true or false (default).
+- `$mol_schema_boolean` - true or false (default).
 - `$mol_schema_string` - any string ("" as default).
+  - `$mol_schema_pattern` - string that matched to regexp ("" as default).
 - `$mol_schema_float` - any number (NaN as default).
 - `$mol_schema_integer` - integer number (0 as default).
 - `$mol_schema_range` - range of values between min (default) and max.
@@ -26,11 +27,10 @@
 
 - `$mol_schema_some` - some of schemas (default of first as default).
   - `$mol_schema_maybe` - value or null or undefined (undefined as default).
-- `$mol_schema_every` - every of schemas (first default casted through all of them).
-- `$mol_schema_list_any` - array of any values ([] as default).
-  - `$mol_schema_list` - typed by schema array ([] as default).
-- `$mol_schema_dict_any` - any object ({} as default).
-  - `$mol_schema_dict` - object with typed fields (object with default fields values by default).
+- `$mol_schema_every` - every of schemas for same value (first default casted through all of them).
+- `$mol_schema_list` - array of same types schema ([] as default).
+- `$mol_schema_dict` - key-value dictionary schema ({} as default).
+- `$mol_schema_record` - object with typed fields (object with default fields values by default).
 
 ## Complex example
 
@@ -43,6 +43,7 @@ export abstract class $my_user_main extends $mol_schema_dict({
 export abstract class $my_user_full extends $mol_schema_dict({
 	... $my_user_full.Fields,
 	bio: $mol_schema_string,
+	flags: $mol_schema_dict( $mol_schema_string, $mol_schema_boolean ),
 }) {}
 
 export abstract class $my_article_full extends $mol_schema_partial({
@@ -56,7 +57,7 @@ export abstract class $my_article_search extends $mol_schema_some([
 		data: $mol_schema_list( $my_article_full ),
 	}),
 	$mol_schema_dict({
-		fail: $mol_schema_string,
+		fail: $mol_schema_pattern( /^\w+$/ ),
 	}),
 ]) {}
 ```
