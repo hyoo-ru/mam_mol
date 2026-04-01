@@ -4,18 +4,18 @@
 
 ## Schema API
 
-- `toString()` - identity of schema.
-- `check(val)` - type guard.
-- `guard(val)` - strict parser.
-- `cast(val)` - relaxed caster.
-- `default` - default value for casting.
+- `.toString()` - identity of schema.
+- `.check(val)` - type guard.
+- `.guard(val)` - strict parser.
+- `.cast(val)` - relaxed caster.
+- `.default` - default value for casting.
 
 ## Leaf schemas
 
 - `$mol_schema_enum(...options)` - some of constant values (first value as default).
 - `$mol_schema_boolean` - true or false (default).
 - `$mol_schema_string` - any string ("" as default).
-  - `$mol_schema_pattern(...regexp)` - string that matched to regexp ("" as default).
+  - `$mol_schema_pattern(regexp)` - string that matched to regexp ("" as default).
 - `$mol_schema_float` - any number (NaN as default).
 - `$mol_schema_integer` - integer number (0 as default).
 - `$mol_schema_range(min,max)` - range of values between min (default) and max.
@@ -78,4 +78,19 @@ if( $my_user_main.check( user ) ) {
 
 ```ts
 const article = $my_article_full.default // default article state
+```
+
+## Usage from NPM
+
+```ts
+import {
+	$mol_schema_record: Rec,
+	$mol_schema_string: Str,
+	/// ...
+} from 'mol_schema'
+
+export class Article extends Rec({
+	title: Str,
+	body: Str,
+}) {}
 ```
