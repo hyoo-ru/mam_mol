@@ -11,14 +11,14 @@ namespace $ {
 				res : typeof $node.express.response ,
 			) => void | boolean
 		) {
-			const wrapped = $mol_wire_async(mdl)
+			// const wrapped = $mol_wire_async(mdl)
 
 			return $mol_func_name_from(async (
 				req : typeof $node.express.request ,
 				res : typeof $node.express.response ,
 				next : (err?: unknown) => any
 			) => {
-				// const wrapped = $mol_wire_async(mdl)
+				const wrapped = $mol_wire_async(mdl)
 
 				try {
 					const stopped = await wrapped(req, res)
