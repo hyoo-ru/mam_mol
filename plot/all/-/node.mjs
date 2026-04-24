@@ -2420,6 +2420,8 @@ var $;
         'field',
         'image',
         'spirit',
+        'hue',
+        'hue_spread',
     ]);
 })($ || ($ = {}));
 
