@@ -1,10 +1,10 @@
 namespace $ {
 	
 	export class $mol_file_web extends $mol_file_webdav {
-
-		static override base = $mol_dom_context.document?.currentScript
-			? new URL( '.' , ($mol_dom_context.document.currentScript as any)['src'] ).toString()
-			: ''
+		
+		static override base = new URL( '.' ,
+			( $mol_dom_context.document?.currentScript as HTMLScriptElement )['src'] ?? globalThis.location.href
+		).toString()
 
 		// Вотчер выключен, версия всегда будет одна
 		// Если пустая строка - будет считаться, что файла нет
