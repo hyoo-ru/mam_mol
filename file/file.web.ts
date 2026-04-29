@@ -3,7 +3,7 @@ namespace $ {
 	export class $mol_file_web extends $mol_file_webdav {
 		
 		static override base = new URL( '.' ,
-			( $mol_dom_context.document?.currentScript as HTMLScriptElement )['src'] ?? globalThis.location.href
+			( $mol_dom_context.document?.currentScript as HTMLScriptElement )?.['src'] ?? globalThis.location.href
 		).toString()
 
 		// Вотчер выключен, версия всегда будет одна
