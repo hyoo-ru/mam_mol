@@ -1,8 +1,19 @@
 namespace $ {
 
+	export type $mol_build_checker_status = 'ready' | 'watching'
+
+	export type $mol_build_checker_shared = {
+		recheck(): $mol_build_checker_changes | null
+	}
+
 	export type $mol_build_checker_remote = {
-		error(rec: [filename: string, error: string][]): void
-		write(rec: [path: string, data: string][]): void
+		changes(rec: $mol_build_checker_changes): void
+		status(next: $mol_build_checker_status): void
+	}
+
+	export type $mol_build_checker_changes = {
+		writes: [path: string, data: string][]
+		errors: [path: string, error: string][]
 	}
 
 	export type $mol_build_checker_worker_data = {
@@ -12,36 +23,10 @@ namespace $ {
 	}
 
 	export class $mol_build_checker extends $mol_object {
-		@ $mol_mem
-		paths(next?: readonly string[]): readonly string[] {
-			return next ?? this.worker_data().paths ?? []
-		}
-
-		@ $mol_mem
-		root(next?: string): string {
-			return next ?? this.worker_data().root ?? ''
-		}
-
-		@ $mol_mem
-		options(next?: ReturnType<typeof $node.typescript.getDefaultCompilerOptions>) {
-			return next ?? this.worker_data().options ?? $node.typescript.getDefaultCompilerOptions()
-		}
-
-		protected writes = [] as [path: string, data: string][]
-		protected write_timeout = null as null | $mol_after_timeout
-
-		protected write_flush() {
-			this.write_timeout?.destructor()
-
-			$mol_error_fence(() => this.remote().write(this.writes), e => (this.$.$mol_fail_log(e), null))
-
-			this.writes = []
-			this.write_timeout = null
-		}
-
-		write_add(path: string, data: string) {
-			this.writes.push([ path, data ])
-			this.write_timeout = this.write_timeout ?? new $mol_after_timeout(200, $mol_wire_async(() => this.write_flush()))
+		paths() { return this.worker_data().paths ?? [] }
+		root() { return this.worker_data().root ?? '' }
+		options() {
+			return this.worker_data().options ?? $node.typescript.getDefaultCompilerOptions()
 		}
 
 		@ $mol_mem
@@ -57,8 +42,9 @@ namespace $ {
 
 		start() {
 			try {
-				this.remote()
-				this.host()
+				const watching = this.watching()
+				if (watching) this.host()
+				this.remote().status(watching ? 'watching' : 'ready')
 			} catch(error) {
 				if ($mol_promise_like(error)) $mol_fail_hidden(error)
 				this.$.$mol_fail_log(error)
@@ -66,30 +52,53 @@ namespace $ {
 			}
 		}
 
+
 		protected run() {}
 
 		protected versions = {} as Record<string, number>
 		protected watchers = new Map< string , ( path : string , kind : number )=> void >()
 
-
+		protected writes = [] as [path: string, data: string][]
 		protected errors = [] as [filename: string, error: string][]
-		protected errors_timer = null as null | $mol_after_timeout
+		protected changes_tick = null as null | undefined | $mol_after_tick
+
+		@ $mol_action
+		protected changes_cut(): $mol_build_checker_changes | null {
+			const writes = this.writes
+			const errors = this.errors
+
+			this.changes_tick?.destructor()
+			this.changes_tick = null
+
+			if (! errors.length && ! writes.length ) return null
+
+			this.writes = []
+			this.errors = []
+
+			return { writes, errors }
+		}
+
+		changes_flush() {
+			const changes = this.changes_cut()
+			if (! changes ) return
+			$mol_error_fence(() => this.remote().changes(changes), e => ($mol_fail_log(e), null))
+		}
+
+		protected changes_schedule() {
+			// ts watcher calls it in host syncronously
+			if (this.changes_tick === undefined) return
+			if (this.changes_tick !== null) return
+			this.changes_tick = new $mol_after_tick(() => $mol_wire_async(this).changes_flush())
+		}
+
+		protected write_add(path: string, data: string) {
+			this.writes.push([ path, data ])
+			this.changes_schedule()
+		}
 
 		protected error_add(filename: string, error: string) {
 			this.errors.push([filename, error])
-			this.errors_timer = this.errors_timer ?? new $mol_after_timeout(200, $mol_wire_async(() => this.errors_flush()))
-		}
-
-		@ $mol_action
-		protected errors_flush() {
-			this.errors_timer?.destructor()
-			$mol_error_fence(
-				() => this.remote().error(this.errors),
-				e => (this.$.$mol_fail_log(e), null)
-			)
-
-			this.errors = []
-			this.errors_timer = null
+			this.changes_schedule()
 		}
 
 		@ $mol_action
@@ -108,13 +117,18 @@ namespace $ {
 			this.run()
 		}
 
+		// Do not place async logic here, to prevent recheck calls race
 		recheck() {
-			this.host()
+			this.changes_tick?.destructor()
+			this.changes_tick = undefined // disable watch sending
+			this.watching(true) // enable host pull in start
+			this.host() // wait host started
 			this.recheck_internal()
-			this.errors_flush()
-			// this.write_flush()
-			return null
+			return this.changes_cut()
 		}
+
+		@ $mol_mem
+		protected watching(next?: boolean) { return next ?? false }
 
 		@ $mol_mem
 		protected host() {

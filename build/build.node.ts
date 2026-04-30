@@ -21,22 +21,24 @@ namespace $ {
 			return this.$.$mol_build.root( [ $mol_file.relative( root ).path(), paths ])
 		}
 
+		@ $mol_action
+		checker_changes_add({ writes, errors }: $mol_build_checker_changes) {
+			for (const [path, data] of writes) {
+				this.$.$mol_file.relative( path ).text( data, 'virt' )
+			}
+			for (const [filename, error] of errors) {
+				this.js_error( filename , error )
+			}
+		}
+
 		@ $mol_mem_key
 		checker_rpc( { path , exclude , bundle } : { path : string , bundle : string , exclude : readonly string[] } ) {
 			const paths = this.tsPaths({ path , exclude , bundle })
 			if (! paths.length) return null
 
 			const handlers: $mol_build_checker_remote = {
-				write: rec => {
-					for (const [path, data] of rec) {
-						this.$.$mol_file.relative( path ).text( data, 'virt' )
-					}
-				},
-				error: rec => {
-					for (const [filename, error] of rec) {
-						this.js_error( filename , error )
-					}
-				},
+				changes: changes => this.checker_changes_add(changes),
+				status: () => {},
 			}
 
 			const workerData: $mol_build_checker_worker_data = {
@@ -47,9 +49,7 @@ namespace $ {
 
 			const maxOldGenerationSizeMb = this.checker_max_mem()
 
-			return this.$.$mol_rpc_worker.make<typeof $mol_rpc_worker<{
-				recheck(): void
-			}>>({
+			return this.$.$mol_rpc_worker.make<typeof $mol_rpc_worker<$mol_build_checker_shared>>({
 				options: $mol_const({
 					resourceLimits: {
 						maxOldGenerationSizeMb,
@@ -932,7 +932,8 @@ namespace $ {
 				this.tsService({ path , exclude : exclude_ext , bundle })?.recheck()
 			} else {
 				const checker = this.checker({ path , exclude: exclude_ext , bundle })
-				checker?.recheck()
+				const changes = checker?.recheck()
+				if ( changes ) this.checker_changes_add(changes)
 			}
 
 			const errors = [] as Error[]
