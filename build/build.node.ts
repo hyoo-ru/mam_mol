@@ -23,8 +23,9 @@ namespace $ {
 
 		@ $mol_action
 		checker_changes_add({ writes, errors }: $mol_build_checker_changes) {
+			console.log('!!! checker_changes_add', 'writes', writes.length, 'errors', errors.length)
 			for (const [path, data] of writes) {
-				this.$.$mol_file.relative( path ).text( data, 'virt' )
+				$mol_file.relative( path ).text( data, 'virt' )
 			}
 			for (const [filename, error] of errors) {
 				this.js_error( filename , error )
@@ -353,6 +354,7 @@ namespace $ {
 					sources.add( src )
 				} )
 			} )
+			console.log('!!! sourcesAll', path, exclude, sources.size)
 			
 			return [ ... sources ]
 		}
@@ -576,6 +578,7 @@ namespace $ {
 			sources = sources.map(
 				src => src.parent().resolve( src.name().replace( /(\.d)?\.tsx?$/ , '.d.ts' ) )
 			)
+			console.log('!!! sourcesDTS', path, exclude, sources.length)
 			
 			return sources
 		}
@@ -729,6 +732,7 @@ namespace $ {
 		@ $mol_mem_key
 		bundle( [ path , bundle = '' ] : [ path : string , bundle? : string ] ) {
 			
+			console.log('!!! bundle 1', path, bundle)
 			bundle = bundle && bundle.replace( /\.map$/ , '' )
 			
 			var envsDef = [ 'web' , 'node' ]
@@ -749,6 +753,7 @@ namespace $ {
 			
 			var res : $mol_file[] = []
 			
+			console.log('!!! bundle 2', path, bundle)
 			envs.forEach(
 				env => {
 					var exclude = envsDef.filter( e => e !== env ).concat( stages )
@@ -820,6 +825,7 @@ namespace $ {
 			if( !bundle || /\//.test( bundle ) ) {
 				res = res.concat( this.bundleFiles( [ path , [ 'node' ] ] ) )
 			}
+			console.log('!!! bundle 3', path, bundle)
 			
 			return res
 		}
@@ -927,6 +933,7 @@ namespace $ {
 			var target = pack.resolve( `-/${bundle}.audit.js` )
 			var exclude_ext = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
 
+			console.log('!!! bundleAuditJS 1', path, exclude)
 	
 			if (this.checker_synced()) {
 				this.tsService({ path , exclude : exclude_ext , bundle })?.recheck()
@@ -935,9 +942,11 @@ namespace $ {
 				const changes = checker?.recheck()
 				if ( changes ) this.checker_changes_add(changes)
 			}
+			console.log('!!! bundleAuditJS 2', path, exclude)
 
 			const errors = [] as Error[]
 			const paths = this.tsPaths({ path , exclude: exclude_ext , bundle })
+			console.log('!!! bundleAuditJS 3', path, exclude)
 
 			for( const path of paths ) {
 
@@ -1099,13 +1108,19 @@ namespace $ {
 			if( sources.length === 0 ) return []
 			
 			var concater = new $mol_sourcemap_builder( target.parent().path() )
-			
+
+			let len = 0
 			sources.forEach(
 				function( src ) {
 					if( ! src.exists() || ! src.text() ) return
-					concater.add( src.text(), src.relate( target.parent() ) )
+					const text = src.text()
+					len += text.length
+					concater.add( text, src.relate( target.parent() ) )
 				}
 			)
+
+			console.log('!!! bundleDTS', path, exclude, sources.length, 'bytes', len)
+
 			
 			target.text( concater.content + '\nexport = $;\n//# sourceMappingURL=' + targetMap.relate( target.parent() ) + '\n' )
 			targetMap.text( concater.toString() )
