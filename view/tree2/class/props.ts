@@ -1,6 +1,7 @@
 namespace $ {
 	const err = $mol_view_tree2_error_str
 	type Context = { factory?: $mol_tree2 }
+	const is_writable = (input: $mol_tree2) => input.type.includes('?')
 
 	export function $mol_view_tree2_class_props(
 		this: $,
@@ -8,12 +9,19 @@ namespace $ {
 	) {
 		let props = this.$mol_view_tree2_class_super( klass )
 		
-		// ! syntax to *
+		// ! syntax to * and ?val syntax to ?
 		props = props.clone(
 			props.hack({
 				'': ( node, belt )=> {
-					const normal = node.type.replace( /!\w+/, '*' )
+					const next = node.type.indexOf('?')
+					const id = node.type.indexOf('!')
+					let normal = node.type
+					const ch = node.type[id + 1]
+					if (id !== -1 && ch?.toUpperCase() !== ch?.toLowerCase())
+						normal = `${normal.substring(0, id)}*${next === -1 ? '' : '?'}`
+					else if (next !== -1) normal = normal.substring(0, next + 1)
 					if( node.type === normal ) return [ node.clone( node.hack( belt ) ) ]
+					console.warn(`Syntax ${node.type} is deprecated. Use ${normal} instead`)
 					return [ node.struct( normal, node.hack( belt ) ) ]
 				}
 			})
@@ -56,6 +64,8 @@ namespace $ {
 					right = operator.kids[0]
 					if (! right) this.$mol_fail(err`Need a child ${operator.span}`)
 					if (! context.factory) this.$mol_fail(err`Need a parent ${left.span}`)
+					if ( is_writable( left ) !== is_writable( right ) )
+						this.$mol_fail(err`Left and right operands are not compatible at ${operator.span}`)
 
 					add_inner(right.clone([
 						right.struct('=', [
@@ -65,6 +75,13 @@ namespace $ {
 							),
 						]),
 					]))
+				} else if (operator?.type === "<=>") {
+					const right = operator.kids[0]
+					if (! right) this.$mol_fail(err`Need a child ${operator.span}`)
+					if (! is_writable(left)) this.$mol_fail(err`Expected writable at ${left.span}`)
+					if (! is_writable(right)) this.$mol_fail(err`Expected writable at ${right.span}`)
+				} else if (operator?.type === "<=" && is_writable(left)) {
+					this.$mol_fail(err`Expected readonly at ${left.span}`)
 				}
 
 				if (right) context = { factory: right.clone([]) }
