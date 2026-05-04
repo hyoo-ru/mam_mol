@@ -1879,10 +1879,10 @@ declare namespace $ {
     /**
      * Return `unknown` when `A` and `B` are the same type. `never` otherwise.
      *
-     * 	$mol_type_equals< unknown , any > & number // never
-     * 	$mol_type_equals< never , never > & number // number
+     * 	$mol_type_equals< unknown , any > & number // true
+     * 	$mol_type_equals< never , never > & number // false
      */
-    type $mol_type_equals<A, B> = (<X>() => X extends A ? 1 : 2) extends (<X>() => X extends B ? 1 : 2) ? unknown : never;
+    type $mol_type_equals<A, B> = (<X>() => X extends A ? 1 : 2) extends (<X>() => X extends B ? 1 : 2) ? true : false;
 }
 
 declare namespace $ {
@@ -1892,7 +1892,7 @@ declare namespace $ {
      * 	// { a : { x : 1 , y : 2 } }
      * 	$mol_type_merge< { a : { x : 1 } }&{ a : { y : 2 } } >
      */
-    type $mol_type_merge<Intersection> = Intersection extends (...a: any[]) => any ? Intersection : Intersection extends new (...a: any[]) => any ? Intersection : Intersection extends object ? $mol_type_merge_object<Intersection> extends Intersection ? unknown extends $mol_type_equals<{
+    type $mol_type_merge<Intersection> = Intersection extends (...a: any[]) => any ? Intersection : Intersection extends new (...a: any[]) => any ? Intersection : Intersection extends object ? $mol_type_merge_object<Intersection> extends Intersection ? true extends $mol_type_equals<{
         [Key in keyof Intersection]: Intersection[Key];
     }, Intersection> ? Intersection : {
         [Key in keyof Intersection]: $mol_type_merge<Intersection[Key]>;

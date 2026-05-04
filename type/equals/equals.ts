@@ -3,8 +3,8 @@ namespace $ {
 	/**
 	 * Return `unknown` when `A` and `B` are the same type. `never` otherwise.
 	 * 
-	 * 	$mol_type_equals< unknown , any > & number // never
-	 * 	$mol_type_equals< never , never > & number // number
+	 * 	$mol_type_equals< unknown , any > & number // true
+	 * 	$mol_type_equals< never , never > & number // false
 	 */
 	export type $mol_type_equals< A , B > =
 		(
@@ -12,7 +12,7 @@ namespace $ {
 		) extends (
 			<X>()=> X extends B ? 1 : 2
 		)
-			? unknown
-			: never
+			? true
+			: false
 
 }
