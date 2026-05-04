@@ -9,6 +9,6 @@ namespace $ {
 	export type $mol_type_nullable< Type > =
 		Type extends object
 		? { [ Key in keyof Type ]: Type[ Key ] | null }
-		: T | null
+		: Type | null
 
 }

@@ -148,7 +148,7 @@ namespace $ {
 				groups[ group ] = groups[ group ] || res[ i + 1 ] || '' as any
 			}
 
-			return Object.assign( res, { groups } )
+			return Object.assign( res, { groups } ) as any
 		}
 		
 		generate(

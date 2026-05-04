@@ -87,6 +87,8 @@
     "$mol_decor",
     "$mol_style_properties",
     "$mol_type_override",
+    "$mol_type_merge",
+    "$mol_type_equals",
     "$mol_gap",
     "$mol_jsx",
     "$mol_dom_render_children",
