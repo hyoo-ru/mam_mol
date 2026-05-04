@@ -52,6 +52,10 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    /**
+     * Sandbox for javascript code from user.
+     * @see https://sandbox.js.hyoo.ru/
+     */
     class $mol_func_sandbox {
         static blacklist = new Set([
             (function () { }).constructor,
@@ -98,6 +102,7 @@ var $;
 				for( const key of Object.getOwnPropertyNames( window ) ) delete window[ key ]
 
 			`);
+            // Stop event-loop and break all async operations
             $mol_dom_context.document.body.removeChild(frame);
             let context_default = {};
             function clean(obj) {

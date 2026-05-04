@@ -25,12 +25,12 @@ namespace $.$$ {
 
 			const dest = `
 				query? \\
-				clear?event null
+				clear? null
 				Query $mol_string value? <=> query?
 				Suggest_label $mol_dimmer
 					needle <= query?
 					key * escape? <=> clear?
-				Clear $mol_button_minor click?event <=> clear?event
+				Clear $mol_button_minor click? <=> clear?
 			`
 			const res = normalize($, src, dest)
 			$mol_assert_equal(res.input, res.output)
@@ -54,10 +54,10 @@ namespace $.$$ {
 			const dest = `
 				Close_icon ${d}mol_icon_cross
 				Title ${d}mol_view sub / <= title
-				close?event null
+				close? null
 				Close ${d}mol_button
 					title \\close
-					click?event <=> close?event
+					click? <=> close?
 				title @ \\title
 				sub2 / <= Close_icon
 				sub /
@@ -109,7 +109,7 @@ namespace $.$$ {
 			const dest = `
 				clear? = Suggest_label clear?
 				Suggest_label $mol_dimmer clear? => clear?
-				Clear $mol_button_minor click?e <=> clear?e
+				Clear $mol_button_minor click? <=> clear?
 			`
 
 			const res = normalize($, src, dest)
@@ -130,7 +130,7 @@ namespace $.$$ {
 				`Need an equal default values at \`/mol/view/tree2/class/props.test.ts#4:16/5\` vs \`/mol/view/tree2/class/props.test.ts#6:23/11\`
 <=>
 /mol/view/tree2/class/props.test.ts#6:19/3
-click?event
+click?
 /mol/view/tree2/class/props.test.ts#6:7/11
 $mol_button_minor
 /mol/view/tree2/class/props.test.ts#5:12/17

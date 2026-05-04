@@ -26,6 +26,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    /**
+     * Sandbox for javascript code from user.
+     * @see https://sandbox.js.hyoo.ru/
+     */
     class $mol_func_sandbox {
         static blacklist: Set<Function>;
         static whitelist: WeakSet<WeakKey>;
