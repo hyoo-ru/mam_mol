@@ -2565,12 +2565,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     /** Create record of CSS variables. */
@@ -8239,6 +8233,12 @@ var $;
 
 ;
 "use strict";
+
+;
+"use strict";
+
+;
+"use strict";
 var $;
 (function ($) {
     let x = /x/[Symbol.matchAll];
@@ -13835,9 +13835,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($_1) {
     $mol_test({
@@ -15402,6 +15399,9 @@ var $;
         $.$mol_locale = $mol_locale_mock;
     });
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";

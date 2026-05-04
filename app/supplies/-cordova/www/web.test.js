@@ -16,9 +16,6 @@ function require( path ){ return $node[ path ] };
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($_1) {
     function $mol_test(set) {
@@ -2994,6 +2991,9 @@ var $;
         $.$mol_locale = $mol_locale_mock;
     });
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";

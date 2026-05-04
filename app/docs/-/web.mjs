@@ -461,12 +461,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     /** Create record of CSS variables. */
@@ -7475,6 +7469,12 @@ var $;
 	($mol_mem_key(($.$mol_dimmer.prototype), "Low"));
 	($mol_mem_key(($.$mol_dimmer.prototype), "High"));
 
+
+;
+"use strict";
+
+;
+"use strict";
 
 ;
 "use strict";

@@ -2574,12 +2574,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     /** Create record of CSS variables. */
