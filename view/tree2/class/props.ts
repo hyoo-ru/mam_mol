@@ -16,8 +16,10 @@ namespace $ {
 					const next = node.type.indexOf('?')
 					const id = node.type.indexOf('!')
 					let normal = node.type
-					if (next !== -1) normal = normal.substring(0, next + 1)
-					if (id !== -1) normal = `${normal.substring(0, id)}*${next === -1 ? '' : '?'}`
+					const ch = node.type[id + 1]
+					if (id !== -1 && ch?.toUpperCase() !== ch?.toLowerCase())
+						normal = `${normal.substring(0, id)}*${next === -1 ? '' : '?'}`
+					else if (next !== -1) normal = normal.substring(0, next + 1)
 					if( node.type === normal ) return [ node.clone( node.hack( belt ) ) ]
 					console.warn(`Syntax ${node.type} is deprecated. Use ${normal} instead`)
 					return [ node.struct( normal, node.hack( belt ) ) ]
