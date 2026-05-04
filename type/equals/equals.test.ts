@@ -4,101 +4,114 @@ namespace $ {
 
 	type equal_numbers = $mol_type_assert<
 		$mol_type_equals< 777 , 777 > ,
-		unknown
+		true
 	>
 
 	type equal_objects = $mol_type_assert<
 		$mol_type_equals< { a : { b : 1 } } , { a : { b : 1 } } > ,
-		unknown
+		true
 	>
 
 	type equal_unions = $mol_type_assert<
 		$mol_type_equals< 1|2 , 2|1 > ,
-		unknown
+		true
 	>
 
 	type nevers = $mol_type_assert<
 		$mol_type_equals< never , never > ,
-		unknown
+		true
 	>
 
 	type voids = $mol_type_assert<
 		$mol_type_equals< void , void > ,
-		unknown
+		true
 	>
 
 	type unknowns = $mol_type_assert<
 		$mol_type_equals< unknown , unknown > ,
-		unknown
+		true
 	>
 
 	type undefineds = $mol_type_assert<
 		$mol_type_equals< undefined , undefined > ,
-		unknown
+		true
 	>
 
 	type nulls = $mol_type_assert<
 		$mol_type_equals< null , null > ,
-		unknown
+		true
 	>
 
 	type anys = $mol_type_assert<
 		$mol_type_equals< any , any > ,
-		unknown
+		true
 	>
 
 	// Negative
 
-	type unique_numbers = $mol_type_assert_never<
-		$mol_type_equals< 666 , 777 >
+	type unique_numbers = $mol_type_assert<
+		$mol_type_equals< 666 , 777 >,
+		false
 	>
 
-	type unique_objects = $mol_type_assert_never<
-		$mol_type_equals< { a : { b : 1 } } , { a : { c : 1 } } >
+	type unique_objects = $mol_type_assert<
+		$mol_type_equals< { a : { b : 1 } } , { a : { c : 1 } } >,
+		false
 	>
 
-	type object_extension = $mol_type_assert_never<
-		$mol_type_equals< { a : 1 } , { a : 1 , b : 2 } >
+	type object_extension = $mol_type_assert<
+		$mol_type_equals< { a : 1 } , { a : 1 , b : 2 } >,
+		false
 	>
 
-	type unique_unions = $mol_type_assert_never<
-		$mol_type_equals< 1|2 , 1|2|3 >
+	type unique_unions = $mol_type_assert<
+		$mol_type_equals< 1|2 , 1|2|3 >,
+		false
 	>
 
-	type number_subtype = $mol_type_assert_never<
-		$mol_type_equals< number , 777 >
+	type number_subtype = $mol_type_assert<
+		$mol_type_equals< number , 777 >,
+		false
 	>
 
-	type never_number = $mol_type_assert_never<
-		$mol_type_equals< never , 777 >
+	type never_number = $mol_type_assert<
+		$mol_type_equals< never , 777 >,
+		false
 	>
 
-	type void_number = $mol_type_assert_never<
-		$mol_type_equals< void , 777 >
+	type void_number = $mol_type_assert<
+		$mol_type_equals< void , 777 >,
+		false
 	>
 
-	type unknown_number = $mol_type_assert_never<
-		$mol_type_equals< unknown , 777 >
+	type unknown_number = $mol_type_assert<
+		$mol_type_equals< unknown , 777 >,
+		false
 	>
 
-	type undefined_number = $mol_type_assert_never<
-		$mol_type_equals< undefined , 777 >
+	type undefined_number = $mol_type_assert<
+		$mol_type_equals< undefined , 777 >,
+		false
 	>
 
-	type null_number = $mol_type_assert_never<
-		$mol_type_equals< null , 777 >
+	type null_number = $mol_type_assert<
+		$mol_type_equals< null , 777 >,
+		false
 	>
 
-	type any_number = $mol_type_assert_never<
-		$mol_type_equals< any , 777 >
+	type any_number = $mol_type_assert<
+		$mol_type_equals< any , 777 >,
+		false
 	>
 
-	type any_unknown = $mol_type_assert_never<
-		$mol_type_equals< any , unknown >
+	type any_unknown = $mol_type_assert<
+		$mol_type_equals< any , unknown >,
+		false
 	>
 
-	type never_void = $mol_type_assert_never<
-		$mol_type_equals< never , void >
+	type never_void = $mol_type_assert<
+		$mol_type_equals< never , void >,
+		false
 	>
 
 }
