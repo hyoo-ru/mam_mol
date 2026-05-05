@@ -23,14 +23,12 @@ namespace $ {
 			if( this.output.writableEnded ) return
 			if( this.output.getHeader( 'content-disposition' ) ) return
 
-			const ascii = name
-				.replace( /[\x00-\x1F\x7F"\\]/g, '_' )
-				.replace( /[^\x20-\x7E]/g, '_' )
+			const ascii = name.replace( /[^a-zA-Z0-9._-]/g, '_' )
 
 			const utf8 = encodeURIComponent( name )
 				.replace( /['()*]/g, char => '%' + char.charCodeAt( 0 ).toString( 16 ).toUpperCase() )
 
-			this.output.setHeader( 'content-disposition', `attachment; filename="${ ascii }"; filename*=UTF-8''${ utf8 }` )
+			this.output.setHeader( 'content-disposition', `inline; filename="${ ascii }"; filename*=UTF-8''${ utf8 }` )
 		}
 		
 		@ $mol_action
