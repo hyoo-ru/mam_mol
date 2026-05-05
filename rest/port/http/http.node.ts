@@ -17,6 +17,21 @@ namespace $ {
 			if( this.output.getHeader( 'content-type' ) ) return
 			this.output.setHeader( 'content-type', mime )
 		}
+
+		@ $mol_action
+		send_name( name: string ) {
+			if( this.output.writableEnded ) return
+			if( this.output.getHeader( 'content-disposition' ) ) return
+
+			const ascii = name
+				.replace( /[\x00-\x1F\x7F"\\]/g, '_' )
+				.replace( /[^\x20-\x7E]/g, '_' )
+
+			const utf8 = encodeURIComponent( name )
+				.replace( /['()*]/g, char => '%' + char.charCodeAt( 0 ).toString( 16 ).toUpperCase() )
+
+			this.output.setHeader( 'content-disposition', `attachment; filename="${ ascii }"; filename*=UTF-8''${ utf8 }` )
+		}
 		
 		@ $mol_action
 		send_bin( data: Uint8Array< ArrayBuffer > ) {
