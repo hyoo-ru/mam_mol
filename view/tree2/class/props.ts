@@ -80,7 +80,7 @@ namespace $ {
 					if (! right) this.$mol_fail(err`Need a child ${operator.span}`)
 					if (! is_writable(left)) this.$mol_fail(err`Expected writable at ${left.span}`)
 					if (! is_writable(right)) this.$mol_fail(err`Expected writable at ${right.span}`)
-				} else if (operator?.type === "<=" && is_writable(left)) {
+				} else if (context.factory && operator?.type === "<=" && is_writable(left)) {
 					this.$mol_fail(err`Expected readonly at ${left.span}`)
 				}
 
