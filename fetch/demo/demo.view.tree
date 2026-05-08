@@ -6,7 +6,7 @@ $mol_fetch_demo $mol_example_small
 				<= Url $mol_string
 					value? <=> url? \https://jsonplaceholder.typicode.com/users
 				<= Fetch $mol_button_major
-					click <= fetch_data null
+					click? <=> fetch_data? null
 			<= Data $mol_dump_value
 				value <= data? null
 	tags /
