@@ -1943,6 +1943,7 @@ declare namespace $.$$ {
     class $mol_list extends $.$mol_list {
         sub(): readonly $mol_view[];
         render_visible_only(): boolean;
+        _view_window_last: number[];
         view_window(next?: [number, number]): [number, number];
         item_height_min(index: number): number;
         row_width_min(index: number): number;

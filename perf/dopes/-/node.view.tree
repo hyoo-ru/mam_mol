@@ -5,14 +5,14 @@ $mol_speck $mol_view
 
 $mol_button $mol_view
 	enabled true
-	click?event null
-	event_click?event null
+	click? null
+	event_click? null
 	status? /
 	event *
 		^
-		click?event <=> activate?event <=> event_activate?event null
-		dblclick?event <=> clicks?event null
-		keydown?event <=> key_press?event <=> event_key_press?event null
+		click? <=> activate? <=> event_activate? null
+		dblclick? <=> clicks? null
+		keydown? <=> key_press? <=> event_key_press? null
 	attr *
 		^
 		disabled <= disabled false
@@ -41,10 +41,10 @@ $mol_perf_dopes $mol_view
 				<= speed \{speed} Dopes/s
 		<= Start $mol_button_major
 			title \@ Start
-			click?event <=> start?event null
+			click? <=> start? null
 		<= Stop $mol_button_major
 			title \@ Stop
-			click?event <=> stop?event null
+			click? <=> stop? null
 		<= Labels $mol_view
 			sub <= labels /
 	Label* $mol_view

@@ -7350,6 +7350,7 @@ var $;
             render_visible_only() {
                 return this.$.$mol_support_css_overflow_anchor();
             }
+            _view_window_last = [0, 0];
             view_window(next) {
                 const kids = this.sub();
                 if (kids.length < 3)
@@ -7359,7 +7360,7 @@ var $;
                 const rect = this.view_rect();
                 if (next)
                     return next;
-                let [min, max] = $mol_mem_cached(() => this.view_window()) ?? [0, 0];
+                let [min, max] = $mol_mem_cached(() => this.view_window()) ?? this._view_window_last;
                 const shift = this.view_window_shift();
                 this.view_window_shift(0);
                 min += shift;
@@ -7454,7 +7455,7 @@ var $;
             sub_visible() {
                 return [
                     ...this.gap_before() ? [this.Gap_before()] : [],
-                    ...this.sub().slice(...this.view_window()),
+                    ...this.sub().slice(...this._view_window_last = this.view_window()),
                     ...this.gap_after() ? [this.Gap_after()] : [],
                 ];
             }

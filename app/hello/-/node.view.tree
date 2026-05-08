@@ -1,7 +1,7 @@
 $mol_hotkey $mol_plugin
 	event *
 		^
-		keydown?event <=> keydown?event null
+		keydown? <=> keydown? null
 	key *
 	mod_ctrl false
 	mod_alt false
@@ -35,11 +35,11 @@ $mol_string $mol_view
 		type <= type? \text
 	event *
 		^
-		input?event <=> event_change?event null
+		input? <=> event_change? null
 	plugins /
 		<= Submit $mol_hotkey
 			mod_ctrl <= submit_with_ctrl false
-			key * enter?event <=> submit?event null
+			key * enter? <=> submit? null
 
 $mol_app_hello $mol_view
 	sub /

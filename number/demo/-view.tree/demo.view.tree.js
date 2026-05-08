@@ -18,7 +18,7 @@
 		Reset(){
 			const obj = new this.$.$mol_button_major();
 			(obj.title) = () => ("Reset");
-			(obj.enabled) = (next) => ((this.reset_enabled()));
+			(obj.enabled) = () => ((this.reset_enabled()));
 			(obj.click) = (next) => ((this.reset_value(next)));
 			return obj;
 		}
@@ -88,7 +88,7 @@
 		Disabled_number(){
 			const obj = new this.$.$mol_number();
 			(obj.hint) = () => ("This hint not showed while enabled is false");
-			(obj.value) = (next) => ((this.value()));
+			(obj.value) = (next) => ((this.value(next)));
 			(obj.enabled) = () => (false);
 			return obj;
 		}

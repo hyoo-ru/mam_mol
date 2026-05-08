@@ -14,7 +14,7 @@
 		}
 		Fetch(){
 			const obj = new this.$.$mol_button_major();
-			(obj.click) = (next) => ((this.fetch_data()));
+			(obj.click) = (next) => ((this.fetch_data(next)));
 			return obj;
 		}
 		Request(){

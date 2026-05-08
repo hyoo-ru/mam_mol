@@ -6,7 +6,7 @@ $mol_scroll $mol_view
 		tabindex <= tabindex -1
 	event *
 		^
-		scroll?event <=> event_scroll?event null
+		scroll? <=> event_scroll? null
 
 $mol_page $mol_view
 	dom_name \article
@@ -90,14 +90,14 @@ $mol_speck $mol_view
 
 $mol_button $mol_view
 	enabled true
-	click?event null
-	event_click?event null
+	click? null
+	event_click? null
 	status? /
 	event *
 		^
-		click?event <=> activate?event <=> event_activate?event null
-		dblclick?event <=> clicks?event null
-		keydown?event <=> key_press?event <=> event_key_press?event null
+		click? <=> activate? <=> event_activate? null
+		dblclick? <=> clicks? null
+		keydown? <=> key_press? <=> event_key_press? null
 	attr *
 		^
 		disabled <= disabled false
@@ -131,7 +131,7 @@ $mol_check $mol_button_minor
 $mol_pick $mol_pop
 	event *
 		^
-		keydown?event <=> keydown?event null
+		keydown? <=> keydown? null
 	Anchor <= Trigger $mol_check
 		minimal_width 40
 		minimal_height 40
@@ -173,13 +173,13 @@ $mol_nav $mol_plugin
 	current_x? null
 	current_y? null
 	-
-	event_up?event null
-	event_down?event null
-	event_left?event null
-	event_right?event null
+	event_up? null
+	event_down? null
+	event_left? null
+	event_right? null
 	event *
 		^
-		keydown?event <=> event_key?event null
+		keydown? <=> event_key? null
 
 $mol_list $mol_view
 	render_visible_only true
@@ -198,7 +198,7 @@ $mol_list $mol_view
 $mol_hotkey $mol_plugin
 	event *
 		^
-		keydown?event <=> keydown?event null
+		keydown? <=> keydown? null
 	key *
 	mod_ctrl false
 	mod_alt false
@@ -232,11 +232,11 @@ $mol_string $mol_view
 		type <= type? \text
 	event *
 		^
-		input?event <=> event_change?event null
+		input? <=> event_change? null
 	plugins /
 		<= Submit $mol_hotkey
 			mod_ctrl <= submit_with_ctrl false
-			key * enter?event <=> submit?event null
+			key * enter? <=> submit? null
 
 $mol_svg $mol_view
 	dom_name \svg
@@ -278,7 +278,7 @@ $mol_search $mol_pop
 			key * escape? <=> clear? null
 		<= Nav $mol_nav
 			keys_y <= nav_components /$mol_view
-			current_y?component <=> nav_focused?component null
+			current_y? <=> nav_focused? null
 	showed? <=> suggests_showed? false
 	align_hor \right
 	Anchor $mol_view
@@ -286,7 +286,7 @@ $mol_search $mol_pop
 			<= Query $mol_string
 				value? <=> query? \
 				hint <= hint @ \Search...
-				submit?event <=> submit?event null
+				submit? <=> submit? null
 				enabled <= enabled true
 				keyboard <= keyboard \search
 				enter <= enter \search
@@ -294,7 +294,7 @@ $mol_search $mol_pop
 			<= Clear $mol_button_minor
 				hint @ \Clear
 				enabled <= enabled true
-				click?event <=> clear?event null
+				click? <=> clear? null
 				sub /
 					<= Clear_icon $mol_icon_close
 	bubble_content /$mol_view_content
@@ -303,7 +303,7 @@ $mol_search $mol_pop
 				<= Menu $mol_list
 					rows <= menu_items /$mol_view
 	Suggest* $mol_button_minor
-		click?event <=> suggest_select*?event null
+		click? <=> suggest_select*? null
 		sub <= suggest_content* /$mol_view_content
 			<= Suggest_label* $mol_dimmer
 				haystack <= suggest_label* \
@@ -318,7 +318,7 @@ $mol_select $mol_pick
 	option_label_default \
 	Option_row* $mol_button_minor
 		enabled <= enabled true
-		event_click?event <=> event_select*?event null
+		event_click? <=> event_select*? null
 		sub <= option_content* /
 			<= Option_label* $mol_dimmer
 				haystack <= option_label* \
@@ -330,7 +330,7 @@ $mol_select $mol_pick
 		^
 		<= Nav $mol_nav
 			keys_y <= nav_components /$mol_view
-			current_y?component <=> option_focused?component null
+			current_y? <=> option_focused? null
 			cycle? <=> nav_cycle? true
 	hint @ \Pick..
 	bubble_content /
@@ -342,7 +342,7 @@ $mol_select $mol_pick
 	Filter $mol_search
 		query? <=> filter_pattern? \
 		hint <= filter_hint @ \Filter..
-		submit?event <=> submit?event null
+		submit? <=> submit? null
 		enabled <= enabled true
 	Trigger_icon $mol_icon_dots_vertical
 	trigger_enabled <= enabled

@@ -6,7 +6,7 @@ $mol_scroll $mol_view
 		tabindex <= tabindex -1
 	event *
 		^
-		scroll?event <=> event_scroll?event null
+		scroll? <=> event_scroll? null
 
 $mol_book2 $mol_scroll
 	menu_title \
@@ -24,7 +24,7 @@ $mol_theme_auto $mol_plugin
 $mol_hotkey $mol_plugin
 	event *
 		^
-		keydown?event <=> keydown?event null
+		keydown? <=> keydown? null
 	key *
 	mod_ctrl false
 	mod_alt false
@@ -118,13 +118,13 @@ $mol_nav $mol_plugin
 	current_x? null
 	current_y? null
 	-
-	event_up?event null
-	event_down?event null
-	event_left?event null
-	event_right?event null
+	event_up? null
+	event_down? null
+	event_left? null
+	event_right? null
 	event *
 		^
-		keydown?event <=> event_key?event null
+		keydown? <=> event_key? null
 
 $mol_string $mol_view
 	dom_name \input
@@ -154,11 +154,11 @@ $mol_string $mol_view
 		type <= type? \text
 	event *
 		^
-		input?event <=> event_change?event null
+		input? <=> event_change? null
 	plugins /
 		<= Submit $mol_hotkey
 			mod_ctrl <= submit_with_ctrl false
-			key * enter?event <=> submit?event null
+			key * enter? <=> submit? null
 
 $mol_svg $mol_view
 	dom_name \svg
@@ -198,14 +198,14 @@ $mol_speck $mol_view
 
 $mol_button $mol_view
 	enabled true
-	click?event null
-	event_click?event null
+	click? null
+	event_click? null
 	status? /
 	event *
 		^
-		click?event <=> activate?event <=> event_activate?event null
-		dblclick?event <=> clicks?event null
-		keydown?event <=> key_press?event <=> event_key_press?event null
+		click? <=> activate? <=> event_activate? null
+		dblclick? <=> clicks? null
+		keydown? <=> key_press? <=> event_key_press? null
 	attr *
 		^
 		disabled <= disabled false
@@ -264,7 +264,7 @@ $mol_search $mol_pop
 			key * escape? <=> clear? null
 		<= Nav $mol_nav
 			keys_y <= nav_components /$mol_view
-			current_y?component <=> nav_focused?component null
+			current_y? <=> nav_focused? null
 	showed? <=> suggests_showed? false
 	align_hor \right
 	Anchor $mol_view
@@ -272,7 +272,7 @@ $mol_search $mol_pop
 			<= Query $mol_string
 				value? <=> query? \
 				hint <= hint @ \Search...
-				submit?event <=> submit?event null
+				submit? <=> submit? null
 				enabled <= enabled true
 				keyboard <= keyboard \search
 				enter <= enter \search
@@ -280,7 +280,7 @@ $mol_search $mol_pop
 			<= Clear $mol_button_minor
 				hint @ \Clear
 				enabled <= enabled true
-				click?event <=> clear?event null
+				click? <=> clear? null
 				sub /
 					<= Clear_icon $mol_icon_close
 	bubble_content /$mol_view_content
@@ -289,7 +289,7 @@ $mol_search $mol_pop
 				<= Menu $mol_list
 					rows <= menu_items /$mol_view
 	Suggest* $mol_button_minor
-		click?event <=> suggest_select*?event null
+		click? <=> suggest_select*? null
 		sub <= suggest_content* /$mol_view_content
 			<= Suggest_label* $mol_dimmer
 				haystack <= suggest_label* \
@@ -378,7 +378,7 @@ $mol_link $mol_view
 	arg *
 	event *
 		^
-		click?event <=> click?event <=> event_click?event null
+		click? <=> click? <=> event_click? null
 
 $mol_app_demo_menu $mol_page
 	names /string
@@ -1737,8 +1737,8 @@ $mol_textarea $mol_stack
 		mol_textarea_clickable <= clickable? false
 		mol_textarea_sidebar_showed <= sidebar_showed false
 	event *
-		keydown?event <=> press?event null
-		pointermove?event <=> hover?event null
+		keydown? <=> press? null
+		pointermove? <=> hover? null
 	sub /
 		<= Edit $mol_textarea_edit
 			value? <=> value? \
@@ -1988,7 +1988,7 @@ $mol_app_quine_demo $mol_example_large
 $mol_pick $mol_pop
 	event *
 		^
-		keydown?event <=> keydown?event null
+		keydown? <=> keydown? null
 	Anchor <= Trigger $mol_check
 		minimal_width 40
 		minimal_height 40
@@ -2008,7 +2008,7 @@ $mol_select $mol_pick
 	option_label_default \
 	Option_row* $mol_button_minor
 		enabled <= enabled true
-		event_click?event <=> event_select*?event null
+		event_click? <=> event_select*? null
 		sub <= option_content* /
 			<= Option_label* $mol_dimmer
 				haystack <= option_label* \
@@ -2020,7 +2020,7 @@ $mol_select $mol_pick
 		^
 		<= Nav $mol_nav
 			keys_y <= nav_components /$mol_view
-			current_y?component <=> option_focused?component null
+			current_y? <=> option_focused? null
 			cycle? <=> nav_cycle? true
 	hint @ \Pick..
 	bubble_content /
@@ -2032,7 +2032,7 @@ $mol_select $mol_pick
 	Filter $mol_search
 		query? <=> filter_pattern? \
 		hint <= filter_hint @ \Filter..
-		submit?event <=> submit?event null
+		submit? <=> submit? null
 		enabled <= enabled true
 	Trigger_icon $mol_icon_dots_vertical
 	trigger_enabled <= enabled
@@ -2292,13 +2292,13 @@ $mol_button_open_native $mol_view
 		accept <= accept \
 		multiple <= multiple true
 	event *
-		change?next <=> picked?next null
+		change? <=> picked? null
 
 $mol_attach $mol_view
 	items? /string
 	sub <= content /$mol_view
 		<= Item*0 $mol_button_minor
-			click?event <=> item_drop*?event null
+			click? <=> item_drop*? null
 			sub /
 				<= Image* $mol_image
 					title \
@@ -2455,8 +2455,8 @@ $mol_form $mol_list
 	submit_blocked false
 	event *
 		^
-		keydown?event <=> keydown?event null
-	save?event null
+		keydown? <=> keydown? null
+	save? null
 	message_done @ \Saved
 	errors *string
 		\Form invalid
@@ -2969,7 +2969,7 @@ $mol_button_demo $mol_example_small
 	sub /
 		<= Major_enabled $mol_button_major
 			title \Enabled Major
-			click?event <=> fail?event null
+			click? <=> fail? null
 		-
 		<= Major_disabled $mol_button_major
 			title \Disabled Major
@@ -2977,19 +2977,19 @@ $mol_button_demo $mol_example_small
 		-
 		<= Minor_enabled $mol_button_minor
 			title \Enabled Minor
-			click?event <=> fail?event null
+			click? <=> fail? null
 		-
 		<= Minor_disabled $mol_button_minor
 			title \Disabled Minor
 			enabled false
 		-
 		<= Minor_icon_only $mol_button_minor
-			click?event <=> fail?event null
+			click? <=> fail? null
 			sub /
 				<= Minor_icon_only_icon $mol_icon_cursor_default_click_outline
 		-
 		<= Minor_iconed $mol_button_minor
-			click?event <=> fail?event null
+			click? <=> fail? null
 			sub /
 				<= Minor_iconed_icon $mol_icon_cursor_default_click_outline
 				\Minor with Icon
@@ -4247,7 +4247,7 @@ $mol_date $mol_pick
 			<= Today $mol_button_minor
 				hint @ \Today
 				enabled <= enabled true
-				click?event <=> today_click?event null
+				click? <=> today_click? null
 				sub /
 					<= Today_icon $mol_icon_calendar_today
 			<= Input $mol_format
@@ -4258,27 +4258,27 @@ $mol_date $mol_pick
 			<= Clear $mol_button_minor
 				hint @ \Clear
 				enabled <= enabled true
-				click?event <=> clear?event null
+				click? <=> clear? null
 				sub /
 					<= Clear_icon $mol_icon_trash_can_outline
 		<= Calendar $mol_date_calendar
 			enabled <= enabled true
 			month_moment <= month_moment <= value_moment
 			day_selected* <= day_selected* false
-			day_click*?event <=> day_click*?event null
+			day_click*? <=> day_click*? null
 			Title => Calendar_title
 			head /
 				<= Calendar_tools $mol_view
 					sub /
 						<= Prev $mol_button_minor
 							hint <= prev_hint @ \Previous month
-							click?event <=> prev?event null
+							click? <=> prev? null
 							sub /
 								<= Prev_icon $mol_icon_chevron_left
 						<= Calendar_title
 						<= Next $mol_button_minor
 							hint <= next_hint @ \Next month
-							click?event <=> next?event null
+							click? <=> next? null
 							sub /
 								<= Next_icon $mol_icon_chevron_right
 	-
@@ -4289,7 +4289,7 @@ $mol_date_calendar $mol_calendar
 	day_content* /
 		<= Day_button* $mol_button_minor
 			title <= day_text*
-			event_click?event <=> day_click*?event null
+			event_click? <=> day_click*? null
 			minimal_height 24
 			enabled <= enabled true
 
@@ -4374,9 +4374,9 @@ $mol_dimmer_demo $mol_example_small
 
 $mol_drag $mol_ghost
 	event *
-		dragstart?event <=> drag_start?event <=> start?event null
-		drag?event <=> drag_move?event <=> move?event null
-		dragend?event <=> drag_end?event <=> end?event null
+		dragstart? <=> drag_start? <=> start? null
+		drag? <=> drag_move? <=> move? null
+		dragend? <=> drag_end? <=> end? null
 	attr *
 		draggable true
 		mol_drag_status <= status? \ready
@@ -4392,13 +4392,13 @@ $mol_drag $mol_ghost
 $mol_drop $mol_ghost
 	enabled? true
 	event *
-		dragenter?event <=> enter?event null
-		dragover?event <=> move?event null
-		dragleave?event <=> leave?event null
-		drop?event <=> drop?event null
+		dragenter? <=> enter? null
+		dragover? <=> move? null
+		dragleave? <=> leave? null
+		drop? <=> drop? null
 	attr * mol_drop_status <= status? \ready
-	adopt?transfer *
-	receive?transfer null
+	adopt? *
+	receive? null
 	allow /
 		\copy
 		\move
@@ -4408,12 +4408,12 @@ $mol_drag_demo $mol_example_large
 	task_count 100
 	sub /
 		<= List_drop $mol_drop
-			adopt?transfer <=> transfer_adopt?transfer null
-			receive?obj <=> receive?obj null
+			adopt? <=> transfer_adopt? null
+			receive? <=> receive? null
 			Sub <= Page $mol_page
 				head / <= Trash_drop $mol_drop
-					adopt?transfer <=> transfer_adopt?transfer null
-					receive?obj <=> receive_trash?obj null
+					adopt? <=> transfer_adopt? null
+					receive? <=> receive_trash? null
 					Sub <= Trash $mol_view sub /
 						<= Trash_icon $mol_icon_trash_can_outline
 						\ Trash
@@ -4425,8 +4425,8 @@ $mol_drag_demo $mol_example_large
 			text/html <= task_html* \
 			text/uri-list <= task_uri* \
 		Sub <= Task_drop* $mol_drop
-			adopt?transfer <=> transfer_adopt?transfer null
-			receive?obj <=> receive_before*?obj null
+			adopt? <=> transfer_adopt? null
+			receive? <=> receive_before*? null
 			Sub <= Task_link* $mol_link
 				uri <= task_uri* \
 				sub / <= task_title* \
@@ -4505,7 +4505,7 @@ $mol_fetch_demo $mol_example_small
 				<= Url $mol_string
 					value? <=> url? \https://jsonplaceholder.typicode.com/users
 				<= Fetch $mol_button_major
-					click? <= fetch_data? null
+					click? <=> fetch_data? null
 			<= Data $mol_dump_value
 				value <= data? null
 	tags /
@@ -4664,7 +4664,7 @@ $mol_form_draft $mol_form
 	list_string*? /string
 	value_changed* false
 	reset? null
-	done?event null
+	done? null
 	buttons /$mol_view
 		<= Submit
 		<= Reset $mol_button_minor
@@ -4678,7 +4678,7 @@ $mol_select_list $mol_view
 	badges_list <= Badges /$mol_view
 	Badge* $mol_button_minor
 		title <= badge_title* \badge
-		click?event <=> remove*?event null
+		click? <=> remove*? null
 		hint <= badge_hint @ \Drop
 		enabled <= drop_enabled <= enabled true
 	sub /$mol_view
@@ -5092,8 +5092,7 @@ $mol_link_lazy $mol_link
 	current false
 	event *
 		^
-		mousedown?event <=> generate?event null
-
+		mousedown? <=> generate? null
 
 $mol_link_lazy_demo $mol_example_small
 	title \Lazy generated link
@@ -5424,7 +5423,7 @@ $mol_number_demo $mol_example_small
 								disabled true
 							<= Reset $mol_button_major
 								title \Reset
-								enabled? <= reset_enabled true
+								enabled <= reset_enabled true
 								click? <=> reset_value? null
 			-
 			<= Section_initial $mol_section
@@ -5459,7 +5458,7 @@ $mol_number_demo $mol_example_small
 						content /
 							<= Disabled_number $mol_number
 								hint \This hint not showed while enabled is false
-								value? <= value?
+								value? <=> value?
 								enabled false
 					-
 					<= Dec_disabled_number_label $mol_labeler
@@ -5639,12 +5638,12 @@ $mol_paginator $mol_bar
 	sub /
 		<= Backward $mol_button_minor
 			hint <= backward_hint @ \Backward
-			click?event <=> backward?event null
+			click? <=> backward? null
 			sub / <= Backward_icon $mol_icon_chevron_left
 		<= Value $mol_view sub / <= value? 0
 		<= Forward $mol_button_minor
 			hint <= forward_hint @ \Forward
-			click?event <=> forward?event null
+			click? <=> forward? null
 			sub / <= Forward_icon $mol_icon_chevron_right
 
 $mol_paginator_demo $mol_example_small
@@ -5796,8 +5795,8 @@ $mol_pop_over $mol_pop
 		tabindex 0
 	event *
 		^
-		mouseenter?event <=> event_show?event null
-		mouseleave?event <=> event_hide?event null
+		mouseenter? <=> event_show? null
+		mouseleave? <=> event_hide? null
 
 $mol_pop_over_demo $mol_example_small
 	title \Menu that opens on mouse over
@@ -6441,16 +6440,16 @@ $mol_search_jumper $mol_search
 	Root $mol_view
 	Index $mol_paginator
 		value? <=> index? 0
-		forward?event => forward?event
-		backward?event => backward?event
+		forward? => forward?
+		backward? => backward?
 	plugins /
 		^
 		<= Backward $mol_hotkey
 			mod_shift true
-			key * enter?event <=> backward?event
+			key * enter? <=> backward?
 		<= Forward $mol_hotkey
 			key *
-				enter?event <=> forward?event
+				enter? <=> forward?
 				escape? <=> escape? null
 
 $mol_icon_pencil $mol_icon path \M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z
@@ -6883,7 +6882,7 @@ $mol_password $mol_view
 			type <= type
 			hint <= hint \
 			value? <=> value? \
-			submit?event <=> submit?event null
+			submit? <=> submit? null
 			enabled <= enabled true
 		<= Show $mol_check_icon
 			checked? <=> checked? true

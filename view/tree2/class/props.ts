@@ -21,7 +21,7 @@ namespace $ {
 						normal = `${normal.substring(0, id)}*${next === -1 ? '' : '?'}`
 					else if (next !== -1) normal = normal.substring(0, next + 1)
 					if( node.type === normal ) return [ node.clone( node.hack( belt ) ) ]
-					console.warn(`Syntax ${node.type} is deprecated. Use ${normal} instead`)
+					console.warn(`Syntax ${node.type} at ${node.span} is deprecated. Use ${normal} instead`)
 					return [ node.struct( normal, node.hack( belt ) ) ]
 				}
 			})
@@ -80,7 +80,7 @@ namespace $ {
 					if (! right) this.$mol_fail(err`Need a child ${operator.span}`)
 					if (! is_writable(left)) this.$mol_fail(err`Expected writable at ${left.span}`)
 					if (! is_writable(right)) this.$mol_fail(err`Expected writable at ${right.span}`)
-				} else if (operator?.type === "<=" && is_writable(left)) {
+				} else if (context.factory && operator?.type === "<=" && is_writable(left)) {
 					this.$mol_fail(err`Expected readonly at ${left.span}`)
 				}
 
