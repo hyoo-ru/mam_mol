@@ -4,7 +4,7 @@ $mol_select_list $mol_view
 	badges_list <= Badges /$mol_view
 	Badge* $mol_button_minor
 		title <= badge_title* \badge
-		click?event <=> remove*?event null
+		click? <=> remove*? null
 		hint <= badge_hint @ \Drop
 		enabled <= drop_enabled <= enabled true
 	sub /$mol_view
