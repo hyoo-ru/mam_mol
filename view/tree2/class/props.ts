@@ -2,7 +2,6 @@ namespace $ {
 	const err = $mol_view_tree2_error_str
 	type Context = { factory?: $mol_tree2 }
 	const is_writable = (input: $mol_tree2) => input.type.includes('?')
-	const deprecated_syntax = new Set<string>()
 
 	export function $mol_view_tree2_class_props(
 		this: $,
@@ -22,11 +21,7 @@ namespace $ {
 						normal = `${normal.substring(0, id)}*${next === -1 ? '' : '?'}`
 					else if (next !== -1) normal = normal.substring(0, next + 1)
 					if( node.type === normal ) return [ node.clone( node.hack( belt ) ) ]
-					const span = node.span.toString()
-					if (!deprecated_syntax.has(span)) {
-						console.warn(`Syntax ${node.type} at ${node.span} is deprecated. Use ${normal} instead`)
-						deprecated_syntax.add(span)
-					}
+					console.warn(`Syntax ${node.type} at ${node.span} is deprecated. Use ${normal} instead`)
 					return [ node.struct( normal, node.hack( belt ) ) ]
 				}
 			})
