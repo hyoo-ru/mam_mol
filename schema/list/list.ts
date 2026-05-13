@@ -1,5 +1,8 @@
 namespace $ {
-	export function $mol_schema_list< Item extends typeof $mol_schema_any >( Item: Item ) {
+	export let $mol_schema_list = $mol_memo_key.func( function $mol_schema_list<
+		Item extends typeof $mol_schema_any
+	>( Item: Item ) {
+		
 		return class $mol_schema_list_ extends $mol_schema_any {
 			
 			static Item = Item
@@ -32,5 +35,6 @@ namespace $ {
 			static default = [] as readonly( Item['default'] )[]
 			
 		}
-	}
+		
+	} )
 }

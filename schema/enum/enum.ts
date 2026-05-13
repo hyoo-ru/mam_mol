@@ -1,5 +1,8 @@
 namespace $ {
-	export function $mol_schema_enum< const Options extends readonly unknown[] >( Options: Options ) {
+	export let $mol_schema_enum = $mol_memo_key.func( function $mol_schema_enum<
+		const Options extends readonly unknown[]
+	>( Options: Options ) {
+		
 		return class $mol_schema_enum_ extends $mol_schema_any {
 			
 			static Options = Options
@@ -22,5 +25,6 @@ namespace $ {
 			static default = Options[0] as Options[number]
 			
 		}
-	}
+		
+	} )
 }

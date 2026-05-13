@@ -1,6 +1,13 @@
 namespace $.$$ {
 	$mol_test({
 		
+		"Cache of instance schema"( $ ) {
+			
+			$mol_assert_equal( $mol_schema_instance( Uint8Array ), $mol_schema_instance( Uint8Array ) )
+			$mol_assert_unique( $mol_schema_instance( Uint8Array ), $mol_schema_instance( Int8Array ) )
+			
+		},
+		
 		"Class instance schema"( $ ) {
 			
 			const Blob = $mol_schema_instance( Uint8Array )

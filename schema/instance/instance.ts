@@ -1,5 +1,5 @@
 namespace $ {
-	export function $mol_schema_instance<
+	export let $mol_schema_instance = $mol_memo_key.func( function $mol_schema_instance<
 		Class extends new( ... args: Args )=> any,
 		Args extends any[]
 	>(
@@ -30,5 +30,5 @@ namespace $ {
 			: $mol_schema_instance_
 		) as Class extends typeof $mol_schema_any ? Class : typeof $mol_schema_instance_
 		
-	}
+	} )
 }

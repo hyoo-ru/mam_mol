@@ -1,5 +1,8 @@
 namespace $ {
-	export function $mol_schema_record< Fields extends Record< string, typeof $mol_schema_any > >( Fields: Fields ) {
+	export let $mol_schema_record =  $mol_memo_key.func( function $mol_schema_record<
+		Fields extends Record< string, typeof $mol_schema_any >
+	>( Fields: Fields ) {
+		
 		return class $mol_schema_record_ extends $mol_schema_any {
 			
 			static Fields = Fields
@@ -40,5 +43,6 @@ namespace $ {
 			}
 			
 		}
-	}
+		
+	} )
 }

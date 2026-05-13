@@ -1,6 +1,13 @@
 namespace $.$$ {
 	$mol_test({
 		
+		"Cache of enum schema"( $ ) {
+			
+			$mol_assert_equal( $mol_schema_enum([ 'foo' ]), $mol_schema_enum([ 'foo' ]) )
+			$mol_assert_unique( $mol_schema_enum([ 'foo' ]), $mol_schema_enum([ 'bar' ]) )
+			
+		},
+		
 		"Enum options"( $ ) {
 			
 			const Config = $mol_schema_enum([ 123, 'foo' ])

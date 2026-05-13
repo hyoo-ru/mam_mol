@@ -1,5 +1,8 @@
 namespace $ {
-	export function $mol_schema_every< Schemas extends readonly( typeof $mol_schema_any )[] >( Schemas: Schemas ) {
+	export let $mol_schema_every = $mol_memo_key.func( function $mol_schema_every<
+		Schemas extends readonly( typeof $mol_schema_any )[]
+	>( Schemas: Schemas ) {
+		
 		return class $mol_schema_every_ extends $mol_schema_any {
 			
 			static Schemas = Schemas
@@ -26,5 +29,6 @@ namespace $ {
 			static default = Schemas.find( Scheme => this.check( Scheme.default ) ) as $mol_type_intersect< Schemas[number]['default'] >
 			
 		}
-	}
+		
+	} )
 }

@@ -1,5 +1,8 @@
 namespace $ {
-	export function $mol_schema_some< Variants extends readonly( typeof $mol_schema_any )[] >( Variants: Variants ) {
+	export let $mol_schema_some = $mol_memo_key.func( function $mol_schema_some<
+		Variants extends readonly( typeof $mol_schema_any )[]
+	>( Variants: Variants ) {
+		
 		return class $mol_schema_some_ extends $mol_schema_any {
 			
 			static Variants = Variants
@@ -37,5 +40,6 @@ namespace $ {
 			static default = Variants[0].default as Variants[number]['default']
 			
 		}
-	}
+		
+	} )
 }

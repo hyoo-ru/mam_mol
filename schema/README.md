@@ -12,40 +12,40 @@
 
 ## Leaf schemas
 
-- `$mol_schema_enum([...options])` - some of constant values (first value as default).
+- `$mol_schema_enum([ ...options ])` - some of constant values (first value as default).
 - `$mol_schema_boolean` - true or false (default).
 - `$mol_schema_string` - any string ("" as default).
-  - `$mol_schema_pattern(regexp)` - string that matched to regexp ("" as default).
+  - `$mol_schema_pattern( regexp )` - string that matched to regexp ("" as default).
 - `$mol_schema_float` - any number (NaN as default).
 - `$mol_schema_integer` - integer number (0 as default).
 - `$mol_schema_bigint` - big integer number (0n as default).
-- `$mol_schema_range(min,max)` - range of values between min (default) and max.
+- `$mol_schema_range([ min, max ])` - range of values between min (default) and max.
   - `$mol_schema_positive` - value >= 0
     - `$mol_schema_natural` - natural number from 0 (default).
   - `$mol_schema_negative` - value <= 0
-- `$mol_schema_instance(Class, ...def_args)` - instance of Class.
+- `$mol_schema_instance( Class, ...def_args )` - instance of Class.
 
 ## Composition schemas
 
-- `$mol_schema_some([...variants])` - some of schemas (default of first as default).
+- `$mol_schema_some([ ...variants ])` - some of schemas (default of first as default).
   - `$mol_schema_maybe(schema)` - value or null or undefined (undefined as default).
-- `$mol_schema_every([...schemas])` - every of schemas for same value (first default casted through all of them).
-- `$mol_schema_list(item)` - array of same types schema ([] as default).
-- `$mol_schema_dict(key,val)` - key-value dictionary schema ({} as default).
-- `$mol_schema_record({...fields})` - object with typed fields (object with default fields values by default).
+- `$mol_schema_every([ ...schemas ])` - every of schemas for same value (first default casted through all of them).
+- `$mol_schema_list( item )` - array of same types schema ([] as default).
+- `$mol_schema_dict([ key, val ])` - key-value dictionary schema ({} as default).
+- `$mol_schema_record({ ...fields })` - object with typed fields (object with default fields values by default).
 
 ## Complex example
 
 ```ts
-export class $my_user_main extends $mol_schema_dict({
+export class $my_user_main extends $mol_schema_record({
 	name: $mol_schema_string,
 	age: $mol_schema_natural,
 }) {}
 
-export class $my_user_full extends $mol_schema_dict({
+export class $my_user_full extends $mol_schema_record({
 	... $my_user_full.Fields,
 	bio: $mol_schema_string,
-	flags: $mol_schema_dict( $mol_schema_string, $mol_schema_boolean ),
+	flags: $mol_schema_dict([ $mol_schema_string, $mol_schema_boolean ]),
 }) {}
 
 export class $my_article_full extends $mol_schema_partial({
@@ -55,10 +55,10 @@ export class $my_article_full extends $mol_schema_partial({
 }) {}
 
 export class $my_article_search extends $mol_schema_some([
-	$mol_schema_dict({
+	$mol_schema_record({
 		data: $mol_schema_list( $my_article_full ),
 	}),
-	$mol_schema_dict({
+	$mol_schema_record({
 		fail: $mol_schema_pattern( /^\w+$/ ),
 	}),
 ]) {}

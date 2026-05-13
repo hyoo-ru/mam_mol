@@ -1,6 +1,13 @@
 namespace $.$$ {
 	$mol_test({
 		
+		"Cache of maybe schema"( $ ) {
+			
+			$mol_assert_equal( $mol_schema_maybe( $mol_schema_float ), $mol_schema_maybe( $mol_schema_float ) )
+			$mol_assert_unique( $mol_schema_maybe( $mol_schema_float ), $mol_schema_maybe( $mol_schema_string ) )
+			
+		},
+		
 		"Optional value"( $ ) {
 			
 			const Config = $mol_schema_maybe( $mol_schema_string )
