@@ -29,7 +29,7 @@ namespace $ {
 				return value.map( item => Item.cast( item ) ) as typeof this.default
 			}
 			
-			static default = [] as readonly( typeof Item.default )[]
+			static default = [] as readonly( Item['default'] )[]
 			
 		}
 	}
