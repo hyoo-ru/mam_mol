@@ -1,5 +1,5 @@
 namespace $ {
-	export abstract class $mol_schema_any extends Object {
+	export class $mol_schema_any extends Object {
 		
 		static [ Symbol.toStringTag ]: string
 		
@@ -13,7 +13,7 @@ namespace $ {
 		}
 		
 		/** Type-guard that checks value by schema. */
-		static check< Val >( val: Val ): val is Val & typeof this.default {
+		static check< This extends typeof $mol_schema_any, Val >( this: This, val: Val ): val is Val & This['default'] {
 			try {
 				this.guard( val )
 				return true
@@ -22,13 +22,17 @@ namespace $ {
 			}
 		}
 		
+		static [ Symbol.hasInstance ]< This extends typeof $mol_schema_any, Val >( this: This, val: Val ): val is Val & This['default'] {
+			return this.check( val )
+		}
+		
 		/** Strict parse. Fails of wrong values. */
 		static guard< Value >( value: Value ): Value {
 			return value
 		}
 		
 		/** Relaxed cast. Normalizes wrong values. */
-		static cast( value: unknown ): typeof this.default {
+		static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {
 			try {
 				return this.guard( value )
 			} catch ( error ) {

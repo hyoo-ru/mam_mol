@@ -1,8 +1,10 @@
 include \/mol/schema/any
+include \/mol/schema/bigint
 include \/mol/schema/boolean
 include \/mol/schema/string
 include \/mol/schema/pattern
 include \/mol/schema/float
+include \/mol/schema/instance
 include \/mol/schema/integer
 include \/mol/schema/natural
 include \/mol/schema/enum
