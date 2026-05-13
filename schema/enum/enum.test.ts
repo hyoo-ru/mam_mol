@@ -14,9 +14,9 @@ namespace $.$$ {
 			$mol_assert_equal( false, Config.check( 321 ) )
 			$mol_assert_equal( false, Config.check( 'bar' ) )
 			
-			$mol_assert_equal( 123, Config.cast( 123 ) )
-			$mol_assert_equal( 'foo', Config.cast( 'foo' ) )
-			$mol_assert_equal( 123, Config.cast( 'bar' ) )
+			$mol_assert_equal( Config.cast( 123 ), 123 )
+			$mol_assert_equal( Config.cast( 'foo' ), 'foo' )
+			$mol_assert_equal( Config.cast( 'bar' ), 123 )
 			
 			$mol_assert_equal( 123, Config.guard( 123 ) )
 			$mol_assert_fail( ()=> Config.guard( 321 ), 'No one option' )
