@@ -13,7 +13,7 @@ namespace $ {
 		}
 		
 		/** Type-guard that checks value by schema. */
-		static check< Val >( val: Val ): val is Val & typeof this.default {
+		static check< This extends typeof $mol_schema_any, Val >( this: This, val: Val ): val is Val & This['default'] {
 			try {
 				this.guard( val )
 				return true
@@ -28,7 +28,7 @@ namespace $ {
 		}
 		
 		/** Relaxed cast. Normalizes wrong values. */
-		static cast( value: unknown ): typeof this.default {
+		static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {
 			try {
 				return this.guard( value )
 			} catch ( error ) {

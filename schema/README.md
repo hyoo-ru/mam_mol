@@ -12,7 +12,7 @@
 
 ## Leaf schemas
 
-- `$mol_schema_enum(...options)` - some of constant values (first value as default).
+- `$mol_schema_enum([...options])` - some of constant values (first value as default).
 - `$mol_schema_boolean` - true or false (default).
 - `$mol_schema_string` - any string ("" as default).
   - `$mol_schema_pattern(regexp)` - string that matched to regexp ("" as default).
@@ -25,9 +25,9 @@
 
 ## Composition schemas
 
-- `$mol_schema_some(...variants)` - some of schemas (default of first as default).
+- `$mol_schema_some([...variants])` - some of schemas (default of first as default).
   - `$mol_schema_maybe(schema)` - value or null or undefined (undefined as default).
-- `$mol_schema_every(...schemas)` - every of schemas for same value (first default casted through all of them).
+- `$mol_schema_every([...schemas])` - every of schemas for same value (first default casted through all of them).
 - `$mol_schema_list(item)` - array of same types schema ([] as default).
 - `$mol_schema_dict(key,val)` - key-value dictionary schema ({} as default).
 - `$mol_schema_record({...fields})` - object with typed fields (object with default fields values by default).
