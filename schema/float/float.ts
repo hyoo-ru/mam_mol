@@ -1,5 +1,5 @@
 namespace $ {
-	export abstract class $mol_schema_float extends $mol_schema_any {
+	export class $mol_schema_float extends $mol_schema_any {
 		
 		static guard< Value >( value: Value ): Value & typeof this.default {
 			if( typeof value === 'number' ) return value

@@ -1,5 +1,5 @@
 namespace $ {
-	export abstract class $mol_schema_any extends Object {
+	export class $mol_schema_any extends Object {
 		
 		static [ Symbol.toStringTag ]: string
 		
@@ -20,6 +20,10 @@ namespace $ {
 			} catch( error ) {
 				return false
 			}
+		}
+		
+		static [ Symbol.hasInstance ]< This extends typeof $mol_schema_any, Val >( this: This, val: Val ): val is Val & This['default'] {
+			return this.check( val )
 		}
 		
 		/** Strict parse. Fails of wrong values. */

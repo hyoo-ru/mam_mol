@@ -1,5 +1,5 @@
 namespace $ {
-	export function $mol_schema_enum< Options extends readonly unknown[] >( Options: Options ) {
+	export function $mol_schema_enum< const Options extends readonly unknown[] >( Options: Options ) {
 		return class $mol_schema_enum_ extends $mol_schema_any {
 			
 			static Options = Options

@@ -18,10 +18,12 @@
   - `$mol_schema_pattern(regexp)` - string that matched to regexp ("" as default).
 - `$mol_schema_float` - any number (NaN as default).
 - `$mol_schema_integer` - integer number (0 as default).
+- `$mol_schema_bigint` - big integer number (0n as default).
 - `$mol_schema_range(min,max)` - range of values between min (default) and max.
   - `$mol_schema_positive` - value >= 0
     - `$mol_schema_natural` - natural number from 0 (default).
   - `$mol_schema_negative` - value <= 0
+- `$mol_schema_instance(Class, ...def_args)` - instance of Class.
 
 ## Composition schemas
 
@@ -35,24 +37,24 @@
 ## Complex example
 
 ```ts
-export abstract class $my_user_main extends $mol_schema_dict({
+export class $my_user_main extends $mol_schema_dict({
 	name: $mol_schema_string,
 	age: $mol_schema_natural,
 }) {}
 
-export abstract class $my_user_full extends $mol_schema_dict({
+export class $my_user_full extends $mol_schema_dict({
 	... $my_user_full.Fields,
 	bio: $mol_schema_string,
 	flags: $mol_schema_dict( $mol_schema_string, $mol_schema_boolean ),
 }) {}
 
-export abstract class $my_article_full extends $mol_schema_partial({
+export class $my_article_full extends $mol_schema_partial({
 	title: $mol_schema_string,
 	body: $mol_schema_string,
 	author: $my_user_full,
 }) {}
 
-export abstract class $my_article_search extends $mol_schema_some([
+export class $my_article_search extends $mol_schema_some([
 	$mol_schema_dict({
 		data: $mol_schema_list( $my_article_full ),
 	}),
