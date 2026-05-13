@@ -15214,56 +15214,56 @@ var $;
             }
             left_top_edge_ratio_x(next) {
                 if (next === undefined)
-                    return 0;
+                    return this.left_edge_x();
                 this.left_edge_x(next);
                 this.top_edge_y_by_ratio();
                 return next;
             }
             left_bottom_edge_ratio_x(next) {
                 if (next === undefined)
-                    return 0;
+                    return this.left_edge_x();
                 this.left_edge_x(next);
                 this.bottom_edge_y_by_ratio();
                 return next;
             }
             right_bottom_edge_ratio_x(next) {
                 if (next === undefined)
-                    return 0;
+                    return this.right_edge_x();
                 this.right_edge_x(next);
                 this.bottom_edge_y_by_ratio();
                 return next;
             }
             top_left_edge_ratio_y(next) {
                 if (next === undefined)
-                    return 0;
+                    return this.top_edge_y();
                 this.top_edge_y(next);
                 this.left_edge_x_by_ratio();
                 return next;
             }
             right_top_edge_ratio_x(next) {
                 if (next === undefined)
-                    return 0;
+                    return this.right_edge_x();
                 this.right_edge_x(next);
                 this.top_edge_y_by_ratio();
                 return next;
             }
             top_right_edge_ratio_y(next) {
                 if (next === undefined)
-                    return 0;
+                    return this.top_edge_y();
                 this.top_edge_y(next);
                 this.right_edge_x_by_ratio();
                 return next;
             }
             bottom_left_edge_ratio_y(next) {
                 if (next === undefined)
-                    return 0;
+                    return this.bottom_edge_y();
                 this.bottom_edge_y(next);
                 this.left_edge_x_by_ratio();
                 return next;
             }
             bottom_right_edge_ratio_y(next) {
                 if (next === undefined)
-                    return 0;
+                    return this.bottom_edge_y();
                 this.bottom_edge_y(next);
                 this.right_edge_x_by_ratio();
                 return next;
