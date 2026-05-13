@@ -1,11 +1,18 @@
 namespace $.$$ {
 	$mol_test({
 		
+		"Cache of every schema"( $ ) {
+			
+			$mol_assert_equal( $mol_schema_every([ $mol_schema_float ]), $mol_schema_every([ $mol_schema_float ]) )
+			$mol_assert_unique( $mol_schema_every([ $mol_schema_float ]), $mol_schema_every([ $mol_schema_string ]) )
+			
+		},
+		
 		"Range intersection"( $ ) {
 			
-			const Narrow = $mol_schema_every([ $mol_schema_integer, $mol_schema_range( 1, 8 ), $mol_schema_range( 4, 10 ) ])
+			const Narrow = $mol_schema_every([ $mol_schema_integer, $mol_schema_range([ 1, 8 ]), $mol_schema_range([ 4, 10 ]) ])
 			
-			$mol_assert_equal( '$mol_schema_every<[$mol_schema_integer,$mol_schema_range<1,8>,$mol_schema_range<4,10>]>', Narrow + '' )
+			$mol_assert_equal( '$mol_schema_every<[$mol_schema_integer,$mol_schema_range<[1,8]>,$mol_schema_range<[4,10]>]>', Narrow + '' )
 			
 			$mol_assert_equal( true, Narrow.check( 6 ) )
 			$mol_assert_equal( true, Narrow.check( 4 ) )

@@ -1,5 +1,8 @@
 namespace $ {
-	export function $mol_schema_maybe< Some extends typeof $mol_schema_any >( Some: Some ) {
+	export let $mol_schema_maybe = $mol_memo_key.func( function $mol_schema_maybe<
+		Some extends typeof $mol_schema_any
+	>( Some: Some ) {
+		
 		return class $mol_schema_maybe_ extends $mol_schema_some([ $mol_schema_enum([ undefined, null ]), Some ]) {
 			
 			static Some = Some
@@ -10,5 +13,6 @@ namespace $ {
 			}	
 			
 		}
-	}
+		
+	} )
 }

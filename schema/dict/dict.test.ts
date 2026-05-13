@@ -1,9 +1,16 @@
 namespace $ {
 	$mol_test({
 		
+		"Cache of dict schema"( $ ) {
+			
+			$mol_assert_equal( $mol_schema_dict([ $mol_schema_string, $mol_schema_float ]), $mol_schema_dict([ $mol_schema_string, $mol_schema_float ]) )
+			$mol_assert_unique( $mol_schema_dict([ $mol_schema_string, $mol_schema_float ]), $mol_schema_dict([ $mol_schema_string, $mol_schema_string ]) )
+			
+		},
+		
 		"Dictionary schema"( $ ) {
 			
-			const Flags = $mol_schema_dict( $mol_schema_pattern( /^[a-z]+$/ ), $mol_schema_boolean )
+			const Flags = $mol_schema_dict([ $mol_schema_pattern( /^[a-z]+$/ ), $mol_schema_boolean ])
 			
 			$mol_assert_equal( true, Flags.check( {} ) )
 			$mol_assert_equal( true, Flags.check( { foo: false } ) )

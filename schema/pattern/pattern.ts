@@ -1,5 +1,5 @@
 namespace $ {
-	export function $mol_schema_pattern< Pattern extends RegExp >( Pattern: Pattern ) {
+	export let $mol_schema_pattern = $mol_memo_key.func( function $mol_schema_pattern< Pattern extends RegExp >( Pattern: Pattern ) {
 		return class $mol_schema_pattern_ extends $mol_schema_string {
 			
 			static Pattern = Pattern
@@ -21,5 +21,5 @@ namespace $ {
 			static default = ''
 			
 		}
-	}
+	} )
 }

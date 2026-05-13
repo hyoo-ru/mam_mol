@@ -1,6 +1,13 @@
 namespace $.$$ {
 	$mol_test({
 		
+		"Cache of some schema"( $ ) {
+			
+			$mol_assert_equal( $mol_schema_some([ $mol_schema_float ]), $mol_schema_some([ $mol_schema_float ]) )
+			$mol_assert_unique( $mol_schema_some([ $mol_schema_float ]), $mol_schema_some([ $mol_schema_string ]) )
+			
+		},
+		
 		"Some variant"( $ ) {
 			
 			const Config = $mol_schema_some([ $mol_schema_float, $mol_schema_string ])
