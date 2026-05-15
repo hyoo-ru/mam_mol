@@ -190,7 +190,7 @@ namespace $ {
 		// }
 
 		match(...args: Parameters<String['match']>) {
-			return this.toString().split(...args)
+			return this.toString().match(...args)
 		}
 
 		split(...args: Parameters<String['split']>) {
