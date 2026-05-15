@@ -1,10 +1,8 @@
 namespace $ {
 	export let $mol_schema_instance = $mol_memo_key.func( function $mol_schema_instance<
-		Class extends new( ... args: Args )=> any,
-		Args extends any[]
+		Class extends new( ... args: any[] )=> any,
 	>(
 		Class: Class,
-		... args: Args
 	) {
 		
 		class $mol_schema_instance_ extends $mol_schema_any {
@@ -21,7 +19,11 @@ namespace $ {
 				return $mol_fail( new TypeError( 'Wrong class', { cause: { value, schema: this } } ) )
 			}
 			
-			static default: InstanceType< Class > = new Class( ... args )
+			static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {
+				return this.guard( value )
+			}
+			
+			static default: InstanceType< Class >
 			
 		}
 		

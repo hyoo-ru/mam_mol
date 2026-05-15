@@ -25,7 +25,7 @@ namespace $ {
 					
 				}
 				
-				return $mol_fail( new AggregateError( errors, 'No one variant', { cause: { value, schema: this } } ) )
+				return $mol_fail( new AggregateError( errors, 'Wrong variant', { cause: { value, schema: this } } ) )
 				
 			}
 			

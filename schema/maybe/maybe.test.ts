@@ -22,10 +22,10 @@ namespace $.$$ {
 			$mol_assert_equal( 'foo', Config.cast( 'foo' ) )
 			$mol_assert_equal( undefined, Config.cast( undefined ) )
 			$mol_assert_equal( null, Config.cast( null ) )
-			$mol_assert_equal( undefined, Config.cast( 0 ) )
+			$mol_assert_equal( null, Config.cast( 0 ) )
 			
 			$mol_assert_equal( 'foo', Config.guard( 'foo' ) )
-			$mol_assert_fail( ()=> Config.guard( 123 ), 'No one variant' )
+			$mol_assert_fail( ()=> Config.guard( 123 ), 'Wrong type' )
 			
 		},
 		
