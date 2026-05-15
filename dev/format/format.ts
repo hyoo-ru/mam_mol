@@ -188,6 +188,10 @@ namespace $ {
 		// [ Symbol.toPrimitive ]() {
 		// 	return this.toString()
 		// }
+
+		split(...args: Parameters<String['split']>) {
+			return this.toString().split(...args)
+		}
 		
 		toString() {
 			return this.join( '\n' )
