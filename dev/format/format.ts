@@ -189,6 +189,10 @@ namespace $ {
 		// 	return this.toString()
 		// }
 
+		match(...args: Parameters<String['match']>) {
+			return this.toString().split(...args)
+		}
+
 		split(...args: Parameters<String['split']>) {
 			return this.toString().split(...args)
 		}
