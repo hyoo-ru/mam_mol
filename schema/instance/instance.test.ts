@@ -19,7 +19,7 @@ namespace $.$$ {
 			$mol_assert_equal( false, Blob.check( null ) )
 			
 			$mol_assert_equal( new Uint8Array([ 0, 1 ]), Blob.cast( new Uint8Array([ 0, 1 ]) ) )
-			$mol_assert_equal( new Uint8Array, Blob.cast( new Int8Array([ 1, -1 ]) ) )
+			$mol_assert_fail( ()=> Blob.cast( new Int8Array ), 'Wrong class' )
 			
 			$mol_assert_equal( new Uint8Array, Blob.guard( new Uint8Array ) )
 			$mol_assert_fail( ()=> Blob.guard( new Int8Array ), 'Wrong class' )

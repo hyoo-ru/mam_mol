@@ -23,7 +23,7 @@ namespace $.$$ {
 			$mol_assert_equal( Number.NaN, Config.cast( true ) )
 			
 			$mol_assert_equal( 123, Config.guard( 123 ) )
-			$mol_assert_fail( ()=> Config.guard( false ), 'No one variant' )
+			$mol_assert_fail( ()=> Config.guard( false ), 'Wrong variant' )
 			
 		},
 		

@@ -26,7 +26,7 @@ namespace $.$$ {
 			$mol_assert_equal( Config.cast( 'bar' ), 123 )
 			
 			$mol_assert_equal( 123, Config.guard( 123 ) )
-			$mol_assert_fail( ()=> Config.guard( 321 ), 'No one option' )
+			$mol_assert_fail( ()=> Config.guard( 321 ), 'Wrong option' )
 			
 		},
 		
