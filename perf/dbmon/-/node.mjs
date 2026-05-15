@@ -788,6 +788,9 @@ var $;
         // [ Symbol.toPrimitive ]() {
         // 	return this.toString()
         // }
+        split(...args) {
+            return this.toString().split(...args);
+        }
         toString() {
             return this.join('\n');
         }
