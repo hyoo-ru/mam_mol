@@ -1,6 +1,13 @@
 namespace $.$$ {
 	$mol_test({
 		
+		"Cache of enum schema"( $ ) {
+			
+			$mol_assert_equal( $mol_schema_enum([ 'foo' ]), $mol_schema_enum([ 'foo' ]) )
+			$mol_assert_unique( $mol_schema_enum([ 'foo' ]), $mol_schema_enum([ 'bar' ]) )
+			
+		},
+		
 		"Enum options"( $ ) {
 			
 			const Config = $mol_schema_enum([ 123, 'foo' ])
@@ -14,12 +21,12 @@ namespace $.$$ {
 			$mol_assert_equal( false, Config.check( 321 ) )
 			$mol_assert_equal( false, Config.check( 'bar' ) )
 			
-			$mol_assert_equal( 123, Config.cast( 123 ) )
-			$mol_assert_equal( 'foo', Config.cast( 'foo' ) )
-			$mol_assert_equal( 123, Config.cast( 'bar' ) )
+			$mol_assert_equal( Config.cast( 123 ), 123 )
+			$mol_assert_equal( Config.cast( 'foo' ), 'foo' )
+			$mol_assert_equal( Config.cast( 'bar' ), 123 )
 			
 			$mol_assert_equal( 123, Config.guard( 123 ) )
-			$mol_assert_fail( ()=> Config.guard( 321 ), 'No one option' )
+			$mol_assert_fail( ()=> Config.guard( 321 ), 'Wrong option' )
 			
 		},
 		

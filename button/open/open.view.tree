@@ -14,4 +14,4 @@ $mol_button_open_native $mol_view
 		accept <= accept \
 		multiple <= multiple true
 	event *
-		change?next <=> picked?next null
+		change? <=> picked? null

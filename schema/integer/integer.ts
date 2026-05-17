@@ -1,5 +1,5 @@
 namespace $ {
-	export abstract class $mol_schema_integer extends $mol_schema_float {
+	export class $mol_schema_integer extends $mol_schema_float {
 		
 		$mol_schema_integer = true
 		

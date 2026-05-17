@@ -1,17 +1,16 @@
 namespace $ {
-	export function $mol_schema_dict<
-		Key extends typeof $mol_schema_any & { default: PropertyKey },
-		Val extends typeof $mol_schema_any,
-	>( Key: Key, Val: Val ) {
+	export let $mol_schema_dict  =$mol_memo_key.func( function $mol_schema_dict< Pair extends [
+		Key: typeof $mol_schema_any & { default: PropertyKey },
+		Val: typeof $mol_schema_any,
+	] >( Pair: Pair ) {
 		
 		return class $mol_schema_dict_ extends $mol_schema_any {
 			
-			static Key = Key
-			static Val = Val
+			static Pair = Pair
 			
 			static toString(): string {
 				if( this !== $mol_schema_dict_ ) return super.toString()
-				return '$mol_schema_dict<' + $mol_key( Key ) + ',' + $mol_key( Key ) + '>'
+				return '$mol_schema_dict<' + $mol_key( Pair ) + '>'
 			}
 			
 			static guard< Value >( value: Value ) {
@@ -23,13 +22,13 @@ namespace $ {
 				for( const key in value ) {
 					
 					try {
-						Key.guard( key )
+						Pair[0].guard( key )
 					} catch( error ) {
 						return $mol_fail( new TypeError( 'Wrong key', { cause: { key, error, value, schema: this } } ) )
 					}
 					
 					try {
-						Val.guard( ( value as any )[ key ] )
+						Pair[1].guard( ( value as any )[ key ] )
 					} catch( error ) {
 						return $mol_fail( new TypeError( 'Wrong val', { cause: { key, error, value, schema: this } } ) )
 					}
@@ -44,16 +43,16 @@ namespace $ {
 				
 				const res = {} as any
 				for( const key in value as any ) {
-					if( !Key.check( key ) ) continue
-					res[ key ] = Val.cast( ( value as any )[ key ] )
+					if( !Pair[0].check( key ) ) continue
+					res[ key ] = Pair[1].cast( ( value as any )[ key ] )
 				}
 				
 				return res as typeof this.default
 			}
 			
-			static default = {} as Record< Key['default'], Val['default'] > 
+			static default = {} as Record< Pair[0]['default'], Pair[1]['default'] > 
 			
 		}
 		
-	}
+	} )
 }
