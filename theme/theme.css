@@ -4,7 +4,7 @@
 	color-scheme: dark light;
 }
 
-:where([mol_theme]) {
+body, :where([mol_theme]) {
 	color: var(--mol_theme_text);
 	fill: var(--mol_theme_text);
 	background-color: var(--mol_theme_back);

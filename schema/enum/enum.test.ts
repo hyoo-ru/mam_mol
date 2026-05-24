@@ -1,0 +1,34 @@
+namespace $.$$ {
+	$mol_test({
+		
+		"Cache of enum schema"( $ ) {
+			
+			$mol_assert_equal( $mol_schema_enum([ 'foo' ]), $mol_schema_enum([ 'foo' ]) )
+			$mol_assert_unique( $mol_schema_enum([ 'foo' ]), $mol_schema_enum([ 'bar' ]) )
+			
+		},
+		
+		"Enum options"( $ ) {
+			
+			const Config = $mol_schema_enum([ 123, 'foo' ])
+			
+			$mol_assert_equal( '$mol_schema_enum<[123,"foo"]>', Config + '', $mol_key( Config ) )
+			
+			$mol_assert_equal( true, Config.check( 123 ) )
+			$mol_assert_equal( true, Config.check( 'foo' ) )
+			
+			$mol_assert_equal( false, Config.check( true ) )
+			$mol_assert_equal( false, Config.check( 321 ) )
+			$mol_assert_equal( false, Config.check( 'bar' ) )
+			
+			$mol_assert_equal( Config.cast( 123 ), 123 )
+			$mol_assert_equal( Config.cast( 'foo' ), 'foo' )
+			$mol_assert_equal( Config.cast( 'bar' ), 123 )
+			
+			$mol_assert_equal( 123, Config.guard( 123 ) )
+			$mol_assert_fail( ()=> Config.guard( 321 ), 'Wrong option' )
+			
+		},
+		
+	})
+}
