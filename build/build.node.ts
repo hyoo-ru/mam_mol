@@ -264,14 +264,24 @@ namespace $ {
 			collect( ownDoc.definitions )
 			for( const ext of externalDocs ) collect( ext.definitions )
 
-			const operations = ( ownDoc.definitions as any[] ).filter( d => d.kind === 'OperationDefinition' )
+			const isSchemaOnly = /\.schema\.(gql|graphql)$/.test( file.name() )
+			const operations = isSchemaOnly
+				? []
+				: ( ownDoc.definitions as any[] ).filter( d => d.kind === 'OperationDefinition' )
+
+			const rootTypes = new Set< string >()
+			for( const def of schemaDefs ) {
+				if( def.kind !== 'ObjectTypeDefinition' ) continue
+				const name = def.name?.value
+				if( name === 'Query' || name === 'Mutation' || name === 'Subscription' ) rootTypes.add( name )
+			}
 
 			const typesCode = this.gqlRenderTypes( schemaDefs, className )
-			const clientCode = this.gqlRenderClient( className, operations, source )
+			const clientCode = isSchemaOnly ? '' : this.gqlRenderClient( className, operations, source, rootTypes )
 
 			return `namespace $ {\n`
-				+ ( typesCode ? `\texport namespace ${ className } {\n${ typesCode }\t}\n` : '' )
 				+ clientCode
+				+ ( typesCode ? `\texport namespace ${ className } {\n${ typesCode }\t}\n` : '' )
 				+ `}\n`
 		}
 
@@ -373,13 +383,13 @@ namespace $ {
 			return lines.join( '\n' ) + '\n'
 		}
 
-		gqlRenderClient( className : string, operations : any[], source : string ) : string {
+		gqlRenderClient( className : string, operations : any[], source : string, rootTypes : Set< string > ) : string {
 
 			const head = `\texport class ${ className } extends $mol_object {\n`
 				+ `\t\tstatic endpoint() { return '' as string }\n`
 				+ `\t\tstatic fetchInit() { return {} as RequestInit }\n`
 				+ `\t\t@ $mol_action\n`
-				+ `\t\tprotected static request( operationName : string, query : string, variables? : Record< string, unknown > ) {\n`
+				+ `\t\tprotected static request< T = unknown >( operationName : string, query : string, variables? : Record< string, unknown > ) : T {\n`
 				+ `\t\t\tconst init = this.fetchInit()\n`
 				+ `\t\t\tconst headers : Record< string, string > = { 'content-type': 'application/json' }\n`
 				+ `\t\t\tif( init.headers ) Object.assign( headers, init.headers as Record< string, string > )\n`
@@ -388,9 +398,9 @@ namespace $ {
 				+ `\t\t\t\tmethod: 'POST',\n`
 				+ `\t\t\t\theaders,\n`
 				+ `\t\t\t\tbody: JSON.stringify({ operationName, query, variables }),\n`
-				+ `\t\t\t}) as { data? : unknown, errors? : readonly { message : string }[] }\n`
+				+ `\t\t\t}) as { data? : T, errors? : readonly { message : string }[] }\n`
 				+ `\t\t\tif( res.errors?.length ) throw new Error( res.errors.map( e => e.message ).join( '\\n' ) )\n`
-				+ `\t\t\treturn res.data\n`
+				+ `\t\t\treturn res.data as T\n`
 				+ `\t\t}\n`
 
 			const methods : string[] = []
@@ -412,10 +422,15 @@ namespace $ {
 				const argDecl = vars.length ? `vars : { ${ varArgs } }` : `vars? : undefined`
 				const varsExpr = vars.length ? `vars` : 'undefined'
 
+				const rootName = op.operation === 'mutation' ? 'Mutation'
+					: op.operation === 'subscription' ? 'Subscription'
+					: 'Query'
+				const returnType = rootTypes.has( rootName ) ? `${ className }.${ rootName }` : 'unknown'
+
 				methods.push(
 					`\t\t@ $mol_action\n` +
 					`\t\tstatic ${ opName }( ${ argDecl } ) {\n` +
-					`\t\t\treturn this.request( ${ JSON.stringify( opName ) }, ${ opSrcLiteral }, ${ varsExpr } as Record< string, unknown > | undefined )\n` +
+					`\t\t\treturn this.request< ${ returnType } >( ${ JSON.stringify( opName ) }, ${ opSrcLiteral }, ${ varsExpr } as Record< string, unknown > | undefined )\n` +
 					`\t\t}`
 				)
 			}
@@ -480,8 +495,9 @@ namespace $ {
 			const clientCode = this.openapiRenderClient( className, spec )
 
 			return `namespace $ {\n`
+				+ `${ clientCode }`
 				+ `\texport namespace ${ className } {\n${ typesIndented }\n\t}\n`
-				+ `${ clientCode }}\n`
+				+ `}\n`
 		}
 
 		async openapiGenerateTypes( spec : any ) : Promise< string > {
@@ -507,6 +523,17 @@ namespace $ {
 
 			const methods : string[] = []
 			const seen = new Set< string >()
+			const opIds = new Map< string, string >()
+
+			for( const route in paths ) {
+				const item = paths[ route ]
+				if( !item ) continue
+				for( const method of httpMethods ) {
+					const op = item[ method ]
+					if( !op?.operationId ) continue
+					opIds.set( op.operationId, op.operationId )
+				}
+			}
 
 			for( const route in paths ) {
 				const item = paths[ route ]
@@ -524,14 +551,45 @@ namespace $ {
 					seen.add( unique )
 					opName = unique
 
-					const pathParams = ( ( op.parameters ?? [] ) as any[] ).filter( p => p.in === 'path' ).map( p => p.name )
-					const queryParams = ( ( op.parameters ?? [] ) as any[] ).filter( p => p.in === 'query' ).map( p => p.name )
+					const hasOpId = !!op.operationId && opIds.has( op.operationId )
+					const opRef = hasOpId
+						? `${ className }.operations[ ${ JSON.stringify( op.operationId ) } ]`
+						: null
+
+					const successCodes = Object.keys( op.responses ?? {} )
+						.filter( c => /^2\d\d$/.test( c ) )
+						.sort()
+					const successCode = successCodes[ 0 ]
+
+					const returnType = opRef && successCode
+						? `NonNullable< ${ opRef }[ 'responses' ][ ${ successCode } ] extends { content : { 'application/json' : infer R } } ? R : unknown >`
+						: 'unknown'
+
+					const pathParams = ( ( op.parameters ?? [] ) as any[] ).filter( p => p.in === 'path' )
+					const queryParams = ( ( op.parameters ?? [] ) as any[] ).filter( p => p.in === 'query' )
 					const hasBody = !!op.requestBody
 
 					const optParts : string[] = []
-					if( pathParams.length ) optParts.push( `params : { ${ pathParams.map( ( n : string ) => `${ JSON.stringify( n ) } : string | number` ).join( ', ' ) } }` )
-					if( queryParams.length ) optParts.push( `query? : Record< string, string | number | boolean | undefined >` )
-					if( hasBody ) optParts.push( `body? : unknown` )
+					const paramsType = opRef && pathParams.length
+						? `${ opRef }[ 'parameters' ][ 'path' ]`
+						: pathParams.length
+							? `{ ${ pathParams.map( p => `${ JSON.stringify( p.name ) } : string | number` ).join( ', ' ) } }`
+							: null
+					if( paramsType ) optParts.push( `params : ${ paramsType }` )
+
+					const queryType = opRef && queryParams.length
+						? `${ opRef }[ 'parameters' ][ 'query' ]`
+						: queryParams.length
+							? `Record< string, string | number | boolean | undefined >`
+							: null
+					if( queryType ) optParts.push( `query? : ${ queryType }` )
+
+					if( hasBody ) {
+						const bodyType = opRef
+							? `${ opRef }[ 'requestBody' ] extends { content : { 'application/json' : infer B } } ? B : unknown`
+							: 'unknown'
+						optParts.push( `body? : ${ opRef ? `( ${ bodyType } )` : 'unknown' }` )
+					}
 
 					const optsRequired = pathParams.length > 0
 					const optsDecl = optParts.length
@@ -540,8 +598,8 @@ namespace $ {
 
 					methods.push(
 						`\t\t@ $mol_action\n` +
-						`\t\tstatic ${ opName }( ${ optsDecl } ) {\n` +
-						`\t\t\treturn this.request( ${ JSON.stringify( method.toUpperCase() ) }, ${ JSON.stringify( route ) }, opts as any )\n` +
+						`\t\tstatic ${ opName }( ${ optsDecl } ) : ${ returnType } {\n` +
+						`\t\t\treturn this.request< ${ returnType } >( ${ JSON.stringify( method.toUpperCase() ) }, ${ JSON.stringify( route ) }, opts as any )\n` +
 						`\t\t}`
 					)
 				}
@@ -551,7 +609,7 @@ namespace $ {
 				+ `\t\tstatic endpoint() { return '' as string }\n`
 				+ `\t\tstatic fetchInit() { return {} as RequestInit }\n`
 				+ `\t\t@ $mol_action\n`
-				+ `\t\tprotected static request( method : string, route : string, opts? : { params? : Record< string, string | number >, query? : Record< string, string | number | boolean | undefined >, body? : unknown } ) {\n`
+				+ `\t\tprotected static request< T = unknown >( method : string, route : string, opts? : { params? : Record< string, string | number >, query? : Record< string, string | number | boolean | undefined >, body? : unknown } ) : T {\n`
 				+ `\t\t\tlet url = this.endpoint() + route\n`
 				+ `\t\t\tif( opts?.params ) for( const k in opts.params ) url = url.replace( '{' + k + '}', encodeURIComponent( String( opts.params[ k ] ) ) )\n`
 				+ `\t\t\tif( opts?.query ) {\n`
@@ -573,7 +631,7 @@ namespace $ {
 				+ `\t\t\t\tmethod,\n`
 				+ `\t\t\t\theaders,\n`
 				+ `\t\t\t\tbody: body === undefined ? undefined : JSON.stringify( body ),\n`
-				+ `\t\t\t})\n`
+				+ `\t\t\t}) as T\n`
 				+ `\t\t}\n`
 				+ methods.join( '\n' ) + ( methods.length ? '\n' : '' )
 				+ `\t}\n`
