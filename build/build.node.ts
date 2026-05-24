@@ -205,12 +205,378 @@ namespace $ {
 			const name = file.name()
 			const type = name.match( /\.(vert|frag)\./ )?.[1] ?? 'both'
 			const script = file.parent().resolve( `-glsl/${ name }.ts` )
-			
+
 			const styles = file.text()
 			const code = `namespace $ { $.$`+`mol_3d_glsl_${ type } += ${ JSON.stringify( styles ) } }\n`
 			script.text( code )
-			
+
 			return [ script ]
+		}
+
+		@ $mol_mem_key
+		gqlTranspile( path : string ) {
+
+			const file = $mol_file.absolute( path )
+			const name = file.name()
+			const script = file.parent().resolve( `-gql/${ name }.ts` )
+
+			const code = this.gqlCompile( path )
+			script.text( code )
+
+			return [ script ]
+		}
+
+		gqlCompile( path : string ) : string {
+
+			const file = $mol_file.absolute( path )
+			const source = file.text()
+
+			const gql = $node.graphql as typeof import( 'graphql' )
+
+			const className = this.codegen_class_name( file, /\.(schema\.)?(gql|graphql)$/ )
+
+			const externalSchemas = this.gqlCollectSchemas( file )
+
+			let ownDoc : any
+			const externalDocs : any[] = []
+			try {
+				ownDoc = gql.parse( source )
+				for( const ext of externalSchemas ) {
+					externalDocs.push( gql.parse( ext ) )
+				}
+			} catch( e ) {
+				const msg = ( e as Error ).message.replace( /\*\//g, '* /' )
+				return `namespace $ {\n\t/* $mol_build gql parse error: ${ msg } */\n}\n`
+			}
+
+			const seen = new Set< string >()
+			const schemaDefs : any[] = []
+			const collect = ( defs : any[] ) => {
+				for( const def of defs ) {
+					if( def.kind === 'OperationDefinition' ) continue
+					if( def.kind === 'FragmentDefinition' ) continue
+					const name = def.name?.value
+					if( !name || seen.has( name ) ) continue
+					seen.add( name )
+					schemaDefs.push( def )
+				}
+			}
+			collect( ownDoc.definitions )
+			for( const ext of externalDocs ) collect( ext.definitions )
+
+			const operations = ( ownDoc.definitions as any[] ).filter( d => d.kind === 'OperationDefinition' )
+
+			const typesCode = this.gqlRenderTypes( schemaDefs, className )
+			const clientCode = this.gqlRenderClient( className, operations, source )
+
+			return `namespace $ {\n`
+				+ ( typesCode ? `\texport namespace ${ className } {\n${ typesCode }\t}\n` : '' )
+				+ clientCode
+				+ `}\n`
+		}
+
+		gqlCollectSchemas( file : $mol_file ) : string[] {
+
+			const root = this.root()
+			const result : string[] = []
+
+			let dir : $mol_file = file.parent()
+			const rootDepth = root.path().split( '/' ).length
+
+			while( dir.path().split( '/' ).length >= rootDepth ) {
+
+				for( const sub of dir.sub() ) {
+					if( sub === file ) continue
+					if( sub.type() !== 'file' ) continue
+					if( !/\.schema\.(gql|graphql)$/.test( sub.name() ) ) continue
+					result.push( sub.text() )
+				}
+
+				if( dir === root ) break
+				dir = dir.parent()
+			}
+
+			return result
+		}
+
+		protected gqlBuiltinScalar( name : string ) : string | null {
+			switch( name ) {
+				case 'Int': case 'Float': return 'number'
+				case 'String': case 'ID': return 'string'
+				case 'Boolean': return 'boolean'
+				default: return null
+			}
+		}
+
+		protected gqlRenderType( node : any, scope : string ) : string {
+			if( node.kind === 'NonNullType' ) return this.gqlRenderType( node.type, scope )
+			if( node.kind === 'ListType' ) return `readonly ( ${ this.gqlRenderType( node.type, scope ) } | null )[]`
+			if( node.kind === 'NamedType' ) {
+				const name = node.name.value
+				const builtin = this.gqlBuiltinScalar( name )
+				if( builtin ) return builtin
+				return scope ? `${ scope }.${ name }` : name
+			}
+			return 'unknown'
+		}
+
+		protected gqlRenderTypeNullable( node : any, scope : string ) : string {
+			if( node.kind === 'NonNullType' ) return this.gqlRenderType( node.type, scope )
+			return `${ this.gqlRenderType( node, scope ) } | null`
+		}
+
+		gqlRenderTypes( defs : any[], scope : string ) : string {
+
+			const lines : string[] = []
+
+			for( const def of defs ) {
+
+				const name = def.name?.value
+				if( !name ) continue
+
+				if( def.kind === 'ScalarTypeDefinition' ) {
+					const builtin = this.gqlBuiltinScalar( name )
+					if( builtin ) continue
+					const known : Record< string, string > = {
+						'DateTime': 'string',
+						'Date': 'string',
+						'Time': 'string',
+						'JSON': 'unknown',
+						'UUID': 'string',
+						'BigInt': 'string',
+						'Decimal': 'string',
+					}
+					lines.push( `\t\texport type ${ name } = ${ known[ name ] ?? 'string' }` )
+				}
+				else if( def.kind === 'EnumTypeDefinition' ) {
+					const values = ( def.values as any[] ).map( v => JSON.stringify( v.name.value ) ).join( ' | ' )
+					lines.push( `\t\texport type ${ name } = ${ values || 'never' }` )
+				}
+				else if(
+					def.kind === 'ObjectTypeDefinition'
+					|| def.kind === 'InterfaceTypeDefinition'
+					|| def.kind === 'InputObjectTypeDefinition'
+				) {
+					const fields = ( ( def.fields || [] ) as any[] ).map( f => {
+						const nullable = f.type.kind !== 'NonNullType'
+						return `\t\t\treadonly ${ JSON.stringify( f.name.value ) }${ nullable ? '?' : '' } : ${ this.gqlRenderTypeNullable( f.type, '' ) }`
+					} ).join( '\n' )
+					lines.push( `\t\texport interface ${ name } {\n${ fields }\n\t\t}` )
+				}
+				else if( def.kind === 'UnionTypeDefinition' ) {
+					const members = ( def.types as any[] ).map( t => t.name.value ).join( ' | ' )
+					lines.push( `\t\texport type ${ name } = ${ members || 'never' }` )
+				}
+			}
+
+			if( !lines.length ) return ''
+			return lines.join( '\n' ) + '\n'
+		}
+
+		gqlRenderClient( className : string, operations : any[], source : string ) : string {
+
+			const head = `\texport class ${ className } extends $mol_object {\n`
+				+ `\t\tstatic endpoint() { return '' as string }\n`
+				+ `\t\tstatic fetchInit() { return {} as RequestInit }\n`
+				+ `\t\t@ $mol_action\n`
+				+ `\t\tprotected static request( operationName : string, query : string, variables? : Record< string, unknown > ) {\n`
+				+ `\t\t\tconst init = this.fetchInit()\n`
+				+ `\t\t\tconst headers : Record< string, string > = { 'content-type': 'application/json' }\n`
+				+ `\t\t\tif( init.headers ) Object.assign( headers, init.headers as Record< string, string > )\n`
+				+ `\t\t\tconst res = this.$.$mol_fetch.json( this.endpoint(), {\n`
+				+ `\t\t\t\t...init,\n`
+				+ `\t\t\t\tmethod: 'POST',\n`
+				+ `\t\t\t\theaders,\n`
+				+ `\t\t\t\tbody: JSON.stringify({ operationName, query, variables }),\n`
+				+ `\t\t\t}) as { data? : unknown, errors? : readonly { message : string }[] }\n`
+				+ `\t\t\tif( res.errors?.length ) throw new Error( res.errors.map( e => e.message ).join( '\\n' ) )\n`
+				+ `\t\t\treturn res.data\n`
+				+ `\t\t}\n`
+
+			const methods : string[] = []
+
+			for( const op of operations ) {
+
+				const opName = op.name?.value
+				if( !opName ) continue
+
+				const opSrc = source.substring( op.loc.start, op.loc.end )
+				const opSrcLiteral = JSON.stringify( opSrc ).replace( /\$/g, '\\x24' )
+
+				const vars = ( op.variableDefinitions || [] ) as any[]
+				const varArgs = vars.map( v => {
+					const nullable = v.type.kind !== 'NonNullType'
+					return `${ v.variable.name.value }${ nullable ? '?' : '' } : ${ this.gqlRenderTypeNullable( v.type, className ) }`
+				} ).join( ' , ' )
+
+				const argDecl = vars.length ? `vars : { ${ varArgs } }` : `vars? : undefined`
+				const varsExpr = vars.length ? `vars` : 'undefined'
+
+				methods.push(
+					`\t\t@ $mol_action\n` +
+					`\t\tstatic ${ opName }( ${ argDecl } ) {\n` +
+					`\t\t\treturn this.request( ${ JSON.stringify( opName ) }, ${ opSrcLiteral }, ${ varsExpr } as Record< string, unknown > | undefined )\n` +
+					`\t\t}`
+				)
+			}
+
+			return head + ( methods.length ? methods.join( '\n' ) + '\n' : '' ) + `\t}\n`
+		}
+
+		protected codegen_class_name( file : $mol_file, stripExt : RegExp ) : string {
+			const parent = file.parent().relate( this.root() )
+			const fileBase = file.name().replace( stripExt, '' )
+			const parts = parent ? parent.split( '/' ).filter( Boolean ) : []
+			if( fileBase ) parts.push( fileBase )
+			return '$' + parts.join( '_' )
+		}
+
+		@ $mol_mem_key
+		openapiTranspile( path : string ) {
+
+			const file = $mol_file.absolute( path )
+			const name = file.name()
+			const script = file.parent().resolve( `-openapi/${ name }.ts` )
+
+			const code = this.openapiCompile( path )
+			script.text( code )
+
+			return [ script ]
+		}
+
+		openapiCompile( path : string ) : string {
+
+			const file = $mol_file.absolute( path )
+			const text = file.text()
+			const className = this.codegen_class_name( file, /\.openapi\.(yaml|yml|json)$/ )
+
+			let spec : any
+			try {
+				if( /\.openapi\.json$/.test( file.name() ) ) {
+					spec = JSON.parse( text )
+				} else {
+					const yaml = $node.yaml as typeof import( 'yaml' )
+					spec = yaml.parse( text )
+				}
+			} catch( e ) {
+				const msg = ( e as Error ).message.replace( /\*\//g, '* /' )
+				return `namespace $ {\n\t/* $mol_build openapi parse error: ${ msg } */\n}\n`
+			}
+
+			let typesText : string
+			try {
+				typesText = $mol_wire_sync( this ).openapiGenerateTypes( spec )
+			} catch( e ) {
+				if( $mol_promise_like( e ) ) $mol_fail_hidden( e )
+				const msg = ( e as Error ).message.replace( /\*\//g, '* /' )
+				return `namespace $ {\n\t/* $mol_build openapi-typescript error: ${ msg } */\n}\n`
+			}
+
+			const typesIndented = typesText
+				.split( '\n' )
+				.map( l => l ? '\t\t' + l : l )
+				.join( '\n' )
+
+			const clientCode = this.openapiRenderClient( className, spec )
+
+			return `namespace $ {\n`
+				+ `\texport namespace ${ className } {\n${ typesIndented }\n\t}\n`
+				+ `${ clientCode }}\n`
+		}
+
+		async openapiGenerateTypes( spec : any ) : Promise< string > {
+			this.$.$node_autoinstall( 'openapi-typescript' )
+			const mod = await import( 'openapi-typescript' ) as any
+			const fn = mod.default ?? mod.openapiTS ?? mod
+			const ast = await fn( spec )
+			const raw : string = typeof ast === 'string'
+				? ast
+				: ( () => {
+					const ts = $node.typescript as typeof import( 'typescript' )
+					const file = ts.createSourceFile( 'out.d.ts', '', ts.ScriptTarget.Latest, false, ts.ScriptKind.TS )
+					const printer = ts.createPrinter( { newLine: ts.NewLineKind.LineFeed } )
+					return ast.map( ( node : any ) => printer.printNode( ts.EmitHint.Unspecified, node, file ) ).join( '\n' )
+				} )()
+			return raw.replace( /^[ \t]*export\s+type\s+\$\w+\s*=\s*Record\s*<\s*string\s*,\s*never\s*>\s*;?\s*$/gm, '' )
+		}
+
+		openapiRenderClient( className : string, spec : any ) : string {
+
+			const httpMethods = [ 'get', 'post', 'put', 'patch', 'delete', 'head', 'options' ] as const
+			const paths = ( spec?.paths ?? {} ) as Record< string, any >
+
+			const methods : string[] = []
+			const seen = new Set< string >()
+
+			for( const route in paths ) {
+				const item = paths[ route ]
+				if( !item ) continue
+				for( const method of httpMethods ) {
+					const op = item[ method ]
+					if( !op ) continue
+
+					let opName : string = op.operationId
+						|| ( method + '_' + route ).replace( /[^a-zA-Z0-9]+/g, '_' ).replace( /^_+|_+$/g, '' )
+
+					let unique = opName
+					let i = 2
+					while( seen.has( unique ) ) unique = opName + '_' + i++
+					seen.add( unique )
+					opName = unique
+
+					const pathParams = ( ( op.parameters ?? [] ) as any[] ).filter( p => p.in === 'path' ).map( p => p.name )
+					const queryParams = ( ( op.parameters ?? [] ) as any[] ).filter( p => p.in === 'query' ).map( p => p.name )
+					const hasBody = !!op.requestBody
+
+					const optParts : string[] = []
+					if( pathParams.length ) optParts.push( `params : { ${ pathParams.map( ( n : string ) => `${ JSON.stringify( n ) } : string | number` ).join( ', ' ) } }` )
+					if( queryParams.length ) optParts.push( `query? : Record< string, string | number | boolean | undefined >` )
+					if( hasBody ) optParts.push( `body? : unknown` )
+
+					const optsRequired = pathParams.length > 0
+					const optsDecl = optParts.length
+						? `opts${ optsRequired ? '' : '?' } : { ${ optParts.join( ', ' ) } }`
+						: `opts? : undefined`
+
+					methods.push(
+						`\t\t@ $mol_action\n` +
+						`\t\tstatic ${ opName }( ${ optsDecl } ) {\n` +
+						`\t\t\treturn this.request( ${ JSON.stringify( method.toUpperCase() ) }, ${ JSON.stringify( route ) }, opts as any )\n` +
+						`\t\t}`
+					)
+				}
+			}
+
+			return `\texport class ${ className } extends $mol_object {\n`
+				+ `\t\tstatic endpoint() { return '' as string }\n`
+				+ `\t\tstatic fetchInit() { return {} as RequestInit }\n`
+				+ `\t\t@ $mol_action\n`
+				+ `\t\tprotected static request( method : string, route : string, opts? : { params? : Record< string, string | number >, query? : Record< string, string | number | boolean | undefined >, body? : unknown } ) {\n`
+				+ `\t\t\tlet url = this.endpoint() + route\n`
+				+ `\t\t\tif( opts?.params ) for( const k in opts.params ) url = url.replace( '{' + k + '}', encodeURIComponent( String( opts.params[ k ] ) ) )\n`
+				+ `\t\t\tif( opts?.query ) {\n`
+				+ `\t\t\t\tconst qs = new URLSearchParams()\n`
+				+ `\t\t\t\tfor( const k in opts.query ) {\n`
+				+ `\t\t\t\t\tconst v = opts.query[ k ]\n`
+				+ `\t\t\t\t\tif( v !== undefined ) qs.append( k, String( v ) )\n`
+				+ `\t\t\t\t}\n`
+				+ `\t\t\t\tconst qstr = qs.toString()\n`
+				+ `\t\t\t\tif( qstr ) url += ( url.includes( '?' ) ? '&' : '?' ) + qstr\n`
+				+ `\t\t\t}\n`
+				+ `\t\t\tconst init = this.fetchInit()\n`
+				+ `\t\t\tconst headers : Record< string, string > = {}\n`
+				+ `\t\t\tif( init.headers ) Object.assign( headers, init.headers as Record< string, string > )\n`
+				+ `\t\t\tconst body = opts?.body\n`
+				+ `\t\t\tif( body !== undefined ) headers[ 'content-type' ] ??= 'application/json'\n`
+				+ `\t\t\treturn this.$.$mol_fetch.json( url, {\n`
+				+ `\t\t\t\t...init,\n`
+				+ `\t\t\t\tmethod,\n`
+				+ `\t\t\t\theaders,\n`
+				+ `\t\t\t\tbody: body === undefined ? undefined : JSON.stringify( body ),\n`
+				+ `\t\t\t})\n`
+				+ `\t\t}\n`
+				+ methods.join( '\n' ) + ( methods.length ? '\n' : '' )
+				+ `\t}\n`
 		}
 
 		@ $mol_mem_key
@@ -242,6 +608,10 @@ namespace $ {
 					files = this.cssTranspile( child_path )
 				} else if( /(\.glsl)$/.test( name ) ) {
 					files = this.glslTranspile( child_path )
+				} else if( /\.(gql|graphql)$/.test( name ) ) {
+					files = this.gqlTranspile( child_path )
+				} else if( /\.openapi\.(ya?ml|json)$/.test( name ) ) {
+					files = this.openapiTranspile( child_path )
 				}
 
 				mods.push( ...files, child )
@@ -1798,5 +2168,37 @@ namespace $ {
 			[`/${ source.parent().relate() }/-view.tree/${ source.name() }.js`]: 0,
 		}
 	}
-	
+
+	$mol_build.dependors[ 'gql' ] = $mol_build.dependors[ 'graphql' ] = source => {
+		const depends : { [ index : string ] : number } = {
+			'/mol/fetch': 0,
+		}
+
+		if( /\.schema\.(gql|graphql)$/.test( source.name() ) ) return depends
+
+		const root = $mol_file.relative( '.' )
+		const rootDepth = root.path().split( '/' ).length
+		let dir = source.parent()
+
+		while( dir.path().split( '/' ).length >= rootDepth ) {
+			for( const sub of dir.sub() ) {
+				if( sub === source ) continue
+				if( sub.type() !== 'file' ) continue
+				if( !/\.schema\.(gql|graphql)$/.test( sub.name() ) ) continue
+				depends[ '/' + sub.parent().relate( root ) ] = 0
+			}
+			if( dir === root ) break
+			dir = dir.parent()
+		}
+
+		return depends
+	}
+
+	$mol_build.dependors[ 'openapi.yaml' ]
+		= $mol_build.dependors[ 'openapi.yml' ]
+		= $mol_build.dependors[ 'openapi.json' ]
+		= source => ( {
+			'/mol/fetch': 0,
+		} )
+
 }
