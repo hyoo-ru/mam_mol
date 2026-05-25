@@ -21,7 +21,6 @@ namespace $ {
 	 * `{ ...op, query: op.query.replace('{{filter}}', dynamic) }`.
 	 */
 	export function $mol_gql< Variables, Result >(
-		this : typeof $,
 		endpoint : string,
 		op : $mol_gql_operation< Variables, Result >,
 		variables : Variables,
@@ -31,7 +30,7 @@ namespace $ {
 		const headers : Record< string, string > = { 'content-type': 'application/json' }
 		if( init?.headers ) Object.assign( headers, init.headers as Record< string, string > )
 
-		const res = this.$mol_fetch.json( endpoint, {
+		const res = $mol_fetch.json( endpoint, {
 			...init,
 			method: 'POST',
 			headers,

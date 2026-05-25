@@ -30,7 +30,6 @@ namespace $ {
 	 * пиши при необходимости в собственном helper'е.
 	 */
 	export function $mol_openapi< Params, Query, Body, Result >(
-		this : typeof $,
 		endpoint : string,
 		op : $mol_openapi_operation< Params, Query, Body, Result >,
 		input? : { params? : Params, query? : Query, body? : Body },
@@ -63,7 +62,7 @@ namespace $ {
 		const body = input?.body
 		if( body !== undefined ) headers[ 'content-type' ] ??= 'application/json'
 
-		return this.$mol_fetch.json( url, {
+		return $mol_fetch.json( url, {
 			...init,
 			method: op.method,
 			headers,
