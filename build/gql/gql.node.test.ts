@@ -9,9 +9,9 @@ namespace $ {
 				class_name: '\x24test_api',
 				is_schema_only: true,
 			})
-			$mol_assert_ok( out.startsWith( 'namespace \x24.\x24test_api' ) )
-			$mol_assert_ok( out.includes( 'interface User' ) )
-			$mol_assert_ok( !/export const /.test( out ) )
+			$mol_assert_equal( out.startsWith( 'namespace \x24.\x24test_api' ), true )
+			$mol_assert_equal( out.includes( 'interface User' ), true )
+			$mol_assert_equal( /export const /.test( out ), false )
 		},
 
 		'operations file: each query/mutation becomes export const with query/variables/result'() {
@@ -21,9 +21,9 @@ namespace $ {
 				class_name: '\x24test_api',
 				is_schema_only: false,
 			})
-			$mol_assert_ok( out.startsWith( 'namespace \x24.\x24test_api' ) )
-			$mol_assert_ok( /export const Foo = \{/.test( out ) )
-			$mol_assert_ok( /query: "query Foo \{ hi \}"/.test( out ) )
+			$mol_assert_equal( out.startsWith( 'namespace \x24.\x24test_api' ), true )
+			$mol_assert_equal( /export const Foo = \{/.test( out ), true )
+			$mol_assert_equal( /query: "query Foo \{ hi \}"/.test( out ), true )
 		},
 
 		'inline schema-defs in ops file dedup with external ones (own wins)'() {
@@ -37,7 +37,7 @@ namespace $ {
 			})
 			const matches = out.match( /interface Country/g ) ?? []
 			$mol_assert_equal( matches.length, 1 )
-			$mol_assert_ok( !/readonly "name"/.test( out ) )
+			$mol_assert_equal( /readonly "name"/.test( out ), false )
 		},
 
 		'builtin scalars resolve to TS primitives, not GraphQL names'() {
@@ -47,12 +47,12 @@ namespace $ {
 				class_name: '\x24x',
 				is_schema_only: true,
 			})
-			$mol_assert_ok( out.includes( '"id" : string' ) )
-			$mol_assert_ok( out.includes( '"n" : number' ) )
-			$mol_assert_ok( out.includes( '"s" : string' ) )
-			$mol_assert_ok( out.includes( '"b" : boolean' ) )
-			$mol_assert_ok( out.includes( '"f" : number' ) )
-			$mol_assert_ok( !/export type ID =/.test( out ) )
+			$mol_assert_equal( out.includes( '"id" : string' ), true )
+			$mol_assert_equal( out.includes( '"n" : number' ), true )
+			$mol_assert_equal( out.includes( '"s" : string' ), true )
+			$mol_assert_equal( out.includes( '"b" : boolean' ), true )
+			$mol_assert_equal( out.includes( '"f" : number' ), true )
+			$mol_assert_equal( /export type ID =/.test( out ), false )
 		},
 
 		'NonNull vs nullable: optional marker and "| null" union'() {
@@ -62,8 +62,20 @@ namespace $ {
 				class_name: '\x24x',
 				is_schema_only: true,
 			})
-			$mol_assert_ok( /"req" : string\b/.test( out ) )
-			$mol_assert_ok( /"opt"\? : string \| null/.test( out ) )
+			$mol_assert_equal( /"req" : string\b/.test( out ), true )
+			$mol_assert_equal( /"opt"\? : string \| null/.test( out ), true )
+		},
+
+		'list inner nullability follows inner NonNull marker, not always | null'() {
+			const out = $mol_build_gql.compile({
+				source: 'type T { strict: [String!]! loose: [String!] mixed: [String] }',
+				external: [],
+				class_name: '\x24x',
+				is_schema_only: true,
+			})
+			$mol_assert_equal( /"strict" : readonly \( string \)\[\]/.test( out ), true )
+			$mol_assert_equal( /"loose"\? : readonly \( string \)\[\] \| null/.test( out ), true )
+			$mol_assert_equal( /"mixed"\? : readonly \( string \| null \)\[\] \| null/.test( out ), true )
 		},
 
 		'enum becomes union of string literals'() {
@@ -73,7 +85,7 @@ namespace $ {
 				class_name: '\x24x',
 				is_schema_only: true,
 			})
-			$mol_assert_ok( out.includes( 'export type Role = "admin" | "member" | "guest"' ) )
+			$mol_assert_equal( out.includes( 'export type Role = "admin" | "member" | "guest"' ), true )
 		},
 
 		'operation result typed via Query root when present in schema'() {
@@ -83,7 +95,7 @@ namespace $ {
 				class_name: '\x24x',
 				is_schema_only: false,
 			})
-			$mol_assert_ok( /result: \{\} as Query/.test( out ) )
+			$mol_assert_equal( /result: \{\} as Query/.test( out ), true )
 		},
 
 		'operation result is unknown when no root type in schema'() {
@@ -93,7 +105,7 @@ namespace $ {
 				class_name: '\x24x',
 				is_schema_only: false,
 			})
-			$mol_assert_ok( /result: \{\} as unknown/.test( out ) )
+			$mol_assert_equal( /result: \{\} as unknown/.test( out ), true )
 		},
 
 		'variable definitions become typed variables field on operation const'() {
@@ -103,7 +115,7 @@ namespace $ {
 				class_name: '\x24x',
 				is_schema_only: false,
 			})
-			$mol_assert_ok( /variables: \{\} as \{ id : string \}/.test( out ) )
+			$mol_assert_equal( /variables: \{\} as \{ id : string \}/.test( out ), true )
 		},
 
 		'operation without variables: variables typed as undefined'() {
@@ -113,7 +125,7 @@ namespace $ {
 				class_name: '\x24x',
 				is_schema_only: false,
 			})
-			$mol_assert_ok( /variables: undefined as undefined/.test( out ) )
+			$mol_assert_equal( /variables: undefined as undefined/.test( out ), true )
 		},
 
 		'operation satisfies $mol_gql_operation generic'() {
@@ -123,7 +135,7 @@ namespace $ {
 				class_name: '\x24x',
 				is_schema_only: false,
 			})
-			$mol_assert_ok( out.includes( 'satisfies \x24mol_gql_operation<' ) )
+			$mol_assert_equal( out.includes( 'satisfies \x24mol_gql_operation<' ), true )
 		},
 
 		'parse error returns wrapped namespace, does not throw'() {
@@ -133,8 +145,8 @@ namespace $ {
 				class_name: '\x24x',
 				is_schema_only: true,
 			})
-			$mol_assert_ok( out.startsWith( 'namespace \x24' ) )
-			$mol_assert_ok( out.includes( 'parse error' ) )
+			$mol_assert_equal( out.startsWith( 'namespace \x24' ), true )
+			$mol_assert_equal( out.includes( 'parse error' ), true )
 		},
 
 		'is_schema_file recognizes .schema.gql and .schema.graphql'() {

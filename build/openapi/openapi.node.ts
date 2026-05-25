@@ -3,6 +3,8 @@ namespace $ {
 	const HttpMethods = [ 'get', 'post', 'put', 'patch', 'delete', 'head', 'options' ] as const
 	type HttpMethod = typeof HttpMethods[ number ]
 
+	// `header` / `cookie` параметры намеренно out of scope — типовая практика
+	// для них передавать через `init.headers` / `fetchInit()`, а не описывать в spec.
 	const ParamLocation = {
 		Path : 'path',
 		Query : 'query',
@@ -15,8 +17,10 @@ namespace $ {
 
 	// openapi-typescript иногда печатает декларацию `$defs` для JSON-Schema 2020-12 совместимости.
 	// `$defs` парсится ts-dep-сканером как ссылка на пакет `/defs` — фейковая зависимость.
-	// Удаляем безопасную пустую декларацию (Record<string,never>).
-	const FakeDefsLine = /^[ \t]*export\s+type\s+\$\w+\s*=\s*Record\s*<\s*string\s*,\s*never\s*>\s*;?\s*$/gm
+	// Удаляем именно её (Record<string, never>), не трогаем другие пустые алиасы.
+	// `\u0024` — экранированный `$`: в regex matches `$`, в исходнике видимого `$` нет
+	// (иначе сам ts-dep-сканер сматчит этот regex literal как ссылку на пакет /defs).
+	const FakeDefsLine = /^[ \t]*export\s+type\s+\u0024defs\s*=\s*Record\s*<\s*string\s*,\s*never\s*>\s*;?\s*$/gm
 
 	type Parameter = {
 		name : string,
@@ -218,9 +222,13 @@ namespace $ {
 		return unique
 	}
 
+	// 2xx → ASC. Если 2xx нет — fallback на `default` (валидный OpenAPI 3.x кейс).
 	function first_success_code( op : Operation ) : string | null {
-		const codes = Object.keys( op.responses ?? {} ).filter( c => /^2\d\d$/.test( c ) ).sort()
-		return codes[ 0 ] ?? null
+		const codes = Object.keys( op.responses ?? {} )
+		const ok = codes.filter( c => /^2\d\d$/.test( c ) ).sort()
+		if( ok.length ) return ok[ 0 ]
+		if( codes.includes( 'default' ) ) return `'default'`
+		return null
 	}
 
 	function multiline( ...lines : readonly string[] ) : string {

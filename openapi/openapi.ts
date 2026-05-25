@@ -24,6 +24,10 @@ namespace $ {
 	 * - `{name}` в route подставляются из `input.params`
 	 * - `input.query` сериализуется через URLSearchParams
 	 * - `input.body` JSON-сериализуется, content-type выставляется автоматически
+	 *
+	 * Non-OK ответы (4xx/5xx) пробрасываются как исключения из `$mol_fetch.json` —
+	 * `@$mol_mem` view'а ловит их и показывает error-плашку. Свой error-handling
+	 * пиши при необходимости в собственном helper'е.
 	 */
 	export function $mol_openapi< Params, Query, Body, Result >(
 		this : typeof $,
@@ -33,7 +37,8 @@ namespace $ {
 		init? : RequestInit,
 	) : Result {
 
-		let url = endpoint + op.route
+		// trailing `/` в endpoint + leading `/` в route → одиночный.
+		let url = endpoint.replace( /\/+$/, '' ) + op.route
 
 		if( input?.params ) {
 			const params = input.params as Record< string, unknown >

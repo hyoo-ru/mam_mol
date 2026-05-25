@@ -213,6 +213,10 @@ namespace $ {
 			return [ script ]
 		}
 
+		// `api.schema.gql` и `api.gql` намеренно резолвятся в один и тот же namespace
+		// (`$bog_lk_api`). TS делает declaration merging для interface'ов — поля
+		// схемы видны без импорта в operations-файле. Если поля разойдутся — TS
+		// поймает; раздели тогда файлы по разным именам или удали дубль из ops-файла.
 		@ $mol_mem_key
 		gqlTranspile( path : string ) {
 			const file = $mol_file.absolute( path )
@@ -646,6 +650,7 @@ namespace $ {
 		@ $mol_mem_key
 		srcDeps( path : string ) {
 			const src = $mol_file.absolute( path )
+			
 
 			// Сгенерированные .ts из .gql/.openapi содержат строковые литералы
 			// (query / route templates) с $-токенами внутри, которые ts-парсер зависимостей
@@ -657,8 +662,8 @@ namespace $ {
 
 			let ext = src.ext()
 			if( !ext ) return {}
-
-			let dependencies
+			
+			let dependencies 
 			while( !dependencies ) {
 				dependencies = $mol_build.dependors[ ext ]
 				if( dependencies ) break
@@ -666,7 +671,7 @@ namespace $ {
 				if( ext === extShort ) break
 				ext = extShort
 			}
-
+			
 			return dependencies ? dependencies( src ) : {}
 		}
 		

@@ -225,7 +225,10 @@ namespace $ {
 
 	function render_type_ref( node : TypeNode, scope : string ) : string {
 		if( node.kind === Kind.NonNull ) return render_type_ref( node.type!, scope )
-		if( node.kind === Kind.List ) return `readonly ( ${ render_type_ref( node.type!, scope ) } | null )[]`
+		// Inner-of-list nullability определяется самим inner-узлом (NonNull или нет),
+		// а не оборачивается принудительно — `[String!]` → `readonly string[]`,
+		// `[String]` → `readonly ( string | null )[]`.
+		if( node.kind === Kind.List ) return `readonly ( ${ render_type_nullable( node.type!, scope ) } )[]`
 		if( node.kind === Kind.Named ) {
 			const name = node.name!.value
 			const builtin = BuiltinScalars[ name ]
@@ -310,6 +313,13 @@ namespace $ {
 		return rendered.join( '\n' )
 	}
 
+	/**
+	 * Result типизируется как **полный** root-тип (Query/Mutation/Subscription),
+	 * а не как тип reconstruction'а из selection set. Это намеренный design trade-off:
+	 * парсер selection set'а в TS-типы — отдельная нетривиальная задача (граф фрагментов,
+	 * inline-фрагменты, директивы), а от unsound доступа к не-selected полям защищает
+	 * валидация на сервере. Если нужна точная типизация — оборачивай в свой helper.
+	 */
 	function render_operation(
 		op : {
 			operation : keyof typeof Roots,
