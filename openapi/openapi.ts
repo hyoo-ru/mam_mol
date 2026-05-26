@@ -10,40 +10,36 @@ namespace $ {
 	}
 
 	/**
-	 * Mapped type-диспетчер: ищет в Obj все ключи со shape OpenAPI-операции и
-	 * преобразует в callable с правильной сигнатурой input'а:
-	 *   - нет path params + нет query + нет body → `() => Out`
-	 *   - есть path params → `(input: { params, query?, body? }) => Out` (input обязателен)
-	 *   - только query/body → `(input?: { query?, body? }) => Out`
+	 * Типизированный OpenAPI-клиент — функция. Overloaded сигнатуры по форме входа:
+	 *   - all params/query/body = undefined → 1 аргумент (op)
+	 *   - есть path params → 2-й аргумент `input` обязателен
+	 *   - только optional → `input` опционален
 	 */
-	type $mol_openapi_dispatch< Obj > = {
-		[ K in keyof Obj ] : Obj[ K ] extends $mol_openapi_op< infer P, infer Q, infer B, infer R >
-			? ( [ P ] extends [ undefined ]
-				? ( [ Q ] extends [ undefined ]
-					? ( [ B ] extends [ undefined ]
-						? () => R
-						: ( input : { body : B } ) => R
-					)
-					: ( input? : { query? : Q, body? : B } ) => R
-				)
-				: ( input : { params : P, query? : Q, body? : B } ) => R
-			)
-			: never
+	export type $mol_openapi_client = {
+		< Q, B, R >( op : $mol_openapi_op< undefined, Q, B, R >, input? : { query? : Q, body? : B } ) : R
+		< P, Q, B, R >( op : $mol_openapi_op< P, Q, B, R >, input : { params : P, query? : Q, body? : B } ) : R
 	}
 
-	export class $mol_openapi extends $mol_object {
+	/**
+	 * Factory типизированного REST/OpenAPI клиента.
+	 *
+	 *   export const $bog_lk_petstore = $mol_openapi_fetch(
+	 *       'https://petstore3.swagger.io/api/v3',
+	 *       { headers: { 'api_key': 'special-key' } },
+	 *   )
+	 *
+	 *   this.$.$bog_lk_petstore( $bog_lk_api_petstore_get_pet_by_id, { params: { petId: 1 } } )
+	 */
+	export function $mol_openapi_fetch( endpoint : string, init? : RequestInit ) : $mol_openapi_client {
 
-		static api_root() { return '' as string }
+		const root = endpoint.replace( /\/+$/, '' )
 
-		static fetchInit() { return {} as RequestInit }
+		return function $mol_openapi_call(
+			op : $mol_openapi_op< any, any, any, any >,
+			input? : { params? : unknown, query? : unknown, body? : unknown },
+		) : unknown {
 
-		static exec< P, Q, B, R >(
-			op : $mol_openapi_op< P, Q, B, R >,
-			input? : { params? : P, query? : Q, body? : B },
-		) : R {
-
-			// trailing `/` в endpoint + leading `/` в route → одиночный.
-			let url = this.api_root().replace( /\/+$/, '' ) + op.route
+			let url = root + op.route
 
 			const params = input?.params as Record< string, unknown > | undefined
 			if( params ) {
@@ -63,39 +59,18 @@ namespace $ {
 				if( qstr ) url += ( url.includes( '?' ) ? '&' : '?' ) + qstr
 			}
 
-			const init = this.fetchInit()
 			const headers : Record< string, string > = {}
-			if( init.headers ) Object.assign( headers, init.headers as Record< string, string > )
+			if( init?.headers ) Object.assign( headers, init.headers as Record< string, string > )
 			const body = input?.body
 			if( body !== undefined ) headers[ 'content-type' ] ??= 'application/json'
 
-			return this.$.$mol_fetch.json( url, {
+			return $mol_fetch.json( url, {
 				...init,
 				method: op.method,
 				headers,
 				body: body === undefined ? undefined : JSON.stringify( body ),
-			}) as R
-		}
-
-		static get _() : $mol_openapi_dispatch< typeof $ > {
-			const self = this
-			return new Proxy( {} as $mol_openapi_dispatch< typeof $ >, {
-				get( _target, key ) {
-					if( typeof key === 'symbol' ) return undefined
-					const op = ( self.$ as any )[ key ]
-					if(
-						op
-						&& typeof op === 'object'
-						&& typeof op.method === 'string'
-						&& typeof op.route === 'string'
-					) {
-						return ( input : unknown ) => self.exec( op, input as any )
-					}
-					return undefined
-				}
-			} )
-		}
-
+			})
+		} as $mol_openapi_client
 	}
 
 }
