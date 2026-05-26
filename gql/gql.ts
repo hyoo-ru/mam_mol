@@ -26,7 +26,6 @@ namespace $ {
 		static fetch< Variables, Result >(
 			endpoint : string,
 			op : $mol_gql_operation< Variables, Result >,
-			variables : Variables,
 			init? : RequestInit,
 		) : Result {
 
@@ -37,7 +36,7 @@ namespace $ {
 				...init,
 				method: 'POST',
 				headers,
-				body: JSON.stringify({ query: op.query, variables }),
+				body: JSON.stringify({ query: op.query, variables: op.variables }),
 			}) as { data? : Result, errors? : readonly { message : string }[] }
 
 			if( res.errors?.length ) throw new Error( res.errors.map( e => e.message ).join( '\n' ) )
