@@ -96,16 +96,18 @@ namespace $ {
 				: ( own_doc.definitions as DefinitionNode[] ).filter( def => def.kind === Kind.Operation )
 
 			const types_code = render_types( schema_defs )
-			const operations_code = render_operations( operations, input.source, root_types )
+			const op_prefix = input.class_name
+			const operations_code = render_operations( operations, root_types, op_prefix, input.source )
 
-			const body = [ types_code, operations_code ].filter( Boolean ).join( '\n' )
+			const types_block = types_code
+				? multiline( `namespace $.${ input.class_name } {`, types_code, '}' )
+				: ''
 
-			return multiline(
-				`namespace $.${ input.class_name } {`,
-				body,
-				'}',
-				'',
-			)
+			const ops_block = operations_code
+				? multiline( 'namespace $ {', operations_code, '}' )
+				: ''
+
+			return [ types_block, ops_block ].filter( Boolean ).join( '\n\n' ) + '\n'
 		}
 
 		export function is_schema_file( name : string ) {
@@ -292,73 +294,81 @@ namespace $ {
 		return lines.join( '\n' )
 	}
 
+	type OpNode = {
+		operation : keyof typeof Roots,
+		name? : { value : string },
+		loc? : { start : number, end : number },
+		variableDefinitions? : Array< {
+			variable : { name : { value : string } },
+			type : TypeNode,
+		} >,
+	}
+
 	function render_operations(
 		operations : DefinitionNode[],
-		source : string,
 		root_types : Set< string >,
+		prefix : string,
+		source : string,
 	) : string {
 
-		const rendered = ( operations as Array< {
-			kind : string,
-			operation : keyof typeof Roots,
-			name? : { value : string },
-			loc? : { start : number, end : number },
-			variableDefinitions? : Array< {
-				variable : { name : { value : string } },
-				type : TypeNode,
-			} >,
-		} > ).map( op => render_operation( op, source, root_types ) )
+		const rendered = ( operations as OpNode[] )
+			.map( op => render_operation( op, root_types, prefix, source ) )
 			.filter( ( m ) : m is string => m !== null )
 
 		return rendered.join( '\n' )
 	}
 
 	/**
+	 * Каждая операция — отдельная flat const в namespace `$` с префиксом из пути файла:
+	 *   `$bog_lk_api_countries_list_countries = { query, in, out }`.
+	 *
+	 * Types-only поля: `in` (variables) и `out` (result). Runtime — placeholder
+	 * (undefined / {}). Реальные значения передаются при вызове через $mol_gql.
+	 *
 	 * Result типизируется как **полный** root-тип (Query/Mutation/Subscription),
-	 * а не как тип reconstruction'а из selection set. Это намеренный design trade-off:
-	 * парсер selection set'а в TS-типы — отдельная нетривиальная задача (граф фрагментов,
-	 * inline-фрагменты, директивы), а от unsound доступа к не-selected полям защищает
-	 * валидация на сервере. Если нужна точная типизация — оборачивай в свой helper.
+	 * а не как reconstruction из selection set — намеренный design trade-off.
 	 */
 	function render_operation(
-		op : {
-			operation : keyof typeof Roots,
-			name? : { value : string },
-			loc? : { start : number, end : number },
-			variableDefinitions? : Array< {
-				variable : { name : { value : string } },
-				type : TypeNode,
-			} >,
-		},
-		source : string,
+		op : OpNode,
 		root_types : Set< string >,
+		prefix : string,
+		source : string,
 	) : string | null {
 
 		const op_name = op.name?.value
 		if( !op_name ) return null
 
-		const op_src = source.substring( op.loc!.start, op.loc!.end )
+		const full_name = `${ prefix }_${ camel_to_snake( op_name ) }`
 		const vars = op.variableDefinitions ?? []
 
-		const vars_type = vars.length
-			? `{ ${ vars.map( v => {
-				const nullable = v.type.kind !== Kind.NonNull
-				return `${ v.variable.name.value }${ nullable ? '?' : '' } : ${ render_type_nullable( v.type, '' ) }`
-			} ).join( ', ' ) } }`
-			: 'undefined'
-
+		const vars_type = render_vars_type( vars )
 		const vars_runtime = vars.length ? '{}' : 'undefined'
 
 		const root_name = Roots[ op.operation ]
-		const result_type = root_types.has( root_name ) ? root_name : 'unknown'
+		const result_type = root_types.has( root_name ) ? `${ prefix }.${ root_name }` : 'unknown'
+
+		const op_src = source.substring( op.loc!.start, op.loc!.end )
 
 		return multiline(
-			`\texport const ${ op_name } = {`,
+			`\texport const ${ full_name } = {`,
 			`\t\tquery: ${ JSON.stringify( op_src ) },`,
-			`\t\tvariables: ${ vars_runtime } as ${ vars_type },`,
-			`\t\tresult: {} as ${ result_type },`,
-			`\t} satisfies $mol_gql_operation< ${ vars_type }, ${ result_type } >`,
+			`\t\tin: ${ vars_runtime } as ${ vars_type },`,
+			`\t\tout: {} as ${ result_type },`,
+			`\t}`,
 		)
+	}
+
+	function render_vars_type( vars : OpNode[ 'variableDefinitions' ] & object ) : string {
+		if( !vars.length ) return 'undefined'
+		const fields = vars.map( v => {
+			const nullable = v.type.kind !== Kind.NonNull
+			return `${ v.variable.name.value }${ nullable ? '?' : '' } : ${ render_type_nullable( v.type, '' ) }`
+		} ).join( ', ' )
+		return `{ ${ fields } }`
+	}
+
+	function camel_to_snake( s : string ) : string {
+		return s.replace( /([a-z0-9])([A-Z])/g, '$1_$2' ).toLowerCase()
 	}
 
 	function multiline( ...lines : readonly string[] ) : string {

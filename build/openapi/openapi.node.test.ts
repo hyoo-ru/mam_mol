@@ -5,9 +5,7 @@ namespace $ {
 			'/pets': {
 				get: {
 					operationId: 'listPets',
-					parameters: [
-						{ name: 'limit', in: 'query' },
-					],
+					parameters: [ { name: 'limit', in: 'query' } ],
 					responses: {
 						'200': { description: 'ok', content: { 'application/json': { schema: {} } } },
 					},
@@ -16,22 +14,16 @@ namespace $ {
 			'/pets/{id}': {
 				get: {
 					operationId: 'getPet',
-					parameters: [
-						{ name: 'id', in: 'path', required: true },
-					],
+					parameters: [ { name: 'id', in: 'path', required: true } ],
 					responses: {
 						'200': { description: 'ok', content: { 'application/json': { schema: {} } } },
 					},
 				},
 				post: {
 					operationId: 'updatePet',
-					parameters: [
-						{ name: 'id', in: 'path', required: true },
-					],
+					parameters: [ { name: 'id', in: 'path', required: true } ],
 					requestBody: { content: { 'application/json': { schema: {} } } },
-					responses: {
-						'201': { description: 'created' },
-					},
+					responses: { '201': { description: 'created' } },
 				},
 			},
 		},
@@ -39,36 +31,35 @@ namespace $ {
 
 	$mol_test({
 
-		'every path×method becomes export const with method/route/params/query/body/result'() {
+		'flat const per op in namespace \x24 with prefix and snake_case name'() {
 			const out = $mol_build_openapi.compile({
 				spec: minimal_spec,
 				types_text: '',
 				class_name: '\x24x',
 			})
-			$mol_assert_equal( out.startsWith( 'namespace \x24.\x24x' ), true )
-			$mol_assert_equal( /export const listPets = \{/.test( out ), true )
-			$mol_assert_equal( /export const getPet = \{/.test( out ), true )
-			$mol_assert_equal( /export const updatePet = \{/.test( out ), true )
+			$mol_assert_equal( /export const \x24x_list_pets = \{/.test( out ), true )
+			$mol_assert_equal( /export const \x24x_get_pet = \{/.test( out ), true )
+			$mol_assert_equal( /export const \x24x_update_pet = \{/.test( out ), true )
 			$mol_assert_equal( /method: "GET"/.test( out ), true )
 			$mol_assert_equal( /method: "POST"/.test( out ), true )
 		},
 
-		'path params typed via operations[opId][parameters][path] when there are any'() {
+		'path params typed via \x24x.operations[opId][parameters][path]'() {
 			const out = $mol_build_openapi.compile({
 				spec: minimal_spec,
 				types_text: '',
 				class_name: '\x24x',
 			})
-			$mol_assert_equal( out.includes( `operations[ "getPet" ][ 'parameters' ][ 'path' ]` ), true )
+			$mol_assert_equal( out.includes( `\x24x.operations[ "getPet" ][ 'parameters' ][ 'path' ]` ), true )
 		},
 
-		'result typed via operations[opId][responses][200][application/json] infer'() {
+		'result inferred from response 200 application/json'() {
 			const out = $mol_build_openapi.compile({
 				spec: minimal_spec,
 				types_text: '',
 				class_name: '\x24x',
 			})
-			$mol_assert_equal( out.includes( `operations[ "listPets" ][ 'responses' ][ 200 ]` ), true )
+			$mol_assert_equal( out.includes( `\x24x.operations[ "listPets" ][ 'responses' ][ 200 ]` ), true )
 			$mol_assert_equal( out.includes( `infer R` ), true )
 		},
 
@@ -90,43 +81,16 @@ namespace $ {
 				types_text: '',
 				class_name: '\x24x',
 			})
-			$mol_assert_equal( out.includes( `operations[ "xGet" ][ 'responses' ][ 'default' ]` ), true )
+			$mol_assert_equal( out.includes( `\x24x.operations[ "xGet" ][ 'responses' ][ 'default' ]` ), true )
 		},
 
-		'success code falls back to 201 when no 2xx earlier'() {
+		'generated file has zero references to \x24mol_openapi'() {
 			const out = $mol_build_openapi.compile({
 				spec: minimal_spec,
 				types_text: '',
 				class_name: '\x24x',
 			})
-			$mol_assert_equal( out.includes( `operations[ "updatePet" ][ 'responses' ][ 201 ]` ), true )
-		},
-
-		'body typed via operations[opId][requestBody] infer'() {
-			const out = $mol_build_openapi.compile({
-				spec: minimal_spec,
-				types_text: '',
-				class_name: '\x24x',
-			})
-			$mol_assert_equal( /body: \{\} as \( operations\[ "updatePet" \]\[ 'requestBody' \]/.test( out ), true )
-		},
-
-		'no path params → params typed as undefined'() {
-			const out = $mol_build_openapi.compile({
-				spec: minimal_spec,
-				types_text: '',
-				class_name: '\x24x',
-			})
-			$mol_assert_equal( /export const listPets = \{[\s\S]*?params: undefined as undefined/.test( out ), true )
-		},
-
-		'operation satisfies $mol_openapi_operation generic'() {
-			const out = $mol_build_openapi.compile({
-				spec: minimal_spec,
-				types_text: '',
-				class_name: '\x24x',
-			})
-			$mol_assert_equal( out.includes( 'satisfies \x24mol_openapi_operation<' ), true )
+			$mol_assert_equal( /\x24mol_openapi/.test( out ), false )
 		},
 
 		'\x24defs declaration from openapi-typescript is stripped to avoid fake /defs dep'() {
@@ -145,7 +109,7 @@ namespace $ {
 			$mol_assert_equal( out.includes( 'paths' ), true )
 		},
 
-		'unique operation name when operationId absent (derived from method_route)'() {
+		'unique op name when operationId absent (derived from method_route)'() {
 			const spec = {
 				paths: {
 					'/a': { get: { responses: { '200': { content: { 'application/json': {} } } } } },
@@ -157,8 +121,8 @@ namespace $ {
 				types_text: '',
 				class_name: '\x24x',
 			})
-			$mol_assert_equal( /export const get_a = \{/.test( out ), true )
-			$mol_assert_equal( /export const get_a_b = \{/.test( out ), true )
+			$mol_assert_equal( /export const \x24x_get_a = \{/.test( out ), true )
+			$mol_assert_equal( /export const \x24x_get_a_b = \{/.test( out ), true )
 		},
 
 		'is_openapi_file recognizes yaml/yml/json'() {

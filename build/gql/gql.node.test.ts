@@ -2,28 +2,53 @@ namespace $ {
 
 	$mol_test({
 
-		'schema-only file: namespace with types, no operations'() {
+		'schema-only file: types in subnamespace, no ops, no augmentation'() {
 			const out = $mol_build_gql.compile({
 				source: 'type User { id: ID! name: String }',
 				external: [],
 				class_name: '\x24test_api',
 				is_schema_only: true,
 			})
-			$mol_assert_equal( out.startsWith( 'namespace \x24.\x24test_api' ), true )
+			$mol_assert_equal( out.includes( 'namespace \x24.\x24test_api' ), true )
 			$mol_assert_equal( out.includes( 'interface User' ), true )
 			$mol_assert_equal( /export const /.test( out ), false )
+			$mol_assert_equal( /\x24mol_gql/.test( out ), false )
 		},
 
-		'operations file: each query/mutation becomes export const with query/variables/result'() {
+		'operations file: flat const in namespace \x24 with prefix from class_name, no $mol_gql ref'() {
 			const out = $mol_build_gql.compile({
 				source: 'query Foo { hi }',
 				external: [],
 				class_name: '\x24test_api',
 				is_schema_only: false,
 			})
-			$mol_assert_equal( out.startsWith( 'namespace \x24.\x24test_api' ), true )
-			$mol_assert_equal( /export const Foo = \{/.test( out ), true )
+			$mol_assert_equal( /export const \x24test_api_foo = \{/.test( out ), true )
 			$mol_assert_equal( /query: "query Foo \{ hi \}"/.test( out ), true )
+			// zero deps: ни одного упоминания $mol_gql в сгенерированном файле
+			$mol_assert_equal( /\x24mol_gql/.test( out ), false )
+		},
+
+		'PascalCase op name converts to snake_case in const and method name'() {
+			const out = $mol_build_gql.compile({
+				source: 'query CountryByCode { hi }',
+				external: [],
+				class_name: '\x24test',
+				is_schema_only: false,
+			})
+			$mol_assert_equal( /\x24test_country_by_code/.test( out ), true )
+		},
+
+		'in/out fields on op const (not variables/result)'() {
+			const out = $mol_build_gql.compile({
+				source: 'query Foo { hi }',
+				external: [],
+				class_name: '\x24test',
+				is_schema_only: false,
+			})
+			$mol_assert_equal( /in: undefined as undefined/.test( out ), true )
+			$mol_assert_equal( /out: \{\} as unknown/.test( out ), true )
+			$mol_assert_equal( /variables: /.test( out ), false )
+			$mol_assert_equal( /result: /.test( out ), false )
 		},
 
 		'inline schema-defs in ops file dedup with external ones (own wins)'() {
@@ -66,7 +91,7 @@ namespace $ {
 			$mol_assert_equal( /"opt"\? : string \| null/.test( out ), true )
 		},
 
-		'list inner nullability follows inner NonNull marker, not always | null'() {
+		'list inner nullability follows inner NonNull marker'() {
 			const out = $mol_build_gql.compile({
 				source: 'type T { strict: [String!]! loose: [String!] mixed: [String] }',
 				external: [],
@@ -88,54 +113,34 @@ namespace $ {
 			$mol_assert_equal( out.includes( 'export type Role = "admin" | "member" | "guest"' ), true )
 		},
 
-		'operation result typed via Query root when present in schema'() {
+		'operation `out` typed via Query root when present in schema'() {
 			const out = $mol_build_gql.compile({
 				source: 'type Query { foo: String } query GetFoo { foo }',
 				external: [],
 				class_name: '\x24x',
 				is_schema_only: false,
 			})
-			$mol_assert_equal( /result: \{\} as Query/.test( out ), true )
+			$mol_assert_equal( /out: \{\} as \x24x\.Query/.test( out ), true )
 		},
 
-		'operation result is unknown when no root type in schema'() {
+		'operation `out` is unknown when no root type in schema'() {
 			const out = $mol_build_gql.compile({
 				source: 'query Anon { hi }',
 				external: [],
 				class_name: '\x24x',
 				is_schema_only: false,
 			})
-			$mol_assert_equal( /result: \{\} as unknown/.test( out ), true )
+			$mol_assert_equal( /out: \{\} as unknown/.test( out ), true )
 		},
 
-		'variable definitions become typed variables field on operation const'() {
+		'variable definitions become typed `in` slot'() {
 			const out = $mol_build_gql.compile({
 				source: 'query Foo(\x24id: ID!) { foo(id: \x24id) }',
 				external: [],
 				class_name: '\x24x',
 				is_schema_only: false,
 			})
-			$mol_assert_equal( /variables: \{\} as \{ id : string \}/.test( out ), true )
-		},
-
-		'operation without variables: variables typed as undefined'() {
-			const out = $mol_build_gql.compile({
-				source: 'query NoVars { foo }',
-				external: [],
-				class_name: '\x24x',
-				is_schema_only: false,
-			})
-			$mol_assert_equal( /variables: undefined as undefined/.test( out ), true )
-		},
-
-		'operation satisfies $mol_gql_operation generic'() {
-			const out = $mol_build_gql.compile({
-				source: 'query Foo { hi }',
-				external: [],
-				class_name: '\x24x',
-				is_schema_only: false,
-			})
-			$mol_assert_equal( out.includes( 'satisfies \x24mol_gql_operation<' ), true )
+			$mol_assert_equal( /in: \{\} as \{ id : string \}/.test( out ), true )
 		},
 
 		'parse error returns wrapped namespace, does not throw'() {

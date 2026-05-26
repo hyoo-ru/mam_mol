@@ -54,16 +54,18 @@ namespace $ {
 			},
 		) : string {
 
-			const types_block = indent_types( sanitize_types( input.types_text ) )
-			const operations_block = render_operations( input.spec )
+			const types_text = sanitize_types( input.types_text )
+			const types_indented = indent_types( types_text )
+			const operations_text = render_operations( input.spec, input.class_name )
 
-			return [
-				`namespace $.${ input.class_name } {`,
-				types_block,
-				operations_block,
-				'}',
-				'',
-			].filter( Boolean ).join( '\n' )
+			const types_block = types_text
+				? [ `namespace $.${ input.class_name } {`, types_indented, '}' ].join( '\n' )
+				: ''
+			const ops_block = operations_text
+				? [ 'namespace $ {', operations_text, '}' ].join( '\n' )
+				: ''
+
+			return [ types_block, ops_block ].filter( Boolean ).join( '\n\n' ) + '\n'
 		}
 
 		/**
@@ -114,7 +116,7 @@ namespace $ {
 		return text.split( '\n' ).map( line => line ? '\t' + line : line ).join( '\n' )
 	}
 
-	function render_operations( spec : Spec ) : string {
+	function render_operations( spec : Spec, prefix : string ) : string {
 
 		const paths = spec.paths ?? {}
 		const op_ids = collect_operation_ids( paths )
@@ -128,12 +130,13 @@ namespace $ {
 			for( const method of HttpMethods ) {
 				const op = item[ method ]
 				if( !op ) continue
-				lines.push( render_operation( route, method, op, op_ids, seen_op_names ) )
+				lines.push( render_operation( route, method, op, op_ids, seen_op_names, prefix ) )
 			}
 		}
 
 		return lines.join( '\n' )
 	}
+
 
 	function collect_operation_ids( paths : Record< string, PathItem > ) : Set< string > {
 		const ids = new Set< string >()
@@ -154,15 +157,55 @@ namespace $ {
 		op : Operation,
 		op_ids : Set< string >,
 		seen : Set< string >,
+		prefix : string,
 	) : string {
 
+		const shape = operation_shape( route, method, op, op_ids, seen, prefix )
+
+		return multiline(
+			`\texport const ${ shape.full_name } = {`,
+			`\t\tmethod: ${ JSON.stringify( method.toUpperCase() ) },`,
+			`\t\troute: ${ JSON.stringify( route ) },`,
+			`\t\tparams: ${ shape.params_runtime } as ${ shape.params_type },`,
+			`\t\tquery: ${ shape.query_runtime } as ${ shape.query_type },`,
+			`\t\tbody: ${ shape.body_runtime } as ${ shape.body_type },`,
+			`\t\tout: {} as ${ shape.result_type },`,
+			`\t}`,
+		)
+	}
+
+	type OperationShape = {
+		full_name : string,
+		params_type : string,
+		params_runtime : string,
+		has_params : boolean,
+		query_type : string,
+		query_runtime : string,
+		has_query : boolean,
+		body_type : string,
+		body_runtime : string,
+		has_body : boolean,
+		result_type : string,
+	}
+
+	function operation_shape(
+		route : string,
+		method : HttpMethod,
+		op : Operation,
+		op_ids : Set< string >,
+		seen : Set< string >,
+		prefix : string,
+	) : OperationShape {
+
 		const op_name = unique_operation_name( op, method, route, seen )
+		const full_name = `${ prefix }_${ camel_to_snake( op_name ) }`
+
+		// op_ref ссылается на тип из namespace `$.${prefix}.operations` (тот же файл).
 		const op_ref = op.operationId && op_ids.has( op.operationId )
-			? `operations[ ${ JSON.stringify( op.operationId ) } ]`
+			? `${ prefix }.operations[ ${ JSON.stringify( op.operationId ) } ]`
 			: null
 
 		const success_code = first_success_code( op )
-
 		const result_type = ( op_ref && success_code )
 			? `NonNullable< ${ op_ref }[ 'responses' ][ ${ success_code } ] extends { content : { '${ JsonMime }' : infer R } } ? R : unknown >`
 			: 'unknown'
@@ -177,7 +220,6 @@ namespace $ {
 				: `{ ${ path_params.map( p => `${ JSON.stringify( p.name ) } : string | number` ).join( ', ' ) } }`
 			)
 			: 'undefined'
-		const params_runtime = path_params.length ? '{}' : 'undefined'
 
 		const query_type = query_params.length
 			? ( op_ref
@@ -185,7 +227,6 @@ namespace $ {
 				: `Record< string, string | number | boolean | undefined >`
 			)
 			: 'undefined'
-		const query_runtime = query_params.length ? '{}' : 'undefined'
 
 		const body_type = has_body
 			? ( op_ref
@@ -193,18 +234,24 @@ namespace $ {
 				: 'unknown'
 			)
 			: 'undefined'
-		const body_runtime = has_body ? '{}' : 'undefined'
 
-		return multiline(
-			`\texport const ${ op_name } = {`,
-			`\t\tmethod: ${ JSON.stringify( method.toUpperCase() ) },`,
-			`\t\troute: ${ JSON.stringify( route ) },`,
-			`\t\tparams: ${ params_runtime } as ${ params_type },`,
-			`\t\tquery: ${ query_runtime } as ${ query_type },`,
-			`\t\tbody: ${ body_runtime } as ${ body_type },`,
-			`\t\tresult: {} as ${ result_type },`,
-			`\t} satisfies $mol_openapi_operation< ${ params_type }, ${ query_type }, ${ body_type }, ${ result_type } >`,
-		)
+		return {
+			full_name,
+			params_type,
+			params_runtime: path_params.length ? '{}' : 'undefined',
+			has_params: path_params.length > 0,
+			query_type,
+			query_runtime: query_params.length ? '{}' : 'undefined',
+			has_query: query_params.length > 0,
+			body_type,
+			body_runtime: has_body ? '{}' : 'undefined',
+			has_body,
+			result_type,
+		}
+	}
+
+	function camel_to_snake( s : string ) : string {
+		return s.replace( /([a-z0-9])([A-Z])/g, '$1_$2' ).toLowerCase()
 	}
 
 	function unique_operation_name(
