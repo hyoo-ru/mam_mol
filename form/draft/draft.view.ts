@@ -125,21 +125,24 @@ namespace $.$$ {
 		}
 
 		@ $mol_action
+		override state_normalized() {
+			const tasks = Object.entries( this.state() ).map(([ field, next ]) => () => ([
+				field,
+				normalize_val(this.model_pick(field), next)
+			] as const))
+
+			return $mol_wire_race(...tasks)
+		}
+
+		override model_push() {
+			const normalized = this.state_normalized()
+			$mol_wire_race(...normalized.map(([ field, next ]) => () => this.model_pick( field, next )))
+			return null
+		}
+
+		@ $mol_action
 		override save(next?: Event) {
-			const tasks = Object.entries( this.state() ).map(
-				([ field, next ]) => () => {
-					const prev = this.model_pick(field)
-
-					return {
-						field,
-						next: normalize_val(prev, next)
-					}
-				}
-			)
-			const normalized = $mol_wire_race(...tasks)
-
-			$mol_wire_race(...normalized.map(({ field, next }) => () => this.model_pick( field, next )))
-
+			this.model_push()
 			this.reset()
 			this.done(next)
 
