@@ -67,6 +67,12 @@
 			if(next !== undefined) return next;
 			return null;
 		}
+		state_normalized(){
+			return [];
+		}
+		model_push(){
+			return null;
+		}
 		buttons(){
 			return [(this.Submit()), (this.Reset())];
 		}

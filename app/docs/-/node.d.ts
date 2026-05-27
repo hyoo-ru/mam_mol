@@ -17877,6 +17877,8 @@ declare namespace $ {
 		value_changed( id: any): boolean
 		reset( next?: any ): any
 		done( next?: any ): any
+		state_normalized( ): readonly(readonly[string,null|$mol_form_draft_state_value])[]
+		model_push( ): any
 		buttons( ): readonly($mol_view)[]
 	}
 	
@@ -17902,6 +17904,8 @@ declare namespace $.$$ {
         reset(next?: unknown): void;
         result(next?: string | Error): string;
         buttons(): ($mol_button_minor | $.$mol_status)[];
+        state_normalized(): (readonly [string, $mol_form_draft_state_value | null])[];
+        model_push(): null;
         save(next?: Event): null;
     }
 }

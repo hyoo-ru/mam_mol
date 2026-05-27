@@ -33,6 +33,8 @@ declare namespace $ {
 		value_changed( id: any): boolean
 		reset( next?: any ): any
 		done( next?: any ): any
+		state_normalized( ): readonly(readonly[string,null|$mol_form_draft_state_value])[]
+		model_push( ): any
 		buttons( ): readonly($mol_view)[]
 	}
 	

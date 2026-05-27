@@ -34819,6 +34819,12 @@ var $;
 			if(next !== undefined) return next;
 			return null;
 		}
+		state_normalized(){
+			return [];
+		}
+		model_push(){
+			return null;
+		}
 		buttons(){
 			return [(this.Submit()), (this.Reset())];
 		}
@@ -34943,16 +34949,20 @@ var $;
                     ...this.result() ? [this.Result()] : [],
                 ];
             }
+            state_normalized() {
+                const tasks = Object.entries(this.state()).map(([field, next]) => () => [
+                    field,
+                    normalize_val(this.model_pick(field), next)
+                ]);
+                return $mol_wire_race(...tasks);
+            }
+            model_push() {
+                const normalized = this.state_normalized();
+                $mol_wire_race(...normalized.map(([field, next]) => () => this.model_pick(field, next)));
+                return null;
+            }
             save(next) {
-                const tasks = Object.entries(this.state()).map(([field, next]) => () => {
-                    const prev = this.model_pick(field);
-                    return {
-                        field,
-                        next: normalize_val(prev, next)
-                    };
-                });
-                const normalized = $mol_wire_race(...tasks);
-                $mol_wire_race(...normalized.map(({ field, next }) => () => this.model_pick(field, next)));
+                this.model_push();
                 this.reset();
                 this.done(next);
                 return null;
@@ -34991,6 +35001,9 @@ var $;
         __decorate([
             $mol_mem
         ], $mol_form_draft.prototype, "buttons", null);
+        __decorate([
+            $mol_action
+        ], $mol_form_draft.prototype, "state_normalized", null);
         __decorate([
             $mol_action
         ], $mol_form_draft.prototype, "save", null);
