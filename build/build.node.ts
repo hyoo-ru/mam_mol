@@ -652,14 +652,9 @@ namespace $ {
 			const src = $mol_file.absolute( path )
 			
 
-			// Сгенерированные .ts из .gql/.openapi содержат строковые литералы
-			// (query / route templates) с $-токенами внутри, которые ts-парсер зависимостей
-			// принимает за ссылки на mam-пакеты и пытается резолвить. Зависимости этих
-			// артефактов уже декларированы через dependors их исходников — повторный скан
-			// только плодит ложные срабатывания. -view.tree / -css / -glsl / etc.
-			// генерят чистый TS без $-в-строках и продолжают парситься как раньше.
+			// не парсим 
 			if( /\/-(gql|openapi)\//.test( path ) ) return {}
-
+			
 			let ext = src.ext()
 			if( !ext ) return {}
 			
@@ -1867,7 +1862,7 @@ namespace $ {
 			[`/${ source.parent().relate() }/-view.tree/${ source.name() }.js`]: 0,
 		}
 	}
-
+	
 	$mol_build.dependors[ 'gql' ]
 		= $mol_build.dependors[ 'graphql' ]
 		= source => $mol_build_gql.deps( source, $mol_file.relative( '.' ) )

@@ -1,7 +1,6 @@
 namespace $ {
 
 	// AST node kinds из пакета graphql (`graphql/language/kinds`).
-	// Вынесены чтобы не хардкодить строки в логике.
 	const Kind = {
 		Operation : 'OperationDefinition',
 		Fragment : 'FragmentDefinition',
