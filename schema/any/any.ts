@@ -41,7 +41,7 @@ namespace $ {
 		}
 		
 		/** Default value which conforms schema. */
-		static default = undefined as unknown
+		static default = null as unknown
 		
 	}
 }
