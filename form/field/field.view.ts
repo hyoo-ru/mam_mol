@@ -8,6 +8,11 @@ namespace $.$$ {
 		bid() {
 			return this.bids().filter( Boolean )[ 0 ] ?? ''
 		}
+		@ $mol_mem
+		control_dom_id(){
+			const control = this.control?.()
+			return control?.control_dom_id?.() || control?.dom_id?.() || ''
+		}
 		
 	}
 }
