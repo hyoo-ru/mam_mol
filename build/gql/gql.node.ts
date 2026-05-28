@@ -1,19 +1,7 @@
 namespace $ {
 
-	// AST node kinds из пакета graphql (`graphql/language/kinds`).
-	const Kind = {
-		Operation : 'OperationDefinition',
-		Fragment : 'FragmentDefinition',
-		Object : 'ObjectTypeDefinition',
-		Interface : 'InterfaceTypeDefinition',
-		Input : 'InputObjectTypeDefinition',
-		Scalar : 'ScalarTypeDefinition',
-		Enum : 'EnumTypeDefinition',
-		Union : 'UnionTypeDefinition',
-		NonNull : 'NonNullType',
-		List : 'ListType',
-		Named : 'NamedType',
-	} as const
+	// AST node kinds из самого пакета graphql.
+	const Kind = ( $node.graphql as typeof import( 'graphql' ) ).Kind
 
 	// Имена корневых типов в GraphQL-схеме. Если operation типа `query` — её результат
 	// типизируется через namespace-member с этим именем.
@@ -92,7 +80,7 @@ namespace $ {
 			const root_types = collect_root_types( schema_defs )
 			const operations = input.is_schema_only
 				? []
-				: ( own_doc.definitions as DefinitionNode[] ).filter( def => def.kind === Kind.Operation )
+				: ( own_doc.definitions as DefinitionNode[] ).filter( def => def.kind === Kind.OPERATION_DEFINITION )
 
 			const types_code = render_types( schema_defs )
 			const op_prefix = input.class_name
@@ -204,8 +192,8 @@ namespace $ {
 		result : DefinitionNode[],
 	) {
 		for( const def of defs ) {
-			if( def.kind === Kind.Operation ) continue
-			if( def.kind === Kind.Fragment ) continue
+			if( def.kind === Kind.OPERATION_DEFINITION ) continue
+			if( def.kind === Kind.FRAGMENT_DEFINITION ) continue
 			const name = ( def as { name? : { value : string } } ).name?.value
 			if( !name || seen.has( name ) ) continue
 			seen.add( name )
@@ -217,7 +205,7 @@ namespace $ {
 		const roots = new Set< string >()
 		const root_names = new Set< string >( Object.values( Roots ) )
 		for( const def of defs ) {
-			if( def.kind !== Kind.Object ) continue
+			if( def.kind !== Kind.OBJECT_TYPE_DEFINITION ) continue
 			const name = ( def as { name? : { value : string } } ).name?.value
 			if( name && root_names.has( name ) ) roots.add( name )
 		}
@@ -225,12 +213,12 @@ namespace $ {
 	}
 
 	function render_type_ref( node : TypeNode, scope : string ) : string {
-		if( node.kind === Kind.NonNull ) return render_type_ref( node.type!, scope )
+		if( node.kind === Kind.NON_NULL_TYPE ) return render_type_ref( node.type!, scope )
 		// Inner-of-list nullability определяется самим inner-узлом (NonNull или нет),
 		// а не оборачивается принудительно — `[String!]` → `readonly string[]`,
 		// `[String]` → `readonly ( string | null )[]`.
-		if( node.kind === Kind.List ) return `readonly ( ${ render_type_nullable( node.type!, scope ) } )[]`
-		if( node.kind === Kind.Named ) {
+		if( node.kind === Kind.LIST_TYPE ) return `readonly ( ${ render_type_nullable( node.type!, scope ) } )[]`
+		if( node.kind === Kind.NAMED_TYPE ) {
 			const name = node.name!.value
 			const builtin = BuiltinScalars[ name ]
 			if( builtin ) return builtin
@@ -240,7 +228,7 @@ namespace $ {
 	}
 
 	function render_type_nullable( node : TypeNode, scope : string ) : string {
-		if( node.kind === Kind.NonNull ) return render_type_ref( node.type!, scope )
+		if( node.kind === Kind.NON_NULL_TYPE ) return render_type_ref( node.type!, scope )
 		return `${ render_type_ref( node, scope ) } | null`
 	}
 
@@ -253,13 +241,13 @@ namespace $ {
 			const name = ( def as { name? : { value : string } } ).name?.value
 			if( !name ) continue
 
-			if( def.kind === Kind.Scalar ) {
+			if( def.kind === Kind.SCALAR_TYPE_DEFINITION ) {
 				if( BuiltinScalars[ name ] ) continue
 				lines.push( `\texport type ${ name } = ${ KnownScalars[ name ] ?? 'string' }` )
 				continue
 			}
 
-			if( def.kind === Kind.Enum ) {
+			if( def.kind === Kind.ENUM_TYPE_DEFINITION ) {
 				const values = ( ( def as any ).values as { name : { value : string } }[] )
 					.map( v => JSON.stringify( v.name.value ) )
 					.join( ' | ' )
@@ -267,12 +255,12 @@ namespace $ {
 				continue
 			}
 
-			if( def.kind === Kind.Object || def.kind === Kind.Interface || def.kind === Kind.Input ) {
+			if( def.kind === Kind.OBJECT_TYPE_DEFINITION || def.kind === Kind.INTERFACE_TYPE_DEFINITION || def.kind === Kind.INPUT_OBJECT_TYPE_DEFINITION ) {
 				const fields = ( ( ( def as any ).fields ?? [] ) as Array< {
 					name : { value : string },
 					type : TypeNode,
 				} > ).map( field => {
-					const nullable = field.type.kind !== Kind.NonNull
+					const nullable = field.type.kind !== Kind.NON_NULL_TYPE
 					const key = JSON.stringify( field.name.value )
 					const optional = nullable ? '?' : ''
 					return `\t\treadonly ${ key }${ optional } : ${ render_type_nullable( field.type, '' ) }`
@@ -281,7 +269,7 @@ namespace $ {
 				continue
 			}
 
-			if( def.kind === Kind.Union ) {
+			if( def.kind === Kind.UNION_TYPE_DEFINITION ) {
 				const members = ( ( def as any ).types as { name : { value : string } }[] )
 					.map( t => t.name.value )
 					.join( ' | ' )
@@ -360,7 +348,7 @@ namespace $ {
 	function render_vars_type( vars : OpNode[ 'variableDefinitions' ] & object ) : string {
 		if( !vars.length ) return 'undefined'
 		const fields = vars.map( v => {
-			const nullable = v.type.kind !== Kind.NonNull
+			const nullable = v.type.kind !== Kind.NON_NULL_TYPE
 			return `${ v.variable.name.value }${ nullable ? '?' : '' } : ${ render_type_nullable( v.type, '' ) }`
 		} ).join( ', ' )
 		return `{ ${ fields } }`
