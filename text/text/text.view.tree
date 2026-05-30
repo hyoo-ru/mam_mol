@@ -30,6 +30,7 @@ $mol_text $mol_list
 		row_themes <= pre_themes* /string
 		highlight <= highlight \
 		uri_resolve* <= uri_resolve* \
+		syntax <= pre_syntax* null
 		sidebar_showed <= pre_sidebar_showed <= code_sidebar_showed true
 	Cut* $mol_view dom_name \hr
 	- \Table
@@ -67,7 +68,7 @@ $mol_text $mol_list
 		highlight <= highlight \
 		text <= line_text* \
 		uri_resolve* <= uri_resolve* \
-		syntax <= code_syntax null
+		syntax <= code_syntax* null
 	Link* $mol_link_iconed
 		uri <= link_uri* \
 		content <= line_content* /
