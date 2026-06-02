@@ -12,29 +12,31 @@ namespace $ {
 			return $$.$mol_func_name( this )
 		}
 		
-		/** Type-guard that checks value by schema. */
-		static check< This extends typeof $mol_schema_any, Val >( this: This, val: Val ): val is Val & This['default'] {
+		/** Type-predicate that checks value by schema. */
+		static check< This extends typeof $mol_schema_any, Value >( this: This, value: Value ): value is Value & This['default'] {
 			try {
-				this.guard( val )
+				this.guard( value )
 				return true
 			} catch( error ) {
 				return false
 			}
 		}
 		
-		static [ Symbol.hasInstance ]< This extends typeof $mol_schema_any, Val >( this: This, val: Val ): val is Val & This['default'] {
-			return this.check( val )
+		/** `instanceof` support */
+		static [ Symbol.hasInstance ]< This extends typeof $mol_schema_any, Value >( this: This, value: Value ): value is Value & This['default'] {
+			return this.check( value )
 		}
 		
-		/** Strict parse. Fails of wrong values. */
-		static guard< Value >( value: Value ): Value {
+		/** Type-parser that fails of wrong values. */
+		static guard< This extends typeof $mol_schema_any, Value >( this: This, value: Value ): Value & This['default'] {
 			return value
 		}
 		
-		/** Relaxed cast. Normalizes wrong values. */
+		/** Type-caster that normalizes wrong values. */
 		static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {
 			try {
-				return this.guard( value )
+				this.guard( value )
+				return value
 			} catch ( error ) {
 				return this.default
 			}

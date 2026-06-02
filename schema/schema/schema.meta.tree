@@ -6,6 +6,8 @@ include \/mol/schema/pattern
 include \/mol/schema/float
 include \/mol/schema/instance
 include \/mol/schema/integer
+include \/mol/schema/json
+include \/mol/schema/lazy
 include \/mol/schema/natural
 include \/mol/schema/enum
 include \/mol/schema/range
