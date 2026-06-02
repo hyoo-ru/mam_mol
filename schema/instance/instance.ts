@@ -14,8 +14,8 @@ namespace $ {
 				return '$mol_schema_instance<' + $$.$mol_func_name(Class) + '>'
 			}
 			
-			static guard< Value >( value: Value ) {
-				if( value != null && Object( value ) instanceof Class ) return value as Value & typeof this.default
+			static guard< This extends typeof $mol_schema_any, Value >( this: This, value: Value ): Value & This['default'] {
+				if( value != null && Object( value ) instanceof Class ) return value
 				return $mol_fail( new TypeError( 'Wrong class', { cause: { value, schema: this } } ) )
 			}
 			
