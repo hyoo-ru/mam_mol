@@ -809,9 +809,17 @@ declare namespace $ {
     type Length = 0 | `${number}${$mol_style_unit_length}` | $mol_style_func<'calc' | 'var' | 'clamp'>;
     type Size = 'auto' | 'max-content' | 'min-content' | 'fit-content' | Length | Common;
     type Directions<Value> = Value | readonly [Value, Value] | {
-        top?: Value;
+        top?: Value | {
+            left: Value;
+        } | {
+            right: Value;
+        };
         right?: Value;
-        bottom?: Value;
+        bottom?: Value | {
+            left: Value;
+        } | {
+            right: Value;
+        };
         left?: Value;
     };
     type Single_animation_composition = 'replace' | 'add' | 'accumulate';
