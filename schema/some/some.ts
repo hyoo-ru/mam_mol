@@ -12,7 +12,7 @@ namespace $ {
 				return '$mol_schema_some<' + $mol_key(Variants) + '>'
 			}	
 			
-			static guard< Value >( value: Value ): Value & typeof this.default {
+			static guard< This extends typeof $mol_schema_any, Value >( this: This, value: Value ): Value & This['default'] {
 				
 				const errors = [] as unknown[]
 				for( const Variant of Variants ) {
@@ -29,11 +29,11 @@ namespace $ {
 				
 			}
 			
-			static cast( value: unknown ) {
+			static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {
 				try {
 					return this.guard( value )
 				} catch ( error ) {
-					return Variants[0].cast( value ) as typeof this.default
+					return Variants[0].cast( value )
 				}
 			}
 			

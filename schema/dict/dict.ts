@@ -1,5 +1,5 @@
 namespace $ {
-	export let $mol_schema_dict  =$mol_memo_key.func( function $mol_schema_dict< Pair extends [
+	export let $mol_schema_dict = $mol_memo_key.func( function $mol_schema_dict< Pair extends [
 		Key: typeof $mol_schema_any & { default: PropertyKey },
 		Val: typeof $mol_schema_any,
 	] >( Pair: Pair ) {
@@ -13,7 +13,7 @@ namespace $ {
 				return '$mol_schema_dict<' + $mol_key( Pair ) + '>'
 			}
 			
-			static guard< Value >( value: Value ) {
+			static guard< This extends typeof $mol_schema_any, Value >( this: This, value: Value ): Value & This['default'] {
 				
 				if( Object.getPrototypeOf( Object.getPrototypeOf( value ) ) ) {
 					return $mol_fail( new TypeError( 'Non dictionary', { cause: { value, schema: this } } ) )
@@ -35,10 +35,11 @@ namespace $ {
 					
 				}
 				
-				return value as Value & typeof this.default
+				return value
 			}
 			
-			static cast( value: unknown ) {
+			static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {
+				
 				if( Object.getPrototypeOf( Object.getPrototypeOf( value ) ) ) return this.default
 				
 				const res = {} as any
@@ -47,7 +48,7 @@ namespace $ {
 					res[ key ] = Pair[1].cast( ( value as any )[ key ] )
 				}
 				
-				return res as typeof this.default
+				return res
 			}
 			
 			static default = {} as Record< Pair[0]['default'], Pair[1]['default'] > 

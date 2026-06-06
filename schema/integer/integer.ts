@@ -3,7 +3,7 @@ namespace $ {
 		
 		$mol_schema_integer = true
 		
-		static guard< Value >( value: Value ) {
+		static guard< This extends typeof $mol_schema_any, Value >( this: This, value: Value ): Value & This['default'] {
 			const val = super.guard( value )
 			if( !Number.isFinite( val ) ) return $mol_fail( new TypeError( 'Non finite', { cause: { value, schema: this } } ) )
 			if( Math.trunc( val ) !== val ) return $mol_fail( new TypeError( 'Non integer', { cause: { value, schema: this } } ) )

@@ -57,9 +57,9 @@ namespace $ {
 	| Value
 	| readonly [ Value , Value ]
 	| {
-		top?: Value ,
+		top?: Value | {left: Value } | { right: Value },
 		right?: Value ,
-		bottom?: Value ,
+		bottom?: Value | {left: Value } | { right: Value },
 		left?: Value ,
 	}
 	
