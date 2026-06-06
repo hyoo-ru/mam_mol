@@ -27,7 +27,7 @@ namespace $ {
 			
 		}
 		
-		return ( ( Class[ Symbol.hasInstance ] === $mol_schema_any[ Symbol.hasInstance ] )
+		return ( ( Class?.[ Symbol.hasInstance ] === $mol_schema_any[ Symbol.hasInstance ] )
 			? Class
 			: $mol_schema_instance_
 		) as Class extends typeof $mol_schema_any ? Class : typeof $mol_schema_instance_
