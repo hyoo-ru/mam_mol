@@ -12,12 +12,12 @@ namespace $ {
 				return '$mol_schema_maybe<' + $mol_key(Some) + '>'
 			}
 			
-			static guard< Value >( value: Value ) {
+			static guard< This extends typeof $mol_schema_any, Value >( this: This, value: Value ): Value & This['default'] {
 				if( value == null ) return value
 				return Some.guard( value )
 			}
 			
-			static default = null as Some['default'] | null | undefined
+			static default = null as Some['default'] | null
 			
 		}
 		

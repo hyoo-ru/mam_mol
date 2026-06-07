@@ -12,18 +12,18 @@ namespace $ {
 				return '$mol_schema_every<' + $mol_key(Schemas) + '>'
 			}	
 			
-			static guard< Value >( value: Value ) {
+			static guard< This extends typeof $mol_schema_any, Value >( this: This, value: Value ): Value & This['default'] {
 				
 				for( const Schema of Schemas ) {
 					Schema.guard( value )
 				}
 				
-				return value as Value & typeof this.default
+				return value
 			}
 			
-			static cast( value: unknown ) {
+			static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {
 				for( const Scheme of Schemas ) value = Scheme.cast( value )
-				return value as typeof this.default
+				return value
 			}
 			
 			static default = Schemas.find( Scheme => this.check( Scheme.default ) ) as $mol_type_intersect< Schemas[number]['default'] >
