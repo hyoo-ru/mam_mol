@@ -57,12 +57,19 @@ namespace $ {
 	| Value
 	| readonly [ Value , Value ]
 	| {
-		top?: Value | {left: Value } | { right: Value },
+		top?: Value,
 		right?: Value ,
-		bottom?: Value | {left: Value } | { right: Value },
+		bottom?: Value,
 		left?: Value ,
 	}
 	
+	type Edges<Value> = {
+		top?: { left?: Value, right?: Value }
+		bottom?: { left?: Value, right?: Value }
+	}
+
+	type Borders< Value > = Directions<Value> | Edges<Value>
+
 	type Single_animation_composition = 'replace' | 'add' | 'accumulate'
 	type Single_animation_direction = 'normal' | 'reverse' | 'alternate' | 'alternate-reverse'
 	type Single_animation_fill_mode = 'none' | 'forwards' | 'backwards' | 'both'
@@ -584,7 +591,7 @@ namespace $ {
 		left?: Length | 'auto' | Common
 
 		/** @see https://developer.mozilla.org/en-US/docs/Web/CSS/border */
-		border?: Directions<{
+		border?: Borders<{
 
 			/** 
 			 * Rounds the corners of an element's outer border edge. You can set a single radius to make circular corners, or two radii to make elliptical corners.
