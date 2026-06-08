@@ -64,8 +64,10 @@ namespace $ {
 	}
 	
 	type Edges<Value> = {
-		top?: { left?: Value, right?: Value }
-		bottom?: { left?: Value, right?: Value }
+		topLeft?: Value
+		topRight?: Value
+		bottomLeft?: Value
+		bottomRight?: Value
 	}
 
 	type Borders< Value > = Directions<Value> | Edges<Value>
