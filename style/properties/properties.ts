@@ -53,16 +53,18 @@ namespace $ {
 	| 'auto' | 'max-content' | 'min-content' | 'fit-content'
 	| Length | Common
 
-	type Directions< Value > =
-	| Value
-	| readonly [ Value , Value ]
-	| {
+	type Sides<Value> = {
 		top?: Value,
 		right?: Value ,
 		bottom?: Value,
 		left?: Value ,
 	}
 	
+	type Directions< Value > =
+	| Value
+	| readonly [ Value , Value ]
+	| Sides<Value>
+
 	type Edges<Value> = {
 		topLeft?: Value
 		topRight?: Value
@@ -70,7 +72,10 @@ namespace $ {
 		bottomRight?: Value
 	}
 
-	type Borders< Value > = Directions<Value> | Edges<Value>
+	type Borders< Value > =
+		| Value
+		| readonly [ Value , Value ]
+		| (Sides<Value> & Edges<Value>)
 
 	type Single_animation_composition = 'replace' | 'add' | 'accumulate'
 	type Single_animation_direction = 'normal' | 'reverse' | 'alternate' | 'alternate-reverse'
