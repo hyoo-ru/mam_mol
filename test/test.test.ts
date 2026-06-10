@@ -24,7 +24,14 @@ namespace $ {
 			let context = Object.create( $$ )
 			for( let mock of $mol_test_mocks ) await mock( context )
 			
-			const res = test( context )
+			let res
+			try {
+				res = test( context )
+			} catch( error ) {
+				if( !$mol_promise_like( error ) ) throw error
+				await error
+				continue
+			}
 			if( $mol_promise_like( res ) ) {
 				await new Promise( ( done, fail )=> {
 					res.then( done, fail )

@@ -27,6 +27,10 @@ namespace $ {
 				[ 'block' , 'Hello!\n\n' , [ 'Hello!' , '\n\n' ] , 42 ] ,
 				[ 'code' , '```\nstop()\n```' , [ '```' , '' , 'stop()\n' , '```' , '' ] , 50 ] ,
 			] )
+
+			check( '```\ntextfsa\ntextfsa2\n```' , [
+				[ 'code' , '```\ntextfsa\ntextfsa2\n```' , [ '```' , '' , 'textfsa\ntextfsa2\n' , '```' , '' ] , 0 ] ,
+			] )
 			
 			check( '| header1 | header2\n|----|----\n| Cell11 | Cell12\n| Cell21 | Cell22\n\n| Cell11 | Cell12\n| Cell21 | Cell22\n' , [
 				[ 'table' , '| header1 | header2\n|----|----\n| Cell11 | Cell12\n| Cell21 | Cell22\n\n' , [ '| header1 | header2\n|----|----\n| Cell11 | Cell12\n| Cell21 | Cell22\n' , '\n' ] , 0 ] ,
