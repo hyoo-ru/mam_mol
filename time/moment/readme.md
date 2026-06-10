@@ -72,8 +72,8 @@ new $mol_time_moment( '2015-07-35' ).normal // new $mol_time_moment( '2015-08-04
 // create moment by merge one moment with another
 new $mol_time_moment( '2015-07-19' ).merge({ month : 7 , day : 4 }) // new $mol_time_moment( '2015-08-05' )
 
-// wipe parts, not present in mask
-new $mol_time_moment( '2015-07-19T19:24+03:00' ).mask({ year: 0, month: 0, day: 0 }) // new $mol_time_moment( '2015-07-19' )
+// wipe parts not present in mask
+new $mol_time_moment( '2015-07-19T19:24+03:00' ).mask('0000-00-00') // new $mol_time_moment( '2015-07-19' )
 
 // create moment by shift one by duration
 new $mol_time_moment( '2015-07-19' ).shift( 'P16D' ) // new $mol_time_moment( '2015-08-04' )
