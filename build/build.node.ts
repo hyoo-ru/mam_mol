@@ -482,14 +482,14 @@ namespace $ {
 
 		@ $mol_mem_key
 		js_error( path : string , next = null as null | string ) {
-			if (next && ($mol_file.absolute( path ).modified()?.valueOf() ?? 0) > this.audit_started_at.valueOf()) return null
 			this.js_content( path )
+			this.recheck_count(null)
 			return next
 		}
 
 		@ $mol_mem_key
 		js_content( path : string ) {
-
+			this.recheck_count(null)
 			const src = $mol_file.absolute( path )
 
 			const text = src.text()
@@ -918,11 +918,9 @@ namespace $ {
 			return Boolean(this.$.$mol_env().MAM_BUILD_CHECKER_SYNCED)
 		}
 
-		protected audit_started_at = new Date()
-
 		@ $mol_action
-		protected audit_start() {
-			this.audit_started_at = new Date()
+		protected recheck_count(next?: null): number {
+			return ($mol_wire_probe(() => this.recheck_count()) ?? -1) + 1
 		}
 	
 		@ $mol_mem_key
@@ -939,7 +937,7 @@ namespace $ {
 				this.tsService({ path , exclude : exclude_ext , bundle })?.recheck()
 			} else {
 				const checker = this.checker({ path , exclude: exclude_ext , bundle })
-				this.audit_start()
+				this.recheck_count()
 				const changes = checker?.recheck()
 				if ( changes ) this.checker_changes_add(changes)
 			}
