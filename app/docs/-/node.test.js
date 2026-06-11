@@ -38346,7 +38346,10 @@ var $;
                 return $mol_geo_search({ query: this.address() })[0] ?? null;
             }
             pos() {
-                return this.found()?.coord ?? super.pos();
+                const coord = this.found()?.coord;
+                if (coord)
+                    return new $mol_vector_2d(coord[1], coord[0]);
+                return super.pos();
             }
             box() {
                 return this.found()?.box ?? super.pos();
