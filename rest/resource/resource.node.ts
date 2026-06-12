@@ -116,7 +116,6 @@ namespace $ {
 			server.root( this.make({}) )
 			server.start()
 			new $mol_wire_atom( `${ server.root() }._auto<>`, ()=> {
-				$mol_wire_solid()
 				try {
 					server.root()._auto()
 				} catch( error ) {
