@@ -214,17 +214,46 @@ namespace $ {
 				if( !chunks ) this._ws_income_chunks.set( sock, chunks = [] )
 				
 				chunks.push( chunk )
-				const patial_size = chunks.reduce( ( sum, buf )=> sum + buf.byteLength, 0 )
+				const partial_size = chunks.reduce( ( sum, buf )=> sum + buf.byteLength, 0 )
 				
-				let frame = $mol_websocket_frame.from( chunks[0] )
-				const msg_size = frame.size() + frame.data().size
+				const first_chunk_ensure = ( size: number )=> {
+					if( partial_size < size ) return null
+					if( chunks[0].byteLength >= size ) return chunks[0]
+					
+					const head = Buffer.alloc( partial_size )
+					let offset = 0
+					for( const buf of chunks.splice( 0 ) ) {
+						head.set( buf, offset )
+						offset += buf.byteLength
+					}
+					chunks.push( head )
+					
+					return head
+				}
 				
-				if( msg_size > patial_size ) {
+				const head = first_chunk_ensure( 2 )
+				if( !head ) {
 					setTimeout( ()=> sock.resume() )
 					return
 				}
 				
-				chunk = Buffer.alloc( patial_size )
+				const size_mark = head[1] & 0b0111_1111
+				const length_head_size = size_mark === 127 ? 10 : size_mark === 126 ? 4 : 2
+				
+				if( !first_chunk_ensure( length_head_size ) ) {
+					setTimeout( ()=> sock.resume() )
+					return
+				}
+				
+				let frame = $mol_websocket_frame.from( chunks[0] )
+				const msg_size = frame.size() + frame.data().size
+				
+				if( msg_size > partial_size ) {
+					setTimeout( ()=> sock.resume() )
+					return
+				}
+				
+				chunk = Buffer.alloc( partial_size )
 				let offset = 0
 				for( const buf of chunks.splice( 0 ) ) {
 					chunk.set( buf, offset )
