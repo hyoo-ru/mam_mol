@@ -197,7 +197,7 @@ namespace $ {
 			
 		}
 		
-		_ws_income_chunks = new WeakMap< InstanceType< typeof $node.stream.Duplex >, Uint8Array< ArrayBuffer >[] >
+		_ws_income_buffer = new WeakMap< InstanceType< typeof $node.stream.Duplex >, Uint8Array< ArrayBuffer > >
 		_ws_income_frames = new WeakMap< InstanceType< typeof $node.stream.Duplex >, ( string | Uint8Array< ArrayBuffer > )[] >
 		
 		async ws_income(
@@ -210,87 +210,91 @@ namespace $ {
 			
 			try {
 				
-				let chunks = this._ws_income_chunks.get( sock )!
-				if( !chunks ) this._ws_income_chunks.set( sock, chunks = [] )
-				
-				chunks.push( chunk )
-				const patial_size = chunks.reduce( ( sum, buf )=> sum + buf.byteLength, 0 )
-				
-				let frame = $mol_websocket_frame.from( chunks[0] )
-				const msg_size = frame.size() + frame.data().size
-				
-				if( msg_size > patial_size ) {
-					setTimeout( ()=> sock.resume() )
-					return
+				const prev = this._ws_income_buffer.get( sock )
+				let buffer: Uint8Array< ArrayBuffer >
+				if( prev ) {
+					buffer = Buffer.alloc( prev.byteLength + chunk.byteLength )
+					buffer.set( prev )
+					buffer.set( chunk, prev.byteLength )
+				} else {
+					buffer = chunk
 				}
 				
-				chunk = Buffer.alloc( patial_size )
 				let offset = 0
-				for( const buf of chunks.splice( 0 ) ) {
-					chunk.set( buf, offset )
-					offset += buf.byteLength
-				}
-				frame = $mol_websocket_frame.from( chunk )
-				
-				if( msg_size < chunk.byteLength ) {
-					const tail = new Uint8Array( chunk.buffer, chunk.byteOffset + msg_size )
-					sock.unshift( tail )
-				}
-				
-				let data: string | Uint8Array< ArrayBuffer > = new Uint8Array( chunk.buffer, chunk.byteOffset + frame.size(), frame.data().size )
-				
-				if( frame.data().mask ) {
-					const mask = frame.mask()
-					for( let i = 0; i < data.length; ++i ) {
-						data[ i ] ^= mask[ i % 4 ]
-					}
-				}
-				
-				const op = frame.kind().op
-				if( op === 'txt' ) data = $mol_charset_decode( data )
-				
-				let frames = this._ws_income_frames.get( sock )!
-				if( !frames ) this._ws_income_frames.set( sock, frames = [] )
-				
-				if( !frame.kind().fin ) {
-					frames.push( data )
-					setTimeout( ()=> sock.resume() )
-					return
-				}
-				
-				if( frames.length ) {
-					frames.push( data )
-					if( typeof frames[0] === 'string' ) {
-						data = ( frames as string[] ).join( '' )
-					} else {
-						const size = ( frames as Uint8Array< ArrayBuffer >[] ).reduce( ( s, f )=> s + f.byteLength, 0 )
-						data = new Uint8Array( size )
-						let offset = 0
-						for( const frame of ( frames as Uint8Array< ArrayBuffer >[] ) ) {
-							data.set( frame, offset )
-							offset += frame.byteLength
+				while( offset < buffer.byteLength ) {
+					
+					const available = buffer.byteLength - offset
+					if( available < 2 ) break
+					
+					const size_mark = buffer[ offset + 1 ] & 0b0111_1111
+					const length_head_size = size_mark === 127 ? 10 : size_mark === 126 ? 4 : 2
+					if( available < length_head_size ) break
+					
+					const raw = new Uint8Array( buffer.buffer, buffer.byteOffset + offset, available )
+					const frame = $mol_websocket_frame.from( raw )
+					const frame_size = frame.size() + frame.data().size
+					if( available < frame_size ) break
+					
+					let data: string | Uint8Array< ArrayBuffer > = new Uint8Array( raw.buffer, raw.byteOffset + frame.size(), frame.data().size )
+					
+					if( frame.data().mask ) {
+						const mask = frame.mask()
+						for( let i = 0; i < data.length; ++i ) {
+							data[ i ] ^= mask[ i % 4 ]
 						}
 					}
-					frames.length = 0
+					
+					offset += frame_size
+					
+					const op = frame.kind().op
+					if( op === 'txt' ) data = $mol_charset_decode( data )
+					
+					let frames = this._ws_income_frames.get( sock )!
+					if( !frames ) this._ws_income_frames.set( sock, frames = [] )
+					
+					if( !frame.kind().fin ) {
+						frames.push( data )
+						continue
+					}
+					
+					if( frames.length ) {
+						frames.push( data )
+						if( typeof frames[0] === 'string' ) {
+							data = ( frames as string[] ).join( '' )
+						} else {
+							const size = ( frames as Uint8Array< ArrayBuffer >[] ).reduce( ( s, f )=> s + f.byteLength, 0 )
+							data = new Uint8Array( size )
+							let offset = 0
+							for( const frame of ( frames as Uint8Array< ArrayBuffer >[] ) ) {
+								data.set( frame, offset )
+								offset += frame.byteLength
+							}
+						}
+						frames.length = 0
+					}
+					
+					if( op !== 'txt' && op !== 'bin' && op !== 'con' ) continue
+				
+					const message = upgrade.derive( 'POST', data )
+					
+					if( data.length !== 0 ) {
+						if( this.log() ) this.$.$mol_log3_rise({
+							place: this,
+							message: message.method(),
+							port: $mol_key( message.port ),
+							url: message.uri(),
+							origin: message.origin(),
+							frame: frame.toString(),
+						})
+						await $mol_wire_async( this.root() ).REQUEST( message )
+					}
+					
 				}
 				
-				if( op !== 'txt' && op !== 'bin' && op !== 'con' ) {
-					setTimeout( ()=> sock.resume() )
-					return
-				}
-			
-				const message = upgrade.derive( 'POST', data )
-				
-				if( data.length !== 0 ) {
-					if( this.log() ) this.$.$mol_log3_rise({
-						place: this,
-						message: message.method(),
-						port: $mol_key( message.port ),
-						url: message.uri(),
-						origin: message.origin(),
-						frame: frame.toString(),
-					})
-					await $mol_wire_async( this.root() ).REQUEST( message )
+				if( offset < buffer.byteLength ) {
+					this._ws_income_buffer.set( sock, new Uint8Array( buffer.buffer, buffer.byteOffset + offset, buffer.byteLength - offset ) )
+				} else {
+					this._ws_income_buffer.delete( sock )
 				}
 			
 				setTimeout( ()=> sock.resume() )
