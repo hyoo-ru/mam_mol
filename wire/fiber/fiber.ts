@@ -24,6 +24,10 @@ namespace $ {
 		static plan() {
 			
 			if( this.plan_task ) return
+			$mol_wire_trace( 'plan_tick', '$mol_wire_fiber', {
+				planning: this.planning.size,
+				reaping: this.reaping.size,
+			} )
 			
 			this.plan_task = new $mol_after_tick( ()=> {
 				
@@ -38,11 +42,18 @@ namespace $ {
 		}
 		
 		static sync() {
+			$mol_wire_trace( 'sync_graph_start', '$mol_wire_fiber', {
+				planning: this.planning.size,
+				reaping: this.reaping.size,
+			} )
 			
 			// Sync whole fiber graph
 			while( this.planning.size ) {
 				for( const fiber of this.planning ) {
 					this.planning.delete( fiber )
+					$mol_wire_trace( 'planned_fresh', fiber[ Symbol.toStringTag ], {
+						cursor: fiber.cursor,
+					} )
 					if( fiber.cursor >= 0 ) continue
 					if( fiber.cursor === $mol_wire_cursor.final ) continue
 					fiber.fresh()
@@ -61,6 +72,10 @@ namespace $ {
 				}
 				
 			}
+			$mol_wire_trace( 'sync_graph_end', '$mol_wire_fiber', {
+				planning: this.planning.size,
+				reaping: this.reaping.size,
+			} )
 			
 		}
 		
@@ -99,6 +114,10 @@ namespace $ {
 		
 		plan() {
 			$mol_wire_fiber.planning.add( this )
+			$mol_wire_trace( 'plan', this[ Symbol.toStringTag ], {
+				cursor: this.cursor,
+				subs: ( this.data.length - this.sub_from ) / 2,
+			} )
 			$mol_wire_fiber.plan()
 			return this
 		}
@@ -140,16 +159,35 @@ namespace $ {
 		}
 		
 		emit( quant = $mol_wire_cursor.stale ) {
+			$mol_wire_trace( 'fiber_emit', this[ Symbol.toStringTag ], {
+				quant,
+				subs_empty: this.sub_empty,
+			} )
 			if( this.sub_empty ) this.plan()
 			else super.emit( quant )
 		}
 		
 		fresh() {
+			const trace = $mol_wire_trace_active( 'fresh_start', this[ Symbol.toStringTag ] )
+			const time = trace ? Date.now() : 0
+			if( trace ) {
+				$mol_wire_trace( 'fresh_start', this[ Symbol.toStringTag ], {
+					cursor: this.cursor,
+					pubs: ( this.sub_from - this.pub_from ) / 2,
+					subs: ( this.data.length - this.sub_from ) / 2,
+				} )
+			}
 
 			type Result = typeof this.cache
 			
-			if( this.cursor === $mol_wire_cursor.fresh ) return
-			if( this.cursor === $mol_wire_cursor.final ) return
+			if( this.cursor === $mol_wire_cursor.fresh ) {
+				if( trace ) $mol_wire_trace( 'fresh_skip', this[ Symbol.toStringTag ], { reason: 'fresh' } )
+				return
+			}
+			if( this.cursor === $mol_wire_cursor.final ) {
+				if( trace ) $mol_wire_trace( 'fresh_skip', this[ Symbol.toStringTag ], { reason: 'final' } )
+				return
+			}
 			
 			check: if( this.cursor === $mol_wire_cursor.doubt ) {
 				
@@ -159,6 +197,11 @@ namespace $ {
 				}
 				
 				this.cursor = $mol_wire_cursor.fresh
+				if( trace ) $mol_wire_trace( 'fresh_end', this[ Symbol.toStringTag ], {
+					duration: Date.now() - time,
+					result: 'doubt_fresh',
+					pubs: ( this.sub_from - this.pub_from ) / 2,
+				} )
 				return
 				
 			}
@@ -175,6 +218,9 @@ namespace $ {
 				}
 				
 				if( $mol_promise_like( result ) ) {
+					if( trace ) $mol_wire_trace( 'fresh_promise', this[ Symbol.toStringTag ], {
+						source: 'return',
+					} )
 
 					if( wrappers.has( result ) ) {
 						result = wrappers.get( result )!.then(a=>a)
@@ -206,6 +252,9 @@ namespace $ {
 				}
 				
 				if( $mol_promise_like( result ) ) {
+					if( trace ) $mol_wire_trace( 'fresh_promise', this[ Symbol.toStringTag ], {
+						source: 'throw',
+					} )
 					
 					if( wrappers.has( result ) ) {
 						result = wrappers.get( result )!
@@ -236,6 +285,15 @@ namespace $ {
 			
 			this.track_off( bu )
 			this.put( result )
+			if( trace ) $mol_wire_trace( 'fresh_end', this[ Symbol.toStringTag ], {
+				duration: Date.now() - time,
+				result: $mol_promise_like( result )
+					? 'promise'
+					: result instanceof Error
+						? 'error'
+						: 'value',
+				pubs: ( this.sub_from - this.pub_from ) / 2,
+			} )
 			
 			return this
 		}
@@ -252,6 +310,9 @@ namespace $ {
 		 * Should be called inside SuspenseAPI consumer (ie fiber).
 		 */
 		sync() {
+			$mol_wire_trace( 'sync_start', this[ Symbol.toStringTag ], {
+				cursor: this.cursor,
+			} )
 			
 			if( !$mol_wire_fiber.warm ) {
 				return this.result() as Awaited< Result >
@@ -265,9 +326,11 @@ namespace $ {
 			}
 			
 			if( $mol_promise_like( this.cache ) ) {
+				$mol_wire_trace( 'sync_promise', this[ Symbol.toStringTag ] )
 				return $mol_fail_hidden( this.cache )
 			}
 			
+			$mol_wire_trace( 'sync_end', this[ Symbol.toStringTag ] )
 			return this.cache as Awaited< Result >
 		}
 
