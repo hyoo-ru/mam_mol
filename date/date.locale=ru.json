@@ -1,4 +1,6 @@
 {
 	"$mol_date_prev_hint": "Предыдущий месяц",
-	"$mol_date_next_hint": "Следующий месяц"
+	"$mol_date_next_hint": "Следующий месяц",
+	"$mol_date_year_prev_hint": "Предыдущий год",
+	"$mol_date_year_next_hint": "Следующий год"
 }

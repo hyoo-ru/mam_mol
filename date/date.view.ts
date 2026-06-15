@@ -117,6 +117,14 @@ namespace $.$$ {
 			this.month_moment( this.month_moment().shift( { month : +1 } ) )
 		}
 
+		year_prev() {
+			this.month_moment( this.month_moment().shift( { year : -1 } ) )
+		}
+
+		year_next() {
+			this.month_moment( this.month_moment().shift( { year : +1 } ) )
+		}
+
 		override today_click() {
 			this.value_moment( this.value_moment_today() )
 		}
