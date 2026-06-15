@@ -119,6 +119,7 @@ namespace $ {
 				try {
 					server.root()._auto()
 				} catch( error ) {
+					if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
 					$mol_fail_log( error )
 				}
 			} ).fresh()
