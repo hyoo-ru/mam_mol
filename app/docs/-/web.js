@@ -32517,6 +32517,30 @@ var $;
 
 
 ;
+	($.$mol_icon_chevron_double_left) = class $mol_icon_chevron_double_left extends ($.$mol_icon) {
+		path(){
+			return "M18.41,7.41L17,6L11,12L17,18L18.41,16.59L13.83,12L18.41,7.41M12.41,7.41L11,6L5,12L11,18L12.41,16.59L7.83,12L12.41,7.41Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$mol_icon_chevron_double_right) = class $mol_icon_chevron_double_right extends ($.$mol_icon) {
+		path(){
+			return "M5.59,7.41L7,6L13,12L7,18L5.59,16.59L10.17,12L5.59,7.41M11.59,7.41L13,6L19,12L13,18L11.59,16.59L16.17,12L11.59,7.41Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
 	($.$mol_date) = class $mol_date extends ($.$mol_pick) {
 		enabled(){
 			return true;
@@ -32595,48 +32619,110 @@ var $;
 		Calendar_title(){
 			return (this.Calendar().Title());
 		}
-		prev_hint(){
-			return (this.$.$mol_locale.text("$mol_date_prev_hint"));
+		year_prev_hint(){
+			return (this.$.$mol_locale.text("$mol_date_year_prev_hint"));
 		}
-		prev(next){
+		year_prev(next){
 			if(next !== undefined) return next;
 			return null;
 		}
-		Prev_icon(){
+		Year_prev_icon(){
+			const obj = new this.$.$mol_icon_chevron_double_left();
+			return obj;
+		}
+		Year_prev(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.hint) = () => ((this.year_prev_hint()));
+			(obj.click) = (next) => ((this.year_prev(next)));
+			(obj.sub) = () => ([(this.Year_prev_icon())]);
+			return obj;
+		}
+		month_prev_hint(){
+			return (this.$.$mol_locale.text("$mol_date_month_prev_hint"));
+		}
+		prev_hint(){
+			return (this.month_prev_hint());
+		}
+		month_prev(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		prev(next){
+			return (this.month_prev(next));
+		}
+		Month_prev_icon(){
 			const obj = new this.$.$mol_icon_chevron_left();
 			return obj;
 		}
-		Prev(){
+		Prev_icon(){
+			return (this.Month_prev_icon());
+		}
+		Month_prev(){
 			const obj = new this.$.$mol_button_minor();
 			(obj.hint) = () => ((this.prev_hint()));
 			(obj.click) = (next) => ((this.prev(next)));
 			(obj.sub) = () => ([(this.Prev_icon())]);
 			return obj;
 		}
-		next_hint(){
-			return (this.$.$mol_locale.text("$mol_date_next_hint"));
+		Prev(){
+			return (this.Month_prev());
 		}
-		next(next){
+		month_next_hint(){
+			return (this.$.$mol_locale.text("$mol_date_month_next_hint"));
+		}
+		next_hint(){
+			return (this.month_next_hint());
+		}
+		month_next(next){
 			if(next !== undefined) return next;
 			return null;
 		}
-		Next_icon(){
+		next(next){
+			return (this.month_next(next));
+		}
+		Month_next_icon(){
 			const obj = new this.$.$mol_icon_chevron_right();
 			return obj;
 		}
-		Next(){
+		Next_icon(){
+			return (this.Month_next_icon());
+		}
+		Month_next(){
 			const obj = new this.$.$mol_button_minor();
 			(obj.hint) = () => ((this.next_hint()));
 			(obj.click) = (next) => ((this.next(next)));
 			(obj.sub) = () => ([(this.Next_icon())]);
 			return obj;
 		}
+		Next(){
+			return (this.Month_next());
+		}
+		year_next_hint(){
+			return (this.$.$mol_locale.text("$mol_date_year_next_hint"));
+		}
+		year_next(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Year_next_icon(){
+			const obj = new this.$.$mol_icon_chevron_double_right();
+			return obj;
+		}
+		Year_next(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.hint) = () => ((this.year_next_hint()));
+			(obj.click) = (next) => ((this.year_next(next)));
+			(obj.sub) = () => ([(this.Year_next_icon())]);
+			return obj;
+		}
 		Calendar_tools(){
 			const obj = new this.$.$mol_view();
 			(obj.sub) = () => ([
+				(this.Year_prev()), 
 				(this.Prev()), 
 				(this.Calendar_title()), 
-				(this.Next())
+				(this.Next()), 
+				(this.Year_next())
 			]);
 			return obj;
 		}
@@ -32676,12 +32762,18 @@ var $;
 	($mol_mem(($.$mol_date.prototype), "Clear"));
 	($mol_mem(($.$mol_date.prototype), "Input_row"));
 	($mol_mem_key(($.$mol_date.prototype), "day_click"));
-	($mol_mem(($.$mol_date.prototype), "prev"));
-	($mol_mem(($.$mol_date.prototype), "Prev_icon"));
-	($mol_mem(($.$mol_date.prototype), "Prev"));
-	($mol_mem(($.$mol_date.prototype), "next"));
-	($mol_mem(($.$mol_date.prototype), "Next_icon"));
-	($mol_mem(($.$mol_date.prototype), "Next"));
+	($mol_mem(($.$mol_date.prototype), "year_prev"));
+	($mol_mem(($.$mol_date.prototype), "Year_prev_icon"));
+	($mol_mem(($.$mol_date.prototype), "Year_prev"));
+	($mol_mem(($.$mol_date.prototype), "month_prev"));
+	($mol_mem(($.$mol_date.prototype), "Month_prev_icon"));
+	($mol_mem(($.$mol_date.prototype), "Month_prev"));
+	($mol_mem(($.$mol_date.prototype), "month_next"));
+	($mol_mem(($.$mol_date.prototype), "Month_next_icon"));
+	($mol_mem(($.$mol_date.prototype), "Month_next"));
+	($mol_mem(($.$mol_date.prototype), "year_next"));
+	($mol_mem(($.$mol_date.prototype), "Year_next_icon"));
+	($mol_mem(($.$mol_date.prototype), "Year_next"));
 	($mol_mem(($.$mol_date.prototype), "Calendar_tools"));
 	($mol_mem(($.$mol_date.prototype), "Calendar"));
 	($mol_mem(($.$mol_date.prototype), "Icon"));
@@ -32800,11 +32892,17 @@ var $;
                 this.value_moment(this.value_moment()?.merge(moment) ?? moment);
                 this.showed(false);
             }
-            prev() {
+            month_prev() {
                 this.month_moment(this.month_moment().shift({ month: -1 }));
             }
-            next() {
+            month_next() {
                 this.month_moment(this.month_moment().shift({ month: +1 }));
+            }
+            year_prev() {
+                this.month_moment(this.month_moment().shift({ year: -1 }));
+            }
+            year_next() {
+                this.month_moment(this.month_moment().shift({ year: +1 }));
             }
             today_click() {
                 this.value_moment(this.value_moment_today());
@@ -32833,7 +32931,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/date/date.view.css", "/* [mol_date_bubble] {\n\tpadding: .5rem;\n} */\n\n[mol_date_input] {\n\tflex-shrink: 0;\n}\n\n[mol_date_prev] ,\n[mol_date_next] {\n\tflex-grow: 1;\n}\n[mol_date_prev] {\n\tjustify-content: flex-end;\n}\n\n[mol_date_calendar_title] {\n\tpadding: var(--mol_gap_text);\n}\n\n[mol_date_calendar_day] {\n\tpadding: 0;\n}\n\n[mol_date_calendar_day_button] {\n\twidth: 100%;\n\t/* padding: .25rem .5rem; */\n\tjustify-content: center;\n\tcursor: pointer;\n\tcolor: inherit;\n}\n");
+    $mol_style_attach("mol/date/date.view.css", "/* [mol_date_bubble] {\n\tpadding: .5rem;\n} */\n\n[mol_date_input] {\n\tflex-shrink: 0;\n}\n\n[mol_date_month_prev] ,\n[mol_date_month_next] {\n\tflex-grow: 1;\n}\n[mol_date_month_prev] {\n\tjustify-content: flex-end;\n}\n\n[mol_date_calendar_title] {\n\tpadding: var(--mol_gap_text);\n}\n\n[mol_date_calendar_day] {\n\tpadding: 0;\n}\n\n[mol_date_calendar_day_button] {\n\twidth: 100%;\n\t/* padding: .25rem .5rem; */\n\tjustify-content: center;\n\tcursor: pointer;\n\tcolor: inherit;\n}\n");
 })($ || ($ = {}));
 
 ;

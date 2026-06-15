@@ -1,6 +1,8 @@
 {
 	"$mol_date_Today_hint": "Today",
 	"$mol_date_Clear_hint": "Clear",
-	"$mol_date_prev_hint": "Previous month",
-	"$mol_date_next_hint": "Next month"
+	"$mol_date_year_prev_hint": "Previous year",
+	"$mol_date_month_prev_hint": "Previous month",
+	"$mol_date_month_next_hint": "Next month",
+	"$mol_date_year_next_hint": "Next year"
 }

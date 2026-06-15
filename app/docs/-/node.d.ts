@@ -16479,6 +16479,24 @@ declare namespace $ {
 //# sourceMappingURL=outline.view.tree.d.ts.map
 declare namespace $ {
 
+	export class $mol_icon_chevron_double_left extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=left.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $mol_icon_chevron_double_right extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=right.view.tree.d.ts.map
+declare namespace $ {
+
 	type $mol_button_minor__hint_mol_date_1 = $mol_type_enforce<
 		string
 		,
@@ -16545,12 +16563,12 @@ declare namespace $ {
 		ReturnType< $mol_view['sub'] >
 	>
 	type $mol_button_minor__hint_mol_date_14 = $mol_type_enforce<
-		ReturnType< $mol_date['prev_hint'] >
+		ReturnType< $mol_date['year_prev_hint'] >
 		,
 		ReturnType< $mol_button_minor['hint'] >
 	>
 	type $mol_button_minor__click_mol_date_15 = $mol_type_enforce<
-		ReturnType< $mol_date['prev'] >
+		ReturnType< $mol_date['year_prev'] >
 		,
 		ReturnType< $mol_button_minor['click'] >
 	>
@@ -16560,12 +16578,12 @@ declare namespace $ {
 		ReturnType< $mol_button_minor['sub'] >
 	>
 	type $mol_button_minor__hint_mol_date_17 = $mol_type_enforce<
-		ReturnType< $mol_date['next_hint'] >
+		ReturnType< $mol_date['prev_hint'] >
 		,
 		ReturnType< $mol_button_minor['hint'] >
 	>
 	type $mol_button_minor__click_mol_date_18 = $mol_type_enforce<
-		ReturnType< $mol_date['next'] >
+		ReturnType< $mol_date['prev'] >
 		,
 		ReturnType< $mol_button_minor['click'] >
 	>
@@ -16574,32 +16592,62 @@ declare namespace $ {
 		,
 		ReturnType< $mol_button_minor['sub'] >
 	>
-	type $mol_view__sub_mol_date_20 = $mol_type_enforce<
+	type $mol_button_minor__hint_mol_date_20 = $mol_type_enforce<
+		ReturnType< $mol_date['next_hint'] >
+		,
+		ReturnType< $mol_button_minor['hint'] >
+	>
+	type $mol_button_minor__click_mol_date_21 = $mol_type_enforce<
+		ReturnType< $mol_date['next'] >
+		,
+		ReturnType< $mol_button_minor['click'] >
+	>
+	type $mol_button_minor__sub_mol_date_22 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_button_minor['sub'] >
+	>
+	type $mol_button_minor__hint_mol_date_23 = $mol_type_enforce<
+		ReturnType< $mol_date['year_next_hint'] >
+		,
+		ReturnType< $mol_button_minor['hint'] >
+	>
+	type $mol_button_minor__click_mol_date_24 = $mol_type_enforce<
+		ReturnType< $mol_date['year_next'] >
+		,
+		ReturnType< $mol_button_minor['click'] >
+	>
+	type $mol_button_minor__sub_mol_date_25 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_button_minor['sub'] >
+	>
+	type $mol_view__sub_mol_date_26 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_date_calendar__enabled_mol_date_21 = $mol_type_enforce<
+	type $mol_date_calendar__enabled_mol_date_27 = $mol_type_enforce<
 		ReturnType< $mol_date['enabled'] >
 		,
 		ReturnType< $mol_date_calendar['enabled'] >
 	>
-	type $mol_date_calendar__month_moment_mol_date_22 = $mol_type_enforce<
+	type $mol_date_calendar__month_moment_mol_date_28 = $mol_type_enforce<
 		ReturnType< $mol_date['month_moment'] >
 		,
 		ReturnType< $mol_date_calendar['month_moment'] >
 	>
-	type $mol_date_calendar__day_selected_mol_date_23 = $mol_type_enforce<
+	type $mol_date_calendar__day_selected_mol_date_29 = $mol_type_enforce<
 		ReturnType< $mol_date['day_selected'] >
 		,
 		ReturnType< $mol_date_calendar['day_selected'] >
 	>
-	type $mol_date_calendar__day_click_mol_date_24 = $mol_type_enforce<
+	type $mol_date_calendar__day_click_mol_date_30 = $mol_type_enforce<
 		ReturnType< $mol_date['day_click'] >
 		,
 		ReturnType< $mol_date_calendar['day_click'] >
 	>
-	type $mol_date_calendar__head_mol_date_25 = $mol_type_enforce<
+	type $mol_date_calendar__head_mol_date_31 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_date_calendar['head'] >
@@ -16622,14 +16670,30 @@ declare namespace $ {
 		day_selected( id: any): boolean
 		day_click( id: any, next?: any ): any
 		Calendar_title( ): ReturnType< ReturnType< $mol_date['Calendar'] >['Title'] >
-		prev_hint( ): string
-		prev( next?: any ): any
-		Prev_icon( ): $mol_icon_chevron_left
-		Prev( ): $mol_button_minor
-		next_hint( ): string
-		next( next?: any ): any
-		Next_icon( ): $mol_icon_chevron_right
-		Next( ): $mol_button_minor
+		year_prev_hint( ): string
+		year_prev( next?: any ): any
+		Year_prev_icon( ): $mol_icon_chevron_double_left
+		Year_prev( ): $mol_button_minor
+		month_prev_hint( ): string
+		prev_hint( ): ReturnType< $mol_date['month_prev_hint'] >
+		month_prev( next?: any ): any
+		prev( next?: ReturnType< $mol_date['month_prev'] > ): ReturnType< $mol_date['month_prev'] >
+		Month_prev_icon( ): $mol_icon_chevron_left
+		Prev_icon( ): ReturnType< $mol_date['Month_prev_icon'] >
+		Month_prev( ): $mol_button_minor
+		Prev( ): ReturnType< $mol_date['Month_prev'] >
+		month_next_hint( ): string
+		next_hint( ): ReturnType< $mol_date['month_next_hint'] >
+		month_next( next?: any ): any
+		next( next?: ReturnType< $mol_date['month_next'] > ): ReturnType< $mol_date['month_next'] >
+		Month_next_icon( ): $mol_icon_chevron_right
+		Next_icon( ): ReturnType< $mol_date['Month_next_icon'] >
+		Month_next( ): $mol_button_minor
+		Next( ): ReturnType< $mol_date['Month_next'] >
+		year_next_hint( ): string
+		year_next( next?: any ): any
+		Year_next_icon( ): $mol_icon_chevron_double_right
+		Year_next( ): $mol_button_minor
 		Calendar_tools( ): $mol_view
 		Calendar( ): $mol_date_calendar
 		Icon( ): $mol_icon_calendar
@@ -16685,8 +16749,10 @@ declare namespace $.$$ {
         month_moment(next?: $mol_time_moment): $mol_time_moment;
         day_selected(day: string): boolean;
         day_click(day: string): void;
-        prev(): void;
-        next(): void;
+        month_prev(): void;
+        month_next(): void;
+        year_prev(): void;
+        year_next(): void;
         today_click(): void;
     }
 }

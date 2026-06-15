@@ -6,11 +6,11 @@
 	flex-shrink: 0;
 }
 
-[mol_date_prev] ,
-[mol_date_next] {
+[mol_date_month_prev] ,
+[mol_date_month_next] {
 	flex-grow: 1;
 }
-[mol_date_prev] {
+[mol_date_month_prev] {
 	justify-content: flex-end;
 }
 
