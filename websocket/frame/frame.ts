@@ -19,6 +19,7 @@ namespace $ {
 	 */
 	export class $mol_websocket_frame extends $mol_buffer {
 		
+		/** Kind of socket frame. */
 		kind( next?: {
 			op: keyof typeof $mol_websocket_frame_op
 			fin: boolean,
@@ -41,6 +42,7 @@ namespace $ {
 			}
 		}
 		
+		/** Payload info. */
 		data( next?: { size: number, mask: boolean } ) {
 			if( next === undefined ) {
 				
@@ -76,12 +78,15 @@ namespace $ {
 			}
 		}
 		
+		/** Header size (2..14). */
 		size() {
+			if( this.byteLength < 2 ) return 2
 			const short = this.getUint8( 1 ) & 0b0111_1111
 			const mask = this.getUint8( 1 ) >> 7
 			return ( short === 127 ? 10 : short === 126 ? 4 : 2 ) + ( mask ? 4 : 0 )
 		}
 		
+		/** 4 byte mask. */
 		mask() {
 			return new Uint8Array( this.buffer, this.byteOffset + this.size() - 4, 4 )
 		}

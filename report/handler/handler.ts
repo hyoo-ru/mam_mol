@@ -12,6 +12,7 @@ namespace $ {
 		}
 	}
 	const handler_promise = (event: PromiseRejectionEvent) => handler('Unhandled Rejection', '', 0, 0, event.reason )
+	const handler_promise_node = (reason: Error) => handler('Unhandled Rejection', '', 0, 0, reason )
 
 	if( 'addEventListener' in globalThis ) {
 		globalThis.addEventListener('error', handler)
@@ -20,7 +21,7 @@ namespace $ {
 	
 	if( 'process' in globalThis ) {
 		process.on('uncaughtExceptionMonitor', handler)
-		process.on('unhandledrejection', handler_promise)
+    	process.on('unhandledRejection', handler_promise_node)
 	}
 
 	const console_error = console.error

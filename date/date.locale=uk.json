@@ -1,4 +1,6 @@
 {
-  "$mol_date_prev_hint": "Попередній місяць",
-  "$mol_date_next_hint": "Наступний місяць"
+  "$mol_date_month_prev_hint": "Попередній місяць",
+  "$mol_date_month_next_hint": "Наступний місяць",
+  "$mol_date_year_prev_hint": "Попередній рiк",
+  "$mol_date_year_next_hint": "Наступний рiк"
 }
