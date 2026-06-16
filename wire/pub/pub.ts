@@ -47,6 +47,12 @@ namespace $ {
 		sub_on( sub: $mol_wire_pub, pub_pos: number ) {
 			const pos = this.data.length
 			this.data.push( sub, pub_pos )
+			$mol_wire_trace( 'sub_on', this[ Symbol.toStringTag ], {
+				sub: sub[ Symbol.toStringTag ],
+				pos,
+				pub_pos,
+				subs: ( this.data.length - this.sub_from ) / 2,
+			} )
 			return pos
 		}
 		
@@ -65,6 +71,10 @@ namespace $ {
 			}
 			
 			this.data.length = end
+			$mol_wire_trace( 'sub_off', this[ Symbol.toStringTag ], {
+				pos: sub_pos,
+				subs: ( this.data.length - this.sub_from ) / 2,
+			} )
 			
 			if( end === this.sub_from ) this.reap()
 			
@@ -79,6 +89,9 @@ namespace $ {
 		 * Autowire this publisher with current subscriber.
 		 **/
 		promote() {
+			$mol_wire_trace( 'promote', this[ Symbol.toStringTag ], {
+				auto: $mol_wire_auto()?.[ Symbol.toStringTag ] ?? null,
+			} )
 			$mol_wire_auto()?.track_next( this )
 		}
 		
@@ -100,6 +113,10 @@ namespace $ {
 		 * Notify subscribers about self changes.
 		 */
 		emit( quant = $mol_wire_cursor.stale ) {
+			$mol_wire_trace( 'emit', this[ Symbol.toStringTag ], {
+				quant,
+				subs: ( this.data.length - this.sub_from ) / 2,
+			} )
 			for( let i = this.sub_from; i < this.data.length; i += 2 ) {
 				;( this.data[i] as $mol_wire_sub ).absorb( quant, this.data[ i + 1 ] as number )
 			}

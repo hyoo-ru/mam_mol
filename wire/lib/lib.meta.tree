@@ -1,3 +1,4 @@
+include \/mol/wire/trace
 include \/mol/wire/pub
 include \/mol/wire/pub/sub
 include \/mol/wire/fiber

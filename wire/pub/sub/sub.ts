@@ -26,6 +26,10 @@ namespace $ {
 		}
 		
 		track_on() {
+			$mol_wire_trace( 'track_on', this[ Symbol.toStringTag ], {
+				pubs: ( this.sub_from - this.pub_from ) / 2,
+				subs: ( this.data.length - this.sub_from ) / 2,
+			} )
 			this.cursor = this.pub_from
 			const sub = $mol_wire_auto()
 			$mol_wire_auto( this )
@@ -47,10 +51,14 @@ namespace $ {
 			
 			if( this.cursor < this.sub_from ) {
 			
- 				const next = this.data[ this.cursor ] as $mol_wire_pub | undefined
+				const next = this.data[ this.cursor ] as $mol_wire_pub | undefined
 				if( pub === undefined ) return next ?? null
 				
 				if( next === pub ) {
+					$mol_wire_trace( 'track_keep', this[ Symbol.toStringTag ], {
+						pub: pub[ Symbol.toStringTag ],
+						pos: this.cursor,
+					} )
 					this.cursor += 2
 					return next
 				}
@@ -80,6 +88,10 @@ namespace $ {
 			
 			this.data[ this.cursor ] = pub
 			this.data[ this.cursor + 1 ] = pub.sub_on( this, this.cursor )
+			$mol_wire_trace( 'track_add', this[ Symbol.toStringTag ], {
+				pub: pub[ Symbol.toStringTag ],
+				pos: this.cursor,
+			} )
 			
 			this.cursor += 2
 			
@@ -104,6 +116,10 @@ namespace $ {
 			}
 			
 			this.cursor = $mol_wire_cursor.fresh
+			$mol_wire_trace( 'track_off', this[ Symbol.toStringTag ], {
+				pubs: ( this.sub_from - this.pub_from ) / 2,
+				auto: sub?.[ Symbol.toStringTag ] ?? null,
+			} )
 			
 		}
 		
@@ -156,6 +172,9 @@ namespace $ {
 			this.data.length = end
 			
 			this.sub_from = this.cursor
+			$mol_wire_trace( 'track_cut', this[ Symbol.toStringTag ], {
+				pubs: ( this.sub_from - this.pub_from ) / 2,
+			} )
 			
 		}
 		
@@ -190,6 +209,11 @@ namespace $ {
 			if( this.cursor === $mol_wire_cursor.final ) return
 			if( this.cursor >= quant ) return
 			
+			$mol_wire_trace( 'absorb', this[ Symbol.toStringTag ], {
+				quant,
+				pos,
+				prev: this.cursor,
+			} )
 			this.cursor = quant
 			this.emit( $mol_wire_cursor.doubt )
 			

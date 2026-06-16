@@ -48,7 +48,7 @@ namespace $ {
 		) {
 			const args_raw = typeof command === 'string' ? command.split( ' ' ) : command
 			const [ app, ...args ] = args_raw
-			const opts = { shell: true, cwd: dir, env }
+			const opts = { shell: true, cwd: dir, env, windowsHide: true }
 
 			const log_object = {
 				place: `${this}.spawn()`,
