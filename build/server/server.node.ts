@@ -53,11 +53,6 @@ namespace $ {
 
 			try {
 				
-				if( req.path.includes( '/-/' ) && req.path.length > 1024 ) {
-					res.status( 404 ).end()
-					return true
-				}
-
 				// if( req.query._escaped_fragment_ ) {
 					
 				// 	const fragment = decodeURIComponent( String( req.query._escaped_fragment_ ) )
@@ -113,7 +108,6 @@ namespace $ {
 			const build = this.build()
 
 			const [ , rawpath , bundle ] = matched
-			if( bundle.length > 512 ) return null
 			const mod = build.root().resolve( rawpath )
 
 			if( bundle === 'web.css' ) {
@@ -171,8 +165,6 @@ namespace $ {
 			    res.end(JSON.stringify(config, null, 2))
 			    return true
 			}
-
-			if( req.path.includes( '/-/' ) ) return
 
 			// ensure загружает сорцы, делает git pull, это не стоит делать на build-папках
 			// Поэтому регулярка выше отсеивает build-папки
@@ -282,15 +274,13 @@ namespace $ {
 
 				this.path_add(path, '')
 
-				const cleanup = ()=> {
+				line.on( 'close' , ()=> {
 					this.path_doubt(path)
 					const lines = new Map( this.lines() )
 					lines.delete( line )
 					this.lines( lines )
 					
-				}
-				line.on( 'close' , cleanup )
-				line.on( 'error' , cleanup )
+				} )
 				
 			} )
 			
@@ -400,7 +390,6 @@ namespace $ {
 		
 		@ $mol_mem_key
 		notify( [ line, path ]: [ InstanceType<$node['ws']['WebSocket']>, string ] ) {
-			if( line.readyState !== line.OPEN ) return true
 			this.bundle_changed_at(path)
 
 			// ignore initial
@@ -412,7 +401,7 @@ namespace $ {
 				path
 			})
 				
-			if( line.readyState === line.OPEN ) line.send( '$mol_build_obsolete' )
+			line.send( '$mol_build_obsolete' )
 
 			return true
 

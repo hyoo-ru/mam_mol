@@ -77,18 +77,11 @@ namespace $ {
 			socket.on( 'connection' , line => {
 
 				this.connections.add( line )
-
-				const cleanup = ()=> {
-					this.connections.delete( line )
-				}
-				line.on( 'close', cleanup )
-				line.on( 'error', cleanup )
 				
 				line.on( 'message' , ( message: any, isBinary: boolean )=> {
 
 					for( const other of this.connections ) {
 						if( line === other ) continue
-						if( other.readyState !== other.OPEN ) continue
 						other.send( message, { binary: isBinary } )
 					}
 					
