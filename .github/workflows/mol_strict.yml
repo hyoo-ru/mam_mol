@@ -26,17 +26,17 @@ jobs:
         
     steps:
     
-    - uses: actions/setup-node@v2
+    - uses: actions/setup-node@7c12f8017d5436eb855f1ed4399f037a36fbd9e8
       with:
         node-version: ${{ matrix.node-version }}
 
     - name: Build apps
-      uses: hyoo-ru/mam_build@master2
+      uses: hyoo-ru/mam_build@77445fb6e8333a530379d799c152553e9fb0932c
       with:
         package: mol
         modules: strict
     
-    - uses: JS-DevTools/npm-publish@v1
+    - uses: JS-DevTools/npm-publish@0f451a94170d1699fd50710966d48fb26194d939
       if: ${{ github.ref == 'refs/heads/master' }}
       with:
         token: ${{ secrets.NPM_AUTH_TOKEN }}
