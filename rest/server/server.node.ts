@@ -214,15 +214,24 @@ namespace $ {
 				if( !chunks ) this._ws_income_chunks.set( sock, chunks = [] )
 				
 				chunks.push( chunk )
-				const patial_size = chunks.reduce( ( sum, buf )=> sum + buf.byteLength, 0 )
 				
 				let frame = $mol_websocket_frame.from( chunks[0] )
-				const msg_size = frame.size() + frame.data().size
+				let header_size = frame.size()
 				
-				if( msg_size > patial_size ) {
-					setTimeout( ()=> sock.resume() )
-					return
+				if( chunks[0].byteLength < header_size ) {
+					if( chunks.length < 2 ) return setTimeout( ()=> sock.resume() ), undefined
+					
+					chunk = Buffer.from([ ... chunks[0], ... chunks[1] ])
+					chunks.splice( 0, 2, chunk )
+					frame = $mol_websocket_frame.from( chunk )
+					header_size = frame.size()
+					
+					if( chunk.byteLength < header_size ) return setTimeout( ()=> sock.resume() ), undefined
 				}
+				
+				const msg_size = header_size + frame.data().size
+				const patial_size = chunks.reduce( ( sum, buf )=> sum + buf.byteLength, 0 )
+				if( msg_size > patial_size ) return setTimeout( ()=> sock.resume() ), undefined
 				
 				chunk = Buffer.alloc( patial_size )
 				let offset = 0
