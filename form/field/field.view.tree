@@ -1,7 +1,7 @@
 $mol_form_field $mol_labeler
 	attr *
 		^
-		mol_form_field_state <= field_state null string
+		mol_form_field_state <= field_state null
 	bids /string
 	label /
 		<= name \

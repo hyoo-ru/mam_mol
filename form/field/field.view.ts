@@ -5,7 +5,7 @@ namespace $.$$ {
 	export class $mol_form_field extends $.$mol_form_field {
 		
 		override field_state() {
-			return this.bid() ? 'error' : null
+			return this.bid() ? 'error' as string : null
 		}
 
 		@ $mol_mem
