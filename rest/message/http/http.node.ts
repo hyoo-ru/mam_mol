@@ -53,7 +53,7 @@ namespace $ {
 			} else {
 				
 				if( this.type() === 'application/json' ) {
-					return consume.json( this.input )
+					return consume.json( this.input ) as object
 				} else {
 					return new Uint8Array( consume.arrayBuffer( this.input ) )
 				}
