@@ -61,20 +61,19 @@ namespace $ {
 
 		protected writes = [] as [path: string, data: string][]
 		protected errors = [] as [filename: string, error: string][]
+		// undefined - disable send schedule, null - schedule on changes, tick - already scheduled
 		protected changes_tick = null as null | undefined | $mol_after_tick
 
 		protected checked_at = null as null | Date
 
 		@ $mol_action
-		protected changes_cut(): $mol_build_checker_changes | null {
+		protected changes_cut(op?: 'watch_off'): $mol_build_checker_changes | null {
 			const writes = this.writes
 			const errors = this.errors
 
 			this.changes_tick?.destructor()
-			this.changes_tick = null
-
+			this.changes_tick = op === 'watch_off' ? undefined : null
 			if (! errors.length && ! writes.length ) return null
-
 			this.writes = []
 			this.errors = []
 
@@ -125,8 +124,7 @@ namespace $ {
 
 		// Do not place async logic here, to prevent recheck calls race
 		recheck() {
-			this.changes_tick?.destructor()
-			this.changes_tick = undefined // disable watch sending
+			this.changes_cut('watch_off')
 			this.watching(true) // enable host pull in start
 			this.host() // wait host started
 			this.recheck_internal()
