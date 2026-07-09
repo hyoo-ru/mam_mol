@@ -483,17 +483,20 @@ namespace $ {
 		@ $mol_mem_key
 		js_error( path : string , next = null as null | string ) {
 			this.js_content( path )
+			this.recheck_count(null)
 			return next
 		}
 
 		@ $mol_mem_key
 		js_content( path : string ) {
-
+			this.recheck_count(null)
 			const src = $mol_file.absolute( path )
+
+			const text = src.text()
 
 			if( /\.tsx?$/.test( src.name() ) ) {
 			
-				const res = $node.typescript.transpileModule( src.text() , { compilerOptions : this.tsOptions() } )
+				const res = $node.typescript.transpileModule( text , { compilerOptions : this.tsOptions() } )
 				
 				if( res.diagnostics?.length ) {
 					return $mol_fail( new Error( $node.typescript.formatDiagnostic( res.diagnostics[0] , {
@@ -512,14 +515,11 @@ namespace $ {
 					// .replace( /^\/\/#\ssourceMappingURL=[^\n]*/mg , '//' + src.relate() )+'\n',
 					map : map,
 				}
+			}
 
-			} else {
-
-				return {
-					text: this.$.$mol_sourcemap_strip(src.text()),
-					map: this.$.$mol_sourcemap_from_file(src)
-				}
-
+			return {
+				text: this.$.$mol_sourcemap_strip(text),
+				map: this.$.$mol_sourcemap_from_file(src)
 			}
 
 		}
@@ -918,6 +918,11 @@ namespace $ {
 			return Boolean(this.$.$mol_env().MAM_BUILD_CHECKER_SYNCED)
 		}
 
+		@ $mol_action
+		protected recheck_count(next?: null): number {
+			return ($mol_wire_probe(() => this.recheck_count()) ?? -1) + 1
+		}
+	
 		@ $mol_mem_key
 		bundleAuditJS( { path , exclude , bundle } : { path : string , exclude : readonly string[] , bundle : string } ) : $mol_file[] {
 
@@ -932,6 +937,7 @@ namespace $ {
 				this.tsService({ path , exclude : exclude_ext , bundle })?.recheck()
 			} else {
 				const checker = this.checker({ path , exclude: exclude_ext , bundle })
+				this.recheck_count()
 				const changes = checker?.recheck()
 				if ( changes ) this.checker_changes_add(changes)
 			}

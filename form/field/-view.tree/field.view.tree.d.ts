@@ -6,10 +6,14 @@ declare namespace $ {
 		ReturnType< $mol_view['sub'] >
 	>
 	export class $mol_form_field extends $mol_labeler {
+		state( ): string | null
 		name( ): string
 		bid( ): string
 		Bid( ): $mol_view
 		control( ): any
+		attr( ): ({ 
+			'mol_form_field_state': ReturnType< $mol_form_field['state'] >,
+		})  & ReturnType< $mol_labeler['attr'] >
 		bids( ): readonly(string)[]
 		label( ): readonly(any)[]
 		content( ): readonly(any)[]

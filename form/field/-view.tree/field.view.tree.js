@@ -1,4 +1,7 @@
 	($.$mol_form_field) = class $mol_form_field extends ($.$mol_labeler) {
+		state(){
+			return null;
+		}
 		name(){
 			return "";
 		}
@@ -12,6 +15,9 @@
 		}
 		control(){
 			return null;
+		}
+		attr(){
+			return {...(super.attr()), "mol_form_field_state": (this.state())};
 		}
 		bids(){
 			return [];

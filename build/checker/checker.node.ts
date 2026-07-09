@@ -12,6 +12,7 @@ namespace $ {
 	}
 
 	export type $mol_build_checker_changes = {
+		time: number
 		writes: [path: string, data: string][]
 		errors: [path: string, error: string][]
 	}
@@ -60,22 +61,25 @@ namespace $ {
 
 		protected writes = [] as [path: string, data: string][]
 		protected errors = [] as [filename: string, error: string][]
+		// undefined - disable send schedule, null - schedule on changes, tick - already scheduled
 		protected changes_tick = null as null | undefined | $mol_after_tick
 
+		protected checked_at = null as null | Date
+
 		@ $mol_action
-		protected changes_cut(): $mol_build_checker_changes | null {
+		protected changes_cut(op?: 'watch_off'): $mol_build_checker_changes | null {
 			const writes = this.writes
 			const errors = this.errors
 
 			this.changes_tick?.destructor()
-			this.changes_tick = null
-
+			this.changes_tick = op === 'watch_off' ? undefined : null
 			if (! errors.length && ! writes.length ) return null
-
 			this.writes = []
 			this.errors = []
 
-			return { writes, errors }
+			const time = this.checked_at?.getTime() ?? 0
+			this.checked_at = null
+			return { writes, errors, time }
 		}
 
 		changes_flush() {
@@ -88,6 +92,7 @@ namespace $ {
 			// ts watcher calls it in host syncronously
 			if (this.changes_tick === undefined) return
 			if (this.changes_tick !== null) return
+			this.checked_at = new Date()
 			this.changes_tick = new $mol_after_tick(() => $mol_wire_async(this).changes_flush())
 		}
 
@@ -119,8 +124,7 @@ namespace $ {
 
 		// Do not place async logic here, to prevent recheck calls race
 		recheck() {
-			this.changes_tick?.destructor()
-			this.changes_tick = undefined // disable watch sending
+			this.changes_cut('watch_off')
 			this.watching(true) // enable host pull in start
 			this.host() // wait host started
 			this.recheck_internal()

@@ -2441,6 +2441,9 @@ $mol_audio_demo_vibe $mol_example_small
 		\Media/Audio
 
 $mol_form_field $mol_labeler
+	attr *
+		^
+		mol_form_field_state <= state null string
 	bids /string
 	label /
 		<= name \
