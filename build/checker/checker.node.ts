@@ -4,6 +4,7 @@ namespace $ {
 
 	export type $mol_build_checker_shared = {
 		recheck(): $mol_build_checker_changes | null
+		transpile(text: string): { map: $mol_sourcemap_raw, text: string }
 	}
 
 	export type $mol_build_checker_remote = {
@@ -18,16 +19,38 @@ namespace $ {
 	}
 
 	export type $mol_build_checker_worker_data = {
-		paths: readonly string[]
+		paths?: readonly string[]
 		root: string
-		options: ReturnType<typeof $node.typescript.getDefaultCompilerOptions>
+		config_path?: string
 	}
 
 	export class $mol_build_checker extends $mol_object {
 		paths() { return this.worker_data().paths ?? [] }
 		root() { return this.worker_data().root ?? '' }
-		options() {
-			return this.worker_data().options ?? $node.typescript.getDefaultCompilerOptions()
+
+		protected config_path() { return this.worker_data().config_path }
+
+		protected config_json() {
+			const path = this.config_path()
+			const config_file = path
+				? this.$.$mol_file.absolute(path)
+				: this.$.$mol_file.absolute(this.root()).resolve('tsconfig.json')
+
+			const text = config_file.text()
+
+			return JSON.parse(text).compilerOptions
+		}
+
+		protected _options = null as null | ReturnType<typeof $node.typescript.getDefaultCompilerOptions>
+
+		protected options() {
+			if (this._options) return this._options
+
+			const res = $node.typescript.convertCompilerOptionsFromJson( this.config_json() , '.' , 'tsconfig.json' )
+			if( res.errors.length ) throw res.errors
+			this._options = res.options
+
+			return res.options
 		}
 
 		@ $mol_mem
@@ -129,6 +152,25 @@ namespace $ {
 			this.host() // wait host started
 			this.recheck_internal()
 			return this.changes_cut()
+		}
+
+		transpile(src: string) {
+			const compilerOptions = this.options()
+			const root = this.root()
+			const res = $node.typescript.transpileModule( src , { compilerOptions } )
+
+			if( res.diagnostics?.length ) {
+				throw new Error( $node.typescript.formatDiagnostic( res.diagnostics[0] , {
+					getCurrentDirectory : ()=> root ,
+					getCanonicalFileName : ( path : string )=> path.toLowerCase() ,
+					getNewLine : ()=> '\n' ,
+				}) )
+			}
+
+			const map = JSON.parse( res.sourceMapText! ) as $mol_sourcemap_raw
+			const text = this.$.$mol_sourcemap_strip(res.outputText)
+
+			return { map, text }
 		}
 
 		@ $mol_mem
