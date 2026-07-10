@@ -31,6 +31,27 @@ namespace $ {
 			}
 		}
 
+		@ $mol_mem
+		checker_global() {
+			const handlers: $mol_build_checker_remote = {
+				changes: changes => this.checker_changes_add(changes),
+				status: () => {},
+			}
+
+			return this.$.$mol_rpc_worker.make<typeof $mol_rpc_worker<$mol_build_checker_shared>>({
+				options: $mol_const({
+					resourceLimits: {
+						maxOldGenerationSizeMb: this.checker_max_mem(),
+					},
+					workerData: {
+						root: this.root().path(),
+					}
+				}),
+				uri: () => __filename,
+				handlers: () => handlers,
+			})
+		}
+
 		@ $mol_mem_key
 		checker_rpc( { path , exclude , bundle } : { path : string , bundle : string , exclude : readonly string[] } ) {
 			const paths = this.tsPaths({ path , exclude , bundle })
@@ -41,20 +62,15 @@ namespace $ {
 				status: () => {},
 			}
 
-			const workerData: $mol_build_checker_worker_data = {
-				paths,
-				root: this.root().path(),
-				options: this.tsOptions(),
-			}
-
-			const maxOldGenerationSizeMb = this.checker_max_mem()
-
 			return this.$.$mol_rpc_worker.make<typeof $mol_rpc_worker<$mol_build_checker_shared>>({
 				options: $mol_const({
 					resourceLimits: {
-						maxOldGenerationSizeMb,
+						maxOldGenerationSizeMb: this.checker_max_mem(),
 					},
-					workerData
+					workerData: {
+						paths,
+						root: this.root().path(),
+					}
 				}),
 				uri: () => __filename,
 				handlers: () => handlers,
@@ -357,14 +373,6 @@ namespace $ {
 			return [ ... sources ]
 		}
 		
-		@ $mol_mem
-		tsOptions() {
-			const rawOptions = JSON.parse( this.root().resolve( 'tsconfig.json' ).text() + '').compilerOptions
-			const res = $node.typescript.convertCompilerOptionsFromJson( rawOptions , "." , 'tsconfig.json' )
-			if( res.errors.length ) throw res.errors
-			return res.options
-		}
-
 		@ $mol_mem_key
 		tsPaths( { path , exclude , bundle } : { path : string , bundle : string , exclude : readonly string[] } ) {
 
@@ -386,101 +394,6 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		tsService( { path , exclude , bundle } : { path : string , bundle : string , exclude : readonly string[] } ) {
-
-			const paths = this.tsPaths({ path , exclude , bundle })
-			if( !paths.length ) return null
-
-			const watchers = new Map< string , ( path : string , kind : number )=> void >()
-			let run = ()=> {}
-			
-			var host = $node.typescript.createWatchCompilerHost(
-
-				paths ,
-				
-				{
-					... this.tsOptions(),
-					emitDeclarationOnly : true,
-				},
-				
-				{
-					... $node.typescript.sys ,
-					watchDirectory: ( path, cb ) => {
-						// console.log('watchDirectory', path )
-						watchers.set( path , cb )
-						return { close(){} }
-					},
-					writeFile : (path , data )=> {
-						$mol_file.relative( path ).text( data, 'virt' )
-					},
-					setTimeout : ( cb : any )=> {
-						run = cb
-					} ,
-					watchFile : (path:string, cb:(path:string,kind:number)=>any )=> {
-						// console.log('watchFile', path )
-						watchers.set( path , cb )
-						return { close(){ } }
-					},
-				},
-				
-				$node.typescript.createEmitAndSemanticDiagnosticsBuilderProgram,
-
-				( diagnostic )=> {
-
-					if( diagnostic.file ) {
-
-						const error = $node.typescript.formatDiagnostic( diagnostic , {
-							getCurrentDirectory : ()=> this.root().path() ,
-							getCanonicalFileName : ( path : string )=> path.toLowerCase() ,
-							getNewLine : ()=> '\n' ,
-						})
-						this.js_error( diagnostic.file.getSourceFile().fileName , error )
-						
-					} else {
-						const text = diagnostic.messageText
-						this.$.$mol_log3_fail({
-							place : `${this}.tsService()` ,
-							message: typeof text === 'string' ? text : text.messageText ,
-						})
-					}
-					
-				} ,
-
-				()=> {}, //watch reports
-				
-				[], // project refs
-				
-				{ // watch options
-					synchronousWatchDirectory: true,
-					watchFile: 5,
-					watchDirectory: 0,
-				},
-				
-			)
-
-			const service = $node.typescript.createWatchProgram( host )
-
-			const versions = {} as Record< string , number >
-
-			return {
-				recheck: ()=> {
-					for( const path of paths ) {
-						const version = $node.fs.statSync( path ).mtime.valueOf()
-						// this.js_error( path, null )
-						if( versions[ path ] && versions[ path ] !== version ) {
-							const watcher = watchers.get( path )
-							if( watcher ) watcher( path , 2 )
-						}
-						versions[ path ] = version
-					}
-					run()
-				},
-				destructor : ()=> service.close()
-			}
-
-		}
-
-		@ $mol_mem_key
 		js_error( path : string , next = null as null | string ) {
 			this.js_content( path )
 			this.recheck_count(null)
@@ -492,33 +405,18 @@ namespace $ {
 			this.recheck_count(null)
 			const src = $mol_file.absolute( path )
 
-			const text = src.text()
+			const src_text = src.text()
 
 			if( /\.tsx?$/.test( src.name() ) ) {
-			
-				const res = $node.typescript.transpileModule( text , { compilerOptions : this.tsOptions() } )
-				
-				if( res.diagnostics?.length ) {
-					return $mol_fail( new Error( $node.typescript.formatDiagnostic( res.diagnostics[0] , {
-						getCurrentDirectory : ()=> this.root().path() ,
-						getCanonicalFileName : ( path : string )=> path.toLowerCase() ,
-						getNewLine : ()=> '\n' ,
-					}) ) )
-				}
 
-				const map = JSON.parse( res.sourceMapText! ) as $mol_sourcemap_raw
-				map.file = src.relate()
-				map.sources = [ src.relate() ]
-				
-				return {
-					text : this.$.$mol_sourcemap_strip(res.outputText),
-					// .replace( /^\/\/#\ssourceMappingURL=[^\n]*/mg , '//' + src.relate() )+'\n',
-					map : map,
-				}
+				const transpiled = this.checker_global().remote().transpile(src_text)
+				const file = src.relate()
+
+				return { text: transpiled.text, map: { ... transpiled.map, file, sources: [ file ] } }
 			}
 
 			return {
-				text: this.$.$mol_sourcemap_strip(text),
+				text: this.$.$mol_sourcemap_strip(src_text),
 				map: this.$.$mol_sourcemap_from_file(src)
 			}
 
@@ -914,10 +812,6 @@ namespace $ {
 			return [ targetMJS, targetJSMap ]
 		}
 
-		checker_synced() {
-			return Boolean(this.$.$mol_env().MAM_BUILD_CHECKER_SYNCED)
-		}
-
 		@ $mol_action
 		protected recheck_count(next?: null): number {
 			return ($mol_wire_probe(() => this.recheck_count()) ?? -1) + 1
@@ -932,15 +826,10 @@ namespace $ {
 			var target = pack.resolve( `-/${bundle}.audit.js` )
 			var exclude_ext = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
 
-	
-			if (this.checker_synced()) {
-				this.tsService({ path , exclude : exclude_ext , bundle })?.recheck()
-			} else {
-				const checker = this.checker({ path , exclude: exclude_ext , bundle })
-				this.recheck_count()
-				const changes = checker?.recheck()
-				if ( changes ) this.checker_changes_add(changes)
-			}
+			const checker = this.checker({ path , exclude: exclude_ext , bundle })
+			this.recheck_count()
+			const changes = checker?.recheck()
+			if ( changes ) this.checker_changes_add(changes)
 
 			const errors = [] as Error[]
 			const paths = this.tsPaths({ path , exclude: exclude_ext , bundle })
