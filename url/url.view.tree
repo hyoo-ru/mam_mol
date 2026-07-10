@@ -1,0 +1,22 @@
+$mol_url $mol_form_field
+	bid \
+	check null
+	message *string
+		required @ \Required!
+		need_protocol @ \Need protocol
+		no_spaces @ \No spaces!
+		invalid_protocol @ \Invalid protocol
+		invalid_format @ \Invalid format
+	control $mol_password
+		type <= type \text
+		value? <=> value? \
+		hint <= hint
+		Show <= Open $mol_button_minor
+			title <= Open_title @ \Open link
+			dom_name \a
+			enabled <= valid false
+			sub / <= Icon $mol_icon_link
+			click <= click null
+			attr *
+				^
+				href <= href /
