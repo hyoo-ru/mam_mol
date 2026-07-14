@@ -12,6 +12,9 @@
 		"@types/body-parser": "*",
 		"@types/serve-index": "*",
 		"@types/jsdom": "*",
-		"@types/ws": "*"
+		"@types/ws": "*",
+		"graphql": "*",
+		"yaml": "*",
+		"openapi-typescript": "*"
 	}
 }

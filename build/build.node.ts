@@ -229,6 +229,62 @@ namespace $ {
 			return [ script ]
 		}
 
+		// `api.schema.gql` и `api.gql` намеренно резолвятся в один и тот же namespace
+		// (`$bog_lk_api`). TS делает declaration merging для interface'ов — поля
+		// схемы видны без импорта в operations-файле. Если поля разойдутся — TS
+		// поймает; раздели тогда файлы по разным именам или удали дубль из ops-файла.
+		@ $mol_mem_key
+		gqlTranspile( path : string ) {
+			const file = $mol_file.absolute( path )
+			const script = file.parent().resolve( `-gql/${ file.name() }.ts` )
+
+			const code = $mol_build_gql.compile({
+				source: file.text(),
+				external: $mol_build_gql.collect_external_schemas( file, this.root() ),
+				class_name: this.codegen_class_name( file, /\.(schema\.)?(gql|graphql)$/ ),
+				is_schema_only: $mol_build_gql.is_schema_file( file.name() ),
+			})
+			script.text( code )
+
+			return [ script ]
+		}
+
+		@ $mol_mem_key
+		openapiTranspile( path : string ) {
+			const file = $mol_file.absolute( path )
+			const script = file.parent().resolve( `-openapi/${ file.name() }.ts` )
+
+			const spec = $mol_build_openapi.parse_spec( file.text(), file.name() )
+			const types_text = $mol_wire_sync( this ).openapiGenerateTypes( spec )
+
+			const code = $mol_build_openapi.compile({
+				spec,
+				types_text,
+				class_name: this.codegen_class_name( file, /\.openapi\.(yaml|yml|json)$/ ),
+			})
+			script.text( code )
+
+			return [ script ]
+		}
+
+		// openapi-typescript v7 — pure ESM, dynamic import. Метод async, через
+		// $mol_wire_sync синхронизуется в transpile. autoinstall ставит пакет если нужно.
+		async openapiGenerateTypes( spec : unknown ) : Promise< string > {
+			this.$.$node_autoinstall( 'openapi-typescript' )
+			const mod = await import( 'openapi-typescript' ) as Record< string, unknown >
+			const fn = ( mod.default ?? mod.openapiTS ?? mod ) as ( spec : unknown ) => unknown
+			const ast = await fn( spec )
+			return typeof ast === 'string' ? ast : $mol_build_openapi.ast_to_text( ast as readonly unknown[] )
+		}
+
+		protected codegen_class_name( file : $mol_file, strip_ext : RegExp ) : string {
+			const parent = file.parent().relate( this.root() )
+			const file_base = file.name().replace( strip_ext, '' )
+			const parts = parent ? parent.split( '/' ).filter( Boolean ) : []
+			if( file_base ) parts.push( file_base )
+			return '$' + parts.join( '_' )
+		}
+
 		@ $mol_mem_key
 		sorted_sub(path: string) {
 			const parent = $mol_file.absolute( path )
@@ -258,6 +314,10 @@ namespace $ {
 					files = this.cssTranspile( child_path )
 				} else if( /(\.glsl)$/.test( name ) ) {
 					files = this.glslTranspile( child_path )
+				} else if( /\.(gql|graphql)$/.test( name ) ) {
+					files = this.gqlTranspile( child_path )
+				} else if( /\.openapi\.(ya?ml|json)$/.test( name ) ) {
+					files = this.openapiTranspile( child_path )
 				}
 
 				mods.push( ...files, child )
@@ -488,6 +548,10 @@ namespace $ {
 		@ $mol_mem_key
 		srcDeps( path : string ) {
 			const src = $mol_file.absolute( path )
+			
+
+			// не парсим 
+			if( /\/-(gql|openapi)\//.test( path ) ) return {}
 			
 			let ext = src.ext()
 			if( !ext ) return {}
@@ -1694,4 +1758,13 @@ namespace $ {
 		}
 	}
 	
+	$mol_build.dependors[ 'gql' ]
+		= $mol_build.dependors[ 'graphql' ]
+		= source => $mol_build_gql.deps( source, $mol_file.relative( '.' ) )
+
+	$mol_build.dependors[ 'openapi.yaml' ]
+		= $mol_build.dependors[ 'openapi.yml' ]
+		= $mol_build.dependors[ 'openapi.json' ]
+		= () => $mol_build_openapi.deps()
+
 }
