@@ -13,6 +13,7 @@
 	contain: style;
 	scrollbar-color: var(--mol_theme_line) transparent;
 	scrollbar-width: thin;
+	text-wrap-style: pretty;
 }	
 
 [mol_view]::selection {
