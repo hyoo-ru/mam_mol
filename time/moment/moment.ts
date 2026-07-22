@@ -227,8 +227,8 @@ namespace $ {
 
 		toJSON() { return this.toString() }
 
-		toString( pattern = 'YYYY-MM-DDThh:mm:ss.sssZ' ) {
-			return super.toString( pattern )
+		toString( pattern = 'YYYY-MM-DDThh:mm:ss.sssZ', lang?: string ) {
+			return super.toString( pattern, lang )
 		}
 		
 		toArray() {
@@ -245,6 +245,20 @@ namespace $ {
 				' ',
 				$mol_dev_format_accent( this.toString( 'YYYY-MM-DD hh:mm:ss.sss Z' ) ),
 			)
+		}
+
+		protected static formatters = {} as Record<string, Intl.DateTimeFormat>
+
+		static pattern(options: Intl.DateTimeFormatOptions & { lang?: string }) {
+			const key = `${options.lang}-${options.day}-${options.month}-${options.weekday}`
+
+			if (! this.formatters[key]) this.formatters[key] = new Intl.DateTimeFormat(options.lang, options)
+
+			return this.formatters[key]
+		}
+
+		static format(options: Parameters<typeof this.pattern>[0] & { moment: $mol_time_moment }) {
+			return this.pattern(options).format(options.moment.native)
 		}
 
 		/// Mnemonics:
@@ -270,12 +284,12 @@ namespace $ {
 				return String( moment.year % 100 )
 			} ,
 			
-			'Month' : ( pattern => ( moment : $mol_time_moment )=> {
+			'Month' : ( moment : $mol_time_moment, lang?: string )=> {
 				if( moment.month == null ) return ''
-				return pattern.format( moment.native )
-			} )( new Intl.DateTimeFormat( $mol_locale.lang() , { month : 'long' } ) ) ,
+				return this.pattern({ lang, month: 'long'}).format( moment.native )
+			},
 			
-			'DD Month' : ( pattern => ( moment : $mol_time_moment )=> {
+			'DD Month' : ( moment : $mol_time_moment, lang?: string )=> {
 				if( moment.month == null ) {
 					if( moment.day == null ) {
 						return ''
@@ -284,16 +298,14 @@ namespace $ {
 					}
 				} else {
 					if( moment.day == null ) {
-						return $mol_time_moment.patterns[ 'Month' ]( moment )
+						return $mol_time_moment.patterns[ 'Month' ]( moment, lang )
 					} else {
-						return pattern.format( moment.native )
+						return this.format({ lang, day : '2-digit' , month : 'long', moment })
 					}
 				}
-			} )(
-				new Intl.DateTimeFormat( $mol_locale.lang() , { day : '2-digit' , month : 'long' } )
-			) ,
+			},
 			
-			'D Month' : ( pattern => ( moment : $mol_time_moment )=> {
+			'D Month' : ( moment : $mol_time_moment, lang?: string )=> {
 				if( moment.month == null ) {
 					if( moment.day == null ) {
 						return ''
@@ -304,19 +316,17 @@ namespace $ {
 					if( moment.day == null ) {
 						return $mol_time_moment.patterns[ 'Month' ]( moment )
 					} else {
-						return pattern.format( moment.native )
+						return this.format({ lang, day : 'numeric' , month : 'long', moment })
 					}
 				}
-			} )(
-				new Intl.DateTimeFormat( $mol_locale.lang() , { day : 'numeric' , month : 'long' } )
-			) ,
-			
-			'Mon' : ( pattern => ( moment : $mol_time_moment )=> {
+			},
+		
+			'Mon' : ( moment : $mol_time_moment, lang?: string )=> {
 				if( moment.month == null ) return ''
-				return pattern.format( moment.native )
-			} )( new Intl.DateTimeFormat( $mol_locale.lang() , { month : 'short' } ) ) ,
+				return this.format({ lang, month : 'short', moment })
+			},
 			
-			'DD Mon' : ( pattern => ( moment : $mol_time_moment )=> {
+			'DD Mon' : ( moment : $mol_time_moment, lang?: string )=> {
 				if( moment.month == null ) {
 					if( moment.day == null ) {
 						return ''
@@ -325,16 +335,14 @@ namespace $ {
 					}
 				} else {
 					if( moment.day == null ) {
-						return $mol_time_moment.patterns[ 'Mon' ]( moment )
+						return $mol_time_moment.patterns[ 'Mon' ]( moment, lang )
 					} else {
-						return pattern.format( moment.native )
+						return this.format({ lang, day : '2-digit' , month : 'short', moment })
 					}
 				}
-			} )(
-				new Intl.DateTimeFormat( $mol_locale.lang() , { day : '2-digit' , month : 'short' } )
-			) ,
+			},
 			
-			'D Mon' : ( pattern => ( moment : $mol_time_moment )=> {
+			'D Mon' : ( moment : $mol_time_moment, lang?: string )=> {
 				if( moment.month == null ) {
 					if( moment.day == null ) {
 						return ''
@@ -343,14 +351,12 @@ namespace $ {
 					}
 				} else {
 					if( moment.day == null ) {
-						return $mol_time_moment.patterns[ 'Mon' ]( moment )
+						return $mol_time_moment.patterns[ 'Mon' ]( moment, lang )
 					} else {
-						return pattern.format( moment.native )
+						return this.format({ lang, day : 'numeric' , month : 'short', moment })
 					}
 				}
-			} )(
-				new Intl.DateTimeFormat( $mol_locale.lang() , { day : 'numeric' , month : 'short' } )
-			) ,
+			},
 			
 			'-MM' : ( moment : $mol_time_moment )=> {
 				if( moment.month == null ) return ''
@@ -367,19 +373,19 @@ namespace $ {
 				return String( moment.month + 1 )
 			} ,
 			
-			'WeekDay' : ( pattern => ( moment : $mol_time_moment )=> {
+			'WeekDay' : ( moment : $mol_time_moment, lang?: string )=> {
 				if( moment.day == null ) return ''
 				if( moment.month == null ) return ''
 				if( moment.year == null ) return ''
-				return pattern.format( moment.native )
-			} )( new Intl.DateTimeFormat( $mol_locale.lang() , { weekday : 'long' } ) ) ,
+				return this.format({ lang, weekday : 'long', moment })
+			},
 
-			'WD' : ( pattern => ( moment : $mol_time_moment )=> {
+			'WD' : ( moment : $mol_time_moment, lang?: string )=> {
 				if( moment.day == null ) return ''
 				if( moment.month == null ) return ''
 				if( moment.year == null ) return ''
-				return pattern.format( moment.native )
-			} )( new Intl.DateTimeFormat( $mol_locale.lang() , { weekday : 'short' } ) ) ,
+				return this.format({ lang, weekday : 'short', moment })
+			},
 			
 			'-DD' : ( moment : $mol_time_moment )=> {
 				if( moment.day == null ) return ''
