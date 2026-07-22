@@ -7,7 +7,7 @@ namespace $.$$ {
 	}
 
 	function norm_number(val: unknown) {
-		return Number(val ?? 0)
+		return val === '' ? Number.NaN : Number(val ?? 0)
 	}
 
 	function norm_bool(val: unknown) {
