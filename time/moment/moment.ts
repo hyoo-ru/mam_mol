@@ -286,7 +286,7 @@ namespace $ {
 			
 			'Month' : ( moment : $mol_time_moment, lang?: string )=> {
 				if( moment.month == null ) return ''
-				return this.pattern({ lang, month: 'long'}).format( moment.native )
+				return $mol_time_moment.format({ lang, month: 'long', moment })
 			},
 			
 			'DD Month' : ( moment : $mol_time_moment, lang?: string )=> {
@@ -300,7 +300,7 @@ namespace $ {
 					if( moment.day == null ) {
 						return $mol_time_moment.patterns[ 'Month' ]( moment, lang )
 					} else {
-						return this.format({ lang, day : '2-digit' , month : 'long', moment })
+						return $mol_time_moment.format({ lang, day : '2-digit' , month : 'long', moment })
 					}
 				}
 			},
@@ -316,14 +316,14 @@ namespace $ {
 					if( moment.day == null ) {
 						return $mol_time_moment.patterns[ 'Month' ]( moment )
 					} else {
-						return this.format({ lang, day : 'numeric' , month : 'long', moment })
+						return $mol_time_moment.format({ lang, day : 'numeric' , month : 'long', moment })
 					}
 				}
 			},
 		
 			'Mon' : ( moment : $mol_time_moment, lang?: string )=> {
 				if( moment.month == null ) return ''
-				return this.format({ lang, month : 'short', moment })
+				return $mol_time_moment.format({ lang, month : 'short', moment })
 			},
 			
 			'DD Mon' : ( moment : $mol_time_moment, lang?: string )=> {
@@ -337,7 +337,7 @@ namespace $ {
 					if( moment.day == null ) {
 						return $mol_time_moment.patterns[ 'Mon' ]( moment, lang )
 					} else {
-						return this.format({ lang, day : '2-digit' , month : 'short', moment })
+						return $mol_time_moment.format({ lang, day : '2-digit' , month : 'short', moment })
 					}
 				}
 			},
@@ -353,7 +353,7 @@ namespace $ {
 					if( moment.day == null ) {
 						return $mol_time_moment.patterns[ 'Mon' ]( moment, lang )
 					} else {
-						return this.format({ lang, day : 'numeric' , month : 'short', moment })
+						return $mol_time_moment.format({ lang, day : 'numeric' , month : 'short', moment })
 					}
 				}
 			},
@@ -377,14 +377,14 @@ namespace $ {
 				if( moment.day == null ) return ''
 				if( moment.month == null ) return ''
 				if( moment.year == null ) return ''
-				return this.format({ lang, weekday : 'long', moment })
+				return $mol_time_moment.format({ lang, weekday : 'long', moment })
 			},
 
 			'WD' : ( moment : $mol_time_moment, lang?: string )=> {
 				if( moment.day == null ) return ''
 				if( moment.month == null ) return ''
 				if( moment.year == null ) return ''
-				return this.format({ lang, weekday : 'short', moment })
+				return $mol_time_moment.format({ lang, weekday : 'short', moment })
 			},
 			
 			'-DD' : ( moment : $mol_time_moment )=> {
