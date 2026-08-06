@@ -185,7 +185,7 @@ namespace $ {
 				const offset = offsets.get( val )
 				if( offset !== undefined ) return dump_unum( $mol_vary_tip.link, offset )
 				
-				const len_max = val.length * 3
+				const len_max = val.length * 3 + 2
 				const len_size = calc_size( len_max )
 				
 				acquire( len_max )

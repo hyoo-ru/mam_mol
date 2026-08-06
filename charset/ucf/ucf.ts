@@ -132,8 +132,14 @@ namespace $ {
 					}
 				} else if( !ascii_map[ code ] ) {
 					if( code >= 0x80 ) code = ascii_set[ code - 0x80 ]
-					if( mode < tiny_mode ) code |= read_remap() << 7
-					if( mode === full_mode ) code |= read_remap() << 14
+					if( mode < tiny_mode ) {
+						if( pos === buffer.length ) $mol_fail( new Error( 'Expected 2 bytes', { cause: { text, pos: pos - 1 } } ) )
+						code |= read_remap() << 7
+					}
+					if( mode === full_mode ) {
+						if( pos === buffer.length ) $mol_fail( new Error( 'Expected 3 bytes', { cause: { text, pos: pos - 2 } } ) )
+						code |= read_remap() << 14
+					}
 					code += page_offset
 				}
 				
