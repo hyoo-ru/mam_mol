@@ -17,7 +17,7 @@ namespace $.$$ {
 		},
 		
 		"1B ASCII with diacritic"( $ ) {
-			check( 'allo\u0302', [ 0x61, 0x6C, 0x6C, 0x6F, 0xEA ] )
+			check( 'allo\u0300', [ 0x61, 0x6C, 0x6C, 0x6F, 0xE2 ] )
 		},
 		
 		"1B Cyrillic"( $ ) {
