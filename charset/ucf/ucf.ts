@@ -109,7 +109,7 @@ namespace $ {
 		
 		const read_code = ()=> {
 			let code = buffer[ pos ++ ]
-			if( code > 0x80 ) code = ( ( mode + code ) & 0x7F ) | 0x80
+			if( code >= 0x80 ) code = ( ( mode + code ) & 0x7F ) | 0x80
 			return code
 		}
 		
