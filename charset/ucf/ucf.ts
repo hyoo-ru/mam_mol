@@ -127,7 +127,7 @@ namespace $ {
 			if( code < full_mode ) { // Char Code
 				
 				if( mode === tiny_mode ) {
-					if( code > 0x80 ) {
+					if( code >= 0x80 ) {
 						code = diacr_set[ code - 0x080 ] | ( 6 << 7 )
 					}
 				} else if( !ascii_map[ code ] ) {
