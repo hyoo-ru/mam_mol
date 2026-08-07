@@ -27,6 +27,7 @@ $mol_number $mol_view
 			hint <= hint \ 
 			enabled <= string_enabled <= enabled
 			submit? <=> submit? null
+			dom_id => control_dom_id
 		<= Inc $mol_button_minor
 			event_click? <=> event_inc? null
 			enabled <= inc_enabled <= enabled
