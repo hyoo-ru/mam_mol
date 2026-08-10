@@ -76,6 +76,10 @@ namespace $.$$ {
 			}
 		}
 		
+		uri_unsafe() {
+			return $mol_dom_safe_uri( super.uri_unsafe() )
+		}
+		
 	}
 	
 }
