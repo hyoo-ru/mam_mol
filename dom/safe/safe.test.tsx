@@ -5,8 +5,8 @@ namespace $ {
 
 		'safe tag'() {
 			$mol_assert_equal(
-				$$.$mol_dom_safe([ <div>foo</div> ])[0],
-				<div>foo</div>,
+				$mol_dom_serialize( $$.$mol_dom_safe([ <div>foo</div> ])[0] ),
+				$mol_dom_serialize( <div>foo</div> ),
 			)
 		},
 
@@ -19,29 +19,29 @@ namespace $ {
 
 		'common attr'() {
 			$mol_assert_equal(
-				$$.$mol_dom_safe([ <a id="foo">foo</a> ])[0],
-				<a id="foo">foo</a>,
+				$mol_dom_serialize( $$.$mol_dom_safe([ <a id="foo">foo</a> ])[0] ),
+				$mol_dom_serialize( <a id="foo">foo</a> ),
 			)
 		},
 
 		'safe attr'() {
 			$mol_assert_equal(
-				$$.$mol_dom_safe([ <a href="https://example.org/">foo</a> ])[0],
-				<a href="https://example.org/">foo</a>,
+				$mol_dom_serialize( $$.$mol_dom_safe([ <a href="https://example.org/">foo</a> ])[0] ),
+				$mol_dom_serialize( <a href="https://example.org/">foo</a> ),
 			)
 		},
 
 		'bad attr'() {
 			$mol_assert_equal(
-				$$.$mol_dom_safe([ <a onclick="alert('ahtung!')">foo</a> ])[0],
-				<a>foo</a>,
+				$mol_dom_serialize( $$.$mol_dom_safe([ <a onclick="alert('ahtung!')">foo</a> ])[0] ),
+				$mol_dom_serialize( <a>foo</a> ),
 			)
 		},
 
 		'danger attr'() {
 			$mol_assert_equal(
-				$$.$mol_dom_safe([ <a href="javascript:alert('ahtung!')">foo</a> ])[0],
-				<a href="about:blank#javascript:alert('ahtung!')">foo</a>,
+				$mol_dom_serialize( $$.$mol_dom_safe([ <a href="javascript:alert('ahtung!')">foo</a> ])[0] ),
+				$mol_dom_serialize( <a href="about:blank#javascript:alert('ahtung!')">foo</a> ),
 			)
 		},
 
