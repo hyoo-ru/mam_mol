@@ -199,6 +199,7 @@
     "$mol_cordova",
     "$mol_app_supplies_card",
     "$mol_link",
+    "$mol_dom_safe",
     "$mol_unit_money",
     "$mol_unit",
     "$mol_cost",

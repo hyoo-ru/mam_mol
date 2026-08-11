@@ -200,6 +200,7 @@
     "$mol_icon_chevron",
     "$mol_compare_text",
     "$mol_link",
+    "$mol_dom_safe",
     "$mol_state_session",
     "$mol_match",
     "$mol_link_source",

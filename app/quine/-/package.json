@@ -199,6 +199,7 @@
     "$mol_link_iconed",
     "$mol_link",
     "$mol_state_arg",
+    "$mol_dom_safe",
     "$mol_image",
     "$mol_embed_any",
     "$mol_embed",
