@@ -9,6 +9,7 @@ namespace $ {
 			if( this.output.writableEnded ) return
 			if( this.output.statusCode !== 400 ) return
 			this.output.statusCode = code
+			this.output.setHeader( 'x-content-type-options', 'nosniff' )
 		}
 		
 		@ $mol_action
