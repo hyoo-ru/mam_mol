@@ -23,23 +23,36 @@ namespace $ {
 
 			let context = Object.create( $$ )
 			for( let mock of $mol_test_mocks ) await mock( context )
-			
-			const res = test( context )
-			if( $mol_promise_like( res ) ) {
-				await new Promise( ( done, fail )=> {
-					res.then( done, fail )
-					setTimeout( ()=> fail( new Error( 'Test timeout: ' + test.name ) ), 1000 )
-				} )
+
+			try {
+
+				const res = test( context )
+				if( $mol_promise_like( res ) ) {
+					await new Promise( ( done, fail )=> {
+						res.then( done, fail )
+						setTimeout( ()=> fail( new Error( 'Test timeout: ' + test.name ) ), 1000 )
+					} )
+				}
+
+			} catch( error: any ) {
+
+				$$.$mol_log3_fail({
+					place: '$mol_test',
+					message: 'Test failed: ' + test.name,
+					error: error?.stack ?? String( error ),
+				})
+
+				return $$.$mol_test_broken()
 			}
-			
+
 		}
-		
+
 		$$.$mol_log3_done({
 			place: '$mol_test',
 			message: 'All tests passed',
 			count: $mol_test_all.length,
 		})
-		
+
 	}
 	
 	let scheduled = false
