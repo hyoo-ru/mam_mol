@@ -43,6 +43,7 @@
 			const obj = new this.$.$mol_infinite();
 			(obj.before) = (id) => ((this.before(id)));
 			(obj.after) = (id) => ((this.after(id)));
+			(obj.item_height_min) = () => (72);
 			(obj.Row) = (id) => ((this.Item(id)));
 			return obj;
 		}

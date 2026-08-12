@@ -6,6 +6,7 @@ $mol_infinite_demo $mol_example_large
 			<= List $mol_infinite
 				before* <= before* /
 				after* <= after* /
+				item_height_min 72
 				Row* <= Item* $mol_row
 					sub /
 						<= Photo* $mol_avatar id <= id* \

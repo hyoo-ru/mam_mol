@@ -35,12 +35,17 @@ declare namespace $ {
 		,
 		ReturnType< $mol_infinite['after'] >
 	>
-	type $mol_infinite__Row_mol_infinite_demo_8 = $mol_type_enforce<
+	type $mol_infinite__item_height_min_mol_infinite_demo_8 = $mol_type_enforce<
+		number
+		,
+		ReturnType< $mol_infinite['item_height_min'] >
+	>
+	type $mol_infinite__Row_mol_infinite_demo_9 = $mol_type_enforce<
 		ReturnType< $mol_infinite_demo['Item'] >
 		,
 		ReturnType< $mol_infinite['Row'] >
 	>
-	type $mol_scroll__sub_mol_infinite_demo_9 = $mol_type_enforce<
+	type $mol_scroll__sub_mol_infinite_demo_10 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_scroll['sub'] >
