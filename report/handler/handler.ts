@@ -21,7 +21,7 @@ namespace $ {
 	
 	if( 'process' in globalThis ) {
 		process.on('uncaughtExceptionMonitor', handler)
-    	process.on('unhandledRejection', handler_promise_node)
+    	// process.on('unhandledRejection', handler_promise_node) // revents process halt
 	}
 
 	const console_error = console.error
