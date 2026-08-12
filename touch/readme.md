@@ -13,8 +13,8 @@ plugins /
 		pan? <=> pan? /
 			0
 			0
-		swipe_right?event <=> open_menu?event null
-		swipe_left?event <=> close_menu?event null
+		swipe_right? <=> open_menu? null
+		swipe_left? <=> close_menu? null
 ```
 
 ## Properties

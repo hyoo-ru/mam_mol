@@ -20,7 +20,7 @@ namespace $.$$ {
 						needle <= query? \\
 						key * escape? <=> clear? null
 					Clear ${d}mol_button_minor
-						click?event <=> clear?event null
+						click? <=> clear? null
 			`
 
 			const dest = `
@@ -48,7 +48,7 @@ namespace $.$$ {
 								<= title
 						<= Close ${d}mol_button
 							title \\close
-							click?event <=> close?event null
+							click? <=> close? null
 			`
 			
 			const dest = `
@@ -122,7 +122,7 @@ namespace $.$$ {
 					Suggest_label ${d}mol_dimmer
 						clear => clear
 					Clear ${d}mol_button_minor
-						click?event <=> clear?event null
+						click? <=> clear? null
 			`
 
 			$mol_assert_fail(
