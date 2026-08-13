@@ -127,11 +127,11 @@ namespace $.$$ {
 
 			$mol_assert_fail(
 				() => normalize($, src).input,
-				`Need an equal default values at \`/mol/view/tree2/class/props.test.ts#4:16/5\` vs \`/mol/view/tree2/class/props.test.ts#6:23/11\`
+				`Need an equal default values at \`/mol/view/tree2/class/props.test.ts#4:16/5\` vs \`/mol/view/tree2/class/props.test.ts#6:18/6\`
 <=>
-/mol/view/tree2/class/props.test.ts#6:19/3
+/mol/view/tree2/class/props.test.ts#6:14/3
 click?
-/mol/view/tree2/class/props.test.ts#6:7/11
+/mol/view/tree2/class/props.test.ts#6:7/6
 $mol_button_minor
 /mol/view/tree2/class/props.test.ts#5:12/17
 Clear
