@@ -1,5 +1,5 @@
 [mol_text_list] {
-	padding-left: 1.75rem;
+	padding-inline-start: 1.75rem;
 }
 
 [mol_text_list_item] {
@@ -12,7 +12,7 @@
 	width: 1.25rem;
 	display: inline-block;
 	position: absolute;
-	margin-left: -1.75rem;
+	margin-inline-start: -1.75rem;
 	text-align: end;
 }
 

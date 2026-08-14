@@ -15,7 +15,8 @@
 }
 
 [mol_app_demo_nav_option] {
-	padding: 0 .5rem 0 0;
+	padding: 0;
+	padding-inline-end: .5rem;
 	display: flex;
 	flex: 1;
 	align-items: center;
@@ -25,7 +26,7 @@
 [mol_app_demo_nav_expand] {
 	align-self: stretch;
 	align-items: center;
-	padding-right: .25rem;
+	padding-inline-end: .25rem;
 }
 
 [mol_app_demo_nav_content] {

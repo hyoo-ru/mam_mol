@@ -36,7 +36,7 @@ namespace $.$$ {
 			},
 			Label: {
 				padding: {
-					left: rem(2),
+					inlineStart: rem(2),
 				},
 			},
 		},

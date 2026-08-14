@@ -4,11 +4,11 @@
 
 [mol_bench_cell_number] {
 	white-space: nowrap;
-	text-align: right;
+	text-align: end;
 }
 
 [mol_bench_result_portion] {
-	margin-left: .75rem;
+	margin-inline-start: .75rem;
 }
 
 [mol_bench_row]:nth-child(1) [mol_portion_indicator] {
