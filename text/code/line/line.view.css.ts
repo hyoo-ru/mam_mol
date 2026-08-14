@@ -12,11 +12,11 @@ namespace $.$$ {
 		},
 		
 		Numb: {
-			textAlign: 'right',
+			textAlign: 'end',
 			color: $mol_theme.shade,
 			width: rem(3),
 			margin: {
-				left: rem(-4),
+				inlineStart: rem(-4),
 			},
 			display: 'inline-block',
 			whiteSpace: 'nowrap',

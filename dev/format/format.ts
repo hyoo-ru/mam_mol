@@ -180,7 +180,7 @@ namespace $ {
 	} )
 
 	export let $mol_dev_format_indent = $mol_dev_format_div.bind( null , {
-		'margin-left': '13px'
+		'margin-inline-start': '13px'
 	} )
 	
 	class Stack extends Array< Call > {
