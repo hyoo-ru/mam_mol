@@ -11,8 +11,10 @@ namespace $.$$ {
 			return new $mol_time_moment({ year : moment.year , month : moment.month })
 		}
 
+		lang() { return this.$.$mol_locale.lang() }
+
 		title() {
-			return this.month_moment().toString( 'Month YYYY' )
+			return this.month_moment().toString( 'Month YYYY', this.lang() )
 		}
 
 		@ $mol_mem
@@ -42,7 +44,7 @@ namespace $.$$ {
 
 		@ $mol_mem_key
 		weekday( index : number ){
-			return this.day_draw_from().shift({ day : index }).toString( 'WD' )
+			return this.day_draw_from().shift({ day : index }).toString( 'WD', this.lang() )
 		}
 
 		weekend( index : number ){
@@ -84,7 +86,7 @@ namespace $.$$ {
 
 		@ $mol_mem_key
 		day_text( day : string ) {
-			return new $mol_time_moment( day ).toString( "D" )
+			return new $mol_time_moment( day ).toString( 'D' , this.lang() )
 		}
 
 		@ $mol_mem_key
