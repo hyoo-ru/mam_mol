@@ -17,13 +17,12 @@ namespace $ {
 		
 		@ $mol_mem
 		static lang( next? : string ) {
-			const lang = this.$.$mol_state_local.value( 'locale' , next ) || $mol_dom_context.navigator.language.replace( /-.*/ , '' ) || this.lang_default()
+			return this.$.$mol_state_local.value( 'locale' , next ) || $mol_dom_context.navigator.language.replace( /-.*/ , '' ) || this.lang_default()
+		}
 
-			const doc = this.$.$mol_dom_context.document.documentElement
-			doc.lang = lang
-			doc.dir = new Intl.Locale(lang).getTextInfo().direction ?? 'ltr'
-
-			return lang
+		@ $mol_mem
+		static direction() {
+			return new Intl.Locale(this.lang()).getTextInfo().direction ?? 'ltr'
 		}
 		
 		@ $mol_mem_key
