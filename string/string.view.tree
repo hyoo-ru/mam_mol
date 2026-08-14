@@ -20,7 +20,6 @@ $mol_string $mol_view
 		selectionStart <= selection_start 0
 		inputMode <= keyboard \text
 		enterkeyhint <= enter \go
-		dir <= dir \auto
 	attr *
 		^
 		maxlength <= length_max +Infinity
