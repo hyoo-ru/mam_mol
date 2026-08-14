@@ -21,6 +21,7 @@ namespace $ {
 
 			const doc = this.$.$mol_dom_context.document.documentElement
 			doc.lang = lang
+			doc.dir = new Intl.Locale(lang).getTextInfo().direction ?? 'ltr'
 
 			return lang
 		}
