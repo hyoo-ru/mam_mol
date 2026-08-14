@@ -11,7 +11,7 @@
 
 [mol_portion_indicator] {
 	padding: 0;
-	padding-block-start: .25rem;
+	padding-top: .25rem;
 	background-color: var(--mol_theme_control);
 	color: var(--mol_theme_control);
 	border-radius: var(--mol_gap_round);
