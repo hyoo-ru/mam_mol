@@ -11,7 +11,7 @@ namespace $.$$ {
 		Kids: {
 			
 			padding: {
-				inlineStart: rem(1.5),
+				inlineStart: '1.5rem',
 			},
 			
 		},

@@ -22,7 +22,7 @@ namespace $.$$ {
 				wrap: 'wrap',
 			},
 			margin: {
-				inlineEnd: rem(2.5),
+				inlineEnd: '2.5rem',
 			},
 			minWidth: 0,
 			maxHeight: rem(2.5),

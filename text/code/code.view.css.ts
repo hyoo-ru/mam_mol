@@ -30,7 +30,7 @@ namespace $.$$ {
 				true: {
 					$mol_text_code_line: {
 						margin: {
-							inlineStart: rem(1.75),
+							inlineStart: '1.75rem',
 						},
 					},
 				},
