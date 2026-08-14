@@ -14,6 +14,8 @@ namespace $ {
 		minWidth: rem(2.5),
 		minHeight: rem(2.5),
 		gap: $mol_gap.space,
+
+		unicodeBidi: 'plaintext',
 		
 		border: {
 			radius: $mol_gap.round,
