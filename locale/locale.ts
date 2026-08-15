@@ -19,6 +19,11 @@ namespace $ {
 		static lang( next? : string ) {
 			return this.$.$mol_state_local.value( 'locale' , next ) || $mol_dom_context.navigator.language.replace( /-.*/ , '' ) || this.lang_default()
 		}
+
+		@ $mol_mem
+		static direction() {
+			return new Intl.Locale(this.lang()).getTextInfo().direction ?? 'ltr'
+		}
 		
 		@ $mol_mem_key
 		static source( lang : string ) {
