@@ -1,5 +1,5 @@
 namespace $.$$ {
-	export class $mol_locale_plugin extends $.$mol_locale_plugin {
+	export class $mol_locale_render extends $.$mol_locale_render {
 		
 		protected locale() { return this.$.$mol_locale }
 		override lang() { return this.locale().lang() }

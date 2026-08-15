@@ -1,4 +1,4 @@
-$mol_locale_plugin $mol_plugin
+$mol_locale_render $mol_plugin
 	attr *
 		^
 		lang <= lang null string
