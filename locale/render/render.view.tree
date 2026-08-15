@@ -1,5 +1,5 @@
 $mol_locale_render $mol_plugin
 	attr *
 		^
-		lang <= lang null string
-		dir <= direction null string
+		lang <= lang \en
+		dir <= direction \ltr
