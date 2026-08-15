@@ -15,7 +15,6 @@
 	min-width: 0;
 	color: inherit;
 	background: var(--mol_theme_field);
-    unicode-bidi: plaintext;
 }
 
 [mol_string]:disabled:not(:placeholder-shown) {
