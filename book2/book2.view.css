@@ -82,7 +82,7 @@
 	background: none;
 	flex-grow: 1;
 	scroll-snap-align: none;
-	margin-right: -1px;
+	margin-inline-end: -1px;
 	box-shadow: none;
 }
 

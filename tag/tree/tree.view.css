@@ -1,15 +1,15 @@
 [mol_tag_tree_tag_content] {
-	padding-left: var(--mol_gap_block);
-    margin-left: var(--mol_gap_block);
+	padding-inline-start: var(--mol_gap_block);
+    margin-inline-start: var(--mol_gap_block);
     box-shadow: inset 1px 0 0 0 var(--mol_theme_line);
 }
 
 [mol_tag_tree_item] {
 	padding: var(--mol_gap_text);
-	padding-left: 0;
+	padding-inline-start: 0;
 }
 
 [mol_tag_tree_tag_trigger_icon] {
-    margin-left: -1rem;
-    margin-right: -0.25rem;
+    margin-inline-start: -1rem;
+    margin-inline-end: -0.25rem;
 }

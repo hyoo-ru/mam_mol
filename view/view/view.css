@@ -14,7 +14,8 @@
 	scrollbar-color: var(--mol_theme_line) transparent;
 	scrollbar-width: thin;
 	text-wrap-style: pretty;
-}	
+	unicode-bidi: plaintext
+}
 
 [mol_view]::selection {
 	background: var(--mol_theme_line);

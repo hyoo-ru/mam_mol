@@ -58,6 +58,10 @@ namespace $ {
 		right?: Value ,
 		bottom?: Value,
 		left?: Value ,
+		blockStart?: Value
+		blockEnd?: Value
+		inlineStart?: Value
+		inlineEnd?: Value
 	}
 	
 	type Directions< Value > =

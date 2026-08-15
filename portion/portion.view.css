@@ -10,7 +10,8 @@
 }
 
 [mol_portion_indicator] {
-	padding: .25rem 0 0;
+	padding: 0;
+	padding-top: .25rem;
 	background-color: var(--mol_theme_control);
 	color: var(--mol_theme_control);
 	border-radius: var(--mol_gap_round);
