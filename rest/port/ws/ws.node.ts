@@ -14,6 +14,10 @@ namespace $ {
 			return this.upgrade().origin()
 		}
 
+		address() {
+			return this.upgrade().address()
+		}
+
 		@ $mol_action
 		send_nil() {
 			if( this.socket.writableEnded ) return

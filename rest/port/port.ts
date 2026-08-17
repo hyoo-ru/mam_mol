@@ -11,7 +11,8 @@ namespace $ {
 		send_code( code: $mol_rest_code ) {}
 		send_type( mime: $mol_rest_port_mime ) {}
 		
-		origin() { return 'uknown' }
+		origin() { return 'unknown' }
+		address() { return 'unknown' }
 		
 		@ $mol_action
 		send_data( data: null | string | Uint8Array< ArrayBuffer > | Element | object ) {
