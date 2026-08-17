@@ -2,8 +2,18 @@ namespace $ {
 	
 	export class $mol_rest_port_ws_node extends $mol_rest_port_ws {
 		
+		prolog!: InstanceType< $node['http']['IncomingMessage'] >
 		socket!: InstanceType< $node['stream']['Duplex'] >
 		
+		@ $mol_mem
+		upgrade(): $mol_rest_message_http {
+			return $mol_rest_message_http.make({ port: this, input: this.prolog })
+		}
+		
+		origin() {
+			return this.upgrade().origin()
+		}
+
 		@ $mol_action
 		send_nil() {
 			if( this.socket.writableEnded ) return

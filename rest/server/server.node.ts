@@ -98,8 +98,8 @@ namespace $ {
 			head: Buffer< ArrayBuffer >,
 		) {
 			
-			const port = $mol_rest_port_ws_node.make({ socket })
-			const upgrade = $mol_rest_message_http.make({ port, input: req })
+			const port = $mol_rest_port_ws_node.make({ socket, prolog: req })
+			const upgrade = port.upgrade()
 			let protocol = ''
 			
 			try {
