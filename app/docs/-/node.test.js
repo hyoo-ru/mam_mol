@@ -2358,7 +2358,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_dom_context = new $node.jsdom.JSDOM('', { url: 'https://localhost/' }).window;
+    $.$mol_dom_context = new $node.jsdom.JSDOM('', { url: `http://${process.env.DOMAIN || 'localhost'}/` }).window;
 })($ || ($ = {}));
 
 ;
