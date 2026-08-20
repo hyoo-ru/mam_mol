@@ -63,8 +63,20 @@ namespace $ {
 			this.port.send_data( data )
 		}
 		
+		private readonly routes = new Map< string, $mol_rest_message >
+
 		@ $mol_action
 		route( uri: URL ) {
+			const key = uri.href
+			const previous = this.routes.get( key )
+			if( previous ) return previous
+
+			const next = this.route_make( uri )
+			this.routes.set( key, next )
+			return next
+		}
+
+		route_make( uri: URL ) {
 			return $mol_rest_message.make({
 				port: this.port,
 				method: ()=> this.method(),

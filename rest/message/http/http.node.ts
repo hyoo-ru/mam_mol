@@ -62,8 +62,7 @@ namespace $ {
 			
 		}
 
-		@ $mol_action
-		route( uri: URL ) {
+		route_make( uri: URL ) {
 			return $mol_rest_message_http.make({
 				port: this.port,
 				input: this.input,
