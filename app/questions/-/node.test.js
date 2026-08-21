@@ -5737,8 +5737,18 @@ var $;
         static lang(next) {
             return this.$.$mol_state_local.value('locale', next) || $mol_dom_context.navigator.language.replace(/-.*/, '') || this.lang_default();
         }
+        static langs_rtl() {
+            return ['ar', 'he', 'fa', 'ur', 'yi', 'ps', 'ug', 'sd'];
+        }
         static direction() {
-            return new Intl.Locale(this.lang()).getTextInfo().direction ?? 'ltr';
+            const lang = this.lang();
+            try {
+                return new Intl.Locale(lang).getTextInfo().direction ?? 'ltr';
+            }
+            catch (e) {
+                $mol_fail_log(e);
+                return this.langs_rtl().includes(lang) ? 'rtl' : 'ltr';
+            }
         }
         static source(lang) {
             return JSON.parse(this.$.$mol_file.relative(`web.locale=${lang}.json`).text().toString());
