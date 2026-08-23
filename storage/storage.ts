@@ -30,11 +30,12 @@ namespace $ {
 			return this.used() / total
 		}
 		
-		/** Fulfillness logarithmic level.
-		 * 0 - empty
-		 * 1 - half
-		 * 2 - quart free
-		 * Infinity - fulfilled
+		/**
+		 * Fulfillness logarithmic level.
+		 * `0` - empty
+		 * `1` - half free
+		 * `2` - quart free
+		 * `Infinity` - fulfilled
 		 */
 		static level() {
 			return - Math.log2( 1 - this.portion() )
