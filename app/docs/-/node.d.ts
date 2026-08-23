@@ -1952,6 +1952,14 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    /** State of time moment */
+    class $mol_state_time extends $mol_object {
+        static task(precision: number, reset?: null): $mol_after_timeout | $mol_after_frame;
+        static now(precision: number): number;
+    }
+}
+
+declare namespace $ {
     class $mol_storage_node extends $mol_storage {
         static persisted(): boolean;
         static stats(): import("node:fs").StatsFs;
@@ -2697,14 +2705,6 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-}
-
-declare namespace $ {
-    /** State of time moment */
-    class $mol_state_time extends $mol_object {
-        static task(precision: number, reset?: null): $mol_after_timeout | $mol_after_frame;
-        static now(precision: number): number;
-    }
 }
 
 declare namespace $ {

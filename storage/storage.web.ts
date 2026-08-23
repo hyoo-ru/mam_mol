@@ -35,7 +35,9 @@ namespace $ {
 			return next ?? $mol_wire_sync( native ).persisted()
 		}
 		
+		@ $mol_mem
 		static estimate() {
+			$mol_state_time.now( 1000 )
 			return $mol_wire_sync( this.native() ?? {} ).estimate()
 		}
 		

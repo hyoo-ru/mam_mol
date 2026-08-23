@@ -4709,11 +4709,40 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    /** State of time moment */
+    class $mol_state_time extends $mol_object {
+        static task(precision, reset) {
+            if (precision) {
+                return new $mol_after_timeout(precision, () => this.task(precision, null));
+            }
+            else {
+                return new $mol_after_frame(() => this.task(precision, null));
+            }
+        }
+        static now(precision) {
+            this.task(precision);
+            return Date.now();
+        }
+    }
+    __decorate([
+        $mol_mem_key
+    ], $mol_state_time, "task", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_state_time, "now", null);
+    $.$mol_state_time = $mol_state_time;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_storage_node extends $mol_storage {
         static persisted() {
             return true;
         }
         static stats() {
+            $mol_state_time.now(1000);
             return $node.fs.statfsSync('.');
         }
         static total() {
@@ -4735,6 +4764,9 @@ var $;
             return (blocks - bfree) / blocks;
         }
     }
+    __decorate([
+        $mol_mem
+    ], $mol_storage_node, "stats", null);
     $.$mol_storage_node = $mol_storage_node;
     $.$mol_storage = $.$mol_storage_node;
 })($ || ($ = {}));
@@ -6301,34 +6333,6 @@ var $;
 		}
 	};
 
-
-;
-"use strict";
-var $;
-(function ($) {
-    /** State of time moment */
-    class $mol_state_time extends $mol_object {
-        static task(precision, reset) {
-            if (precision) {
-                return new $mol_after_timeout(precision, () => this.task(precision, null));
-            }
-            else {
-                return new $mol_after_frame(() => this.task(precision, null));
-            }
-        }
-        static now(precision) {
-            this.task(precision);
-            return Date.now();
-        }
-    }
-    __decorate([
-        $mol_mem_key
-    ], $mol_state_time, "task", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_state_time, "now", null);
-    $.$mol_state_time = $mol_state_time;
-})($ || ($ = {}));
 
 ;
 "use strict";

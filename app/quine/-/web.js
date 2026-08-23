@@ -5881,6 +5881,7 @@ var $;
             return next ?? $mol_wire_sync(native).persisted();
         }
         static estimate() {
+            $mol_state_time.now(1000);
             return $mol_wire_sync(this.native() ?? {}).estimate();
         }
         static total() {
@@ -5909,6 +5910,9 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_storage_web, "persisted", null);
+    __decorate([
+        $mol_mem
+    ], $mol_storage_web, "estimate", null);
     $.$mol_storage_web = $mol_storage_web;
     $.$mol_storage = $.$mol_storage_web;
 })($ || ($ = {}));

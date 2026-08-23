@@ -4239,6 +4239,34 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    /** State of time moment */
+    class $mol_state_time extends $mol_object {
+        static task(precision, reset) {
+            if (precision) {
+                return new $mol_after_timeout(precision, () => this.task(precision, null));
+            }
+            else {
+                return new $mol_after_frame(() => this.task(precision, null));
+            }
+        }
+        static now(precision) {
+            this.task(precision);
+            return Date.now();
+        }
+    }
+    __decorate([
+        $mol_mem_key
+    ], $mol_state_time, "task", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_state_time, "now", null);
+    $.$mol_state_time = $mol_state_time;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_storage_web extends $mol_storage {
         static native() {
             return this.$.$mol_dom_context.navigator.storage ?? {
@@ -4267,6 +4295,7 @@ var $;
             return next ?? $mol_wire_sync(native).persisted();
         }
         static estimate() {
+            $mol_state_time.now(1000);
             return $mol_wire_sync(this.native() ?? {}).estimate();
         }
         static total() {
@@ -4295,6 +4324,9 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_storage_web, "persisted", null);
+    __decorate([
+        $mol_mem
+    ], $mol_storage_web, "estimate", null);
     $.$mol_storage_web = $mol_storage_web;
     $.$mol_storage = $.$mol_storage_web;
 })($ || ($ = {}));
@@ -5943,34 +5975,6 @@ var $;
 		}
 	};
 
-
-;
-"use strict";
-var $;
-(function ($) {
-    /** State of time moment */
-    class $mol_state_time extends $mol_object {
-        static task(precision, reset) {
-            if (precision) {
-                return new $mol_after_timeout(precision, () => this.task(precision, null));
-            }
-            else {
-                return new $mol_after_frame(() => this.task(precision, null));
-            }
-        }
-        static now(precision) {
-            this.task(precision);
-            return Date.now();
-        }
-    }
-    __decorate([
-        $mol_mem_key
-    ], $mol_state_time, "task", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_state_time, "now", null);
-    $.$mol_state_time = $mol_state_time;
-})($ || ($ = {}));
 
 ;
 "use strict";

@@ -6476,6 +6476,7 @@ var $;
             return true;
         }
         static stats() {
+            $mol_state_time.now(1000);
             return $node.fs.statfsSync('.');
         }
         static total() {
@@ -6497,6 +6498,9 @@ var $;
             return (blocks - bfree) / blocks;
         }
     }
+    __decorate([
+        $mol_mem
+    ], $mol_storage_node, "stats", null);
     $.$mol_storage_node = $mol_storage_node;
     $.$mol_storage = $.$mol_storage_node;
 })($ || ($ = {}));
