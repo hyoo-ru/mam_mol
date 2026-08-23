@@ -4696,71 +4696,76 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_mem_persist = $mol_wire_solid;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_wait_user_async() {
-        return new Promise(done => $mol_dom.addEventListener('click', function onclick() {
-            $mol_dom.removeEventListener('click', onclick);
-            done(null);
-        }));
-    }
-    $.$mol_wait_user_async = $mol_wait_user_async;
-    function $mol_wait_user() {
-        return this.$mol_wire_sync(this).$mol_wait_user_async();
-    }
-    $.$mol_wait_user = $mol_wait_user;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
     class $mol_storage extends $mol_object2 {
-        static native() {
-            return this.$.$mol_dom_context.navigator.storage ?? {
-                persisted: async () => false,
-                persist: async () => false,
-                estimate: async () => ({}),
-                getDirectory: async () => null,
-            };
+        /** Is storage a long term. */
+        static persisted(next) {
+            return false;
         }
-        static persisted(next, cache) {
-            $mol_mem_persist();
-            if (cache)
-                return Boolean(next);
-            const native = this.native();
-            if (next && !$mol_mem_cached(() => this.persisted())) {
-                this.$.$mol_wait_user_async()
-                    .then(() => native.persist())
-                    .then(actual => {
-                    setTimeout(() => this.persisted(actual, 'cache'), 5000);
-                    if (actual)
-                        this.$.$mol_log3_done({ place: `$mol_storage`, message: `Persist: Yes` });
-                    else
-                        this.$.$mol_log3_fail({ place: `$mol_storage`, message: `Persist: No` });
-                });
-            }
-            return next ?? $mol_wire_sync(native).persisted();
+        /** Total storage quota in bytes. */
+        static total() {
+            return 0;
         }
-        static estimate() {
-            return $mol_wire_sync(this.native() ?? {}).estimate();
+        /** Total storage usage in bytes. */
+        static used() {
+            return 0;
         }
-        static dir() {
-            return $mol_wire_sync(this.native()).getDirectory();
+        /** Minimum available free space in bytes. */
+        static free() {
+            return this.total() - this.used();
+        }
+        /** Fulfillness of storage. */
+        static portion() {
+            const total = this.total();
+            if (!total)
+                return 1;
+            return this.used() / total;
+        }
+        /**
+         * Fulfillness logarithmic level.
+         * `0` - empty
+         * `1` - half free
+         * `2` - quart free
+         * `Infinity` - fulfilled
+         */
+        static level() {
+            return -Math.log2(1 - this.portion());
         }
     }
-    __decorate([
-        $mol_mem
-    ], $mol_storage, "native", null);
-    __decorate([
-        $mol_mem
-    ], $mol_storage, "persisted", null);
     $.$mol_storage = $mol_storage;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_storage_node extends $mol_storage {
+        static persisted() {
+            return true;
+        }
+        static stats() {
+            return $node.fs.statfsSync('.');
+        }
+        static total() {
+            const { blocks, bsize } = this.stats();
+            return blocks * bsize;
+        }
+        static used() {
+            const { blocks, bfree, bsize } = this.stats();
+            return (blocks - bfree) * bsize;
+        }
+        static free() {
+            const { bfree, bsize } = this.stats();
+            return bfree * bsize;
+        }
+        static portion() {
+            const { blocks, bfree } = this.stats();
+            if (!blocks)
+                return 1;
+            return (blocks - bfree) / blocks;
+        }
+    }
+    $.$mol_storage_node = $mol_storage_node;
+    $.$mol_storage = $.$mol_storage_node;
 })($ || ($ = {}));
 
 ;

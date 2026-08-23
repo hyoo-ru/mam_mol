@@ -1784,6 +1784,29 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $mol_storage extends $mol_object2 {
+        /** Is storage a long term. */
+        static persisted(next?: boolean): boolean;
+        /** Total storage quota in bytes. */
+        static total(): number;
+        /** Total storage usage in bytes. */
+        static used(): number;
+        /** Minimum available free space in bytes. */
+        static free(): number;
+        /** Fulfillness of storage. */
+        static portion(): number;
+        /**
+         * Fulfillness logarithmic level.
+         * `0` - empty
+         * `1` - half free
+         * `2` - quart free
+         * `Infinity` - fulfilled
+         */
+        static level(): number;
+    }
+}
+
+declare namespace $ {
     let $mol_mem_persist: typeof $mol_wire_solid;
 }
 
@@ -1812,10 +1835,14 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_storage extends $mol_object2 {
+    class $mol_storage_web extends $mol_storage {
         static native(): StorageManager;
         static persisted(next?: boolean, cache?: 'cache'): boolean;
         static estimate(): StorageEstimate;
+        static total(): number;
+        static used(): number;
+        static free(): number;
+        static portion(): number;
         static dir(): FileSystemDirectoryHandle;
     }
 }
