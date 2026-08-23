@@ -1,47 +1,45 @@
 namespace $ {
 	export class $mol_storage extends $mol_object2 {
 		
-		@ $mol_mem
-		static native() {
-			return this.$.$mol_dom_context.navigator.storage ?? { // exists only in secure context
-				persisted: async ()=> false,
-				persist: async ()=> false,
-				estimate: async ()=> ({}),
-				getDirectory: async ()=> null! as FileSystemHandle,
-			} as StorageManager
+		/** Is storage a long term. */
+		static persisted( next?: boolean ) {
+			return false
 		}
 		
-		@ $mol_mem
-		static persisted( next?: boolean, cache?: 'cache' ): boolean {
-			
-			$mol_mem_persist()
-			
-			if( cache ) return Boolean( next )
-			
-			const native = this.native()
-			if( next && !$mol_mem_cached( ()=> this.persisted() ) ) {
-				this.$.$mol_wait_user_async()
-				.then( ()=> native.persist() )
-				.then( actual => {
-					
-					setTimeout( ()=> this.persisted( actual, 'cache' ), 5000 )
-					
-					if( actual ) this.$.$mol_log3_done({ place: `$mol_storage`, message: `Persist: Yes` })
-					else this.$.$mol_log3_fail({ place: `$mol_storage`, message: `Persist: No` })
-					
-				} )
-			}
-			
-			return next ?? $mol_wire_sync( native ).persisted()
+		/** Total storage quota in bytes. */
+		static total() {
+			return 0
 		}
 		
-		static estimate() {
-			return $mol_wire_sync( this.native() ?? {} ).estimate()
+		/** Total storage usage in bytes. */
+		static used() {
+			return 0
 		}
 		
-		static dir() {
-			return $mol_wire_sync( this.native() ).getDirectory()
+		/** Minimum available free space in bytes. */
+		static free() {
+			return this.total() - this.used()
+		}
+		
+		/** Fulfillness of storage. */
+		static portion() {
+			
+			const total = this.total()
+			if( !total ) return 1
+			
+			return this.used() / total
+		}
+		
+		/** Fulfillness logarithmic level.
+		 * 0 - empty
+		 * 1 - half
+		 * 2 - quart free
+		 * Infinity - fulfilled
+		 */
+		static level() {
+			return - Math.log2( 1 - this.portion() )
 		}
 		
 	}
 }
+
