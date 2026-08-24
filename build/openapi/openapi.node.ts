@@ -1,0 +1,285 @@
+namespace $ {
+
+	const HttpMethods = [ 'get', 'post', 'put', 'patch', 'delete', 'head', 'options' ] as const
+	type HttpMethod = typeof HttpMethods[ number ]
+
+	// `header` / `cookie` параметры намеренно out of scope — типовая практика
+	// для них передавать через `init.headers` / `fetchInit()`, а не описывать в spec.
+	const ParamLocation = {
+		Path : 'path',
+		Query : 'query',
+	} as const
+
+	const JsonMime = 'application/json'
+
+	const OpenapiFileRegex = /\.openapi\.(yaml|yml|json)$/
+	const OpenapiJsonFileRegex = /\.openapi\.json$/
+
+	// openapi-typescript иногда печатает декларацию `$defs` для JSON-Schema 2020-12 совместимости.
+	// `$defs` парсится ts-dep-сканером как ссылка на пакет `/defs` — фейковая зависимость.
+	// Удаляем именно её (Record<string, never>), не трогаем другие пустые алиасы.
+	// `\u0024` — экранированный `$`: в regex matches `$`, в исходнике видимого `$` нет
+	// (иначе сам ts-dep-сканер сматчит этот regex literal как ссылку на пакет /defs).
+	const FakeDefsLine = /^[ \t]*export\s+type\s+\u0024defs\s*=\s*Record\s*<\s*string\s*,\s*never\s*>\s*;?\s*$/gm
+
+	type Parameter = {
+		name : string,
+		in : string,
+	}
+
+	type Operation = {
+		operationId? : string,
+		parameters? : Parameter[],
+		requestBody? : unknown,
+		responses? : Record< string, unknown >,
+	}
+
+	type PathItem = Partial< Record< HttpMethod, Operation > >
+
+	type Spec = {
+		paths? : Record< string, PathItem >,
+	}
+
+	export namespace $mol_build_openapi {
+
+		/**
+		 * Принимает уже распарсенную OpenAPI-спеку и текст типов из openapi-typescript,
+		 * возвращает готовый namespace+class TypeScript-код.
+		 */
+		export function compile(
+			input : {
+				spec : Spec,
+				types_text : string,
+				class_name : string,
+			},
+		) : string {
+
+			const types_text = sanitize_types( input.types_text )
+			const types_indented = indent_types( types_text )
+			const operations_text = render_operations( input.spec, input.class_name )
+
+			const types_block = types_text
+				? [ `namespace $.${ input.class_name } {`, types_indented, '}' ].join( '\n' )
+				: ''
+			const ops_block = operations_text
+				? [ 'namespace $ {', operations_text, '}' ].join( '\n' )
+				: ''
+
+			return [ types_block, ops_block ].filter( Boolean ).join( '\n\n' ) + '\n'
+		}
+
+		/**
+		 * YAML или JSON в зависимости от расширения. JSON парсится встроенным,
+		 * YAML — пакетом `yaml`.
+		 */
+		export function parse_spec( text : string, file_name : string ) : Spec {
+			if( OpenapiJsonFileRegex.test( file_name ) ) return JSON.parse( text ) as Spec
+			const yaml = $node.yaml as typeof import( 'yaml' )
+			return yaml.parse( text ) as Spec
+		}
+
+		export function is_openapi_file( name : string ) {
+			return OpenapiFileRegex.test( name )
+		}
+
+		export const render = {
+			operations : render_operations,
+			sanitize : sanitize_types,
+		}
+
+		/**
+		 * Сериализация AST из openapi-typescript v7 (если вернулся не текст).
+		 */
+		export function ast_to_text( ast : readonly unknown[] ) : string {
+			const ts = $node.typescript as typeof import( 'typescript' )
+			const file = ts.createSourceFile( 'out.d.ts', '', ts.ScriptTarget.Latest, false, ts.ScriptKind.TS )
+			const printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed })
+			return ast
+				.map( node => printer.printNode( ts.EmitHint.Unspecified, node as Parameters< typeof printer.printNode >[ 1 ], file ) )
+				.join( '\n' )
+		}
+
+		/**
+		 * OpenAPI-файл не имеет inter-module зависимостей помимо helper'а.
+		 */
+		export function deps() : Record< string, number > {
+			return { '/mol/openapi' : 0 }
+		}
+
+	}
+
+	function sanitize_types( raw : string ) : string {
+		return raw.replace( FakeDefsLine, '' )
+	}
+
+	function indent_types( text : string ) : string {
+		return text.split( '\n' ).map( line => line ? '\t' + line : line ).join( '\n' )
+	}
+
+	function render_operations( spec : Spec, prefix : string ) : string {
+
+		const paths = spec.paths ?? {}
+		const op_ids = collect_operation_ids( paths )
+		const seen_op_names = new Set< string >()
+
+		const lines : string[] = []
+
+		for( const route in paths ) {
+			const item = paths[ route ]
+			if( !item ) continue
+			for( const method of HttpMethods ) {
+				const op = item[ method ]
+				if( !op ) continue
+				lines.push( render_operation( route, method, op, op_ids, seen_op_names, prefix ) )
+			}
+		}
+
+		return lines.join( '\n' )
+	}
+
+
+	function collect_operation_ids( paths : Record< string, PathItem > ) : Set< string > {
+		const ids = new Set< string >()
+		for( const route in paths ) {
+			const item = paths[ route ]
+			if( !item ) continue
+			for( const method of HttpMethods ) {
+				const op = item[ method ]
+				if( op?.operationId ) ids.add( op.operationId )
+			}
+		}
+		return ids
+	}
+
+	function render_operation(
+		route : string,
+		method : HttpMethod,
+		op : Operation,
+		op_ids : Set< string >,
+		seen : Set< string >,
+		prefix : string,
+	) : string {
+
+		const shape = operation_shape( route, method, op, op_ids, seen, prefix )
+
+		return multiline(
+			`\texport const ${ shape.full_name } = {`,
+			`\t\tmethod: ${ JSON.stringify( method.toUpperCase() ) },`,
+			`\t\troute: ${ JSON.stringify( route ) },`,
+			`\t\tparams: ${ shape.params_runtime } as ${ shape.params_type },`,
+			`\t\tquery: ${ shape.query_runtime } as ${ shape.query_type },`,
+			`\t\tbody: ${ shape.body_runtime } as ${ shape.body_type },`,
+			`\t\tout: {} as ${ shape.result_type },`,
+			`\t}`,
+		)
+	}
+
+	type OperationShape = {
+		full_name : string,
+		params_type : string,
+		params_runtime : string,
+		has_params : boolean,
+		query_type : string,
+		query_runtime : string,
+		has_query : boolean,
+		body_type : string,
+		body_runtime : string,
+		has_body : boolean,
+		result_type : string,
+	}
+
+	function operation_shape(
+		route : string,
+		method : HttpMethod,
+		op : Operation,
+		op_ids : Set< string >,
+		seen : Set< string >,
+		prefix : string,
+	) : OperationShape {
+
+		const op_name = unique_operation_name( op, method, route, seen )
+		const full_name = `${ prefix }_${ camel_to_snake( op_name ) }`
+
+		// op_ref ссылается на тип из namespace `$.${prefix}.operations` (тот же файл).
+		const op_ref = op.operationId && op_ids.has( op.operationId )
+			? `${ prefix }.operations[ ${ JSON.stringify( op.operationId ) } ]`
+			: null
+
+		const success_code = first_success_code( op )
+		const result_type = ( op_ref && success_code )
+			? `NonNullable< ${ op_ref }[ 'responses' ][ ${ success_code } ] extends { content : { '${ JsonMime }' : infer R } } ? R : unknown >`
+			: 'unknown'
+
+		const path_params = ( op.parameters ?? [] ).filter( p => p.in === ParamLocation.Path )
+		const query_params = ( op.parameters ?? [] ).filter( p => p.in === ParamLocation.Query )
+		const has_body = !!op.requestBody
+
+		const params_type = path_params.length
+			? ( op_ref
+				? `${ op_ref }[ 'parameters' ][ 'path' ]`
+				: `{ ${ path_params.map( p => `${ JSON.stringify( p.name ) } : string | number` ).join( ', ' ) } }`
+			)
+			: 'undefined'
+
+		const query_type = query_params.length
+			? ( op_ref
+				? `${ op_ref }[ 'parameters' ][ 'query' ]`
+				: `Record< string, string | number | boolean | undefined >`
+			)
+			: 'undefined'
+
+		const body_type = has_body
+			? ( op_ref
+				? `( ${ op_ref }[ 'requestBody' ] extends { content : { '${ JsonMime }' : infer B } } ? B : unknown )`
+				: 'unknown'
+			)
+			: 'undefined'
+
+		return {
+			full_name,
+			params_type,
+			params_runtime: path_params.length ? '{}' : 'undefined',
+			has_params: path_params.length > 0,
+			query_type,
+			query_runtime: query_params.length ? '{}' : 'undefined',
+			has_query: query_params.length > 0,
+			body_type,
+			body_runtime: has_body ? '{}' : 'undefined',
+			has_body,
+			result_type,
+		}
+	}
+
+	function camel_to_snake( s : string ) : string {
+		return s.replace( /([a-z0-9])([A-Z])/g, '$1_$2' ).toLowerCase()
+	}
+
+	function unique_operation_name(
+		op : Operation,
+		method : HttpMethod,
+		route : string,
+		seen : Set< string >,
+	) : string {
+		const base = op.operationId
+			?? ( method + '_' + route ).replace( /[^a-zA-Z0-9]+/g, '_' ).replace( /^_+|_+$/g, '' )
+		let unique = base
+		let i = 2
+		while( seen.has( unique ) ) unique = `${ base }_${ i++ }`
+		seen.add( unique )
+		return unique
+	}
+
+	// 2xx → ASC. Если 2xx нет — fallback на `default` (валидный OpenAPI 3.x кейс).
+	function first_success_code( op : Operation ) : string | null {
+		const codes = Object.keys( op.responses ?? {} )
+		const ok = codes.filter( c => /^2\d\d$/.test( c ) ).sort()
+		if( ok.length ) return ok[ 0 ]
+		if( codes.includes( 'default' ) ) return `'default'`
+		return null
+	}
+
+	function multiline( ...lines : readonly string[] ) : string {
+		return lines.join( '\n' )
+	}
+
+}
