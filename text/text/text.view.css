@@ -46,6 +46,7 @@
 	text-shadow: 0 0;
 	font-weight: normal;
 	break-after: avoid;
+	letter-spacing: 2px;
 }
 
 * + [mol_text_header] {

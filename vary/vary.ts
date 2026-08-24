@@ -336,7 +336,7 @@ namespace $ {
 		}
 		
 		/** Parses buffer to rich runtime structures. */
-		take( array: Uint8Array< ArrayBuffer > ): unknown {
+		take( array: Uint8Array< ArrayBuffer > ): unknown[] {
 			
 			const buffer = new DataView( array.buffer, array.byteOffset, array.byteLength )
 			const stream = [] as unknown[]
