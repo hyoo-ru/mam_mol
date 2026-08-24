@@ -14,6 +14,7 @@
 	border-radius: var(--mol_gap_round);
 	background: transparent;
 	color: inherit;
+	-webkit-tap-highlight-color: transparent;
 }
 
 [mol_button]:where(:not(:disabled)):hover {
