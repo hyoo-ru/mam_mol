@@ -117,6 +117,13 @@ namespace $ {
 			if( next !== undefined ) this.setFloat64( offset, next, true )
 			return this.getFloat64( offset, true )
 		}
+
+		/** Mixes bytes into this buffer using repeating XOR. */
+		mix( mixin: Uint8Array< ArrayBuffer > ) {
+			const array = this.asArray()
+			for( let index = 0; index < mixin.length; ++index ) array[ index % array.byteLength ] ^= mixin[ index ]
+			return this
+		}
 		
 		/** A Uint8Array view for the same buffer. */
 		asArray() {
