@@ -42,6 +42,11 @@ namespace $ {
 			}
 		}
 		
+		/** [Standard Schema v1](https://standardschema.dev) interop props. */
+		static get [ '~standard' ]() {
+			return $mol_schema_standard_props_of( this )
+		}
+
 		/** Default value which conforms schema. */
 		static default = null as unknown
 		

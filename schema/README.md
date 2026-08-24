@@ -9,6 +9,7 @@
 - `.guard(val)` - strict parser.
 - `.cast(val)` - relaxed caster.
 - `.default` - default value for casting.
+- `.~standard` - [Standard Schema v1](https://standardschema.dev/) props.
 
 ## Leaf schemas
 
@@ -82,6 +83,20 @@ if( $my_user_main.check( user ) ) {
 
 ```ts
 const article = $my_article_full.default // default article state
+```
+
+## Standard Schema
+
+Every schema implements [Standard Schema v1](https://standardschema.dev/):
+
+```ts
+const result = MySchema[ '~standard' ].validate( data )
+
+if( result.issues ) {
+	for( const issue of result.issues ) console.error( issue.path, issue.message )
+} else {
+	result.value // typed data
+}
 ```
 
 ## Usage from NPM

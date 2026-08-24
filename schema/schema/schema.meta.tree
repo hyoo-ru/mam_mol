@@ -1,3 +1,4 @@
+include \/mol/schema/standard
 include \/mol/schema/any
 include \/mol/schema/bigint
 include \/mol/schema/boolean
