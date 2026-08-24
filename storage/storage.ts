@@ -38,7 +38,7 @@ namespace $ {
 		 * `Infinity` - fulfilled
 		 */
 		static level() {
-			return - Math.log2( 1 - this.portion() )
+			return Math.floor( - Math.log2( 1 - this.portion() ) )
 		}
 		
 	}

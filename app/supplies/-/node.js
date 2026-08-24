@@ -4708,7 +4708,7 @@ var $;
          * `Infinity` - fulfilled
          */
         static level() {
-            return -Math.log2(1 - this.portion());
+            return Math.floor(-Math.log2(1 - this.portion()));
         }
     }
     $.$mol_storage = $mol_storage;
