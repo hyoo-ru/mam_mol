@@ -288,7 +288,8 @@ namespace $ {
 					return
 				}
 			
-				const message = upgrade.derive( 'POST', data )
+				const type = typeof data === 'string' ? 'text/plain' : 'application/octet-stream'
+				const message = upgrade.derive( 'POST', data, type )
 				
 				if( data.length !== 0 ) {
 					if( this.log() ) this.$.$mol_log3_rise({
