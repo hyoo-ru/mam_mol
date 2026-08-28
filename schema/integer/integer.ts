@@ -3,15 +3,12 @@ namespace $ {
 		
 		$mol_schema_integer = true
 		
-		static override *issues_lazy<
-			This extends typeof $mol_schema_any,
-			Value
-		>(
+		static override *issues_lazy< This extends typeof $mol_schema_any, Value >(
 			this: This,
 			value: Value,
 			path: $mol_schema_issue_path = [],
 		) {
-			if (!super.issues_lazy(value, path).next().done)
+			if( !super.issues_lazy( value, path ).next().done )
 				yield { message: 'Wrong number', path }
 			else if( !Number.isFinite( value as any ) )
 				yield { message: 'Non finite', path }

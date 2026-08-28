@@ -1,5 +1,5 @@
 namespace $ {
-	export let $mol_schema_record =  $mol_memo_key.func( function $mol_schema_record<
+	export let $mol_schema_record = $mol_memo_key.func( function $mol_schema_record<
 		Fields extends Record< string, typeof $mol_schema_any >
 	>( Fields: Fields ) {
 		
@@ -12,18 +12,15 @@ namespace $ {
 				return '$mol_schema_record<' + $mol_key(Fields) + '>'
 			}	
 			
-			static override *issues_lazy<
-				This extends typeof $mol_schema_any,
-				Value
-			>(
+			static override *issues_lazy< This extends typeof $mol_schema_any, Value >(
 				this: This,
 				value: Value,
 				path: $mol_schema_issue_path = [],
 			) {
-				if (Object.getPrototypeOf(Object.getPrototypeOf(value)))
+				if( Object.getPrototypeOf( Object.getPrototypeOf( value ) ) )
 					yield { message: 'Non record', path }
-				else for (const field in Fields)
-					yield* Fields[field].issues_lazy((value as any)[field], [...path, field])
+				else for( const field in Fields )
+					yield* Fields[ field ].issues_lazy( ( value as any )[ field ], [ ...path, field ] )
 			}
 			
 			static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {

@@ -12,12 +12,9 @@ namespace $ {
 				return '$mol_schema_range<' + $mol_key(Range) + '>'
 			}	
 
-			static override *issues_lazy<
-				This extends typeof $mol_schema_any,
-				Val
-			>(
+			static override *issues_lazy< This extends typeof $mol_schema_any, Value >(
 				this: This,
-				value: Val,
+				value: Value,
 				path: $mol_schema_issue_path = [],
 			) {
 				if( typeof value !== 'number' && typeof value !== 'bigint' )

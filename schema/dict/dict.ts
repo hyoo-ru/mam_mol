@@ -13,10 +13,7 @@ namespace $ {
 				return '$mol_schema_dict<' + $mol_key( Pair ) + '>'
 			}
 			
-			static override *issues_lazy<
-				This extends typeof $mol_schema_any,
-				Value
-			>(
+			static override *issues_lazy< This extends typeof $mol_schema_any, Value >(
 				this: This,
 				value: Value,
 				path: $mol_schema_issue_path = [],
@@ -42,7 +39,7 @@ namespace $ {
 				return res
 			}
 			
-			static default = {} as Record< Pair[0]['default'], Pair[1]['default'] > 
+			static default = {} as Record< Pair[0]['default'], Pair[1]['default'] >
 			
 		}
 		
