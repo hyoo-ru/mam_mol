@@ -12,9 +12,16 @@ namespace $ {
 				return '$mol_schema_maybe<' + $mol_key(Some) + '>'
 			}
 			
-			static guard< This extends typeof $mol_schema_any, Value >( this: This, value: Value ): Value & This['default'] {
-				if( value == null ) return value
-				return Some.guard( value )
+			static override *issues_lazy<
+				This extends typeof $mol_schema_any,
+				Value
+			>(
+				this: This,
+				value: Value,
+				path: $mol_schema_issue_path = [],
+			) {
+				if( value == null ) return
+				yield* Some.issues_lazy( value, path )
 			}
 			
 			static default = null as Some['default'] | null

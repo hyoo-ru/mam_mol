@@ -3,11 +3,20 @@ namespace $ {
 		
 		$mol_schema_integer = true
 		
-		static guard< This extends typeof $mol_schema_any, Value >( this: This, value: Value ): Value & This['default'] {
-			const val = super.guard( value )
-			if( !Number.isFinite( val ) ) return $mol_fail( new TypeError( 'Non finite', { cause: { value, schema: this } } ) )
-			if( Math.trunc( val ) !== val ) return $mol_fail( new TypeError( 'Non integer', { cause: { value, schema: this } } ) )
-			return val as Value & typeof this.default
+		static override *issues_lazy<
+			This extends typeof $mol_schema_any,
+			Value
+		>(
+			this: This,
+			value: Value,
+			path: $mol_schema_issue_path = [],
+		) {
+			if (!super.issues_lazy(value, path).next().done)
+				yield { message: 'Wrong number', path }
+			else if( !Number.isFinite( value as any ) )
+				yield { message: 'Non finite', path }
+			else if( Math.trunc( value as any ) !== value )
+				yield { message: 'Non integer', path }
 		}
 		
 		static default = 0 as number & $mol_schema_integer

@@ -1,4 +1,10 @@
 namespace $ {
+
+	function* merge<T>(generators: Generator<T>[]) {
+		for (const g of generators)
+			yield* g
+	}
+
 	export let $mol_schema_some = $mol_memo_key.func( function $mol_schema_some<
 		Variants extends readonly( typeof $mol_schema_any )[]
 	>( Variants: Variants ) {
@@ -12,21 +18,25 @@ namespace $ {
 				return '$mol_schema_some<' + $mol_key(Variants) + '>'
 			}	
 			
-			static guard< This extends typeof $mol_schema_any, Value >( this: This, value: Value ): Value & This['default'] {
-				
-				const errors = [] as unknown[]
-				for( const Variant of Variants ) {
-					
-					try {
-						return Variant.guard( value )
-					} catch( error ) {
-						errors.push( error )
-					}
-					
+			static override *issues_lazy<
+				This extends typeof $mol_schema_any,
+				Value
+			>(
+				this: This,
+				value: Value,
+				path: $mol_schema_issue_path = [],
+			) {
+				const issues = []
+				for (const Variant of Variants) {
+					const iter = Variant.issues_lazy(value, path)
+					const first = iter.next()
+					if (first.done) return
+					issues.push((function* () {
+						yield first.value
+						yield* iter
+					})())
 				}
-				
-				return $mol_fail( new AggregateError( errors, 'Wrong variant', { cause: { value, schema: this } } ) )
-				
+				yield { message: 'Wrong variant', path, issues: merge(issues) }
 			}
 			
 			static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {

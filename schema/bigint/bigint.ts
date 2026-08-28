@@ -1,9 +1,16 @@
 namespace $ {
 	export class $mol_schema_bigint extends $mol_schema_any {
 		
-		static guard< This extends typeof $mol_schema_any, Value >( this: This, value: Value ): Value & This['default'] {
-			if( typeof value === 'bigint' ) return value
-			return $mol_fail( new TypeError( 'Wrong type', { cause: { value, schema: this } } ) )
+		static override *issues_lazy<
+			This extends typeof $mol_schema_any,
+			Value
+		>(
+			this: This,
+			value: Value,
+			path: $mol_schema_issue_path = [],
+		) {
+			if( typeof value === 'bigint' ) return
+			yield { message: 'Wrong bigint', path }
 		}
 		
 		static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {

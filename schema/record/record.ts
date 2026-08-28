@@ -12,21 +12,18 @@ namespace $ {
 				return '$mol_schema_record<' + $mol_key(Fields) + '>'
 			}	
 			
-			static guard< This extends typeof $mol_schema_any, Value >( this: This, value: Value ): Value & This['default'] {
-				
-				if( Object.getPrototypeOf( Object.getPrototypeOf( value ) ) ) {
-					return $mol_fail( new TypeError( 'Non record', { cause: { value, schema: this } } ) )
-				}
-			
-				for( const field in Fields ) {
-					try {
-						Fields[ field ].guard( ( value as any )[ field ] )
-					} catch( error ) {
-						return $mol_fail( new TypeError( 'Wrong field', { cause: { field, error, value, schema: this } } ) )
-					}
-				}
-				
-				return value
+			static override *issues_lazy<
+				This extends typeof $mol_schema_any,
+				Value
+			>(
+				this: This,
+				value: Value,
+				path: $mol_schema_issue_path = [],
+			) {
+				if (Object.getPrototypeOf(Object.getPrototypeOf(value)))
+					yield { message: 'Non record', path }
+				else for (const field in Fields)
+					yield* Fields[field].issues_lazy((value as any)[field], [...path, field])
 			}
 			
 			static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {

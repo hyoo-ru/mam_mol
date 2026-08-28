@@ -12,13 +12,16 @@ namespace $ {
 				return '$mol_schema_every<' + $mol_key(Schemas) + '>'
 			}	
 			
-			static guard< This extends typeof $mol_schema_any, Value >( this: This, value: Value ): Value & This['default'] {
-				
-				for( const Schema of Schemas ) {
-					Schema.guard( value )
-				}
-				
-				return value
+			static override *issues_lazy<
+				This extends typeof $mol_schema_any,
+				Value
+			>(
+				this: This,
+				value: Value,
+				path: $mol_schema_issue_path = [],
+			) {
+				for( const Schema of Schemas )
+					yield* Schema.issues_lazy( value, path )
 			}
 			
 			static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {

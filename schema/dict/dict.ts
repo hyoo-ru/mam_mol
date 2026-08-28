@@ -13,29 +13,20 @@ namespace $ {
 				return '$mol_schema_dict<' + $mol_key( Pair ) + '>'
 			}
 			
-			static guard< This extends typeof $mol_schema_any, Value >( this: This, value: Value ): Value & This['default'] {
-				
-				if( Object.getPrototypeOf( Object.getPrototypeOf( value ) ) ) {
-					return $mol_fail( new TypeError( 'Non dictionary', { cause: { value, schema: this } } ) )
+			static override *issues_lazy<
+				This extends typeof $mol_schema_any,
+				Value
+			>(
+				this: This,
+				value: Value,
+				path: $mol_schema_issue_path = [],
+			) {
+				if( !value || Object.getPrototypeOf( Object.getPrototypeOf( value ) ) )
+					yield { message: 'Non dictionary', path }
+				else for( const key in value ) {
+					yield* Pair[0].issues_lazy( key, [ ...path, { key } ] )
+					yield* Pair[1].issues_lazy( ( value as any )[ key ], [ ...path, key ] )
 				}
-				
-				for( const key in value ) {
-					
-					try {
-						Pair[0].guard( key )
-					} catch( error ) {
-						return $mol_fail( new TypeError( 'Wrong key', { cause: { key, error, value, schema: this } } ) )
-					}
-					
-					try {
-						Pair[1].guard( ( value as any )[ key ] )
-					} catch( error ) {
-						return $mol_fail( new TypeError( 'Wrong val', { cause: { key, error, value, schema: this } } ) )
-					}
-					
-				}
-				
-				return value
 			}
 			
 			static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {
