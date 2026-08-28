@@ -41,7 +41,7 @@ namespace $ {
 			return this.check( value )
 		}
 		
-		static _get_error( { issues, path, kind, message }: $mol_schema_issue & { kind?: string }, options: ErrorOptions): Error {
+		static _get_error( { issues, path, kind, message }: $mol_schema_issue & { kind?: string | undefined }, options: ErrorOptions): Error {
 			const last = path.at(-1)
 			if( typeof last === "object" ) message = "Wrong key"
 			else if( typeof last === "number" ) message = "Wrong item"
