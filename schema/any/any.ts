@@ -34,7 +34,7 @@ namespace $ {
 		/** Type-parser that fails of wrong values. */
 		static guard< This extends typeof $mol_schema_any, Value >( this: This, value: Value ): Value & This['default'] {
 			const { value: issue } = this.issues_lazy(value).next()
-			if (issue) $mol_fail(new TypeError(issue.message, { cause: { value, schema: this, path: issue.path } }))
+			if( issue ) $mol_fail( new TypeError( issue.message, { cause: { ...issue, value, schema: this } } ) )
 			return value
 		}
 		
