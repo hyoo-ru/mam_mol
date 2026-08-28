@@ -1,8 +1,8 @@
 namespace $ {
 
-	function* merge<T>( generators: Generator<T>[] ) {
-		for( const g of generators )
-			yield* g
+	function* merge<T>( iterable: Iterable<T>[] ) {
+		for( const i of iterable )
+			yield* i
 	}
 
 	export let $mol_schema_some = $mol_memo_key.func( function $mol_schema_some<

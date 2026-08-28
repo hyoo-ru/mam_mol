@@ -16,7 +16,7 @@ namespace $ {
 			) {
 				yield* super.issues_lazy( value, path )
 				if( Pattern.test( value as any ) ) return
-				yield { message: 'Wrong pattern', path }
+				yield { message: 'Wrong pattern', path, kind: "string" }
 			}
 			
 			static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {

@@ -23,8 +23,8 @@ namespace $ {
 			
 			$mol_assert_equal( {}, Flags.guard( {} ) )
 			$mol_assert_equal( { foo: false }, Flags.guard({ foo: false }) )
-			$mol_assert_fail( ()=> Flags.guard({ foo: 123 }), 'Wrong boolean' )
-			$mol_assert_fail( ()=> Flags.guard({ f00: 123 }), 'Wrong pattern' )
+			$mol_assert_fail( ()=> Flags.guard({ foo: 123 }), 'Wrong val' )
+			$mol_assert_fail( ()=> Flags.guard({ f00: 123 }), 'Wrong key' )
 			
 		},
 		

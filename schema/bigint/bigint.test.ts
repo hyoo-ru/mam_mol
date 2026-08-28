@@ -12,7 +12,7 @@ namespace $.$$ {
 			$mol_assert_equal( 1n, $mol_schema_bigint.cast( 1 ) )
 			
 			$mol_assert_equal( 0n, $mol_schema_bigint.guard( 0n ) )
-			$mol_assert_fail( ()=> $mol_schema_bigint.guard( 1 ), 'Wrong bigint' )
+			$mol_assert_fail( ()=> $mol_schema_bigint.guard( 1 ), 'Wrong type' )
 			
 		},
 		

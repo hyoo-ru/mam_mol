@@ -22,7 +22,8 @@ namespace $ {
 					yield { message: 'Non dictionary', path }
 				else for( const key in value ) {
 					yield* Pair[0].issues_lazy( key, [ ...path, { key } ] )
-					yield* Pair[1].issues_lazy( ( value as any )[ key ], [ ...path, key ] )
+					for( const i of Pair[1].issues_lazy( ( value as any )[ key ], [ ...path, key ] ) )
+						yield { ...i, kind: "val" }
 				}
 			}
 			

@@ -20,7 +20,8 @@ namespace $ {
 				if( Object.getPrototypeOf( Object.getPrototypeOf( value ) ) )
 					yield { message: 'Non record', path }
 				else for( const field in Fields )
-					yield* Fields[ field ].issues_lazy( ( value as any )[ field ], [ ...path, field ] )
+					for( const i of Fields[ field ].issues_lazy( ( value as any )[ field ], [ ...path, field ] ) )
+						yield {...i, kind: "field" }
 			}
 			
 			static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {

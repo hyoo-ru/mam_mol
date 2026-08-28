@@ -4,7 +4,18 @@ namespace $ {
 	export type $mol_schema_issue = {
 		readonly message: string
 		readonly path: $mol_schema_issue_path
-		readonly issues?: Generator<$mol_schema_issue, void, unknown>
+		readonly issues?: IterableIterator<$mol_schema_issue, void, unknown>
+	}
+
+	class AggregationErrorLazy extends AggregateError {
+		constructor(errors_: () => Iterable<Error>, message: string, options: ErrorOptions) {
+			super([], message, options)
+			Object.defineProperty(this, 'errors', {
+				get: () => [ ...errors_() ],
+				enumerable: false,
+				configurable: true,
+			})
+		}
 	}
 
 	export class $mol_schema_any extends Object {
@@ -30,11 +41,35 @@ namespace $ {
 			return this.check( value )
 		}
 		
+		static _get_error( { issues, path, kind, message }: $mol_schema_issue & { kind?: string }, options: ErrorOptions): Error {
+			const last = path.at(-1)
+			if( typeof last === "object" ) message = "Wrong key"
+			else if( typeof last === "number" ) message = "Wrong item"
+			else if( kind ) message = `Wrong ${kind}`
+			const self = this
+			if( issues ) return new AggregationErrorLazy(
+				function* () { for( const i of issues ) yield self._get_error( i, options ) }, // issues.map
+				message,
+				options
+			)
+			return new TypeError( message, options )
+		}
+
 		/** Type-parser that fails of wrong values. */
 		static guard< This extends typeof $mol_schema_any, Value >( this: This, value: Value ): Value & This['default'] {
-			const { value: issue } = this.issues_lazy( value ).next()
-			if( issue ) $mol_fail( new TypeError( issue.message, { cause: { ...issue, value, schema: this } } ) )
-			return value
+			const issues = this.issues_lazy( value )
+			const { value: first, done } = issues.next()
+			if( done ) return value
+			const options = { cause: { value, schema: this } }
+			const f = this._get_error( first, options )
+			const { value: second, done: d } = issues.next()
+			if( d ) return $mol_fail( f )
+			const self = this
+			return $mol_fail( new AggregationErrorLazy( function*() {
+				yield f
+				yield self._get_error( second, options )
+				for( const i of issues ) yield self._get_error( i, options )
+			}, f.message, options ) )
 		}
 		
 		/** Type-caster that normalizes wrong values. */
@@ -50,7 +85,7 @@ namespace $ {
 			this: This,
 			value: Value,
 			path: $mol_schema_issue_path = [],
-		): Generator<$mol_schema_issue, void, unknown> {}
+		): IterableIterator<$mol_schema_issue, void, unknown> {}
 
 		static issues< This extends typeof $mol_schema_any, Value >( this: This, value: Value ) {
 			type Issue = Omit< $mol_schema_issue, 'issues' > & { issues?: Issue[] }

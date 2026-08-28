@@ -12,7 +12,7 @@ namespace $.$$ {
 			$mol_assert_equal( '', $mol_schema_string.cast( 123 ) )
 			
 			$mol_assert_equal( 'foo', $mol_schema_string.guard( 'foo' ) )
-			$mol_assert_fail( ()=> $mol_schema_string.guard( 123 ), 'Wrong string' )
+			$mol_assert_fail( ()=> $mol_schema_string.guard( 123 ), 'Wrong type' )
 			
 		},
 		

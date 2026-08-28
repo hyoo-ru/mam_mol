@@ -6,7 +6,7 @@ namespace $ {
 			path: $mol_schema_issue_path = [],
 		) {
 			if( typeof value === 'number' ) return
-			yield { message: 'Wrong float', path }
+			yield { message: 'Wrong float', path, kind: "type" }
 		}
 		
 		static default = Number.NaN

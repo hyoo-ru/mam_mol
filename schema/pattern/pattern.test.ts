@@ -23,7 +23,7 @@ namespace $.$$ {
 			$mol_assert_equal( '', Email.cast( 123 ) )
 			
 			$mol_assert_equal( 'foo@bar', Email.guard( 'foo@bar' ) )
-			$mol_assert_fail( ()=> Email.guard( 'foo' ), 'Wrong pattern' )
+			$mol_assert_fail( ()=> Email.guard( 'foo' ), 'Wrong string' )
 			
 		},
 		

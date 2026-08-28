@@ -25,7 +25,7 @@ namespace $.$$ {
 			$mol_assert_equal( null, Config.cast( 0 ) )
 			
 			$mol_assert_equal( 'foo', Config.guard( 'foo' ) )
-			$mol_assert_fail( ()=> Config.guard( 123 ), 'Wrong string' )
+			$mol_assert_fail( ()=> Config.guard( 123 ), 'Wrong type' )
 			
 		},
 		

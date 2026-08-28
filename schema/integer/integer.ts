@@ -9,7 +9,7 @@ namespace $ {
 			path: $mol_schema_issue_path = [],
 		) {
 			if( !super.issues_lazy( value, path ).next().done )
-				yield { message: 'Wrong number', path }
+				yield { message: 'Wrong number', path, kind: "type" }
 			else if( !Number.isFinite( value as any ) )
 				yield { message: 'Non finite', path }
 			else if( Math.trunc( value as any ) !== value )

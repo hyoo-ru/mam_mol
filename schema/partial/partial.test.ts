@@ -21,7 +21,7 @@ namespace $.$$ {
 				User.guard({ name: 'foo', age: undefined }),
 				// User.guard({ name: 'foo' }),
 			)
-			$mol_assert_fail( ()=> User.guard({ name: 'foo', age: 'bar' }), 'Wrong number' )
+			$mol_assert_fail( ()=> User.guard({ name: 'foo', age: 'bar' }), 'Wrong field' )
 			
 		},
 		

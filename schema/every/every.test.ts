@@ -29,7 +29,7 @@ namespace $.$$ {
 			$mol_assert_equal( 5, Narrow.guard( 5 ) )
 			$mol_assert_fail( ()=> Narrow.guard( 2 ), 'Too small' )
 			$mol_assert_fail( ()=> Narrow.guard( 10 ), 'Too large' )
-			$mol_assert_fail( ()=> Narrow.guard( '' ), 'Wrong number' )
+			$mol_assert_fail( ()=> Narrow.guard( '' ), 'Wrong type' )
 			
 		},
 		
