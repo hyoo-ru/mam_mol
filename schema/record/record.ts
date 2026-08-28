@@ -12,11 +12,11 @@ namespace $ {
 				return '$mol_schema_record<' + $mol_key(Fields) + '>'
 			}	
 			
-			static override *issues_lazy< This extends typeof $mol_schema_any, Value >(
+			static *issues_lazy< This extends typeof $mol_schema_any, Value >(
 				this: This,
 				value: Value,
 				path: $mol_schema_issue_path = [],
-			) {
+			): $mol_schema_issues {
 				if( Object.getPrototypeOf( Object.getPrototypeOf( value ) ) )
 					yield { message: 'Non record', path }
 				else for( const field in Fields )

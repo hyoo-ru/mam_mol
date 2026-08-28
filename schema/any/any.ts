@@ -4,8 +4,10 @@ namespace $ {
 	export type $mol_schema_issue = {
 		readonly message: string
 		readonly path: $mol_schema_issue_path
-		readonly issues?: IterableIterator<$mol_schema_issue, void, unknown>
+		readonly issues?: $mol_schema_issues
+		readonly kind?: string | undefined
 	}
+	export type $mol_schema_issues = IterableIterator<$mol_schema_issue, void, unknown>
 
 	class AggregationErrorLazy extends AggregateError {
 		constructor(errors_: () => Iterable<Error>, message: string, options: ErrorOptions) {
@@ -41,7 +43,7 @@ namespace $ {
 			return this.check( value )
 		}
 		
-		static _get_error( { issues, path, kind, message }: $mol_schema_issue & { kind?: string | undefined }, options: ErrorOptions): Error {
+		static _get_error( { issues, path, kind, message }: $mol_schema_issue, options: ErrorOptions): Error {
 			const last = path.at(-1)
 			if( typeof last === "object" ) message = "Wrong key"
 			else if( typeof last === "number" ) message = "Wrong item"

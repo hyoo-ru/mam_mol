@@ -3,11 +3,11 @@ namespace $ {
 		
 		$mol_schema_integer = true
 		
-		static override *issues_lazy< This extends typeof $mol_schema_any, Value >(
+		static *issues_lazy< This extends typeof $mol_schema_any, Value >(
 			this: This,
 			value: Value,
 			path: $mol_schema_issue_path = [],
-		) {
+		): $mol_schema_issues {
 			if( !super.issues_lazy( value, path ).next().done )
 				yield { message: 'Wrong number', path, kind: "type" }
 			else if( !Number.isFinite( value as any ) )

@@ -6,7 +6,7 @@ namespace $ {
 			
 			static Schema = $mol_memo.func( Schema )
 			
-			static override *issues_lazy< Val >(
+			static *issues_lazy< Val >(
 				value: Val,
 				path: $mol_schema_issue_path = [],
 			) {

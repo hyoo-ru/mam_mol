@@ -18,7 +18,7 @@ namespace $ {
 				return '$mol_schema_some<' + $mol_key(Variants) + '>'
 			}	
 			
-			static override *issues_lazy< This extends typeof $mol_schema_any, Value >(
+			static *issues_lazy< This extends typeof $mol_schema_any, Value >(
 				this: This,
 				value: Value,
 				path: $mol_schema_issue_path = [],

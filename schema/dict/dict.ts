@@ -13,11 +13,11 @@ namespace $ {
 				return '$mol_schema_dict<' + $mol_key( Pair ) + '>'
 			}
 			
-			static override *issues_lazy< This extends typeof $mol_schema_any, Value >(
+			static *issues_lazy< This extends typeof $mol_schema_any, Value >(
 				this: This,
 				value: Value,
 				path: $mol_schema_issue_path = [],
-			) {
+			): $mol_schema_issues {
 				if( !value || Object.getPrototypeOf( Object.getPrototypeOf( value ) ) )
 					yield { message: 'Non dictionary', path }
 				else for( const key in value ) {
