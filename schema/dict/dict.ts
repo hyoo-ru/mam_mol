@@ -18,15 +18,26 @@ namespace $ {
 				value: Value,
 				path: $mol_schema_issue_path = [],
 			): $mol_schema_issues {
-				if( !value || Object.getPrototypeOf( Object.getPrototypeOf( value ) ) )
+				try {
+					var proto = Object.getPrototypeOf( Object.getPrototypeOf( value ) )
+				} catch( error ) {
+					yield { message: 'Non dictionary', path, error }
+					return
+				}
+				if ( proto )
 					yield { message: 'Non dictionary', path }
 				else for( const key in value ) {
 					yield* Pair[0].issues_lazy( key, [ ...path, { key } ] )
 					for( const i of Pair[1].issues_lazy( ( value as any )[ key ], [ ...path, key ] ) )
-						yield { ...i, kind: "val" }
+						yield { ...i, kind: [ "val", ...i.kind ?? [] ] }
 				}
 			}
 			
+			static guard<This extends typeof $mol_schema_any, Value>(this: This, value: Value) {
+				if (!value) Object.getPrototypeOf( value )
+				return super.guard(value)
+			}
+
 			static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {
 				
 				if( Object.getPrototypeOf( Object.getPrototypeOf( value ) ) ) return this.default

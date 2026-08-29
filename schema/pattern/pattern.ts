@@ -14,9 +14,13 @@ namespace $ {
 				value: Value,
 				path: $mol_schema_issue_path = [],
 			): $mol_schema_issues {
-				yield* super.issues_lazy( value, path )
+				const { value: issue } = super.issues_lazy( value, path ).next()
+				if( issue ) {
+					yield issue
+					return
+				}
 				if( Pattern.test( value as any ) ) return
-				yield { message: 'Wrong pattern', path, kind: "string" }
+				yield { message: 'Wrong pattern', path, kind: [ "string" ] }
 			}
 			
 			static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {

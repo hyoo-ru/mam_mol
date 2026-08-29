@@ -5,18 +5,19 @@ namespace $ {
 		readonly message: string
 		readonly path: $mol_schema_issue_path
 		readonly issues?: $mol_schema_issues
-		readonly kind?: string | undefined
+		readonly kind?: string[] | undefined // For backward compatibility as "Wrong field" / "Wrong type"
+		readonly error?: unknown // For backward compatibility with "Cannot convert undefined or null to object"
 	}
 	export type $mol_schema_issues = IterableIterator<$mol_schema_issue, void, unknown>
 
-	class AggregationErrorLazy extends AggregateError {
-		constructor(errors_: () => Iterable<Error>, message: string, options: ErrorOptions) {
-			super([], message, options)
-			Object.defineProperty(this, 'errors', {
-				get: () => [ ...errors_() ],
-				enumerable: false,
-				configurable: true,
-			})
+	class AggregateErrorLazy extends AggregateError {
+		constructor(
+			errors: () => Iterable<unknown, void, unknown>,
+			message: string,
+			options?: ErrorOptions
+		) {
+			super( [], message, options )
+			Object.defineProperty( this, "errors", { get: $mol_memo.func(()=>[ ...errors() ]) } )
 		}
 	}
 
@@ -43,35 +44,61 @@ namespace $ {
 			return this.check( value )
 		}
 		
-		static _get_error( { issues, path, kind, message }: $mol_schema_issue, options: ErrorOptions): Error {
-			const last = path.at(-1)
-			if( typeof last === "object" ) message = "Wrong key"
-			else if( typeof last === "number" ) message = "Wrong item"
-			else if( kind ) message = `Wrong ${kind}`
+		static _get_value(value: any, path: $mol_schema_issue_path) {
+			for( const key of path ) {
+				if( typeof key === "object" ) return key.key
+				value = value?.[key]
+			}
+			return value
+		}
+
+		static _get_error( { issues, path: [ p, ... path ], kind, message, error }: $mol_schema_issue, value: unknown): unknown {
+			if( error ) return error
+			const cause = { value, schema: this } as Record<string, unknown>
+			const v = this._get_value(value, [p])
+			const m = message
 			const self = this
-			if( issues ) return new AggregationErrorLazy(
-				function* () { for( const i of issues ) yield self._get_error( i, options ) }, // issues.map
-				message,
-				options
-			)
-			return new TypeError( message, options )
+
+			const add_error = (kind?: string[]) => Object.defineProperty( cause, 'error', {
+				get: $mol_memo.func( () => this._get_error({ message: m, path, issues, kind }, v ) ),
+				enumerable: true,
+			} )
+			if( typeof p === "object" ) {
+				add_error(kind)
+				message = "Wrong key"
+				cause.key = p.key
+			} else if( typeof p === "number" ) {
+				add_error(kind)
+				message = "Wrong item"
+				cause.index = p
+			} else if( kind?.[0] ) {
+				const [ k, ...other ] = kind ?? []
+				if( p ) {
+					add_error(other)
+					cause[ k === "val" ? "key" : k ] = p
+				}
+				message = `Wrong ${k}`
+			}
+
+			if( !issues ) return new TypeError( message, { cause } )
+			const { value: first } = issues.next()
+			if( !first ) return new TypeError( message, { cause } )
+
+			const f = this._get_error( first, this._get_value( value, first.path ) )
+			const { value: i, done } = issues.next()
+			if( done ) return f
+
+			return new AggregateErrorLazy( function*() {
+				yield f
+				yield self._get_error(i, self._get_value(value, i.path))
+				for( const i of issues ) yield self._get_error(i, self._get_value(value, i.path))
+			}, message, { cause: { value, schema: this } } )
 		}
 
 		/** Type-parser that fails of wrong values. */
 		static guard< This extends typeof $mol_schema_any, Value >( this: This, value: Value ): Value & This['default'] {
-			const issues = this.issues_lazy( value )
-			const { value: first, done } = issues.next()
-			if( done ) return value
-			const options = { cause: { value, schema: this } }
-			const f = this._get_error( first, options )
-			const { value: second, done: d } = issues.next()
-			if( d ) return $mol_fail( f )
-			const self = this
-			return $mol_fail( new AggregationErrorLazy( function*() {
-				yield f
-				yield self._get_error( second, options )
-				for( const i of issues ) yield self._get_error( i, options )
-			}, f.message, options ) )
+			const { value: first }  = this.issues_lazy( value ).next()
+			return first ? $mol_fail( this._get_error( first, value ) ) : value
 		}
 		
 		/** Type-caster that normalizes wrong values. */
@@ -93,12 +120,9 @@ namespace $ {
 			type Issue = Omit< $mol_schema_issue, 'issues' > & { issues?: Issue[] }
 			const issue = ( i: $mol_schema_issue ): Issue => {
 				const { issues } = i
-				if( issues ) return {
-					...i,
-					get issues() {
-						return Array.from( issues, issue )
-					},
-				}
+				if( issues ) Object.defineProperty( i, "issues", {
+					get: $mol_memo.func( () => Array.from(issues, issue) )
+				} )
 				return i as Issue
 			}
 			return Array.from( this.issues_lazy( value ), issue )
