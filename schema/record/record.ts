@@ -18,7 +18,7 @@ namespace $ {
 				path: $mol_schema_issue_path = [],
 			): $mol_schema_issues {
 				if ( !value || Object.getPrototypeOf( Object.getPrototypeOf( value ) ) )
-					yield { message: 'Non record', path }
+					yield { message: 'Non record', path, value, schema: this }
 				else for( const field in Fields )
 					yield* Fields[ field ].issues_lazy( ( value as any )[ field ], [ ...path, field ] )
 			}

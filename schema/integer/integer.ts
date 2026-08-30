@@ -12,13 +12,13 @@ namespace $ {
 			if( !done )
 				yield {
 					message: 'Wrong number',
-					path,
+					path, value, schema: this,
 					issues: (function* () { yield issue })()
 				}
 			else if( !Number.isFinite( value as any ) )
-				yield { message: 'Non finite', path }
+				yield { message: 'Non finite', path, value, schema: this }
 			else if( Math.trunc( value as any ) !== value )
-				yield { message: 'Non integer', path }
+				yield { message: 'Non integer', path, value, schema: this }
 		}
 		
 		static default = 0 as number & $mol_schema_integer

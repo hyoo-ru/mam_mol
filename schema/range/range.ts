@@ -16,13 +16,13 @@ namespace $ {
 				this: This,
 				value: Value,
 				path: $mol_schema_issue_path = [],
-			) {
+			): $mol_schema_issues {
 				if( typeof value !== 'number' && typeof value !== 'bigint' )
-					yield { message: 'Uncomparable type', path }
+					yield { message: 'Uncomparable type', path, value, schema: this }
 				else if(!( value <= Range[1] ))
-					yield { message: 'Too large', path }
+					yield { message: 'Too large', path, value, schema: this }
 				else if(!( value >= Range[0] ))
-					yield { message: 'Too small', path }
+					yield { message: 'Too small', path, value, schema: this }
 			}
 			
 			static cast< This extends typeof $mol_schema_any >( this: This, value: Value ): This['default'] {

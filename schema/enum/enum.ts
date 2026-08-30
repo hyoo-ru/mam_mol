@@ -16,9 +16,9 @@ namespace $ {
 				this: This,
 				value: Value,
 				path: $mol_schema_issue_path = [],
-			) {
+			): $mol_schema_issues {
 				if( Options.some( Option => Object.is( Option, value ) ) ) return
-				yield { message: 'Wrong option', path }
+				yield { message: 'Wrong option', path, value, schema: this }
 			}
 			
 			static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {

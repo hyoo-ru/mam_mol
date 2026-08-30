@@ -20,7 +20,7 @@ namespace $ {
 				path: $mol_schema_issue_path = [],
 			) {
 				if( value != null && Object( value ) instanceof Class ) return
-				yield { message: 'Wrong class', path }
+				yield { message: 'Wrong class', path, value, schema: this }
 			}
 			
 			static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {

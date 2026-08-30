@@ -16,11 +16,11 @@ namespace $ {
 				this: This,
 				value: Value,
 				path: $mol_schema_issue_path = [],
-			) {
+			): $mol_schema_issues {
 				if( Array.isArray( value ) )
 					for( const [ index, item ] of value.entries() )
 						yield* Item.issues_lazy( item, [ ...path, index ] )
-				else yield { message: 'Non array', path }
+				else yield { message: 'Non array', path, value, schema: this }
 			}
 			static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {
 				if( !Array.isArray( value ) ) return this.default

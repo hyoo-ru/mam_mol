@@ -22,7 +22,7 @@ namespace $ {
 				this: This,
 				value: Value,
 				path: $mol_schema_issue_path = [],
-			) {
+			): $mol_schema_issues {
 				const issues = []
 				for( const Variant of Variants ) {
 					const iter = Variant.issues_lazy( value, path )
@@ -33,7 +33,7 @@ namespace $ {
 						yield* iter
 					})())
 				}
-				yield { message: 'Wrong variant', path, issues: merge( issues ) }
+				yield { message: 'Wrong variant', path, issues: merge( issues ), value, schema: this }
 			}
 			
 			static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {

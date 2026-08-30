@@ -1,10 +1,12 @@
 namespace $ {
 	
 	export type $mol_schema_issue_path = ReadonlyArray<PropertyKey | { key: PropertyKey }>
-	export type $mol_schema_issue = {
+	export type $mol_schema_issue<Value=unknown> = {
 		readonly message: string
 		readonly path: $mol_schema_issue_path
 		readonly issues?: $mol_schema_issues
+		readonly value: Value
+		readonly schema: typeof $mol_schema_any
 	}
 	export type $mol_schema_issues = IterableIterator<$mol_schema_issue, void, unknown>
 

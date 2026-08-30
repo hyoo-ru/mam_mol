@@ -7,7 +7,7 @@ namespace $ {
 			path: $mol_schema_issue_path = [],
 		): $mol_schema_issues {
 			if( typeof value === 'boolean' ) return
-			yield { message: 'Wrong boolean', path }
+			yield { message: 'Wrong boolean', path, value, schema: this }
 		}
 		
 		static default = false

@@ -19,16 +19,11 @@ namespace $ {
 				path: $mol_schema_issue_path = [],
 			): $mol_schema_issues {
 				if ( !value || Object.getPrototypeOf( Object.getPrototypeOf( value ) ) )
-					yield { message: 'Non dictionary', path }
+					yield { message: 'Non dictionary', path, value, schema: this }
 				else for( const key in value ) {
 					yield* Pair[0].issues_lazy( key, [ ...path, { key } ] )
 					yield* Pair[1].issues_lazy( ( value as any )[ key ], [ ...path, key ] )
 				}
-			}
-			
-			static guard<This extends typeof $mol_schema_any, Value>(this: This, value: Value) {
-				if (!value) Object.getPrototypeOf( value )
-				return super.guard(value)
 			}
 
 			static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {
