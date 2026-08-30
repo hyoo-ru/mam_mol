@@ -17,17 +17,10 @@ namespace $ {
 				value: Value,
 				path: $mol_schema_issue_path = [],
 			): $mol_schema_issues {
-				try {
-					var proto = Object.getPrototypeOf( Object.getPrototypeOf( value ) )
-				} catch( error ) {
-					yield { message: 'Non record', path, error }
-					return
-				}
-				if ( proto )
+				if ( !value || Object.getPrototypeOf( Object.getPrototypeOf( value ) ) )
 					yield { message: 'Non record', path }
 				else for( const field in Fields )
-					for( const i of Fields[ field ].issues_lazy( ( value as any )[ field ], [ ...path, field ] ) )
-						yield { ...i, kind: [ "field", ...i.kind ?? [] ] }
+					yield* Fields[ field ].issues_lazy( ( value as any )[ field ], [ ...path, field ] )
 			}
 			
 			static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {

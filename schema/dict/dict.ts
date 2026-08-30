@@ -18,18 +18,11 @@ namespace $ {
 				value: Value,
 				path: $mol_schema_issue_path = [],
 			): $mol_schema_issues {
-				try {
-					var proto = Object.getPrototypeOf( Object.getPrototypeOf( value ) )
-				} catch( error ) {
-					yield { message: 'Non dictionary', path, error }
-					return
-				}
-				if ( proto )
+				if ( !value || Object.getPrototypeOf( Object.getPrototypeOf( value ) ) )
 					yield { message: 'Non dictionary', path }
 				else for( const key in value ) {
 					yield* Pair[0].issues_lazy( key, [ ...path, { key } ] )
-					for( const i of Pair[1].issues_lazy( ( value as any )[ key ], [ ...path, key ] ) )
-						yield { ...i, kind: [ "val", ...i.kind ?? [] ] }
+					yield* Pair[1].issues_lazy( ( value as any )[ key ], [ ...path, key ] )
 				}
 			}
 			

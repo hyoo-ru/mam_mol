@@ -20,7 +20,7 @@ namespace $ {
 					return
 				}
 				if( Pattern.test( value as any ) ) return
-				yield { message: 'Wrong pattern', path, kind: [ "string" ] }
+				yield { message: 'Wrong pattern', path }
 			}
 			
 			static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {

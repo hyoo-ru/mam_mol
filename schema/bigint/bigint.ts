@@ -7,7 +7,7 @@ namespace $ {
 			path: $mol_schema_issue_path = [],
 		): $mol_schema_issues {
 			if( typeof value === 'bigint' ) return
-			yield { message: 'Wrong bigint', path, kind: [ 'type' ] }
+			yield { message: 'Wrong bigint', path }
 		}
 		
 		static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {

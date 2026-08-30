@@ -8,8 +8,13 @@ namespace $ {
 			value: Value,
 			path: $mol_schema_issue_path = [],
 		): $mol_schema_issues {
-			if( !super.issues_lazy( value, path ).next().done )
-				yield { message: 'Wrong number', path, kind: [ 'type' ] }
+			const { value: issue, done } = super.issues_lazy( value, path ).next()
+			if( !done )
+				yield {
+					message: 'Wrong number',
+					path,
+					issues: (function* () { yield issue })()
+				}
 			else if( !Number.isFinite( value as any ) )
 				yield { message: 'Non finite', path }
 			else if( Math.trunc( value as any ) !== value )
