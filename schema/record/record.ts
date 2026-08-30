@@ -19,8 +19,23 @@ namespace $ {
 			): $mol_schema_issues<Value> {
 				if ( !value || Object.getPrototypeOf( Object.getPrototypeOf( value ) ) )
 					yield { message: 'Non record', path, value, schema: this }
-				else for( const field in Fields )
-					yield* Fields[ field ].issues_lazy( ( value as any )[ field ], [ ...path, field ] )
+				else {
+					const errors = []
+					for( const field in Fields ) {
+						const schema = Fields[ field ]
+						const value_ = ( value as any )[ field ]
+						const path_ = [ ...path, field ]
+						try {
+							yield* schema.issues_lazy( value_, path_ )
+						} catch( error ) {
+							if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
+							else errors.push(new Error("Wrong schema", { cause: { e: error, value: value_, path: path_, schema }  }) )
+						}
+					}
+					if( errors.length === 0 ) return
+					else if( errors.length === 1 ) $mol_fail( errors[0] )
+					else $mol_fail( new AggregateError( errors, "Wrong schemas", { cause: { path, value, schema: this } }) )
+				}
 			}
 			
 			static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {
