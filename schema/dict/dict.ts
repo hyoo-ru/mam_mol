@@ -21,7 +21,7 @@ namespace $ {
 				if ( !value || Object.getPrototypeOf( Object.getPrototypeOf( value ) ) )
 					yield { message: 'Non dictionary', path, value, schema: this }
 				else for( const key in value ) {
-					yield* Pair[0].issues_lazy( key, [ ...path, { key } ] )
+					yield* Pair[0].issues_lazy( key, [ ...path, { key } ] ) as any
 					yield* Pair[1].issues_lazy( ( value as any )[ key ], [ ...path, key ] )
 				}
 			}
