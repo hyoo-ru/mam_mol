@@ -1,14 +1,14 @@
 namespace $ {
 	
 	export type $mol_schema_issue_path = ReadonlyArray<PropertyKey | { key: PropertyKey }>
-	export type $mol_schema_issue<Value=unknown> = {
+	export type $mol_schema_issue<Value> = {
 		readonly message: string
 		readonly path: $mol_schema_issue_path
-		readonly issues?: $mol_schema_issues
+		readonly issues?: $mol_schema_issues<Value>
 		readonly value: Value
 		readonly schema: typeof $mol_schema_any
 	}
-	export type $mol_schema_issues = IterableIterator<$mol_schema_issue, void, unknown>
+	export type $mol_schema_issues<Value> = IterableIterator<$mol_schema_issue<Value>, void, unknown>
 
 	export class $mol_schema_any extends Object {
 		
@@ -57,7 +57,7 @@ namespace $ {
 			this: This,
 			value: Value,
 			path: $mol_schema_issue_path = [],
-		): $mol_schema_issues {}
+		): $mol_schema_issues<Value> {}
 
 		static issues< This extends typeof $mol_schema_any, Value >( this: This, value: Value ) {
 			return Array.from( this.issues_lazy( value ), issue_eager )
@@ -77,12 +77,12 @@ namespace $ {
 		}
 
 	}
-	type Issue = Omit< $mol_schema_issue, 'issues' > & { issues?: Issue[] }
+	type Issue<Value> = Omit< $mol_schema_issue<Value>, 'issues' > & { issues?: Issue<Value>[] }
 	const issue_eager = (issue: $mol_schema_issue) => {
 		const { issues, ...i } = issue
 		if( issues ) Object.defineProperty( i, "issues", {
 			get: $mol_memo.func( () => Array.from(issues, issue_eager) )
 		} )
-		return i as Issue
+		return i as Issue<Value>
 	}
 }

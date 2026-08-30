@@ -22,7 +22,7 @@ namespace $ {
 				this: This,
 				value: Value,
 				path: $mol_schema_issue_path = [],
-			): $mol_schema_issues {
+			): $mol_schema_issues<Value> {
 				const issues = []
 				for( const Variant of Variants ) {
 					const iter = Variant.issues_lazy( value, path )

@@ -16,7 +16,7 @@ namespace $ {
 				this: This,
 				value: Value,
 				path: $mol_schema_issue_path = [],
-			): $mol_schema_issues {
+			): $mol_schema_issues<Value> {
 				if( Options.some( Option => Object.is( Option, value ) ) ) return
 				yield { message: 'Wrong option', path, value, schema: this }
 			}

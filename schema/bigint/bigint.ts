@@ -5,7 +5,7 @@ namespace $ {
 			this: This,
 			value: Value,
 			path: $mol_schema_issue_path = [],
-		): $mol_schema_issues {
+		): $mol_schema_issues<Value> {
 			if( typeof value === 'bigint' ) return
 			yield { message: 'Wrong bigint', path, value, schema: this }
 		}

@@ -4,7 +4,7 @@ namespace $ {
 			this: This,
 			value: Value,
 			path: $mol_schema_issue_path = [],
-		): $mol_schema_issues {
+		): $mol_schema_issues<Value> {
 			if( typeof value === 'number' ) return
 			yield { message: 'Wrong float', path, value, schema: this }
 		}

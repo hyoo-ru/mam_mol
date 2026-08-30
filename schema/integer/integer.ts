@@ -7,7 +7,7 @@ namespace $ {
 			this: This,
 			value: Value,
 			path: $mol_schema_issue_path = [],
-		): $mol_schema_issues {
+		): $mol_schema_issues<Value> {
 			const { value: issue, done } = super.issues_lazy( value, path ).next()
 			if( !done )
 				yield {

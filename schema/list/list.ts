@@ -16,7 +16,7 @@ namespace $ {
 				this: This,
 				value: Value,
 				path: $mol_schema_issue_path = [],
-			): $mol_schema_issues {
+			): $mol_schema_issues<Value> {
 				if( Array.isArray( value ) )
 					for( const [ index, item ] of value.entries() )
 						yield* Item.issues_lazy( item, [ ...path, index ] )
