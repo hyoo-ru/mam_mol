@@ -40,7 +40,7 @@ namespace $ {
 			return $mol_fail( new TypeError( issue.message, { cause: {
 				value,
 				schema: this,
-				issue: issue_eager( issue )
+				issue: $mol_schema_issue_eager( issue )
 			} } ) )
 		}
 		
@@ -60,7 +60,7 @@ namespace $ {
 		): $mol_schema_issues<Value> {}
 
 		static issues< This extends typeof $mol_schema_any, Value >( this: This, value: Value ) {
-			return Array.from( this.issues_lazy( value ), issue_eager )
+			return Array.from( this.issues_lazy( value ), $mol_schema_issue_eager )
 		}
 		
 		static get ['~standard']() {
@@ -78,10 +78,10 @@ namespace $ {
 
 	}
 	type Issue<Value> = Omit< $mol_schema_issue<Value>, 'issues' > & { issues?: Issue<Value>[] }
-	const issue_eager = (issue: $mol_schema_issue) => {
+	export function $mol_schema_issue_eager< Value >( issue: $mol_schema_issue<Value> ) {
 		const { issues, ...i } = issue
 		if( issues ) Object.defineProperty( i, "issues", {
-			get: $mol_memo.func( () => Array.from(issues, issue_eager) )
+			get: $mol_memo.func( () => Array.from( issues, $mol_schema_issue_eager ) )
 		} )
 		return i as Issue<Value>
 	}

@@ -24,7 +24,8 @@ namespace $ {
 				path: $mol_schema_issue_path = [],
 			): $mol_schema_issues<Value> {
 				const issues = []
-				for( const Variant of Variants ) {
+				const errors = []
+				for( const Variant of Variants ) try {
 					const iter = Variant.issues_lazy( value, path )
 					const first = iter.next()
 					if( first.done ) return
@@ -32,8 +33,20 @@ namespace $ {
 						yield first.value
 						yield* iter
 					})())
+				} catch( error ) {
+					if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
+					else errors.push( error )
 				}
-				yield { message: 'Wrong variant', path, issues: merge( issues ), value, schema: this }
+				if( errors.length === 0 )
+					yield { message: 'Wrong variant', path, issues: merge( issues ), value, schema: this }
+				else {
+					const cause = {
+						path, value, schema: this,
+						issues: issues.map( i => Array.from( i, $mol_schema_issue_eager ) ),
+					}
+					if( errors.length === 1 ) $mol_fail( new Error( "Wrong schema", { cause: { error: errors[0], ...cause } } ) )
+					else $mol_fail( new AggregateError( errors, 'Wrong schemas', { cause } ) )
+				}
 			}
 			
 			static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {
