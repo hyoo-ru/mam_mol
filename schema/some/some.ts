@@ -25,18 +25,22 @@ namespace $ {
 			): $mol_schema_issues<Value> {
 				const issues = []
 				const errors = []
-				for( const Variant of Variants ) try {
-					const iter = Variant.issues_lazy( value, path )
-					const first = iter.next()
-					if( first.done ) return
-					issues.push((function* () {
-						yield first.value
-						yield* iter
-					})())
-				} catch( error ) {
-					if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
-					else errors.push( error )
+				
+				for( const Variant of Variants ) {
+					try {
+						const iter = Variant.issues_lazy( value, path )
+						const first = iter.next()
+						if( first.done ) return
+						issues.push( (function* () {
+							yield first.value
+							yield* iter
+						})() )
+					} catch( error ) {
+						if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
+						else errors.push( error )
+					}
 				}
+				
 				if( errors.length === 0 )
 					yield { message: 'Wrong variant', path, issues: merge( issues ), value, schema: this }
 				else {
@@ -44,7 +48,7 @@ namespace $ {
 						path, value, schema: this,
 						issues: issues.map( i => Array.from( i, $mol_schema_issue_eager ) ),
 					}
-					if( errors.length === 1 ) $mol_fail( new Error( "Wrong schema", { cause: { error: errors[0], ...cause } } ) )
+					if( errors.length === 1 ) $mol_fail( new Error( 'Wrong schema', { cause: { error: errors[0], ...cause } } ) )
 					else $mol_fail( new AggregateError( errors, 'Wrong schemas', { cause } ) )
 				}
 			}

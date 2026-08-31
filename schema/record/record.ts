@@ -17,7 +17,7 @@ namespace $ {
 				value: Value,
 				path: $mol_schema_issue_path = [],
 			): $mol_schema_issues<Value> {
-				if ( !value || Object.getPrototypeOf( Object.getPrototypeOf( value ) ) )
+				if( !value || Object.getPrototypeOf( Object.getPrototypeOf( value ) ) )
 					yield { message: 'Non record', path, value, schema: this }
 				else {
 					const errors = []
@@ -29,12 +29,12 @@ namespace $ {
 							yield* schema.issues_lazy( value_, path_ )
 						} catch( error ) {
 							if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
-							else errors.push(new Error("Wrong schema", { cause: { e: error, value: value_, path: path_, schema }  }) )
+							else errors.push(new Error( 'Wrong schema', { cause: { e: error, value: value_, path: path_, schema }  } ) )
 						}
 					}
 					if( errors.length === 0 ) return
 					else if( errors.length === 1 ) $mol_fail( errors[0] )
-					else $mol_fail( new AggregateError( errors, "Wrong schemas", { cause: { path, value, schema: this } }) )
+					else $mol_fail( new AggregateError( errors, 'Wrong schemas', { cause: { path, value, schema: this } } ) )
 				}
 			}
 			

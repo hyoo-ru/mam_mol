@@ -18,14 +18,14 @@ namespace $ {
 				value: Value,
 				path: $mol_schema_issue_path = [],
 			): $mol_schema_issues<Value> {
-				if ( !value || Object.getPrototypeOf( Object.getPrototypeOf( value ) ) )
+				if( !value || Object.getPrototypeOf( Object.getPrototypeOf( value ) ) )
 					yield { message: 'Non dictionary', path, value, schema: this }
 				else for( const key in value ) {
 					yield* Pair[0].issues_lazy( key, [ ...path, { key } ] ) as any
 					yield* Pair[1].issues_lazy( ( value as any )[ key ], [ ...path, key ] )
 				}
 			}
-
+			
 			static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {
 				
 				if( Object.getPrototypeOf( Object.getPrototypeOf( value ) ) ) return this.default
@@ -39,7 +39,7 @@ namespace $ {
 				return res
 			}
 			
-			static default = {} as Record< Pair[0]['default'], Pair[1]['default'] >
+			static default = {} as Record< Pair[0]['default'], Pair[1]['default'] > 
 			
 		}
 		

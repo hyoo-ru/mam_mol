@@ -35,8 +35,8 @@ namespace $ {
 		
 		/** Type-parser that fails of wrong values. */
 		static guard< This extends typeof $mol_schema_any, Value >( this: This, value: Value ): Value & This['default'] {
-			const { value: issue }  = this.issues_lazy( value ).next()
-			if (!issue) return value
+			const { value: issue } = this.issues_lazy( value ).next()
+			if( !issue ) return value
 			return $mol_fail( new TypeError( issue.message, { cause: {
 				value,
 				schema: this,
@@ -77,11 +77,12 @@ namespace $ {
 		}
 
 	}
+
 	type Issue<Value> = Omit< $mol_schema_issue<Value>, 'issues' > & { issues?: Issue<Value>[] }
 	export function $mol_schema_issue_eager< Value >( issue: $mol_schema_issue<Value> ) {
 		const { issues, ...i } = issue
-		if( issues ) Object.defineProperty( i, "issues", {
-			get: $mol_memo.func( () => Array.from( issues, $mol_schema_issue_eager ) )
+		if( issues ) Object.defineProperty( i, 'issues', {
+			get: $mol_memo.func( ()=> Array.from( issues, $mol_schema_issue_eager ) )
 		} )
 		return i as Issue<Value>
 	}
