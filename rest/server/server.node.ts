@@ -169,7 +169,7 @@ namespace $ {
 				
 			} )
 			
-			socket.on( 'end', onclose )
+			socket.on( 'end', ()=> { onclose(); socket.end() } )
 			socket.on( 'error', onclose )
 			
 			socket.on( 'data', ( chunk: Buffer< ArrayBuffer > )=> this.ws_income( chunk, upgrade, socket ) )
