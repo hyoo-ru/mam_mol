@@ -1,9 +1,0 @@
-$mol_pop_over $mol_pop
-	showed <= hovered? false
-	attr *
-		^
-		tabindex 0
-	event *
-		^
-		mouseenter? <=> event_show? null
-		mouseleave? <=> event_hide? null

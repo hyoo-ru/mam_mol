@@ -1,9 +1,0 @@
-{
-	"version": 3,
-	"sources": [
-		"mol/theme/auto/auto.view.tree"
-	],
-	"mappings": "AAAA;AAAA;AAAA,AAAA,6BAAgB,oBAAhB;AAE8B,AAAA,WAAM;AAAf,AAAA,YAAS,YAF9B,eAE8B;AAD7B,AAAA,YAAO;AACP,AAAA,WAAK;AAAA,AAAE,gBAAa,YAFrB,eAEqB,WAAb;AAAF;AAFN;AAAA;AAAA;",
-	"file": "auto.view.tree.d.ts",
-	"sourceRoot": "../../../.."
-}

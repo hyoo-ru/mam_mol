@@ -1,4 +1,0 @@
-$mol_link_support $mol_link
-	hint @ \Discuss the project
-	sub /
-		<= Icon $mol_icon_face_agent

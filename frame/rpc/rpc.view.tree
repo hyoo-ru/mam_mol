@@ -1,8 +1,0 @@
-$mol_frame_rpc $mol_frame
-	rpc $mol_rpc_iframe
-		frame_window <= window
-		remote => remote
-		handlers <= handlers *
-	auto /
-		^
-		<= remote

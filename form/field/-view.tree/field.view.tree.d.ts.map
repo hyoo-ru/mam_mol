@@ -1,9 +1,0 @@
-{
-	"version": 3,
-	"sources": [
-		"mol/form/field/field.view.tree"
-	],
-	"mappings": "AAAA;AAAA;AAAA,AAQG;AAAA,AAAI;AAAA;AAAJ,cADM,SACN;AAAA;AARH,6BAAgB,qBAAhB;AAG0B,AAAA,YAAW,MAAL;AAG3B,AAAA,WAAM;AAEC,AAAA,UAAK;AADZ,AAAA,UAAI;AAEK,AAAA,cAAQ;AARrB,AAAA,WAAK;AAAA,AAEJ,2BAAwB,YAH1B,eAG0B,WAAxB;AAFI,GACJ,GADD,YADe,YACf;AAGA,AAAA,WAAK;AACL,AAAA,YAAM;AAIN,AAAA,cAAQ;AATT;AAAA;AAAA;",
-	"file": "field.view.tree.d.ts",
-	"sourceRoot": "../../../.."
-}

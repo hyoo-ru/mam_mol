@@ -1,4 +1,0 @@
-$mol_float $mol_view
-	style *
-		^
-		minHeight \auto

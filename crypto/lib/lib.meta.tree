@@ -1,7 +1,0 @@
-include \/mol/crypto/sacred
-include \/mol/crypto/sacred/id
-include \/mol/crypto/sacred/pass
-include \/mol/crypto/sacred/shared
-include \/mol/crypto/key
-include \/mol/crypto/hash
-include \/mol/crypto/salt

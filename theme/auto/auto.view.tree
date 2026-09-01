@@ -1,3 +1,0 @@
-$mol_theme_auto $mol_plugin
-	light \$mol_theme_light
-	attr * mol_theme <= theme <= dark \$mol_theme_dark

@@ -1,3 +1,0 @@
-$mol_transit $mol_ghost
-	style * animationName <= animation_name_style \
-	event * animationend? <=> reset? null

@@ -1,4 +1,0 @@
-// @ts-nocheck
-interface $node {
- 
-}
