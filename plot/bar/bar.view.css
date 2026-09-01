@@ -1,0 +1,13 @@
+[mol_plot_bar] {
+	stroke-linecap: butt;
+	stroke-width: 1rem;
+}
+
+[mol_plot_bar_sample] {
+	background: currentColor;
+	position: absolute;
+	top:0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}

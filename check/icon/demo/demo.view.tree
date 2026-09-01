@@ -1,0 +1,20 @@
+$mol_check_icon_demo $mol_example_small
+	title \Iconic checkboxes in various states
+	sub /
+		<= Base $mol_check_icon
+			Icon <= Base_icon $mol_icon_microphone
+			checked? <=> base_checked? false
+		-
+		<= Checked $mol_check_icon
+			Icon <= Checked_icon $mol_icon_microphone
+			checked? <=> checked_checked? true
+		-
+		<= Disabled $mol_check_box
+			Icon <= Disabled_icon $mol_icon_microphone
+			checked true
+			enabled false
+	tags /
+		\switch
+		\toggle
+	aspects /
+		\Widget/Control/Button

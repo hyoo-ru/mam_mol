@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/phone/phone.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_phone $mol_format\n\tmask* \\+___ (___) ___-__-__\n\tkeyboard \\tel\n"
+	],
+	"mappings": "AAAA,AAAA,mCAAW,wBAAX;AAAA,AACC;AAAA,AAAA,UAAO,sBAAP;AAAA;AACA;AAAA,AAAA,UAAU,KAAV;AAAA;AAFD,CAAA;"
+}

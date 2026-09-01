@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/plot/mark/hor/hor.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,gCAAmB,4BAAnB;AACC,AAAA,aAAO;AADR;AAAA;AAAA;",
+	"file": "hor.view.tree.d.ts",
+	"sourceRoot": "../../../../.."
+}

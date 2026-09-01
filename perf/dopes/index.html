@@ -1,0 +1,34 @@
+<!doctype html>
+<html style=" width : 100% ; height : 100% ; padding : 0 ">
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+
+<body style=" width : 100% ; height : 100% ; margin : 0 ; display : flex ; flex-direction : column ">
+<div mol_view_root="$mol_perf_dopes" tabindex="0">
+
+<script>
+if (!window.setImmediate) window.setImmediate = (function() {
+
+  var head = { }, tail = head; // очередь вызовов, 1-связный список
+
+  var ID = Math.random(); // уникальный идентификатор
+
+  function onmessage(e) {
+    if(e.data != ID) return; // не наше сообщение
+    head = head.next;
+    var func = head.func;
+    delete head.func;
+    func();
+  }
+
+  window.addEventListener('message', onmessage);
+  
+  return function(func) {
+    tail = tail.next = { func: func };
+    window.postMessage(ID, "*");
+  };
+  
+}());
+</script>
+<script src="web.js" charset="utf-8"></script>

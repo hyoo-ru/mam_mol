@@ -1,0 +1,23 @@
+$mol_page_demo $mol_example_large
+	title \Page with header, body and footer
+	sub /
+		<= Page $mol_page
+			tools /
+				<= Button_tools $mol_button_minor
+					title \Toolbar Button
+			body /
+				<= Text $mol_filler
+			foot /
+				<= Button_foot $mol_button_minor
+					title \Footer Button
+	tags /
+		\container
+		\header
+		\footer
+		\toolbar
+		\app
+		\bar
+		\bottom
+		\navigator
+	aspects /
+		\Widget/Layout

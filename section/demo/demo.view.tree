@@ -1,0 +1,12 @@
+$mol_section_demo $mol_example_small
+	title \Section with header
+	sub /
+		<= Section $mol_section
+			title \Section header
+			content /
+				<= Section_content $mol_filler
+	tags /
+		\container
+		\header
+	aspects /
+		\Widget/Layout

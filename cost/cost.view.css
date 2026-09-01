@@ -1,0 +1,24 @@
+[mol_cost] {
+	white-space: nowrap;
+	font-weight: normal;
+	display: inline;
+}
+
+[mol_cost_main] {
+	display: inline;
+}
+
+[mol_cost_prefix] {
+	font-weight: lighter;
+	display: inline;
+}
+
+[mol_cost_value] {
+	display: inline;
+}
+
+[mol_cost_postfix] {
+	font-weight: lighter;
+	display: inline;
+	white-space: pre-wrap;
+}

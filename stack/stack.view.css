@@ -1,0 +1,11 @@
+[mol_stack] {
+	display: grid;
+	/* width: max-content; */
+	/* height: max-content; */
+	align-items: flex-start;
+	justify-items: flex-start;
+}
+
+[mol_stack] > * {
+	grid-area: 1/1;
+}

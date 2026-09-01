@@ -1,0 +1,20 @@
+$mol_app_demo_menu $mol_page
+	names /string
+	widget_tags* /string
+	widget_aspects* /string
+	widget_title* \
+	search_start? null
+	body /
+		<= Filter $mol_search
+			query? <=> filter? \
+			- suggests <= filter_suggests
+		<= Tree $mol_tag_tree
+			Item* <= Option*
+			ids_tags <= ids_tags *
+			levels_expanded <= levels_expanded <= levels_expanded_default 0
+	Option* $mol_link
+		arg <= option_arg* *
+		sub /
+			<= Option_title* $mol_dimmer
+				haystack <= option_title* \
+				needle <= filter? \

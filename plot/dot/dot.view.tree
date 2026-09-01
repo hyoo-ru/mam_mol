@@ -1,0 +1,13 @@
+$mol_plot_dot $mol_plot_graph
+	points_max +Infinity
+	aspect 1
+	style *
+		^
+		stroke-width <= diameter 8
+	sub /
+		<= Hint
+		<= Curve $mol_svg_path
+			geometry <= curve \
+	-
+	Sample $mol_plot_graph_sample
+		color <= color

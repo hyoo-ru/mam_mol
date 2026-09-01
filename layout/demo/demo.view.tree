@@ -1,0 +1,10 @@
+$mol_layout_demo $mol_example_large
+	title \Custom flex layout engine
+	sub /
+		<= Sample $mol_canvas
+			paint <= paint null
+			context => context
+			width => width
+			height => height
+	aspects /
+		\Algorithm/Constraint

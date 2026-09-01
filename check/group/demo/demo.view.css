@@ -1,0 +1,7 @@
+[mol_check_group_demo] {
+	align-items: flex-start;
+}
+
+[mol_check_group_demo_all] {
+	box-shadow: 0 1px 0 0px var(--mol_theme_line);
+}

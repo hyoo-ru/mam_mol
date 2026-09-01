@@ -1,0 +1,20 @@
+$mol_float_demo $mol_example_large
+	title \Floating header example
+	sub /
+		<= Scroll $mol_scroll
+			sub /
+				<= Head $mol_float
+					sub /
+						<= Head_row $mol_row
+							sub /
+								<= Head_content $mol_paragraph
+									title \Float header
+				<= Content $mol_list
+					rows /
+						<= Filler1 $mol_filler
+						<= Filler2 $mol_filler
+	tags /
+		\scroll
+		\container
+	aspects /
+		\Widget/Float

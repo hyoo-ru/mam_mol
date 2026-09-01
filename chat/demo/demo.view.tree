@@ -1,0 +1,13 @@
+$mol_chat_demo $mol_example_small
+	title \Feed of comments for this page
+	sub /
+		<= Chat $mol_chat
+			seed \mol_chat_demo
+			pages => chat_pages
+		- <= Pages $mol_view
+			sub <= chat_pages
+	tags /
+		\communication
+	aspects /
+		\Integration
+		\Widget/Button

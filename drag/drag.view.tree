@@ -1,0 +1,16 @@
+$mol_drag $mol_ghost
+	event *
+		dragstart? <=> drag_start? <=> start? null
+		drag? <=> drag_move? <=> move? null
+		dragend? <=> drag_end? <=> end? null
+	attr *
+		draggable true
+		mol_drag_status <= status? \ready
+	transfer *
+		text/plain \
+		text/html \
+		text/uri-list \
+	allow_copy true
+	allow_link true
+	allow_move true
+	image <= dom_node

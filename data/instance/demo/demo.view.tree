@@ -1,0 +1,12 @@
+$mol_data_instance_demo $mol_example_code
+	code? \
+		\const Created = $mol_data_instance( Date )
+		\const created = Created( new Date ) // ✅
+		\
+		\Created( '2023-01-01' ) // ❌ 2023-01-01 is not a Date
+	tags /
+		\runtime
+		\validation
+		\instance
+	aspects /
+		\Algorithm/Assert

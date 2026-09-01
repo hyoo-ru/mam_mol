@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/data/email/demo/demo.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_data_email_demo $mol_example_code\n\tcode? \\\n\t\t\\const From = $mol_data_email\n\t\t\\const from = From( 'jin@example.org' ) // ✅\n\t\t\\\n\t\t\\From( 'jin' ) // ❌ jin is not a /.+@.+/\n\ttags /\n\t\t\\runtime\n\t\t\\validation\n\taspects /\n\t\t\\Algorithm/Assert\n\t\t\\Type/Email\n"
+	],
+	"mappings": "AAAA,AAAA,uDAAqB,8BAArB;AAAA,AACC;AAAA,AAAA;AAAA,UAAO,sHAAP;AAAA;AAKA;AAAA,AAAA,UAAK,CACH,SADG,EAEH,YAFG,CAAL;AAAA;AAGA;AAAA,AAAA,UAAQ,CACN,kBADM,EAEN,YAFM,CAAR;AAAA;AATD,CAAA;AACC,YADD,CACC,0CADD;"
+}

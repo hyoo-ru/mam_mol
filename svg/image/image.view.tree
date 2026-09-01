@@ -1,0 +1,16 @@
+$mol_svg_image $mol_svg
+	dom_name \image
+	pos /
+		0
+		0
+	size /
+		0
+		0
+	attr *
+		^
+		x <= pos_x \
+		y <= pos_y \
+		width <= size_x \
+		height <= size_y \
+		href <= uri \
+		preserveAspectRatio <= aspect \none

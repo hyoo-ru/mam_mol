@@ -1,0 +1,33 @@
+$mol_chart_demo_forces $mol_example_large
+	title \Fake wheel forces
+	samples_count 5000
+	points_max 2500
+	sub /
+		<= Chart $mol_chart
+			graphs /
+				<= Forces_left $mol_plot_dot
+					title <= forces_left_title \Left wheel
+					series_x <= forces_left_x /number
+					series_y <= forces_left_y /number
+					points_max <= points_max
+				<= Forces_right $mol_plot_dot
+					title <= forces_right_title \Right wheel
+					series_x <= forces_right_x /number
+					series_y <= forces_right_y /number
+					points_max <= points_max
+				<= Vert_ruler $mol_plot_ruler_vert
+					title <= vert_title \kN
+				<= Hor_ruler $mol_plot_ruler_hor
+					title <= hor_title \cm
+					series_x <= forces_left_x
+				<= Cross $mol_plot_mark_cross
+					graphs /
+						<= Forces_left
+						<= Forces_right
+	tags /
+		\plot
+		\visualization
+		\dashboard
+	aspects /
+		\Widget/Draw/Chart/Line
+		\Widget/Draw/Chart/Dot

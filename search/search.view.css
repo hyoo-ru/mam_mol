@@ -1,0 +1,26 @@
+[mol_search] {
+	align-self: flex-start;
+	flex: auto;
+}
+
+[mol_search_anchor] {
+	flex: 1 1 auto;
+}
+
+[mol_search_query] {
+	flex-grow: 1;
+}
+
+[mol_search_menu] {
+	min-height: .75rem;
+	display: flex;
+}
+
+[mol_search_suggest] {
+	text-align: start;
+}
+
+[mol_search_suggest_label_high] {
+	color: var(--mol_theme_shade);
+	text-shadow: none;
+}

@@ -1,0 +1,7 @@
+$mol_time_interval_demo $mol_example_code
+	title \Time processing library sandbox
+	code? \
+		\const nextYear = new $mol_time_interval( '/P1Y' )
+		\const anniversary = nextYear.end.toString( 'YYYY-MM-DD hh:mm' )
+	aspects /
+		\Type/Time

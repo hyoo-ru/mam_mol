@@ -1,0 +1,6 @@
+[mol_app_supplies_enter] {
+	flex: 1000 0 40rem;
+	justify-content: center;
+	display: flex;
+	align-items: center;
+}

@@ -1,0 +1,3 @@
+namespace $ { $mol_style_attach( "mol/pick/time/time.view.css",
+ "/* [mol_pick_time_bubble] {\n\tpadding: var(--mol_gap_block);\n} */\n\n[mol_pick_time_pickers] {\n\tpadding: 0;\n\talign-items: center;\n}\n\n[mol_pick_time_hours],\n[mol_pick_time_minutes] {\n\tdisplay: grid;\n\tgrid-auto-flow: column;\n\tgrid-template-rows: repeat(6, 1fr);\n}\n\n[mol_pick_time_hours_option],\n[mol_pick_time_minutes_option] {\n\tjustify-content: center;\t\n}\n"
+) }

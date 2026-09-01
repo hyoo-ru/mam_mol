@@ -1,0 +1,12 @@
+$mol_data_const_demo $mol_example_code
+	code? \
+		\const OK = $mol_data_const({ done: true })
+		\const ok = OK({ done: true }) // ✅
+		\
+		\OK({ done: false }) // ❌ {"done":false} is not {"done":true}
+	tags /
+		\runtime
+		\validation
+		\equals
+	aspects /
+		\Algorithm/Assert

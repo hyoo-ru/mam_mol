@@ -1,0 +1,33 @@
+$mol_plot_demo $mol_example_large
+	title \Dynamic lightweight graphs
+	count? 20
+	frequency 8
+	sub /
+		<= Plot $mol_plot_pane
+			graphs /
+				<= Saturation $mol_plot_group
+					series_y <= saturation_series /
+					graphs /
+						<= Saturation_fill $mol_plot_fill
+						<= Saturation_line $mol_plot_line
+							type \dashed
+				<= Input $mol_plot_group
+					series_y <= input_series /
+					graphs /
+						<= Input_line $mol_plot_line
+						<= Input_dots $mol_plot_dot
+				<= Output $mol_plot_bar
+					series_y <= output_series /
+				<= Voltage $mol_plot_ruler_vert
+					title <= Voltage_title \V
+				<= Time $mol_plot_ruler_hor
+					title <= Time_title \ms
+	tags /
+		\visualization
+		\chart
+		\graph
+		\dashboard
+	aspects /
+		\Widget/Draw/Chart/Line
+		\Widget/Draw/Chart/Fill
+		\Widget/Draw/Chart/Dot

@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/check/box/box.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,4BAAe,mBAAf;AACC,AAAA,WAAK;AADN;AAAA;AAAA;",
+	"file": "box.view.tree.d.ts",
+	"sourceRoot": "../../../.."
+}

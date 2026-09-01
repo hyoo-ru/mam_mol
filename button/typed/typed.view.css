@@ -1,0 +1,24 @@
+[mol_button_typed] {
+	align-content: center;
+	align-items: center;
+	padding: var(--mol_gap_text);
+	border-radius: var(--mol_gap_round);
+	gap: var(--mol_gap_space);
+	user-select: none;
+	cursor: pointer;
+	min-width: 2.5rem;
+	min-height: 2.5rem;
+}
+
+[mol_button_typed][disabled] {
+	pointer-events: none;
+}
+
+[mol_button_typed]:hover ,
+[mol_button_typed]:focus-visible {
+	box-shadow: inset 0 0 0 100vmax var(--mol_theme_hover);
+}
+
+[mol_button_typed]:active {
+	color: var(--mol_theme_focus);
+}

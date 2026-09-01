@@ -1,0 +1,62 @@
+[mol_textarea] {
+	flex: 1 0 auto;
+	flex-direction: column;
+	vertical-align: top;
+	min-height: max-content;
+	white-space: pre-wrap;
+	word-break: break-word;
+	border-radius: var(--mol_gap_round);
+	font-family: monospace;
+	position: relative;
+	tab-size: 4;
+}
+
+[mol_textarea_view] {
+	pointer-events: none;
+	white-space: inherit;
+	font-family: inherit;
+	tab-size: inherit;
+	user-select: none;
+}
+
+[mol_textarea_view_copy] {
+	pointer-events: all;
+}
+
+[mol_textarea_clickable] > [mol_textarea_view] {
+	pointer-events: all;
+	user-select: auto;
+}
+
+[mol_textarea_clickable] > [mol_textarea_edit] {
+	user-select: none;
+}
+
+[mol_textarea_edit] {
+	font-family: inherit;
+	padding: var(--mol_gap_text);
+	color: transparent !important;
+	caret-color: var(--mol_theme_text);
+	resize: none;
+	text-align: inherit;
+	white-space: inherit;
+	border-radius: inherit;
+	overflow-anchor: none;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	tab-size: inherit;
+}
+
+[mol_textarea_sidebar_showed] [mol_textarea_edit] {
+	left: 1.75rem;
+	width: calc( 100% - 1.75rem );
+}
+
+[mol_textarea_edit]:hover + [mol_textarea_view] {
+	z-index: var(--mol_layer_hover);
+}
+
+[mol_textarea_edit]:focus + [mol_textarea_view] {
+	z-index: var(--mol_layer_focus);
+}

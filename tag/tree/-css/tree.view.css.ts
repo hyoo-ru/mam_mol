@@ -1,0 +1,3 @@
+namespace $ { $mol_style_attach( "mol/tag/tree/tree.view.css",
+ "[mol_tag_tree_tag_content] {\n\tpadding-inline-start: var(--mol_gap_block);\n    margin-inline-start: var(--mol_gap_block);\n    box-shadow: inset 1px 0 0 0 var(--mol_theme_line);\n}\n\n[mol_tag_tree_item] {\n\tpadding: var(--mol_gap_text);\n\tpadding-inline-start: 0;\n}\n\n[mol_tag_tree_tag_trigger_icon] {\n    margin-inline-start: -1rem;\n    margin-inline-end: -0.25rem;\n}\n"
+) }

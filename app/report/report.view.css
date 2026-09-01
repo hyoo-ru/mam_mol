@@ -1,0 +1,46 @@
+[mol_app_report] {
+	margin: 0;
+}
+
+[mol_app_report_body] {
+	flex-direction: column;
+}
+
+[mol_app_report_tabler] {
+	margin: 1rem;
+	border-collapse: collapse;
+	display: table;
+	width: max-content;
+}
+
+[mol_app_report_descriptor] {
+	display: block;
+	margin: 1rem;
+	white-space: pre-line;
+	line-height: 2rem;
+}
+
+[mol_app_report_rower] {
+	display: table-row;
+}
+
+[mol_app_report_cell] {
+	border: 1px solid var(--mol_theme_line);
+	padding: 0;
+	vertical-align: top;
+	display: table-cell;
+}
+
+[mol_app_report_cell]:not( [colspan="1"] ) {
+	font-weight: 500;
+}
+
+[mol_app_report_texter] {
+	display: flex;
+	padding: .5rem 1rem;
+}
+
+[mol_app_report_stringer] {
+	width: 100%;
+	min-height: 100%;
+}

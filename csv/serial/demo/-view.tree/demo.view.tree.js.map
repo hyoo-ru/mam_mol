@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/csv/serial/demo/demo.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_csv_serial_demo $mol_example_code\n\tcode? \\\n\t\t\\const data = [\n\t\t\\\t{ foo: '123', bar: '456' },\n\t\t\\\t{ foo: 'x\"xx', bar: 'y\"y\"y' },\n\t\t\\]\n\t\t\\const text = $mol_csv_serial( data )\n\ttags /\n\t\t\\table\n\taspects /\n\t\t\\Language/CSV\n\t\t\\Language/TSV\n"
+	],
+	"mappings": "AAAA,AAAA,uDAAqB,8BAArB;AAAA,AACC;AAAA,AAAA;AAAA,UAAO,6HAAP;AAAA;AAMA;AAAA,AAAA,UAAK,CACH,OADG,CAAL;AAAA;AAEA;AAAA,AAAA,UAAQ,CACN,cADM,EAEN,cAFM,CAAR;AAAA;AATD,CAAA;AACC,YADD,CACC,0CADD;"
+}

@@ -1,0 +1,13 @@
+$mol_password_demo $mol_example_small
+	title \Password input field based on $mol_string
+	sub /
+		<= Simple $mol_password
+			value? <=> pass? \Hello world
+		<= Hint $mol_password
+			value? <=> pass2? \
+			hint \Top secret
+	tags /
+		\input
+	aspects /
+		\Widget/Control
+		\Type/String

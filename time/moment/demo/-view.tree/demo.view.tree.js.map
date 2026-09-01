@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/time/moment/demo/demo.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_time_moment_demo $mol_example_code\n\ttitle \\Time processing library sandbox\n\tcode? \\\n\t\t\\const now = new $mol_time_moment\n\t\t\\const today = now.toString( 'YYYY-MM-DD' )\n\t\t\\const tomorrow = now.shift( 'P1D' ).toString( 'DD Mon' )\n\taspects /\n\t\t\\Type/Time\n"
+	],
+	"mappings": "AAAA,AAAA,yDAAsB,8BAAtB;AAAA,AACC;AAAA,AAAA,UAAO,iCAAP;AAAA;AACA;AAAA,AAAA;AAAA,UAAO,wIAAP;AAAA;AAIA;AAAA,AAAA,UAAQ,CACN,WADM,CAAR;AAAA;AAND,CAAA;AAEC,YAFD,CAEC,2CAFD;"
+}

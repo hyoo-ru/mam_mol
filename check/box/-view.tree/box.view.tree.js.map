@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/check/box/box.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_check_box $mol_check\n\tIcon $mol_icon_tick\n"
+	],
+	"mappings": "AAAA,AAAA,2CAAe,uBAAf;AAAA,AACC;AAAA,AAAK,0CAAL;AAAA,UAAK,GAAL;AAAA;AADD,CAAA;AACC,YADD,CACC,oCADD;"
+}

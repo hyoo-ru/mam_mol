@@ -1,0 +1,46 @@
+$mol_pick_demo $mol_example_small
+	title \Simple and complex popups
+	sub /
+		<= Info_pop $mol_pick
+			title \Info
+			bubble_content /
+				<= Info_content $mol_text
+					text <= info_content_text \
+						\## Info Pop-up
+						\**Markdown text content**
+		-
+		<= Options_pop $mol_pick
+			hint \Click to show options menu
+			trigger_content /
+				<= Options_trigger_icon $mol_icon_menu
+			bubble_content /
+				<= Options_content $mol_list rows /
+					<= Menu_item_copy $mol_button_copy
+						title \Copy
+						text \Hello, World!
+					<= Menu_item_download $mol_button_download
+						title \Download
+						blob <= Menu_item_download_blob $mol_blob
+						file_name \demo.bin
+					<= Menu_item_delete $mol_pick
+						align \center
+						trigger_content /
+							<= menu_item_delete_icon $mol_icon_trash_can_outline
+							<= menu_item_delete_label \Delete
+						bubble_content /
+							<= Delete_confirm $mol_button_major
+								title \Confirm
+								click? <=> delete_confirm? null
+	-
+	tags /
+		\pick
+		\popup
+		\info
+		\menu
+		\icon
+		\container
+		\confirm
+		\modal
+	aspects /
+		\Widget/Float
+		\Widget/Control/Button/Picker

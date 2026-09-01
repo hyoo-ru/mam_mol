@@ -1,0 +1,31 @@
+$mol_format_demo $mol_example_small
+	title \Formatted string input/output
+	sub /
+		<= Ip_card $mol_card
+			status <= ip
+			Content <= Ip $mol_format
+				mask \___.___.___.___
+				value? <=> ip? \
+		<= Phone_card $mol_card
+			status <= phone
+			Content <= Phone $mol_phone
+				value? <=> phone? \
+		<= Card_card $mol_card
+			status <= card
+			Content <= Card $mol_format
+				mask \____ ____ ____ ____
+				value? <=> card? \
+		<= Moment_card $mol_card
+			status <= moment
+			Content <= Moment $mol_format
+				mask \__.__.____ __:__
+				value? <=> moment? \
+	tags /
+		\phone
+		\ip
+		\car
+		\datetime
+		\input
+	aspects /
+		\Widget/Control
+		\Type/String

@@ -1,0 +1,7 @@
+$mol_deck $mol_list
+	items /$mol_view
+	rows /$mol_view
+		<= Switch $mol_switch
+			value? <=> current? \0
+			options <= switch_options *
+		<= Content $mol_view

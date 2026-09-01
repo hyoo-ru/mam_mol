@@ -1,0 +1,45 @@
+[mol_calendar] {
+	display: table;
+	font-family: monospace;
+}
+
+[mol_calendar_head] {
+	display: table-caption;
+	background: inherit;
+}
+
+[mol_calendar_title] {
+	justify-content: center;
+}
+
+[mol_calendar_weekdays] ,
+[mol_calendar_week] {
+	display: table-row;
+	padding: 0;
+}
+
+[mol_calendar_day] {
+	display: table-cell;
+	padding: .25rem .5rem;
+	text-align: center;
+	word-break: normal;
+	box-shadow: none;
+	border-radius: var(--mol_gap_round);
+}
+
+[mol_calendar_weekday] {
+	color: var(--mol_theme_shade);
+	border-bottom: 1px solid var(--mol_theme_line);
+}
+
+[mol_calendar_holiday] {
+	color: var(--mol_theme_special);
+}
+
+[mol_calendar_today] {
+	font-weight: bolder;
+}
+
+[mol_calendar_ghost] {
+	opacity: .2;
+}

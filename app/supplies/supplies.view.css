@@ -1,0 +1,13 @@
+[mol_app_supplies] {
+	flex: 1 1 auto;
+	align-self: stretch;
+	display: flex;
+}
+
+[mol_app_supplies_list] {
+	flex: 0 0 40rem;
+}
+
+[mol_app_supplies_detail] {
+	flex: 1000 0 80rem;
+}

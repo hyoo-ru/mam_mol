@@ -1,0 +1,22 @@
+$mol_plot_map_heat_demo $mol_example_large
+	title \Dynamic Heat Map Graphs
+	count_x 20
+	count_y 200
+	count_z 20
+	sub /
+		<= Plot $mol_plot_pane
+			scale_y? => zoom?
+			zoom? <=> zoom?
+			graphs /
+				<= Terrain $mol_plot_map_heat
+					series_x <= terrain_x /number
+					series_y <= terrain_y /number
+					series_z <= terrain_z /number
+	tags /
+		\$mol_plot_pane
+		\visualization
+		\heatmap
+		\graph
+		\dashboard
+	aspects /
+		\Widget/Draw/Chart/Heat

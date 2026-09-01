@@ -1,0 +1,32 @@
+$mol_nav_demo $mol_example
+	title \Number input control with various configuration
+	plugins /
+		<= Nav $mol_nav
+			keys_x <= tab_list
+			current_x? <=> tab_current?
+			keys_y <= row_list
+			current_y? <=> row_current?
+	sub /
+		<= Demo_items $mol_card
+			content /
+				<= Tab_list $mol_switch
+					keys => tab_list
+					value? <=> tab_current? \
+					options *
+						first \First
+						second \Second
+						third \Third
+				<= Row_list $mol_switch
+					keys => row_list
+					value? <=> row_current? \
+					options *
+						first \First
+						second \Second
+						third \Third
+			status \Select option and use keys to switch
+	tags /
+		\navigation
+	aspects /
+		\Widget/Plugin
+		\Controler/Keyboard
+

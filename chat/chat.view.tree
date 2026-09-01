@@ -1,0 +1,21 @@
+$mol_chat $mol_link
+	seed \
+	opened false
+	arg * mol_chat \
+	hint <= title
+	sub /
+		<= Icon $mol_icon_forum_outline
+	pages /
+		<= Page $mol_page
+			title <= title @ \Discussion
+			tools /
+				<= Esternal $mol_link
+					uri <= standalone \
+					sub /
+						<= Standalone_icon $mol_icon_open_in_new
+				<= Close $mol_link
+					arg * mol_chat null
+					sub /
+						<= Close_icon $mol_icon_close
+			Body <= Embed $mol_frame
+				uri <= embed \

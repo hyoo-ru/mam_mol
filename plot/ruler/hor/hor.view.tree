@@ -1,0 +1,7 @@
+$mol_plot_ruler_hor $mol_plot_ruler
+	title_align \start
+	label_align \middle
+	title_pos_x \0
+	title_pos_y \100%
+	label_pos_y* <= title_pos_y
+	background_width \100%

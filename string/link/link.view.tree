@@ -1,0 +1,13 @@
+$mol_string_link $mol_view
+	attr *
+		^
+		mol_string_link_editing <= editing <= enabled true
+	sub /
+		<= View $mol_link
+			title <= title
+			hint <= hint_view \
+			uri <= value
+		<= Edit $mol_string
+			enabled <= enabled
+			value? <=> value? \
+			hint <= hint_edit <= hint <= title \

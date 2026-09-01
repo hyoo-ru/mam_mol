@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/plot/ruler/vert/vert.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,kCAAqB,wBAArB;AACC,AAAA,kBAAa;AACb,AAAA,kBAAa;AACb,AAAA,kBAAa;AACb,AAAA,yBAAgB,YAJjB,oBAIiB;AAChB,AAAA,wBAAmB;AACnB,AAAA,uBAAoB,YANrB,oBAMqB;AANrB;AAAA;AAAA;",
+	"file": "vert.view.tree.d.ts",
+	"sourceRoot": "../../../../.."
+}

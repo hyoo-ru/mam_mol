@@ -1,0 +1,15 @@
+$mol_text_code_demo $mol_example_small
+	title \Markdow visualization example
+	sub /
+		<= Text $mol_text_code
+			sidebar_showed true
+			text <= source \
+			syntax <= syntax null
+			uri_resolve* <= uri_resolve* \
+	tags /
+		\text
+		\code
+		\syntax highlighting
+	aspects /
+		\Widget/Text
+		\Type/String

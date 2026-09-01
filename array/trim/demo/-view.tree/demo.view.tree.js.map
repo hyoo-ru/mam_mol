@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/array/trim/demo/demo.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_array_trim_demo $mol_example_code\n\tcode? \\\n\t\t\\const res = $mol_array_trim([\n\t\t\\\tundefined,\n\t\t\\\tnull,\n\t\t\\\t0,\n\t\t\\\tfalse,\n\t\t\\\tnull,\n\t\t\\\tundefined,\n\t\t\\\tundefined,\n\t\t\\])\n\taspects /\n\t\t\\Type/List\n"
+	],
+	"mappings": "AAAA,AAAA,uDAAqB,8BAArB;AAAA,AACC;AAAA,AAAA;AAAA,UAAO,+GAAP;AAAA;AAUA;AAAA,AAAA,UAAQ,CACN,WADM,CAAR;AAAA;AAXD,CAAA;AACC,YADD,CACC,0CADD;"
+}

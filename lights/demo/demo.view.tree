@@ -1,0 +1,17 @@
+$mol_lights_demo $mol_example_small
+	title \Switcher between light/dark themes (usually for `$mol_theme_auto` plugin).
+	sub /
+		<= Sample $mol_view
+			plugins /
+				<= Theme $mol_theme_auto
+			sub /
+				<= Lighter $mol_lights_toggle
+	tags /
+		\light
+		\dark
+		\theme
+		\switcher
+		\toggle
+	aspects /
+		\Widget/Control/Button
+		\Theme

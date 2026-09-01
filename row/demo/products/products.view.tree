@@ -1,0 +1,16 @@
+$mol_row_demo_products $mol_example
+	title \Product catalog
+	count 100
+	Product* $mol_card
+		minimal_width 110
+		minimal_height 100
+		title <= product_title* \
+	sub /
+		<= Products $mol_row
+			sub <= products /
+	tags /
+		\products
+		\grid
+		\scroll
+	aspects /
+		\Widget/Layout

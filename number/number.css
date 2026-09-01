@@ -1,0 +1,17 @@
+[mol_number] {
+	display: flex;
+	flex: 0 1 auto;
+	position: relative;
+	align-items: stretch;
+	max-width: 100%;
+}
+
+[mol_number_string] {
+	appearance: textfield;
+	flex: 1 1 7rem;
+	width: 7rem;
+}
+
+[mol_number_string]::-webkit-inner-spin-button {
+	display: none;
+}

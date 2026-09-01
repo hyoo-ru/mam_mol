@@ -1,0 +1,5 @@
+[mol_string_button]:not(:placeholder-shown):not(:focus):not(:hover):not(:disabled) {
+	color: var(--mol_theme_control);
+	background: transparent;
+	box-shadow: none;
+}

@@ -1,0 +1,15 @@
+$mol_meter_demo $mol_example_small
+	title \Real time offset and size metering
+	plugins /
+		<= Meter $mol_meter
+			top => top
+			height => height
+	sub /
+		<= Top $mol_view
+			sub /
+				\Offset from top: 
+				<= top
+		<= Height $mol_view
+			sub /
+				\Component height: 
+				<= height

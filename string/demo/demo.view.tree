@@ -1,0 +1,25 @@
+$mol_string_demo $mol_example_small
+	title \String input field in various states
+	sub /
+		<= Simple $mol_string
+			value? <=> name? \
+		<= Hint $mol_string
+			hint \Batman
+			value? <=> name? \
+		<= Broken $mol_string
+			hint \Broken
+			value? <=> broken? \
+		<= Filled $mol_string
+			value? <=> name2? \Jocker
+		<= Disabled $mol_string
+			disabled true
+			value? <=> name2?
+		<= Button $mol_string_button
+			value? <=> name2?
+	tags /
+		\input
+		\text
+		\field
+	aspects /
+		\Widget/Control
+		\Type/String

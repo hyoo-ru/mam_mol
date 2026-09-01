@@ -1,0 +1,47 @@
+	<html>
+		<body>
+			
+			<div id="root">
+				
+				<div id="form">
+					<input id="nickname" value="Jin" />
+					<button id="clear">Clear</button>
+					<label>
+						<input id="greet" type="checkbox" /> Greet
+					</label>
+				</div>
+				
+				<p id="greeting">...</p>
+				
+			</div>
+			
+			<script src="https://unpkg.com/mol_wire_dom"></script>
+			
+			<script>
+
+				// Make DOM reactive
+				$mol_wire_dom( document.body )
+				
+				// Make globals reactive
+				$mol_wire_patch( globalThis )
+	
+				// Take references to elements
+				const root = document.getElementById( 'root' )
+				const form = document.getElementById( 'form' )
+				const nickname = document.getElementById( 'nickname' )
+				const greet = document.getElementById( 'greet' )
+				const greeting = document.getElementById( 'greeting' )
+				const clear = document.getElementById( 'clear' )
+				
+				// Setup invariants
+				root.childNodes = ()=> greet.checked ? [ form, greeting ] : [ form ]
+				greeting.textContent = ()=> `Hello ${nickname.value}!`
+				clear.style = ()=> ({ zoom: 1 / devicePixelRatio })
+				
+				// Set up handlers
+				clear.onclick = ()=> nickname.value = ''
+				
+			</script>
+			
+		</body>
+	</html>

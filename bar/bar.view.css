@@ -1,0 +1,5 @@
+[mol_bar] {
+	display: flex;
+	/* box-shadow: inset 0 0 0 1px var(--mol_theme_line); */
+	border-radius: var(--mol_gap_round);
+}

@@ -1,0 +1,20 @@
+/* [mol_pick_time_bubble] {
+	padding: var(--mol_gap_block);
+} */
+
+[mol_pick_time_pickers] {
+	padding: 0;
+	align-items: center;
+}
+
+[mol_pick_time_hours],
+[mol_pick_time_minutes] {
+	display: grid;
+	grid-auto-flow: column;
+	grid-template-rows: repeat(6, 1fr);
+}
+
+[mol_pick_time_hours_option],
+[mol_pick_time_minutes_option] {
+	justify-content: center;	
+}

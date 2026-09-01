@@ -1,0 +1,36 @@
+$mol_perf_uibench_table $mol_list
+	state null
+	dom_name \table
+	attr_static *
+		^
+		class \Table
+	sub <= rows /
+	Row* $mol_perf_uibench_table_row
+		state <= row_state* null
+
+$mol_perf_uibench_table_row $mol_view
+	state null
+	minimal_height 18
+	dom_name \tr
+	attr *
+		^
+		class <= classes \TableRow
+		data-id <= id 0
+	sub /
+		<= Head $mol_perf_uibench_table_cell
+			text <= head_text \
+		<= cells /
+	Cell* $mol_perf_uibench_table_cell
+		text <= cell_state* null
+
+$mol_perf_uibench_table_cell $mol_view
+	dom_name \td
+	attr_static *
+		^
+		class \TableCell
+	event *
+		^
+		click? <=> click? null
+	sub /
+		<= text \
+

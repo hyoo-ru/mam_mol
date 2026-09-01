@@ -1,0 +1,14 @@
+$mol_infinite $mol_list
+	before* /
+	after* /
+	row_ids? /
+	render_over 1
+	Row* $mol_view
+	Before* $mol_view
+		minimal_width 0
+		minimal_height 0
+		sub / <= before_load* null
+	After* $mol_view
+		minimal_width 0
+		minimal_height 0
+		sub / <= after_load* null

@@ -1,0 +1,13 @@
+$mol_filler_demo $mol_example_small
+	title \Prints large bulk of text
+	sub /
+		<= Filler $mol_filler
+			min_symbols 6000
+	tags /
+		\filler
+		\fake
+		\lorem
+		\ipsum
+		\dolor
+	aspects /
+		\Widget/Text

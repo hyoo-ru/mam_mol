@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/data/email/demo/demo.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,kCAAqB,0BAArB;AACC,AAAA,eAAO,MAAP,IAAO;AAKP,AAAA,WAAK;AAGL,AAAA,cAAQ;AATT;AAAA;AAAA;",
+	"file": "demo.view.tree.d.ts",
+	"sourceRoot": "../../../../.."
+}

@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/speck/speck.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,wBAAW,kBAAX;AAGK,AAAA,YAAM;AAFV,AAAA,YAAO;AACP,AAAA,UAAI;AAFL;AAAA;AAAA;",
+	"file": "speck.view.tree.d.ts",
+	"sourceRoot": "../../.."
+}

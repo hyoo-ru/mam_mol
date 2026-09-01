@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/bar/bar.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,sBAAS,kBAAT;AAAA;AAAA;AAAA;",
+	"file": "bar.view.tree.d.ts",
+	"sourceRoot": "../../.."
+}

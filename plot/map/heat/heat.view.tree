@@ -1,0 +1,17 @@
+$mol_plot_map_heat $mol_plot_group
+	series_z /number
+	graphs <= level_graphs /
+	Level* $mol_plot_map_heat_level
+		hint <= level_hint* \
+		points <= level_points* /
+		opacity <= level_opacity* \1
+		diameter <= level_diameter 10
+		aspect <= level_aspect 1
+	-
+	Sample $mol_plot_graph_sample
+		color <= color
+
+$mol_plot_map_heat_level $mol_plot_dot
+	style *
+		^
+		opacity <= opacity \1

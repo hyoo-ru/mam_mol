@@ -1,0 +1,26 @@
+$mol_check_expand_demo $mol_example_small
+	title \Checkbox-expand in various states
+	sub /
+		<= Demo_items $mol_list rows /
+			<= Labeled_base $mol_check_expand
+				checked? <=> base_expanded? false
+				title <= c1Label \Base
+			-
+			<= Labeled_expanded $mol_check_expand
+				title <= c2Label \Expanded
+				checked? <=> expanded_expanded? true
+			-
+			<= Disabled $mol_check_expand
+				title <= c5Label \Non expandable
+				disabled true
+			-
+			<= Empty_base $mol_check_expand
+				checked? <=> base_expanded? false
+			-
+			<= Empty_expanded $mol_check_expand
+				checked? <=> expanded_expanded? true
+	tags /
+		\fold
+	aspects /
+		\Widget/Control/Button
+		\Type/Boolean

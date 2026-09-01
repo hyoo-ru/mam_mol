@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/plot/fill/fill.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,4BAAe,uBAAf;AACC,AAAA,gBAAU;AADX;AAAA;AAAA;",
+	"file": "fill.view.tree.d.ts",
+	"sourceRoot": "../../../.."
+}

@@ -1,0 +1,9 @@
+$mol_array_chunks_demo $mol_example_code
+	code? \
+		\const res = $mol_array_chunks(
+		\	[ 1, 2, 3, 4, 5 ],
+		\	n => n % 2,
+		\)
+	aspects /
+		\Type/List
+		\Algorithm/Transform

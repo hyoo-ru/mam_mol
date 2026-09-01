@@ -1,0 +1,7 @@
+[mol_form] {
+	gap: var(--mol_gap_block);
+}
+
+[mol_form_body] {
+	gap: var(--mol_gap_block);
+}

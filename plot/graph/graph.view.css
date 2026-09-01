@@ -1,0 +1,13 @@
+[mol_plot_graph] {
+	stroke: currentColor;
+}
+
+[mol_plot_graph_sample] {
+	border-width: 0;
+	border-style: solid;
+}
+
+[mol_plot_graph_type="dashed"] {
+	stroke-dasharray: 4 4;
+	border-style: dashed;
+}

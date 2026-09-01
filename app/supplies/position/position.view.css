@@ -1,0 +1,62 @@
+[mol_app_supplies_position] {
+	flex: 1 1 auto;
+}
+[mol_app_supplies_position_row] {
+	align-items: stretch;
+	padding: 0;
+	box-shadow: none;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+[mol_app_supplies_position_row] > * {
+	align-items: baseline;
+	margin: 0;
+}
+
+[mol_app_supplies_position_main_group] {
+	flex: 1 1 12rem;
+	box-shadow: 0 0 0 1px var(--mol_theme_line);
+}
+
+[mol_app_supplies_position_addon_group] {
+	flex: 1 1 12rem;
+	box-shadow: 0 0 0 1px var(--mol_theme_line);
+}
+
+[mol_app_supplies_position_supply_group] {
+	flex: 1 1 24rem;
+	flex-direction: row-reverse;
+	box-shadow: 0 0 0 1px var(--mol_theme_line);
+}
+
+[mol_app_supplies_position_division_item] {
+	flex: 1000 1 6rem;
+}
+
+[mol_app_supplies_position_product_item] {
+	flex: 1000 1 6rem;
+}
+
+[mol_app_supplies_position_price_item] {
+	flex: 1 0 3rem;
+	align-items: flex-end;
+}
+
+[mol_app_supplies_position_quantity_item] {
+	flex: 1 0 4rem;
+	align-items: flex-end;
+}
+
+[mol_app_supplies_position_cost_item] {
+	flex: 1 0 3rem;
+	align-items: flex-end;
+}
+
+[mol_app_supplies_position_supply_date_item] {
+	flex: 0 0 9rem;
+}
+
+[mol_app_supplies_position_store_item] {
+	flex: 1 1 12rem;
+}

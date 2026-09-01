@@ -1,0 +1,3 @@
+namespace $ { $mol_style_attach( "mol/select/demo/colors/colors.view.css",
+ "[mol_select_demo_colors_color_option] {\n\tflex-wrap: nowrap;\n\tjustify-content: flex-start;\n\talign-items: center;\n}\n\n[mol_select_demo_colors_color_option] {\n\tpadding: .5rem;\n}\n\n[mol_select_demo_colors_color_option] > * {\n\tmargin: 0 .25rem;\n}\n\n[mol_select_demo_colors_color_preview] {\n\tbox-shadow: inset 0 0 0 1px var(--mol_theme_line);\n\ttext-align: start;\n\tpadding: .5rem;\n}\n"
+) }

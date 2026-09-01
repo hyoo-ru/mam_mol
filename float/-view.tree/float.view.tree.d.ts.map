@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/float/float.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,wBAAW,kBAAX;AACC,AAAA,YAAM;AAAA,AAEL,gBAAW,MAAX;AAFK,GACL,GADD,YADU,SACV;AADD;AAAA;AAAA;",
+	"file": "float.view.tree.d.ts",
+	"sourceRoot": "../../.."
+}

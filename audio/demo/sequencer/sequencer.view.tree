@@ -1,0 +1,46 @@
+$mol_audio_demo_sequencer $mol_example_small
+	title \WebAudio API example sequencer
+	Room $mol_audio_room
+		status? => room_status?
+		active? => room_active?
+		input /
+			<= Beep_track $mol_audio_melody
+				start => beep_track_start
+				active? => beep_track_active?
+				notes? <=> notes? \e e e _ e e e _ e g c d e _ _ _/2 f f f f f e e e e/2 e/2 d d e d _ g _
+				note_length? <=> note_length? .25
+				note_off_part? <=> note_off_part? .4
+	sub /
+		<= List $mol_list rows /
+			<= Note_settings $mol_row sub /
+				<= Note_length_field $mol_form_field
+					name \Note length, sec
+					control <= Note_length $mol_number
+						precision .05
+						value_min .05
+						value? <=> note_length?
+				<= Note_off_part_field $mol_form_field
+					name \Note off, part of length
+					control <= Note_off_part $mol_number
+						precision .1
+						value_min .1
+						value? <=> note_off_part?
+			<= Notes_field $mol_form_field
+				name \Notes
+				control <= Notes $mol_textarea
+					hint \Example: e _ c#5/2 _/2
+					value? <=> notes?
+			<= Beep_row $mol_row sub /
+				<= Beep_active $mol_check_icon
+					hint \Play / Pause
+					Icon <= Beep_active_icon $mol_icon_play_pause
+					checked? <=> beep_track_active?
+				<= Beep_play $mol_button_minor
+					click? <=> beep_track_start?
+					title \Play
+				<= Beep_status $mol_audio_status status? <=> room_status?
+	tags /
+		\sound
+		\sequencer
+	aspects /
+		\Media/Audio

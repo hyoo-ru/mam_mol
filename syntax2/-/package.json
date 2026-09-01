@@ -1,0 +1,23 @@
+{
+  "name": "mol_syntax2",
+  "version": "0.0.1",
+  "exports": {
+    "node": {
+      "import": "./node.mjs",
+      "default": "./node.js"
+    },
+    "types": "./web.d.ts",
+    "import": "./web.mjs",
+    "default": "./web.js"
+  },
+  "main": "./web.js",
+  "module": "./web.mjs",
+  "browser": "./web.js",
+  "types": "./web.d.ts",
+  "keywords": [
+    "$mol_syntax2",
+    "$mol",
+    "$mol_fail"
+  ],
+  "dependencies": {}
+}

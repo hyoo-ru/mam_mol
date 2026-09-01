@@ -1,0 +1,17 @@
+{
+	"name": "mam",
+	"version": "1.11.0",
+	"bin": {
+		"mam": "./mol/build/bin"
+	},
+	"dependencies": {
+		"@types/node": "*",
+		"@types/express": "*",
+		"@types/compression": "*",
+		"@types/cors": "*",
+		"@types/body-parser": "*",
+		"@types/serve-index": "*",
+		"@types/jsdom": "*",
+		"@types/ws": "*"
+	}
+}

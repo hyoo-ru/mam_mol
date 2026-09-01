@@ -1,0 +1,24 @@
+$mol_book2_demo $mol_example_large
+	title \Adaprive layout for various sizes of screen
+	sub /
+		<= View $mol_book2
+			Placeholder <= Side $mol_view
+				sub / \Side
+			pages /
+				<= First $mol_view
+					sub / \First
+				<= Second $mol_view
+					sub / \Second
+				<= Third $mol_view
+					sub / \Third
+	tags /
+		\app
+		\page
+		\navigation
+		\transition
+		\multipage
+		\dialog
+		\breadcrumbs
+		\drawer
+	aspects /
+		\Widget/Layout

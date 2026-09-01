@@ -1,0 +1,32 @@
+namespace $ {
+	
+	export class $mol_rest_port_ws_std extends $mol_rest_port_ws {
+		
+		socket!: WebSocket
+		
+		origin() {
+			return this.socket.url
+		}
+
+		@ $mol_action
+		send_nil() {
+			if( this.socket.readyState !== this.socket.OPEN ) return
+			this.socket.send( '' )
+		}
+		
+		@ $mol_action
+		send_bin( data: Uint8Array< ArrayBuffer > ) {
+			if( this.socket.readyState !== this.socket.OPEN ) return
+			this.socket.send( data )
+		}
+		
+		@ $mol_action
+		send_text( data: string ) {
+			if( this.socket.readyState !== this.socket.OPEN ) return
+			const bin = $mol_charset_encode( data )
+			this.socket.send( bin )
+		}
+		
+	}
+	
+}

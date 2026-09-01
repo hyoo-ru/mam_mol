@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/switch/switch.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_switch $mol_check_list\n\tvalue? \\\n"
+	],
+	"mappings": "AAAA,AAAA,qCAAY,4BAAZ;AAAA,AACC;AAAA,AAAA;AAAA,UAAQ,EAAR;AAAA;AADD,CAAA;AACC,YADD,CACC,kCADD;"
+}

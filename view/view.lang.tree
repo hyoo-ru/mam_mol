@@ -1,0 +1,20 @@
+view kind
+	[] - comment \Whole subtree is ignored
+	[: $ class \Fully Qualified Name of class
+	[] * struct \Mapping keys to values
+	[: / struct \Array
+	[] ^ operator \Spread array/struct property here
+	[] @ operator \Localizable value
+	[] <= operator \Hack controlled object to take owner's value
+	[] => operator \Alias controlled object's property to owner
+	[] <=> operator \Hack controlled object to take/put owner's value
+	[] NaN number \Not a Number
+	[: + number \Positive Number
+	[: - number \Negative Number
+	[] true keyword \Boolean
+	[] false keyword \Boolean
+	[] null keyword \Any type
+	[] \
+		string \Raw string without escaping
+	[: \
+		property \Object property

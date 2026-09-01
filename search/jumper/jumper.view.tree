@@ -1,0 +1,15 @@
+$mol_search_jumper $mol_search
+	Root $mol_view
+	Index $mol_paginator
+		value? <=> index? 0
+		forward? => forward?
+		backward? => backward?
+	plugins /
+		^
+		<= Backward $mol_hotkey
+			mod_shift true
+			key * enter? <=> backward?
+		<= Forward $mol_hotkey
+			key *
+				enter? <=> forward?
+				escape? <=> escape? null

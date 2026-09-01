@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/phone/phone.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,wBAAW,oBAAX;AACC,AAAA,kBAAO;AACP,AAAA,eAAU;AAFX;AAAA;AAAA;",
+	"file": "phone.view.tree.d.ts",
+	"sourceRoot": "../../.."
+}

@@ -1,0 +1,49 @@
+$mol_app_questions $mol_book2
+	plugins /
+		<= Themme $mol_theme_auto
+	-
+	Menu $mol_page
+		title <= title_default @ \Questions
+		tools /
+			<= Lights $mol_lights_toggle
+			<= Source_link $mol_link_source
+				uri \https://github.com/eigenmethod/mol/tree/master/app/questions
+		body /
+			<= Menu_links $mol_list
+				rows <= menu_rows /
+	-
+	Details* $mol_page
+		title <= question_title* \
+		tools /
+			<= Details_permalink* $mol_link
+				uri <= question_permalink* \
+				sub /
+					<= Details_permalink_icon* $mol_icon_external
+			<= Details_close* $mol_link
+				sub /
+					<= Details_close_icon* $mol_icon_close
+				arg *
+					question null
+		body /
+			<= Details_descr* $mol_text
+				text <= question_descr* \
+			<= Answers* $mol_list
+				rows <= answers* /
+	-
+	Answer* $mol_text
+		text <= question_answer* \
+	-
+	Question_link* $mol_link
+		minimal_width 64
+		minimal_height 64
+		arg <= question_arg_by_index* *
+		sub /
+			<= Question_title* $mol_view
+				sub /
+					<= question_title_by_index* \
+			<= Question_tags* $mol_view
+				sub <= question_tags_by_index* /
+	-
+	Tag* $mol_view
+		sub /
+			<= tag_name* \ 

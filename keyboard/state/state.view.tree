@@ -1,0 +1,6 @@
+$mol_keyboard_state $mol_plugin
+	event *
+		^
+		keydown? <=> down? null
+		keyup? <=> up? null
+	key *

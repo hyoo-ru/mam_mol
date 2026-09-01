@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/example/large/large.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_example_large $mol_example\n"
+	],
+	"mappings": "AAAA,AAAA,mDAAmB,yBAAnB,EAAA;"
+}

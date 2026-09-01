@@ -1,0 +1,8 @@
+$mol_time_moment_demo $mol_example_code
+	title \Time processing library sandbox
+	code? \
+		\const now = new $mol_time_moment
+		\const today = now.toString( 'YYYY-MM-DD' )
+		\const tomorrow = now.shift( 'P1D' ).toString( 'DD Mon' )
+	aspects /
+		\Type/Time

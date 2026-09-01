@@ -1,0 +1,36 @@
+[mol_app_questions_menu] {
+	flex: 0 0 40rem;
+}
+
+[mol_app_questions_question_link] {
+	display: block;
+	justify-content: flex-start;
+	align-items: flex-start;
+}
+
+[mol_app_questions_question_tags] {
+	flex: 1 0 auto;
+	color: var(--mol_theme_shade);
+	display: flex;
+	flex-wrap: wrap;
+}
+
+[mol_app_questions_tag] {
+	margin-right: .5rem;
+}
+
+[mol_app_questions_question_title] {
+	flex: 1000 1 auto;
+}
+
+[mol_app_questions_details] {
+	flex: 1 0 60rem;
+}
+
+[mol_app_questions_details_body] {
+	padding: 0;
+}
+
+[mol_app_questions_answer] {
+	margin: 1rem;
+}

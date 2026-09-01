@@ -1,0 +1,24 @@
+$mol_select_demo_month $mol_example_small
+	title \Month picker with filter
+	sub /
+		<= Month $mol_select
+			no_options_message \Not found
+			value? <=> month? \jan
+			dictionary <= months *
+				jan \January
+				feb \February
+				mar \March
+				apr \April
+				may \May
+				jun \June
+				jul \July
+				aug \August
+				sep \September
+				oct \October
+				nov \November
+				dec \December
+	tags /
+		\select
+		\month
+	aspects /
+		\Widget/Control

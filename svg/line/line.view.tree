@@ -1,0 +1,11 @@
+$mol_svg_line $mol_svg
+	dom_name \line
+	pos /
+		<= from /
+		<= to /
+	attr *
+		^
+		x1 <= from_x \
+		y1 <= from_y \
+		x2 <= to_x \
+		y2 <= to_y \

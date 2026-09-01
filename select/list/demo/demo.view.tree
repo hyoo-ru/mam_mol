@@ -1,0 +1,33 @@
+$mol_select_list_demo $mol_example_small
+	title \Friends picker
+	sub /
+		<= Demo_items $mol_list
+			rows /
+				<= Friends $mol_select_list
+					value? <=> friends? /
+					dictionary <= suggestions *string
+						jocker \Jocker
+						harley \Harley Quinn
+						penguin \Penguin
+						riddler \Riddler
+						bane \Bane
+						freeze \Mister Freeze
+						clay \Clayface
+						mask \Black Mask
+				<= Friends_disabled $mol_select_list
+					value? <=> friends? /
+					dictionary <= suggestions
+					enabled false
+				<= Friends_lazy $mol_select_list
+					value? <=> friends_lazy? /
+					option_title* <= option_title* \
+					filter_pattern? => filter_pattern?
+					pick_enabled true
+					dictionary <= suggestions_lazy <= suggestions
+	tags /
+		\select
+		\tags
+		\multiselect
+	aspects /
+		\Widget/Control
+		\Type/List

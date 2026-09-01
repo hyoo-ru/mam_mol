@@ -1,0 +1,32 @@
+$mol_check_box_demo $mol_example_small
+	title \Checkboxes in various states
+	sub /
+		<= Demo_items $mol_list rows /
+			<= Labeled_base $mol_check_box
+				checked? <=> base_checked? false
+				title <= c1Label \Base
+			-
+			<= Labeled_checked $mol_check_box
+				title <= c2Label \Checked
+				checked? <=> checked_checked? true
+			-
+			<= Labeled_disabled $mol_check_box
+				title <= c6Label \Disabled
+				checked true
+				enabled false
+			-
+			<= Alone_base $mol_check_box
+				checked? <=> base_checked? false
+			-
+			<= Alone_checked $mol_check_box
+				checked? <=> checked_checked? true
+			-
+			<= Alone_disabled $mol_check_box
+				checked true
+				enabled false
+	tags /
+		\switch
+		\toggle
+	aspects /
+		\Widget/Control/Button
+		\Type/Boolean

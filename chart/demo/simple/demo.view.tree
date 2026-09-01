@@ -1,0 +1,43 @@
+$mol_chart_demo_simple $mol_example_large
+	title \Simple chart with hadcoded series
+	sub /
+		<= Chart $mol_chart
+			graphs /
+				<= Plan $mol_plot_bar
+					title <= plan_title \Plan
+					series_y <= plan /
+						10
+						20
+						30
+						40
+				<= Fact $mol_plot_group
+					title <= fact_title \Fact
+					series_y <= facts /
+						5
+						10
+						30
+					graphs /
+						<= Fact_line $mol_plot_line
+						<= Fact_dots $mol_plot_dot
+				<= Vert_ruler $mol_plot_ruler_vert
+					title <= vert_title \pcs
+				<= Marker_hor $mol_plot_mark_hor
+					title <= marker_hor_title \Months
+					labels <= months /string
+						\January
+						\February
+						\March
+						\April
+				<= Marker_cross $mol_plot_mark_cross
+					labels <= months
+					graphs /
+						<= Plan
+						<= Fact_dots
+	tags /
+		\plot
+		\visualization
+		\dashboard
+	aspects /
+		\Widget/Draw/Chart/Line
+		\Widget/Draw/Chart/Dot
+		\Widget/Draw/Chart/Bar

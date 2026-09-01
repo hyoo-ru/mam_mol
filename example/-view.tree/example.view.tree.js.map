@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/example/example.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_example $mol_view\n\ttags /string\n\taspects /string\n"
+	],
+	"mappings": "AAAA,AAAA,uCAAa,sBAAb;AAAA,AACC;AAAA,AAAA,UAAK,EAAL;AAAA;AACA;AAAA,AAAA,UAAQ,EAAR;AAAA;AAFD,CAAA;"
+}

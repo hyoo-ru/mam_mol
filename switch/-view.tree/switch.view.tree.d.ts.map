@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/switch/switch.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,yBAAY,wBAAZ;AACC,AAAA,gBAAQ,MAAR,IAAQ;AADT;AAAA;AAAA;",
+	"file": "switch.view.tree.d.ts",
+	"sourceRoot": "../../.."
+}

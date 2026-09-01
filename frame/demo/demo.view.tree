@@ -1,0 +1,11 @@
+$mol_frame_demo $mol_example_large
+	sub /
+		<= Frame $mol_frame
+			title \Another page inside that
+			uri \https://mol.hyoo.ru/
+	tags /
+		\iframe
+		\container
+	aspects /
+		\Widget/Integration
+		\Widget/Island

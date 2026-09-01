@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/data/boolean/demo/demo.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_data_boolean_demo $mol_example_code\n\tcode? \\\n\t\t\\const IsAdult = $mol_data_boolean\n\t\t\\const isAdult = IsAdult( false ) // ✅\n\t\t\\\n\t\t\\IsAdult( 0 ) // ❌ 0 is not a boolean\n\ttags /\n\t\t\\runtime\n\t\t\\validation\n\taspects /\n\t\t\\Algorithm/Assert\n\t\t\\Type/Boolean\n"
+	],
+	"mappings": "AAAA,AAAA,2DAAuB,8BAAvB;AAAA,AACC;AAAA,AAAA;AAAA,UAAO,kHAAP;AAAA;AAKA;AAAA,AAAA,UAAK,CACH,SADG,EAEH,YAFG,CAAL;AAAA;AAGA;AAAA,AAAA,UAAQ,CACN,kBADM,EAEN,cAFM,CAAR;AAAA;AATD,CAAA;AACC,YADD,CACC,4CADD;"
+}

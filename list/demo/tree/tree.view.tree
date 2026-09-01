@@ -1,0 +1,19 @@
+$mol_list_demo_tree $mol_example_large
+	title \Large list of rows with dynamic content
+	sub /
+		<= Content $mol_list
+			rows <= root_rows /
+	Row* $mol_expander
+		label / <= Row_title* $mol_paragraph sub / <= row_title* \
+		expanded? <=> row_expanded*? false
+		expandable true
+		Content <= Row_content* $mol_list
+			rows <= row_content* /
+	tags /
+		\list
+		\tree
+		\hierarchy
+		\container
+		\nested
+	aspects /
+		\Widget/Layout

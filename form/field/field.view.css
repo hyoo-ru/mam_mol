@@ -1,0 +1,13 @@
+[mol_form_field] {
+	align-items: stretch;
+}
+
+[mol_form_field_bid] {
+	color: var(--mol_theme_focus);
+	display: inline-block;
+	text-shadow: 0 0;
+}
+
+[mol_form_field_content] {
+	border-radius: var(--mol_gap_round);
+}

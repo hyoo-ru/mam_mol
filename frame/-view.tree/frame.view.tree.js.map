@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/frame/frame.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_frame $mol_embed_native\n\tattr *\n\t\ttabindex <= tabindex\n\t\tallow <= allow \\\n\t\tsrc <= uri\n\t\tsrcdoc <= html null\n\tfullscreen true\n\taccelerometer true\n\tautoplay true\n\tencription true\n\tgyroscope true\n\tpip true\n\tclipboard_read true\n\tclipboard_write true\n"
+	],
+	"mappings": "AAAA,AAAA,mCAAW,8BAAX;AAAA,AAGW;AAAA,AAAA,UAAO,EAAP;AAAA;AAEC;AAAA,AAAA,UAAK,IAAL;AAAA;AAJX;AAAA,AAAA,UAAK;AAAA,AACJ,gBAAS,KAAG,WAAH,CADL;AAEJ,aAAM,KAAG,QAAH,CAFF;AAGJ,WAAI,KAAG,MAAH,CAHA;AAIJ,cAAO,KAAG,OAAH;AAJH,CAAL;AAAA;AAKA;AAAA,AAAA,UAAW,IAAX;AAAA;AACA;AAAA,AAAA,UAAc,IAAd;AAAA;AACA;AAAA,AAAA,UAAS,IAAT;AAAA;AACA;AAAA,AAAA,UAAW,IAAX;AAAA;AACA;AAAA,AAAA,UAAU,IAAV;AAAA;AACA;AAAA,AAAA,UAAI,IAAJ;AAAA;AACA;AAAA,AAAA,UAAe,IAAf;AAAA;AACA;AAAA,AAAA,UAAgB,IAAhB;AAAA;AAbD,CAAA;"
+}

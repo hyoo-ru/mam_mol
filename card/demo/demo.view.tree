@@ -1,0 +1,16 @@
+$mol_card_demo $mol_example_small
+	title \Cards with optional status
+	sub /
+		<= Simple $mol_card
+			content /
+				\Hello world!
+		<= Pending $mol_card
+			title \Hello pending!
+			status \pending
+	tags /
+		\status
+		\container
+		\sticker
+	aspects /
+		\Widget/Layout
+		\Widget/Island

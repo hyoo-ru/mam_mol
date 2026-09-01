@@ -1,0 +1,18 @@
+$mol_button_share_demo $mol_example_small
+	title \Share button demo
+	sub /
+		<= Share_page $mol_button_share
+			title <= title
+			hint \Share this page with screenshot
+		<= Share_screenshot $mol_button_share
+			title \Component screensht
+			hint \Share screenshot of component
+			uri null
+			capture <= Share_hyoo
+		<= Share_hyoo $mol_button_share
+			title \$hyoo
+			hint \Share hyoo.ru
+			uri \https://hyoo.ru
+			capture null
+	aspects /
+		\Widget/Control/Button

@@ -1,0 +1,54 @@
+$mol_chart_demo_styles $mol_example_large
+	title \Chart with various styles of graphs.
+	samples_count 15
+	sub /
+		<= Chart $mol_chart
+			graphs <= graphs /
+				<= Receipts $mol_plot_bar
+					title <= receipts_title \Receipts
+					series_x <= series_x /number
+					series_y <= series_2_y /number
+				<= Receipts_confirmed $mol_plot_bar
+					title <= receipts_confirmed_title \Confirmed receipts
+					series_x <= series_x /number
+					series_y <= series_3_y /number
+				<= Maximum $mol_plot_dot
+					title <= maximum_title \Maximum
+					series_x <= series_x /number
+					series_y <= series_1_y /number
+				<= Waste $mol_plot_line
+					type \dashed
+					title <= waste_title \Waste
+					series_x <= series_x /number
+					series_y <= series_4_y /number
+				<= Purchases $mol_plot_group
+					title <= purchases_title \Purchases
+					series_x <= series_x /number
+					series_y <= series_5_y /number
+					graphs /
+						<= Purchases_fill $mol_plot_fill
+						<= Purchases_line $mol_plot_line 
+						<= Purchases_dots $mol_plot_dot 
+				<= Taxes $mol_plot_group
+					title <= taxes_title \Taxes
+					series_x <= series_x /number
+					series_y <= series_6_y /number
+					graphs /
+						<= Taxes_fill $mol_plot_fill
+						<= Taxes_line $mol_plot_line
+							type \dashed
+						<= Taxes_dots $mol_plot_dot
+				<= Energy $mol_plot_ruler_vert
+					title <= energy_title \kJ
+				<= Day $mol_plot_mark_hor
+					title <= day_title \Day
+					series_x <= series_x /number
+	tags /
+		\plot
+		\visualization
+		\dashboard
+	aspects /
+		\Widget/Draw/Chart/Line
+		\Widget/Draw/Chart/Dot
+		\Widget/Draw/Chart/Bar
+		\Widget/Draw/Chart/Fill

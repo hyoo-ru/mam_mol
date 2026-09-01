@@ -1,0 +1,36 @@
+$mol_video_player_demo $mol_example_large
+	title \Reactive video player
+	sub /
+		<= Controls $mol_row sub /
+			<= Open $mol_button_open
+				files => files
+			<= Playing $mol_check_icon
+				checked? <=> playing?
+				Icon <= Playing_icon $mol_icon_play
+			<= Duration_labeler $mol_labeler
+				title \Duration
+				content /
+					<= Duration $mol_paragraph
+						sub / <= duration
+			<= Time_labeler $mol_labeler
+				title \Time
+				content /
+					<= Time $mol_number
+						value? <=> time?
+						precision_view 0.001
+			<= Volume_labeler $mol_labeler
+				title \Volume
+				content /
+					<= Volume $mol_number
+						value? <=> volume?
+						precision 0.001
+		<= Player $mol_video_player
+			uri <= uri \
+			playing? => playing?
+			volume? => volume?
+			time? => time?
+			duration => duration
+	tags /
+		\palyback
+	aspects /
+		\Media/Video

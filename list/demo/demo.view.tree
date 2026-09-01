@@ -1,0 +1,22 @@
+$mol_list_demo $mol_example_small
+	sub /
+		<= Items_count_label $mol_labeler
+			title \Items count
+			content /
+				<= Items_count $mol_number
+					value? <=> items_count? 50
+					value_min 0
+					value_max 100000
+		<= Items $mol_list
+			rows <= list_items /
+				<= Item*0 $mol_link
+					title <= item_title* \
+			-
+			Empty <= List_empty $mol_paragraph
+				title \No items in this list
+	tags /
+		\list
+		\rows
+		\stack
+	aspects /
+		\Widget/Layout

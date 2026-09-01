@@ -1,0 +1,12 @@
+[mol_text_demo_view_page] {
+	flex: 1 0 40rem;
+}
+
+[mol_text_demo_code_page] {
+	flex: 0 0 40rem;
+}
+
+[mol_text_demo_view_page_body],
+[mol_text_demo_code_page_body] {
+	padding: var(--mol_gap_block);
+}

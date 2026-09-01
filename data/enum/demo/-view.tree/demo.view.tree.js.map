@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/data/enum/demo/demo.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_data_enum_demo_number $mol_example_code\n\tcode? \\\n\t\t\\enum SexValues { male, female }\n\t\t\\const Sex = $mol_data_enum( 'Sex', SexValues )\n\t\t\\const sex = Sex( 0 ) // ✅\n\t\t\\\n\t\t\\Samples( 3 ) // ❌ 3 is not value of Sex enum\n\ttags /\n\t\t\\runtime\n\t\t\\validation\n\t\t\\enum\n\taspects /\n\t\t\\Algorithm/Assert\n\t\t\\Type/Number\n\n$mol_data_enum_demo_string $mol_example_code\n\tcode? \\\n\t\t\\enum SexValues { male = 'male', female = 'female' }\n\t\t\\const Sex = $mol_data_enum( 'Sex', SexValues )\n\t\t\\const sex = Sex( 'male' ) // ✅\n\t\t\\\n\t\t\\Samples( 'helicopter' ) // ❌ helicopter is not value of Sex enum\n\ttags /\n\t\t\\runtime\n\t\t\\validation\n\t\t\\enum\n\taspects /\n\t\t\\Algorithm/Assert\n\t\t\\Type/String\n"
+	],
+	"mappings": "AAAA,AAAA,mEAA2B,8BAA3B;AAAA,AACC;AAAA,AAAA;AAAA,UAAO,4JAAP;AAAA;AAMA;AAAA,AAAA,UAAK;AAAA,AACH,aADG;AAEH,gBAFG;AAGH;AAHG,CAAL;AAAA;AAIA;AAAA,AAAA,UAAQ,CACN,kBADM,EAEN,aAFM,CAAR;AAAA;AAXD,CAAA;AACC,YADD,CACC,gDADD;AAeA,mEAA2B,8BAA3B;AAAA,AACC;AAAA,AAAA;AAAA,UAAO,yMAAP;AAAA;AAMA;AAAA,AAAA,UAAK;AAAA,AACH,aADG;AAEH,gBAFG;AAGH;AAHG,CAAL;AAAA;AAIA;AAAA,AAAA,UAAQ,CACN,kBADM,EAEN,aAFM,CAAR;AAAA;AAXD,CAfA;AAgBC,YADD,CACC,gDAhBD;"
+}

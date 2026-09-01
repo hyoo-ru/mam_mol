@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/button/typed/typed.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_button_typed $mol_button\n\tminimal_height 40\n\tminimal_width 40\n"
+	],
+	"mappings": "AAAA,AAAA,iDAAkB,wBAAlB;AAAA,AACC;AAAA,AAAA,UAAe,EAAf;AAAA;AACA;AAAA,AAAA,UAAc,EAAd;AAAA;AAFD,CAAA;"
+}

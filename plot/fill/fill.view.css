@@ -1,0 +1,17 @@
+[mol_plot_fill] {
+	stroke: none;
+	stroke-width: 0;
+	opacity: .1;
+	fill: currentColor;
+	pointer-events: none;
+}
+
+[mol_plot_fill_sample] {
+	opacity: .1;
+	background: currentColor;
+	position: absolute;
+	bottom: 0;
+	top: .75em;
+	left: 0;
+	right: 0;
+}

@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/paginator/demo/demo.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAIG;AAAA,AAAW,cAJd,mBAIc;AAAA;AAAX,cADQ,cACR;AAAA;AAJH,iCAAoB,2BAApB;AAIc,AAAA,eAAM,MAAN,IAAM;AADf,AAAA,YAAM;AAFV,AAAA,YAAO;AACP,AAAA,UAAI;AAGJ,AAAA,WAAK;AAGL,AAAA,cAAQ;AART;AAAA;AAAA;",
+	"file": "demo.view.tree.d.ts",
+	"sourceRoot": "../../../.."
+}

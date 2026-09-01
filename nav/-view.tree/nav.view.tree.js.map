@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/nav/nav.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_nav $mol_plugin\n\tcycle? false\n\t-\n\tmod_ctrl false\n\tmod_shift false\n\tmod_alt false\n\t-\n\tkeys_x? /\n\tkeys_y? /\n\t-\n\tcurrent_x? null\n\tcurrent_y? null\n\t-\n\tevent_up? null\n\tevent_down? null\n\tevent_left? null\n\tevent_right? null\n\tevent *\n\t\t^\n\t\tkeydown? <=> event_key? null\n"
+	],
+	"mappings": "AAAA,AAAA,+BAAS,wBAAT;AAAA,AAmBe;AAAA,AAAA;AAAA,UAAW,IAAX;AAAA;AAlBd;AAAA,AAAA;AAAA,UAAO,KAAP;AAAA;AAEA;AAAA,AAAA,UAAS,KAAT;AAAA;AACA;AAAA,AAAA,UAAU,KAAV;AAAA;AACA;AAAA,AAAA,UAAQ,KAAR;AAAA;AAEA;AAAA,AAAA;AAAA,UAAQ,EAAR;AAAA;AACA;AAAA,AAAA;AAAA,UAAQ,EAAR;AAAA;AAEA;AAAA,AAAA;AAAA,UAAW,IAAX;AAAA;AACA;AAAA,AAAA;AAAA,UAAW,IAAX;AAAA;AAEA;AAAA,AAAA;AAAA,UAAU,IAAV;AAAA;AACA;AAAA,AAAA;AAAA,UAAY,IAAZ;AAAA;AACA;AAAA,AAAA;AAAA,UAAY,IAAZ;AAAA;AACA;AAAA,AAAA;AAAA,UAAa,IAAb;AAAA;AACA;AAAA,AAAA,UAAM,CACL,kBADK,EAEL,qBAAS,KAAI,gBAAJ,CAFJ,CAAN;AAAA;AAjBD,CAAA;AAmBe,YAnBf,CAmBe,mCAnBf;AACC,YADD,CACC,+BADD;AAOC,YAPD,CAOC,gCAPD;AAQC,YARD,CAQC,gCARD;AAUC,YAVD,CAUC,mCAVD;AAWC,YAXD,CAWC,mCAXD;AAaC,YAbD,CAaC,kCAbD;AAcC,YAdD,CAcC,oCAdD;AAeC,YAfD,CAeC,oCAfD;AAgBC,YAhBD,CAgBC,qCAhBD;"
+}

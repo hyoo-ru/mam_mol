@@ -1,0 +1,20 @@
+$mol_calendar_demo_selection $mol_example_small
+	title \Days of month 2018-01 with custom selection
+	interval_config *
+		start \2018-01-05
+		end \2018-01-10
+	days /
+		\2018-01-18
+		\2018-01-20
+		\2018-01-26
+		\2018-02-01
+		\2018-02-03
+	sub /
+		<= Calendar $mol_calendar
+			month_string <= month \2018-01
+			day_selected* <= selected* false
+	tags /
+		\month
+	aspects /
+		\Widget/Grid
+		\Type/Date

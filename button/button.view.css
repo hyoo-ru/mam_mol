@@ -1,0 +1,26 @@
+[mol_button] {
+	border: none;
+	font: inherit;
+	display: inline-flex;
+	flex-shrink: 0;
+	text-decoration: inherit;
+	cursor: inherit;
+	position: relative;
+	box-sizing: border-box;
+	word-break: normal;
+	cursor: default;
+	user-select: none;
+	-webkit-user-select: none;
+	border-radius: var(--mol_gap_round);
+	background: transparent;
+	color: inherit;
+}
+
+[mol_button]:where(:not(:disabled)):hover {
+	z-index: var(--mol_layer_hover);
+}
+
+[mol_button]:focus {
+	outline: none;
+	z-index: var(--mol_layer_focus);
+}

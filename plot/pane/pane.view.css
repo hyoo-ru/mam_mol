@@ -1,0 +1,7 @@
+[mol_plot_pane] {
+	color: var(--mol_theme_control);
+	flex: 1 1 auto;
+	align-self: stretch;
+	stroke-width: 2px;
+	user-select: none;
+}

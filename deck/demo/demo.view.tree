@@ -1,0 +1,24 @@
+$mol_deck_demo $mol_example_small
+	title \Simple deck with tabbar
+	sub /
+		<= Deck $mol_deck items /
+			<= Greeting $mol_card
+				title \Greeting
+				content / \Hello, world!
+			<= Question $mol_card
+				title \Question
+				content / \How are you?
+			<= Answer $mol_card
+				title \Answer
+				content / \The Answer to the Ultimate Question of Life, the Universe, and Everything is 42
+			<= Command $mol_card
+				title \Command
+				content / \Let's do it right!
+			<= Spam $mol_card
+				title \Spam
+				Content <= Spam_content $mol_filler
+	tags /
+		\tabs
+		\container
+	aspects /
+		\Widget/Layout

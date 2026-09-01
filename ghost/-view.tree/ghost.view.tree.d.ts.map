@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/ghost/ghost.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,wBAAW,kBAAX;AACC,AAAA,UAAI;AADL;AAAA;AAAA;",
+	"file": "ghost.view.tree.d.ts",
+	"sourceRoot": "../../.."
+}

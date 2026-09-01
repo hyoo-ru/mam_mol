@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/link/lazy/lazy.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_link_lazy $mol_link\n\turi? \\\n\turi_generated \\\n\tcurrent false\n\tevent *\n\t\t^\n\t\tmousedown? <=> generate? null\n"
+	],
+	"mappings": "AAAA,AAAA,2CAAe,sBAAf;AAAA,AAMiB;AAAA,AAAA;AAAA,UAAU,IAAV;AAAA;AALhB;AAAA,AAAA;AAAA,UAAM,EAAN;AAAA;AACA;AAAA,AAAA,UAAe,EAAf;AAAA;AACA;AAAA,AAAA,UAAQ,KAAR;AAAA;AACA;AAAA,AAAA,UAAM,CACL,kBADK,EAEL,uBAAW,KAAI,eAAJ,CAFN,CAAN;AAAA;AAJD,CAAA;AAMiB,YANjB,CAMiB,wCANjB;AACC,YADD,CACC,mCADD;"
+}

@@ -1,0 +1,20 @@
+[mol_check_list] {
+	display: flex;
+	flex-wrap: wrap;
+	flex: 1 1 auto;
+	border-radius: var(--mol_gap_round);
+	gap: 1px;
+}
+
+[mol_check_list_option] {
+	flex: 0 1 auto;
+}
+
+[mol_check_list_option]:where([mol_check_checked="true"]) {
+	text-shadow: 0 0;
+	color: var(--mol_theme_current);
+}
+
+[mol_check_list_option]:where([mol_check_checked="true"][disabled]) {
+	color: var(--mol_theme_text);
+}

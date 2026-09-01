@@ -1,0 +1,51 @@
+$mol_perf_jsfb $mol_scroll
+	sub /
+		<= Content $mol_list rows /
+			<= Head $mol_row sub /
+				<= Title $mol_view sub / <= title \$mol keyed
+				<= Controls $mol_row sub /
+					<= Create_1K $mol_button_major
+						dom_id \run
+						title \Create 1,000 rows
+						click? <=> create_1K? null
+					<= Create_10K $mol_button_major
+						dom_id \runlots
+						title \Create 10,000 rows
+						click? <=> create_10K? null
+					<= Append_1K $mol_button_major
+						dom_id \add
+						title \Append 1,000 rows
+						click? <=> append_1K? null
+					<= Update_10 $mol_button_major
+						dom_id \update
+						title \Update every 10th row
+						click? <=> update_10? null
+					<= Clear $mol_button_major
+						dom_id \clear
+						title \Clear
+						click? <=> clear? null
+					<= Swap $mol_button_major
+						dom_id \swaprows
+						title \Swap Rows
+						click? <=> swap? null
+			<= Rows $mol_list rows <= rows /$mol_view
+				<= Row*0 $mol_perf_jsfb_row
+					title? => row_title*?
+					selected? <=> row_selected*? false
+					drop? <=> row_drop*? null
+					id <= row_id* \
+
+$mol_perf_jsfb_row $mol_view
+	minimal_height 40
+	minimal_width 200
+	attr *
+		^
+		mol_perf_jsfb_row_selected <= selected
+	sub /
+		<= Id $mol_view sub / <= id \
+		<= Title $mol_check
+			checked? <=> selected? false
+			sub / <= title? \
+		<= Drop $mol_button_minor
+			sub / <= Drop_icon $mol_icon_close
+			click? <=> drop? null

@@ -1,0 +1,35 @@
+[mol_app_supplies_card] {
+	flex: 0 1 auto;
+	position: relative;
+	display: block;
+	padding: .5rem;
+}
+
+[mol_app_supplies_card_card][mol_card_status_type="approved"] {
+	--mol_theme_line: hsl(140, 50%, 40%);
+}
+
+[mol_app_supplies_card_content] {
+}
+
+[mol_app_supplies_card_group] {
+	align-items: flex-start;
+	margin: 0;
+}
+
+[mol_app_supplies_card_code_item] {
+	flex: 1 1 5rem;
+}
+
+[mol_app_supplies_card_cost_item] {
+	flex: 1 1 5rem;
+	text-align: end;
+}
+
+[mol_app_supplies_card_cost_item_content] {
+	justify-content: flex-end;
+}
+
+[mol_app_supplies_card_provider_item] {
+	flex: 10 1 10rem;
+}

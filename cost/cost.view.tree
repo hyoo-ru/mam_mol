@@ -1,0 +1,12 @@
+$mol_cost $mol_view
+	value null
+	sub /
+		<= Prefix $mol_view
+			sub /
+				<= prefix \
+		<= Value $mol_view
+			sub /
+				<= value_view \
+		<= Postfix $mol_view
+			sub /
+				<= postfix \

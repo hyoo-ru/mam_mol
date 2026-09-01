@@ -1,0 +1,11 @@
+$mol_app_demo_main $mol_page
+	minimal_width 400
+	title \$mol libs for web ui
+	tools /
+		<= Lights $mol_lights_toggle
+		<= Project $mol_link_source
+			uri <= project_uri \https://github.com/eigenmethod/mol/tree/master/
+	body /
+		<= Description $mol_text
+			text <= description \
+			uri_base <= project_uri

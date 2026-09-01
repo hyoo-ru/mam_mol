@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/example/example.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,0BAAa,kBAAb;AACC,AAAA,WAAK;AACL,AAAA,cAAQ;AAFT;AAAA;AAAA;",
+	"file": "example.view.tree.d.ts",
+	"sourceRoot": "../../.."
+}

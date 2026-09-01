@@ -1,0 +1,10 @@
+[mol_example_large] {
+	flex: 1 1 auto;
+	flex-direction: column;
+	background: var(--mol_theme_back);
+	box-shadow: 0 0 0 1px var(--mol_theme_line);
+	border-radius: var(--mol_gap_round);
+	max-width: 100%;
+	max-height: 100%;
+	overflow: hidden;
+}

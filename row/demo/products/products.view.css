@@ -1,0 +1,9 @@
+
+[mol_row_demo_products_products] {
+	display: grid;
+	grid-template-columns: repeat( auto-fit, minmax( 8rem, 1fr ) );
+}
+
+[mol_row_demo_products_product] {
+	align-self: stretch;
+}

@@ -1,0 +1,14 @@
+[mol_expander] {
+	flex-direction: column;
+}
+
+[mol_expander_label] {
+	display: flex;
+	flex-wrap: wrap;
+	border-radius: var(--mol_gap_round);
+}
+
+[mol_expander_trigger] {
+	flex: auto;
+	position: relative;
+}

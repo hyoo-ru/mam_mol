@@ -1,0 +1,20 @@
+$mol_check_list_demo $mol_example_small
+	title \Set of toggles
+	sub /
+		<= Rights $mol_check_list
+			option_checked*? <=> right*? false
+			options *
+				read \Allow Read
+				write \Allow Write
+				rights \Allow Change Rights
+				backup \Allow BackUp
+				restart \Allow Restart
+				ping \Allow Ping
+				api \Allow API Access
+				docs \Allow Read Documentation
+	tags /
+		\option
+		\switch
+		\toggle
+	aspects /
+		\Widget/Control/Button

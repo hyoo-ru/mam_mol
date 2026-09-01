@@ -1,0 +1,4 @@
+$mol_speck $mol_view
+	theme \$mol_theme_accent
+	sub /
+		<= value null

@@ -1,0 +1,22 @@
+$mol_app_demo_readme $mol_page
+	readme_link_template \https://raw.githubusercontent.com/{repo}/HEAD/{module}/readme.md
+	source_link_template \https://github.com/{repo}/tree/HEAD/{module}
+	repo \
+	module /string
+	title @ \Readme
+	opened? false
+	tools /
+		<= Source_link $mol_link_source
+			uri <= source_link \
+			hint <= source_hint @ \Source code of this demo
+		<= Close $mol_button_minor
+			hint @ \Close panel
+			sub /
+				<= Close_icon $mol_icon_close
+			click? <=> close? null
+	-
+	Readme $mol_text
+		text <= readme \
+		uri_base <= uri_base? \
+	Not_found $mol_view sub /
+		<= Not_found_caption @ \Readme not found

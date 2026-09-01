@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/avatar/avatar.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_avatar $mol_icon\n\tview_box \\0 0 24 24\n\tid \\\n\tpath \\M 12 12 l 0 0 M 0 0 l 0 0 M 24 24 l 0 0 M 0 24 l 0 0 M 24 0 l 0 0\n"
+	],
+	"mappings": "AAAA,AAAA,qCAAY,sBAAZ;AAAA,AACC;AAAA,AAAA,UAAU,WAAV;AAAA;AACA;AAAA,AAAA,UAAI,EAAJ;AAAA;AACA;AAAA,AAAA,UAAM,mEAAN;AAAA;AAHD,CAAA;"
+}

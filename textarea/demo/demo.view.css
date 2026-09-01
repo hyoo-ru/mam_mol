@@ -1,0 +1,7 @@
+[mol_textarea_demo] {
+	align-self: stretch;
+}
+
+[mol_textarea_demo_inputs] {
+	padding: var(--mol_gap_block);
+}

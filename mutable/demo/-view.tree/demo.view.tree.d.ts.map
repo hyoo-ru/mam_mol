@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/mutable/demo/demo.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,+BAAkB,0BAAlB;AACC,AAAA,eAAO,MAAP,IAAO;AAuBP,AAAA,WAAK;AAGL,AAAA,cAAQ;AA3BT;AAAA;AAAA;",
+	"file": "demo.view.tree.d.ts",
+	"sourceRoot": "../../../.."
+}

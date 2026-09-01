@@ -1,0 +1,29 @@
+$mol_switch_demo $mol_example
+	title \Color switchers in various state
+	sub /
+		<= Demo_items $mol_list
+			sub /
+				<= Enabled_labeler $mol_labeler
+					title \Read/Write
+					Content <= Enabled $mol_switch
+						value? <=> color? \red
+						options *
+							red <= option_red \Red
+							green <= option_green \Green
+							blue <= option_blue \Blue
+							infernal <= option_infernal \Color which can not be displayed on your device
+				<= Disabled_labeler $mol_labeler
+					title \Read only
+					Content <= Disabled $mol_switch
+						value? <=> color?
+						enabled false
+						options *
+							red <= option_red
+							green <= option_green
+							blue <= option_blue
+	tags /
+		\option
+		\group
+		\radio
+	aspects /
+		\Widget/Control

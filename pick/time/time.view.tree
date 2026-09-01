@@ -1,0 +1,22 @@
+$mol_pick_time $mol_pick
+	Icon $mol_icon_clock_outline
+	trigger_enabled <= enabled true
+	-
+	bubble_content /
+		<= Input $mol_format
+			value? <=> value? \
+			mask \__:__
+			allow \0123456789.
+			enabled <= enabled true
+		<= Pickers $mol_row
+			sub /
+				<= Hours $mol_switch
+					value? <=> hour_selected? \
+					options <= hour_options *
+				<= Delimiter $mol_paragraph
+					title \:
+				<= Minutes $mol_switch
+					value? <=> minute_selected? \
+					options <= minute_options *
+	-
+	value_moment? $mol_time_moment

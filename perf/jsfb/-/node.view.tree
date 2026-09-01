@@ -1,0 +1,156 @@
+$mol_scroll $mol_view
+	scroll_top? 0
+	scroll_left? 0
+	attr *
+		^
+		tabindex <= tabindex -1
+	event *
+		^
+		scroll? <=> event_scroll? null
+
+$mol_speck $mol_view
+	theme \$mol_theme_accent
+	sub /
+		<= value null
+
+$mol_button $mol_view
+	enabled true
+	click? null
+	event_click? null
+	status? /
+	event *
+		^
+		click? <=> activate? <=> event_activate? null
+		dblclick? <=> clicks? null
+		keydown? <=> key_press? <=> event_key_press? null
+	attr *
+		^
+		disabled <= disabled false
+		role \button
+		tabindex <= tab_index 0
+		title <= hint_safe <= hint \
+	sub /$mol_view_content
+		<= title
+	Speck $mol_speck
+		value <= error \
+
+$mol_button_typed $mol_button
+	minimal_height 40
+	minimal_width 40
+
+$mol_button_minor $mol_button_typed
+
+$mol_button_major $mol_button_minor
+	theme \$mol_theme_base
+
+$mol_row $mol_view
+
+$mol_list $mol_view
+	render_visible_only true
+	render_over 0.1
+	sub <= rows /$mol_view
+		<= Gap_before $mol_view style * paddingTop <= gap_before 0
+		<= Empty $mol_view
+		<= Gap_after $mol_view style * paddingTop <= gap_after 0
+	item_height_min* 1
+	item_width_min* 1
+	view_window_shift? 0
+	view_window /
+		0
+		0
+
+$mol_check $mol_button_minor
+	attr *
+		^
+		mol_check_checked <= checked? false
+		aria-checked <= aria_checked \false
+		role <= aria_role \checkbox
+	sub /$mol_view_content
+		<= Icon null
+		<= label /
+			<= Title $mol_view
+				sub /
+					<= title \
+
+$mol_svg $mol_view
+	dom_name \svg
+	dom_name_space \http://www.w3.org/2000/svg
+	font_size 16
+	font_family \
+	style_size *
+
+$mol_svg_root $mol_svg
+	dom_name \svg
+	attr *
+		^
+		viewBox <= view_box \0 0 100 100
+		preserveAspectRatio <= aspect \xMidYMid
+
+$mol_svg_path $mol_svg
+	dom_name \path
+	attr *
+		^
+		d <= geometry \
+
+
+$mol_icon $mol_svg_root
+	view_box \0 0 24 24
+	minimal_width 16
+	minimal_height 16
+	sub /
+		<= Path $mol_svg_path
+			geometry <= path \
+
+$mol_icon_close $mol_icon path \M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z
+
+$mol_perf_jsfb $mol_scroll
+	sub /
+		<= Content $mol_list rows /
+			<= Head $mol_row sub /
+				<= Title $mol_view sub / <= title \$mol keyed
+				<= Controls $mol_row sub /
+					<= Create_1K $mol_button_major
+						dom_id \run
+						title \Create 1,000 rows
+						click? <=> create_1K? null
+					<= Create_10K $mol_button_major
+						dom_id \runlots
+						title \Create 10,000 rows
+						click? <=> create_10K? null
+					<= Append_1K $mol_button_major
+						dom_id \add
+						title \Append 1,000 rows
+						click? <=> append_1K? null
+					<= Update_10 $mol_button_major
+						dom_id \update
+						title \Update every 10th row
+						click? <=> update_10? null
+					<= Clear $mol_button_major
+						dom_id \clear
+						title \Clear
+						click? <=> clear? null
+					<= Swap $mol_button_major
+						dom_id \swaprows
+						title \Swap Rows
+						click? <=> swap? null
+			<= Rows $mol_list rows <= rows /$mol_view
+				<= Row*0 $mol_perf_jsfb_row
+					title? => row_title*?
+					selected? <=> row_selected*? false
+					drop? <=> row_drop*? null
+					id <= row_id* \
+
+$mol_perf_jsfb_row $mol_view
+	minimal_height 40
+	minimal_width 200
+	attr *
+		^
+		mol_perf_jsfb_row_selected <= selected
+	sub /
+		<= Id $mol_view sub / <= id \
+		<= Title $mol_check
+			checked? <=> selected? false
+			sub / <= title? \
+		<= Drop $mol_button_minor
+			sub / <= Drop_icon $mol_icon_close
+			click? <=> drop? null

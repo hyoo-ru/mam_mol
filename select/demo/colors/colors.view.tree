@@ -1,0 +1,29 @@
+$mol_select_demo_colors $mol_example_small
+	title \Color picker with filter and custom rows
+	sub /
+		<= Color $mol_select
+			filter_pattern => color_filter
+			value? <=> color? \
+			dictionary <= colors *
+			option_label* <= color_name* \
+			option_content* <= option_content* /
+				<= Color_option* $mol_view
+					sub /
+						<= Color_preview* $mol_select_colors_color_preview
+							color <= option_color* \
+						<= Color_name* $mol_dimmer
+							haystack <= color_name* \
+							needle <= color_filter
+					minimal_height 40
+	tags /
+		\select
+		\color
+		\picker
+		\filter
+	aspects /
+		\Widget/Control
+
+$mol_select_colors_color_preview $mol_view
+	style *
+		^
+		background <= color \

@@ -1,0 +1,40 @@
+$mol_app_demo $mol_book2
+	editor_title <= detail_title \$mol
+	meta_bundle_base \
+	repo_dict *
+	plugins /
+		<= Theme $mol_theme_auto
+		<= Search_start $mol_hotkey
+			key * F? <=> search_start?
+			mod_ctrl true
+	demo_block_list /
+		\$mol_example_small
+		\$mol_example_large
+	Menu $mol_app_demo_menu
+		title <= menu_title @ \$mol examples
+		names <= names /string
+		widget_tags* <= widget_tags* /string
+		widget_aspects* <= widget_aspects* /string
+		widget_title* <= widget_title* \
+		search_start? => search_start?
+		tools <= tools /
+			<= Sources $mol_link_source
+				uri <= sources_uri \https://github.com/hyoo-ru/mam_mol/
+			<= Lights $mol_lights_toggle
+	Detail* $mol_app_demo_detail
+		chat_seed <= chat_seed* \p9zx0v_nsmx1d
+		chat_pages => chat_pages*
+		title <= detail_title
+		description <= detail_description \
+		edit_uri <= edit_uri \
+		readme? <=> readme_page? false
+		Demo <= Demo $mol_view
+	Readme_page $mol_app_demo_readme
+		repo <= repo \
+		opened? <=> readme_page? false
+		module <= module /string
+	Detail_empty_message $mol_status
+		sub /
+			<= detail_empty_prefix @ \No one demo with prefix "
+			<= selected \
+			<= detail_empty_postfix @ \"

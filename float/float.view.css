@@ -1,0 +1,12 @@
+[mol_float] {
+	position: sticky;
+	top: 0;
+	left: 0;
+	z-index: var(--mol_layer_float);
+	opacity: 1;
+	transition: opacity .25s ease-in;
+	display: block;
+	background: linear-gradient( var(--mol_theme_card), var(--mol_theme_card) ), var(--mol_theme_back);
+	box-shadow: 0 0 .5rem hsla(0,0%,0%,.25);
+}
+

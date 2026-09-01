@@ -1,0 +1,16 @@
+$mol_link_iconed_demo $mol_example_small
+	title \Link with icon
+	sub /
+		<= Blocks $mol_list
+			rows /
+				<= Input $mol_string
+					value? <=> uri? \https://www.google.com/search?q=%24mol
+				<= Output $mol_link_iconed
+					uri <= uri?
+	tags /
+		\link
+		\icon
+		\url
+	aspects /
+		\Navigation
+		\Widget/Button

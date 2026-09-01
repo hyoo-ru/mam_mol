@@ -1,0 +1,21 @@
+$mol_scroll_demo $mol_example_large
+	title \Simple scroll pane
+	sub /
+		<= Scroll $mol_scroll
+			sub /
+				<= Content $mol_list rows /
+					<= Filler0 $mol_filler
+					<= Filler1 $mol_filler
+					<= Filler2 $mol_filler
+					<= Filler3 $mol_filler
+					<= Filler4 $mol_filler
+					<= Filler5 $mol_filler
+					<= Filler6 $mol_filler
+					<= Filler7 $mol_filler
+					<= Filler8 $mol_filler
+					<= Filler9 $mol_filler
+	tags /
+		\scroll
+		\container
+	aspects /
+		\Widget/Scroll

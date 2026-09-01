@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/stack/stack.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_stack $mol_view\n"
+	],
+	"mappings": "AAAA,AAAA,mCAAW,sBAAX,EAAA;"
+}

@@ -1,0 +1,6 @@
+[mol_pop_over_demo_file_menu] ,
+[mol_pop_over_demo_help_menu] {
+	align-items: stretch;
+	display: flex;
+	flex-direction: column;
+}

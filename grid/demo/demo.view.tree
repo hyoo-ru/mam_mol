@@ -1,0 +1,14 @@
+$mol_grid_demo $mol_example_large
+	title \Grid with large count of cells
+	rows 1000
+	cols 10
+	sub /
+		<= Grid $mol_grid
+			records <= records *
+			col_head_content* <= col_head_content* /
+	tags /
+		\grid
+		\table
+		\rows
+	aspects /
+		\Widget/Layout

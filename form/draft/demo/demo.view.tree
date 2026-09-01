@@ -1,0 +1,99 @@
+$mol_form_draft_demo_article $mol_object2
+	title? \
+	type? \
+	adult? false
+	content? \
+	friends? /string
+	hobbies? *
+
+$mol_form_draft_demo $mol_example
+	title \Article draft form demo
+	-
+	bid_required* \Required
+	bid_swearing* \No swearing
+	bid_short* \> 5 letters
+	bid_long* \> 100 letters
+	-
+	sub /
+		<= Form $mol_form_draft
+			model <= model $mol_form_draft_demo_article
+			submit? => publish?
+			submit_allowed => publish_allowed
+			value_str*? => value_str*?
+			list_string*? => list_string*?
+			dictionary_bool*? => dictionary_bool*?
+			changed => changed
+			reset? => reset?
+			form_fields /
+				<= Title_field $mol_form_field
+					name \Title
+					bids /
+						<= bid_swearing*title
+						<= bid_short*title
+					Content <= Title $mol_string
+						hint \How I spent the summer..
+						value? <=> value_str*title?
+				<= Type_field $mol_form_field
+					name \Type
+					bids /
+						<= bid_required*type
+					Content <= Type $mol_switch
+						value? <=> value_str*type?
+						options *
+							article \Article
+							news \News
+							question \Question
+				<= Adult_field $mol_form_field
+					name \Adult only
+					Content <= Adult $mol_switch
+						value? <=> value_str*adult?
+						options *
+							false \No
+							true \Yes
+				<= Content_field $mol_form_field
+					name \Content
+					bids /
+						<= bid_swearing*content
+						<= bid_long*content
+					Content <= Content $mol_textarea
+						hint \Long long story..
+						value? <=> value_str*content?
+				<= Hobbies_field $mol_form_field
+					name \Hobbies
+					Content <= Hobbies $mol_check_list
+						dictionary? <=> dictionary_bool*hobbies?
+						options *
+							programming \Programming
+							bikinkg \Biking
+							fishing \Fishing
+				<= Friends_field $mol_form_field
+					name \Friends
+					Content <= Friends $mol_select_list
+						dictionary *
+							jocker \Jocker
+							harley \Harley Quinn
+							penguin \Penguin
+							riddler \Riddler
+							bane \Bane
+							freeze \Mister Freeze
+							clay \Clayface
+							mask \Black Mask
+						value? <=> list_string*friends?
+			body <= form_body /
+				<= Title_field
+				<= Config $mol_form_group sub /
+					<= Adult_field
+					<= Type_field
+				<= Content_field
+				<= Friends_field
+	tags /
+		\$mol_form_field
+		\$mol_button
+		\$mol_string
+		\$mol_switch
+		\form
+		\bids
+		\validation
+		\field
+	aspects /
+		\Widget/Form

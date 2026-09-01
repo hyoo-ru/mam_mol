@@ -1,0 +1,8 @@
+[mol_image] {
+	border-radius: var(--mol_gap_round);
+	overflow: hidden;
+	flex: 0 1 auto;
+	max-width: 100%;
+	object-fit: cover;
+	height: fit-content;
+}

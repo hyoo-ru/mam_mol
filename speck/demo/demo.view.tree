@@ -1,0 +1,27 @@
+$mol_speck_demo $mol_example_small
+	sub /
+		<= Link $mol_link
+			sub /
+				<= Link_speck $mol_speck
+					value \β
+				<= Link_icon $mol_icon_settings
+		<= String $mol_view
+			sub /
+				<= String_speck $mol_speck
+					value <= string_speck \New
+				<= String_field $mol_string
+		<= Button $mol_button_minor
+			sub /
+				<= Button_speck $mol_speck
+					value <= notification_count 8
+				<= Button_icon $mol_icon_menu
+		<= Message $mol_paragraph
+			sub /
+				<= Message_speck $mol_speck
+				<= message_text \Created
+	tags /
+		\speck
+		\highlight
+		\badge
+	aspects /
+		\Widget

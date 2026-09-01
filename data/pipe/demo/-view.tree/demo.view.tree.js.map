@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/data/pipe/demo/demo.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_data_pipe_demo $mol_example_code\n\tcode? \\\n\t\t\\const Birthday = $mol_data_pipe(\n\t\t\\\t$mol_data_string,\n\t\t\\\t$mol_time_moment,\n\t\t\\\t( moment: $mol_time_moment )=> moment.toOffset( 'Z' ),\n\t\t\\)\n\t\t\\const birthday = Birthday( '2023-01-06' ) // ✅\n\t\t\\\n\t\t\\Birthday( 123 ) // ❌ 2023-01-06 is not a number\n\ttags /\n\t\t\\runtime\n\t\t\\validation\n\t\t\\pipe\n\taspects /\n\t\t\\Algorithm/Assert\n\t\t\\Algorithm/Compose\n"
+	],
+	"mappings": "AAAA,AAAA,qDAAoB,8BAApB;AAAA,AACC;AAAA,AAAA;AAAA,UAAO,4OAAP;AAAA;AASA;AAAA,AAAA,UAAK;AAAA,AACH,aADG;AAEH,gBAFG;AAGH;AAHG,CAAL;AAAA;AAIA;AAAA,AAAA,UAAQ,CACN,kBADM,EAEN,mBAFM,CAAR;AAAA;AAdD,CAAA;AACC,YADD,CACC,yCADD;"
+}

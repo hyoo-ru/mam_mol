@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/app/hello/demo/demo.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,iCAAoB,2BAApB;AAGK,AAAA,UAAI;AAFR,AAAA,YAAO;AACP,AAAA,UAAI;AAEJ,AAAA,cAAQ;AAJT;AAAA;AAAA;",
+	"file": "demo.view.tree.d.ts",
+	"sourceRoot": "../../../../.."
+}

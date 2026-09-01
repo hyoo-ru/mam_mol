@@ -1,0 +1,8 @@
+[mol_form_group] {
+	flex-wrap: wrap;
+	gap: var(--mol_gap_block);
+}
+
+[mol_form_group] > * {
+	flex: 1 1 18rem;
+}

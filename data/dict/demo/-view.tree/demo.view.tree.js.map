@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/data/dict/demo/demo.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_data_dict_demo $mol_example_code\n\tcode? \\\n\t\t\\const Names = $mol_data_dict( $mol_data_string )\n\t\t\\const names = Names({ jin: 'Jin', john: 'John' }) // ✅\n\t\t\\\n\t\t\\Names({ jin: 'Jin', john: 5 }) // ❌ [\"john\"] 5 is not a string\n\ttags /\n\t\t\\runtime\n\t\t\\validation\n\taspects /\n\t\t\\Algorithm/Assert\n\t\t\\Type/Dictionary\n"
+	],
+	"mappings": "AAAA,AAAA,qDAAoB,8BAApB;AAAA,AACC;AAAA,AAAA;AAAA,UAAO,8KAAP;AAAA;AAKA;AAAA,AAAA,UAAK,CACH,SADG,EAEH,YAFG,CAAL;AAAA;AAGA;AAAA,AAAA,UAAQ,CACN,kBADM,EAEN,iBAFM,CAAR;AAAA;AATD,CAAA;AACC,YADD,CACC,yCADD;"
+}

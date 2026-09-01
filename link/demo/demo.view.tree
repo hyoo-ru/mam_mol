@@ -1,0 +1,42 @@
+$mol_link_demo $mol_example_small
+	title \Some hyperlinks
+	sub /
+		<= Demo_items $mol_list
+			rows /
+				<= This $mol_link
+					sub /
+						<= this_label \This page
+				<= Red $mol_link
+					arg * color \red
+					sub /
+						<= red_label \Red
+				<= Green $mol_link
+					arg * color \green
+					sub /
+						<= green_label \Green
+				<= Blue $mol_link
+					arg * color \blue
+					sub /
+						<= blue_label \Blue
+				<= External $mol_link
+					uri \http://example.org
+					title \example.org
+					hint <= external_hint \external link
+				<= Download $mol_link
+					uri <= object_uri \
+					file_name \file.csv
+					sub /
+						<= Download_icon $mol_icon_download
+						<= download_label \Download
+	tags /
+		\$mol_icon
+		\file
+		\download
+		\link
+		\icon
+		\navigation
+		\router
+		\url
+	aspects /
+		\Navigation
+		\Widget/Button

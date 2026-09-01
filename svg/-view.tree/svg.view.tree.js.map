@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/svg/svg.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_svg $mol_view\n\tdom_name \\svg\n\tdom_name_space \\http://www.w3.org/2000/svg\n\tfont_size 16\n\tfont_family \\\n\tstyle_size *\n"
+	],
+	"mappings": "AAAA,AAAA,+BAAS,sBAAT;AAAA,AACC;AAAA,AAAA,UAAU,KAAV;AAAA;AACA;AAAA,AAAA,UAAgB,4BAAhB;AAAA;AACA;AAAA,AAAA,UAAU,EAAV;AAAA;AACA;AAAA,AAAA,UAAa,EAAb;AAAA;AACA;AAAA,AAAA,UAAW,EAAX;AAAA;AALD,CAAA;"
+}

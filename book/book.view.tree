@@ -1,0 +1,31 @@
+$mol_book $mol_view
+	sub <= pages_wrapped /$mol_view
+	minimal_width 0
+	pages /$mol_view
+	plugins /$mol_plugin
+		<= Meter $mol_meter
+			width => width
+		<= Touch $mol_touch
+			swipe_from_left? <=> event_front_up? null
+			swipe_to_left? <=> event_front_down? null
+	Page* $mol_book_page
+		Sub <= page* null
+		visible <= page_visible* true
+	Placeholder $mol_book_placeholder
+		title <= title
+
+$mol_book_placeholder $mol_view
+	minimal_width 400
+	attr *
+		^
+		tabindex null
+
+$mol_book_page $mol_ghost
+	attr_static *
+		^
+		tabindex 0
+		mol_book_page_visible true
+	attr *
+		^
+		mol_book_page_focused <= focused
+		mol_book_page_visible <= visible true

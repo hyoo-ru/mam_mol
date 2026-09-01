@@ -1,0 +1,11 @@
+{
+	"$mol_app_demo_detail_edit_hint": "Открыть демо приложение в студии",
+	"$mol_app_demo_detail_close_hint": "Закрыть панель",
+	"$mol_app_demo_detail_empty_postfix": "\" ни одного демо не найдено",
+	"$mol_app_demo_detail_empty_prefix": "По префиксу \"",
+	"$mol_app_demo_detail_Readme_hint": "Readme",
+	"$mol_app_demo_menu_title": "$mol примеры",
+	"$mol_app_demo_readme_Close_hint": "Закрыть панель",
+	"$mol_app_demo_readme_title": "Readme",
+	"$mol_app_demo_readme_Not_found_caption": "Readme не найден"
+}

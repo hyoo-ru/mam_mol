@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/app/questions/demo/demo.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,qCAAwB,2BAAxB;AAGK,AAAA,UAAI;AAFR,AAAA,YAAO;AACP,AAAA,UAAI;AAEJ,AAAA,cAAQ;AAJT;AAAA;AAAA;",
+	"file": "demo.view.tree.d.ts",
+	"sourceRoot": "../../../../.."
+}

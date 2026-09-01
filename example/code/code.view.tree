@@ -1,0 +1,14 @@
+$mol_example_code $mol_example
+	sub /
+		<= Sandbox $hyoo_js_eval
+			Menu_page null
+			Perf null
+			Bookmark null
+			code? <=> code? \
+	tags /
+		\sandbox
+		\eval
+		\js
+		\javascript
+	aspects /
+		\Widget/Playground

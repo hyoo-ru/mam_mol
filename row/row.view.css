@@ -1,0 +1,16 @@
+[mol_row] {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	align-content: flex-start;
+	justify-content: flex-start;
+	padding: var(--mol_gap_block);
+	gap: var(--mol_gap_block);
+	flex: 0 0 auto;
+	box-sizing: border-box;
+	max-width: 100%;
+}
+
+[mol_row] > * {
+	max-width: 100%;
+}

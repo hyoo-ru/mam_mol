@@ -1,0 +1,22 @@
+$mol_bar_demo $mol_example_small
+	title \Group of controls as one control
+	sub /
+		<= Two $mol_bar
+			sub /
+				<= Two_mail $mol_email
+					value? <=> mail? \
+				<= Two_submit $mol_button_minor
+					title <= submit_title \Submit
+		<= Three $mol_bar
+			sub /
+				<= Three_mail $mol_email
+					value? <=> mail? \
+				<= Three_confirm $mol_check_box
+					title <= confirm_title \Confirm
+					checked? <=> confirmed? false
+	tags /
+		\group
+		\container
+	aspects /
+		\Widget/Layout
+		\Widget/Island

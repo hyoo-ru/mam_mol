@@ -1,0 +1,44 @@
+[mol_message] {
+	max-width: 58rem;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+}
+
+[mol_message_avatar] {
+	width: 1.5rem;
+	height: 1.5rem;
+}
+
+[mol_message_text] {
+	flex: 1000 1 10rem;
+	padding: 0;
+}
+
+[mol_message_info] {
+	flex: 1 1 100%;
+	box-shadow: none;
+	display: flex;
+	justify-content: space-between;
+}
+
+[mol_message_info] > * {
+	margin: .25rem;
+}
+
+[mol_message_author] {
+	margin: 0;
+	padding: 0;
+}
+
+[mol_message_author] > * {
+	margin: .25rem;
+}
+
+[mol_message_name] {
+	font-weight: bolder;
+}
+
+[mol_message_moment] {
+	color: var(--mol_theme_shade);
+}

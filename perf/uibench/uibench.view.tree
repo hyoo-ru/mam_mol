@@ -1,0 +1,11 @@
+$mol_perf_uibench $mol_scroll
+	attr_static *
+		^
+		class \Main
+	sub /
+		<= Table $mol_perf_uibench_table
+			state <= table_state null
+		<= Anim $mol_perf_uibench_anim
+			state <= anim_state null
+		<= Tree $mol_perf_uibench_tree
+			state <= tree_state null

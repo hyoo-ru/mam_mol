@@ -1,0 +1,12 @@
+$mol_data_dict_demo $mol_example_code
+	code? \
+		\const Names = $mol_data_dict( $mol_data_string )
+		\const names = Names({ jin: 'Jin', john: 'John' }) // ✅
+		\
+		\Names({ jin: 'Jin', john: 5 }) // ❌ ["john"] 5 is not a string
+	tags /
+		\runtime
+		\validation
+	aspects /
+		\Algorithm/Assert
+		\Type/Dictionary

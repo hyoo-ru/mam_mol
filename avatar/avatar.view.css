@@ -1,0 +1,10 @@
+[mol_avatar] {
+	stroke-linecap: round;
+	stroke-width: 3.5px;
+	fill: none;
+	stroke: currentColor;
+	/* width: 1.5rem;
+	height: 1.5rem;
+	margin: 0 -.25rem; */
+	/* box-shadow: 0 0 0 1px var(--mol_theme_line); */
+}

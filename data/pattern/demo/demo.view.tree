@@ -1,0 +1,13 @@
+$mol_data_pattern_demo $mol_example_code
+	code? \
+		\const Birthday = $mol_data_pattern( /^\d{4}-\d{2}-\d{2}$/ )
+		\const birthday = Birthday( '2023-01-06' ) // ✅
+		\
+		\Birthday( '2023-1-6' ) // ❌ 2023-01-06 is not a /^\d{4}-\d{2}-\d{2}$/
+	tags /
+		\runtime
+		\validation
+		\pattern
+	aspects /
+		\Algorithm/Assert
+		\Type/String

@@ -1,0 +1,75 @@
+$mol_tag_tree_demo $mol_example
+	title \Autoatic tag tree
+	sub /
+		<= Tree $mol_tag_tree
+			Item* <= Item* $mol_button_minor
+				title <= item_title* \
+			levels_expanded 0
+			ids_tags *
+				Batman /
+					\Side/Good
+					\Universe/DC
+					\Sex/Male
+				Superman /
+					\Side/Good
+					\Universe/DC
+					\Sex/Male
+				Aquaman /
+					\Side/Good
+					\Universe/DC
+					\Sex/Male
+				Flash /
+					\Side/Good
+					\Universe/DC
+					\Sex/Male
+				Jocker /
+					\Side/Bad
+					\Universe/DC
+					\Sex/Male
+				Deadshot /
+					\Side/Bad
+					\Universe/DC
+					\Sex/Male
+				Ironman /
+					\Side/Good
+					\Universe/Marvel
+					\Sex/Male
+				Hulk /
+					\Side/Good
+					\Universe/Marvel
+					\Sex/Male
+				Thor /
+					\Side/Good
+					\Universe/Marvel
+					\Sex/Male
+				Spiderman /
+					\Side/Good
+					\Universe/Marvel
+					\Sex/Male
+				Thanos /
+					\Side/Bad
+					\Universe/Marvel
+					\Sex/Male
+				Locky /
+					\Side/Bad
+					\Universe/Marvel
+					\Sex/Male
+				\Harley Quinn
+					/
+						\Side/Bad
+						\Universe/DC
+						\Sex/Female
+				\Wonder Woman
+					/
+						\Side/Good
+						\Universe/DC
+						\Sex/Female
+				Hela /
+					\Side/Bad
+					\Universe/Marvel
+					\Sex/Female
+	tags /
+		\taxonomy
+		\menu
+	aspects /
+		\Widget/Layout

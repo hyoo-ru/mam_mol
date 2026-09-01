@@ -1,0 +1,8 @@
+$mol_3d_pane $mol_view
+	dom_name \canvas
+	context $mol_3d_context / <= context_native WebGL2RenderingContext
+	field *
+		^
+		width <= width 0
+		height <= height 0
+	paint null

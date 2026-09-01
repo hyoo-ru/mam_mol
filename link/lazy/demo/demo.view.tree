@@ -1,0 +1,17 @@
+$mol_link_lazy_demo $mol_example_small
+	title \Lazy generated link
+	sub /
+		<= Download $mol_link_lazy
+			hint <= title
+			uri_generated <= uri_generated \
+			file_name <= download_file \generated.csv
+			sub /
+				<= Download_icon $mol_icon_download
+				<= download_label \Download
+	tags /
+		\icon
+		\link
+		\lazy
+		\download
+	aspects /
+		\Widget/Button

@@ -1,0 +1,25 @@
+$mol_app_demo_detail $mol_page
+	description \
+	tools /
+		<= Readme $mol_check_icon
+			checked? <=> readme? false
+			hint @ \Readme
+			Icon <= readme_icon $mol_icon_information_outline
+		<= Chat $mol_chat
+			pages => chat_pages
+			seed <= chat_seed \0_0
+		<= Edit $mol_link
+			hint <= edit_hint @ \Edit this demo in studio
+			sub /
+				<= Edit_speck $mol_speck
+					value \β
+				<= Edit_icon $mol_icon_settings
+			uri <= edit_uri \
+		<= Close $mol_link 
+			hint <= close_hint @ \Close panel
+			sub /
+				<= Close_icon $mol_icon_close
+			arg <= close_arg *
+				demo null
+	body /
+		<= Demo $mol_view

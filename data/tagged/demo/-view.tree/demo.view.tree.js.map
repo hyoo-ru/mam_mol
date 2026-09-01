@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/data/tagged/demo/demo.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_data_tagged_demo $mol_example_code\n\tcode? \\\n\t\t\\const { Weight, Length } = $mol_data_tagged({\n\t\t\\\tWeight: $mol_data_integer,\n\t\t\\\tLength: $mol_data_integer,\n\t\t\\})\n\t\t\\\n\t\t\\let weight = Weight( 50 ) // ✅\n\t\t\\weight = Length( 50 ) // ❌ Type '\"Weight\"' is not assignable to type '\"Length\"'\n\ttags /\n\t\t\\runtime\n\t\t\\validation\n\t\t\\tagged\n\taspects /\n\t\t\\Algorithm/Assert\n"
+	],
+	"mappings": "AAAA,AAAA,yDAAsB,8BAAtB;AAAA,AACC;AAAA,AAAA;AAAA,UAAO,sOAAP;AAAA;AAQA;AAAA,AAAA,UAAK;AAAA,AACH,aADG;AAEH,gBAFG;AAGH;AAHG,CAAL;AAAA;AAIA;AAAA,AAAA,UAAQ,CACN,kBADM,CAAR;AAAA;AAbD,CAAA;AACC,YADD,CACC,2CADD;"
+}
