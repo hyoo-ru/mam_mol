@@ -22,8 +22,7 @@ jobs:
       with:
         package: mol
         modules: build
-    - uses: JS-DevTools/npm-publish@v1
-      if: ${{ github.ref == 'refs/heads/master' }}
+    - uses: hyoo-ru/gh-deploy@v4.4.1
+      if: github.ref == 'refs/heads/master'
       with:
-        token: ${{ secrets.NPM_AUTH_TOKEN }}
-        package: ./mol/build/-/package.json
+        folder: 'mol/build/-'
