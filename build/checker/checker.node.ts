@@ -38,7 +38,7 @@ namespace $ {
 
 			const text = config_file.text()
 
-			return JSON.parse(text).compilerOptions
+			return JSON.parse(text)
 		}
 
 		protected _options = null as null | ReturnType<typeof $node.typescript.getDefaultCompilerOptions>
@@ -46,7 +46,7 @@ namespace $ {
 		protected options() {
 			if (this._options) return this._options
 
-			const res = $node.typescript.convertCompilerOptionsFromJson( this.config_json() , '.' , 'tsconfig.json' )
+			const res = $node.typescript.parseJsonConfigFileContent( this.config_json() , $node.typescript.sys, '.' )
 			if( res.errors.length ) throw res.errors
 			this._options = res.options
 
