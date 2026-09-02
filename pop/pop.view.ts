@@ -67,9 +67,8 @@ namespace $.$$ {
 		override direction() { return this.$.$mol_locale.direction() }
 		override align_enriched() {
 			const align = this.align()
-			if (this.direction() === 'rtl') return align.replace(/(left|right)/, (_, match) => match === 'left' ? 'right' : 'left')
-
-			return align
+			const rtl = this.direction() === 'rtl'
+			return align.replace(/(start|end)/, (_, match) => match === 'start' && rtl ? 'right' : 'left')
 		}
 
 		@ $mol_mem
