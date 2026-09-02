@@ -68,7 +68,9 @@ namespace $.$$ {
 		override align_enriched() {
 			const align = this.align()
 			const rtl = this.direction() === 'rtl'
-			return align.replace(/(start|end)/, (_, match) => match === 'start' && rtl ? 'right' : 'left')
+			const start = rtl ? 'right' : 'left'
+			const end = rtl ? 'left' : 'right'
+			return align.replace(/(start|end)/, (_, match) => match === 'start' ? start : end)
 		}
 
 		@ $mol_mem
