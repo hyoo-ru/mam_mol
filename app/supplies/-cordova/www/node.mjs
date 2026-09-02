@@ -7618,6 +7618,9 @@ var $;
 
 ;
 	($.$mol_pop) = class $mol_pop extends ($.$mol_view) {
+		align(){
+			return "bottom_center";
+		}
 		bubble(){
 			return null;
 		}
@@ -7660,8 +7663,11 @@ var $;
 		align_hor(){
 			return "";
 		}
-		align(){
-			return "bottom_center";
+		direction(){
+			return "ltr";
+		}
+		align_enriched(){
+			return (this.align());
 		}
 		prefer(){
 			return "vert";
@@ -7758,8 +7764,16 @@ var $;
                 const viewport = this.$.$mol_window.size();
                 return rect_pop.left > viewport.width / 2 ? 'left' : 'right';
             }
+            direction() { return this.$.$mol_locale.direction(); }
+            align_enriched() {
+                const align = this.align();
+                const rtl = this.direction() === 'rtl';
+                const start = rtl ? 'right' : 'left';
+                const end = rtl ? 'left' : 'right';
+                return align.replace('start', start).replace('end', end);
+            }
             bubble_offset() {
-                const tags = new Set(this.align().split('_'));
+                const tags = new Set(this.align_enriched().split('_'));
                 if (tags.has('suspense'))
                     return [0, 0];
                 const hor = tags.has('right') ? 'right' : tags.has('left') ? 'left' : 'center';
@@ -7778,7 +7792,7 @@ var $;
                 }
             }
             bubble_align() {
-                const tags = new Set(this.align().split('_'));
+                const tags = new Set(this.align_enriched().split('_'));
                 if (tags.has('suspense'))
                     return [-.5, -.5];
                 const hor = tags.has('right') ? 'right' : tags.has('left') ? 'left' : 'center';

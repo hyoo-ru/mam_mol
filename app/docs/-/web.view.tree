@@ -75,7 +75,8 @@ $mol_pop $mol_view
 	showed? false
 	align_vert \
 	align_hor \
-	align \bottom_center
+	direction \ltr
+	align_enriched <= align \bottom_center
 	prefer \vert
 	auto /
 		<= bubble null
