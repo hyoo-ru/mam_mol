@@ -50,3 +50,7 @@ Align of `Bubble` to `Anchor`.
 * `bottom_left`
 * `bottom_center`
 * `bottom_right`
+
+## RTL support in align
+
+Replace left to start, right to end in align.
