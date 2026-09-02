@@ -70,7 +70,7 @@ namespace $.$$ {
 			const rtl = this.direction() === 'rtl'
 			const start = rtl ? 'right' : 'left'
 			const end = rtl ? 'left' : 'right'
-			return align.replace(/(start|end)/, (_, match) => match === 'start' ? start : end)
+			return align.replace('start', start).replace('end', end)
 		}
 
 		@ $mol_mem
