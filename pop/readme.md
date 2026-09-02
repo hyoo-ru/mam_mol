@@ -51,6 +51,4 @@ Align of `Bubble` to `Anchor`.
 * `bottom_center`
 * `bottom_right`
 
-## RTL support in align
-
-Replace left to start, right to end in align.
+start/end are replaced with left/right based on direction.
