@@ -11,20 +11,34 @@ namespace $.$$ {
 			const el = this.dom_node() as HTMLInputElement
 			const from = el.selectionStart
 			const to = el.selectionEnd
-			try {
-				el.value = this.value_changed( el.value )
-			} catch( error ) {
-				const el = this.dom_node() as HTMLInputElement
-				if( error instanceof Error ) {
-					el.setCustomValidity( error.message )
-					el.reportValidity()
-				}
-				$mol_fail_hidden( error )
-			}
+			el.value = this.value_changed( el.value )
 			if( to === null ) return 
 			el.selectionEnd = to
 			el.selectionStart = from
 			this.selection_change( next )
+		}
+		
+		@ $mol_mem
+		value_changed( next? : string ): string {
+			
+			const el = this.dom_node() as HTMLInputElement
+			
+			try {
+				
+				el.setCustomValidity( '' )
+				return this.value( next )
+				
+			} catch( error ) {
+				
+				$mol_fail_log( error )
+				
+				if( error instanceof Error ) {
+					el.setCustomValidity( error.message )
+					el.reportValidity()
+				}
+				
+				return next ?? $mol_mem_cached( ()=> this.value_changed() ) ?? ''
+			}
 		}
 		
 		@ $mol_mem

@@ -1,0 +1,28 @@
+$mol_vary_edit_demo $mol_example_small
+	sub /
+		<= Edit $mol_vary_edit
+			value? <=> value? *
+				Simple *
+					Null null
+					True true
+					False false
+				Numbers /
+					123n
+					12.34
+				Text \foo
+				Objects *
+					Date <= date Date
+					DOM <= dom Element
+				Collections *
+					Set <= set Set<any> / /
+						123
+						\foo
+					Map <= map Map<any,any> / /
+						/
+							\foo
+							\bar
+						/
+							123
+							456
+		<= Dump $mol_dump_value
+			value <= value
