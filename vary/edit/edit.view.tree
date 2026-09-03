@@ -5,11 +5,11 @@ $mol_vary_edit $mol_list
 	Null_icon $mol_icon_circle_off_outline
 	Bool_icon $mol_icon_flag_checkered
 	Bint_icon $mol_icon_numeric
-	Real_icon $mol_icon_ruler
+	Real_icon $mol_icon_division
 	Date_icon $mol_icon_clock_outline
 	Text_icon $mol_icon_alphabetical_variant
-	List_icon $mol_icon_order_numeric_ascending
-	Tupl_icon $mol_icon_order_alphabetical_ascending
+	List_icon $mol_icon_format_list_bulleted
+	Tupl_icon $mol_icon_table
 	rows /
 		<= Head $mol_bar sub /
 			<= Type $mol_select
