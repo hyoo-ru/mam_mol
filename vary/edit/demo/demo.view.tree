@@ -26,3 +26,10 @@ $mol_vary_edit_demo $mol_example_small
 							456
 		<= Dump $mol_dump_value
 			value <= value
+	tags /
+		\VaryPack
+		\JSON
+		\field
+	aspects /
+		\Widget/Control
+		\Type/Vary
