@@ -6,6 +6,7 @@ $mol_select $mol_pick
 	Option_row* $mol_button_minor
 		enabled <= enabled true
 		event_click? <=> event_select*? null
+		hint <= option_hint* null
 		sub <= option_content* /
 			<= Option_label* $mol_dimmer
 				haystack <= option_label* \
