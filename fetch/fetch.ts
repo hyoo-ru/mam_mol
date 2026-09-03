@@ -102,8 +102,10 @@ namespace $ {
 
 		@ $mol_action
 		response() {
+			const native = $mol_error_fence(() => $mol_wire_sync( this ).response_async(), e => new $mol_error_mix(e.message, this, e))
+
 			return this.$.$mol_fetch_response.make({
-				native: $mol_wire_sync( this ).response_async(),
+				native,
 				request: this
 			})
 		}
