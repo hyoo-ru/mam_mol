@@ -1,0 +1,64 @@
+$mol_vary_edit $mol_list
+	schema null
+	value? null
+	Vary $mol_vary_class
+	Null_icon $mol_icon_circle_off_outline
+	Bool_icon $mol_icon_flag_checkered
+	Bint_icon $mol_icon_numeric
+	Real_icon $mol_icon_ruler
+	Date_icon $mol_icon_clock_outline
+	Text_icon $mol_icon_alphabetical_variant
+	List_icon $mol_icon_order_numeric_ascending
+	Tupl_icon $mol_icon_order_alphabetical_ascending
+	rows /
+		<= Head $mol_bar sub /
+			<= Type $mol_select
+				Filter null
+				Trigger_icon null
+				option_content* / <= Type_icon* $mol_icon
+				enabled <= enabled true
+				dictionary *
+					Null \Nothing
+					Bool \Boolean
+					Bint \Integer
+					Real \Real
+					Text \Text
+					List \Array
+					Tupl \Dictionary
+				value? <=> type? \Null
+			^ head /
+				<= Bool $mol_check_box
+					checked? <=> bool? false
+					enabled <= enabled true
+				<= Bint $mol_bigint_field
+					value? <=> bint? 0n
+					enabled <= enabled true
+				<= Real $mol_number
+					value? <=> real? 0
+					enabled <= enabled true
+				<= Date $mol_date
+					value_moment? <=> date? $mol_time_moment
+					enabled <= enabled true
+				<= Text $mol_textarea
+					value? <=> text? \
+					enabled <= enabled true
+				<= Item_add $mol_button_minor
+					click? <=> item_add? null
+					enabled <= enabled true
+					sub /
+						<= Item_add_icon $mol_icon_plus
+				<= Field_add $mol_string
+					hint \+
+					submit? <=> field_add? null
+					enabled <= enabled true
+					sub /
+						<= Field_add_icon $mol_icon_plus
+		<= Body $mol_list rows <= body /
+			<= Item*0 $mol_bar sub /
+				<= Item_drop* $mol_drop
+					Sub <= Item_drag* $mol_drag
+						Sub <= Item_key* $mol_view
+							sub / <= item_key* null
+				<= Item_val* $mol_vary_edit
+					enabled <= enabled true
+					value? <=> item_val*? null
