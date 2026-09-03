@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/vary/edit/demo/demo.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_vary_edit_demo $mol_example_small\n\tsub /\n\t\t<= Edit $mol_vary_edit\n\t\t\tvalue? <=> value? *\n\t\t\t\tSimple *\n\t\t\t\t\tNull null\n\t\t\t\t\tTrue true\n\t\t\t\t\tFalse false\n\t\t\t\tNumbers /\n\t\t\t\t\t123n\n\t\t\t\t\t12.34\n\t\t\t\tText \\foo\n\t\t\t\tObjects *\n\t\t\t\t\tDate <= date Date\n\t\t\t\t\tDOM <= dom Element\n\t\t\t\tCollections *\n\t\t\t\t\tSet <= set Set<any> / /\n\t\t\t\t\t\t123\n\t\t\t\t\t\t\\foo\n\t\t\t\t\tMap <= map Map<any,any> / /\n\t\t\t\t\t\t/\n\t\t\t\t\t\t\t\\foo\n\t\t\t\t\t\t\t\\bar\n\t\t\t\t\t\t/\n\t\t\t\t\t\t\t123\n\t\t\t\t\t\t\t456\n\t\t<= Dump $mol_dump_value\n\t\t\tvalue <= value\n\ttags /\n\t\t\\VaryPack\n\t\t\\JSON\n\t\t\\field\n\taspects /\n\t\t\\Widget/Control\n\t\t\\Type/Vary\n"
+	],
+	"mappings": "AAAA,AAAA,qDAAoB,+BAApB;AAAA,AAaa;AAAA,AAAK,gCAAL;AAAA,UAAK,GAAL;AAAA;AACD;AAAA,AAAI,mCAAJ;AAAA,UAAI,GAAJ;AAAA;AAEA;AAAA,AAAI,8BAAW,CACrB,GADqB,EAEpB,KAFoB,CAAX,CAAJ;AAAA,UAAI,GAAJ;AAAA;AAGA;AAAA,AAAI,8BAAe,CACzB,CACE,KADF,EAEE,KAFF,CADyB,EAIzB,CACC,GADD,EAEC,GAFD,CAJyB,CAAf,CAAJ;AAAA,UAAI,GAAJ;AAAA;AAhBE;AAAA,AAAA;AAAA,UAAO;AAAA,AACjB,cAAO;AAAA,AACN,aAAK,IADC;AAEN,aAAK,IAFC;AAGN,cAAM;AAHA,CADU;AAKjB,eAAQ,CACP,IADO,EAEP,KAFO,CALS;AAQjB,YAAM,KARW;AASjB,eAAQ,CACP,QAAK,KAAG,OAAH,CADE,EAEP,OAAI,KAAG,MAAH,CAFG,CATS;AAYjB,mBAAY,CACX,OAAI,KAAG,MAAH,CADO,EAIX,OAAI,KAAG,MAAH,CAJO;AAZK,CAAP;AAAA;AADT;AAAA,AAAK,0CAAL;AACF,4BAAO,KAAI,YAAJ,CAAP,CADE;AAAA,UAAK,GAAL;AAAA;AAwBA;AAAA,AAAK,2CAAL;AACF,wBAAM,KAAG,QAAH,CAAN,CADE;AAAA,UAAK,GAAL;AAAA;AAzBJ;AAAA,AAAA,UAAI,CACH,KAAG,OAAH,CADG,EAyBH,KAAG,OAAH,CAzBG,CAAJ;AAAA;AA2BA;AAAA,AAAA,UAAK;AAAA,AACH,cADG;AAEH,UAFG;AAGH;AAHG,CAAL;AAAA;AAIA;AAAA,AAAA,UAAQ,CACN,gBADM,EAEN,WAFM,CAAR;AAAA;AAhCD,CAAA;AAaa,YAbb,CAaa,yCAbb;AAcY,YAdZ,CAcY,wCAdZ;AAgBY,YAhBZ,CAgBY,wCAhBZ;AAmBY,YAnBZ,CAmBY,wCAnBZ;AAGc,YAHd,CAGc,0CAHd;AAEK,YAFL,CAEK,yCAFL;AA0BK,YA1BL,CA0BK,yCA1BL;"
+}

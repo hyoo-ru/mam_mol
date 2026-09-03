@@ -6262,5 +6262,384 @@ var $;
     });
 })($ || ($ = {}));
 
+;
+"use strict";
+var $;
+(function ($_1) {
+    var $$;
+    (function ($$) {
+        $mol_test({
+            "1 byte int"($) {
+                $mol_assert_equal($mol_bigint_encode(0n), new Uint8Array(new Int8Array([0]).buffer));
+                $mol_assert_equal($mol_bigint_encode(1n), new Uint8Array(new Int8Array([1]).buffer));
+                $mol_assert_equal($mol_bigint_encode(-1n), new Uint8Array(new Int8Array([-1]).buffer));
+                $mol_assert_equal($mol_bigint_encode(127n), new Uint8Array(new Int8Array([127]).buffer));
+                $mol_assert_equal($mol_bigint_encode(-128n), new Uint8Array(new Int8Array([-128]).buffer));
+            },
+            "2 byte int"($) {
+                $mol_assert_equal($mol_bigint_encode(128n), new Uint8Array(new Int16Array([128]).buffer));
+                $mol_assert_equal($mol_bigint_encode(-129n), new Uint8Array(new Int16Array([-129]).buffer));
+                $mol_assert_equal($mol_bigint_encode(128n * 256n - 1n), new Uint8Array(new Int16Array([128 * 256 - 1]).buffer));
+                $mol_assert_equal($mol_bigint_encode(-128n * 256n), new Uint8Array(new Int16Array([-128 * 256]).buffer));
+            },
+            "3 byte int"($) {
+                $mol_assert_equal($mol_bigint_encode(128n * 256n), new Uint8Array(new Int32Array([128 * 256]).buffer).slice(0, 3));
+                $mol_assert_equal($mol_bigint_encode(-128n * 256n - 1n), new Uint8Array(new Int32Array([-128 * 256 - 1]).buffer).slice(0, 3));
+                $mol_assert_equal($mol_bigint_encode(128n * 256n ** 2n - 1n), new Uint8Array(new Int32Array([128 * 256 ** 2 - 1]).buffer).slice(0, 3));
+                $mol_assert_equal($mol_bigint_encode(-128n * 256n ** 2n), new Uint8Array(new Int32Array([-128 * 256 ** 2]).buffer).slice(0, 3));
+            },
+            "4 byte int"($) {
+                $mol_assert_equal($mol_bigint_encode(128n * 256n ** 2n), new Uint8Array(new Int32Array([128 * 256 ** 2]).buffer));
+                $mol_assert_equal($mol_bigint_encode(-128n * 256n ** 2n - 1n), new Uint8Array(new Int32Array([-128 * 256 ** 2 - 1]).buffer));
+                $mol_assert_equal($mol_bigint_encode(128n * 256n ** 3n - 1n), new Uint8Array(new Int32Array([128 * 256 ** 3 - 1]).buffer));
+                $mol_assert_equal($mol_bigint_encode(-128n * 256n ** 3n), new Uint8Array(new Int32Array([-128 * 256 ** 3]).buffer));
+            },
+            "8 byte int"($) {
+                $mol_assert_equal($mol_bigint_encode(128n * 256n ** 7n - 1n), new Uint8Array(new BigInt64Array([128n * 256n ** 7n - 1n]).buffer));
+                $mol_assert_equal($mol_bigint_encode(-128n * 256n ** 7n), new Uint8Array(new BigInt64Array([-128n * 256n ** 7n]).buffer));
+            },
+        });
+    })($$ = $_1.$$ || ($_1.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
+    var $$;
+    (function ($$) {
+        function check(text, bytes) {
+            const ideal = new Uint8Array(bytes);
+            const actual = $mol_charset_ucf_encode(text);
+            $mol_assert_equal($mol_charset_ucf_decode(actual), text);
+            $mol_assert_equal(actual, ideal);
+        }
+        $mol_test({
+            "Full ASCII compatible"($) {
+                check('hi', [0x68, 0x69]);
+            },
+            "1B ASCII with diacritic"($) {
+                check('allo\u0300', [0x61, 0x6C, 0x6C, 0x6F, 0xE2]);
+            },
+            "1B Cyrillic"($) {
+                check('мир', [0x88, 0x3C, 0xE2, 0x40, 0xF8]);
+            },
+            "1B Cyrillic with nummbers and punctuation"($) {
+                check('м.1', [0x88, 0x3C, 0x2E, 0x31, 0xF8]);
+            },
+            "2B Kanji"($) {
+                check('美', [0xF9, 0x0E, 0x63, 0x87]);
+            },
+            "3B rare Kanji"($) {
+                check('𲎯', [0xF7, 0x2F, 0x47, 0x0C, 0x89]);
+            },
+            "1B Kana"($) {
+                check('しい', [0xE0, 0x57, 0x44, 0xA0]);
+            },
+            "2B Emoji"($) {
+                check('🏴', [0xFF, 0x74, 0x4B, 0x81]);
+            },
+            "2B Emoji with 1B modifiers"($) {
+                check('🏴‍☠', [0xFF, 0x74, 0x4B, 0xC1, 0x0D, 0x8C, 0xA9, 0xB4]);
+            },
+            "2B Emoji with 3B Tag"($) {
+                check('🏴\u{E007F}', [0xFF, 0x74, 0x4B, 0xF8, 0x7F, 0x00, 0xF3, 0x89]);
+            },
+            "Mixed scripts"($) {
+                check('allô 美しい мир, 🏴‍☠\n', [
+                    0x61, 0x6C, 0x6C, 0x6F, 0xEA, 0x20, // allô 
+                    0xF9, 0x0E, 0x63, 0xE7, 0x57, 0x44, 0x20, // 美しい 
+                    0xA8, 0x3C, 0xE2, 0x40, 0x2C, 0x20, // мир, 
+                    0xF7, 0x74, 0x4B, 0xC1, 0x0D, 0x8C, 0xA9, 0x0A, // 🏴‍☠\n
+                    0xB4,
+                ]);
+            },
+            "Wrong ending"($) {
+                const bin = new Uint8Array([0x88, 0x3C, 0xE2, 0x40]);
+                const error = $mol_assert_fail(() => $mol_charset_ucf_decode(bin), 'Wrong ending');
+                $mol_assert_equal(error.cause.mode, 166);
+                $mol_assert_equal(error.cause.text, 'мир');
+            },
+            "Wrong byte"($) {
+                const bin = new Uint8Array([0xFF, 0x74, 0x4B, 0x74, 0x9B, 0x81]);
+                const error = $mol_assert_fail(() => $mol_charset_ucf_decode(bin), 'Wrong byte');
+                $mol_assert_equal(error.cause.pos, 4);
+                $mol_assert_equal(error.cause.text, '🏴');
+            },
+            "Wrong 2B sequence length"($) {
+                const bin = new Uint8Array([0x78, 0xF9, 0x0E]);
+                const error = $mol_assert_fail(() => $mol_charset_ucf_decode(bin), 'Expected 2 bytes');
+                $mol_assert_equal(error.cause.pos, 2);
+                $mol_assert_equal(error.cause.text, 'x');
+            },
+            "Wrong 3B sequence length"($) {
+                const bin = new Uint8Array([0x78, 0xF7, 0x2F, 0x47]);
+                const error = $mol_assert_fail(() => $mol_charset_ucf_decode(bin), 'Expected 3 bytes');
+                $mol_assert_equal(error.cause.pos, 2);
+                $mol_assert_equal(error.cause.text, 'x');
+            },
+        });
+    })($$ = $_1.$$ || ($_1.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
+    var $$;
+    (function ($$) {
+        $mol_test({
+            "1 byte int"($) {
+                $mol_assert_equal($mol_bigint_decode(new Uint8Array), 0n);
+                $mol_assert_equal($mol_bigint_decode(new Uint8Array(new Int8Array([1]).buffer)), 1n);
+                $mol_assert_equal($mol_bigint_decode(new Uint8Array(new Int8Array([-1]).buffer)), -1n);
+                $mol_assert_equal($mol_bigint_decode(new Uint8Array(new Int8Array([127]).buffer)), 127n);
+                $mol_assert_equal($mol_bigint_decode(new Uint8Array(new Int8Array([-128]).buffer)), -128n);
+            },
+            "2 byte int"($) {
+                $mol_assert_equal($mol_bigint_decode(new Uint8Array(new Int16Array([128]).buffer)), 128n);
+                $mol_assert_equal($mol_bigint_decode(new Uint8Array(new Int16Array([-129]).buffer)), -129n);
+                $mol_assert_equal($mol_bigint_decode(new Uint8Array(new Int16Array([128 * 256 - 1]).buffer)), 128n * 256n - 1n);
+                $mol_assert_equal($mol_bigint_decode(new Uint8Array(new Int16Array([-128 * 256]).buffer)), -128n * 256n);
+            },
+            "3 byte int"($) {
+                $mol_assert_equal($mol_bigint_decode(new Uint8Array(new Int32Array([128 * 256]).buffer).slice(0, 3)), 128n * 256n);
+                $mol_assert_equal($mol_bigint_decode(new Uint8Array(new Int32Array([-128 * 256 - 1]).buffer).slice(0, 3)), -128n * 256n - 1n);
+                $mol_assert_equal($mol_bigint_decode(new Uint8Array(new Int32Array([128 * 256 ** 2 - 1]).buffer).slice(0, 3)), 128n * 256n ** 2n - 1n);
+                $mol_assert_equal($mol_bigint_decode(new Uint8Array(new Int32Array([-128 * 256 ** 2]).buffer).slice(0, 3)), -128n * 256n ** 2n);
+            },
+            "4 byte int"($) {
+                $mol_assert_equal($mol_bigint_decode(new Uint8Array(new Int32Array([128 * 256 ** 2]).buffer)), 128n * 256n ** 2n);
+                $mol_assert_equal($mol_bigint_decode(new Uint8Array(new Int32Array([-128 * 256 ** 2 - 1]).buffer)), -128n * 256n ** 2n - 1n);
+                $mol_assert_equal($mol_bigint_decode(new Uint8Array(new Int32Array([128 * 256 ** 3 - 1]).buffer)), 128n * 256n ** 3n - 1n);
+                $mol_assert_equal($mol_bigint_decode(new Uint8Array(new Int32Array([-128 * 256 ** 3]).buffer)), -128n * 256n ** 3n);
+            },
+            "8 byte int"($) {
+                $mol_assert_equal($mol_bigint_decode(new Uint8Array(new BigInt64Array([128n * 256n ** 7n - 1n]).buffer)), 128n * 256n ** 7n - 1n);
+                $mol_assert_equal($mol_bigint_decode(new Uint8Array(new BigInt64Array([-128n * 256n ** 7n]).buffer)), -128n * 256n ** 7n);
+            },
+        });
+    })($$ = $_1.$$ || ($_1.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
+    var $$;
+    (function ($$) {
+        $mol_test({
+            "Zero int"($) {
+                $mol_assert_equal($mol_bigint_decode($mol_bigint_encode(0n)), 0n);
+            },
+            "Large positive int"($) {
+                $mol_assert_equal($mol_bigint_decode($mol_bigint_encode(12345678901234567890n)), 12345678901234567890n);
+            },
+            "Large negative int"($) {
+                $mol_assert_equal($mol_bigint_decode($mol_bigint_encode(-12345678901234567890n)), -12345678901234567890n);
+            },
+        });
+    })($$ = $_1.$$ || ($_1.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+/** @jsx $mol_jsx */
+var $;
+(function ($_1) {
+    var $$;
+    (function ($$) {
+        const { uint, link, spec, blob, text, list, tupl, sint } = $mol_vary_tip;
+        const { none, both, fp16, fp32, fp64 } = $mol_vary_spec;
+        const { L1, L2, L4, L8, LA } = $mol_vary_len;
+        const str = $mol_charset_ucf_encode;
+        function check(vary, ideal, Vary = $mol_vary) {
+            const pack = Vary.pack(vary);
+            $mol_assert_equal(Vary.take(pack), vary);
+            $mol_assert_equal(pack, new Uint8Array(ideal));
+        }
+        $mol_test({
+            "vary pack logical"($) {
+                check([null], [spec | none]);
+                check([true], [$mol_vary_spec.true]);
+                check([false], [$mol_vary_spec.fake]);
+                check([undefined], [spec | both]);
+            },
+            "vary pack uint0"($) {
+                check([0], [0]);
+                check([27], [27]);
+            },
+            "vary pack uint1"($) {
+                check([28], [uint | L1, 28]);
+                check([255], [uint | L1, 255]);
+            },
+            "vary pack uint2"($) {
+                check([256], [uint | L2, 0, 1]);
+                check([256 ** 2 - 1], [uint | L2, 255, 255]);
+            },
+            "vary pack uint4"($) {
+                check([256 ** 2], [uint | L4, 0, 0, 1, 0]);
+                check([256 ** 4 - 1], [uint | L4, 255, 255, 255, 255]);
+            },
+            "vary pack uint8"($) {
+                check([256 ** 4], [uint | L8, 0, 0, 0, 0, 1, 0, 0, 0]);
+                check([Number.MAX_SAFE_INTEGER], [uint | L8, 255, 255, 255, 255, 255, 255, 31, 0]);
+                check([256n ** 8n - 1n], [uint | L8, 255, 255, 255, 255, 255, 255, 255, 255]);
+            },
+            "vary pack sint0"($) {
+                check([-1], [-1]);
+                check([-27], [-27]);
+            },
+            "vary pack sint1"($) {
+                check([-28,], [sint | -L1, -28]);
+                check([-256 / 2], [sint | -L1, 128]);
+            },
+            "vary pack sint2"($) {
+                check([-256 / 2 - 1], [sint | -L2, 127, 255]);
+                check([-(256 ** 2) / 2], [sint | -L2, 0, 128]);
+            },
+            "vary pack sint4"($) {
+                check([-(256 ** 2) / 2 - 1], [sint | -L4, 255, 127, 255, 255]);
+                check([-(256 ** 4) / 2], [sint | -L4, 0, 0, 0, 128]);
+            },
+            "vary pack sint8"($) {
+                check([-(256 ** 4) / 2 - 1], [sint | -L8, 255, 255, 255, 127, 255, 255, 255, 255]);
+                check([Number.MIN_SAFE_INTEGER], [sint | -L8, 1, 0, 0, 0, 0, 0, 224, 255]);
+                check([-(2n ** 63n)], [sint | -L8, 0, 0, 0, 0, 0, 0, 0, 128]);
+            },
+            "vary pack bigint"($) {
+                check([2n ** 64n], [sint | -LA, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]);
+                check([2n ** 2111n], [sint | -LA, 0, 1, ...Array.from({ length: 263 }, () => 0), 128, 0]);
+                check([-1n - 2n ** 64n], [sint | -LA, 0, 0, 255, 255, 255, 255, 255, 255, 255, 255, 254]);
+                check([-1n - 2n ** 2111n], [sint | -LA, 0, 1, ...Array.from({ length: 263 }, () => 255), -129, 255]);
+            },
+            "vary pack float"($) {
+                check([1.5], [fp64, ...new Uint8Array(new Float64Array([1.5]).buffer)]);
+            },
+            "vary pack list"($) {
+                check([[1, 2, 3]], [list | 3, 1, 2, 3]);
+                check([[[], [1], [2, 3]]], [list | 3, list | 0, list | 1, 1, list | 2, 2, 3]);
+            },
+            "vary pack dedup list"($) {
+                const pair = [1, 2];
+                check([[pair, pair]], [list | 2, list | 2, 1, 2, link | 0]);
+                const seven = [7];
+                const box = [seven];
+                check([[box, box, seven]], [list | 3, list | 1, list | 1, 7, link | 1, link | 0]);
+            },
+            "vary pack cyclic list"($) {
+                const foo = [];
+                foo.push([foo]);
+                $mol_assert_fail(() => $mol_vary.pack([foo]), 'Cyclic refs');
+            },
+            "vary pack dedup uint"($) {
+                check([[28, 28]], [list | 2, uint | L1, 28, link | 0]);
+                check([[2n ** 64n, 2n ** 64n]], [list | 2, sint | -LA, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, link | 0]);
+            },
+            "vary pack dedup float"($) {
+                check([[1.5, 1.5]], [list | 2, fp64, ...new Uint8Array(new Float64Array([1.5]).buffer), link | 0]);
+            },
+            "vary pack text"($) {
+                check(['foo'], [text | 3, ...str('foo')]);
+                check(['абв'], [text | 5, ...str('абв')]);
+                const long_lat = 'abcdefghijklmnopqrst';
+                check([long_lat], [text | L1, 20, ...str(long_lat)]);
+                const long_cyr = 'абвгдеёжзийклмнопрст';
+                check([long_cyr], [text | L1, 22, ...str(long_cyr)]);
+            },
+            "vary pack dedup text"($) {
+                check([["f", "f"]], [list | 2, text | 1, ...str('f'), link | 0]);
+            },
+            "vary pack blob"($) {
+                check([new Uint8Array([1, 255])], [blob | 2, uint | L1, 1, 255]);
+                check([new Int8Array([-128, 127])], [blob | 2, sint | ~L1, -128, 127]);
+                check([new Uint32Array([255])], [blob | 4, uint | L4, 255, 0, 0, 0]);
+                check([new Int32Array([-128])], [blob | 4, sint | ~L4, -128, 255, 255, 255]);
+                check([new BigUint64Array([255n])], [blob | 8, uint | L8, 255, 0, 0, 0, 0, 0, 0, 0]);
+                check([new BigInt64Array([-128n])], [blob | 8, sint | ~L8, -128, 255, 255, 255, 255, 255, 255, 255]);
+                check([new Float32Array([1.5])], [blob | 4, fp32, ...new Uint8Array(new Float32Array([1.5]).buffer)]);
+                check([new Float64Array([1.5])], [blob | 8, fp64, ...new Uint8Array(new Float64Array([1.5]).buffer)]);
+            },
+            "vary pack dedup blob"($) {
+                const part = new Uint8Array([1, 2]);
+                check([[part, part]], [list | 2, blob | 2, uint | L1, 1, 2, link | 0]);
+            },
+            "vary pack struct"($) {
+                check([{ x: 1, y: 2 }], [tupl | 2, list | 2, text | 1, ...str('x'), text | 1, ...str('y'), 1, 2]);
+                check([{ x: {}, y: { a: 1 } }], [tupl | 2, list | 2, text | 1, ...str('x'), text | 1, ...str('y'), tupl | 0, list | 0, tupl | 1, list | 1, text | 1, ...str('a'), 1]);
+            },
+            "vary pack struct shape dedup"($) {
+                check([[{}, { foo: 1 }, { foo: 2 }]], [list | 3, tupl | 0, list | 0, tupl | 1, list | 1, text | 3, ...str('foo'), 1, tupl | 1, link | 3, 2]);
+                check([{ x: 1, y: { x: 2, y: 3 } }], [tupl | 2, list | 2, text | 1, ...str('x'), text | 1, ...str('y'), 1, tupl | 2, link | 2, 2, 3]);
+            },
+            "vary pack struct full dedup"($) {
+                const item = { x: 1 };
+                check([[item, item]], [list | 2, tupl | 1, list | 1, text | 1, ...str('x'), 1, link | 2]);
+                const part = { x: 1, y: 2 };
+                check([{ x: part, y: part }], [tupl | 2, list | 2, text | 1, ...str('x'), text | 1, ...str('y'), tupl | 2, link | 2, 1, 2, link | 3]);
+            },
+            "vary pack cyclic struct"($) {
+                const foo = { bar: null };
+                foo.bar = foo;
+                $mol_assert_fail(() => $mol_vary.pack([foo]), 'Cyclic refs');
+            },
+            "vary pack Map"($) {
+                check([new Map([['foo', 1], [2, 'bar']])], [tupl | 2, list | 2, text | 4, ...str('keys'), text | 4, ...str('vals'), list | 2, text | 3, ...str('foo'), 2, list | 2, 1, text | 3, ...str('bar')]);
+            },
+            "vary pack Set"($) {
+                check([new Set([7, 'foo'])], [tupl | 1, list | 1, text | 3, ...str('set'), list | 2, 7, text | 3, ...str('foo')]);
+            },
+            "vary pack Date"($) {
+                const date1 = new Date('2025-01-02T03:04:05');
+                check([date1], [tupl | 1, list | 1, text | $mol_vary_len.L1, 9, ...str('unix_time'), uint | L4, ...new Uint8Array(new Uint32Array([date1.valueOf() / 1000]).buffer)]);
+                const date2 = new Date('2025-01-02T03:04:05.678');
+                check([date2], [tupl | 1, list | 1, text | $mol_vary_len.L1, 9, ...str('unix_time'), fp64, ...new Uint8Array(new Float64Array([date2.valueOf() / 1000]).buffer)]);
+            },
+            "vary pack DOM Element"($) {
+                $mol_assert_equal($mol_dom_serialize($mol_jsx("div", null,
+                    $mol_jsx("span", null),
+                    $mol_jsx("br", null),
+                    " ")), $mol_dom_serialize($mol_vary.take($mol_vary.pack([$mol_jsx("div", null,
+                        $mol_jsx("span", null),
+                        $mol_jsx("br", null),
+                        " ")]))[0]));
+            },
+            "vary pack custom types in rooms"($) {
+                class Foo {
+                    a;
+                    b;
+                    constructor(a, b) {
+                        this.a = a;
+                        this.b = b;
+                    }
+                    ;
+                    [Symbol.iterator]() {
+                        return [this.a, this.b].values();
+                    }
+                }
+                const Vary = $mol_vary.zone();
+                Vary.type({
+                    type: Foo,
+                    keys: ['summ', 'diff'],
+                    lean: foo => [foo.a + foo.b, foo.a - foo.b],
+                    rich: ([summ, diff]) => new Foo((summ + diff) / 2, (summ - diff) / 2),
+                });
+                // restore
+                check([new Foo(4, 2)], [tupl | 2, list | 2, text | 4, ...str('summ'), text | 4, ...str('diff'), 6, 2], Vary);
+                // isolated
+                $mol_assert_equal($mol_vary.take($mol_vary.pack([new Foo(4, 2)])), [{ a: 4, b: 2 }]);
+                // inherited
+                $mol_assert_equal(Vary.take(Vary.pack([new Map([[1, 2]])])), [new Map([[1, 2]])]);
+            },
+            "vary pack sequences"($) {
+                check([], []);
+                check([7], [7]);
+                check([3, 4], [3, 4]);
+                check([['foo', 'foo'], ['bar', 'bar']], [list | 2, text | 3, ...str('foo'), link | 0, list | 2, text | 3, ...str('bar'), link | 0]);
+            },
+        });
+    })($$ = $_1.$$ || ($_1.$$ = {}));
+})($ || ($ = {}));
+
 
 //# sourceMappingURL=web.test.js.map

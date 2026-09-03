@@ -128,6 +128,7 @@
     "$mol_keyboard_code",
     "$mol_keyboard",
     "$mol_action",
+    "$mol_mem_cached",
     "$mol_dom_listener",
     "$mol_layer",
     "$mol_type_enforce"

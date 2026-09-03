@@ -2010,6 +2010,7 @@ $mol_select $mol_pick
 	Option_row* $mol_button_minor
 		enabled <= enabled true
 		event_click? <=> event_select*? null
+		hint <= option_hint* null
 		sub <= option_content* /
 			<= Option_label* $mol_dimmer
 				haystack <= option_label* \
@@ -6756,6 +6757,161 @@ $mol_transit_demo $mol_example_large
 						flex-end \bottom
 	aspects /
 		\Widget/Layout
+
+$mol_bigint_field $mol_bar
+	step 1n
+	boost 10n
+	value_min null bigint
+	value_max null bigint
+	value? 0n
+	enabled? true
+	plugins /
+		<= Hotkey $mol_hotkey
+			key *
+				down? <=> decrement? null
+				up? <=> increment? null
+				pageDown? <=> decrement_boost? null
+				pageUp? <=> increment_boost? null
+	sub /
+		<= Decrement $mol_button_minor
+			click? <=> decrement? null
+			enabled <= decrement_enabled <= enabled
+			sub /
+				<= Decrement_icon $mol_icon_chevron_left
+		<= String $mol_string
+			type \text
+			keyboard \decimal
+			value? <=> value_string? \
+			hint <= hint \ 
+			enabled <= string_enabled <= enabled
+			submit? <=> submit? null
+			selection? => selection?
+		<= Increment $mol_button_minor
+			click? <=> increment? null
+			enabled <= increment_enabled <= enabled
+			sub /
+				<= Increment_icon $mol_icon_chevron_right
+
+$mol_icon_circle $mol_icon path \M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z
+
+$mol_icon_circle_off_outline $mol_icon path \M22.11 21.46L2.39 1.73L1.11 3L4.06 5.95C2.78 7.63 2 9.72 2 12C2 17.5 6.5 22 12 22C14.28 22 16.37 21.23 18.05 19.94L20.84 22.73L22.11 21.46M12 20C7.58 20 4 16.42 4 12C4 10.27 4.56 8.68 5.5 7.38L16.62 18.5C15.32 19.45 13.73 20 12 20M8.17 4.97L6.72 3.5C8.25 2.56 10.06 2 12 2C17.5 2 22 6.5 22 12C22 13.94 21.44 15.75 20.5 17.28L19.03 15.83C19.65 14.69 20 13.39 20 12C20 7.58 16.42 4 12 4C10.61 4 9.31 4.35 8.17 4.97Z
+
+$mol_icon_flag $mol_icon path \M14.4,6L14,4H5V21H7V14H12.6L13,16H20V6H14.4Z
+
+$mol_icon_flag_checkered $mol_icon path \M14.4,6H20V16H13L12.6,14H7V21H5V4H14L14.4,6M14,14H16V12H18V10H16V8H14V10L13,8V6H11V8H9V6H7V8H9V10H7V12H9V10H11V12H13V10L14,12V14M11,10V8H13V10H11M14,10H16V12H14V10Z
+
+$mol_icon_numeric $mol_icon path \M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z
+
+$mol_icon_division $mol_icon path \M19,13H5V11H19V13M12,5A2,2 0 0,1 14,7A2,2 0 0,1 12,9A2,2 0 0,1 10,7A2,2 0 0,1 12,5M12,15A2,2 0 0,1 14,17A2,2 0 0,1 12,19A2,2 0 0,1 10,17A2,2 0 0,1 12,15Z
+
+$mol_icon_alphabetical $mol_icon path \M6,11A2,2 0 0,1 8,13V17H4A2,2 0 0,1 2,15V13A2,2 0 0,1 4,11H6M4,13V15H6V13H4M20,13V15H22V17H20A2,2 0 0,1 18,15V13A2,2 0 0,1 20,11H22V13H20M12,7V11H14A2,2 0 0,1 16,13V15A2,2 0 0,1 14,17H12A2,2 0 0,1 10,15V7H12M12,15H14V13H12V15Z
+
+$mol_icon_alphabetical_variant $mol_icon path \M3 7A2 2 0 0 0 1 9V17H3V13H5V17H7V9A2 2 0 0 0 5 7H3M3 9H5V11H3M15 10.5V9A2 2 0 0 0 13 7H9V17H13A2 2 0 0 0 15 15V13.5A1.54 1.54 0 0 0 13.5 12A1.54 1.54 0 0 0 15 10.5M13 15H11V13H13V15M13 11H11V9H13M19 7A2 2 0 0 0 17 9V15A2 2 0 0 0 19 17H21A2 2 0 0 0 23 15V14H21V15H19V9H21V10H23V9A2 2 0 0 0 21 7Z
+
+$mol_icon_format_list_bulleted $mol_icon path \M7,5H21V7H7V5M7,13V11H21V13H7M4,4.5A1.5,1.5 0 0,1 5.5,6A1.5,1.5 0 0,1 4,7.5A1.5,1.5 0 0,1 2.5,6A1.5,1.5 0 0,1 4,4.5M4,10.5A1.5,1.5 0 0,1 5.5,12A1.5,1.5 0 0,1 4,13.5A1.5,1.5 0 0,1 2.5,12A1.5,1.5 0 0,1 4,10.5M7,19V17H21V19H7M4,16.5A1.5,1.5 0 0,1 5.5,18A1.5,1.5 0 0,1 4,19.5A1.5,1.5 0 0,1 2.5,18A1.5,1.5 0 0,1 4,16.5Z
+
+$mol_icon_table $mol_icon path \M5,4H19A2,2 0 0,1 21,6V18A2,2 0 0,1 19,20H5A2,2 0 0,1 3,18V6A2,2 0 0,1 5,4M5,8V12H11V8H5M13,8V12H19V8H13M5,14V18H11V14H5M13,14V18H19V14H13Z
+
+$mol_vary_edit $mol_list
+	schema null
+	value? null
+	Vary $mol_vary_class
+	Null_icon $mol_icon_circle_off_outline
+	Bool_icon $mol_icon_flag_checkered
+	Bint_icon $mol_icon_numeric
+	Real_icon $mol_icon_division
+	Date_icon $mol_icon_clock_outline
+	Text_icon $mol_icon_alphabetical_variant
+	List_icon $mol_icon_format_list_bulleted
+	Tupl_icon $mol_icon_table
+	rows /
+		<= Head $mol_bar sub /
+			<= Type $mol_select
+				Filter null
+				Trigger_icon null
+				option_content* / <= Type_icon* $mol_icon
+				enabled <= enabled true
+				dictionary *
+					Null \Nothing
+					Bool \Boolean
+					Bint \Integer
+					Real \Real
+					Text \Text
+					List \Array
+					Tupl \Dictionary
+				value? <=> type? \Null
+			^ head /
+				<= Bool $mol_check_box
+					checked? <=> bool? false
+					enabled <= enabled true
+				<= Bint $mol_bigint_field
+					value? <=> bint? 0n
+					enabled <= enabled true
+				<= Real $mol_number
+					value? <=> real? 0
+					enabled <= enabled true
+				<= Date $mol_date
+					value_moment? <=> date? $mol_time_moment
+					enabled <= enabled true
+				<= Text $mol_textarea
+					value? <=> text? \
+					enabled <= enabled true
+				<= Item_add $mol_button_minor
+					click? <=> item_add? null
+					enabled <= enabled true
+					sub /
+						<= Item_add_icon $mol_icon_plus
+				<= Field_add $mol_string
+					hint \+
+					submit? <=> field_add? null
+					enabled <= enabled true
+					sub /
+						<= Field_add_icon $mol_icon_plus
+		<= Body $mol_list rows <= body /
+			<= Item*0 $mol_bar sub /
+				<= Item_drop* $mol_drop
+					Sub <= Item_drag* $mol_drag
+						Sub <= Item_key* $mol_view
+							sub / <= item_key* null
+				<= Item_val* $mol_vary_edit
+					enabled <= enabled true
+					value? <=> item_val*? null
+
+$mol_vary_edit_demo $mol_example_small
+	sub /
+		<= Edit $mol_vary_edit
+			value? <=> value? *
+				Simple *
+					Null null
+					True true
+					False false
+				Numbers /
+					123n
+					12.34
+				Text \foo
+				Objects *
+					Date <= date Date
+					DOM <= dom Element
+				Collections *
+					Set <= set Set<any> / /
+						123
+						\foo
+					Map <= map Map<any,any> / /
+						/
+							\foo
+							\bar
+						/
+							123
+							456
+		<= Dump $mol_dump_value
+			value <= value
+	tags /
+		\VaryPack
+		\JSON
+		\field
+	aspects /
+		\Widget/Control
+		\Type/Vary
 
 $mol_video_player $mol_view
 	dom_name \video

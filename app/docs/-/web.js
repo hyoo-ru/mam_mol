@@ -5483,8 +5483,9 @@ var $;
             });
         }
         response() {
+            const native = $mol_error_enriched(this, () => $mol_wire_sync(this).response_async());
             return this.$.$mol_fetch_response.make({
-                native: $mol_wire_sync(this).response_async(),
+                native,
                 request: this
             });
         }
@@ -6717,22 +6718,27 @@ var $;
                 const el = this.dom_node();
                 const from = el.selectionStart;
                 const to = el.selectionEnd;
-                try {
-                    el.value = this.value_changed(el.value);
-                }
-                catch (error) {
-                    const el = this.dom_node();
-                    if (error instanceof Error) {
-                        el.setCustomValidity(error.message);
-                        el.reportValidity();
-                    }
-                    $mol_fail_hidden(error);
-                }
+                el.value = this.value_changed(el.value);
                 if (to === null)
                     return;
                 el.selectionEnd = to;
                 el.selectionStart = from;
                 this.selection_change(next);
+            }
+            value_changed(next) {
+                const el = this.dom_node();
+                try {
+                    el.setCustomValidity('');
+                    return this.value(next);
+                }
+                catch (error) {
+                    $mol_fail_log(error);
+                    if (error instanceof Error) {
+                        el.setCustomValidity(error.message);
+                        el.reportValidity();
+                    }
+                    return next ?? $mol_mem_cached(() => this.value_changed()) ?? '';
+                }
             }
             error_report() {
                 try {
@@ -6793,6 +6799,9 @@ var $;
         __decorate([
             $mol_action
         ], $mol_string.prototype, "event_change", null);
+        __decorate([
+            $mol_mem
+        ], $mol_string.prototype, "value_changed", null);
         __decorate([
             $mol_mem
         ], $mol_string.prototype, "error_report", null);
@@ -19982,6 +19991,9 @@ var $;
 			if(next !== undefined) return next;
 			return null;
 		}
+		option_hint(id){
+			return null;
+		}
 		option_label(id){
 			return "";
 		}
@@ -20057,6 +20069,7 @@ var $;
 			const obj = new this.$.$mol_button_minor();
 			(obj.enabled) = () => ((this.enabled()));
 			(obj.event_click) = (next) => ((this.event_select(id, next)));
+			(obj.hint) = () => ((this.option_hint(id)));
 			(obj.sub) = () => ((this.option_content(id)));
 			return obj;
 		}
@@ -20143,6 +20156,9 @@ var $;
             option_label(id) {
                 const value = this.dictionary()[id];
                 return (value == null ? id : value) || this.option_label_default();
+            }
+            option_hint(id) {
+                return id;
             }
             option_rows() {
                 return this.options_filtered().map((option) => this.Option_row(option));
@@ -62078,6 +62094,1731 @@ var $;
         });
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_bigint_encode(num) {
+        const minus = num < 0n ? 255 : 0;
+        num = minus ? -num - 1n : num;
+        const bytes = [];
+        do {
+            let byte = minus ^ Number(num & 255n);
+            bytes.push(byte);
+            if (num >>= 8n)
+                continue;
+            if ((minus & 128) !== (byte & 128))
+                bytes.push(minus);
+            break;
+        } while (num);
+        return new Uint8Array(bytes);
+    }
+    $.$mol_bigint_encode = $mol_bigint_encode;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    const ascii_set = [...`0123456789.,:;()'"- \n`].map(c => c.charCodeAt(0));
+    const ascii_map = new Array(0x80).fill(0);
+    for (let i = 0; i < ascii_set.length; ++i)
+        ascii_map[ascii_set[i]] = i | 0x80;
+    const diacr_set = [
+        0x00, 0x01, 0x0F, 0x0B, 0x07, 0x08, 0x12, 0x13, // up
+        0x02, 0x0C, 0x06, 0x11, 0x03, 0x09, 0x0A, 0x04, // up
+        0x28, 0x31, 0x27, 0x26, 0x23, // down
+    ];
+    const diacr_map = new Array(0x80).fill(0);
+    for (let i = 0; i < diacr_set.length; ++i)
+        diacr_map[diacr_set[i]] = i | 0x80;
+    const wide_offset = 0x0E_00;
+    const wide_limit = 128 * 128 * 8 + wide_offset;
+    const tiny_limit = 128 * 98;
+    const full_mode = 0x95;
+    const wide_mode = 0x96;
+    const tiny_mode = 0x9E;
+    /** Encode text to Unicode Compact Format. */
+    function $mol_charset_ucf_encode(str) {
+        const buf = $mol_charset_buffer(str.length * 3);
+        return buf.slice(0, $mol_charset_ucf_encode_to(str, buf));
+    }
+    $.$mol_charset_ucf_encode = $mol_charset_ucf_encode;
+    function $mol_charset_ucf_encode_to(str, buf, from = 0) {
+        let pos = from;
+        let mode = tiny_mode;
+        const write_high = (code) => {
+            buf[pos++] = ((code + 128 - mode) & 0x7F) | 0x80;
+        };
+        const write_remap = (code) => {
+            const fast = ascii_map[code];
+            if (fast)
+                write_high(fast);
+            else
+                buf[pos++] = code;
+        };
+        const write_mode = (m) => {
+            write_high(m);
+            mode = m;
+        };
+        for (let i = 0; i < str.length; i++) {
+            let code = str.charCodeAt(i);
+            if (code >= 0xD8_00 && code < 0xDC_00)
+                code = ((code - 0xd800) << 10) + str.charCodeAt(++i) + 0x2400;
+            if (code < 0x80) { // ASCII
+                if (mode !== tiny_mode) {
+                    const fast = ascii_map[code];
+                    if (!fast)
+                        write_mode(tiny_mode);
+                }
+                buf[pos++] = code;
+            }
+            else if (code < tiny_limit) { // Tiny
+                const page = (code >> 7) + tiny_mode;
+                code &= 0x7F;
+                if (page === 164) { // diacritics
+                    const fast = diacr_map[code];
+                    if (fast) {
+                        if (mode !== tiny_mode)
+                            write_mode(tiny_mode);
+                        write_high(fast);
+                        continue;
+                    }
+                }
+                if (mode !== page)
+                    write_mode(page);
+                write_remap(code);
+            }
+            else if (code < wide_limit) { // Wide
+                code -= wide_offset;
+                const page = (code >> 14) + wide_mode;
+                if (mode !== page)
+                    write_mode(page);
+                write_remap(code & 0x7F);
+                write_remap((code >> 7) & 0x7F);
+            }
+            else { // Full
+                if (mode !== full_mode)
+                    write_mode(full_mode);
+                write_remap(code & 0x7F);
+                write_remap((code >> 7) & 0x7F);
+                write_remap(code >> 14);
+            }
+        }
+        if (mode !== tiny_mode)
+            write_mode(tiny_mode);
+        return pos - from;
+    }
+    $.$mol_charset_ucf_encode_to = $mol_charset_ucf_encode_to;
+    /** Decode text from Unicode Compact Format. */
+    function $mol_charset_ucf_decode(buffer, mode = tiny_mode) {
+        let text = '';
+        let pos = 0;
+        let page_offset = 0;
+        const read_code = () => {
+            let code = buffer[pos++];
+            if (code >= 0x80)
+                code = ((mode + code) & 0x7F) | 0x80;
+            return code;
+        };
+        const read_remap = () => {
+            let code = read_code();
+            if (code >= 0x80)
+                code = ascii_set[code - 0x80];
+            if (code === undefined)
+                $mol_fail(new Error('Wrong byte', { cause: { text, pos: pos - 1 } }));
+            return code;
+        };
+        while (pos < buffer.length) {
+            let code = read_code();
+            if (code < full_mode) { // Char Code
+                if (mode === tiny_mode) {
+                    if (code >= 0x80) {
+                        code = diacr_set[code - 0x080] | (6 << 7);
+                    }
+                }
+                else if (!ascii_map[code]) {
+                    if (code >= 0x80)
+                        code = ascii_set[code - 0x80];
+                    if (mode < tiny_mode) {
+                        if (pos === buffer.length)
+                            $mol_fail(new Error('Expected 2 bytes', { cause: { text, pos: pos - 1 } }));
+                        code |= read_remap() << 7;
+                    }
+                    if (mode === full_mode) {
+                        if (pos === buffer.length)
+                            $mol_fail(new Error('Expected 3 bytes', { cause: { text, pos: pos - 2 } }));
+                        code |= read_remap() << 14;
+                    }
+                    code += page_offset;
+                }
+                text += String.fromCodePoint(code);
+            }
+            else if (code >= tiny_mode) { // Tiny Set
+                mode = code;
+                page_offset = (mode - tiny_mode) << 7;
+            }
+            else if (code === full_mode) { // Full Set
+                mode = code;
+                page_offset = 0;
+            }
+            else { // Wide Set
+                mode = code;
+                page_offset = ((mode - wide_mode) << 14) + wide_offset;
+            }
+        }
+        if (mode !== tiny_mode) {
+            return $mol_fail(new Error('Wrong ending', { cause: { text, mode } }));
+        }
+        return text;
+    }
+    $.$mol_charset_ucf_decode = $mol_charset_ucf_decode;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_bigint_decode(buf) {
+        if (buf.length === 8)
+            return new BigInt64Array(buf.buffer, buf.byteOffset, 1)[0];
+        if (buf.length === 4)
+            return BigInt(new Int32Array(buf.buffer, buf.byteOffset, 1)[0]);
+        if (buf.length === 2)
+            return BigInt(new Int16Array(buf.buffer, buf.byteOffset, 1)[0]);
+        if (buf.length === 1)
+            return BigInt(new Int8Array(buf.buffer, buf.byteOffset, 1)[0]);
+        const minus = (buf.at(-1) & 128) ? 255 : 0;
+        let result = 0n;
+        let offset = 0n;
+        for (let i = 0; i < buf.length; i++, offset += 8n) {
+            result |= BigInt(buf[i] ^ minus) << offset;
+        }
+        if (minus)
+            result = (result + 1n) * -1n;
+        return result;
+    }
+    $.$mol_bigint_decode = $mol_bigint_decode;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    let $mol_vary_tip;
+    (function ($mol_vary_tip) {
+        $mol_vary_tip[$mol_vary_tip["uint"] = 0] = "uint";
+        $mol_vary_tip[$mol_vary_tip["link"] = 32] = "link";
+        $mol_vary_tip[$mol_vary_tip["spec"] = 64] = "spec";
+        $mol_vary_tip[$mol_vary_tip["list"] = 96] = "list";
+        $mol_vary_tip[$mol_vary_tip["blob"] = 128] = "blob";
+        $mol_vary_tip[$mol_vary_tip["text"] = 160] = "text";
+        $mol_vary_tip[$mol_vary_tip["tupl"] = 192] = "tupl";
+        $mol_vary_tip[$mol_vary_tip["sint"] = 224] = "sint";
+    })($mol_vary_tip = $.$mol_vary_tip || ($.$mol_vary_tip = {}));
+    let $mol_vary_len;
+    (function ($mol_vary_len) {
+        $mol_vary_len[$mol_vary_len["L1"] = 28] = "L1";
+        $mol_vary_len[$mol_vary_len["L2"] = 29] = "L2";
+        $mol_vary_len[$mol_vary_len["L4"] = 30] = "L4";
+        $mol_vary_len[$mol_vary_len["L8"] = 31] = "L8";
+        $mol_vary_len[$mol_vary_len["LA"] = 32] = "LA";
+    })($mol_vary_len = $.$mol_vary_len || ($.$mol_vary_len = {}));
+    let $mol_vary_spec;
+    (function ($mol_vary_spec) {
+        $mol_vary_spec[$mol_vary_spec["none"] = 'N'.charCodeAt(0)] = "none";
+        $mol_vary_spec[$mol_vary_spec["true"] = 'T'.charCodeAt(0)] = "true";
+        $mol_vary_spec[$mol_vary_spec["fake"] = 'F'.charCodeAt(0)] = "fake";
+        $mol_vary_spec[$mol_vary_spec["both"] = 'B'.charCodeAt(0)] = "both";
+        $mol_vary_spec[$mol_vary_spec["fp16"] = 'H'.charCodeAt(0)] = "fp16";
+        $mol_vary_spec[$mol_vary_spec["fp32"] = 'S'.charCodeAt(0)] = "fp32";
+        $mol_vary_spec[$mol_vary_spec["fp64"] = 'D'.charCodeAt(0)] = "fp64";
+        $mol_vary_spec[$mol_vary_spec["f128"] = 'Q'.charCodeAt(0)] = "f128";
+        $mol_vary_spec[$mol_vary_spec["f256"] = 'O'.charCodeAt(0)] = "f256";
+    })($mol_vary_spec = $.$mol_vary_spec || ($.$mol_vary_spec = {}));
+    const pojo_maker = (keys) => (vals) => {
+        const obj = {};
+        for (let i = 0; i < keys.length; ++i)
+            obj[keys[i]] = vals[i];
+        return obj;
+    };
+    /** VaryPack - simple fast compact data binarization format. */
+    class $mol_vary_class extends Object {
+        lean_symbol = Symbol('$mol_vary_lean');
+        array = new Uint8Array(256);
+        buffer = new DataView(this.array.buffer);
+        /** Packs any data to Uint8Array with deduplication. */
+        pack(data) {
+            let pos = 0;
+            let capacity = 0;
+            const offsets = new Map();
+            const stack = [];
+            const acquire = (size) => {
+                if (size < 0)
+                    return;
+                capacity += size;
+                if (this.array.byteLength >= capacity)
+                    return;
+                const buffer2 = new Uint8Array(Math.ceil(capacity / 4096) * 4096);
+                buffer2.set(this.array);
+                this.array = buffer2;
+                this.buffer = new DataView(this.array.buffer);
+            };
+            const release = (size) => {
+                capacity -= size;
+            };
+            const calc_size = (val) => {
+                if (val < $mol_vary_len.L1)
+                    return 1;
+                if (val < 2 ** 8)
+                    return 2;
+                if (val < 2 ** 16)
+                    return 3;
+                if (val < 2 ** 32)
+                    return 5;
+                if (val < 2n ** 64n)
+                    return 9;
+                return $mol_fail(new Error('Too large number'));
+            };
+            const dump_unum = (tip, val, max = val) => {
+                if (max < $mol_vary_len.L1) {
+                    this.array[pos++] = tip | Number(val);
+                    release(8);
+                    return;
+                }
+                if (tip == $mol_vary_tip.uint) {
+                    const offset = offsets.get(val);
+                    if (offset !== undefined)
+                        return dump_unum($mol_vary_tip.link, offset);
+                }
+                if (max < 2 ** 8) {
+                    this.array[pos++] = tip | $mol_vary_len.L1;
+                    this.array[pos++] = Number(val);
+                    release(7);
+                }
+                else if (max < 2 ** 16) {
+                    this.array[pos++] = tip | $mol_vary_len.L2;
+                    this.buffer.setUint16(pos, Number(val), true);
+                    pos += 2;
+                    release(6);
+                }
+                else if (max < 2 ** 32) {
+                    this.array[pos++] = tip | $mol_vary_len.L4;
+                    this.buffer.setUint32(pos, Number(val), true);
+                    pos += 4;
+                    release(4);
+                }
+                else if (max < 2n ** 64n) {
+                    this.array[pos++] = tip | $mol_vary_len.L8;
+                    this.buffer.setBigUint64(pos, BigInt(val), true);
+                    pos += 8;
+                }
+                else {
+                    dump_bint(val);
+                }
+                if (tip == $mol_vary_tip.uint)
+                    offsets.set(val, offsets.size);
+            };
+            const dump_snum = (val) => {
+                if (val > -$mol_vary_len.L1) {
+                    this.array[pos++] = Number(val);
+                    release(8);
+                    return;
+                }
+                const offset = offsets.get(val);
+                if (offset !== undefined)
+                    return dump_unum($mol_vary_tip.link, offset);
+                if (val >= -(2 ** 7)) {
+                    this.array[pos++] = -$mol_vary_len.L1;
+                    this.array[pos++] = Number(val);
+                    release(7);
+                }
+                else if (val >= -(2 ** 15)) {
+                    this.array[pos++] = -$mol_vary_len.L2;
+                    this.buffer.setInt16(pos, Number(val), true);
+                    pos += 2;
+                    release(6);
+                }
+                else if (val >= -(2 ** 31)) {
+                    this.array[pos++] = -$mol_vary_len.L4;
+                    this.buffer.setInt32(pos, Number(val), true);
+                    pos += 4;
+                    release(4);
+                }
+                else if (val >= -(2n ** 63n)) {
+                    this.array[pos++] = -$mol_vary_len.L8;
+                    this.buffer.setBigInt64(pos, BigInt(val), true);
+                    pos += 8;
+                }
+                else {
+                    dump_bint(val);
+                }
+                offsets.set(val, offsets.size);
+            };
+            const dump_bint = (val) => {
+                const buf = $mol_bigint_encode(val);
+                if (buf.byteLength > (2 ** 16 + 8))
+                    $mol_fail(new Error('Number too high', { cause: { val } }));
+                acquire(buf.byteLength - 6);
+                this.array[pos++] = -$mol_vary_len.LA;
+                this.buffer.setUint16(pos, buf.byteLength - 9, true);
+                pos += 2;
+                this.array.set(buf, pos);
+                pos += buf.byteLength;
+            };
+            const dump_float = (val) => {
+                const offset = offsets.get(val);
+                if (offset !== undefined)
+                    return dump_unum($mol_vary_tip.link, offset);
+                this.array[pos++] = $mol_vary_spec.fp64;
+                this.buffer.setFloat64(pos, val, true);
+                pos += 8;
+                offsets.set(val, offsets.size);
+            };
+            const dump_string = (val) => {
+                const offset = offsets.get(val);
+                if (offset !== undefined)
+                    return dump_unum($mol_vary_tip.link, offset);
+                const len_max = val.length * 3 + 2;
+                const len_size = calc_size(len_max);
+                acquire(len_max);
+                const len = $mol_charset_ucf_encode_to(val, this.array, pos + len_size);
+                dump_unum($mol_vary_tip.text, len, len_max);
+                pos += len;
+                release(len_max - len);
+                offsets.set(val, offsets.size);
+                return;
+            };
+            const dump_buffer = (val) => {
+                const offset = offsets.get(val);
+                if (offset !== undefined)
+                    return dump_unum($mol_vary_tip.link, offset);
+                dump_unum($mol_vary_tip.blob, val.byteLength);
+                acquire(1 + val.byteLength);
+                if (val instanceof Uint8Array)
+                    this.array[pos++] = $mol_vary_tip.uint | $mol_vary_len.L1;
+                else if (val instanceof Uint16Array)
+                    this.array[pos++] = $mol_vary_tip.uint | $mol_vary_len.L2;
+                else if (val instanceof Uint32Array)
+                    this.array[pos++] = $mol_vary_tip.uint | $mol_vary_len.L4;
+                else if (val instanceof BigUint64Array)
+                    this.array[pos++] = $mol_vary_tip.uint | $mol_vary_len.L8;
+                else if (val instanceof Int8Array)
+                    this.array[pos++] = $mol_vary_tip.sint | ~$mol_vary_len.L1;
+                else if (val instanceof Int16Array)
+                    this.array[pos++] = $mol_vary_tip.sint | ~$mol_vary_len.L2;
+                else if (val instanceof Int32Array)
+                    this.array[pos++] = $mol_vary_tip.sint | ~$mol_vary_len.L4;
+                else if (val instanceof BigInt64Array)
+                    this.array[pos++] = $mol_vary_tip.sint | ~$mol_vary_len.L8;
+                else if (typeof Float16Array === 'function' && val instanceof Float16Array)
+                    this.array[pos++] = $mol_vary_spec.fp16;
+                else if (val instanceof Float32Array)
+                    this.array[pos++] = $mol_vary_spec.fp32;
+                else if (val instanceof Float64Array)
+                    this.array[pos++] = $mol_vary_spec.fp64;
+                else
+                    $mol_fail(new Error(`Unsupported type`));
+                const src = (val instanceof Uint8Array) ? val : new Uint8Array(val.buffer, val.byteOffset, val.byteLength);
+                this.array.set(src, pos);
+                pos += val.byteLength;
+                offsets.set(val, offsets.size);
+            };
+            const dump_list = (val) => {
+                const offset = offsets.get(val);
+                if (offset !== undefined)
+                    return dump_unum($mol_vary_tip.link, offset);
+                dump_unum($mol_vary_tip.list, val.length);
+                acquire(val.length * 9);
+                if (stack.includes(val))
+                    $mol_fail(new Error('Cyclic refs', { cause: { stack, val } }));
+                stack.push(val);
+                for (let i = 0; i < val.length; ++i)
+                    dump(val[i]);
+                if (stack.at(-1) !== val)
+                    $mol_fail(new Error('Broken stack', { cause: { stack, val } }));
+                stack.pop();
+                offsets.set(val, offsets.size);
+            };
+            const shapes = new Map();
+            const shape = (val) => {
+                const keys1 = Object.keys(val);
+                const key = keys1.join('\0');
+                const keys2 = shapes.get(key);
+                if (keys2)
+                    return keys2;
+                shapes.set(key, keys1);
+                return keys1;
+            };
+            const dump_object = (val) => {
+                const offset = offsets.get(val);
+                if (offset !== undefined)
+                    return dump_unum($mol_vary_tip.link, offset);
+                const { 0: keys, 1: vals } = this.lean_find(val)?.(val) ?? [shape(val), Object.values(val)];
+                dump_unum($mol_vary_tip.tupl, vals.length);
+                acquire((vals.length + 1) * 9);
+                dump_list(keys);
+                if (stack.includes(val))
+                    $mol_fail(new Error('Cyclic refs', { cause: { stack, val } }));
+                stack.push(val);
+                for (let i = 0; i < vals.length; ++i)
+                    dump(vals[i]);
+                if (stack.at(-1) !== val)
+                    $mol_fail(new Error('Broken stack', { cause: { stack, val } }));
+                stack.pop();
+                offsets.set(val, offsets.size);
+            };
+            const dumpers = {
+                undefined: () => {
+                    this.array[pos++] = $mol_vary_spec.both;
+                    capacity -= 8;
+                },
+                boolean: val => {
+                    this.array[pos++] = val ? $mol_vary_spec.true : $mol_vary_spec.fake;
+                    capacity -= 8;
+                },
+                number: val => {
+                    if (!Number.isInteger(val))
+                        dump_float(val);
+                    else
+                        dumpers.bigint(val);
+                },
+                bigint: val => {
+                    if (val < 0) {
+                        dump_snum(val);
+                    }
+                    else {
+                        dump_unum($mol_vary_tip.uint, val);
+                    }
+                },
+                string: val => dump_string(val),
+                object: val => {
+                    if (!val) {
+                        capacity -= 8;
+                        return this.array[pos++] = $mol_vary_spec.none;
+                    }
+                    if (Array.isArray(val))
+                        return dump_list(val);
+                    if (ArrayBuffer.isView(val))
+                        return dump_buffer(val);
+                    return dump_object(val);
+                }
+            };
+            /** Recursive fills buffer with data. */
+            const dump = (val) => {
+                const dumper = dumpers[typeof val];
+                if (!dumper)
+                    $mol_fail(new Error(`Unsupported type`));
+                dumper(val);
+            };
+            for (let i = 0; i < data.length; ++i) {
+                capacity += 9;
+                dump(data[i]);
+                if (stack.length)
+                    $mol_fail(new Error('Stack underflow', { cause: { stack, item: data[i] } }));
+                offsets.clear();
+            }
+            if (pos !== capacity)
+                $mol_fail(new Error('Wrong reserved capacity', { cause: { capacity, size: pos, data } }));
+            return this.array.slice(0, pos);
+        }
+        /** Parses buffer to rich runtime structures. */
+        take(array) {
+            const buffer = new DataView(array.buffer, array.byteOffset, array.byteLength);
+            const stream = [];
+            let pos = 0;
+            const read_unum = (kind) => {
+                ++pos;
+                const num = kind & 0b11111;
+                if (num < $mol_vary_len.L1)
+                    return num;
+                let res = 0;
+                if (num === $mol_vary_len.L1) {
+                    res = buffer.getUint8(pos++);
+                }
+                else if (num === $mol_vary_len.L2) {
+                    res = buffer.getUint16(pos, true);
+                    pos += 2;
+                }
+                else if (num === $mol_vary_len.L4) {
+                    res = buffer.getUint32(pos, true);
+                    pos += 4;
+                }
+                else if (num === $mol_vary_len.L8) {
+                    res = buffer.getBigUint64(pos, true);
+                    if (res <= Number.MAX_SAFE_INTEGER)
+                        res = Number(res);
+                    pos += 8;
+                }
+                else {
+                    $mol_fail(new Error('Unsupported unum', { cause: { num } }));
+                }
+                if ((kind & 0b111_00000) === $mol_vary_tip.uint)
+                    stream.push(res);
+                return res;
+            };
+            const read_snum = (kind) => {
+                const num = buffer.getInt8(pos++);
+                if (num > -$mol_vary_len.L1)
+                    return num;
+                let res = 0;
+                if (num === -$mol_vary_len.L1) {
+                    res = buffer.getInt8(pos++);
+                }
+                else if (num === -$mol_vary_len.L2) {
+                    res = buffer.getInt16(pos, true);
+                    pos += 2;
+                }
+                else if (num === -$mol_vary_len.L4) {
+                    res = buffer.getInt32(pos, true);
+                    pos += 4;
+                }
+                else if (num === -$mol_vary_len.L8) {
+                    res = buffer.getBigInt64(pos, true);
+                    if (res >= Number.MIN_SAFE_INTEGER && res <= Number.MAX_SAFE_INTEGER)
+                        res = Number(res);
+                    pos += 8;
+                }
+                else if (num === -$mol_vary_len.LA) {
+                    const len = buffer.getUint16(pos, true) + 9;
+                    pos += 2;
+                    res = $mol_bigint_decode(new Uint8Array(buffer.buffer, buffer.byteOffset + pos, len));
+                    pos += len;
+                }
+                else {
+                    $mol_fail(new Error('Unsupported snum', { cause: { num } }));
+                }
+                stream.push(res);
+                return res;
+            };
+            const read_text = (kind) => {
+                const len = read_unum(kind);
+                const text = $mol_charset_ucf_decode(new Uint8Array(array.buffer, array.byteOffset + pos, len));
+                pos += len;
+                stream.push(text);
+                return text;
+            };
+            const read_buffer = (len, TypedArray) => {
+                const bin = new TypedArray(array.slice(pos, pos + len).buffer);
+                pos += len;
+                stream.push(bin);
+                return bin;
+            };
+            const read_blob = (kind) => {
+                const len = read_unum(kind);
+                const kind_item = buffer.getUint8(pos++);
+                switch (kind_item) {
+                    case $mol_vary_len.L1: return read_buffer(len, Uint8Array);
+                    case $mol_vary_len.L2: return read_buffer(len, Uint16Array);
+                    case $mol_vary_len.L4: return read_buffer(len, Uint32Array);
+                    case $mol_vary_len.L8: return read_buffer(len, BigUint64Array);
+                    case ~$mol_vary_len.L1 + 256: return read_buffer(len, Int8Array);
+                    case ~$mol_vary_len.L2 + 256: return read_buffer(len, Int16Array);
+                    case ~$mol_vary_len.L4 + 256: return read_buffer(len, Int32Array);
+                    case ~$mol_vary_len.L8 + 256: return read_buffer(len, BigInt64Array);
+                    case $mol_vary_tip.spec | $mol_vary_spec.fp16: return read_buffer(len, Float16Array);
+                    case $mol_vary_tip.spec | $mol_vary_spec.fp32: return read_buffer(len, Float32Array);
+                    case $mol_vary_tip.spec | $mol_vary_spec.fp64: return read_buffer(len, Float64Array);
+                    default:
+                        $mol_fail(new Error('Unsupported blob item kind', { cause: { kind_item } }));
+                }
+            };
+            const read_list = (kind) => {
+                const len = read_unum(kind);
+                const list = new Array(len);
+                for (let i = 0; i < len; ++i)
+                    list[i] = read_vary();
+                stream.push(list);
+                return list;
+            };
+            const read_link = (kind) => {
+                const index = read_unum(kind);
+                if (index >= stream.length)
+                    $mol_fail(new Error('Too large index', { cause: { index, exists: stream.length } }));
+                return stream[index];
+            };
+            const read_tupl = (kind) => {
+                const len = read_unum(kind);
+                const keys = read_vary();
+                const vals = new Array(len);
+                for (let i = 0; i < len; ++i)
+                    vals[i] = read_vary();
+                const obj = this.rich(keys, vals);
+                stream.push(obj);
+                return obj;
+            };
+            const read_spec = (kind) => {
+                switch (kind) {
+                    case $mol_vary_spec.none:
+                        ++pos;
+                        return null;
+                    case $mol_vary_spec.fake:
+                        ++pos;
+                        return false;
+                    case $mol_vary_spec.true:
+                        ++pos;
+                        return true;
+                    case $mol_vary_spec.both:
+                        ++pos;
+                        return undefined;
+                    case $mol_vary_spec.fp64: {
+                        const val = buffer.getFloat64(++pos, true);
+                        stream.push(val);
+                        pos += 8;
+                        return val;
+                    }
+                    case $mol_vary_spec.fp32: {
+                        const val = buffer.getFloat32(++pos, true);
+                        stream.push(val);
+                        pos += 4;
+                        return val;
+                    }
+                    case $mol_vary_spec.fp16: {
+                        const val = buffer.getFloat16(++pos, true);
+                        stream.push(val);
+                        pos += 2;
+                        return val;
+                    }
+                    default:
+                        $mol_fail(new Error('Unsupported spec', { cause: { kind } }));
+                }
+            };
+            const read_vary = () => {
+                const kind = buffer.getUint8(pos);
+                const tip = kind & 0b111_00000;
+                switch (tip) {
+                    case $mol_vary_tip.uint: return read_unum(kind);
+                    case $mol_vary_tip.sint: return read_snum(kind);
+                    case $mol_vary_tip.link: return read_link(kind);
+                    case $mol_vary_tip.text: return read_text(kind);
+                    case $mol_vary_tip.list: return read_list(kind);
+                    case $mol_vary_tip.blob: return read_blob(kind);
+                    case $mol_vary_tip.tupl: return read_tupl(kind);
+                    case $mol_vary_tip.spec: return read_spec(kind);
+                    default: $mol_fail(new Error('Unsupported tip', { cause: { tip } }));
+                }
+            };
+            const result = [];
+            while (pos < array.byteLength) {
+                result.push(read_vary());
+                stream.length = 0;
+            }
+            return result;
+        }
+        rich_index = new Map([
+            [null, () => ({})]
+        ]);
+        /** Isolated Vary for custom types */
+        zone() {
+            const room = new $mol_vary_class;
+            Object.setPrototypeOf(room, this);
+            const index_clone = (map) => new Map([...map].map(([k, v]) => [k, k === null ? v : index_clone(v)]));
+            room.rich_index = index_clone(this.rich_index);
+            return room;
+        }
+        rich(keys, vals) {
+            const node = this.rich_node(keys);
+            let rich = node.get(null);
+            if (!rich)
+                node.set(null, rich = pojo_maker(keys));
+            return rich(vals);
+        }
+        rich_node(keys) {
+            let node = this.rich_index;
+            for (let i = 0; i < keys.length; ++i) {
+                let sub = node.get(keys[i]);
+                if (sub)
+                    node = sub;
+                else
+                    node.set(keys[i], node = new Map);
+            }
+            return node;
+        }
+        lean(obj) {
+            return this.lean_find(obj)?.(obj) ?? [Object.keys(obj), Object.values(obj)];
+        }
+        lean_find(val) {
+            const lean = val[this.lean_symbol];
+            if (lean)
+                return lean;
+            const sup = Object.getPrototypeOf(this);
+            if (sup === Object.prototype)
+                return;
+            return sup.lean_find(val);
+        }
+        /** Adds custom types support. */
+        type({ type, keys, rich, lean }) {
+            this.rich_node(keys).set(null, rich);
+            type.prototype[this.lean_symbol] = (val) => [keys, lean(val)];
+        }
+    }
+    $.$mol_vary_class = $mol_vary_class;
+    $.$mol_vary = new $mol_vary_class;
+    /** Native Map support */
+    $.$mol_vary.type({
+        type: Map,
+        keys: ['keys', 'vals'],
+        lean: obj => [[...obj.keys()], [...obj.values()]],
+        rich: ([keys, vals]) => new Map((keys ?? []).map((k, i) => [k, vals?.[i]])),
+    });
+    /** Native Set support */
+    $.$mol_vary.type({
+        type: Set,
+        keys: ['set'],
+        lean: obj => [[...obj.values()]],
+        rich: ([vals]) => new Set(vals),
+    });
+    /** Native Date support */
+    $.$mol_vary.type({
+        type: Date,
+        keys: ['unix_time'],
+        lean: obj => [obj.valueOf() / 1000],
+        rich: ([ts]) => new Date(ts * 1000),
+    });
+    if ('Element' in $mol_dom) { // Absent in workers
+        /** Native Element support */
+        $.$mol_vary.type({
+            type: $mol_dom.Element,
+            keys: ['XML'],
+            lean: node => [$mol_dom_serialize(node)],
+            rich: ([text]) => $mol_dom_parse(text, 'application/xml').documentElement,
+        });
+    }
+})($ || ($ = {}));
+
+;
+	($.$mol_bigint_field) = class $mol_bigint_field extends ($.$mol_bar) {
+		decrement(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		increment(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		decrement_boost(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		increment_boost(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Hotkey(){
+			const obj = new this.$.$mol_hotkey();
+			(obj.key) = () => ({
+				"down": (next) => (this.decrement(next)), 
+				"up": (next) => (this.increment(next)), 
+				"pageDown": (next) => (this.decrement_boost(next)), 
+				"pageUp": (next) => (this.increment_boost(next))
+			});
+			return obj;
+		}
+		decrement_enabled(){
+			return (this.enabled());
+		}
+		Decrement_icon(){
+			const obj = new this.$.$mol_icon_chevron_left();
+			return obj;
+		}
+		Decrement(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.click) = (next) => ((this.decrement(next)));
+			(obj.enabled) = () => ((this.decrement_enabled()));
+			(obj.sub) = () => ([(this.Decrement_icon())]);
+			return obj;
+		}
+		value_string(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		hint(){
+			return " ";
+		}
+		string_enabled(){
+			return (this.enabled());
+		}
+		submit(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		selection(next){
+			return (this.String().selection(next));
+		}
+		String(){
+			const obj = new this.$.$mol_string();
+			(obj.type) = () => ("text");
+			(obj.keyboard) = () => ("decimal");
+			(obj.value) = (next) => ((this.value_string(next)));
+			(obj.hint) = () => ((this.hint()));
+			(obj.enabled) = () => ((this.string_enabled()));
+			(obj.submit) = (next) => ((this.submit(next)));
+			return obj;
+		}
+		increment_enabled(){
+			return (this.enabled());
+		}
+		Increment_icon(){
+			const obj = new this.$.$mol_icon_chevron_right();
+			return obj;
+		}
+		Increment(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.click) = (next) => ((this.increment(next)));
+			(obj.enabled) = () => ((this.increment_enabled()));
+			(obj.sub) = () => ([(this.Increment_icon())]);
+			return obj;
+		}
+		step(){
+			return 1n;
+		}
+		boost(){
+			return 10n;
+		}
+		value_min(){
+			return null;
+		}
+		value_max(){
+			return null;
+		}
+		value(next){
+			if(next !== undefined) return next;
+			return 0n;
+		}
+		enabled(next){
+			if(next !== undefined) return next;
+			return true;
+		}
+		plugins(){
+			return [(this.Hotkey())];
+		}
+		sub(){
+			return [
+				(this.Decrement()), 
+				(this.String()), 
+				(this.Increment())
+			];
+		}
+	};
+	($mol_mem(($.$mol_bigint_field.prototype), "decrement"));
+	($mol_mem(($.$mol_bigint_field.prototype), "increment"));
+	($mol_mem(($.$mol_bigint_field.prototype), "decrement_boost"));
+	($mol_mem(($.$mol_bigint_field.prototype), "increment_boost"));
+	($mol_mem(($.$mol_bigint_field.prototype), "Hotkey"));
+	($mol_mem(($.$mol_bigint_field.prototype), "Decrement_icon"));
+	($mol_mem(($.$mol_bigint_field.prototype), "Decrement"));
+	($mol_mem(($.$mol_bigint_field.prototype), "value_string"));
+	($mol_mem(($.$mol_bigint_field.prototype), "submit"));
+	($mol_mem(($.$mol_bigint_field.prototype), "String"));
+	($mol_mem(($.$mol_bigint_field.prototype), "Increment_icon"));
+	($mol_mem(($.$mol_bigint_field.prototype), "Increment"));
+	($mol_mem(($.$mol_bigint_field.prototype), "value"));
+	($mol_mem(($.$mol_bigint_field.prototype), "enabled"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_bigint_field extends $.$mol_bigint_field {
+            value_string(next) {
+                const val = this.value(next === undefined ? undefined : BigInt(next));
+                return val == null ? '' : next === '' ? '' : String(val);
+            }
+            shift(diff) {
+                let next = this.value() + diff;
+                const max = this.value_max();
+                const min = this.value_min();
+                if (min !== null && next < min)
+                    next = min;
+                if (max !== null && next > max)
+                    next = max;
+                this.value(next);
+            }
+            shift_boost(diff) {
+                const pos = this.selection()[0];
+                const len = this.value_string().length;
+                const boost = 10n ** BigInt(len - pos);
+                this.shift(diff * boost);
+            }
+            increment(event) {
+                this.shift(this.step());
+                event?.preventDefault();
+            }
+            decrement(event) {
+                this.shift(-this.step());
+                event?.preventDefault();
+            }
+            increment_boost(event) {
+                this.shift_boost(1n);
+                event?.preventDefault();
+            }
+            decrement_boost(event) {
+                this.shift_boost(-1n);
+                event?.preventDefault();
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_bigint_field.prototype, "value_string", null);
+        __decorate([
+            $mol_action
+        ], $mol_bigint_field.prototype, "shift", null);
+        __decorate([
+            $mol_action
+        ], $mol_bigint_field.prototype, "shift_boost", null);
+        $$.$mol_bigint_field = $mol_bigint_field;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($mol_bigint_field, {
+            maxWidth: '100%',
+            String: {
+                flex: {
+                    grow: 1,
+                    shrink: 1,
+                    basis: `7rem`
+                },
+                width: `7rem`,
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$mol_icon_circle) = class $mol_icon_circle extends ($.$mol_icon) {
+		path(){
+			return "M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$mol_icon_circle_off_outline) = class $mol_icon_circle_off_outline extends ($.$mol_icon) {
+		path(){
+			return "M22.11 21.46L2.39 1.73L1.11 3L4.06 5.95C2.78 7.63 2 9.72 2 12C2 17.5 6.5 22 12 22C14.28 22 16.37 21.23 18.05 19.94L20.84 22.73L22.11 21.46M12 20C7.58 20 4 16.42 4 12C4 10.27 4.56 8.68 5.5 7.38L16.62 18.5C15.32 19.45 13.73 20 12 20M8.17 4.97L6.72 3.5C8.25 2.56 10.06 2 12 2C17.5 2 22 6.5 22 12C22 13.94 21.44 15.75 20.5 17.28L19.03 15.83C19.65 14.69 20 13.39 20 12C20 7.58 16.42 4 12 4C10.61 4 9.31 4.35 8.17 4.97Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$mol_icon_flag) = class $mol_icon_flag extends ($.$mol_icon) {
+		path(){
+			return "M14.4,6L14,4H5V21H7V14H12.6L13,16H20V6H14.4Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$mol_icon_flag_checkered) = class $mol_icon_flag_checkered extends ($.$mol_icon) {
+		path(){
+			return "M14.4,6H20V16H13L12.6,14H7V21H5V4H14L14.4,6M14,14H16V12H18V10H16V8H14V10L13,8V6H11V8H9V6H7V8H9V10H7V12H9V10H11V12H13V10L14,12V14M11,10V8H13V10H11M14,10H16V12H14V10Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$mol_icon_numeric) = class $mol_icon_numeric extends ($.$mol_icon) {
+		path(){
+			return "M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$mol_icon_division) = class $mol_icon_division extends ($.$mol_icon) {
+		path(){
+			return "M19,13H5V11H19V13M12,5A2,2 0 0,1 14,7A2,2 0 0,1 12,9A2,2 0 0,1 10,7A2,2 0 0,1 12,5M12,15A2,2 0 0,1 14,17A2,2 0 0,1 12,19A2,2 0 0,1 10,17A2,2 0 0,1 12,15Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$mol_icon_alphabetical) = class $mol_icon_alphabetical extends ($.$mol_icon) {
+		path(){
+			return "M6,11A2,2 0 0,1 8,13V17H4A2,2 0 0,1 2,15V13A2,2 0 0,1 4,11H6M4,13V15H6V13H4M20,13V15H22V17H20A2,2 0 0,1 18,15V13A2,2 0 0,1 20,11H22V13H20M12,7V11H14A2,2 0 0,1 16,13V15A2,2 0 0,1 14,17H12A2,2 0 0,1 10,15V7H12M12,15H14V13H12V15Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$mol_icon_alphabetical_variant) = class $mol_icon_alphabetical_variant extends ($.$mol_icon) {
+		path(){
+			return "M3 7A2 2 0 0 0 1 9V17H3V13H5V17H7V9A2 2 0 0 0 5 7H3M3 9H5V11H3M15 10.5V9A2 2 0 0 0 13 7H9V17H13A2 2 0 0 0 15 15V13.5A1.54 1.54 0 0 0 13.5 12A1.54 1.54 0 0 0 15 10.5M13 15H11V13H13V15M13 11H11V9H13M19 7A2 2 0 0 0 17 9V15A2 2 0 0 0 19 17H21A2 2 0 0 0 23 15V14H21V15H19V9H21V10H23V9A2 2 0 0 0 21 7Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$mol_icon_format_list_bulleted) = class $mol_icon_format_list_bulleted extends ($.$mol_icon) {
+		path(){
+			return "M7,5H21V7H7V5M7,13V11H21V13H7M4,4.5A1.5,1.5 0 0,1 5.5,6A1.5,1.5 0 0,1 4,7.5A1.5,1.5 0 0,1 2.5,6A1.5,1.5 0 0,1 4,4.5M4,10.5A1.5,1.5 0 0,1 5.5,12A1.5,1.5 0 0,1 4,13.5A1.5,1.5 0 0,1 2.5,12A1.5,1.5 0 0,1 4,10.5M7,19V17H21V19H7M4,16.5A1.5,1.5 0 0,1 5.5,18A1.5,1.5 0 0,1 4,19.5A1.5,1.5 0 0,1 2.5,18A1.5,1.5 0 0,1 4,16.5Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$mol_icon_table) = class $mol_icon_table extends ($.$mol_icon) {
+		path(){
+			return "M5,4H19A2,2 0 0,1 21,6V18A2,2 0 0,1 19,20H5A2,2 0 0,1 3,18V6A2,2 0 0,1 5,4M5,8V12H11V8H5M13,8V12H19V8H13M5,14V18H11V14H5M13,14V18H19V14H13Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$mol_vary_edit) = class $mol_vary_edit extends ($.$mol_list) {
+		Type_icon(id){
+			const obj = new this.$.$mol_icon();
+			return obj;
+		}
+		enabled(){
+			return true;
+		}
+		type(next){
+			if(next !== undefined) return next;
+			return "Null";
+		}
+		Type(){
+			const obj = new this.$.$mol_select();
+			(obj.Filter) = () => (null);
+			(obj.Trigger_icon) = () => (null);
+			(obj.option_content) = (id) => ([(this.Type_icon(id))]);
+			(obj.enabled) = () => ((this.enabled()));
+			(obj.dictionary) = () => ({
+				"Null": "Nothing", 
+				"Bool": "Boolean", 
+				"Bint": "Integer", 
+				"Real": "Real", 
+				"Text": "Text", 
+				"List": "Array", 
+				"Tupl": "Dictionary"
+			});
+			(obj.value) = (next) => ((this.type(next)));
+			return obj;
+		}
+		bool(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		Bool(){
+			const obj = new this.$.$mol_check_box();
+			(obj.checked) = (next) => ((this.bool(next)));
+			(obj.enabled) = () => ((this.enabled()));
+			return obj;
+		}
+		bint(next){
+			if(next !== undefined) return next;
+			return 0n;
+		}
+		Bint(){
+			const obj = new this.$.$mol_bigint_field();
+			(obj.value) = (next) => ((this.bint(next)));
+			(obj.enabled) = () => ((this.enabled()));
+			return obj;
+		}
+		real(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		Real(){
+			const obj = new this.$.$mol_number();
+			(obj.value) = (next) => ((this.real(next)));
+			(obj.enabled) = () => ((this.enabled()));
+			return obj;
+		}
+		date(next){
+			if(next !== undefined) return next;
+			const obj = new this.$.$mol_time_moment();
+			return obj;
+		}
+		Date(){
+			const obj = new this.$.$mol_date();
+			(obj.value_moment) = (next) => ((this.date(next)));
+			(obj.enabled) = () => ((this.enabled()));
+			return obj;
+		}
+		text(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		Text(){
+			const obj = new this.$.$mol_textarea();
+			(obj.value) = (next) => ((this.text(next)));
+			(obj.enabled) = () => ((this.enabled()));
+			return obj;
+		}
+		item_add(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Item_add_icon(){
+			const obj = new this.$.$mol_icon_plus();
+			return obj;
+		}
+		Item_add(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.click) = (next) => ((this.item_add(next)));
+			(obj.enabled) = () => ((this.enabled()));
+			(obj.sub) = () => ([(this.Item_add_icon())]);
+			return obj;
+		}
+		field_add(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Field_add_icon(){
+			const obj = new this.$.$mol_icon_plus();
+			return obj;
+		}
+		Field_add(){
+			const obj = new this.$.$mol_string();
+			(obj.hint) = () => ("+");
+			(obj.submit) = (next) => ((this.field_add(next)));
+			(obj.enabled) = () => ((this.enabled()));
+			(obj.sub) = () => ([(this.Field_add_icon())]);
+			return obj;
+		}
+		head(){
+			return [
+				(this.Bool()), 
+				(this.Bint()), 
+				(this.Real()), 
+				(this.Date()), 
+				(this.Text()), 
+				(this.Item_add()), 
+				(this.Field_add())
+			];
+		}
+		Head(){
+			const obj = new this.$.$mol_bar();
+			(obj.sub) = () => ([(this.Type()), ...(this.head())]);
+			return obj;
+		}
+		item_key(id){
+			return null;
+		}
+		Item_key(id){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.item_key(id))]);
+			return obj;
+		}
+		Item_drag(id){
+			const obj = new this.$.$mol_drag();
+			(obj.Sub) = () => ((this.Item_key(id)));
+			return obj;
+		}
+		Item_drop(id){
+			const obj = new this.$.$mol_drop();
+			(obj.Sub) = () => ((this.Item_drag(id)));
+			return obj;
+		}
+		item_val(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Item_val(id){
+			const obj = new this.$.$mol_vary_edit();
+			(obj.enabled) = () => ((this.enabled()));
+			(obj.value) = (next) => ((this.item_val(id, next)));
+			return obj;
+		}
+		Item(id){
+			const obj = new this.$.$mol_bar();
+			(obj.sub) = () => ([(this.Item_drop(id)), (this.Item_val(id))]);
+			return obj;
+		}
+		body(){
+			return [(this.Item("0"))];
+		}
+		Body(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ((this.body()));
+			return obj;
+		}
+		schema(){
+			return null;
+		}
+		value(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Vary(){
+			const obj = new this.$.$mol_vary_class();
+			return obj;
+		}
+		Null_icon(){
+			const obj = new this.$.$mol_icon_circle_off_outline();
+			return obj;
+		}
+		Bool_icon(){
+			const obj = new this.$.$mol_icon_flag_checkered();
+			return obj;
+		}
+		Bint_icon(){
+			const obj = new this.$.$mol_icon_numeric();
+			return obj;
+		}
+		Real_icon(){
+			const obj = new this.$.$mol_icon_division();
+			return obj;
+		}
+		Date_icon(){
+			const obj = new this.$.$mol_icon_clock_outline();
+			return obj;
+		}
+		Text_icon(){
+			const obj = new this.$.$mol_icon_alphabetical_variant();
+			return obj;
+		}
+		List_icon(){
+			const obj = new this.$.$mol_icon_format_list_bulleted();
+			return obj;
+		}
+		Tupl_icon(){
+			const obj = new this.$.$mol_icon_table();
+			return obj;
+		}
+		rows(){
+			return [(this.Head()), (this.Body())];
+		}
+	};
+	($mol_mem_key(($.$mol_vary_edit.prototype), "Type_icon"));
+	($mol_mem(($.$mol_vary_edit.prototype), "type"));
+	($mol_mem(($.$mol_vary_edit.prototype), "Type"));
+	($mol_mem(($.$mol_vary_edit.prototype), "bool"));
+	($mol_mem(($.$mol_vary_edit.prototype), "Bool"));
+	($mol_mem(($.$mol_vary_edit.prototype), "bint"));
+	($mol_mem(($.$mol_vary_edit.prototype), "Bint"));
+	($mol_mem(($.$mol_vary_edit.prototype), "real"));
+	($mol_mem(($.$mol_vary_edit.prototype), "Real"));
+	($mol_mem(($.$mol_vary_edit.prototype), "date"));
+	($mol_mem(($.$mol_vary_edit.prototype), "Date"));
+	($mol_mem(($.$mol_vary_edit.prototype), "text"));
+	($mol_mem(($.$mol_vary_edit.prototype), "Text"));
+	($mol_mem(($.$mol_vary_edit.prototype), "item_add"));
+	($mol_mem(($.$mol_vary_edit.prototype), "Item_add_icon"));
+	($mol_mem(($.$mol_vary_edit.prototype), "Item_add"));
+	($mol_mem(($.$mol_vary_edit.prototype), "field_add"));
+	($mol_mem(($.$mol_vary_edit.prototype), "Field_add_icon"));
+	($mol_mem(($.$mol_vary_edit.prototype), "Field_add"));
+	($mol_mem(($.$mol_vary_edit.prototype), "Head"));
+	($mol_mem_key(($.$mol_vary_edit.prototype), "Item_key"));
+	($mol_mem_key(($.$mol_vary_edit.prototype), "Item_drag"));
+	($mol_mem_key(($.$mol_vary_edit.prototype), "Item_drop"));
+	($mol_mem_key(($.$mol_vary_edit.prototype), "item_val"));
+	($mol_mem_key(($.$mol_vary_edit.prototype), "Item_val"));
+	($mol_mem_key(($.$mol_vary_edit.prototype), "Item"));
+	($mol_mem(($.$mol_vary_edit.prototype), "Body"));
+	($mol_mem(($.$mol_vary_edit.prototype), "value"));
+	($mol_mem(($.$mol_vary_edit.prototype), "Vary"));
+	($mol_mem(($.$mol_vary_edit.prototype), "Null_icon"));
+	($mol_mem(($.$mol_vary_edit.prototype), "Bool_icon"));
+	($mol_mem(($.$mol_vary_edit.prototype), "Bint_icon"));
+	($mol_mem(($.$mol_vary_edit.prototype), "Real_icon"));
+	($mol_mem(($.$mol_vary_edit.prototype), "Date_icon"));
+	($mol_mem(($.$mol_vary_edit.prototype), "Text_icon"));
+	($mol_mem(($.$mol_vary_edit.prototype), "List_icon"));
+	($mol_mem(($.$mol_vary_edit.prototype), "Tupl_icon"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_vary_edit extends $.$mol_vary_edit {
+            Vary() {
+                return this.$.$mol_vary;
+            }
+            type(next) {
+                if (next !== undefined) {
+                    if (next !== 'Null')
+                        return next;
+                    this.value(null);
+                }
+                const val = this.value();
+                if (val == null)
+                    return 'Null';
+                switch (typeof val) {
+                    case 'boolean': return 'Bool';
+                    case 'bigint': return 'Bint';
+                    case 'number': return 'Real';
+                    case 'string': return 'Text';
+                }
+                if (Array.isArray(val))
+                    return 'List';
+                if (val instanceof Date)
+                    return 'Date';
+                return 'Tupl';
+            }
+            Type_icon(type) {
+                switch (type) {
+                    case 'Bool': return this.Bool_icon();
+                    case 'Bint': return this.Bint_icon();
+                    case 'Real': return this.Real_icon();
+                    case 'Date': return this.Date_icon();
+                    case 'Text': return this.Text_icon();
+                    case 'List': return this.List_icon();
+                    case 'Tupl': return this.Tupl_icon();
+                }
+                return this.Null_icon();
+            }
+            bool(next) {
+                return Boolean(this.value(next));
+            }
+            bint(next) {
+                return BigInt(this.value(next) ?? 0n);
+            }
+            real(next) {
+                return Number(this.value(next));
+            }
+            date(next) {
+                return new $mol_time_moment(this.value(next?.native));
+            }
+            text(next) {
+                return String(this.value(next) ?? '');
+            }
+            list(next) {
+                return [].concat(this.value(next));
+            }
+            tupl(next) {
+                let val = next ? this.Vary().rich(next[0] ?? [], next[1] ?? [[], []]) : undefined;
+                val = this.value(val) ?? {};
+                return this.Vary().lean(val);
+            }
+            head() {
+                const type = this.type();
+                return [
+                    ...type === 'Bool' ? [this.Bool()] : [],
+                    ...type === 'Bint' ? [this.Bint()] : [],
+                    ...type === 'Real' ? [this.Real()] : [],
+                    ...type === 'Date' ? [this.Date()] : [],
+                    ...type === 'Text' ? [this.Text()] : [],
+                    ...type === 'List' ? [this.Item_add()] : [],
+                    ...type === 'Tupl' ? [this.Field_add()] : [],
+                ];
+            }
+            body() {
+                switch (this.type()) {
+                    case 'List': return this.list().map((_, index) => this.Item(index));
+                    case 'Tupl': return this.tupl()[0].map((_, index) => this.Item(index));
+                }
+                return [];
+            }
+            item_key(index) {
+                switch (this.type()) {
+                    case 'Tupl': return this.tupl()[0][index];
+                }
+                return index;
+            }
+            item_val(index, next) {
+                switch (this.type()) {
+                    case 'List': {
+                        let list = this.list();
+                        if (next !== undefined)
+                            list = this.list([
+                                ...list.slice(0, index),
+                                ...next === null ? [] : [next],
+                                ...list.slice(index + 1),
+                            ]);
+                        return list[index];
+                    }
+                    case 'Tupl': {
+                        let tupl = this.tupl();
+                        if (next !== undefined)
+                            tupl = this.tupl([
+                                [
+                                    ...tupl[0].slice(0, index),
+                                    ...next === null ? [] : [tupl[0][index]],
+                                    ...tupl[0].slice(index + 1),
+                                ],
+                                [
+                                    ...tupl[1].slice(0, index),
+                                    ...next === null ? [] : [next],
+                                    ...tupl[1].slice(index + 1),
+                                ],
+                            ]);
+                        return next === null ? null : tupl[1][index] ?? null;
+                    }
+                }
+                return null;
+            }
+            item_add() {
+                this.list([undefined, ...this.list()]);
+            }
+            field_add() {
+                const tupl = this.tupl();
+                this.tupl([
+                    [this.Field_add().value(), ...tupl[0]],
+                    [undefined, ...tupl[1]],
+                ]);
+                this.Field_add().value('');
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_vary_edit.prototype, "type", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_vary_edit.prototype, "Type_icon", null);
+        __decorate([
+            $mol_mem
+        ], $mol_vary_edit.prototype, "bool", null);
+        __decorate([
+            $mol_mem
+        ], $mol_vary_edit.prototype, "bint", null);
+        __decorate([
+            $mol_mem
+        ], $mol_vary_edit.prototype, "real", null);
+        __decorate([
+            $mol_mem
+        ], $mol_vary_edit.prototype, "date", null);
+        __decorate([
+            $mol_mem
+        ], $mol_vary_edit.prototype, "text", null);
+        __decorate([
+            $mol_mem
+        ], $mol_vary_edit.prototype, "list", null);
+        __decorate([
+            $mol_mem
+        ], $mol_vary_edit.prototype, "tupl", null);
+        __decorate([
+            $mol_mem
+        ], $mol_vary_edit.prototype, "head", null);
+        __decorate([
+            $mol_mem
+        ], $mol_vary_edit.prototype, "body", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_vary_edit.prototype, "item_key", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_vary_edit.prototype, "item_val", null);
+        __decorate([
+            $mol_action
+        ], $mol_vary_edit.prototype, "item_add", null);
+        __decorate([
+            $mol_action
+        ], $mol_vary_edit.prototype, "field_add", null);
+        $$.$mol_vary_edit = $mol_vary_edit;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($mol_vary_edit, {
+            Head: {
+                background: {
+                    color: $mol_theme.card,
+                },
+                box: {
+                    shadow: [['inset', '0px', '0px', '0px', '1px', $mol_theme.field]],
+                },
+            },
+            Body: {
+                display: 'table',
+            },
+            Type: {
+                width: '2.5rem',
+                Trigger: {
+                    padding: $mol_gap.text,
+                },
+                Option_row: {
+                    padding: $mol_gap.text,
+                },
+            },
+            Field_add: {
+                background: 'none',
+                box: {
+                    shadow: 'none',
+                },
+            },
+            Item: {
+                display: 'table-row',
+            },
+            Item_key: {
+                padding: $mol_gap.text,
+                // color: $mol_theme.shade,
+                justify: {
+                    content: 'center',
+                },
+                minWidth: '2.5rem',
+                display: 'table-cell',
+                verticalAlign: 'top',
+            },
+            Item_val: {
+                flex: {
+                    grow: 1,
+                },
+                display: 'table-cell',
+            },
+            Item_drag: {
+                cursor: 'move',
+            },
+            Item_drop: {
+                '[mol_drop_status]': {
+                    drag: {
+                        box: {
+                            shadow: [['0px', '1px', '0px', '0px', $mol_theme.focus]],
+                        },
+                    }
+                },
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$mol_vary_edit_demo) = class $mol_vary_edit_demo extends ($.$mol_example_small) {
+		date(){
+			const obj = new this.$.Date();
+			return obj;
+		}
+		dom(){
+			const obj = new this.$.Element();
+			return obj;
+		}
+		set(){
+			const obj = new this.$.Set([123, "foo"]);
+			return obj;
+		}
+		map(){
+			const obj = new this.$.Map([["foo", "bar"], [123, 456]]);
+			return obj;
+		}
+		value(next){
+			if(next !== undefined) return next;
+			return {
+				"Simple": {
+					"Null": null, 
+					"True": true, 
+					"False": false
+				}, 
+				"Numbers": [123n, 12.34], 
+				"Text": "foo", 
+				"Objects": {"Date": (this.date()), "DOM": (this.dom())}, 
+				"Collections": {"Set": (this.set()), "Map": (this.map())}
+			};
+		}
+		Edit(){
+			const obj = new this.$.$mol_vary_edit();
+			(obj.value) = (next) => ((this.value(next)));
+			return obj;
+		}
+		Dump(){
+			const obj = new this.$.$mol_dump_value();
+			(obj.value) = () => ((this.value()));
+			return obj;
+		}
+		sub(){
+			return [(this.Edit()), (this.Dump())];
+		}
+		tags(){
+			return [
+				"VaryPack", 
+				"JSON", 
+				"field"
+			];
+		}
+		aspects(){
+			return ["Widget/Control", "Type/Vary"];
+		}
+	};
+	($mol_mem(($.$mol_vary_edit_demo.prototype), "date"));
+	($mol_mem(($.$mol_vary_edit_demo.prototype), "dom"));
+	($mol_mem(($.$mol_vary_edit_demo.prototype), "set"));
+	($mol_mem(($.$mol_vary_edit_demo.prototype), "map"));
+	($mol_mem(($.$mol_vary_edit_demo.prototype), "value"));
+	($mol_mem(($.$mol_vary_edit_demo.prototype), "Edit"));
+	($mol_mem(($.$mol_vary_edit_demo.prototype), "Dump"));
+
+
+;
+"use strict";
+/** @jsx $mol_jsx */
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_vary_edit_demo extends $.$mol_vary_edit_demo {
+            dom() {
+                return $mol_jsx("div", { class: "bar" },
+                    "hello ",
+                    $mol_jsx("b", null, "world"));
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_vary_edit_demo.prototype, "dom", null);
+        $$.$mol_vary_edit_demo = $mol_vary_edit_demo;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+
 
 ;
 	($.$mol_video_player) = class $mol_video_player extends ($.$mol_view) {

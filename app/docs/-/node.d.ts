@@ -2697,6 +2697,7 @@ declare namespace $.$$ {
      */
     class $mol_string extends $.$mol_string {
         event_change(next?: Event): void;
+        value_changed(next?: string): string;
         error_report(): void;
         hint_visible(): string;
         disabled(): boolean;
@@ -9063,32 +9064,37 @@ declare namespace $ {
 		,
 		ReturnType< $mol_button_minor['event_click'] >
 	>
-	type $mol_button_minor__sub_mol_select_10 = $mol_type_enforce<
+	type $mol_button_minor__hint_mol_select_10 = $mol_type_enforce<
+		ReturnType< $mol_select['option_hint'] >
+		,
+		ReturnType< $mol_button_minor['hint'] >
+	>
+	type $mol_button_minor__sub_mol_select_11 = $mol_type_enforce<
 		ReturnType< $mol_select['option_content'] >
 		,
 		ReturnType< $mol_button_minor['sub'] >
 	>
-	type $mol_view__sub_mol_select_11 = $mol_type_enforce<
+	type $mol_view__sub_mol_select_12 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_search__query_mol_select_12 = $mol_type_enforce<
+	type $mol_search__query_mol_select_13 = $mol_type_enforce<
 		ReturnType< $mol_select['filter_pattern'] >
 		,
 		ReturnType< $mol_search['query'] >
 	>
-	type $mol_search__hint_mol_select_13 = $mol_type_enforce<
+	type $mol_search__hint_mol_select_14 = $mol_type_enforce<
 		ReturnType< $mol_select['filter_hint'] >
 		,
 		ReturnType< $mol_search['hint'] >
 	>
-	type $mol_search__submit_mol_select_14 = $mol_type_enforce<
+	type $mol_search__submit_mol_select_15 = $mol_type_enforce<
 		ReturnType< $mol_select['submit'] >
 		,
 		ReturnType< $mol_search['submit'] >
 	>
-	type $mol_search__enabled_mol_select_15 = $mol_type_enforce<
+	type $mol_search__enabled_mol_select_16 = $mol_type_enforce<
 		ReturnType< $mol_select['enabled'] >
 		,
 		ReturnType< $mol_search['enabled'] >
@@ -9096,6 +9102,7 @@ declare namespace $ {
 	export class $mol_select extends $mol_pick {
 		enabled( ): boolean
 		event_select( id: any, next?: any ): any
+		option_hint( id: any): any
 		option_label( id: any): string
 		filter_pattern( next?: string ): string
 		Option_label( id: any): $mol_dimmer
@@ -9138,6 +9145,7 @@ declare namespace $.$$ {
         options(): readonly string[];
         options_filtered(): readonly string[];
         option_label(id: string): any;
+        option_hint(id: string): string;
         option_rows(): $mol_button_minor[];
         option_focused(component?: $mol_view): $mol_view | $.$mol_search | null;
         event_select(id: string, event?: MouseEvent): void;
@@ -24398,6 +24406,606 @@ declare namespace $.$$ {
 declare namespace $.$$ {
 }
 
+declare namespace $ {
+    function $mol_bigint_encode(num: bigint): Uint8Array<ArrayBuffer>;
+}
+
+declare namespace $ {
+    /** Encode text to Unicode Compact Format. */
+    function $mol_charset_ucf_encode(str: string): Uint8Array<ArrayBuffer>;
+    function $mol_charset_ucf_encode_to(str: string, buf: Uint8Array<ArrayBuffer>, from?: number): number;
+    /** Decode text from Unicode Compact Format. */
+    function $mol_charset_ucf_decode(buffer: Uint8Array<ArrayBuffer>, mode?: number): string;
+}
+
+declare namespace $ {
+    function $mol_bigint_decode(buf: Uint8Array<ArrayBuffer>): bigint;
+}
+
+declare namespace $ {
+    enum $mol_vary_tip {
+        uint = 0,
+        link = 32,
+        spec = 64,
+        list = 96,
+        blob = 128,
+        text = 160,
+        tupl = 192,
+        sint = 224
+    }
+    enum $mol_vary_len {
+        L1 = 28,
+        L2 = 29,
+        L4 = 30,
+        L8 = 31,
+        LA = 32
+    }
+    enum $mol_vary_spec {
+        none,
+        true,
+        fake,
+        both,
+        fp16,
+        fp32,
+        fp64,
+        f128,
+        f256
+    }
+    /** VaryPack - simple fast compact data binarization format. */
+    class $mol_vary_class extends Object {
+        lean_symbol: symbol;
+        array: Uint8Array<ArrayBuffer>;
+        buffer: DataView<ArrayBuffer>;
+        /** Packs any data to Uint8Array with deduplication. */
+        pack(data: readonly unknown[]): Uint8Array<ArrayBuffer>;
+        /** Parses buffer to rich runtime structures. */
+        take(array: Uint8Array<ArrayBuffer>): unknown[];
+        rich_index: Map<string | null, any>;
+        /** Isolated Vary for custom types */
+        zone(): $mol_vary_class;
+        rich(keys: readonly string[], vals: readonly unknown[]): any;
+        rich_node(keys: readonly string[]): Map<string | null, any>;
+        lean(obj: {}): any;
+        lean_find(val: any): any;
+        /** Adds custom types support. */
+        type<const Instance extends object, const Keys extends readonly any[], const Vals extends readonly any[]>({ type, keys, rich, lean }: {
+            type: new (...vals: any[]) => Instance;
+            keys: Keys;
+            lean: (obj: Instance) => Vals;
+            rich: (vals: Vals) => Instance;
+        }): void;
+    }
+    let $mol_vary: $mol_vary_class;
+}
+
+declare namespace $ {
+
+	type $mol_hotkey__key_mol_bigint_field_1 = $mol_type_enforce<
+		({ 
+			down( next?: ReturnType< $mol_bigint_field['decrement'] > ): ReturnType< $mol_bigint_field['decrement'] >,
+			up( next?: ReturnType< $mol_bigint_field['increment'] > ): ReturnType< $mol_bigint_field['increment'] >,
+			pageDown( next?: ReturnType< $mol_bigint_field['decrement_boost'] > ): ReturnType< $mol_bigint_field['decrement_boost'] >,
+			pageUp( next?: ReturnType< $mol_bigint_field['increment_boost'] > ): ReturnType< $mol_bigint_field['increment_boost'] >,
+		}) 
+		,
+		ReturnType< $mol_hotkey['key'] >
+	>
+	type $mol_button_minor__click_mol_bigint_field_2 = $mol_type_enforce<
+		ReturnType< $mol_bigint_field['decrement'] >
+		,
+		ReturnType< $mol_button_minor['click'] >
+	>
+	type $mol_button_minor__enabled_mol_bigint_field_3 = $mol_type_enforce<
+		ReturnType< $mol_bigint_field['decrement_enabled'] >
+		,
+		ReturnType< $mol_button_minor['enabled'] >
+	>
+	type $mol_button_minor__sub_mol_bigint_field_4 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_button_minor['sub'] >
+	>
+	type __mol_bigint_field_5 = $mol_type_enforce<
+		Parameters< $mol_bigint_field['selection'] >[0]
+		,
+		Parameters< ReturnType< $mol_bigint_field['String'] >['selection'] >[0]
+	>
+	type $mol_string__type_mol_bigint_field_6 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_string['type'] >
+	>
+	type $mol_string__keyboard_mol_bigint_field_7 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_string['keyboard'] >
+	>
+	type $mol_string__value_mol_bigint_field_8 = $mol_type_enforce<
+		ReturnType< $mol_bigint_field['value_string'] >
+		,
+		ReturnType< $mol_string['value'] >
+	>
+	type $mol_string__hint_mol_bigint_field_9 = $mol_type_enforce<
+		ReturnType< $mol_bigint_field['hint'] >
+		,
+		ReturnType< $mol_string['hint'] >
+	>
+	type $mol_string__enabled_mol_bigint_field_10 = $mol_type_enforce<
+		ReturnType< $mol_bigint_field['string_enabled'] >
+		,
+		ReturnType< $mol_string['enabled'] >
+	>
+	type $mol_string__submit_mol_bigint_field_11 = $mol_type_enforce<
+		ReturnType< $mol_bigint_field['submit'] >
+		,
+		ReturnType< $mol_string['submit'] >
+	>
+	type $mol_button_minor__click_mol_bigint_field_12 = $mol_type_enforce<
+		ReturnType< $mol_bigint_field['increment'] >
+		,
+		ReturnType< $mol_button_minor['click'] >
+	>
+	type $mol_button_minor__enabled_mol_bigint_field_13 = $mol_type_enforce<
+		ReturnType< $mol_bigint_field['increment_enabled'] >
+		,
+		ReturnType< $mol_button_minor['enabled'] >
+	>
+	type $mol_button_minor__sub_mol_bigint_field_14 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_button_minor['sub'] >
+	>
+	export class $mol_bigint_field extends $mol_bar {
+		decrement( next?: any ): any
+		increment( next?: any ): any
+		decrement_boost( next?: any ): any
+		increment_boost( next?: any ): any
+		Hotkey( ): $mol_hotkey
+		decrement_enabled( ): ReturnType< $mol_bigint_field['enabled'] >
+		Decrement_icon( ): $mol_icon_chevron_left
+		Decrement( ): $mol_button_minor
+		value_string( next?: string ): string
+		hint( ): string
+		string_enabled( ): ReturnType< $mol_bigint_field['enabled'] >
+		submit( next?: any ): any
+		selection( next?: ReturnType< ReturnType< $mol_bigint_field['String'] >['selection'] > ): ReturnType< ReturnType< $mol_bigint_field['String'] >['selection'] >
+		String( ): $mol_string
+		increment_enabled( ): ReturnType< $mol_bigint_field['enabled'] >
+		Increment_icon( ): $mol_icon_chevron_right
+		Increment( ): $mol_button_minor
+		step( ): bigint
+		boost( ): bigint
+		value_min( ): bigint | null
+		value_max( ): bigint | null
+		value( next?: bigint ): bigint
+		enabled( next?: boolean ): boolean
+		plugins( ): readonly(any)[]
+		sub( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=field.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $mol_bigint_field extends $.$mol_bigint_field {
+        value_string(next?: string): string;
+        shift(diff: bigint): void;
+        shift_boost(diff: bigint): void;
+        increment(event: Event): void;
+        decrement(event?: Event): void;
+        increment_boost(event: Event): void;
+        decrement_boost(event: Event): void;
+    }
+}
+
+declare namespace $.$$ {
+}
+
+declare namespace $ {
+
+	export class $mol_icon_circle extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=circle.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $mol_icon_circle_off_outline extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=outline.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $mol_icon_flag extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=flag.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $mol_icon_flag_checkered extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=checkered.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $mol_icon_numeric extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=numeric.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $mol_icon_division extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=division.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $mol_icon_alphabetical extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=alphabetical.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $mol_icon_alphabetical_variant extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=variant.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $mol_icon_format_list_bulleted extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=bulleted.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $mol_icon_table extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=table.view.tree.d.ts.map
+declare namespace $ {
+
+	type $mol_select__Filter_mol_vary_edit_1 = $mol_type_enforce<
+		any
+		,
+		ReturnType< $mol_select['Filter'] >
+	>
+	type $mol_select__Trigger_icon_mol_vary_edit_2 = $mol_type_enforce<
+		any
+		,
+		ReturnType< $mol_select['Trigger_icon'] >
+	>
+	type $mol_select__option_content_mol_vary_edit_3 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_select['option_content'] >
+	>
+	type $mol_select__enabled_mol_vary_edit_4 = $mol_type_enforce<
+		ReturnType< $mol_vary_edit['enabled'] >
+		,
+		ReturnType< $mol_select['enabled'] >
+	>
+	type $mol_select__dictionary_mol_vary_edit_5 = $mol_type_enforce<
+		({ 
+			'Null': string,
+			'Bool': string,
+			'Bint': string,
+			'Real': string,
+			'Text': string,
+			'List': string,
+			'Tupl': string,
+		}) 
+		,
+		ReturnType< $mol_select['dictionary'] >
+	>
+	type $mol_select__value_mol_vary_edit_6 = $mol_type_enforce<
+		ReturnType< $mol_vary_edit['type'] >
+		,
+		ReturnType< $mol_select['value'] >
+	>
+	type $mol_check_box__checked_mol_vary_edit_7 = $mol_type_enforce<
+		ReturnType< $mol_vary_edit['bool'] >
+		,
+		ReturnType< $mol_check_box['checked'] >
+	>
+	type $mol_check_box__enabled_mol_vary_edit_8 = $mol_type_enforce<
+		ReturnType< $mol_vary_edit['enabled'] >
+		,
+		ReturnType< $mol_check_box['enabled'] >
+	>
+	type $mol_bigint_field__value_mol_vary_edit_9 = $mol_type_enforce<
+		ReturnType< $mol_vary_edit['bint'] >
+		,
+		ReturnType< $mol_bigint_field['value'] >
+	>
+	type $mol_bigint_field__enabled_mol_vary_edit_10 = $mol_type_enforce<
+		ReturnType< $mol_vary_edit['enabled'] >
+		,
+		ReturnType< $mol_bigint_field['enabled'] >
+	>
+	type $mol_number__value_mol_vary_edit_11 = $mol_type_enforce<
+		ReturnType< $mol_vary_edit['real'] >
+		,
+		ReturnType< $mol_number['value'] >
+	>
+	type $mol_number__enabled_mol_vary_edit_12 = $mol_type_enforce<
+		ReturnType< $mol_vary_edit['enabled'] >
+		,
+		ReturnType< $mol_number['enabled'] >
+	>
+	type $mol_date__value_moment_mol_vary_edit_13 = $mol_type_enforce<
+		ReturnType< $mol_vary_edit['date'] >
+		,
+		ReturnType< $mol_date['value_moment'] >
+	>
+	type $mol_date__enabled_mol_vary_edit_14 = $mol_type_enforce<
+		ReturnType< $mol_vary_edit['enabled'] >
+		,
+		ReturnType< $mol_date['enabled'] >
+	>
+	type $mol_textarea__value_mol_vary_edit_15 = $mol_type_enforce<
+		ReturnType< $mol_vary_edit['text'] >
+		,
+		ReturnType< $mol_textarea['value'] >
+	>
+	type $mol_textarea__enabled_mol_vary_edit_16 = $mol_type_enforce<
+		ReturnType< $mol_vary_edit['enabled'] >
+		,
+		ReturnType< $mol_textarea['enabled'] >
+	>
+	type $mol_button_minor__click_mol_vary_edit_17 = $mol_type_enforce<
+		ReturnType< $mol_vary_edit['item_add'] >
+		,
+		ReturnType< $mol_button_minor['click'] >
+	>
+	type $mol_button_minor__enabled_mol_vary_edit_18 = $mol_type_enforce<
+		ReturnType< $mol_vary_edit['enabled'] >
+		,
+		ReturnType< $mol_button_minor['enabled'] >
+	>
+	type $mol_button_minor__sub_mol_vary_edit_19 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_button_minor['sub'] >
+	>
+	type $mol_string__hint_mol_vary_edit_20 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_string['hint'] >
+	>
+	type $mol_string__submit_mol_vary_edit_21 = $mol_type_enforce<
+		ReturnType< $mol_vary_edit['field_add'] >
+		,
+		ReturnType< $mol_string['submit'] >
+	>
+	type $mol_string__enabled_mol_vary_edit_22 = $mol_type_enforce<
+		ReturnType< $mol_vary_edit['enabled'] >
+		,
+		ReturnType< $mol_string['enabled'] >
+	>
+	type $mol_string__sub_mol_vary_edit_23 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_string['sub'] >
+	>
+	type $mol_bar__sub_mol_vary_edit_24 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_bar['sub'] >
+	>
+	type $mol_view__sub_mol_vary_edit_25 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_drag__Sub_mol_vary_edit_26 = $mol_type_enforce<
+		ReturnType< $mol_vary_edit['Item_key'] >
+		,
+		ReturnType< $mol_drag['Sub'] >
+	>
+	type $mol_drop__Sub_mol_vary_edit_27 = $mol_type_enforce<
+		ReturnType< $mol_vary_edit['Item_drag'] >
+		,
+		ReturnType< $mol_drop['Sub'] >
+	>
+	type $mol_vary_edit__enabled_mol_vary_edit_28 = $mol_type_enforce<
+		ReturnType< $mol_vary_edit['enabled'] >
+		,
+		ReturnType< $mol_vary_edit['enabled'] >
+	>
+	type $mol_vary_edit__value_mol_vary_edit_29 = $mol_type_enforce<
+		ReturnType< $mol_vary_edit['item_val'] >
+		,
+		ReturnType< $mol_vary_edit['value'] >
+	>
+	type $mol_bar__sub_mol_vary_edit_30 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_bar['sub'] >
+	>
+	type $mol_list__rows_mol_vary_edit_31 = $mol_type_enforce<
+		ReturnType< $mol_vary_edit['body'] >
+		,
+		ReturnType< $mol_list['rows'] >
+	>
+	export class $mol_vary_edit extends $mol_list {
+		Type_icon( id: any): $mol_icon
+		enabled( ): boolean
+		type( next?: string ): string
+		Type( ): $mol_select
+		bool( next?: boolean ): boolean
+		Bool( ): $mol_check_box
+		bint( next?: bigint ): bigint
+		Bint( ): $mol_bigint_field
+		real( next?: number ): number
+		Real( ): $mol_number
+		date( next?: $mol_time_moment ): $mol_time_moment
+		Date( ): $mol_date
+		text( next?: string ): string
+		Text( ): $mol_textarea
+		item_add( next?: any ): any
+		Item_add_icon( ): $mol_icon_plus
+		Item_add( ): $mol_button_minor
+		field_add( next?: any ): any
+		Field_add_icon( ): $mol_icon_plus
+		Field_add( ): $mol_string
+		head( ): readonly(any)[]
+		Head( ): $mol_bar
+		item_key( id: any): any
+		Item_key( id: any): $mol_view
+		Item_drag( id: any): $mol_drag
+		Item_drop( id: any): $mol_drop
+		item_val( id: any, next?: any ): any
+		Item_val( id: any): $mol_vary_edit
+		Item( id: any): $mol_bar
+		body( ): readonly(any)[]
+		Body( ): $mol_list
+		schema( ): any
+		value( next?: any ): any
+		Vary( ): $mol_vary_class
+		Null_icon( ): $mol_icon_circle_off_outline
+		Bool_icon( ): $mol_icon_flag_checkered
+		Bint_icon( ): $mol_icon_numeric
+		Real_icon( ): $mol_icon_division
+		Date_icon( ): $mol_icon_clock_outline
+		Text_icon( ): $mol_icon_alphabetical_variant
+		List_icon( ): $mol_icon_format_list_bulleted
+		Tupl_icon( ): $mol_icon_table
+		rows( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=edit.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $mol_vary_edit extends $.$mol_vary_edit {
+        Vary(): $mol_vary_class;
+        type(next?: string): string;
+        Type_icon(type: string): $mol_icon_clock_outline | $mol_icon_flag_checkered | $mol_icon_numeric | $mol_icon_division | $mol_icon_alphabetical_variant | $mol_icon_format_list_bulleted | $mol_icon_table | $mol_icon_circle_off_outline;
+        bool(next?: boolean): boolean;
+        bint(next?: bigint): bigint;
+        real(next?: number): number;
+        date(next?: $mol_time_moment): $mol_time_moment;
+        text(next?: string): string;
+        list(next?: readonly unknown[]): readonly unknown[];
+        tupl(next?: [readonly string[], readonly unknown[]]): [readonly string[], readonly unknown[]];
+        head(): ($.$mol_string | $mol_button_minor | $.$mol_number | $.$mol_textarea | $.$mol_date | $.$mol_bigint_field)[];
+        body(): $mol_bar[];
+        item_key(index: number): string | number;
+        item_val(index: number, next?: unknown): unknown;
+        item_add(): void;
+        field_add(): void;
+    }
+}
+
+declare namespace $.$$ {
+}
+
+/** @jsx $mol_jsx */
+declare namespace $.$$ {
+    class $mol_vary_edit_demo extends $.$mol_vary_edit_demo {
+        dom(): $mol_jsx.JSX.Element;
+    }
+}
+
+declare namespace $ {
+
+	type Set__mol_vary_edit_demo_1 = $mol_type_enforce<
+		[ readonly(any)[] ]
+		,
+		ConstructorParameters< typeof Set<any> >
+	>
+	type Map__mol_vary_edit_demo_2 = $mol_type_enforce<
+		[ readonly(any)[] ]
+		,
+		ConstructorParameters< typeof Map<any,any> >
+	>
+	type $mol_vary_edit__value_mol_vary_edit_demo_3 = $mol_type_enforce<
+		ReturnType< $mol_vary_edit_demo['value'] >
+		,
+		ReturnType< $mol_vary_edit['value'] >
+	>
+	type $mol_dump_value__value_mol_vary_edit_demo_4 = $mol_type_enforce<
+		ReturnType< $mol_vary_edit_demo['value'] >
+		,
+		ReturnType< $mol_dump_value['value'] >
+	>
+	export class $mol_vary_edit_demo extends $mol_example_small {
+		date( ): Date
+		dom( ): Element
+		set( ): Set<any>
+		map( ): Map<any,any>
+		value( next?: ({ 
+			'Simple': ({ 
+				'Null': any,
+				'True': boolean,
+				'False': boolean,
+			}) ,
+			'Numbers': readonly(any)[],
+			'Text': string,
+			'Objects': ({ 
+				'Date': ReturnType< $mol_vary_edit_demo['date'] >,
+				'DOM': ReturnType< $mol_vary_edit_demo['dom'] >,
+			}) ,
+			'Collections': ({ 
+				'Set': ReturnType< $mol_vary_edit_demo['set'] >,
+				'Map': ReturnType< $mol_vary_edit_demo['map'] >,
+			}) ,
+		})  ): ({ 
+			'Simple': ({ 
+				'Null': any,
+				'True': boolean,
+				'False': boolean,
+			}) ,
+			'Numbers': readonly(any)[],
+			'Text': string,
+			'Objects': ({ 
+				'Date': ReturnType< $mol_vary_edit_demo['date'] >,
+				'DOM': ReturnType< $mol_vary_edit_demo['dom'] >,
+			}) ,
+			'Collections': ({ 
+				'Set': ReturnType< $mol_vary_edit_demo['set'] >,
+				'Map': ReturnType< $mol_vary_edit_demo['map'] >,
+			}) ,
+		}) 
+		Edit( ): $mol_vary_edit
+		Dump( ): $mol_dump_value
+		sub( ): readonly(any)[]
+		tags( ): readonly(any)[]
+		aspects( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=demo.view.tree.d.ts.map
 declare namespace $ {
 
 	export class $mol_video_player extends $mol_view {
