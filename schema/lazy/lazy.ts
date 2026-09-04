@@ -6,8 +6,11 @@ namespace $ {
 			
 			static Schema = $mol_memo.func( Schema )
 			
-			static guard< Val >( value: Val ): Val & Value {
-				return this.Schema().guard( value )
+			static *issues_lazy< Val >(
+				value: Val,
+				path: $mol_schema_issue_path = [],
+			) {
+				yield* this.Schema().issues_lazy( value, path )
 			}
 			
 			static cast< Val >( value: Val ): Value {
