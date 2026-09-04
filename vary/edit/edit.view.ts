@@ -96,13 +96,14 @@ namespace $.$$ {
 				... type === 'Real' ? [ this.Real() ] : [],
 				... type === 'Date' ? [ this.Date() ] : [],
 				... type === 'Text' ? [ this.Text() ] : [],
-				... type === 'List' ? [ this.Item_add() ] : [],
-				... type === 'Tupl' ? [ this.Field_add() ] : [],
+				... type === 'List' ? [ this.Item_expand(), this.Item_add() ] : [],
+				... type === 'Tupl' ? [ this.Item_expand(), this.Field_add() ] : [],
 			]
 		}
 		
 		@ $mol_mem
 		body() {
+			if( !this.expanded() ) return []
 			switch( this.type() ) {
 				case 'List': return this.list().map( ( _, index )=> this.Item( index ) )
 				case 'Tupl': return this.tupl()[0].map( ( _, index )=> this.Item( index ) )

@@ -6862,6 +6862,8 @@ $mol_vary_edit $mol_list
 					value? <=> text? \
 					enabled <= enabled true
 					selection? <=> text_selection? /number
+				<= Item_expand $mol_check_expand
+					expanded? <=> expanded? true
 				<= Item_add $mol_button_minor
 					click? <=> item_add? null
 					enabled <= enabled true
@@ -6878,7 +6880,8 @@ $mol_vary_edit $mol_list
 				<= Item_drop* $mol_drop
 					Sub <= Item_drag* $mol_drag
 						Sub <= Item_key* $mol_view
-							sub / <= item_key* null
+							sub /
+								<= item_key* null
 				<= Item_val* $mol_vary_edit
 					enabled <= enabled true
 					value? <=> item_val*? null

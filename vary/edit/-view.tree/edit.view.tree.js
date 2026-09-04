@@ -89,6 +89,15 @@
 			(obj.selection) = (next) => ((this.text_selection(next)));
 			return obj;
 		}
+		expanded(next){
+			if(next !== undefined) return next;
+			return true;
+		}
+		Item_expand(){
+			const obj = new this.$.$mol_check_expand();
+			(obj.expanded) = (next) => ((this.expanded(next)));
+			return obj;
+		}
 		item_add(next){
 			if(next !== undefined) return next;
 			return null;
@@ -127,6 +136,7 @@
 				(this.Real()), 
 				(this.Date()), 
 				(this.Text()), 
+				(this.Item_expand()), 
 				(this.Item_add()), 
 				(this.Field_add())
 			];
@@ -247,6 +257,8 @@
 	($mol_mem(($.$mol_vary_edit.prototype), "Date"));
 	($mol_mem(($.$mol_vary_edit.prototype), "text"));
 	($mol_mem(($.$mol_vary_edit.prototype), "Text"));
+	($mol_mem(($.$mol_vary_edit.prototype), "expanded"));
+	($mol_mem(($.$mol_vary_edit.prototype), "Item_expand"));
 	($mol_mem(($.$mol_vary_edit.prototype), "item_add"));
 	($mol_mem(($.$mol_vary_edit.prototype), "Item_add_icon"));
 	($mol_mem(($.$mol_vary_edit.prototype), "Item_add"));

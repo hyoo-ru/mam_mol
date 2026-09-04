@@ -63325,6 +63325,15 @@ var $;
 			(obj.selection) = (next) => ((this.text_selection(next)));
 			return obj;
 		}
+		expanded(next){
+			if(next !== undefined) return next;
+			return true;
+		}
+		Item_expand(){
+			const obj = new this.$.$mol_check_expand();
+			(obj.expanded) = (next) => ((this.expanded(next)));
+			return obj;
+		}
 		item_add(next){
 			if(next !== undefined) return next;
 			return null;
@@ -63363,6 +63372,7 @@ var $;
 				(this.Real()), 
 				(this.Date()), 
 				(this.Text()), 
+				(this.Item_expand()), 
 				(this.Item_add()), 
 				(this.Field_add())
 			];
@@ -63483,6 +63493,8 @@ var $;
 	($mol_mem(($.$mol_vary_edit.prototype), "Date"));
 	($mol_mem(($.$mol_vary_edit.prototype), "text"));
 	($mol_mem(($.$mol_vary_edit.prototype), "Text"));
+	($mol_mem(($.$mol_vary_edit.prototype), "expanded"));
+	($mol_mem(($.$mol_vary_edit.prototype), "Item_expand"));
 	($mol_mem(($.$mol_vary_edit.prototype), "item_add"));
 	($mol_mem(($.$mol_vary_edit.prototype), "Item_add_icon"));
 	($mol_mem(($.$mol_vary_edit.prototype), "Item_add"));
@@ -63595,11 +63607,13 @@ var $;
                     ...type === 'Real' ? [this.Real()] : [],
                     ...type === 'Date' ? [this.Date()] : [],
                     ...type === 'Text' ? [this.Text()] : [],
-                    ...type === 'List' ? [this.Item_add()] : [],
-                    ...type === 'Tupl' ? [this.Field_add()] : [],
+                    ...type === 'List' ? [this.Item_expand(), this.Item_add()] : [],
+                    ...type === 'Tupl' ? [this.Item_expand(), this.Field_add()] : [],
                 ];
             }
             body() {
+                if (!this.expanded())
+                    return [];
                 switch (this.type()) {
                     case 'List': return this.list().map((_, index) => this.Item(index));
                     case 'Tupl': return this.tupl()[0].map((_, index) => this.Item(index));
@@ -63754,6 +63768,11 @@ var $;
                 background: 'none',
                 box: {
                     shadow: 'none',
+                },
+            },
+            Item_expand: {
+                Icon: {
+                    margin: 0,
                 },
             },
             Item: {

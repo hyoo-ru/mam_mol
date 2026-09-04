@@ -103,82 +103,87 @@ declare namespace $ {
 		,
 		ReturnType< $mol_textarea['selection'] >
 	>
-	type $mol_button_minor__click_mol_vary_edit_20 = $mol_type_enforce<
+	type $mol_check_expand__expanded_mol_vary_edit_20 = $mol_type_enforce<
+		ReturnType< $mol_vary_edit['expanded'] >
+		,
+		ReturnType< $mol_check_expand['expanded'] >
+	>
+	type $mol_button_minor__click_mol_vary_edit_21 = $mol_type_enforce<
 		ReturnType< $mol_vary_edit['item_add'] >
 		,
 		ReturnType< $mol_button_minor['click'] >
 	>
-	type $mol_button_minor__enabled_mol_vary_edit_21 = $mol_type_enforce<
+	type $mol_button_minor__enabled_mol_vary_edit_22 = $mol_type_enforce<
 		ReturnType< $mol_vary_edit['enabled'] >
 		,
 		ReturnType< $mol_button_minor['enabled'] >
 	>
-	type $mol_button_minor__sub_mol_vary_edit_22 = $mol_type_enforce<
+	type $mol_button_minor__sub_mol_vary_edit_23 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_minor['sub'] >
 	>
-	type $mol_string__hint_mol_vary_edit_23 = $mol_type_enforce<
+	type $mol_string__hint_mol_vary_edit_24 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__submit_mol_vary_edit_24 = $mol_type_enforce<
+	type $mol_string__submit_mol_vary_edit_25 = $mol_type_enforce<
 		ReturnType< $mol_vary_edit['field_add'] >
 		,
 		ReturnType< $mol_string['submit'] >
 	>
-	type $mol_string__enabled_mol_vary_edit_25 = $mol_type_enforce<
+	type $mol_string__enabled_mol_vary_edit_26 = $mol_type_enforce<
 		ReturnType< $mol_vary_edit['enabled'] >
 		,
 		ReturnType< $mol_string['enabled'] >
 	>
-	type $mol_string__sub_mol_vary_edit_26 = $mol_type_enforce<
+	type $mol_string__sub_mol_vary_edit_27 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_string['sub'] >
 	>
-	type $mol_bar__sub_mol_vary_edit_27 = $mol_type_enforce<
+	type $mol_bar__sub_mol_vary_edit_28 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_bar['sub'] >
 	>
-	type $mol_view__sub_mol_vary_edit_28 = $mol_type_enforce<
+	type $mol_view__sub_mol_vary_edit_29 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_drag__Sub_mol_vary_edit_29 = $mol_type_enforce<
+	type $mol_drag__Sub_mol_vary_edit_30 = $mol_type_enforce<
 		ReturnType< $mol_vary_edit['Item_key'] >
 		,
 		ReturnType< $mol_drag['Sub'] >
 	>
-	type $mol_drop__Sub_mol_vary_edit_30 = $mol_type_enforce<
+	type $mol_drop__Sub_mol_vary_edit_31 = $mol_type_enforce<
 		ReturnType< $mol_vary_edit['Item_drag'] >
 		,
 		ReturnType< $mol_drop['Sub'] >
 	>
-	type $mol_vary_edit__enabled_mol_vary_edit_31 = $mol_type_enforce<
+	type $mol_vary_edit__enabled_mol_vary_edit_32 = $mol_type_enforce<
 		ReturnType< $mol_vary_edit['enabled'] >
 		,
 		ReturnType< $mol_vary_edit['enabled'] >
 	>
-	type $mol_vary_edit__value_mol_vary_edit_32 = $mol_type_enforce<
+	type $mol_vary_edit__value_mol_vary_edit_33 = $mol_type_enforce<
 		ReturnType< $mol_vary_edit['item_val'] >
 		,
 		ReturnType< $mol_vary_edit['value'] >
 	>
-	type $mol_vary_edit__selection_mol_vary_edit_33 = $mol_type_enforce<
+	type $mol_vary_edit__selection_mol_vary_edit_34 = $mol_type_enforce<
 		ReturnType< $mol_vary_edit['item_selection'] >
 		,
 		ReturnType< $mol_vary_edit['selection'] >
 	>
-	type $mol_bar__sub_mol_vary_edit_34 = $mol_type_enforce<
+	type $mol_bar__sub_mol_vary_edit_35 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_bar['sub'] >
 	>
-	type $mol_list__rows_mol_vary_edit_35 = $mol_type_enforce<
+	type $mol_list__rows_mol_vary_edit_36 = $mol_type_enforce<
 		ReturnType< $mol_vary_edit['body'] >
 		,
 		ReturnType< $mol_list['rows'] >
@@ -200,6 +205,8 @@ declare namespace $ {
 		Date( ): $mol_date
 		text( next?: string ): string
 		Text( ): $mol_textarea
+		expanded( next?: boolean ): boolean
+		Item_expand( ): $mol_check_expand
 		item_add( next?: any ): any
 		Item_add_icon( ): $mol_icon_plus
 		Item_add( ): $mol_button_minor
