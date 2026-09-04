@@ -25,6 +25,12 @@ namespace $.$$ {
 			},
 		},
 		
+		Text: {
+			flex: {
+				shrink: 1,
+			},
+		},
+		
 		Field_add: {
 			background: 'none',
 			box: {
@@ -51,6 +57,7 @@ namespace $.$$ {
 			flex: {
 				grow: 1,
 			},
+			width: `100%`,
 			display: 'table-cell',
 		},
 		
