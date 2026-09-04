@@ -38,6 +38,12 @@ namespace $.$$ {
 			},
 		},
 		
+		Item_expand: {
+			Icon: {
+				margin: 0,
+			},
+		},
+		
 		Item: {
 			display: 'table-row',
 		},
