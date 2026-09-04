@@ -38396,6 +38396,11 @@ var $;
 			(obj.rows) = () => ((this.root_rows()));
 			return obj;
 		}
+		Scroll(){
+			const obj = new this.$.$mol_scroll();
+			(obj.sub) = () => ([(this.Content())]);
+			return obj;
+		}
 		row_title(id){
 			return "";
 		}
@@ -38420,7 +38425,7 @@ var $;
 			return "Large list of rows with dynamic content";
 		}
 		sub(){
-			return [(this.Content())];
+			return [(this.Scroll())];
 		}
 		Row(id){
 			const obj = new this.$.$mol_expander();
@@ -38444,6 +38449,7 @@ var $;
 		}
 	};
 	($mol_mem(($.$mol_list_demo_tree.prototype), "Content"));
+	($mol_mem(($.$mol_list_demo_tree.prototype), "Scroll"));
 	($mol_mem_key(($.$mol_list_demo_tree.prototype), "Row_title"));
 	($mol_mem_key(($.$mol_list_demo_tree.prototype), "row_expanded"));
 	($mol_mem_key(($.$mol_list_demo_tree.prototype), "Row_content"));
