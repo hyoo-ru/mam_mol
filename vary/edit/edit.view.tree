@@ -13,20 +13,23 @@ $mol_vary_edit $mol_list
 	Tupl_icon $mol_icon_table
 	rows /
 		<= Head $mol_bar sub /
-			<= Type $mol_select
-				Filter null
-				Trigger_icon null
-				option_content* / <= Type_icon* $mol_icon
-				enabled <= type_mutable <= enabled true
-				dictionary *
-					Null \Nothing
-					Bool \Boolean
-					Bint \Integer
-					Real \Real
-					Text \Text
-					List \Array
-					Tupl \Dictionary
-				value? <=> type? \Null
+			<= Type_drop $mol_drop
+				adopt? <=> item_adopt? null
+				receive? <=> type_receive? null
+				Sub <= Type $mol_select
+					Filter null
+					Trigger_icon null
+					option_content* / <= Type_icon* $mol_icon
+					enabled <= type_mutable <= enabled true
+					dictionary *
+						Null \Nothing
+						Bool \Boolean
+						Bint \Integer
+						Real \Real
+						Text \Text
+						List \Array
+						Tupl \Dictionary
+					value? <=> type? \Null
 			^ head /
 				<= Bool $mol_check_box
 					checked? <=> bool? false
@@ -62,7 +65,14 @@ $mol_vary_edit $mol_list
 		<= Body $mol_list rows <= body /
 			<= Item*0 $mol_bar sub /
 				<= Item_drop* $mol_drop
+					adopt? <=> item_adopt? null
+					receive? <=> item_receive*? null
 					Sub <= Item_drag* $mol_drag
+						drag_end? <=> item_drag_end*? null
+						transfer *
+							text/plain <= transfer_vary* \
+							text/html \
+							text/uri-list <= transfer_vary* \
 						Sub <= Item_key* $mol_view
 							sub /
 								<= item_key* null

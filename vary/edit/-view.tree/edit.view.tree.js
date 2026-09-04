@@ -1,4 +1,12 @@
 	($.$mol_vary_edit) = class $mol_vary_edit extends ($.$mol_list) {
+		item_adopt(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		type_receive(next){
+			if(next !== undefined) return next;
+			return null;
+		}
 		Type_icon(id){
 			const obj = new this.$.$mol_icon();
 			return obj;
@@ -29,6 +37,13 @@
 				"Tupl": "Dictionary"
 			});
 			(obj.value) = (next) => ((this.type(next)));
+			return obj;
+		}
+		Type_drop(){
+			const obj = new this.$.$mol_drop();
+			(obj.adopt) = (next) => ((this.item_adopt(next)));
+			(obj.receive) = (next) => ((this.type_receive(next)));
+			(obj.Sub) = () => ((this.Type()));
 			return obj;
 		}
 		bool(next){
@@ -143,8 +158,19 @@
 		}
 		Head(){
 			const obj = new this.$.$mol_bar();
-			(obj.sub) = () => ([(this.Type()), ...(this.head())]);
+			(obj.sub) = () => ([(this.Type_drop()), ...(this.head())]);
 			return obj;
+		}
+		item_receive(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		item_drag_end(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		transfer_vary(id){
+			return "";
 		}
 		item_key(id){
 			return null;
@@ -156,11 +182,19 @@
 		}
 		Item_drag(id){
 			const obj = new this.$.$mol_drag();
+			(obj.drag_end) = (next) => ((this.item_drag_end(id, next)));
+			(obj.transfer) = () => ({
+				"text/plain": (this.transfer_vary(id)), 
+				"text/html": "", 
+				"text/uri-list": (this.transfer_vary(id))
+			});
 			(obj.Sub) = () => ((this.Item_key(id)));
 			return obj;
 		}
 		Item_drop(id){
 			const obj = new this.$.$mol_drop();
+			(obj.adopt) = (next) => ((this.item_adopt(next)));
+			(obj.receive) = (next) => ((this.item_receive(id, next)));
 			(obj.Sub) = () => ((this.Item_drag(id)));
 			return obj;
 		}
@@ -243,9 +277,12 @@
 			return [(this.Head()), (this.Body())];
 		}
 	};
+	($mol_mem(($.$mol_vary_edit.prototype), "item_adopt"));
+	($mol_mem(($.$mol_vary_edit.prototype), "type_receive"));
 	($mol_mem_key(($.$mol_vary_edit.prototype), "Type_icon"));
 	($mol_mem(($.$mol_vary_edit.prototype), "type"));
 	($mol_mem(($.$mol_vary_edit.prototype), "Type"));
+	($mol_mem(($.$mol_vary_edit.prototype), "Type_drop"));
 	($mol_mem(($.$mol_vary_edit.prototype), "bool"));
 	($mol_mem(($.$mol_vary_edit.prototype), "Bool"));
 	($mol_mem(($.$mol_vary_edit.prototype), "bint"));
@@ -266,6 +303,8 @@
 	($mol_mem(($.$mol_vary_edit.prototype), "Field_add_icon"));
 	($mol_mem(($.$mol_vary_edit.prototype), "Field_add"));
 	($mol_mem(($.$mol_vary_edit.prototype), "Head"));
+	($mol_mem_key(($.$mol_vary_edit.prototype), "item_receive"));
+	($mol_mem_key(($.$mol_vary_edit.prototype), "item_drag_end"));
 	($mol_mem_key(($.$mol_vary_edit.prototype), "Item_key"));
 	($mol_mem_key(($.$mol_vary_edit.prototype), "Item_drag"));
 	($mol_mem_key(($.$mol_vary_edit.prototype), "Item_drop"));

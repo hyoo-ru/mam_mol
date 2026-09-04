@@ -711,6 +711,8 @@
     "$mol_icon_format_list",
     "$mol_icon_format",
     "$mol_icon_table",
+    "$mol_base64_encode",
+    "$mol_base64_decode",
     "$mol_video_player_demo",
     "$mol_video_player",
     "$mol_video",

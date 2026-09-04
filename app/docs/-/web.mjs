@@ -63235,6 +63235,14 @@ var $;
 
 ;
 	($.$mol_vary_edit) = class $mol_vary_edit extends ($.$mol_list) {
+		item_adopt(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		type_receive(next){
+			if(next !== undefined) return next;
+			return null;
+		}
 		Type_icon(id){
 			const obj = new this.$.$mol_icon();
 			return obj;
@@ -63265,6 +63273,13 @@ var $;
 				"Tupl": "Dictionary"
 			});
 			(obj.value) = (next) => ((this.type(next)));
+			return obj;
+		}
+		Type_drop(){
+			const obj = new this.$.$mol_drop();
+			(obj.adopt) = (next) => ((this.item_adopt(next)));
+			(obj.receive) = (next) => ((this.type_receive(next)));
+			(obj.Sub) = () => ((this.Type()));
 			return obj;
 		}
 		bool(next){
@@ -63379,8 +63394,19 @@ var $;
 		}
 		Head(){
 			const obj = new this.$.$mol_bar();
-			(obj.sub) = () => ([(this.Type()), ...(this.head())]);
+			(obj.sub) = () => ([(this.Type_drop()), ...(this.head())]);
 			return obj;
+		}
+		item_receive(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		item_drag_end(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		transfer_vary(id){
+			return "";
 		}
 		item_key(id){
 			return null;
@@ -63392,11 +63418,19 @@ var $;
 		}
 		Item_drag(id){
 			const obj = new this.$.$mol_drag();
+			(obj.drag_end) = (next) => ((this.item_drag_end(id, next)));
+			(obj.transfer) = () => ({
+				"text/plain": (this.transfer_vary(id)), 
+				"text/html": "", 
+				"text/uri-list": (this.transfer_vary(id))
+			});
 			(obj.Sub) = () => ((this.Item_key(id)));
 			return obj;
 		}
 		Item_drop(id){
 			const obj = new this.$.$mol_drop();
+			(obj.adopt) = (next) => ((this.item_adopt(next)));
+			(obj.receive) = (next) => ((this.item_receive(id, next)));
 			(obj.Sub) = () => ((this.Item_drag(id)));
 			return obj;
 		}
@@ -63479,9 +63513,12 @@ var $;
 			return [(this.Head()), (this.Body())];
 		}
 	};
+	($mol_mem(($.$mol_vary_edit.prototype), "item_adopt"));
+	($mol_mem(($.$mol_vary_edit.prototype), "type_receive"));
 	($mol_mem_key(($.$mol_vary_edit.prototype), "Type_icon"));
 	($mol_mem(($.$mol_vary_edit.prototype), "type"));
 	($mol_mem(($.$mol_vary_edit.prototype), "Type"));
+	($mol_mem(($.$mol_vary_edit.prototype), "Type_drop"));
 	($mol_mem(($.$mol_vary_edit.prototype), "bool"));
 	($mol_mem(($.$mol_vary_edit.prototype), "Bool"));
 	($mol_mem(($.$mol_vary_edit.prototype), "bint"));
@@ -63502,6 +63539,8 @@ var $;
 	($mol_mem(($.$mol_vary_edit.prototype), "Field_add_icon"));
 	($mol_mem(($.$mol_vary_edit.prototype), "Field_add"));
 	($mol_mem(($.$mol_vary_edit.prototype), "Head"));
+	($mol_mem_key(($.$mol_vary_edit.prototype), "item_receive"));
+	($mol_mem_key(($.$mol_vary_edit.prototype), "item_drag_end"));
 	($mol_mem_key(($.$mol_vary_edit.prototype), "Item_key"));
 	($mol_mem_key(($.$mol_vary_edit.prototype), "Item_drag"));
 	($mol_mem_key(($.$mol_vary_edit.prototype), "Item_drop"));
@@ -63682,6 +63721,92 @@ var $;
                     return ['', 0, 0];
                 return [sel[0].slice(prefix.length), sel[1], sel[2]];
             }
+            _last_drop_index = 0;
+            transfer_vary(index) {
+                this._last_drop_index = 0;
+                const data = [
+                    this.item_val(index),
+                    this.item_key(index),
+                ];
+                const buf = this.Vary().pack(data);
+                return 'data:application/x-vary;base64,' + $mol_base64_encode(buf);
+            }
+            item_adopt(transfer) {
+                const uri = transfer.getData('text/uri-list');
+                const match = uri.match(/^data:application\/x-vary;base64,(.*)$/);
+                if (!match)
+                    return null;
+                const buf = $mol_base64_decode(match[1]);
+                return this.Vary().take(buf);
+            }
+            type_receive([val, key]) {
+                this._last_drop_index = 0;
+                switch (this.type()) {
+                    case 'List': {
+                        this.list([val, ...this.list()]);
+                        return;
+                    }
+                    case 'Tupl': {
+                        const tupl = this.tupl();
+                        this.tupl([
+                            [key, ...tupl[0]],
+                            [val, ...tupl[1]],
+                        ]);
+                    }
+                }
+            }
+            item_receive(index, [val, key]) {
+                this._last_drop_index = index;
+                switch (this.type()) {
+                    case 'List': {
+                        const list = this.list();
+                        this.list([
+                            ...list.slice(0, index + 1),
+                            val,
+                            ...list.slice(index + 1),
+                        ]);
+                        return;
+                    }
+                    case 'Tupl': {
+                        const tupl = this.tupl().map(list => [...list]);
+                        const pos = tupl[0].indexOf(key);
+                        if (pos >= 0) {
+                            tupl[0].splice(pos, 1);
+                            tupl[1].splice(pos, 1);
+                            if (pos < index)
+                                index--;
+                        }
+                        this.tupl([
+                            [
+                                ...tupl[0].slice(0, index + 1),
+                                key,
+                                ...tupl[0].slice(index + 1),
+                            ],
+                            [
+                                ...tupl[1].slice(0, index + 1),
+                                val,
+                                ...tupl[1].slice(index + 1),
+                            ],
+                        ]);
+                    }
+                }
+            }
+            item_drag_end(index, event) {
+                if (event.dataTransfer?.dropEffect !== 'move')
+                    return;
+                if (this._last_drop_index <= index)
+                    index++;
+                switch (this.type()) {
+                    case 'List': {
+                        let list = this.list();
+                        this.list([
+                            ...list.slice(0, index),
+                            ...list.slice(index + 1),
+                        ]);
+                    }
+                }
+                return;
+            }
         }
         __decorate([
             $mol_mem
@@ -63797,6 +63922,15 @@ var $;
             },
             Item_drag: {
                 cursor: 'move',
+            },
+            Type_drop: {
+                '[mol_drop_status]': {
+                    drag: {
+                        box: {
+                            shadow: [['0px', '1px', '0px', '0px', $mol_theme.focus]],
+                        },
+                    }
+                },
             },
             Item_drop: {
                 '[mol_drop_status]': {

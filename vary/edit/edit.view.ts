@@ -182,5 +182,105 @@ namespace $.$$ {
 			return [ sel[0].slice( prefix.length ), sel[1], sel[2] ]
 		}
 		
+		_last_drop_index = 0
+		
+		transfer_vary( index: number ) {
+			this._last_drop_index = 0
+			const data = [
+				this.item_val( index ),
+				this.item_key( index ),
+			]
+			const buf = this.Vary().pack( data )
+			return 'data:application/x-vary;base64,' + $mol_base64_encode( buf )
+		}
+		
+		item_adopt( transfer: DataTransfer ) {
+			const uri = transfer!.getData( 'text/uri-list' )
+			const match = uri.match( /^data:application\/x-vary;base64,(.*)$/ )
+			if( !match ) return null
+			const buf = $mol_base64_decode( match[1] )
+			return this.Vary().take( buf )
+		}
+		
+		type_receive( [ val, key ]: [ any, string ] ) {
+			this._last_drop_index = 0
+			switch( this.type() ) {
+				
+				case 'List': {
+					this.list([ val, ... this.list() ])
+					return
+				}
+				
+				case 'Tupl': {
+					const tupl = this.tupl()
+					this.tupl([
+						[ key, ... tupl[0] ],
+						[ val, ... tupl[1] ],
+					])
+				}
+				
+			}
+		}
+		
+		item_receive( index: number, [ val, key ]: [ any, string ] ) {
+			this._last_drop_index = index
+			switch( this.type() ) {
+				
+				case 'List': {
+					const list = this.list()
+					this.list([
+						... list.slice( 0, index + 1 ),
+						val,
+						... list.slice( index + 1 ),
+					])
+					return
+				}
+				
+				case 'Tupl': {
+					
+					const tupl = this.tupl().map( list => [ ... list ] ) as [ any[], any[] ]
+					
+					const pos = tupl[0].indexOf( key )
+					if( pos >=0 ) {
+						tupl[0].splice( pos, 1 )
+						tupl[1].splice( pos, 1 )
+						if( pos < index ) index--
+					}
+					
+					this.tupl([
+						[
+							... tupl[0].slice( 0, index + 1 ),
+							key,
+							... tupl[0].slice( index + 1 ),
+						],
+						[
+							... tupl[1].slice( 0, index + 1 ),
+							val,
+							... tupl[1].slice( index + 1 ),
+						],
+					])
+					
+				}
+				
+			}
+		}
+		
+		item_drag_end( index: number, event: DragEvent ) {
+			if( event.dataTransfer?.dropEffect !== 'move' ) return
+			if( this._last_drop_index <= index ) index++
+			switch( this.type() ) {
+				
+				case 'List': {
+					let list = this.list()
+					this.list([
+						... list.slice( 0, index ),
+						... list.slice( index + 1 ),
+					])
+				}
+				
+			}
+			return
+		}
+		
 	}
 }

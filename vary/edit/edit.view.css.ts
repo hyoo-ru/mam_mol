@@ -71,6 +71,16 @@ namespace $.$$ {
 			cursor: 'move',
 		},
 		
+		Type_drop: {
+			'[mol_drop_status]': {
+				drag: {
+					box: {
+						shadow: [[ '0px', '1px', '0px', '0px', $mol_theme.focus ]],
+					},
+				}
+			},
+		},
+		
 		Item_drop: {
 			'[mol_drop_status]': {
 				drag: {
