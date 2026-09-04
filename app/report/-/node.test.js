@@ -8672,6 +8672,10 @@ var $;
 			if(next !== undefined) return next;
 			return null;
 		}
+		selection(next){
+			if(next !== undefined) return next;
+			return [];
+		}
 		String(){
 			const obj = new this.$.$mol_string();
 			(obj.type) = () => ((this.type()));
@@ -8680,6 +8684,7 @@ var $;
 			(obj.hint) = () => ((this.hint()));
 			(obj.enabled) = () => ((this.string_enabled()));
 			(obj.submit) = (next) => ((this.submit(next)));
+			(obj.selection) = (next) => ((this.selection(next)));
 			return obj;
 		}
 		inc_enabled(){
@@ -8738,6 +8743,7 @@ var $;
 	($mol_mem(($.$mol_number.prototype), "Dec"));
 	($mol_mem(($.$mol_number.prototype), "value_string"));
 	($mol_mem(($.$mol_number.prototype), "submit"));
+	($mol_mem(($.$mol_number.prototype), "selection"));
 	($mol_mem(($.$mol_number.prototype), "String"));
 	($mol_mem(($.$mol_number.prototype), "inc_icon"));
 	($mol_mem(($.$mol_number.prototype), "Inc"));

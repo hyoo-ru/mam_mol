@@ -6,6 +6,9 @@
 		enabled(){
 			return true;
 		}
+		type_mutable(){
+			return (this.enabled());
+		}
 		type(next){
 			if(next !== undefined) return next;
 			return "Null";
@@ -15,7 +18,7 @@
 			(obj.Filter) = () => (null);
 			(obj.Trigger_icon) = () => (null);
 			(obj.option_content) = (id) => ([(this.Type_icon(id))]);
-			(obj.enabled) = () => ((this.enabled()));
+			(obj.enabled) = () => ((this.type_mutable()));
 			(obj.dictionary) = () => ({
 				"Null": "Nothing", 
 				"Bool": "Boolean", 
@@ -42,10 +45,15 @@
 			if(next !== undefined) return next;
 			return 0n;
 		}
+		text_selection(next){
+			if(next !== undefined) return next;
+			return [];
+		}
 		Bint(){
 			const obj = new this.$.$mol_bigint_field();
 			(obj.value) = (next) => ((this.bint(next)));
 			(obj.enabled) = () => ((this.enabled()));
+			(obj.selection) = (next) => ((this.text_selection(next)));
 			return obj;
 		}
 		real(next){
@@ -56,6 +64,7 @@
 			const obj = new this.$.$mol_number();
 			(obj.value) = (next) => ((this.real(next)));
 			(obj.enabled) = () => ((this.enabled()));
+			(obj.selection) = (next) => ((this.text_selection(next)));
 			return obj;
 		}
 		date(next){
@@ -77,6 +86,7 @@
 			const obj = new this.$.$mol_textarea();
 			(obj.value) = (next) => ((this.text(next)));
 			(obj.enabled) = () => ((this.enabled()));
+			(obj.selection) = (next) => ((this.text_selection(next)));
 			return obj;
 		}
 		item_add(next){
@@ -148,10 +158,15 @@
 			if(next !== undefined) return next;
 			return null;
 		}
+		item_selection(id, next){
+			if(next !== undefined) return next;
+			return [];
+		}
 		Item_val(id){
 			const obj = new this.$.$mol_vary_edit();
 			(obj.enabled) = () => ((this.enabled()));
 			(obj.value) = (next) => ((this.item_val(id, next)));
+			(obj.selection) = (next) => ((this.item_selection(id, next)));
 			return obj;
 		}
 		Item(id){
@@ -177,6 +192,10 @@
 		Vary(){
 			const obj = new this.$.$mol_vary_class();
 			return obj;
+		}
+		selection(next){
+			if(next !== undefined) return next;
+			return [];
 		}
 		Null_icon(){
 			const obj = new this.$.$mol_icon_circle_off_outline();
@@ -220,6 +239,7 @@
 	($mol_mem(($.$mol_vary_edit.prototype), "bool"));
 	($mol_mem(($.$mol_vary_edit.prototype), "Bool"));
 	($mol_mem(($.$mol_vary_edit.prototype), "bint"));
+	($mol_mem(($.$mol_vary_edit.prototype), "text_selection"));
 	($mol_mem(($.$mol_vary_edit.prototype), "Bint"));
 	($mol_mem(($.$mol_vary_edit.prototype), "real"));
 	($mol_mem(($.$mol_vary_edit.prototype), "Real"));
@@ -238,11 +258,13 @@
 	($mol_mem_key(($.$mol_vary_edit.prototype), "Item_drag"));
 	($mol_mem_key(($.$mol_vary_edit.prototype), "Item_drop"));
 	($mol_mem_key(($.$mol_vary_edit.prototype), "item_val"));
+	($mol_mem_key(($.$mol_vary_edit.prototype), "item_selection"));
 	($mol_mem_key(($.$mol_vary_edit.prototype), "Item_val"));
 	($mol_mem_key(($.$mol_vary_edit.prototype), "Item"));
 	($mol_mem(($.$mol_vary_edit.prototype), "Body"));
 	($mol_mem(($.$mol_vary_edit.prototype), "value"));
 	($mol_mem(($.$mol_vary_edit.prototype), "Vary"));
+	($mol_mem(($.$mol_vary_edit.prototype), "selection"));
 	($mol_mem(($.$mol_vary_edit.prototype), "Null_icon"));
 	($mol_mem(($.$mol_vary_edit.prototype), "Bool_icon"));
 	($mol_mem(($.$mol_vary_edit.prototype), "Bint_icon"));

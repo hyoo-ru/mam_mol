@@ -3575,17 +3575,22 @@ declare namespace $ {
 		,
 		ReturnType< $mol_string['submit'] >
 	>
-	type $mol_button_minor__event_click_mol_number_11 = $mol_type_enforce<
+	type $mol_string__selection_mol_number_11 = $mol_type_enforce<
+		ReturnType< $mol_number['selection'] >
+		,
+		ReturnType< $mol_string['selection'] >
+	>
+	type $mol_button_minor__event_click_mol_number_12 = $mol_type_enforce<
 		ReturnType< $mol_number['event_inc'] >
 		,
 		ReturnType< $mol_button_minor['event_click'] >
 	>
-	type $mol_button_minor__enabled_mol_number_12 = $mol_type_enforce<
+	type $mol_button_minor__enabled_mol_number_13 = $mol_type_enforce<
 		ReturnType< $mol_number['inc_enabled'] >
 		,
 		ReturnType< $mol_button_minor['enabled'] >
 	>
-	type $mol_button_minor__sub_mol_number_13 = $mol_type_enforce<
+	type $mol_button_minor__sub_mol_number_14 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_minor['sub'] >
@@ -3605,6 +3610,7 @@ declare namespace $ {
 		hint( ): string
 		string_enabled( ): ReturnType< $mol_number['enabled'] >
 		submit( next?: any ): any
+		selection( next?: readonly(number)[] ): readonly(number)[]
 		String( ): $mol_string
 		inc_enabled( ): ReturnType< $mol_number['enabled'] >
 		inc_icon( ): $mol_icon_chevron_right

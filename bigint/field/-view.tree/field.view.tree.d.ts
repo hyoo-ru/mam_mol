@@ -25,40 +25,40 @@ declare namespace $ {
 		,
 		ReturnType< $mol_button_minor['sub'] >
 	>
-	type __mol_bigint_field_5 = $mol_type_enforce<
-		Parameters< $mol_bigint_field['selection'] >[0]
-		,
-		Parameters< ReturnType< $mol_bigint_field['String'] >['selection'] >[0]
-	>
-	type $mol_string__type_mol_bigint_field_6 = $mol_type_enforce<
+	type $mol_string__type_mol_bigint_field_5 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_string['type'] >
 	>
-	type $mol_string__keyboard_mol_bigint_field_7 = $mol_type_enforce<
+	type $mol_string__keyboard_mol_bigint_field_6 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_string['keyboard'] >
 	>
-	type $mol_string__value_mol_bigint_field_8 = $mol_type_enforce<
+	type $mol_string__value_mol_bigint_field_7 = $mol_type_enforce<
 		ReturnType< $mol_bigint_field['value_string'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_string__hint_mol_bigint_field_9 = $mol_type_enforce<
+	type $mol_string__hint_mol_bigint_field_8 = $mol_type_enforce<
 		ReturnType< $mol_bigint_field['hint'] >
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__enabled_mol_bigint_field_10 = $mol_type_enforce<
+	type $mol_string__enabled_mol_bigint_field_9 = $mol_type_enforce<
 		ReturnType< $mol_bigint_field['string_enabled'] >
 		,
 		ReturnType< $mol_string['enabled'] >
 	>
-	type $mol_string__submit_mol_bigint_field_11 = $mol_type_enforce<
+	type $mol_string__submit_mol_bigint_field_10 = $mol_type_enforce<
 		ReturnType< $mol_bigint_field['submit'] >
 		,
 		ReturnType< $mol_string['submit'] >
+	>
+	type $mol_string__selection_mol_bigint_field_11 = $mol_type_enforce<
+		ReturnType< $mol_bigint_field['selection'] >
+		,
+		ReturnType< $mol_string['selection'] >
 	>
 	type $mol_button_minor__click_mol_bigint_field_12 = $mol_type_enforce<
 		ReturnType< $mol_bigint_field['increment'] >
@@ -88,7 +88,7 @@ declare namespace $ {
 		hint( ): string
 		string_enabled( ): ReturnType< $mol_bigint_field['enabled'] >
 		submit( next?: any ): any
-		selection( next?: ReturnType< ReturnType< $mol_bigint_field['String'] >['selection'] > ): ReturnType< ReturnType< $mol_bigint_field['String'] >['selection'] >
+		selection( next?: readonly(number)[] ): readonly(number)[]
 		String( ): $mol_string
 		increment_enabled( ): ReturnType< $mol_bigint_field['enabled'] >
 		Increment_icon( ): $mol_icon_chevron_right

@@ -13,6 +13,9 @@ namespace $.$$ {
 				this.value( null )
 			}
 			
+			const schema = this.schema()
+			if( schema ) return schema
+			
 			const val = this.value()
 			if( val == null ) return 'Null'
 			
@@ -27,6 +30,10 @@ namespace $.$$ {
 			if( val instanceof Date ) return 'Date'
 			
 			return 'Tupl'
+		}
+		
+		type_mutable() {
+			return ! this.schema()
 		}
 		
 		@ $mol_mem_key
@@ -159,6 +166,19 @@ namespace $.$$ {
 				[ undefined, ... tupl[1] ],
 			])
 			this.Field_add().value( '' )
+		}
+		
+		text_selection( next?: readonly number[] ): readonly number[] {
+			const sel = this.selection( next === undefined ? undefined : [ '', next[0], next[1] ] )
+			if( sel[0] !== '' ) return [ 0, 0 ]
+			return [ sel[1], sel[2] ]
+		}
+		
+		item_selection( index: number, next?: readonly[ path: string, begin: number, end: number ] ): readonly[ path: string, begin: number, end: number ] {
+			const prefix = '/' + index
+			const sel = this.selection( next === undefined ? undefined : [ prefix + next[0], next[1], next[2] ] )
+			if( !sel[0].startsWith( prefix ) ) return [ '', 0, 0 ]
+			return [ sel[0].slice( prefix.length ), sel[1], sel[2] ]
 		}
 		
 	}

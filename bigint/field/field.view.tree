@@ -25,7 +25,7 @@ $mol_bigint_field $mol_bar
 			hint <= hint \ 
 			enabled <= string_enabled <= enabled
 			submit? <=> submit? null
-			selection? => selection?
+			selection? <=> selection? /number
 		<= Increment $mol_button_minor
 			click? <=> increment? null
 			enabled <= increment_enabled <= enabled

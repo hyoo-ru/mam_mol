@@ -54,7 +54,8 @@
 			return null;
 		}
 		selection(next){
-			return (this.String().selection(next));
+			if(next !== undefined) return next;
+			return [];
 		}
 		String(){
 			const obj = new this.$.$mol_string();
@@ -64,6 +65,7 @@
 			(obj.hint) = () => ((this.hint()));
 			(obj.enabled) = () => ((this.string_enabled()));
 			(obj.submit) = (next) => ((this.submit(next)));
+			(obj.selection) = (next) => ((this.selection(next)));
 			return obj;
 		}
 		increment_enabled(){
@@ -120,6 +122,7 @@
 	($mol_mem(($.$mol_bigint_field.prototype), "Decrement"));
 	($mol_mem(($.$mol_bigint_field.prototype), "value_string"));
 	($mol_mem(($.$mol_bigint_field.prototype), "submit"));
+	($mol_mem(($.$mol_bigint_field.prototype), "selection"));
 	($mol_mem(($.$mol_bigint_field.prototype), "String"));
 	($mol_mem(($.$mol_bigint_field.prototype), "Increment_icon"));
 	($mol_mem(($.$mol_bigint_field.prototype), "Increment"));
