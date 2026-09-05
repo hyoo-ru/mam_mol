@@ -360,8 +360,8 @@ $mol_icon_menu_up $mol_icon path \M7,15L12,10L17,15H7Z
 $mol_icon_menu_up_outline $mol_icon path \M18,16V14.5L12,8.5L6,14.5V16H18M12,11.33L14.67,14H9.33L12,11.33Z
 
 $mol_number $mol_view
-	precision_view <= precision 1
-	precision_change <= precision 1
+	precision_view <= precision 0
+	precision_change <= precision 0
 	boost 10
 	value_min -Infinity
 	value_max +Infinity

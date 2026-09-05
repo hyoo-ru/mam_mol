@@ -1,6 +1,6 @@
 	($.$mol_number) = class $mol_number extends ($.$mol_view) {
 		precision(){
-			return 1;
+			return 0;
 		}
 		event_dec(next){
 			if(next !== undefined) return next;

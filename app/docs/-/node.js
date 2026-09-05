@@ -16292,7 +16292,7 @@ var $;
 ;
 	($.$mol_number) = class $mol_number extends ($.$mol_view) {
 		precision(){
-			return 1;
+			return 0;
 		}
 		event_dec(next){
 			if(next !== undefined) return next;
@@ -16495,8 +16495,8 @@ var $;
                 if (!val)
                     return '';
                 const precision_view = this.precision_view();
-                if (!precision_view)
-                    return val.toFixed();
+                if (precision_view === 0)
+                    return String(val);
                 if (precision_view >= 1) {
                     return (val / precision_view).toFixed();
                 }
@@ -16513,7 +16513,7 @@ var $;
                     return current;
                 const precision = this.precision_view();
                 // Точку в конце поставить нельзя, если precision_view целое число > 0
-                if (precision - Math.floor(precision) === 0)
+                if (precision > 0 && precision - Math.floor(precision) === 0)
                     next = next.replace(/[.,]/g, '');
                 // Запятые меняем на точки, удаляем не-цифры и не-точки и лишние ноли в начале целой части.
                 // Минус получится ввести только в начале.
