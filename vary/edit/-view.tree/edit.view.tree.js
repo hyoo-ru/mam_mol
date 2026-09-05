@@ -250,7 +250,7 @@
 			return obj;
 		}
 		Bint_icon(){
-			const obj = new this.$.$mol_icon_numeric();
+			const obj = new this.$.$mol_icon_pound();
 			return obj;
 		}
 		Real_icon(){
@@ -262,7 +262,7 @@
 			return obj;
 		}
 		Text_icon(){
-			const obj = new this.$.$mol_icon_alphabetical_variant();
+			const obj = new this.$.$mol_icon_card_text_outline();
 			return obj;
 		}
 		List_icon(){

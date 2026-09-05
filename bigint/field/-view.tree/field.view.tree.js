@@ -25,20 +25,6 @@
 			});
 			return obj;
 		}
-		decrement_enabled(){
-			return (this.enabled());
-		}
-		Decrement_icon(){
-			const obj = new this.$.$mol_icon_chevron_left();
-			return obj;
-		}
-		Decrement(){
-			const obj = new this.$.$mol_button_minor();
-			(obj.click) = (next) => ((this.decrement(next)));
-			(obj.enabled) = () => ((this.decrement_enabled()));
-			(obj.sub) = () => ([(this.Decrement_icon())]);
-			return obj;
-		}
 		value_string(next){
 			if(next !== undefined) return next;
 			return "";
@@ -68,11 +54,25 @@
 			(obj.selection) = (next) => ((this.selection(next)));
 			return obj;
 		}
+		decrement_enabled(){
+			return (this.enabled());
+		}
+		Decrement_icon(){
+			const obj = new this.$.$mol_icon_menu_down_outline();
+			return obj;
+		}
+		Decrement(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.click) = (next) => ((this.decrement(next)));
+			(obj.enabled) = () => ((this.decrement_enabled()));
+			(obj.sub) = () => ([(this.Decrement_icon())]);
+			return obj;
+		}
 		increment_enabled(){
 			return (this.enabled());
 		}
 		Increment_icon(){
-			const obj = new this.$.$mol_icon_chevron_right();
+			const obj = new this.$.$mol_icon_menu_up_outline();
 			return obj;
 		}
 		Increment(){
@@ -107,8 +107,8 @@
 		}
 		sub(){
 			return [
-				(this.Decrement()), 
 				(this.String()), 
+				(this.Decrement()), 
 				(this.Increment())
 			];
 		}
@@ -118,12 +118,12 @@
 	($mol_mem(($.$mol_bigint_field.prototype), "decrement_boost"));
 	($mol_mem(($.$mol_bigint_field.prototype), "increment_boost"));
 	($mol_mem(($.$mol_bigint_field.prototype), "Hotkey"));
-	($mol_mem(($.$mol_bigint_field.prototype), "Decrement_icon"));
-	($mol_mem(($.$mol_bigint_field.prototype), "Decrement"));
 	($mol_mem(($.$mol_bigint_field.prototype), "value_string"));
 	($mol_mem(($.$mol_bigint_field.prototype), "submit"));
 	($mol_mem(($.$mol_bigint_field.prototype), "selection"));
 	($mol_mem(($.$mol_bigint_field.prototype), "String"));
+	($mol_mem(($.$mol_bigint_field.prototype), "Decrement_icon"));
+	($mol_mem(($.$mol_bigint_field.prototype), "Decrement"));
 	($mol_mem(($.$mol_bigint_field.prototype), "Increment_icon"));
 	($mol_mem(($.$mol_bigint_field.prototype), "Increment"));
 	($mol_mem(($.$mol_bigint_field.prototype), "value"));

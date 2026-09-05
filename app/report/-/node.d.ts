@@ -3490,31 +3490,49 @@ declare namespace $ {
 
 declare namespace $ {
 
-	export class $mol_icon_chevron extends $mol_icon {
+	export class $mol_icon_menu extends $mol_icon {
 		path( ): string
 	}
 	
 }
 
-//# sourceMappingURL=chevron.view.tree.d.ts.map
+//# sourceMappingURL=menu.view.tree.d.ts.map
 declare namespace $ {
 
-	export class $mol_icon_chevron_left extends $mol_icon {
+	export class $mol_icon_menu_down extends $mol_icon {
 		path( ): string
 	}
 	
 }
 
-//# sourceMappingURL=left.view.tree.d.ts.map
+//# sourceMappingURL=down.view.tree.d.ts.map
 declare namespace $ {
 
-	export class $mol_icon_chevron_right extends $mol_icon {
+	export class $mol_icon_menu_down_outline extends $mol_icon {
 		path( ): string
 	}
 	
 }
 
-//# sourceMappingURL=right.view.tree.d.ts.map
+//# sourceMappingURL=outline.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $mol_icon_menu_up extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=up.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $mol_icon_menu_up_outline extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=outline.view.tree.d.ts.map
 declare namespace $ {
 }
 
@@ -3530,55 +3548,55 @@ declare namespace $ {
 		,
 		ReturnType< $mol_hotkey['key'] >
 	>
-	type $mol_button_minor__event_click_mol_number_2 = $mol_type_enforce<
-		ReturnType< $mol_number['event_dec'] >
-		,
-		ReturnType< $mol_button_minor['event_click'] >
-	>
-	type $mol_button_minor__enabled_mol_number_3 = $mol_type_enforce<
-		ReturnType< $mol_number['dec_enabled'] >
-		,
-		ReturnType< $mol_button_minor['enabled'] >
-	>
-	type $mol_button_minor__sub_mol_number_4 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_button_minor['sub'] >
-	>
-	type $mol_string__type_mol_number_5 = $mol_type_enforce<
+	type $mol_string__type_mol_number_2 = $mol_type_enforce<
 		ReturnType< $mol_number['type'] >
 		,
 		ReturnType< $mol_string['type'] >
 	>
-	type $mol_string__keyboard_mol_number_6 = $mol_type_enforce<
+	type $mol_string__keyboard_mol_number_3 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_string['keyboard'] >
 	>
-	type $mol_string__value_mol_number_7 = $mol_type_enforce<
+	type $mol_string__value_mol_number_4 = $mol_type_enforce<
 		ReturnType< $mol_number['value_string'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_string__hint_mol_number_8 = $mol_type_enforce<
+	type $mol_string__hint_mol_number_5 = $mol_type_enforce<
 		ReturnType< $mol_number['hint'] >
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__enabled_mol_number_9 = $mol_type_enforce<
+	type $mol_string__enabled_mol_number_6 = $mol_type_enforce<
 		ReturnType< $mol_number['string_enabled'] >
 		,
 		ReturnType< $mol_string['enabled'] >
 	>
-	type $mol_string__submit_mol_number_10 = $mol_type_enforce<
+	type $mol_string__submit_mol_number_7 = $mol_type_enforce<
 		ReturnType< $mol_number['submit'] >
 		,
 		ReturnType< $mol_string['submit'] >
 	>
-	type $mol_string__selection_mol_number_11 = $mol_type_enforce<
+	type $mol_string__selection_mol_number_8 = $mol_type_enforce<
 		ReturnType< $mol_number['selection'] >
 		,
 		ReturnType< $mol_string['selection'] >
+	>
+	type $mol_button_minor__event_click_mol_number_9 = $mol_type_enforce<
+		ReturnType< $mol_number['event_dec'] >
+		,
+		ReturnType< $mol_button_minor['event_click'] >
+	>
+	type $mol_button_minor__enabled_mol_number_10 = $mol_type_enforce<
+		ReturnType< $mol_number['dec_enabled'] >
+		,
+		ReturnType< $mol_button_minor['enabled'] >
+	>
+	type $mol_button_minor__sub_mol_number_11 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_button_minor['sub'] >
 	>
 	type $mol_button_minor__event_click_mol_number_12 = $mol_type_enforce<
 		ReturnType< $mol_number['event_inc'] >
@@ -3602,9 +3620,6 @@ declare namespace $ {
 		event_dec_boost( next?: any ): any
 		event_inc_boost( next?: any ): any
 		Hotkey( ): $mol_hotkey
-		dec_enabled( ): ReturnType< $mol_number['enabled'] >
-		dec_icon( ): $mol_icon_chevron_left
-		Dec( ): $mol_button_minor
 		type( ): string
 		value_string( next?: string ): string
 		hint( ): string
@@ -3612,8 +3627,11 @@ declare namespace $ {
 		submit( next?: any ): any
 		selection( next?: readonly(number)[] ): readonly(number)[]
 		String( ): $mol_string
+		dec_enabled( ): ReturnType< $mol_number['enabled'] >
+		dec_icon( ): $mol_icon_menu_down_outline
+		Dec( ): $mol_button_minor
 		inc_enabled( ): ReturnType< $mol_number['enabled'] >
-		inc_icon( ): $mol_icon_chevron_right
+		inc_icon( ): $mol_icon_menu_up_outline
 		Inc( ): $mol_button_minor
 		precision_view( ): ReturnType< $mol_number['precision'] >
 		precision_change( ): ReturnType< $mol_number['precision'] >
@@ -3635,6 +3653,7 @@ declare namespace $.$$ {
      * @see https://mol.hyoo.ru/#!section=demos/demo=mol_number_demo
      */
     class $mol_number extends $.$mol_number {
+        sub(): ($mol_button_minor | $.$mol_string)[];
         value_limited(val?: number): number;
         event_dec(next?: Event): void;
         event_inc(next?: Event): void;

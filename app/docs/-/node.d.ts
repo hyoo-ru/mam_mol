@@ -7391,22 +7391,49 @@ declare namespace $.$$ {
 
 declare namespace $ {
 
-	export class $mol_icon_chevron_left extends $mol_icon {
+	export class $mol_icon_menu extends $mol_icon {
 		path( ): string
 	}
 	
 }
 
-//# sourceMappingURL=left.view.tree.d.ts.map
+//# sourceMappingURL=menu.view.tree.d.ts.map
 declare namespace $ {
 
-	export class $mol_icon_chevron_right extends $mol_icon {
+	export class $mol_icon_menu_down extends $mol_icon {
 		path( ): string
 	}
 	
 }
 
-//# sourceMappingURL=right.view.tree.d.ts.map
+//# sourceMappingURL=down.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $mol_icon_menu_down_outline extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=outline.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $mol_icon_menu_up extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=up.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $mol_icon_menu_up_outline extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=outline.view.tree.d.ts.map
 declare namespace $ {
 }
 
@@ -7422,55 +7449,55 @@ declare namespace $ {
 		,
 		ReturnType< $mol_hotkey['key'] >
 	>
-	type $mol_button_minor__event_click_mol_number_2 = $mol_type_enforce<
-		ReturnType< $mol_number['event_dec'] >
-		,
-		ReturnType< $mol_button_minor['event_click'] >
-	>
-	type $mol_button_minor__enabled_mol_number_3 = $mol_type_enforce<
-		ReturnType< $mol_number['dec_enabled'] >
-		,
-		ReturnType< $mol_button_minor['enabled'] >
-	>
-	type $mol_button_minor__sub_mol_number_4 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_button_minor['sub'] >
-	>
-	type $mol_string__type_mol_number_5 = $mol_type_enforce<
+	type $mol_string__type_mol_number_2 = $mol_type_enforce<
 		ReturnType< $mol_number['type'] >
 		,
 		ReturnType< $mol_string['type'] >
 	>
-	type $mol_string__keyboard_mol_number_6 = $mol_type_enforce<
+	type $mol_string__keyboard_mol_number_3 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_string['keyboard'] >
 	>
-	type $mol_string__value_mol_number_7 = $mol_type_enforce<
+	type $mol_string__value_mol_number_4 = $mol_type_enforce<
 		ReturnType< $mol_number['value_string'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_string__hint_mol_number_8 = $mol_type_enforce<
+	type $mol_string__hint_mol_number_5 = $mol_type_enforce<
 		ReturnType< $mol_number['hint'] >
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__enabled_mol_number_9 = $mol_type_enforce<
+	type $mol_string__enabled_mol_number_6 = $mol_type_enforce<
 		ReturnType< $mol_number['string_enabled'] >
 		,
 		ReturnType< $mol_string['enabled'] >
 	>
-	type $mol_string__submit_mol_number_10 = $mol_type_enforce<
+	type $mol_string__submit_mol_number_7 = $mol_type_enforce<
 		ReturnType< $mol_number['submit'] >
 		,
 		ReturnType< $mol_string['submit'] >
 	>
-	type $mol_string__selection_mol_number_11 = $mol_type_enforce<
+	type $mol_string__selection_mol_number_8 = $mol_type_enforce<
 		ReturnType< $mol_number['selection'] >
 		,
 		ReturnType< $mol_string['selection'] >
+	>
+	type $mol_button_minor__event_click_mol_number_9 = $mol_type_enforce<
+		ReturnType< $mol_number['event_dec'] >
+		,
+		ReturnType< $mol_button_minor['event_click'] >
+	>
+	type $mol_button_minor__enabled_mol_number_10 = $mol_type_enforce<
+		ReturnType< $mol_number['dec_enabled'] >
+		,
+		ReturnType< $mol_button_minor['enabled'] >
+	>
+	type $mol_button_minor__sub_mol_number_11 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_button_minor['sub'] >
 	>
 	type $mol_button_minor__event_click_mol_number_12 = $mol_type_enforce<
 		ReturnType< $mol_number['event_inc'] >
@@ -7494,9 +7521,6 @@ declare namespace $ {
 		event_dec_boost( next?: any ): any
 		event_inc_boost( next?: any ): any
 		Hotkey( ): $mol_hotkey
-		dec_enabled( ): ReturnType< $mol_number['enabled'] >
-		dec_icon( ): $mol_icon_chevron_left
-		Dec( ): $mol_button_minor
 		type( ): string
 		value_string( next?: string ): string
 		hint( ): string
@@ -7504,8 +7528,11 @@ declare namespace $ {
 		submit( next?: any ): any
 		selection( next?: readonly(number)[] ): readonly(number)[]
 		String( ): $mol_string
+		dec_enabled( ): ReturnType< $mol_number['enabled'] >
+		dec_icon( ): $mol_icon_menu_down_outline
+		Dec( ): $mol_button_minor
 		inc_enabled( ): ReturnType< $mol_number['enabled'] >
-		inc_icon( ): $mol_icon_chevron_right
+		inc_icon( ): $mol_icon_menu_up_outline
 		Inc( ): $mol_button_minor
 		precision_view( ): ReturnType< $mol_number['precision'] >
 		precision_change( ): ReturnType< $mol_number['precision'] >
@@ -7527,6 +7554,7 @@ declare namespace $.$$ {
      * @see https://mol.hyoo.ru/#!section=demos/demo=mol_number_demo
      */
     class $mol_number extends $.$mol_number {
+        sub(): ($.$mol_string | $mol_button_minor)[];
         value_limited(val?: number): number;
         event_dec(next?: Event): void;
         event_inc(next?: Event): void;
@@ -16545,6 +16573,24 @@ declare namespace $ {
 //# sourceMappingURL=left.view.tree.d.ts.map
 declare namespace $ {
 
+	export class $mol_icon_chevron_left extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=left.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $mol_icon_chevron_right extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=right.view.tree.d.ts.map
+declare namespace $ {
+
 	export class $mol_icon_chevron_double_right extends $mol_icon {
 		path( ): string
 	}
@@ -21975,15 +22021,6 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=demo.view.tree.d.ts.map
-declare namespace $ {
-
-	export class $mol_icon_menu extends $mol_icon {
-		path( ): string
-	}
-	
-}
-
-//# sourceMappingURL=menu.view.tree.d.ts.map
 /** @jsx $mol_jsx */
 declare namespace $.$$ {
     /**
@@ -24502,55 +24539,55 @@ declare namespace $ {
 		,
 		ReturnType< $mol_hotkey['key'] >
 	>
-	type $mol_button_minor__click_mol_bigint_field_2 = $mol_type_enforce<
-		ReturnType< $mol_bigint_field['decrement'] >
-		,
-		ReturnType< $mol_button_minor['click'] >
-	>
-	type $mol_button_minor__enabled_mol_bigint_field_3 = $mol_type_enforce<
-		ReturnType< $mol_bigint_field['decrement_enabled'] >
-		,
-		ReturnType< $mol_button_minor['enabled'] >
-	>
-	type $mol_button_minor__sub_mol_bigint_field_4 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_button_minor['sub'] >
-	>
-	type $mol_string__type_mol_bigint_field_5 = $mol_type_enforce<
+	type $mol_string__type_mol_bigint_field_2 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_string['type'] >
 	>
-	type $mol_string__keyboard_mol_bigint_field_6 = $mol_type_enforce<
+	type $mol_string__keyboard_mol_bigint_field_3 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_string['keyboard'] >
 	>
-	type $mol_string__value_mol_bigint_field_7 = $mol_type_enforce<
+	type $mol_string__value_mol_bigint_field_4 = $mol_type_enforce<
 		ReturnType< $mol_bigint_field['value_string'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_string__hint_mol_bigint_field_8 = $mol_type_enforce<
+	type $mol_string__hint_mol_bigint_field_5 = $mol_type_enforce<
 		ReturnType< $mol_bigint_field['hint'] >
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__enabled_mol_bigint_field_9 = $mol_type_enforce<
+	type $mol_string__enabled_mol_bigint_field_6 = $mol_type_enforce<
 		ReturnType< $mol_bigint_field['string_enabled'] >
 		,
 		ReturnType< $mol_string['enabled'] >
 	>
-	type $mol_string__submit_mol_bigint_field_10 = $mol_type_enforce<
+	type $mol_string__submit_mol_bigint_field_7 = $mol_type_enforce<
 		ReturnType< $mol_bigint_field['submit'] >
 		,
 		ReturnType< $mol_string['submit'] >
 	>
-	type $mol_string__selection_mol_bigint_field_11 = $mol_type_enforce<
+	type $mol_string__selection_mol_bigint_field_8 = $mol_type_enforce<
 		ReturnType< $mol_bigint_field['selection'] >
 		,
 		ReturnType< $mol_string['selection'] >
+	>
+	type $mol_button_minor__click_mol_bigint_field_9 = $mol_type_enforce<
+		ReturnType< $mol_bigint_field['decrement'] >
+		,
+		ReturnType< $mol_button_minor['click'] >
+	>
+	type $mol_button_minor__enabled_mol_bigint_field_10 = $mol_type_enforce<
+		ReturnType< $mol_bigint_field['decrement_enabled'] >
+		,
+		ReturnType< $mol_button_minor['enabled'] >
+	>
+	type $mol_button_minor__sub_mol_bigint_field_11 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_button_minor['sub'] >
 	>
 	type $mol_button_minor__click_mol_bigint_field_12 = $mol_type_enforce<
 		ReturnType< $mol_bigint_field['increment'] >
@@ -24573,17 +24610,17 @@ declare namespace $ {
 		decrement_boost( next?: any ): any
 		increment_boost( next?: any ): any
 		Hotkey( ): $mol_hotkey
-		decrement_enabled( ): ReturnType< $mol_bigint_field['enabled'] >
-		Decrement_icon( ): $mol_icon_chevron_left
-		Decrement( ): $mol_button_minor
 		value_string( next?: string ): string
 		hint( ): string
 		string_enabled( ): ReturnType< $mol_bigint_field['enabled'] >
 		submit( next?: any ): any
 		selection( next?: readonly(number)[] ): readonly(number)[]
 		String( ): $mol_string
+		decrement_enabled( ): ReturnType< $mol_bigint_field['enabled'] >
+		Decrement_icon( ): $mol_icon_menu_down_outline
+		Decrement( ): $mol_button_minor
 		increment_enabled( ): ReturnType< $mol_bigint_field['enabled'] >
-		Increment_icon( ): $mol_icon_chevron_right
+		Increment_icon( ): $mol_icon_menu_up_outline
 		Increment( ): $mol_button_minor
 		step( ): bigint
 		boost( ): bigint
@@ -24600,6 +24637,7 @@ declare namespace $ {
 //# sourceMappingURL=field.view.tree.d.ts.map
 declare namespace $.$$ {
     class $mol_bigint_field extends $.$mol_bigint_field {
+        sub(): ($.$mol_string | $mol_button_minor)[];
         value_string(next?: string): string;
         shift(diff: bigint): void;
         shift_boost(diff: bigint): void;
@@ -24607,6 +24645,8 @@ declare namespace $.$$ {
         decrement(event?: Event): void;
         increment_boost(event: Event): void;
         decrement_boost(event: Event): void;
+        decrement_enabled(): boolean;
+        increment_enabled(): boolean;
     }
 }
 
@@ -24651,13 +24691,13 @@ declare namespace $ {
 //# sourceMappingURL=checkered.view.tree.d.ts.map
 declare namespace $ {
 
-	export class $mol_icon_numeric extends $mol_icon {
+	export class $mol_icon_pound extends $mol_icon {
 		path( ): string
 	}
 	
 }
 
-//# sourceMappingURL=numeric.view.tree.d.ts.map
+//# sourceMappingURL=pound.view.tree.d.ts.map
 declare namespace $ {
 
 	export class $mol_icon_division extends $mol_icon {
@@ -24669,22 +24709,31 @@ declare namespace $ {
 //# sourceMappingURL=division.view.tree.d.ts.map
 declare namespace $ {
 
-	export class $mol_icon_alphabetical extends $mol_icon {
+	export class $mol_icon_card extends $mol_icon {
 		path( ): string
 	}
 	
 }
 
-//# sourceMappingURL=alphabetical.view.tree.d.ts.map
+//# sourceMappingURL=card.view.tree.d.ts.map
 declare namespace $ {
 
-	export class $mol_icon_alphabetical_variant extends $mol_icon {
+	export class $mol_icon_card_text extends $mol_icon {
 		path( ): string
 	}
 	
 }
 
-//# sourceMappingURL=variant.view.tree.d.ts.map
+//# sourceMappingURL=text.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $mol_icon_card_text_outline extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=outline.view.tree.d.ts.map
 declare namespace $ {
 
 	export class $mol_icon_format_list_bulleted extends $mol_icon {
@@ -24997,10 +25046,10 @@ declare namespace $ {
 		selection( next?: readonly(any)[] ): readonly(any)[]
 		Null_icon( ): $mol_icon_circle_off_outline
 		Bool_icon( ): $mol_icon_flag_checkered
-		Bint_icon( ): $mol_icon_numeric
+		Bint_icon( ): $mol_icon_pound
 		Real_icon( ): $mol_icon_division
 		Date_icon( ): $mol_icon_clock_outline
-		Text_icon( ): $mol_icon_alphabetical_variant
+		Text_icon( ): $mol_icon_card_text_outline
 		List_icon( ): $mol_icon_format_list_bulleted
 		Tupl_icon( ): $mol_icon_table
 		rows( ): readonly(any)[]
@@ -25014,7 +25063,7 @@ declare namespace $.$$ {
         Vary(): $mol_vary_class;
         type(next?: string): any;
         type_mutable(): boolean;
-        Type_icon(type: string): $mol_icon_clock_outline | $mol_icon_flag_checkered | $mol_icon_numeric | $mol_icon_division | $mol_icon_alphabetical_variant | $mol_icon_format_list_bulleted | $mol_icon_table | $mol_icon_circle_off_outline;
+        Type_icon(type: string): $mol_icon_clock_outline | $mol_icon_flag_checkered | $mol_icon_pound | $mol_icon_division | $mol_icon_card_text_outline | $mol_icon_format_list_bulleted | $mol_icon_table | $mol_icon_circle_off_outline;
         bool(next?: boolean): boolean;
         bint(next?: bigint): bigint;
         real(next?: number): number;

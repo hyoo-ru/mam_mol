@@ -187,9 +187,11 @@
     "$mol_icon_dots",
     "$mol_match",
     "$mol_number",
-    "$mol_icon_chevron_left",
-    "$mol_icon_chevron",
-    "$mol_icon_chevron_right"
+    "$mol_icon_menu_down_outline",
+    "$mol_icon_menu_down",
+    "$mol_icon_menu",
+    "$mol_icon_menu_up_outline",
+    "$mol_icon_menu_up"
   ],
   "dependencies": {
     "autoinstall": "*",

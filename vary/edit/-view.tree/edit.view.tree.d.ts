@@ -276,10 +276,10 @@ declare namespace $ {
 		selection( next?: readonly(any)[] ): readonly(any)[]
 		Null_icon( ): $mol_icon_circle_off_outline
 		Bool_icon( ): $mol_icon_flag_checkered
-		Bint_icon( ): $mol_icon_numeric
+		Bint_icon( ): $mol_icon_pound
 		Real_icon( ): $mol_icon_division
 		Date_icon( ): $mol_icon_clock_outline
-		Text_icon( ): $mol_icon_alphabetical_variant
+		Text_icon( ): $mol_icon_card_text_outline
 		List_icon( ): $mol_icon_format_list_bulleted
 		Tupl_icon( ): $mol_icon_table
 		rows( ): readonly(any)[]

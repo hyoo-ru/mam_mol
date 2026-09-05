@@ -16143,9 +16143,9 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$mol_icon_chevron_left) = class $mol_icon_chevron_left extends ($.$mol_icon) {
+	($.$mol_icon_menu) = class $mol_icon_menu extends ($.$mol_icon) {
 		path(){
-			return "M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z";
+			return "M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z";
 		}
 	};
 
@@ -16155,9 +16155,45 @@ var $;
 
 
 ;
-	($.$mol_icon_chevron_right) = class $mol_icon_chevron_right extends ($.$mol_icon) {
+	($.$mol_icon_menu_down) = class $mol_icon_menu_down extends ($.$mol_icon) {
 		path(){
-			return "M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z";
+			return "M7,10L12,15L17,10H7Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$mol_icon_menu_down_outline) = class $mol_icon_menu_down_outline extends ($.$mol_icon) {
+		path(){
+			return "M18,9V10.5L12,16.5L6,10.5V9H18M12,13.67L14.67,11H9.33L12,13.67Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$mol_icon_menu_up) = class $mol_icon_menu_up extends ($.$mol_icon) {
+		path(){
+			return "M7,15L12,10L17,15H7Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$mol_icon_menu_up_outline) = class $mol_icon_menu_up_outline extends ($.$mol_icon) {
+		path(){
+			return "M18,16V14.5L12,8.5L6,14.5V16H18M12,11.33L14.67,14H9.33L12,11.33Z";
 		}
 	};
 
@@ -16197,20 +16233,6 @@ var $;
 			});
 			return obj;
 		}
-		dec_enabled(){
-			return (this.enabled());
-		}
-		dec_icon(){
-			const obj = new this.$.$mol_icon_chevron_left();
-			return obj;
-		}
-		Dec(){
-			const obj = new this.$.$mol_button_minor();
-			(obj.event_click) = (next) => ((this.event_dec(next)));
-			(obj.enabled) = () => ((this.dec_enabled()));
-			(obj.sub) = () => ([(this.dec_icon())]);
-			return obj;
-		}
 		type(){
 			return "text";
 		}
@@ -16243,11 +16265,25 @@ var $;
 			(obj.selection) = (next) => ((this.selection(next)));
 			return obj;
 		}
+		dec_enabled(){
+			return (this.enabled());
+		}
+		dec_icon(){
+			const obj = new this.$.$mol_icon_menu_down_outline();
+			return obj;
+		}
+		Dec(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.event_click) = (next) => ((this.event_dec(next)));
+			(obj.enabled) = () => ((this.dec_enabled()));
+			(obj.sub) = () => ([(this.dec_icon())]);
+			return obj;
+		}
 		inc_enabled(){
 			return (this.enabled());
 		}
 		inc_icon(){
-			const obj = new this.$.$mol_icon_chevron_right();
+			const obj = new this.$.$mol_icon_menu_up_outline();
 			return obj;
 		}
 		Inc(){
@@ -16284,8 +16320,8 @@ var $;
 		}
 		sub(){
 			return [
-				(this.Dec()), 
 				(this.String()), 
+				(this.Dec()), 
 				(this.Inc())
 			];
 		}
@@ -16295,12 +16331,12 @@ var $;
 	($mol_mem(($.$mol_number.prototype), "event_dec_boost"));
 	($mol_mem(($.$mol_number.prototype), "event_inc_boost"));
 	($mol_mem(($.$mol_number.prototype), "Hotkey"));
-	($mol_mem(($.$mol_number.prototype), "dec_icon"));
-	($mol_mem(($.$mol_number.prototype), "Dec"));
 	($mol_mem(($.$mol_number.prototype), "value_string"));
 	($mol_mem(($.$mol_number.prototype), "submit"));
 	($mol_mem(($.$mol_number.prototype), "selection"));
 	($mol_mem(($.$mol_number.prototype), "String"));
+	($mol_mem(($.$mol_number.prototype), "dec_icon"));
+	($mol_mem(($.$mol_number.prototype), "Dec"));
 	($mol_mem(($.$mol_number.prototype), "inc_icon"));
 	($mol_mem(($.$mol_number.prototype), "Inc"));
 	($mol_mem(($.$mol_number.prototype), "value"));
@@ -16328,6 +16364,13 @@ var $;
          * @see https://mol.hyoo.ru/#!section=demos/demo=mol_number_demo
          */
         class $mol_number extends $.$mol_number {
+            sub() {
+                return [
+                    this.String(),
+                    ...this.dec_enabled() ? [this.Dec()] : [],
+                    ...this.inc_enabled() ? [this.Inc()] : [],
+                ];
+            }
             value_limited(val) {
                 if (Number.isNaN(val))
                     return this.value(val);
@@ -16422,6 +16465,9 @@ var $;
                 return this.enabled() && (!((this.value() || 0) >= this.value_max()));
             }
         }
+        __decorate([
+            $mol_mem
+        ], $mol_number.prototype, "sub", null);
         __decorate([
             $mol_mem
         ], $mol_number.prototype, "value_string", null);
@@ -32747,6 +32793,30 @@ var $;
 
 
 ;
+	($.$mol_icon_chevron_left) = class $mol_icon_chevron_left extends ($.$mol_icon) {
+		path(){
+			return "M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$mol_icon_chevron_right) = class $mol_icon_chevron_right extends ($.$mol_icon) {
+		path(){
+			return "M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
 	($.$mol_icon_chevron_double_right) = class $mol_icon_chevron_double_right extends ($.$mol_icon) {
 		path(){
 			return "M5.59,7.41L7,6L13,12L7,18L5.59,16.59L10.17,12L5.59,7.41M11.59,7.41L13,6L19,12L13,18L11.59,16.59L16.17,12L11.59,7.41Z";
@@ -41308,18 +41378,6 @@ var $;
 	($mol_mem(($.$mol_portion_demo.prototype), "Empty"));
 	($mol_mem(($.$mol_portion_demo.prototype), "Partial"));
 	($mol_mem(($.$mol_portion_demo.prototype), "Full"));
-
-
-;
-"use strict";
-
-
-;
-	($.$mol_icon_menu) = class $mol_icon_menu extends ($.$mol_icon) {
-		path(){
-			return "M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z";
-		}
-	};
 
 
 ;
@@ -62927,20 +62985,6 @@ var $;
 			});
 			return obj;
 		}
-		decrement_enabled(){
-			return (this.enabled());
-		}
-		Decrement_icon(){
-			const obj = new this.$.$mol_icon_chevron_left();
-			return obj;
-		}
-		Decrement(){
-			const obj = new this.$.$mol_button_minor();
-			(obj.click) = (next) => ((this.decrement(next)));
-			(obj.enabled) = () => ((this.decrement_enabled()));
-			(obj.sub) = () => ([(this.Decrement_icon())]);
-			return obj;
-		}
 		value_string(next){
 			if(next !== undefined) return next;
 			return "";
@@ -62970,11 +63014,25 @@ var $;
 			(obj.selection) = (next) => ((this.selection(next)));
 			return obj;
 		}
+		decrement_enabled(){
+			return (this.enabled());
+		}
+		Decrement_icon(){
+			const obj = new this.$.$mol_icon_menu_down_outline();
+			return obj;
+		}
+		Decrement(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.click) = (next) => ((this.decrement(next)));
+			(obj.enabled) = () => ((this.decrement_enabled()));
+			(obj.sub) = () => ([(this.Decrement_icon())]);
+			return obj;
+		}
 		increment_enabled(){
 			return (this.enabled());
 		}
 		Increment_icon(){
-			const obj = new this.$.$mol_icon_chevron_right();
+			const obj = new this.$.$mol_icon_menu_up_outline();
 			return obj;
 		}
 		Increment(){
@@ -63009,8 +63067,8 @@ var $;
 		}
 		sub(){
 			return [
-				(this.Decrement()), 
 				(this.String()), 
+				(this.Decrement()), 
 				(this.Increment())
 			];
 		}
@@ -63020,12 +63078,12 @@ var $;
 	($mol_mem(($.$mol_bigint_field.prototype), "decrement_boost"));
 	($mol_mem(($.$mol_bigint_field.prototype), "increment_boost"));
 	($mol_mem(($.$mol_bigint_field.prototype), "Hotkey"));
-	($mol_mem(($.$mol_bigint_field.prototype), "Decrement_icon"));
-	($mol_mem(($.$mol_bigint_field.prototype), "Decrement"));
 	($mol_mem(($.$mol_bigint_field.prototype), "value_string"));
 	($mol_mem(($.$mol_bigint_field.prototype), "submit"));
 	($mol_mem(($.$mol_bigint_field.prototype), "selection"));
 	($mol_mem(($.$mol_bigint_field.prototype), "String"));
+	($mol_mem(($.$mol_bigint_field.prototype), "Decrement_icon"));
+	($mol_mem(($.$mol_bigint_field.prototype), "Decrement"));
 	($mol_mem(($.$mol_bigint_field.prototype), "Increment_icon"));
 	($mol_mem(($.$mol_bigint_field.prototype), "Increment"));
 	($mol_mem(($.$mol_bigint_field.prototype), "value"));
@@ -63043,6 +63101,13 @@ var $;
     var $$;
     (function ($$) {
         class $mol_bigint_field extends $.$mol_bigint_field {
+            sub() {
+                return [
+                    this.String(),
+                    ...this.decrement_enabled() ? [this.Decrement()] : [],
+                    ...this.increment_enabled() ? [this.Increment()] : [],
+                ];
+            }
             value_string(next) {
                 const val = this.value(next === undefined ? undefined : BigInt(next));
                 return val == null ? '' : next === '' ? '' : String(val);
@@ -63079,7 +63144,26 @@ var $;
                 this.shift_boost(-1n);
                 event?.preventDefault();
             }
+            decrement_enabled() {
+                if (!this.enabled())
+                    return false;
+                const min = this.value_min();
+                if (min === null)
+                    return true;
+                return this.value() > min;
+            }
+            increment_enabled() {
+                if (!this.enabled())
+                    return false;
+                const max = this.value_max();
+                if (max === null)
+                    return true;
+                return this.value() < max;
+            }
         }
+        __decorate([
+            $mol_mem
+        ], $mol_bigint_field.prototype, "sub", null);
         __decorate([
             $mol_mem
         ], $mol_bigint_field.prototype, "value_string", null);
@@ -63105,9 +63189,9 @@ var $;
                 flex: {
                     grow: 1,
                     shrink: 1,
-                    basis: `10rem`
+                    basis: `7rem`
                 },
-                width: `10rem`,
+                width: `7rem`,
             },
         });
     })($$ = $.$$ || ($.$$ = {}));
@@ -63162,9 +63246,9 @@ var $;
 
 
 ;
-	($.$mol_icon_numeric) = class $mol_icon_numeric extends ($.$mol_icon) {
+	($.$mol_icon_pound) = class $mol_icon_pound extends ($.$mol_icon) {
 		path(){
-			return "M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z";
+			return "M5.41,21L6.12,17H2.12L2.47,15H6.47L7.53,9H3.53L3.88,7H7.88L8.59,3H10.59L9.88,7H15.88L16.59,3H18.59L17.88,7H21.88L21.53,9H17.53L16.47,15H20.47L20.12,17H16.12L15.41,21H13.41L14.12,17H8.12L7.41,21H5.41M9.53,9L8.47,15H14.47L15.53,9H9.53Z";
 		}
 	};
 
@@ -63186,9 +63270,9 @@ var $;
 
 
 ;
-	($.$mol_icon_alphabetical) = class $mol_icon_alphabetical extends ($.$mol_icon) {
+	($.$mol_icon_card) = class $mol_icon_card extends ($.$mol_icon) {
 		path(){
-			return "M6,11A2,2 0 0,1 8,13V17H4A2,2 0 0,1 2,15V13A2,2 0 0,1 4,11H6M4,13V15H6V13H4M20,13V15H22V17H20A2,2 0 0,1 18,15V13A2,2 0 0,1 20,11H22V13H20M12,7V11H14A2,2 0 0,1 16,13V15A2,2 0 0,1 14,17H12A2,2 0 0,1 10,15V7H12M12,15H14V13H12V15Z";
+			return "M20,20H4A2,2 0 0,1 2,18V6A2,2 0 0,1 4,4H20A2,2 0 0,1 22,6V18A2,2 0 0,1 20,20Z";
 		}
 	};
 
@@ -63198,9 +63282,21 @@ var $;
 
 
 ;
-	($.$mol_icon_alphabetical_variant) = class $mol_icon_alphabetical_variant extends ($.$mol_icon) {
+	($.$mol_icon_card_text) = class $mol_icon_card_text extends ($.$mol_icon) {
 		path(){
-			return "M3 7A2 2 0 0 0 1 9V17H3V13H5V17H7V9A2 2 0 0 0 5 7H3M3 9H5V11H3M15 10.5V9A2 2 0 0 0 13 7H9V17H13A2 2 0 0 0 15 15V13.5A1.54 1.54 0 0 0 13.5 12A1.54 1.54 0 0 0 15 10.5M13 15H11V13H13V15M13 11H11V9H13M19 7A2 2 0 0 0 17 9V15A2 2 0 0 0 19 17H21A2 2 0 0 0 23 15V14H21V15H19V9H21V10H23V9A2 2 0 0 0 21 7Z";
+			return "M20,20H4A2,2 0 0,1 2,18V6A2,2 0 0,1 4,4H20A2,2 0 0,1 22,6V18A2,2 0 0,1 20,20M5,13V15H16V13H5M5,9V11H19V9H5Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$mol_icon_card_text_outline) = class $mol_icon_card_text_outline extends ($.$mol_icon) {
+		path(){
+			return "M20,20H4A2,2 0 0,1 2,18V6A2,2 0 0,1 4,4H20A2,2 0 0,1 22,6V18A2,2 0 0,1 20,20M4,6V18H20V6H4M6,9H18V11H6V9M6,13H16V15H6V13Z";
 		}
 	};
 
@@ -63486,7 +63582,7 @@ var $;
 			return obj;
 		}
 		Bint_icon(){
-			const obj = new this.$.$mol_icon_numeric();
+			const obj = new this.$.$mol_icon_pound();
 			return obj;
 		}
 		Real_icon(){
@@ -63498,7 +63594,7 @@ var $;
 			return obj;
 		}
 		Text_icon(){
-			const obj = new this.$.$mol_icon_alphabetical_variant();
+			const obj = new this.$.$mol_icon_card_text_outline();
 			return obj;
 		}
 		List_icon(){
@@ -63601,7 +63697,7 @@ var $;
                 return 'Tupl';
             }
             type_mutable() {
-                return !this.schema();
+                return this.enabled() && !this.schema();
             }
             Type_icon(type) {
                 switch (type) {
@@ -63646,8 +63742,9 @@ var $;
                     ...type === 'Real' ? [this.Real()] : [],
                     ...type === 'Date' ? [this.Date()] : [],
                     ...type === 'Text' ? [this.Text()] : [],
-                    ...type === 'List' ? [this.Item_expand(), this.Item_add()] : [],
-                    ...type === 'Tupl' ? [this.Item_expand(), this.Field_add()] : [],
+                    ...type === 'List' || type === 'Tupl' ? [this.Item_expand()] : [],
+                    ...type === 'List' && this.enabled() ? [this.Item_add()] : [],
+                    ...type === 'Tupl' && this.enabled() ? [this.Field_add()] : [],
                 ];
             }
             body() {
@@ -63717,7 +63814,7 @@ var $;
             item_selection(index, next) {
                 const prefix = '/' + index;
                 const sel = this.selection(next === undefined ? undefined : [prefix + next[0], next[1], next[2]]);
-                if (!sel[0].startsWith(prefix))
+                if (!sel[0]?.startsWith(prefix))
                     return ['', 0, 0];
                 return [sel[0].slice(prefix.length), sel[1], sel[2]];
             }
@@ -63882,6 +63979,16 @@ var $;
                 },
                 Option_row: {
                     padding: $mol_gap.text,
+                },
+            },
+            Bint: {
+                flex: {
+                    grow: 1,
+                },
+            },
+            Real: {
+                flex: {
+                    grow: 1,
                 },
             },
             Text: {

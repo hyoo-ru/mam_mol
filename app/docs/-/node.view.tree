@@ -1631,9 +1631,15 @@ $rise_range_value $mol_view
 		^
 		disabled <= disabled false
 
-$mol_icon_chevron_left $mol_icon path \M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z
+$mol_icon_menu $mol_icon path \M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z
 
-$mol_icon_chevron_right $mol_icon path \M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z
+$mol_icon_menu_down $mol_icon path \M7,10L12,15L17,10H7Z
+
+$mol_icon_menu_down_outline $mol_icon path \M18,9V10.5L12,16.5L6,10.5V9H18M12,13.67L14.67,11H9.33L12,13.67Z
+
+$mol_icon_menu_up $mol_icon path \M7,15L12,10L17,15H7Z
+
+$mol_icon_menu_up_outline $mol_icon path \M18,16V14.5L12,8.5L6,14.5V16H18M12,11.33L14.67,14H9.33L12,11.33Z
 
 $mol_number $mol_view
 	precision_view <= precision 1
@@ -1651,10 +1657,6 @@ $mol_number $mol_view
 				pageDown? <=> event_dec_boost? null
 				pageUp? <=> event_inc_boost? null
 	sub /
-		<= Dec $mol_button_minor
-			event_click? <=> event_dec? null
-			enabled <= dec_enabled <= enabled
-			sub / <= dec_icon $mol_icon_chevron_left
 		<= String $mol_string
 			- \ we don't want native number controls in mobile devices
 			- \ https://stackoverflow.com/questions/3790935/can-i-hide-the-html5-number-input-s-spin-box
@@ -1665,10 +1667,14 @@ $mol_number $mol_view
 			enabled <= string_enabled <= enabled
 			submit? <=> submit? null
 			selection? <=> selection? /number
+		<= Dec $mol_button_minor
+			event_click? <=> event_dec? null
+			enabled <= dec_enabled <= enabled
+			sub / <= dec_icon $mol_icon_menu_down_outline
 		<= Inc $mol_button_minor
 			event_click? <=> event_inc? null
 			enabled <= inc_enabled <= enabled
-			sub / <= inc_icon $mol_icon_chevron_right
+			sub / <= inc_icon $mol_icon_menu_up_outline
 
 $rise_range_demo $mol_example_small
 	sub /
@@ -4247,6 +4253,10 @@ $mol_icon_trash_can_outline $mol_icon path \M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,
 
 $mol_icon_chevron_double_left $mol_icon path \M18.41,7.41L17,6L11,12L17,18L18.41,16.59L13.83,12L18.41,7.41M12.41,7.41L11,6L5,12L11,18L12.41,16.59L7.83,12L12.41,7.41Z
 
+$mol_icon_chevron_left $mol_icon path \M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z
+
+$mol_icon_chevron_right $mol_icon path \M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z
+
 $mol_icon_chevron_double_right $mol_icon path \M5.59,7.41L7,6L13,12L7,18L5.59,16.59L10.17,12L5.59,7.41M11.59,7.41L13,6L19,12L13,18L11.59,16.59L16.17,12L11.59,7.41Z
 
 $mol_date $mol_pick
@@ -5873,8 +5883,6 @@ $mol_portion_demo $mol_example_small
 	aspects /
 		\Widget/Draw/Chart/Bar
 
-$mol_icon_menu $mol_icon path \M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z
-
 $mol_button_download $mol_button_minor
 	blob null
 	uri \
@@ -6775,11 +6783,6 @@ $mol_bigint_field $mol_bar
 				pageDown? <=> decrement_boost? null
 				pageUp? <=> increment_boost? null
 	sub /
-		<= Decrement $mol_button_minor
-			click? <=> decrement? null
-			enabled <= decrement_enabled <= enabled
-			sub /
-				<= Decrement_icon $mol_icon_chevron_left
 		<= String $mol_string
 			type \text
 			keyboard \decimal
@@ -6788,11 +6791,16 @@ $mol_bigint_field $mol_bar
 			enabled <= string_enabled <= enabled
 			submit? <=> submit? null
 			selection? <=> selection? /number
+		<= Decrement $mol_button_minor
+			click? <=> decrement? null
+			enabled <= decrement_enabled <= enabled
+			sub /
+				<= Decrement_icon $mol_icon_menu_down_outline
 		<= Increment $mol_button_minor
 			click? <=> increment? null
 			enabled <= increment_enabled <= enabled
 			sub /
-				<= Increment_icon $mol_icon_chevron_right
+				<= Increment_icon $mol_icon_menu_up_outline
 
 $mol_icon_circle $mol_icon path \M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z
 
@@ -6802,13 +6810,15 @@ $mol_icon_flag $mol_icon path \M14.4,6L14,4H5V21H7V14H12.6L13,16H20V6H14.4Z
 
 $mol_icon_flag_checkered $mol_icon path \M14.4,6H20V16H13L12.6,14H7V21H5V4H14L14.4,6M14,14H16V12H18V10H16V8H14V10L13,8V6H11V8H9V6H7V8H9V10H7V12H9V10H11V12H13V10L14,12V14M11,10V8H13V10H11M14,10H16V12H14V10Z
 
-$mol_icon_numeric $mol_icon path \M4,17V9H2V7H6V17H4M22,15C22,16.11 21.1,17 20,17H16V15H20V13H18V11H20V9H16V7H20A2,2 0 0,1 22,9V10.5A1.5,1.5 0 0,1 20.5,12A1.5,1.5 0 0,1 22,13.5V15M14,15V17H8V13C8,11.89 8.9,11 10,11H12V9H8V7H12A2,2 0 0,1 14,9V11C14,12.11 13.1,13 12,13H10V15H14Z
+$mol_icon_pound $mol_icon path \M5.41,21L6.12,17H2.12L2.47,15H6.47L7.53,9H3.53L3.88,7H7.88L8.59,3H10.59L9.88,7H15.88L16.59,3H18.59L17.88,7H21.88L21.53,9H17.53L16.47,15H20.47L20.12,17H16.12L15.41,21H13.41L14.12,17H8.12L7.41,21H5.41M9.53,9L8.47,15H14.47L15.53,9H9.53Z
 
 $mol_icon_division $mol_icon path \M19,13H5V11H19V13M12,5A2,2 0 0,1 14,7A2,2 0 0,1 12,9A2,2 0 0,1 10,7A2,2 0 0,1 12,5M12,15A2,2 0 0,1 14,17A2,2 0 0,1 12,19A2,2 0 0,1 10,17A2,2 0 0,1 12,15Z
 
-$mol_icon_alphabetical $mol_icon path \M6,11A2,2 0 0,1 8,13V17H4A2,2 0 0,1 2,15V13A2,2 0 0,1 4,11H6M4,13V15H6V13H4M20,13V15H22V17H20A2,2 0 0,1 18,15V13A2,2 0 0,1 20,11H22V13H20M12,7V11H14A2,2 0 0,1 16,13V15A2,2 0 0,1 14,17H12A2,2 0 0,1 10,15V7H12M12,15H14V13H12V15Z
+$mol_icon_card $mol_icon path \M20,20H4A2,2 0 0,1 2,18V6A2,2 0 0,1 4,4H20A2,2 0 0,1 22,6V18A2,2 0 0,1 20,20Z
 
-$mol_icon_alphabetical_variant $mol_icon path \M3 7A2 2 0 0 0 1 9V17H3V13H5V17H7V9A2 2 0 0 0 5 7H3M3 9H5V11H3M15 10.5V9A2 2 0 0 0 13 7H9V17H13A2 2 0 0 0 15 15V13.5A1.54 1.54 0 0 0 13.5 12A1.54 1.54 0 0 0 15 10.5M13 15H11V13H13V15M13 11H11V9H13M19 7A2 2 0 0 0 17 9V15A2 2 0 0 0 19 17H21A2 2 0 0 0 23 15V14H21V15H19V9H21V10H23V9A2 2 0 0 0 21 7Z
+$mol_icon_card_text $mol_icon path \M20,20H4A2,2 0 0,1 2,18V6A2,2 0 0,1 4,4H20A2,2 0 0,1 22,6V18A2,2 0 0,1 20,20M5,13V15H16V13H5M5,9V11H19V9H5Z
+
+$mol_icon_card_text_outline $mol_icon path \M20,20H4A2,2 0 0,1 2,18V6A2,2 0 0,1 4,4H20A2,2 0 0,1 22,6V18A2,2 0 0,1 20,20M4,6V18H20V6H4M6,9H18V11H6V9M6,13H16V15H6V13Z
 
 $mol_icon_format_list_bulleted $mol_icon path \M7,5H21V7H7V5M7,13V11H21V13H7M4,4.5A1.5,1.5 0 0,1 5.5,6A1.5,1.5 0 0,1 4,7.5A1.5,1.5 0 0,1 2.5,6A1.5,1.5 0 0,1 4,4.5M4,10.5A1.5,1.5 0 0,1 5.5,12A1.5,1.5 0 0,1 4,13.5A1.5,1.5 0 0,1 2.5,12A1.5,1.5 0 0,1 4,10.5M7,19V17H21V19H7M4,16.5A1.5,1.5 0 0,1 5.5,18A1.5,1.5 0 0,1 4,19.5A1.5,1.5 0 0,1 2.5,18A1.5,1.5 0 0,1 4,16.5Z
 
@@ -6821,10 +6831,10 @@ $mol_vary_edit $mol_list
 	selection? /
 	Null_icon $mol_icon_circle_off_outline
 	Bool_icon $mol_icon_flag_checkered
-	Bint_icon $mol_icon_numeric
+	Bint_icon $mol_icon_pound
 	Real_icon $mol_icon_division
 	Date_icon $mol_icon_clock_outline
-	Text_icon $mol_icon_alphabetical_variant
+	Text_icon $mol_icon_card_text_outline
 	List_icon $mol_icon_format_list_bulleted
 	Tupl_icon $mol_icon_table
 	rows /

@@ -13,11 +13,6 @@ $mol_bigint_field $mol_bar
 				pageDown? <=> decrement_boost? null
 				pageUp? <=> increment_boost? null
 	sub /
-		<= Decrement $mol_button_minor
-			click? <=> decrement? null
-			enabled <= decrement_enabled <= enabled
-			sub /
-				<= Decrement_icon $mol_icon_chevron_left
 		<= String $mol_string
 			type \text
 			keyboard \decimal
@@ -26,8 +21,13 @@ $mol_bigint_field $mol_bar
 			enabled <= string_enabled <= enabled
 			submit? <=> submit? null
 			selection? <=> selection? /number
+		<= Decrement $mol_button_minor
+			click? <=> decrement? null
+			enabled <= decrement_enabled <= enabled
+			sub /
+				<= Decrement_icon $mol_icon_menu_down_outline
 		<= Increment $mol_button_minor
 			click? <=> increment? null
 			enabled <= increment_enabled <= enabled
 			sub /
-				<= Increment_icon $mol_icon_chevron_right
+				<= Increment_icon $mol_icon_menu_up_outline
