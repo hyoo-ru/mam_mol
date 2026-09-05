@@ -1,6 +1,6 @@
 $mol_number $mol_view
-	precision_view <= precision 1
-	precision_change <= precision 1
+	precision_view <= precision 0
+	precision_change <= precision 0
 	boost 10
 	value_min -Infinity
 	value_max +Infinity
