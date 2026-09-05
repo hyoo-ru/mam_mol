@@ -8,9 +8,9 @@ namespace $.$$ {
 			flex: {
 				grow: 1,
 				shrink: 1,
-				basis: `10rem`
+				basis: `7rem`
 			},
-			width: `10rem`,
+			width: `7rem`,
 		},
 		
 	} )

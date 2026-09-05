@@ -2,6 +2,15 @@ namespace $.$$ {
 	export class $mol_bigint_field extends $.$mol_bigint_field {
 		
 		@ $mol_mem
+		sub() {
+			return [
+				this.String(),
+				... this.decrement_enabled() ? [ this.Decrement() ] : [],
+				... this.increment_enabled() ? [ this.Increment() ] : [],
+			]
+		}
+		
+		@ $mol_mem
 		value_string( next?: string ) {
 			const val = this.value( next === undefined ? undefined : BigInt( next )  )
 			return val == null ? '' : next === '' ? '' : String( val )
@@ -51,6 +60,24 @@ namespace $.$$ {
 		decrement_boost( event: Event) {
 			this.shift_boost( -1n )
 			event?.preventDefault()
+		}
+		
+		decrement_enabled() {
+			if( !this.enabled() ) return false
+			
+			const min = this.value_min()
+			if( min === null ) return true
+			
+			return this.value() > min
+		}
+		
+		increment_enabled() {
+			if( !this.enabled() ) return false
+			
+			const max = this.value_max()
+			if( max === null ) return true
+			
+			return this.value() < max
 		}
 		
 	}

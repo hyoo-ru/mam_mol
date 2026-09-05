@@ -33,7 +33,7 @@ namespace $.$$ {
 		}
 		
 		type_mutable() {
-			return ! this.schema()
+			return this.enabled() && ! this.schema()
 		}
 		
 		@ $mol_mem_key
@@ -96,8 +96,9 @@ namespace $.$$ {
 				... type === 'Real' ? [ this.Real() ] : [],
 				... type === 'Date' ? [ this.Date() ] : [],
 				... type === 'Text' ? [ this.Text() ] : [],
-				... type === 'List' ? [ this.Item_expand(), this.Item_add() ] : [],
-				... type === 'Tupl' ? [ this.Item_expand(), this.Field_add() ] : [],
+				... type === 'List' || type === 'Tupl' ? [ this.Item_expand() ] : [],
+				... type === 'List' && this.enabled() ? [ this.Item_add() ] : [],
+				... type === 'Tupl' && this.enabled() ? [ this.Field_add() ] : [],
 			]
 		}
 		
@@ -178,7 +179,7 @@ namespace $.$$ {
 		item_selection( index: number, next?: readonly[ path: string, begin: number, end: number ] ): readonly[ path: string, begin: number, end: number ] {
 			const prefix = '/' + index
 			const sel = this.selection( next === undefined ? undefined : [ prefix + next[0], next[1], next[2] ] )
-			if( !sel[0].startsWith( prefix ) ) return [ '', 0, 0 ]
+			if( !sel[0]?.startsWith( prefix ) ) return [ '', 0, 0 ]
 			return [ sel[0].slice( prefix.length ), sel[1], sel[2] ]
 		}
 		

@@ -6,6 +6,15 @@ namespace $.$$ {
 	 */
 	export class $mol_number extends $.$mol_number {
 		
+		@ $mol_mem
+		sub() {
+			return [
+				this.String(),
+				... this.dec_enabled() ? [ this.Dec() ] : [],
+				... this.inc_enabled() ? [ this.Inc() ] : [],
+			]
+		}
+		
 		value_limited( val? :  number ) : number {
 			if (Number.isNaN( val )) return this.value( val )
 			if ( val === undefined ) return this.value()

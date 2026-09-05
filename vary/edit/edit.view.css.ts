@@ -25,6 +25,18 @@ namespace $.$$ {
 			},
 		},
 		
+		Bint: {
+			flex: {
+				grow: 1,
+			},
+		},
+		
+		Real: {
+			flex: {
+				grow: 1,
+			},
+		},
+		
 		Text: {
 			flex: {
 				shrink: 1,
