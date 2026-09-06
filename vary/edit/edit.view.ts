@@ -49,6 +49,11 @@ namespace $.$$ {
 			return this.enabled() && ! this.schema()
 		}
 		
+		type_option_content( type: string ) {
+			if( type == this.type() ) return [ this.Type_icon( type ) ]
+			return super.type_option_content( type )
+		}
+		
 		@ $mol_mem_key
 		Type_icon( type: string ) {
 			switch( type ) {
