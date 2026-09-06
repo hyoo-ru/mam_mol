@@ -63744,9 +63744,32 @@ var $;
             }
             type(next) {
                 if (next !== undefined) {
-                    if (next !== 'Null')
-                        return next;
-                    this.value(null);
+                    switch (next) {
+                        case 'Null':
+                            this.value(null);
+                            return next;
+                        case 'Bool':
+                            this.bool(this.bool());
+                            return next;
+                        case 'Bint':
+                            this.bint(this.bint());
+                            return next;
+                        case 'Real':
+                            this.real(this.real());
+                            return next;
+                        case 'Date':
+                            this.date(this.date());
+                            return next;
+                        case 'Text':
+                            this.text(this.text());
+                            return next;
+                        case 'List':
+                            this.list(this.list());
+                            return next;
+                        case 'Tupl':
+                            this.tupl(this.tupl());
+                            return next;
+                    }
                 }
                 const schema = this.schema();
                 if (schema)
@@ -63978,9 +64001,6 @@ var $;
                 return;
             }
         }
-        __decorate([
-            $mol_mem
-        ], $mol_vary_edit.prototype, "type", null);
         __decorate([
             $mol_mem
         ], $mol_vary_edit.prototype, "type_auto", null);
