@@ -16,6 +16,12 @@ namespace $.$$ {
 			const schema = this.schema()
 			if( schema ) return schema
 			
+			return this.type_auto()
+		}
+		
+		@ $mol_mem
+		type_auto() {
+			
 			const val = this.value()
 			if( val == null ) return 'Null'
 			
