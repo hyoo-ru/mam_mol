@@ -19,7 +19,10 @@ $mol_vary_edit $mol_list
 				Sub <= Type $mol_select
 					Filter null
 					Trigger_icon null
-					option_content* / <= Type_icon* $mol_icon
+					option_label* => type_label*
+					option_content* <= type_option_content* /
+						<= Type_icon* $mol_icon
+						<= type_label*
 					enabled <= type_mutable <= enabled true
 					dictionary <= type_dict *
 						Null \Nothing
