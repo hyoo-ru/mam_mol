@@ -21,15 +21,7 @@ declare namespace $ {
 		ReturnType< $mol_select['enabled'] >
 	>
 	type $mol_select__dictionary_mol_vary_edit_5 = $mol_type_enforce<
-		({ 
-			'Null': string,
-			'Bool': string,
-			'Bint': string,
-			'Real': string,
-			'Text': string,
-			'List': string,
-			'Tupl': string,
-		}) 
+		ReturnType< $mol_vary_edit['type_dict'] >
 		,
 		ReturnType< $mol_select['dictionary'] >
 	>
@@ -233,7 +225,17 @@ declare namespace $ {
 		Type_icon( id: any): $mol_icon
 		enabled( ): boolean
 		type_mutable( ): ReturnType< $mol_vary_edit['enabled'] >
-		type( next?: string ): string
+		type_dict( ): ({ 
+			'Null': string,
+			'Bool': string,
+			'Bint': string,
+			'Real': string,
+			'Text': string,
+			'List': string,
+			'Tupl': string,
+		}) 
+		type_auto( ): string
+		type( next?: ReturnType< $mol_vary_edit['type_auto'] > ): ReturnType< $mol_vary_edit['type_auto'] >
 		Type( ): $mol_select
 		Type_drop( ): $mol_drop
 		bool( next?: boolean ): boolean

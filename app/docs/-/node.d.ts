@@ -7557,6 +7557,7 @@ declare namespace $.$$ {
         sub(): ($.$mol_string | $mol_button_minor)[];
         value_limited(val?: number): number;
         event_dec(next?: Event): void;
+        precision_change(): number;
         event_inc(next?: Event): void;
         event_dec_boost(next?: Event): void;
         event_inc_boost(next?: Event): void;
@@ -24791,15 +24792,7 @@ declare namespace $ {
 		ReturnType< $mol_select['enabled'] >
 	>
 	type $mol_select__dictionary_mol_vary_edit_5 = $mol_type_enforce<
-		({ 
-			'Null': string,
-			'Bool': string,
-			'Bint': string,
-			'Real': string,
-			'Text': string,
-			'List': string,
-			'Tupl': string,
-		}) 
+		ReturnType< $mol_vary_edit['type_dict'] >
 		,
 		ReturnType< $mol_select['dictionary'] >
 	>
@@ -25003,7 +24996,17 @@ declare namespace $ {
 		Type_icon( id: any): $mol_icon
 		enabled( ): boolean
 		type_mutable( ): ReturnType< $mol_vary_edit['enabled'] >
-		type( next?: string ): string
+		type_dict( ): ({ 
+			'Null': string,
+			'Bool': string,
+			'Bint': string,
+			'Real': string,
+			'Text': string,
+			'List': string,
+			'Tupl': string,
+		}) 
+		type_auto( ): string
+		type( next?: ReturnType< $mol_vary_edit['type_auto'] > ): ReturnType< $mol_vary_edit['type_auto'] >
 		Type( ): $mol_select
 		Type_drop( ): $mol_drop
 		bool( next?: boolean ): boolean
@@ -25062,6 +25065,7 @@ declare namespace $.$$ {
     class $mol_vary_edit extends $.$mol_vary_edit {
         Vary(): $mol_vary_class;
         type(next?: string): any;
+        type_auto(): "Null" | "Bool" | "Bint" | "Real" | "Text" | "List" | "Date" | "Tupl";
         type_mutable(): boolean;
         Type_icon(type: string): $mol_icon_clock_outline | $mol_icon_flag_checkered | $mol_icon_pound | $mol_icon_division | $mol_icon_card_text_outline | $mol_icon_format_list_bulleted | $mol_icon_table | $mol_icon_circle_off_outline;
         bool(next?: boolean): boolean;

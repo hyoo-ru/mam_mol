@@ -6847,7 +6847,7 @@ $mol_vary_edit $mol_list
 					Trigger_icon null
 					option_content* / <= Type_icon* $mol_icon
 					enabled <= type_mutable <= enabled true
-					dictionary *
+					dictionary <= type_dict *
 						Null \Nothing
 						Bool \Boolean
 						Bint \Integer
@@ -6855,7 +6855,7 @@ $mol_vary_edit $mol_list
 						Text \Text
 						List \Array
 						Tupl \Dictionary
-					value? <=> type? \Null
+					value? <=> type? <= type_auto \Null
 			^ head /
 				<= Bool $mol_check_box
 					checked? <=> bool? false

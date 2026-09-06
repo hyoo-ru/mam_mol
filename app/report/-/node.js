@@ -8829,6 +8829,9 @@ var $;
                 this.value_limited((this.value_limited() || 0) - this.precision_change());
                 next?.preventDefault();
             }
+            precision_change() {
+                return this.precision() || 1;
+            }
             event_inc(next) {
                 this.value_limited((this.value_limited() || 0) + this.precision_change());
                 next?.preventDefault();

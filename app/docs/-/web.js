@@ -16388,6 +16388,9 @@ var $;
                 this.value_limited((this.value_limited() || 0) - this.precision_change());
                 next?.preventDefault();
             }
+            precision_change() {
+                return this.precision() || 1;
+            }
             event_inc(next) {
                 this.value_limited((this.value_limited() || 0) + this.precision_change());
                 next?.preventDefault();
@@ -63349,17 +63352,8 @@ var $;
 		type_mutable(){
 			return (this.enabled());
 		}
-		type(next){
-			if(next !== undefined) return next;
-			return "Null";
-		}
-		Type(){
-			const obj = new this.$.$mol_select();
-			(obj.Filter) = () => (null);
-			(obj.Trigger_icon) = () => (null);
-			(obj.option_content) = (id) => ([(this.Type_icon(id))]);
-			(obj.enabled) = () => ((this.type_mutable()));
-			(obj.dictionary) = () => ({
+		type_dict(){
+			return {
 				"Null": "Nothing", 
 				"Bool": "Boolean", 
 				"Bint": "Integer", 
@@ -63367,7 +63361,22 @@ var $;
 				"Text": "Text", 
 				"List": "Array", 
 				"Tupl": "Dictionary"
-			});
+			};
+		}
+		type_auto(){
+			return "Null";
+		}
+		type(next){
+			if(next !== undefined) return next;
+			return (this.type_auto());
+		}
+		Type(){
+			const obj = new this.$.$mol_select();
+			(obj.Filter) = () => (null);
+			(obj.Trigger_icon) = () => (null);
+			(obj.option_content) = (id) => ([(this.Type_icon(id))]);
+			(obj.enabled) = () => ((this.type_mutable()));
+			(obj.dictionary) = () => ((this.type_dict()));
 			(obj.value) = (next) => ((this.type(next)));
 			return obj;
 		}
@@ -63681,6 +63690,9 @@ var $;
                 const schema = this.schema();
                 if (schema)
                     return schema;
+                return this.type_auto();
+            }
+            type_auto() {
                 const val = this.value();
                 if (val == null)
                     return 'Null';
@@ -63908,6 +63920,9 @@ var $;
         __decorate([
             $mol_mem
         ], $mol_vary_edit.prototype, "type", null);
+        __decorate([
+            $mol_mem
+        ], $mol_vary_edit.prototype, "type_auto", null);
         __decorate([
             $mol_mem_key
         ], $mol_vary_edit.prototype, "Type_icon", null);

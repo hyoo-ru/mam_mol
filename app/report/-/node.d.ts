@@ -3656,6 +3656,7 @@ declare namespace $.$$ {
         sub(): ($mol_button_minor | $.$mol_string)[];
         value_limited(val?: number): number;
         event_dec(next?: Event): void;
+        precision_change(): number;
         event_inc(next?: Event): void;
         event_dec_boost(next?: Event): void;
         event_inc_boost(next?: Event): void;

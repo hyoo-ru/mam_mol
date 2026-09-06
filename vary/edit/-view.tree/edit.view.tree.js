@@ -17,17 +17,8 @@
 		type_mutable(){
 			return (this.enabled());
 		}
-		type(next){
-			if(next !== undefined) return next;
-			return "Null";
-		}
-		Type(){
-			const obj = new this.$.$mol_select();
-			(obj.Filter) = () => (null);
-			(obj.Trigger_icon) = () => (null);
-			(obj.option_content) = (id) => ([(this.Type_icon(id))]);
-			(obj.enabled) = () => ((this.type_mutable()));
-			(obj.dictionary) = () => ({
+		type_dict(){
+			return {
 				"Null": "Nothing", 
 				"Bool": "Boolean", 
 				"Bint": "Integer", 
@@ -35,7 +26,22 @@
 				"Text": "Text", 
 				"List": "Array", 
 				"Tupl": "Dictionary"
-			});
+			};
+		}
+		type_auto(){
+			return "Null";
+		}
+		type(next){
+			if(next !== undefined) return next;
+			return (this.type_auto());
+		}
+		Type(){
+			const obj = new this.$.$mol_select();
+			(obj.Filter) = () => (null);
+			(obj.Trigger_icon) = () => (null);
+			(obj.option_content) = (id) => ([(this.Type_icon(id))]);
+			(obj.enabled) = () => ((this.type_mutable()));
+			(obj.dictionary) = () => ((this.type_dict()));
 			(obj.value) = (next) => ((this.type(next)));
 			return obj;
 		}
