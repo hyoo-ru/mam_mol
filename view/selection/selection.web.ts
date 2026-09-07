@@ -12,11 +12,18 @@ namespace $ {
 			
 		}
 		
+		function blur( event: Event ) {
+			$mol_view_selection.focused( $mol_maybe( ( event as FocusEvent ).relatedTarget as HTMLElement ), 'notify' )
+		}
+		
 		function watch( root: Document | ShadowRoot ) {
 			
 			
 			root.removeEventListener( 'focus', focus, true )
 			root.addEventListener( 'focus', focus, true )
+			
+			root.removeEventListener( 'focusout', blur, true )
+			root.addEventListener( 'focusout', blur, true )
 			
 		}
 		
