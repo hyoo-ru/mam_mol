@@ -755,7 +755,8 @@ namespace $ {
 				try {
 					contents.push({ src, content: this.js_content( src.path() ) })
 				} catch( error ) {
-					if ($mol_fail_catch(error)) errors.push( error as Error )
+					if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
+					errors.push( error as Error )
 				}
 			}
 			
@@ -787,7 +788,8 @@ namespace $ {
 					}
 
 				} catch( error ) {
-					if ($mol_fail_catch(error)) errors.push( error as Error)
+					if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
+					errors.push( error as Error )
 				}
 			}
 			
