@@ -746,6 +746,18 @@ namespace $ {
 			
 			var sources = this.sources_js( [ path , exclude ] )
 			if( sources.length === 0 ) return []
+
+			const errors = []
+			const contents = []
+			for (const src of sources) {
+				if( bundle === 'node' && /node_modules\//.test( src.relate( this.root() ) ) ) continue
+
+				try {
+					contents.push({ src, content: this.js_content( src.path() ) })
+				} catch( error ) {
+					if ($mol_fail_catch(error)) errors.push( error as Error )
+				}
+			}
 			
 			var concater = new $mol_sourcemap_builder( this.root().relate( targetJS.parent() ), ';')
 			concater.add( '#!/usr/bin/env node\n"use strict"' )
@@ -756,12 +768,9 @@ namespace $ {
 				concater.add( 'function require'+'( path ){ return $node[ path ] }' )
 			}
 
-			const errors = [] as Error[]
-			for (const src of sources) {
-				if( bundle === 'node' && /node_modules\//.test( src.relate( this.root() ) ) ) continue
+			for( const { src, content } of contents ) {
 
 				try {
-					const content = this.js_content( src.path() )
 					
 					const isCommonJs = /typeof +exports|module\.exports|\bexports\.\w+\s*=/.test( content.text )
 				

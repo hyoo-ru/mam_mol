@@ -17,7 +17,7 @@ $mol_vary_edit_demo $mol_example_small
 					Set <= set Set<any> / /
 						123
 						\foo
-					Map <= map Map<any,any> / /
+					Map <= map Map / /
 						/
 							\foo
 							\bar
