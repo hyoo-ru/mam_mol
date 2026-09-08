@@ -1,5 +1,5 @@
 namespace $ {
-	export abstract class $mol_schema_any extends Object {
+	export class $mol_schema_any extends Object {
 		
 		static [ Symbol.toStringTag ]: string
 		
@@ -12,32 +12,38 @@ namespace $ {
 			return $$.$mol_func_name( this )
 		}
 		
-		/** Type-guard that checks value by schema. */
-		static check< Val >( val: Val ): val is Val & typeof this.default {
+		/** Type-predicate that checks value by schema. */
+		static check< This extends typeof $mol_schema_any, Value >( this: This, value: Value ): value is Value & This['default'] {
 			try {
-				this.guard( val )
+				this.guard( value )
 				return true
 			} catch( error ) {
 				return false
 			}
 		}
 		
-		/** Strict parse. Fails of wrong values. */
-		static guard< Value >( value: Value ): Value {
+		/** `instanceof` support */
+		static [ Symbol.hasInstance ]< This extends typeof $mol_schema_any, Value >( this: This, value: Value ): value is Value & This['default'] {
+			return this.check( value )
+		}
+		
+		/** Type-parser that fails of wrong values. */
+		static guard< This extends typeof $mol_schema_any, Value >( this: This, value: Value ): Value & This['default'] {
 			return value
 		}
 		
-		/** Relaxed cast. Normalizes wrong values. */
-		static cast( value: unknown ): typeof this.default {
+		/** Type-caster that normalizes wrong values. */
+		static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {
 			try {
-				return this.guard( value )
+				this.guard( value )
+				return value
 			} catch ( error ) {
 				return this.default
 			}
 		}
 		
 		/** Default value which conforms schema. */
-		static default = undefined as unknown
+		static default = null as unknown
 		
 	}
 }

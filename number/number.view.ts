@@ -6,6 +6,15 @@ namespace $.$$ {
 	 */
 	export class $mol_number extends $.$mol_number {
 		
+		@ $mol_mem
+		sub() {
+			return [
+				this.String(),
+				... this.dec_enabled() ? [ this.Dec() ] : [],
+				... this.inc_enabled() ? [ this.Inc() ] : [],
+			]
+		}
+		
 		value_limited( val? :  number ) : number {
 			if (Number.isNaN( val )) return this.value( val )
 			if ( val === undefined ) return this.value()
@@ -22,6 +31,10 @@ namespace $.$$ {
 	 	override event_dec( next? : Event ) {
 			this.value_limited( ( this.value_limited() || 0 ) - this.precision_change() )
 			next?.preventDefault()
+		}
+		
+		precision_change() {
+			return this.precision() || 1
 		}
 
 		override event_inc( next? : Event ) {
@@ -46,7 +59,7 @@ namespace $.$$ {
 
 			const precision_view = this.precision_view()
 
-			if (! precision_view) return val.toFixed()
+			if (precision_view === 0) return String(val)
 
 			if( precision_view >= 1 ) {
 				return ( val / precision_view ).toFixed()
@@ -66,7 +79,7 @@ namespace $.$$ {
 			const precision = this.precision_view()
 
 			// Точку в конце поставить нельзя, если precision_view целое число > 0
-			if ( precision - Math.floor(precision) === 0 ) next = next.replace(/[.,]/g, '')
+			if ( precision > 0 && precision - Math.floor(precision) === 0 ) next = next.replace(/[.,]/g, '')
 
 			// Запятые меняем на точки, удаляем не-цифры и не-точки и лишние ноли в начале целой части.
 			// Минус получится ввести только в начале.

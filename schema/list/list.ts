@@ -1,5 +1,8 @@
 namespace $ {
-	export function $mol_schema_list< Item extends typeof $mol_schema_any >( Item: Item ) {
+	export let $mol_schema_list = $mol_memo_key.func( function $mol_schema_list<
+		Item extends typeof $mol_schema_any
+	>( Item: Item ) {
+		
 		return class $mol_schema_list_ extends $mol_schema_any {
 			
 			static Item = Item
@@ -9,7 +12,7 @@ namespace $ {
 				return '$mol_schema_list<' + $mol_key(Item) + '>'
 			}	
 			
-			static guard< Value >( value: Value ) {
+			static guard< This extends typeof $mol_schema_any, Value >( this: This, value: Value ): Value & This['default'] {
 				
 				if( !Array.isArray( value ) ) return $mol_fail( new TypeError( 'Non array', { cause: { value, schema: this } } ) )
 				
@@ -21,16 +24,17 @@ namespace $ {
 					}
 				}
 				
-				return value as Value & typeof this.default
+				return value
 			}
 			
-			static cast( value: unknown ) {
+			static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {
 				if( !Array.isArray( value ) ) return this.default
 				return value.map( item => Item.cast( item ) ) as typeof this.default
 			}
 			
-			static default = [] as readonly( typeof Item.default )[]
+			static default = [] as readonly( Item['default'] )[]
 			
 		}
-	}
+		
+	} )
 }

@@ -1,6 +1,13 @@
 namespace $.$$ {
 	$mol_test({
 		
+		"Cache of record schema"( $ ) {
+			
+			$mol_assert_equal( $mol_schema_record({ foo: $mol_schema_float }), $mol_schema_record({ foo: $mol_schema_float }) )
+			$mol_assert_unique( $mol_schema_record({ foo: $mol_schema_float }), $mol_schema_record({ foo: $mol_schema_string }) )
+			
+		},
+		
 		"Record schema"( $ ) {
 			
 			const User = $mol_schema_record({

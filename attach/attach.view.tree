@@ -2,7 +2,7 @@ $mol_attach $mol_view
 	items? /string
 	sub <= content /$mol_view
 		<= Item*0 $mol_button_minor
-			click?event <=> item_drop*?event null
+			click? <=> item_drop*? null
 			sub /
 				<= Image* $mol_image
 					title \

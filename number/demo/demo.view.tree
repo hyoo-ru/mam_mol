@@ -13,7 +13,7 @@ $mol_number_demo $mol_example_small
 								disabled true
 							<= Reset $mol_button_major
 								title \Reset
-								enabled? <= reset_enabled true
+								enabled <= reset_enabled true
 								click? <=> reset_value? null
 			-
 			<= Section_initial $mol_section
@@ -48,7 +48,7 @@ $mol_number_demo $mol_example_small
 						content /
 							<= Disabled_number $mol_number
 								hint \This hint not showed while enabled is false
-								value? <= value?
+								value? <=> value?
 								enabled false
 					-
 					<= Dec_disabled_number_label $mol_labeler

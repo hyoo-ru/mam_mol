@@ -13,7 +13,9 @@
 	contain: style;
 	scrollbar-color: var(--mol_theme_line) transparent;
 	scrollbar-width: thin;
-}	
+	/* text-wrap-style: pretty; dont work in textarea */
+	unicode-bidi: plaintext
+}
 
 [mol_view]::selection {
 	background: var(--mol_theme_line);

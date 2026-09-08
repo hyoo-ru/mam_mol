@@ -12,7 +12,7 @@ namespace $.$$ {
 			$mol_assert_equal( true, User.check( { name: null } ) )
 			
 			$mol_assert_equal(
-				{ name: 'foo', age: undefined },
+				{ name: 'foo', age: null },
 				User.cast({ name: 'foo', age: false }),
 			)
 			

@@ -1,5 +1,5 @@
 namespace $ {
-	export function $mol_schema_pattern< Pattern extends RegExp >( Pattern: Pattern ) {
+	export let $mol_schema_pattern = $mol_memo_key.func( function $mol_schema_pattern< Pattern extends RegExp >( Pattern: Pattern ) {
 		return class $mol_schema_pattern_ extends $mol_schema_string {
 			
 			static Pattern = Pattern
@@ -9,17 +9,17 @@ namespace $ {
 				return '$mol_schema_pattern<' + $mol_key(Pattern) + '>'
 			}
 			
-			static guard< Value >( value: Value ) {
-				if( Pattern.test( super.guard( value ) ) ) return value as Value & typeof this.default
+			static guard< This extends typeof $mol_schema_any, Value >( this: This, value: Value ): Value & This['default'] {
+				if( Pattern.test( super.guard( value ) ) ) return value
 				return $mol_fail( new TypeError( 'Wrong string', { cause: { value, schema: this } } ) )
 			}
 			
-			static cast( value: unknown ) {
-				return super.cast( value ) as typeof this.default
+			static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {
+				return super.cast( value )
 			}
 			
 			static default = ''
 			
 		}
-	}
+	} )
 }

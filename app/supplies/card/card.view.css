@@ -23,7 +23,7 @@
 
 [mol_app_supplies_card_cost_item] {
 	flex: 1 1 5rem;
-	text-align: right;
+	text-align: end;
 }
 
 [mol_app_supplies_card_cost_item_content] {

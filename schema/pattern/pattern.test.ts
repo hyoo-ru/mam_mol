@@ -1,6 +1,13 @@
 namespace $.$$ {
 	$mol_test({
 		
+		"Cache of pattern schema"( $ ) {
+			
+			$mol_assert_equal( $mol_schema_pattern( /foo/ ), $mol_schema_pattern( /foo/ ) )
+			$mol_assert_unique( $mol_schema_pattern( /foo/ ), $mol_schema_pattern( /bar/ ) )
+			
+		},
+		
 		"String pattern schema"( $ ) {
 			
 			const Email = $mol_schema_pattern( /^.*@.*$/ )

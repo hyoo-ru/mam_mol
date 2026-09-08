@@ -118,6 +118,12 @@ namespace $ {
 			return this.getFloat64( offset, true )
 		}
 		
+		mix( mixin: Uint8Array< ArrayBuffer > ) {
+			const arr = this.asArray()
+			for( let i = 0; i < mixin.length; ++i ) arr[ i % arr.byteLength ] ^= mixin[ i ]
+			return this
+		}
+		
 		/** A Uint8Array view for the same buffer. */
 		asArray() {
 			return new Uint8Array( this.buffer, this.byteOffset, this.byteLength )

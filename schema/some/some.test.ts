@@ -1,6 +1,13 @@
 namespace $.$$ {
 	$mol_test({
 		
+		"Cache of some schema"( $ ) {
+			
+			$mol_assert_equal( $mol_schema_some([ $mol_schema_float ]), $mol_schema_some([ $mol_schema_float ]) )
+			$mol_assert_unique( $mol_schema_some([ $mol_schema_float ]), $mol_schema_some([ $mol_schema_string ]) )
+			
+		},
+		
 		"Some variant"( $ ) {
 			
 			const Config = $mol_schema_some([ $mol_schema_float, $mol_schema_string ])
@@ -16,7 +23,7 @@ namespace $.$$ {
 			$mol_assert_equal( Number.NaN, Config.cast( true ) )
 			
 			$mol_assert_equal( 123, Config.guard( 123 ) )
-			$mol_assert_fail( ()=> Config.guard( false ), 'No one variant' )
+			$mol_assert_fail( ()=> Config.guard( false ), 'Wrong variant' )
 			
 		},
 		

@@ -5,6 +5,7 @@
 		"mam": "./mol/build/bin"
 	},
 	"dependencies": {
+	    "typescript": "^6.0.3",
 		"@types/node": "*",
 		"@types/express": "*",
 		"@types/compression": "*",

@@ -6,10 +6,10 @@ $mol_perf_dopes $mol_view
 				<= speed \{speed} Dopes/s
 		<= Start $mol_button_major
 			title \@ Start
-			click?event <=> start?event null
+			click? <=> start? null
 		<= Stop $mol_button_major
 			title \@ Stop
-			click?event <=> stop?event null
+			click? <=> stop? null
 		<= Labels $mol_view
 			sub <= labels /
 	Label* $mol_view

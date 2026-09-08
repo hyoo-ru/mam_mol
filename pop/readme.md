@@ -50,3 +50,5 @@ Align of `Bubble` to `Anchor`.
 * `bottom_left`
 * `bottom_center`
 * `bottom_right`
+
+start/end are replaced with left/right based on direction.

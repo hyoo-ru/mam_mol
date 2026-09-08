@@ -14,7 +14,7 @@ namespace $ {
 				.map( ( token : string ) => token.replace( /([-+*.\[\]()\^])/g , '\\$1' ) )
 			var lexer = RegExp( '(.*?)(' + tokens.join( '|' ) + '|$)', 'g' )
 
-			var funcs = [] as ( ( arg : any )=> string )[]
+			var funcs = [] as ( ( arg : any, lang?: string )=> string )[]
 
 			pattern.replace( lexer, ( str : string , text : string , token : string ) => {
 				if( text ) funcs.push( () => text )
@@ -22,16 +22,16 @@ namespace $ {
 				return str
 			} )
 
-			return this.patterns[ pattern ] = ( arg : any )=> {
-				return funcs.reduce( ( res , func )=> res + func( arg ) , '' )
+			return this.patterns[ pattern ] = ( arg : any, lang?: string )=> {
+				return funcs.reduce( ( res , func )=> res + func( arg, lang ) , '' )
 			}
 		
 		}
 
-		toString( pattern : string ) : string {
+		toString( pattern : string, lang?: string ) : string {
 			const Base = this.constructor as typeof $mol_time_base
 			const formatter = Base.formatter( pattern )
-			return formatter( this )
+			return formatter( this, lang )
 		}
 
 	}

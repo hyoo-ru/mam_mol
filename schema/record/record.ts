@@ -1,5 +1,8 @@
 namespace $ {
-	export function $mol_schema_record< Fields extends Record< string, typeof $mol_schema_any > >( Fields: Fields ) {
+	export let $mol_schema_record =  $mol_memo_key.func( function $mol_schema_record<
+		Fields extends Record< string, typeof $mol_schema_any >
+	>( Fields: Fields ) {
+		
 		return class $mol_schema_record_ extends $mol_schema_any {
 			
 			static Fields = Fields
@@ -9,7 +12,7 @@ namespace $ {
 				return '$mol_schema_record<' + $mol_key(Fields) + '>'
 			}	
 			
-			static guard< Value >( value: Value ) {
+			static guard< This extends typeof $mol_schema_any, Value >( this: This, value: Value ): Value & This['default'] {
 				
 				if( Object.getPrototypeOf( Object.getPrototypeOf( value ) ) ) {
 					return $mol_fail( new TypeError( 'Non record', { cause: { value, schema: this } } ) )
@@ -23,14 +26,17 @@ namespace $ {
 					}
 				}
 				
-				return value as Value & typeof this.default
+				return value
 			}
 			
-			static cast( value: unknown ) {
+			static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {
+				
 				if( Object.getPrototypeOf( Object.getPrototypeOf( value ) ) ) return this.default
+				
 				const res = {} as any
 				for( const field in Fields ) res[ field ] = Fields[ field ].cast( ( value as any )[ field ] )
-				return res as typeof this.default
+				
+				return res
 			}
 			
 			static default = Object.fromEntries(
@@ -40,5 +46,6 @@ namespace $ {
 			}
 			
 		}
-	}
+		
+	} )
 }

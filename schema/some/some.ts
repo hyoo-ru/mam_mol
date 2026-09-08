@@ -1,5 +1,8 @@
 namespace $ {
-	export function $mol_schema_some< Variants extends readonly( typeof $mol_schema_any )[] >( Variants: Variants ) {
+	export let $mol_schema_some = $mol_memo_key.func( function $mol_schema_some<
+		Variants extends readonly( typeof $mol_schema_any )[]
+	>( Variants: Variants ) {
+		
 		return class $mol_schema_some_ extends $mol_schema_any {
 			
 			static Variants = Variants
@@ -9,7 +12,7 @@ namespace $ {
 				return '$mol_schema_some<' + $mol_key(Variants) + '>'
 			}	
 			
-			static guard< Value >( value: Value ): Value & typeof this.default {
+			static guard< This extends typeof $mol_schema_any, Value >( this: This, value: Value ): Value & This['default'] {
 				
 				const errors = [] as unknown[]
 				for( const Variant of Variants ) {
@@ -22,20 +25,21 @@ namespace $ {
 					
 				}
 				
-				return $mol_fail( new AggregateError( errors, 'No one variant', { cause: { value, schema: this } } ) )
+				return $mol_fail( new AggregateError( errors, 'Wrong variant', { cause: { value, schema: this } } ) )
 				
 			}
 			
-			static cast( value: unknown ) {
+			static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {
 				try {
 					return this.guard( value )
 				} catch ( error ) {
-					return Variants[0].cast( value ) as typeof this.default
+					return Variants[0].cast( value )
 				}
 			}
 			
 			static default = Variants[0].default as Variants[number]['default']
 			
 		}
-	}
+		
+	} )
 }

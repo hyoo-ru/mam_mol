@@ -246,7 +246,7 @@ namespace $ {
 		}
 		
 		port() {
-			return 9080
+			return Number(this.$.$mol_env()['MAM_BUILD_SERVER_PORT'] || '9080')
 		}
 		
 		@ $mol_mem

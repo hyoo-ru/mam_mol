@@ -12,6 +12,9 @@ namespace $ {
 		send_type( mime: $mol_rest_port_mime ) {}
 		send_name( name: string ) {}
 		
+		origin() { return 'unknown' }
+		address() { return 'unknown' }
+		
 		@ $mol_action
 		send_data( data: null | string | Uint8Array< ArrayBuffer > | Element | object ) {
 			if( data === null ) return this.send_nil()

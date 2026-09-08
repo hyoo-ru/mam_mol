@@ -80,13 +80,14 @@ namespace $ {
 		derive(
 			method: string,
 			data: null | string | Uint8Array< ArrayBuffer > | Element | object,
+			type: $mol_rest_port_mime = this.type(),
 		) {
 			return $mol_rest_message.make({
 				port: this.port,
 				method: $mol_const( method ),
 				uri: ()=> this.uri(),
 				protocols: ()=> this.protocols(),
-				type: ()=> this.type(),
+				type: $mol_const( type ),
 				origin: ()=> this.origin(),
 				data: $mol_const( data ),
 			})

@@ -25,7 +25,9 @@ namespace $.$$ {
 		}
 
 		pos() {
-			return this.found()?.coord ?? super.pos()
+			const coord = this.found()?.coord
+			if ( coord ) return new $mol_vector_2d( coord[1] , coord[0] )
+			return super.pos()
 		}
 
 		@ $mol_mem

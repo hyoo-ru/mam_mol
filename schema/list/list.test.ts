@@ -1,6 +1,13 @@
 namespace $.$$ {
 	$mol_test({
 		
+		"Cache of list schema"( $ ) {
+			
+			$mol_assert_equal( $mol_schema_list( $mol_schema_float ), $mol_schema_list( $mol_schema_float ) )
+			$mol_assert_unique( $mol_schema_list( $mol_schema_float ), $mol_schema_list( $mol_schema_string ) )
+			
+		},
+		
 		"Array schema"( $ ) {
 			
 			const Vector = $mol_schema_list( $mol_schema_float )

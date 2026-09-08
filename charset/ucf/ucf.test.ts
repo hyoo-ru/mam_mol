@@ -17,7 +17,7 @@ namespace $.$$ {
 		},
 		
 		"1B ASCII with diacritic"( $ ) {
-			check( 'allo\u0302', [ 0x61, 0x6C, 0x6C, 0x6F, 0xEA ] )
+			check( 'allo\u0300', [ 0x61, 0x6C, 0x6C, 0x6F, 0xE2 ] )
 		},
 		
 		"1B Cyrillic"( $ ) {
@@ -74,6 +74,20 @@ namespace $.$$ {
 			const error = $mol_assert_fail( ()=> $mol_charset_ucf_decode( bin ), 'Wrong byte' )
 			$mol_assert_equal( error.cause.pos, 4 )
 			$mol_assert_equal( error.cause.text, '🏴' )
+		},
+		
+		"Wrong 2B sequence length"( $ ) {
+			const bin = new Uint8Array([ 0x78, 0xF9, 0x0E ])
+			const error = $mol_assert_fail( ()=> $mol_charset_ucf_decode( bin ), 'Expected 2 bytes' )
+			$mol_assert_equal( error.cause.pos, 2 )
+			$mol_assert_equal( error.cause.text, 'x' )
+		},
+		
+		"Wrong 3B sequence length"( $ ) {
+			const bin = new Uint8Array([ 0x78, 0xF7, 0x2F, 0x47 ])
+			const error = $mol_assert_fail( ()=> $mol_charset_ucf_decode( bin ), 'Expected 3 bytes' )
+			$mol_assert_equal( error.cause.pos, 2 )
+			$mol_assert_equal( error.cause.text, 'x' )
 		},
 		
 	})

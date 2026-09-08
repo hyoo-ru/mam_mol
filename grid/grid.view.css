@@ -58,7 +58,7 @@
 }
 
 /* [mol_grid_cell_number] {
-	text-align: right;
+	text-align: end;
 } */
 
 [mol_grid_col_head] {

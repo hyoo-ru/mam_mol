@@ -4,7 +4,7 @@ namespace $.$$ {
 		
 		// @ $mol_mem_key
 		// before( anchor_id: number | null ) {
-		// 	this.$.$mol_wait_timeout( 10000 )
+		// 	this.$.$mol_wait_timeout( 250 )
 		// 	return Array.from(
 		// 		{ length: this.chunk_size() },
 		// 		( _, index )=> ( anchor_id ?? 0 ) - index - 1,
@@ -13,7 +13,7 @@ namespace $.$$ {
 		
 		@ $mol_mem_key
 		after( anchor_id: number | null ) {
-			this.$.$mol_wait_timeout( 500 )
+			this.$.$mol_wait_timeout( 250 )
 			return Array.from(
 				{ length: this.chunk_size() },
 				( _, index )=> ( anchor_id ?? 0 ) + index + 1,
@@ -27,7 +27,7 @@ namespace $.$$ {
 		@ $mol_mem_key
 		name( index: number ) {
 			$mol_wire_solid()
-			return $mol_stub_person_name()
+			return index + ': ' + $mol_stub_person_name()
 		}
 		
 		@ $mol_mem_key

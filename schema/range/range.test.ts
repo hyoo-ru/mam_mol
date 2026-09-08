@@ -1,9 +1,16 @@
 namespace $.$$ {
 	$mol_test({
 		
+		"Cache of range schema"( $ ) {
+			
+			$mol_assert_equal( $mol_schema_range([ 0, 1 ]), $mol_schema_range([ 0, 1 ]) )
+			$mol_assert_unique( $mol_schema_range([ 0, 1 ]), $mol_schema_range([ 0, 2 ]) )
+			
+		},
+		
 		"Float range schema"( $ ) {
 			
-			const Range = $mol_schema_range( 4, 8 )
+			const Range = $mol_schema_range([ 4, 8 ])
 			
 			$mol_assert_equal( true, Range.check( 5.5 ) )
 			$mol_assert_equal( true, Range.check( 4 ) )

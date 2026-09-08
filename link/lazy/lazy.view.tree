@@ -4,5 +4,4 @@ $mol_link_lazy $mol_link
 	current false
 	event *
 		^
-		mousedown?event <=> generate?event null
-
+		mousedown? <=> generate? null

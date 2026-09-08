@@ -2,8 +2,10 @@
 [mol_infinite_after] {
 	overflow-anchor: none;
 	border-radius: var(--mol_gap_round);
+	position: relative;
 }
 
+[mol_infinite_before]:where([mol_view_error="Promise"]),
 [mol_infinite_after]:where([mol_view_error="Promise"]) {
-	height: 100vh;
+	height: var(--mol_gap_block);
 }
