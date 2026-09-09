@@ -232,7 +232,8 @@ namespace $ {
 				<link href="/_logo.png" rel="icon" />
 				<a href="..">&#x1F4C1; ..</a>
 				` + files
-				.sort($mol_compare_text((item) => item.type))
+				.sort( $mol_compare_text( item => item.name ) )
+				.sort( $mol_compare_text( item => item.type ) )
 				.map( file => `<a href="${file.name}">${file.type === 'dir' ? '&#x1F4C1;' : '&#128196;'} ${file.name}</a>` )
 				.join( '\n' )
 			
