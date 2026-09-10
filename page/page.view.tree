@@ -3,6 +3,8 @@ $mol_page $mol_view
 	attr *
 		^
 		tabIndex <= tabindex -1
+	plugins /
+		<= Selection $mol_selection
 	sub /
 		<= Head $mol_view
 			minimal_height 64
