@@ -12,19 +12,15 @@ namespace $ {
 				return '$mol_schema_list<' + $mol_key(Item) + '>'
 			}	
 			
-			static guard< This extends typeof $mol_schema_any, Value >( this: This, value: Value ): Value & This['default'] {
-				
-				if( !Array.isArray( value ) ) return $mol_fail( new TypeError( 'Non array', { cause: { value, schema: this } } ) )
-				
-				for( const [ index, item ] of super.guard( value ).entries() ) {
-					try {
-						Item.guard( item )
-					} catch( error ) {
-						return $mol_fail( new TypeError( 'Wrong item', { cause: { index, error, value, schema: this } } ) )
-					}
-				}
-				
-				return value
+			static *issues_lazy< This extends typeof $mol_schema_any, Value >(
+				this: This,
+				value: Value,
+				path: $mol_schema_issue_path = [],
+			): $mol_schema_issues<Value> {
+				if( Array.isArray( value ) )
+					for( const [ index, item ] of value.entries() )
+						yield* Item.issues_lazy( item, [ ...path, index ] )
+				else yield { message: 'Non array', path, value, schema: this }
 			}
 			
 			static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {

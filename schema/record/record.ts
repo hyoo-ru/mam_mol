@@ -1,5 +1,5 @@
 namespace $ {
-	export let $mol_schema_record =  $mol_memo_key.func( function $mol_schema_record<
+	export let $mol_schema_record = $mol_memo_key.func( function $mol_schema_record<
 		Fields extends Record< string, typeof $mol_schema_any >
 	>( Fields: Fields ) {
 		
@@ -12,21 +12,30 @@ namespace $ {
 				return '$mol_schema_record<' + $mol_key(Fields) + '>'
 			}	
 			
-			static guard< This extends typeof $mol_schema_any, Value >( this: This, value: Value ): Value & This['default'] {
-				
-				if( Object.getPrototypeOf( Object.getPrototypeOf( value ) ) ) {
-					return $mol_fail( new TypeError( 'Non record', { cause: { value, schema: this } } ) )
-				}
-			
-				for( const field in Fields ) {
-					try {
-						Fields[ field ].guard( ( value as any )[ field ] )
-					} catch( error ) {
-						return $mol_fail( new TypeError( 'Wrong field', { cause: { field, error, value, schema: this } } ) )
+			static *issues_lazy< This extends typeof $mol_schema_any, Value >(
+				this: This,
+				value: Value,
+				path: $mol_schema_issue_path = [],
+			): $mol_schema_issues<Value> {
+				if( !value || Object.getPrototypeOf( Object.getPrototypeOf( value ) ) )
+					yield { message: 'Non record', path, value, schema: this }
+				else {
+					const errors = []
+					for( const field in Fields ) {
+						const schema = Fields[ field ]
+						const value_ = ( value as any )[ field ]
+						const path_ = [ ...path, field ]
+						try {
+							yield* schema.issues_lazy( value_, path_ )
+						} catch( error ) {
+							if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
+							else errors.push(new Error( 'Wrong schema', { cause: { e: error, value: value_, path: path_, schema }  } ) )
+						}
 					}
+					if( errors.length === 0 ) return
+					else if( errors.length === 1 ) $mol_fail( errors[0] )
+					else $mol_fail( new AggregateError( errors, 'Wrong schemas', { cause: { path, value, schema: this } } ) )
 				}
-				
-				return value
 			}
 			
 			static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {

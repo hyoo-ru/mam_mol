@@ -12,21 +12,21 @@ namespace $ {
 				return '$mol_schema_every<' + $mol_key(Schemas) + '>'
 			}	
 			
-			static guard< This extends typeof $mol_schema_any, Value >( this: This, value: Value ): Value & This['default'] {
-				
-				for( const Schema of Schemas ) {
-					Schema.guard( value )
-				}
-				
-				return value
+			static *issues_lazy< This extends typeof $mol_schema_any, Value >(
+				this: This,
+				value: Value,
+				path: $mol_schema_issue_path = [],
+			) {
+				for( const Schema of Schemas )
+					yield* Schema.issues_lazy( value, path )
 			}
 			
 			static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {
-				for( const Scheme of Schemas ) value = Scheme.cast( value )
+				for( const Schema of Schemas ) value = Schema.cast( value )
 				return value
 			}
 			
-			static default = Schemas.find( Scheme => this.check( Scheme.default ) ) as $mol_type_intersect< Schemas[number]['default'] >
+			static default = Schemas.find( Schema => this.check( Schema.default ) ) as $mol_type_intersect< Schemas[number]['default'] >
 			
 		}
 		

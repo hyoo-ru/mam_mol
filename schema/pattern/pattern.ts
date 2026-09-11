@@ -9,9 +9,18 @@ namespace $ {
 				return '$mol_schema_pattern<' + $mol_key(Pattern) + '>'
 			}
 			
-			static guard< This extends typeof $mol_schema_any, Value >( this: This, value: Value ): Value & This['default'] {
-				if( Pattern.test( super.guard( value ) ) ) return value
-				return $mol_fail( new TypeError( 'Wrong string', { cause: { value, schema: this } } ) )
+			static *issues_lazy< This extends typeof $mol_schema_any, Value >(
+				this: This,
+				value: Value,
+				path: $mol_schema_issue_path = [],
+			): $mol_schema_issues<Value> {
+				const { value: issue } = super.issues_lazy( value, path ).next()
+				if( issue ) {
+					yield issue
+					return
+				}
+				if( Pattern.test( value as any ) ) return
+				yield { message: 'Wrong pattern', path, value, schema: this }
 			}
 			
 			static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {

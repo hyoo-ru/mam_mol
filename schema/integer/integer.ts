@@ -3,11 +3,22 @@ namespace $ {
 		
 		$mol_schema_integer = true
 		
-		static guard< This extends typeof $mol_schema_any, Value >( this: This, value: Value ): Value & This['default'] {
-			const val = super.guard( value )
-			if( !Number.isFinite( val ) ) return $mol_fail( new TypeError( 'Non finite', { cause: { value, schema: this } } ) )
-			if( Math.trunc( val ) !== val ) return $mol_fail( new TypeError( 'Non integer', { cause: { value, schema: this } } ) )
-			return val as Value & typeof this.default
+		static *issues_lazy< This extends typeof $mol_schema_any, Value >(
+			this: This,
+			value: Value,
+			path: $mol_schema_issue_path = [],
+		): $mol_schema_issues<Value> {
+			const { value: issue, done } = super.issues_lazy( value, path ).next()
+			if( !done )
+				yield {
+					message: 'Wrong number',
+					path, value, schema: this,
+					issues: (function* () { yield issue })()
+				}
+			else if( !Number.isFinite( value as any ) )
+				yield { message: 'Non finite', path, value, schema: this }
+			else if( Math.trunc( value as any ) !== value )
+				yield { message: 'Non integer', path, value, schema: this }
 		}
 		
 		static default = 0 as number & $mol_schema_integer
