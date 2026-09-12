@@ -36,7 +36,6 @@ namespace $.$$ {
 			
 			if( kids.length < 3 ) return [ 0 , kids.length ]
 			if( this.$.$mol_print.active() ) return [ 0 , kids.length ]
-			if( this.$.$mol_selection.root()?.contains( this.dom_node() ) ) return [ 0 , kids.length ]
 			
 			const rect = this.view_rect()
 			if( next ) return next

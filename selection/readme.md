@@ -1,18 +1,23 @@
 # $mol_selection
 
-The [plugin](../plugin) which makes `Ctrl+A` (`Cmd+A`) select the whole content of the owner, including rows which are not rendered because of [virtualization](../list). Native copy works after that, no clipboard permissions are needed.
+The [plugin](../plugin) which makes `Ctrl+A` (`Cmd+A`) select the whole owner and puts its source `text` into the clipboard on copy. Nothing extra is rendered, so rows hidden by [virtualization](../list) are not lost and no clipboard permissions are needed.
 
-Bundled with [$mol_text](../text/text) and [$mol_page](../page). Hang it on any view:
+Bundled with [$mol_text](../text/text), where the source is the markdown. Hang it on any view which has a source text:
 
 ```tree
 plugins /
 	<= Selection $mol_selection
+		text <= text
 ```
 
-The deepest owner around the caret or the focus handles the key. Inputs and other editable fields are left to the browser.
+The deepest owner around the caret or the focus handles the key. Inputs and other editable fields are left to the browser. A partial selection or an empty `text` is copied by the browser as usual.
 
 ## Properties
 
+**`text(): string`**
+
+Source text which goes to the clipboard while the whole owner is selected.
+
 **`static root(): Element | null`**
 
-Element which content is selected now. `$mol_list` renders every row while it is inside. Resets when the selection collapses or leaves the element.
+Element which is selected as a whole now. Resets when the selection collapses or leaves the element.

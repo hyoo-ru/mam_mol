@@ -8,6 +8,7 @@ $mol_text $mol_list
 		<= auto_scroll null
 	plugins /
 		<= Selection $mol_selection
+			text <= text
 	- \Blocks
 	Paragraph* $mol_paragraph
 		sub <= block_content* /

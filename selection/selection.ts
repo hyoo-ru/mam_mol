@@ -1,12 +1,17 @@
 namespace $ {
 
 	/**
-	 * Plugin which makes Ctrl+A select the whole content of the owner, virtualized rows included.
+	 * Plugin which makes Ctrl+A select the whole owner and copy its source text instead of the rendered part.
 	 * @see https://mol.hyoo.ru/#!section=docs/=1fcpsq_1wh0h2
 	 */
 	export class $mol_selection extends $mol_plugin {
 
-		/** Element which content is selected now. Lists inside render every row while it is set. */
+		/** Source text which goes to the clipboard while the whole owner is selected. */
+		text() {
+			return ''
+		}
+
+		/** Element which is selected as a whole now. Resets when the selection collapses or leaves it. */
 		@ $mol_mem
 		static root( next?: Element | null ) {
 			this.watcher()
@@ -41,7 +46,7 @@ namespace $ {
 			const plugin = host && this.hosts.get( host )
 			if( !plugin ) return
 			event.preventDefault()
-			$mol_wire_async( plugin ).select_all()
+			plugin.select_all()
 		}
 
 		/** Element around the caret or the focus, null inside editable fields. */
@@ -57,12 +62,26 @@ namespace $ {
 		override auto() {
 			$mol_selection.listener()
 			$mol_selection.hosts.set( this.dom_node(), this )
+			this.copier()
+		}
+
+		@ $mol_mem
+		copier() {
+			return new $mol_dom_listener( this.dom_node(), 'copy', ( event: ClipboardEvent )=> this.copy( event ), { passive: false } )
+		}
+
+		/** Puts the source text into the clipboard instead of the rendered selection. */
+		copy( event: ClipboardEvent ) {
+			if( $mol_selection.root() !== this.dom_node() ) return
+			const text = this.text()
+			if( !text ) return
+			event.clipboardData?.setData( 'text/plain', text )
+			event.preventDefault()
 		}
 
 		select_all() {
 			const node = this.dom_node()
 			$mol_selection.root( node )
-			$mol_owning_get< typeof this, $mol_wire_fiber< $mol_view, any, any > >( this )!.host!.dom_final()
 			this.$.$mol_dom_context.document.getSelection()?.selectAllChildren( node )
 		}
 
