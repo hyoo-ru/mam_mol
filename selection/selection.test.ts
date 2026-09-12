@@ -1,13 +1,5 @@
 namespace $ {
 
-	function rows( $: $, count: number ) {
-		return Array.from( { length: count }, ( _, index )=> $mol_view.make({
-			$,
-			minimal_height: ()=> 30,
-			sub: ()=> [ `row ${ index }` ],
-		}) )
-	}
-
 	class $mol_selection_test_host extends $mol_list {
 
 		text() {
@@ -25,60 +17,41 @@ namespace $ {
 
 	}
 
-	function press( $: $ ) {
-		const event = new $.$mol_dom_context.KeyboardEvent( 'keydown', { code: 'KeyA', ctrlKey: true, bubbles: true, cancelable: true } )
-		$.$mol_dom_context.document.dispatchEvent( event )
-		return event.defaultPrevented
-	}
-
-	function copy( $: $, node: Element ) {
-		const data = {} as Record< string, string >
-		const event = Object.assign(
-			new $.$mol_dom_context.Event( 'copy', { bubbles: true, cancelable: true } ),
-			{ clipboardData: { setData: ( type: string, text: string )=> { data[ type ] = text } } },
-		)
-		node.dispatchEvent( event )
-		return event.defaultPrevented ? data[ 'text/plain' ] : null
-	}
-
 	$mol_test({
 
-		'Ctrl+A around the caret selects the whole owner without rendering it'( $ ) {
+		'Ctrl+A around the caret copies the owner source text'( $ ) {
 
 			const doc = $.$mol_dom_context.document
-			const host = $mol_selection_test_host.make({ $, rows: $mol_const( rows( $, 200 ) ) })
+			const written = [] as string[]
+			Object.defineProperty( $.$mol_dom_context.navigator, 'clipboard', {
+				value: { writeText: ( text: string )=> { written.push( text ) } },
+				configurable: true,
+			})
+
+			const row = ()=> [ $mol_view.make({ $, sub: ()=> [ 'row' ] }) ]
+			const host = $mol_selection_test_host.make({ $, rows: row, text: ()=> 'source' })
+			const empty = $mol_selection_test_host.make({ $, rows: row })
 			doc.body.appendChild( host.dom_tree() )
+			doc.body.appendChild( empty.dom_tree() )
 			const outside = doc.body.appendChild( doc.createElement( 'p' ) )
 			outside.textContent = 'outside'
 
+			const press = ()=> {
+				const event = new $.$mol_dom_context.KeyboardEvent( 'keydown', { code: 'KeyA', ctrlKey: true, bubbles: true, cancelable: true } )
+				doc.dispatchEvent( event )
+				return event.defaultPrevented
+			}
+
 			doc.getSelection()!.collapse( outside.firstChild, 0 )
-			$mol_assert_not( press( $ ) )
+			$mol_assert_equal( press(), false )
 
 			doc.getSelection()!.collapse( host.dom_node().firstChild, 0 )
-			$mol_assert_ok( press( $ ) )
-			$mol_assert_equal( doc.getSelection()!.anchorNode, host.dom_node() )
-			$mol_assert_ok( host.view_window()[1] < 200 )
+			$mol_assert_equal( press(), true )
+			$mol_assert_equal( written, [ 'source' ] )
 
-			host.destructor()
-			doc.body.innerHTML = ''
-		},
-
-		'copy takes the source text only while the whole owner is selected'( $ ) {
-
-			const doc = $.$mol_dom_context.document
-			const host = $mol_selection_test_host.make({ $, rows: $mol_const( rows( $, 3 ) ), text: ()=> 'source' })
-			const empty = $mol_selection_test_host.make({ $, rows: $mol_const( rows( $, 3 ) ) })
-			doc.body.appendChild( host.dom_tree() )
-			doc.body.appendChild( empty.dom_tree() )
-
-			host.Selection().select_all()
-			$mol_assert_equal( copy( $, host.dom_node() ), 'source' )
-
-			doc.getSelection()!.collapse( host.dom_node().firstChild, 0 )
-			$mol_assert_equal( copy( $, host.dom_node() ), null )
-
-			empty.Selection().select_all()
-			$mol_assert_equal( copy( $, empty.dom_node() ), null )
+			doc.getSelection()!.collapse( empty.dom_node().firstChild, 0 )
+			$mol_assert_equal( press(), false )
+			$mol_assert_equal( written, [ 'source' ] )
 
 			host.destructor()
 			empty.destructor()

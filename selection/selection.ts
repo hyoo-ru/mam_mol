@@ -1,12 +1,12 @@
 namespace $ {
 
 	/**
-	 * Plugin which makes Ctrl+A select the whole owner and copy its source text instead of the rendered part.
+	 * Plugin which makes Ctrl+A copy the owner source text instead of selecting the rendered part.
 	 * @see https://mol.hyoo.ru/#!section=docs/=1fcpsq_1wh0h2
 	 */
 	export class $mol_selection extends $mol_plugin {
 
-		/** Source text which goes to the clipboard while the whole owner is selected. */
+		/** Source text which goes to the clipboard on Ctrl+A. */
 		text() {
 			return ''
 		}
@@ -16,10 +16,7 @@ namespace $ {
 		@ $mol_mem
 		static listener() {
 			const doc = this.$.$mol_dom_context.document
-			return [
-				new $mol_dom_listener( doc, 'keydown', ( event: KeyboardEvent )=> this.keydown( event ), { passive: false } ),
-				new $mol_dom_listener( doc, 'copy', ( event: ClipboardEvent )=> this.copy( event ), { passive: false } ),
-			]
+			return new $mol_dom_listener( doc, 'keydown', ( event: KeyboardEvent )=> this.keydown( event ), { passive: false } )
 		}
 
 		static keydown( event: KeyboardEvent ) {
@@ -27,16 +24,9 @@ namespace $ {
 			if( event.code !== 'KeyA' ) return
 			if( !( event.ctrlKey || event.metaKey ) || event.altKey || event.shiftKey ) return
 			const plugin = this.plugin()
-			if( !plugin ) return
+			if( !plugin?.text() ) return
 			event.preventDefault()
-			plugin.select_all()
-		}
-
-		static copy( event: ClipboardEvent ) {
-			const plugin = this.plugin()
-			if( !plugin?.text() || !plugin.selected() ) return
-			event.clipboardData?.setData( 'text/plain', plugin.text() )
-			event.preventDefault()
+			plugin.copy()
 		}
 
 		/** Plugin of the deepest owner around the caret or the focus, null inside editable fields. */
@@ -56,15 +46,8 @@ namespace $ {
 			$mol_selection.hosts.set( this.dom_node(), this )
 		}
 
-		select_all() {
-			this.$.$mol_dom_context.document.getSelection()?.selectAllChildren( this.dom_node() )
-		}
-
-		/** Whole owner is selected. */
-		selected() {
-			const node = this.dom_node()
-			const selection = this.$.$mol_dom_context.document.getSelection()
-			return selection?.anchorNode === node && selection.focusNode === node && !selection.isCollapsed
+		copy() {
+			return this.$.$mol_dom_context.navigator.clipboard.writeText( this.text() )
 		}
 
 	}
