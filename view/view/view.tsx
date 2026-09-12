@@ -548,11 +548,6 @@ namespace $ {
 			: never
 		: never
 
-	/**
-	 * Props of `$$` override of view class `Name` which differ from `Base` props only by case.
-	 * View tree generates this assert for every class, so `exchangeResult()` in `.view.ts`
-	 * fails type check when `.view.tree` has `exchange_result`.
-	 */
 	export type $mol_view_override_mismatch< Base, Name extends string > =
 		keyof {
 			[

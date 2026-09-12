@@ -182,21 +182,11 @@ namespace $ {
 	export type $mol_type_case_scream_parse< String extends string > =
 		$mol_type_case_cobra_parse< String >
 
-
 	type fold_tail< String extends string > =
 		String extends `${ infer Left }_${ infer Right }`
 		? `${ Left }${ fold_tail< Right > }`
 		: String
 
-	/**
-	 * Fold string to compare names regardless of case style. First char is kept as is.
-	 *
-	 * 	// 'foobarwee'
-	 * 	$mol_type_case_fold< 'foo_bar_wee' >
-	 * 	$mol_type_case_fold< 'fooBarWee' >
-	 * 	// 'Foobarwee'
-	 * 	$mol_type_case_fold< 'Foo_bar_wee' >
-	 */
 	export type $mol_type_case_fold< String extends string > =
 		String extends `${ infer Head }${ infer Tail }`
 		? `${ Head }${ Lowercase< fold_tail< Tail > > }`

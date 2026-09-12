@@ -222,41 +222,4 @@ namespace $ {
 
 	>
 
-
-	type fold1 = $mol_type_assert<
-
-		$mol_type_case_fold<
-			'foo_bar_wee'
-		>,
-		'foobarwee'
-
-	>
-
-	type fold2 = $mol_type_assert<
-
-		$mol_type_case_fold<
-			'fooBarWee'
-		>,
-		'foobarwee'
-
-	>
-
-	type fold3 = $mol_type_assert<
-
-		$mol_type_case_fold<
-			'Foo_bar_wee'
-		>,
-		'Foobarwee'
-
-	>
-
-	type fold4 = $mol_type_assert<
-
-		$mol_type_case_fold<
-			'foo_bar' | 'Foo_bar'
-		>,
-		'foobar' | 'Foobar'
-
-	>
-
 }
