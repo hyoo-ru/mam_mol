@@ -369,8 +369,15 @@ namespace $ {
 				... aliases,
 				klass.data( '}' ),
 				descr.data(''),
+				type_enforce.call(
+					this,
+					klass.data( `${ klass.type }__override_${ ++assert_count }` ),
+					[ klass.data( `$mol_view_override_mismatch< ${ klass.type }, '${ klass.type }' >` ) ],
+					[ klass.data( `'Override differs from view.tree prop only by case'` ) ],
+				),
+				descr.data(''),
 			)
-			
+
 		}
 
 		return descr.list([

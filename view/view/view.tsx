@@ -541,4 +541,24 @@ namespace $ {
 
 	export type $mol_view_all = $mol_type_pick< $ , typeof $mol_view >
 
+	type override_of< Name extends string > =
+		Name extends keyof typeof $$
+		? ( typeof $$ )[ Name ] extends abstract new ( ... args: any ) => infer Over
+			? Over
+			: never
+		: never
+
+	/**
+	 * Props of `$$` override of view class `Name` which differ from `Base` props only by case.
+	 * View tree generates this assert for every class, so `exchangeResult()` in `.view.ts`
+	 * fails type check when `.view.tree` has `exchange_result`.
+	 */
+	export type $mol_view_override_mismatch< Base, Name extends string > =
+		keyof {
+			[
+				Key in Exclude< keyof override_of< Name >, keyof Base > & string
+				as $mol_type_case_fold< Key > extends $mol_type_case_fold< keyof Base & string > ? Key : never
+			]: Key
+		}
+
 }
