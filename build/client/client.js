@@ -41,6 +41,7 @@ class $mol_build_edit {
 		addEventListener( 'mousemove', event => this.hover( event ), true )
 		addEventListener( 'mousedown', event => this.stop( event ), true )
 		addEventListener( 'mouseup', event => this.stop( event ), true )
+		addEventListener( 'selectstart', event => this.stop( event ), true )
 		addEventListener( 'click', event => this.pick( event ), true )
 	}
 

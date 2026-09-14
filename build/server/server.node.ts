@@ -57,6 +57,11 @@ namespace $ {
 			res : typeof $node.express.response ,
 		) {
 
+			if( req.path === '/mol/build/client/client.js' ) {
+				res.set( 'Cache-Control', 'no-cache' )
+				return
+			}
+
 			if( req.path !== '/-/edit' ) return
 
 			const place = this.edit_place( String( req.query.class ?? '' ), String( req.query.prop ?? '' ) )
@@ -70,8 +75,26 @@ namespace $ {
 
 		edit_place( name: string, prop: string ) {
 
-			const dir = this.build().root().resolve( name.replace( /^\$/, '' ).replaceAll( '_', '/' ) )
-			if( dir.type() !== 'dir' ) return $mol_fail( new Error( `Unknown class ${ name }` ) )
+			const root = this.build().root()
+			const parts = name.replace( /^\$/, '' ).split( '_' )
+
+			for( let depth = parts.length; depth > 0; --depth ) {
+
+				const dir = root.resolve( parts.slice( 0, depth ).join( '/' ) )
+				if( dir.type() !== 'dir' ) continue
+
+				const place = this.edit_place_dir( dir, name, prop )
+				if( place ) return place
+
+			}
+
+			return $mol_fail( new Error( `Unknown class ${ name }` ) )
+
+		}
+
+		edit_place_dir( dir: $mol_file, name: string, prop: string ) {
+
+			let fallback = null as null | { file: string, row: number, col: number }
 
 			const trees = dir.sub().filter( file => /\.view\.tree$/.test( file.name() ) )
 
@@ -84,29 +107,32 @@ namespace $ {
 				const span = prop ? this.edit_prop( cls, prop ) : cls.span
 				if( span ) return { file: span.uri, row: span.row, col: span.col }
 
+				fallback ??= { file: cls.span.uri, row: cls.span.row, col: cls.span.col }
+
 			}
 
 			const scripts = dir.sub().filter( file => /\.tsx?$/.test( file.name() ) && !/\.test\.tsx?$/.test( file.name() ) )
 
-			const pattern = prop
-				? new RegExp( `^[ \\t]*(?:(?:override|static|async|get|set)\\s+)*${ prop }\\s*[(<]`, 'm' )
-				: new RegExp( `class\\s+\\${ name }\\b` )
+			const class_pattern = new RegExp( `class\\s+\\${ name }\\b` )
+			const prop_pattern = new RegExp( `^[ \\t]*(?:(?:override|static|async|get|set)\\s+)*${ prop }\\s*[(<]`, 'm' )
 
 			for( const file of scripts ) {
 
 				const text = file.text()
-				const found = pattern.exec( text )
-				if( !found ) continue
+				const cls = class_pattern.exec( text )
+				if( !cls ) continue
 
-				const row = text.slice( 0, found.index ).split( '\n' ).length
-				return { file: file.path(), row, col: 1 }
+				const found = prop ? prop_pattern.exec( text ) : cls
+				if( !found ) {
+					fallback ??= { file: file.path(), row: text.slice( 0, cls.index ).split( '\n' ).length, col: 1 }
+					continue
+				}
+
+				return { file: file.path(), row: text.slice( 0, found.index ).split( '\n' ).length, col: 1 }
 
 			}
 
-			const first = trees[0] ?? scripts[0]
-			if( !first ) return $mol_fail( new Error( `No sources for ${ name }` ) )
-
-			return { file: first.path(), row: 1, col: 1 }
+			return fallback
 
 		}
 
