@@ -45,7 +45,93 @@ namespace $ {
 	
 	
 		expressGenerator() { return this.sync_middleware(this.handleRequest.bind(this)) }
-		
+
+		override expressHandlers() {
+			return [ this.expressEditor(), ... super.expressHandlers() ]
+		}
+
+		expressEditor() { return this.sync_middleware( this.expressEditorRequest.bind( this ) ) }
+
+		expressEditorRequest(
+			req : typeof $node.express.request ,
+			res : typeof $node.express.response ,
+		) {
+
+			if( req.path !== '/-/edit' ) return
+
+			const place = this.edit_place( String( req.query.class ?? '' ), String( req.query.prop ?? '' ) )
+			this.edit_open( place )
+
+			res.writeHead( 200, { 'Content-Type': 'text/plain' } )
+			res.end( `${ place.file }:${ place.row }:${ place.col }` )
+			return true
+
+		}
+
+		edit_place( name: string, prop: string ) {
+
+			const dir = this.build().root().resolve( name.replace( /^\$/, '' ).replaceAll( '_', '/' ) )
+			if( dir.type() !== 'dir' ) return $mol_fail( new Error( `Unknown class ${ name }` ) )
+
+			const trees = dir.sub().filter( file => /\.view\.tree$/.test( file.name() ) )
+
+			for( const file of trees ) {
+
+				const tree = this.$.$mol_tree2_from_string( file.text(), file.path() )
+				const cls = tree.kids.find( kid => kid.type === name )
+				if( !cls ) continue
+
+				const span = prop
+					? cls.kids[0]?.kids.find( kid => kid.type.match( /^\w+/ )?.[0] === prop )?.span
+					: cls.span
+
+				if( span ) return { file: span.uri, row: span.row, col: span.col }
+
+			}
+
+			const scripts = dir.sub().filter( file => /\.tsx?$/.test( file.name() ) && !/\.test\.tsx?$/.test( file.name() ) )
+
+			const pattern = prop
+				? new RegExp( `^[ \\t]*(?:(?:override|static|async|get|set)\\s+)*${ prop }\\s*[(<]`, 'm' )
+				: new RegExp( `class\\s+\\${ name }\\b` )
+
+			for( const file of scripts ) {
+
+				const text = file.text()
+				const found = pattern.exec( text )
+				if( !found ) continue
+
+				const row = text.slice( 0, found.index ).split( '\n' ).length
+				return { file: file.path(), row, col: 1 }
+
+			}
+
+			const first = trees[0] ?? scripts[0]
+			if( !first ) return $mol_fail( new Error( `No sources for ${ name }` ) )
+
+			return { file: first.path(), row: 1, col: 1 }
+
+		}
+
+		edit_open( { file, row, col }: { file: string, row: number, col: number } ) {
+
+			const editor = this.$.$mol_env()[ 'LAUNCH_EDITOR' ]
+			if( !editor ) return $mol_fail( new Error( 'Set LAUNCH_EDITOR, for example: LAUNCH_EDITOR=zed or LAUNCH_EDITOR="code -g"' ) )
+
+			const command = /\{file\}/.test( editor )
+				? editor.replace( '{file}', file ).replace( '{row}', String( row ) ).replace( '{col}', String( col ) )
+				: `${ editor } "${ file }:${ row }:${ col }"`
+
+			this.$.$mol_log3_come({
+				place: `${this}.edit_open()`,
+				message: 'Edit',
+				command,
+			})
+
+			$node[ 'child_process' ].spawn( command, { shell: true, stdio: 'ignore', detached: true } ).unref()
+
+		}
+
 		handleRequest(
 			req : typeof $node.express.request ,
 			res : typeof $node.express.response,
