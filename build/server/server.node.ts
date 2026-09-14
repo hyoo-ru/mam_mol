@@ -81,10 +81,7 @@ namespace $ {
 				const cls = tree.kids.find( kid => kid.type === name )
 				if( !cls ) continue
 
-				const span = prop
-					? cls.kids[0]?.kids.find( kid => kid.type.match( /^\w+/ )?.[0] === prop )?.span
-					: cls.span
-
+				const span = prop ? this.edit_prop( cls, prop ) : cls.span
 				if( span ) return { file: span.uri, row: span.row, col: span.col }
 
 			}
@@ -110,6 +107,25 @@ namespace $ {
 			if( !first ) return $mol_fail( new Error( `No sources for ${ name }` ) )
 
 			return { file: first.path(), row: 1, col: 1 }
+
+		}
+
+		edit_prop( cls: $mol_tree2, prop: string ) {
+
+			let ref = undefined as undefined | $mol_span
+
+			const visit = ( node: $mol_tree2 ): undefined | $mol_span => {
+				for( const kid of node.kids ) {
+					if( kid.type.match( /^\w+/ )?.[0] === prop ) {
+						if( kid.kids.length ) return kid.span
+						ref ??= kid.span
+					}
+					const found = visit( kid )
+					if( found ) return found
+				}
+			}
+
+			return visit( cls ) ?? ref
 
 		}
 
