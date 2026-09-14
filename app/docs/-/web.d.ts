@@ -8262,32 +8262,39 @@ declare namespace $ {
 		,
 		ReturnType< $mol_textarea_edit['submit_with_ctrl'] >
 	>
-	type $mol_text_code__text_mol_textarea_9 = $mol_type_enforce<
+	type $mol_text_code__attr_mol_textarea_9 = $mol_type_enforce<
+		({ 
+			'inert': string,
+		})  & ReturnType< $mol_text_code['attr'] >
+		,
+		ReturnType< $mol_text_code['attr'] >
+	>
+	type $mol_text_code__text_mol_textarea_10 = $mol_type_enforce<
 		ReturnType< $mol_textarea['value'] >
 		,
 		ReturnType< $mol_text_code['text'] >
 	>
-	type $mol_text_code__render_visible_only_mol_textarea_10 = $mol_type_enforce<
+	type $mol_text_code__render_visible_only_mol_textarea_11 = $mol_type_enforce<
 		boolean
 		,
 		ReturnType< $mol_text_code['render_visible_only'] >
 	>
-	type $mol_text_code__row_numb_mol_textarea_11 = $mol_type_enforce<
+	type $mol_text_code__row_numb_mol_textarea_12 = $mol_type_enforce<
 		ReturnType< $mol_textarea['row_numb'] >
 		,
 		ReturnType< $mol_text_code['row_numb'] >
 	>
-	type $mol_text_code__sidebar_showed_mol_textarea_12 = $mol_type_enforce<
+	type $mol_text_code__sidebar_showed_mol_textarea_13 = $mol_type_enforce<
 		ReturnType< $mol_textarea['sidebar_showed'] >
 		,
 		ReturnType< $mol_text_code['sidebar_showed'] >
 	>
-	type $mol_text_code__highlight_mol_textarea_13 = $mol_type_enforce<
+	type $mol_text_code__highlight_mol_textarea_14 = $mol_type_enforce<
 		ReturnType< $mol_textarea['highlight'] >
 		,
 		ReturnType< $mol_text_code['highlight'] >
 	>
-	type $mol_text_code__syntax_mol_textarea_14 = $mol_type_enforce<
+	type $mol_text_code__syntax_mol_textarea_15 = $mol_type_enforce<
 		ReturnType< $mol_textarea['syntax'] >
 		,
 		ReturnType< $mol_text_code['syntax'] >

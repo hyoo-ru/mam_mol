@@ -18880,6 +18880,7 @@ var $;
 		}
 		View(){
 			const obj = new this.$.$mol_text_code();
+			(obj.attr) = () => ({...(this.$.$mol_text_code.prototype.attr.call(obj)), "inert": ""});
 			(obj.text) = () => ((this.value()));
 			(obj.render_visible_only) = () => (false);
 			(obj.row_numb) = (id) => ((this.row_numb(id)));
