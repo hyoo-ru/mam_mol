@@ -85,12 +85,22 @@ namespace $ {
 			
 		// }
 		
-		OPEN( msg: $mol_rest_message ) {}
+		_protocols = [] as readonly string[]
+		OPEN( msg: $mol_rest_message ) {
+			const protocols = msg.protocols()
+			for( const protocol of protocols ) {
+				if( this._protocols.includes( protocol ) ) return protocol
+			}
+			return ''
+		}
 		CLOSE( msg: $mol_rest_message ) {}
+		
 		HEAD( msg: $mol_rest_message ) {}
 		GET( msg: $mol_rest_message ) {}
+		
 		PUT( msg: $mol_rest_message ) {}
 		PATCH( msg: $mol_rest_message ) {}
+		
 		POST( msg: $mol_rest_message ) {}
 		DELETE( msg: $mol_rest_message ) {}
 		
@@ -109,6 +119,7 @@ namespace $ {
 				try {
 					server.root()._auto()
 				} catch( error ) {
+					if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
 					$mol_fail_log( error )
 				}
 			} ).fresh()

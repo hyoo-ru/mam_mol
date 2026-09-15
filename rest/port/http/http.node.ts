@@ -9,6 +9,7 @@ namespace $ {
 			if( this.output.writableEnded ) return
 			if( this.output.statusCode !== 400 ) return
 			this.output.statusCode = code
+			this.output.setHeader( 'x-content-type-options', 'nosniff' )
 		}
 		
 		@ $mol_action
@@ -16,6 +17,17 @@ namespace $ {
 			if( this.output.writableEnded ) return
 			if( this.output.getHeader( 'content-type' ) ) return
 			this.output.setHeader( 'content-type', mime )
+		}
+		
+		@ $mol_action
+		send_name( name: string ) {
+			if( this.output.writableEnded ) return
+			if( this.output.getHeader( 'content-disposition' ) ) return
+			
+			const utf8 = encodeURIComponent( name )
+				.replace( /['()*]/g, char => '%' + char.charCodeAt( 0 ).toString( 16 ).toUpperCase() )
+			
+			this.output.setHeader( 'content-disposition', `inline; filename*=UTF-8''${ utf8 }` )
 		}
 		
 		@ $mol_action

@@ -180,7 +180,7 @@ namespace $ {
 	} )
 
 	export let $mol_dev_format_indent = $mol_dev_format_div.bind( null , {
-		'margin-left': '13px'
+		'margin-inline-start': '13px'
 	} )
 	
 	class Stack extends Array< Call > {
@@ -188,6 +188,14 @@ namespace $ {
 		// [ Symbol.toPrimitive ]() {
 		// 	return this.toString()
 		// }
+
+		match(...args: Parameters<String['match']>) {
+			return this.toString().match(...args)
+		}
+
+		split(...args: Parameters<String['split']>) {
+			return this.toString().split(...args)
+		}
 		
 		toString() {
 			return this.join( '\n' )

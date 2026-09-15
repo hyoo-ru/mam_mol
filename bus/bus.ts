@@ -1,24 +1,28 @@
 namespace $ {
     export class $mol_bus< Data > extends $mol_object {
 		
-        readonly channel: BroadcastChannel
+        readonly channel = null as null | BroadcastChannel
 		
 		constructor(
 			readonly name: string,
 			readonly handle: ( data: Data )=> void
 		) {
 			super()
-            const channel = new BroadcastChannel( name )
-            channel.onmessage = ( event: MessageEvent< Data > )=> this.handle( event.data )
-			this.channel = channel
+
+			try {
+				this.channel = new BroadcastChannel( name )
+				this.channel.onmessage = ( event: MessageEvent< Data > )=> this.handle( event.data )
+			} catch (error) {
+				console.warn(error)
+			}
         }
 		
 		destructor() {
-			this.channel.close()
+			this.channel?.close()
 		}
 		
 		send( data: Data ) {
-			this.channel.postMessage( data )
+			this.channel?.postMessage( data )
 		}
 		
     }

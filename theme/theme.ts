@@ -20,6 +20,8 @@ namespace $ {
 			'field',
 			'image',
 			'spirit',
+			'hue',
+			'hue_spread',
 		] as const
 	)
 

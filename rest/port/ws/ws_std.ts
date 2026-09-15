@@ -4,6 +4,10 @@ namespace $ {
 		
 		socket!: WebSocket
 		
+		origin() {
+			return this.socket.url
+		}
+
 		@ $mol_action
 		send_nil() {
 			if( this.socket.readyState !== this.socket.OPEN ) return

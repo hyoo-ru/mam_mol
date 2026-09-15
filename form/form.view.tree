@@ -3,8 +3,8 @@ $mol_form $mol_list
 	submit_blocked false
 	event *
 		^
-		keydown?event <=> keydown?event null
-	save?event null
+		keydown? <=> keydown? null
+	save? null
 	message_done @ \Saved
 	errors *string
 		\Form invalid

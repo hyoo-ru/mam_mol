@@ -21,6 +21,21 @@ namespace $ {
 		}
 		
 		@ $mol_mem
+		origin() {
+			return this.input.headers['origin'] ?? super.origin()
+		}
+		
+		@ $mol_mem
+		address() {
+			return String( this.input.headers['x-forwarded-for'] ?? '' ) || this.input.socket?.remoteAddress || super.address()
+		}
+		
+		@ $mol_mem
+		protocols() {
+			return String( this.input.headers['sec-websocket-protocol'] ?? '' ).split( ',' ).map( p => p.trim() ).filter( Boolean )
+		}
+		
+		@ $mol_mem
 		data(): null | string | Uint8Array< ArrayBuffer > | Element | object {
 			
 			const consume = $mol_wire_sync( $node['stream/consumers'] )
@@ -38,7 +53,7 @@ namespace $ {
 			} else {
 				
 				if( this.type() === 'application/json' ) {
-					return consume.json( this.input )
+					return consume.json( this.input ) as object
 				} else {
 					return new Uint8Array( consume.arrayBuffer( this.input ) )
 				}

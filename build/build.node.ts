@@ -1,8 +1,10 @@
 namespace $ {
 	
-	setTimeout( ()=> $mol_wire_async( $mol_build ).start( process.argv.slice( 2 ) ) )
-
-	
+	if ( $mol_rpc_worker.is_main() ) {
+		setTimeout( ()=> $mol_wire_async( $mol_build ).start( process.argv.slice( 2 ) ) )
+	} else {
+		new $mol_wire_atom( '$mol_build_checker', ()=> $.$mol_one.$mol_build_checker.start() ).fresh()
+	}
 
 	export class $mol_build extends $mol_object {
 		@ $mol_mem_key
@@ -17,6 +19,71 @@ namespace $ {
 		
 		static relative( root : string, paths: readonly string[] ) {
 			return this.$.$mol_build.root( [ $mol_file.relative( root ).path(), paths ])
+		}
+
+		@ $mol_action
+		checker_changes_add({ writes, errors }: $mol_build_checker_changes) {
+			for (const [path, data] of writes) {
+				this.$.$mol_file.relative( path ).text( data, 'virt' )
+			}
+			for (const [filename, error] of errors) {
+				this.js_error( filename , error )
+			}
+		}
+
+		@ $mol_mem
+		checker_global() {
+			const handlers: $mol_build_checker_remote = {
+				changes: changes => this.checker_changes_add(changes),
+				status: () => {},
+			}
+
+			return this.$.$mol_rpc_worker.make<typeof $mol_rpc_worker<$mol_build_checker_shared>>({
+				options: $mol_const({
+					resourceLimits: {
+						maxOldGenerationSizeMb: this.checker_max_mem(),
+					},
+					workerData: {
+						root: this.root().path(),
+					}
+				}),
+				uri: () => __filename,
+				handlers: () => handlers,
+			})
+		}
+
+		@ $mol_mem_key
+		checker_rpc( { path , exclude , bundle } : { path : string , bundle : string , exclude : readonly string[] } ) {
+			const paths = this.tsPaths({ path , exclude , bundle })
+			if (! paths.length) return null
+
+			const handlers: $mol_build_checker_remote = {
+				changes: changes => this.checker_changes_add(changes),
+				status: () => {},
+			}
+
+			return this.$.$mol_rpc_worker.make<typeof $mol_rpc_worker<$mol_build_checker_shared>>({
+				options: $mol_const({
+					resourceLimits: {
+						maxOldGenerationSizeMb: this.checker_max_mem(),
+					},
+					workerData: {
+						paths,
+						root: this.root().path(),
+					}
+				}),
+				uri: () => __filename,
+				handlers: () => handlers,
+			})
+		}
+
+		checker_max_mem() {
+			return Number(this.$.$mol_env().MOL_BUILD_CHECKER_MAX_MEM || '2560')
+		}
+
+		checker( params: { path : string , bundle : string , exclude : readonly string[] } ) {
+			const checker = this.checker_rpc(params)
+			return checker?.remote() ?? null
 		}
 
 		@ $mol_mem
@@ -306,20 +373,6 @@ namespace $ {
 			return [ ... sources ]
 		}
 		
-		@ $mol_mem
-		tsOptions() {
-			const rawOptions = JSON.parse( this.root().resolve( 'tsconfig.json' ).text() + '').compilerOptions
-			const res = $node.typescript.convertCompilerOptionsFromJson( rawOptions , "." , 'tsconfig.json' )
-			if( res.errors.length ) throw res.errors
-			return res.options
-		}
-		
-		@ $mol_mem_key
-		tsSource( { path , target } : { path : string , target : number } ) {
-			const content = $mol_file.absolute( path ).text()
-			return $node.typescript.createSourceFile( path , content , target )
-		}
-
 		@ $mol_mem_key
 		tsPaths( { path , exclude , bundle } : { path : string , bundle : string , exclude : readonly string[] } ) {
 
@@ -341,167 +394,30 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		tsHost( { path , exclude , bundle } : { path : string , bundle : string , exclude : readonly string[] } ) {
-			
-			const host = $node.typescript.createCompilerHost( this.tsOptions() )
-			
-			host.fileExists = ( path )=> $mol_file.relative( path ).exists()
-			host.readFile = ( path )=> $mol_file.relative( path ).text()
-			host.writeFile = ( path , text )=> $mol_file.relative( path ).text( text, 'virt' )
-			
-			return host
-		}
-
-		@ $mol_mem_key
-		tsTranspiler( { path , exclude , bundle } : { path : string , bundle : string , exclude : readonly string[] } ) {
-			return $node.typescript.createProgram(
-				this.tsPaths({ path , exclude , bundle }) ,
-				this.tsOptions() ,
-				this.tsHost({ path , exclude , bundle }) ,
-			)
-		}
-
-		@ $mol_mem_key
-		tsTranspile( { path , exclude , bundle } : { path : string , bundle : string , exclude : readonly string[] } ) {
-			const res = this.tsTranspiler({ path , exclude , bundle }).emit()
-			return res
-		}
-
-		@ $mol_mem_key
-		tsService( { path , exclude , bundle } : { path : string , bundle : string , exclude : readonly string[] } ) {
-
-			const paths = this.tsPaths({ path , exclude , bundle })
-			if( !paths.length ) return null
-
-			const watchers = new Map< string , ( path : string , kind : number )=> void >()
-			let run = ()=> {}
-			
-			var host = $node.typescript.createWatchCompilerHost(
-
-				paths ,
-				
-				{
-					... this.tsOptions(),
-					emitDeclarationOnly : true,
-				},
-				
-				{
-					... $node.typescript.sys ,
-					watchDirectory: ( path, cb ) => {
-						// console.log('watchDirectory', path )
-						watchers.set( path , cb )
-						return { close(){} }
-					},
-					writeFile : (path , data )=> {
-						$mol_file.relative( path ).text( data, 'virt' )
-					},
-					setTimeout : ( cb : any )=> {
-						run = cb
-					} ,
-					watchFile : (path:string, cb:(path:string,kind:number)=>any )=> {
-						// console.log('watchFile', path )
-						watchers.set( path , cb )
-						return { close(){ } }
-					},
-				},
-				
-				$node.typescript.createEmitAndSemanticDiagnosticsBuilderProgram,
-
-				( diagnostic )=> {
-
-					if( diagnostic.file ) {
-
-						const error = $node.typescript.formatDiagnostic( diagnostic , {
-							getCurrentDirectory : ()=> this.root().path() ,
-							getCanonicalFileName : ( path : string )=> path.toLowerCase() ,
-							getNewLine : ()=> '\n' ,
-						})
-						this.js_error( diagnostic.file.getSourceFile().fileName , error )
-						
-					} else {
-						const text = diagnostic.messageText
-						this.$.$mol_log3_fail({
-							place : `${this}.tsService()` ,
-							message: typeof text === 'string' ? text : text.messageText ,
-						})
-					}
-					
-				} ,
-
-				()=> {}, //watch reports
-				
-				[], // project refs
-				
-				{ // watch options
-					synchronousWatchDirectory: true,
-					watchFile: 5,
-					watchDirectory: 0,
-				},
-				
-			)
-
-			const service = $node.typescript.createWatchProgram( host )
-
-			const versions = {} as Record< string , number >
-
-			return {
-				recheck: ()=> {
-					for( const path of paths ) {
-						const version = $node.fs.statSync( path ).mtime.valueOf()
-						// this.js_error( path, null )
-						if( versions[ path ] && versions[ path ] !== version ) {
-							const watcher = watchers.get( path )
-							if( watcher ) watcher( path , 2 )
-						}
-						versions[ path ] = version
-					}
-					run()
-				},
-				destructor : ()=> service.close()
-			}
-
-		}
-
-		@ $mol_mem_key
 		js_error( path : string , next = null as null | string ) {
 			this.js_content( path )
+			this.recheck_count(null)
 			return next
 		}
 
 		@ $mol_mem_key
 		js_content( path : string ) {
-
+			this.recheck_count(null)
 			const src = $mol_file.absolute( path )
 
+			const src_text = src.text()
+
 			if( /\.tsx?$/.test( src.name() ) ) {
-			
-				const res = $node.typescript.transpileModule( src.text() , { compilerOptions : this.tsOptions() } )
-				
-				if( res.diagnostics?.length ) {
-					return $mol_fail( new Error( $node.typescript.formatDiagnostic( res.diagnostics[0] , {
-						getCurrentDirectory : ()=> this.root().path() ,
-						getCanonicalFileName : ( path : string )=> path.toLowerCase() ,
-						getNewLine : ()=> '\n' ,
-					}) ) )
-				}
 
-				const map = JSON.parse( res.sourceMapText! ) as $mol_sourcemap_raw
-				map.file = src.relate()
-				map.sources = [ src.relate() ]
-				
-				return {
-					text : this.$.$mol_sourcemap_strip(res.outputText),
-					// .replace( /^\/\/#\ssourceMappingURL=[^\n]*/mg , '//' + src.relate() )+'\n',
-					map : map,
-				}
+				const transpiled = this.checker_global().remote().transpile(src_text)
+				const file = src.relate()
 
-			} else {
+				return { text: transpiled.text, map: { ... transpiled.map, file, sources: [ file ] } }
+			}
 
-				return {
-					text: this.$.$mol_sourcemap_strip(src.text()),
-					map: this.$.$mol_sourcemap_from_file(src)
-				}
-
+			return {
+				text: this.$.$mol_sourcemap_strip(src_text),
+				map: this.$.$mol_sourcemap_from_file(src)
 			}
 
 		}
@@ -656,6 +572,7 @@ namespace $ {
 			this.bundle([ path , 'web.js' ])
 			this.bundle([ path , 'web.test.js' ])
 			this.bundle([ path , 'web.test.html' ])
+			this.bundle([ path , 'web.baza' ])
 			this.bundle([ path , 'web.view.tree' ])
 			this.bundle([ path , 'web.meta.tree' ])
 			this.bundle([ path , 'web.locale=en.json' ])
@@ -673,6 +590,7 @@ namespace $ {
 			this.bundle([ path , 'node.deps.json' ])
 			this.bundle([ path , 'node.js' ])
 			this.bundle([ path , 'node.test.js' ])
+			this.bundle([ path , 'node.baza' ])
 			this.bundle([ path , 'node.view.tree' ])
 			this.bundle([ path , 'node.meta.tree' ])
 			this.bundle([ path , 'node.locale=en.json' ])
@@ -716,7 +634,7 @@ namespace $ {
 			var stages = [ 'test' , 'dev' ]
 			if( bundle ) {
 				
-				var [ bundle , tags , type , locale ] = /^(.*?)(?:\.(audit\.js|test\.js|test\.html|js|css|deps\.json|locale=(\w+)\.json))?$/.exec(
+				var [ bundle , tags , type , locale ] = /^(.*?)(?:\.(audit\.js|test\.js|test\.html|js|css|deps\.json|locale=(\w+)\.json|baza))?$/.exec(
 					bundle
 				)!
 				
@@ -756,6 +674,9 @@ namespace $ {
 					}
 					if( !type || type === 'view.tree' ) {
 						res = res.concat( this.bundleViewTree( { path , exclude , bundle : env } ) )
+					}
+					if( !type || type === 'baza' ) {
+						res = res.concat( this.bundleBaza( { path , exclude , bundle : env } ) )
 					}
 					if( !type || type === 'meta.tree' ) {
 						res = res.concat( this.bundleMetaTree( { path , exclude , bundle : env } ) )
@@ -825,6 +746,19 @@ namespace $ {
 			
 			var sources = this.sources_js( [ path , exclude ] )
 			if( sources.length === 0 ) return []
+
+			const errors = []
+			const contents = []
+			for (const src of sources) {
+				if( bundle === 'node' && /node_modules\//.test( src.relate( this.root() ) ) ) continue
+
+				try {
+					contents.push({ src, content: this.js_content( src.path() ) })
+				} catch( error ) {
+					if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
+					errors.push( error as Error )
+				}
+			}
 			
 			var concater = new $mol_sourcemap_builder( this.root().relate( targetJS.parent() ), ';')
 			concater.add( '#!/usr/bin/env node\n"use strict"' )
@@ -835,12 +769,9 @@ namespace $ {
 				concater.add( 'function require'+'( path ){ return $node[ path ] }' )
 			}
 
-			const errors = [] as Error[]
-			for (const src of sources) {
-				if( bundle === 'node' && /node_modules\//.test( src.relate( this.root() ) ) ) continue
+			for( const { src, content } of contents ) {
 
 				try {
-					const content = this.js_content( src.path() )
 					
 					const isCommonJs = /typeof +exports|module\.exports|\bexports\.\w+\s*=/.test( content.text )
 				
@@ -857,7 +788,8 @@ namespace $ {
 					}
 
 				} catch( error ) {
-					if ($mol_fail_catch(error)) errors.push( error as Error)
+					if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
+					errors.push( error as Error )
 				}
 			}
 			
@@ -891,6 +823,11 @@ namespace $ {
 			return [ targetMJS, targetJSMap ]
 		}
 
+		@ $mol_action
+		protected recheck_count(next?: null): number {
+			return ($mol_wire_probe(() => this.recheck_count()) ?? -1) + 1
+		}
+	
 		@ $mol_mem_key
 		bundleAuditJS( { path , exclude , bundle } : { path : string , exclude : readonly string[] , bundle : string } ) : $mol_file[] {
 
@@ -900,10 +837,12 @@ namespace $ {
 			var target = pack.resolve( `-/${bundle}.audit.js` )
 			var exclude_ext = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
 
-			this.tsService({ path , exclude : exclude_ext , bundle })?.recheck()
-			
-			const errors = [] as Error[]
+			const checker = this.checker({ path , exclude: exclude_ext , bundle })
+			this.recheck_count()
+			const changes = checker?.recheck()
+			if ( changes ) this.checker_changes_add(changes)
 
+			const errors = [] as Error[]
 			const paths = this.tsPaths({ path , exclude: exclude_ext , bundle })
 
 			for( const path of paths ) {
@@ -1099,6 +1038,25 @@ namespace $ {
 			this.logBundle( target , Date.now() - start )
 			
 			return [ target ]
+		}
+		
+		@ $mol_mem_key
+		bundleBaza( { path , exclude , bundle } : { path : string , exclude? : readonly string[] , bundle : string } ) : $mol_file[] {
+			
+			const start = this.now()
+			const pack = $mol_file.absolute( path )
+			
+			const target = pack.resolve( `-/${bundle}.baza` )
+			
+			const sources = this.sourcesAll([ path , exclude ])
+				.filter( src => /baza$/.test( src.ext() ) )
+			if( sources.length === 0 ) return []
+			
+			target.buffer( new Uint8Array( sources.flatMap( src => [ ... src.buffer() ] ) ) )
+			
+			this.logBundle( target , Date.now() - start )
+			return [ target ]
+			
 		}
 		
 		@ $mol_mem_key

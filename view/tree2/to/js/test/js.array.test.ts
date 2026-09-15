@@ -17,7 +17,7 @@ namespace $ {
 			const _foo = $mol_view_tree2_to_js_test_ex_array_number_foo
 			const foo = _foo.make({ $ })
 
-			type a1 = $mol_type_assert<ReturnType<typeof foo['bar']>, any /* readonly number[] */ >
+			type a1 = $mol_type_assert<ReturnType<typeof foo['bar']>, readonly any[] >
 
 			$mol_assert_like(
 				foo.bar(),

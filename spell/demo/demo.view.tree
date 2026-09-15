@@ -1,9 +1,16 @@
 $mol_spell_demo $mol_example_small
 	sub /
 		<= List $mol_list rows /
-			<= Article $mol_textarea
-				value? <=> article? \Я весьма сегдян недоперепила, вттак.
-			<= Report $mol_text_code text <= report \
+			<= Article_block $mol_labeler
+				title \Article
+				content / <= Article $mol_textarea
+					value? <=> article? \Я весьма сегдян недоперепила, вттак.
+			<= Segments_block $mol_labeler
+				title \Segments
+				Content <= Segments $mol_text_code text <= segments \
+			<= Reports_block $mol_labeler
+				title \Reports
+				Content <= Report $mol_text_code text <= report \
 	tags /
 		\$mol_spell_check
 		\$mol_textarea

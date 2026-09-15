@@ -26,6 +26,7 @@ namespace $.$$ {
 		override auto() {
 			const spread = this.spread_current()
 			if (spread instanceof $mol_book2) spread.auto()
+			return []
 		}
 
 		@ $mol_mem

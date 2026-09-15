@@ -2,9 +2,17 @@ namespace $ {
 
 	export type $mol_style_properties = Partial< $mol_type_override< CSSStyleDeclaration , Overrides > >
 
+
 	type Common =
 	| 'inherit' | 'initial' | 'unset' | 'revert' | 'revert-layer' | 'none'
 	| $mol_style_func< 'var' >
+
+	type Portion = `${number}${'%'}` | number
+
+	type Space = '' | ' '
+	type Var = `var(--${string})`
+	type Calc = `calc(${string})`
+	type Angle = number | `${number}${'deg' | 'turn'}` | Var | Calc | 'none'
 
 	export type $mol_style_properties_color =
 	| 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure'
@@ -37,6 +45,7 @@ namespace $ {
 	| 'transparent' | 'currentcolor'
 	| $mol_style_func< 'hsla' | 'rgba' | 'var' >
 	| `#${string}`
+	| `hsl(${Space}${Angle} ${Portion} ${Portion}${'' | `${Space}/${Space}${Portion}`}${Space})`
 	
 	type Length = 0 | `${number}${ $mol_style_unit_length }` | $mol_style_func< 'calc' | 'var' | 'clamp' >
 
@@ -44,16 +53,34 @@ namespace $ {
 	| 'auto' | 'max-content' | 'min-content' | 'fit-content'
 	| Length | Common
 
+	type Sides<Value> = {
+		top?: Value,
+		right?: Value ,
+		bottom?: Value,
+		left?: Value ,
+		blockStart?: Value
+		blockEnd?: Value
+		inlineStart?: Value
+		inlineEnd?: Value
+	}
+	
 	type Directions< Value > =
 	| Value
 	| readonly [ Value , Value ]
-	| {
-		top?: Value ,
-		right?: Value ,
-		bottom?: Value ,
-		left?: Value ,
+	| Sides<Value>
+
+	type Edges<Value> = {
+		topLeft?: Value
+		topRight?: Value
+		bottomLeft?: Value
+		bottomRight?: Value
 	}
-	
+
+	type Borders< Value > =
+		| Value
+		| readonly [ Value , Value ]
+		| (Sides<Value> & Edges<Value>)
+
 	type Single_animation_composition = 'replace' | 'add' | 'accumulate'
 	type Single_animation_direction = 'normal' | 'reverse' | 'alternate' | 'alternate-reverse'
 	type Single_animation_fill_mode = 'none' | 'forwards' | 'backwards' | 'both'
@@ -253,7 +280,7 @@ namespace $ {
 		| Common
 
 		/** @see https://developer.mozilla.org/en-US/docs/Web/CSS/gap */
-		gap?: Length
+		gap?: Length | readonly [ Length , Length ] | Common
 
 		/** 
 		 * All background style properties.
@@ -339,6 +366,12 @@ namespace $ {
 			| 'none' | Common
 
 		}
+
+
+		/** @see https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/rx */
+		rx?: Length | Common
+		/** @see https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/ry */
+		ry?: Length | Common
 
 		/** @see https://developer.mozilla.org/ru/docs/Web/CSS/font */
 		font?: {
@@ -569,7 +602,7 @@ namespace $ {
 		left?: Length | 'auto' | Common
 
 		/** @see https://developer.mozilla.org/en-US/docs/Web/CSS/border */
-		border?: Directions<{
+		border?: Borders<{
 
 			/** 
 			 * Rounds the corners of an element's outer border edge. You can set a single radius to make circular corners, or two radii to make elliptical corners.
@@ -643,6 +676,11 @@ namespace $ {
 
 		}
 
+		container?: {
+			name?: string
+			type?: Container_type | readonly Container_type[]
+		}
+
 		/** 
 		 * Z-order of a positioned element and its descendants or flex items. Overlapping elements with a larger z-index cover those with a smaller one.
 		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/z-index
@@ -656,5 +694,7 @@ namespace $ {
 		opacity: number | Common
 		
 	}
+
+	type Container_type = 'normal' | 'size' | 'inline-size' | 'scroll-state' | 'anchored'
 
 }

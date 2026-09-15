@@ -32,6 +32,6 @@
 }
 
 [mol_app_supplies_detail_cost] {
-	text-align: right;
+	text-align: end;
 	margin: 0;
 }

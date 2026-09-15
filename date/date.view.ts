@@ -109,12 +109,20 @@ namespace $.$$ {
 			this.showed( false )
 		}
 
-		prev() {
+		override month_prev() {
 			this.month_moment( this.month_moment().shift( { month : -1 } ) )
 		}
 
-		next() {
+		override month_next() {
 			this.month_moment( this.month_moment().shift( { month : +1 } ) )
+		}
+
+		override year_prev() {
+			this.month_moment( this.month_moment().shift( { year : -1 } ) )
+		}
+
+		override year_next() {
+			this.month_moment( this.month_moment().shift( { year : +1 } ) )
 		}
 
 		override today_click() {

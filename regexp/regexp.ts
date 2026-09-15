@@ -61,7 +61,7 @@ namespace $ {
 		}[ keyof Source ] > >
 
 		: never
-		
+	let x = /x/[Symbol.matchAll]
 	/** Type safe reguar expression builder */
 	export class $mol_regexp< Groups extends Record< string , string > > extends RegExp {
 		
@@ -70,7 +70,7 @@ namespace $ {
 			super( source , flags )
 		}
 		
-		*[Symbol.matchAll] (str:string): RegExpStringIterator< RegExpMatchArray & $mol_type_override< RegExpMatchArray, { groups?: { [ key in keyof Groups ] : string } } > > {
+		*[Symbol.matchAll] (str:string): RegExpStringIterator< RegExpExecArray & $mol_type_override< RegExpExecArray, { groups?: { [ key in keyof Groups ] : string } } > > {
 			const index = this.lastIndex
 			this.lastIndex = 0
 			try {
@@ -231,6 +231,7 @@ namespace $ {
 			Sources extends readonly $mol_regexp_source[]
 		>(
 			sources : Sources ,
+			flags : string = 'gsu',
 		) {
 			
 			const groups = [] as string[]
@@ -246,7 +247,7 @@ namespace $ {
 			
 			return new $mol_regexp< $mol_regexp_groups< Sources[number] > >(
 				`(?:${ chunks.join('|') })` ,
-				'' ,
+				flags ,
 				groups as any[] ,
 			)
 			

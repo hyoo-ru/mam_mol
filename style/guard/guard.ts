@@ -33,7 +33,7 @@ namespace $ {
 		: key extends '@'
 		? Attrs< View , Config[key] >
 		
-		: key extends '@media'
+		: key extends ('@media' | '@container')
 		? Medias< View , Config[key] >
 		
 		: key extends '@starting-style'

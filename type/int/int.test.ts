@@ -17,8 +17,9 @@ namespace $ {
 		0
 	>
 
-	type minus_overflow = $mol_type_assert_never<
-		$mol_type_int_minus< 60, 100 >
+	type minus_overflow = $mol_type_assert<
+		$mol_type_int_minus< 60, 100 >,
+		never
 	>
 
 	type mult = $mol_type_assert<
@@ -36,8 +37,9 @@ namespace $ {
 		unknown
 	>
 
-	type desc = $mol_type_assert_never<
-		$mol_type_int_ordered< 60, 40 >
+	type desc = $mol_type_assert<
+		$mol_type_int_ordered< 60, 40 >,
+		never
 	>
 	
 	type range_right = $mol_type_assert<
@@ -45,8 +47,9 @@ namespace $ {
 		| 3 | 4 | 5
 	>
 
-	type range_wrong = $mol_type_assert_never<
-		$mol_type_int_range< 6, 3 >
+	type range_wrong = $mol_type_assert<
+		$mol_type_int_range< 6, 3 >,
+		never
 	>
 
 	type calc_priorities = $mol_type_assert<

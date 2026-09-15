@@ -11,14 +11,14 @@ namespace $ {
 				res : typeof $node.express.response ,
 			) => void | boolean
 		) {
-			const wrapped = $mol_wire_async(mdl)
+			// const wrapped = $mol_wire_async(mdl)
 
 			return $mol_func_name_from(async (
 				req : typeof $node.express.request ,
 				res : typeof $node.express.response ,
 				next : (err?: unknown) => any
 			) => {
-				// const wrapped = $mol_wire_async(mdl)
+				const wrapped = $mol_wire_async(mdl)
 
 				try {
 					const stopped = await wrapped(req, res)
@@ -142,6 +142,29 @@ namespace $ {
 			const dir = root.resolve( req.path )
 
 			const path = dir.path()
+			
+			// Handle .well-known paths (browser/dev tools standard paths)
+			if (req.path === '/.well-known/appspecific/com.chrome.devtools.json') {
+			    const root = this.build().root().path()
+			    
+			    const config = {
+			        version: 1,
+			        description: 'MAM ($mol) Framework DevTools Configuration',
+			        mappings: [
+			            {
+			                url: `http://localhost:${this.port()}/`,
+			                path: root,
+			            }
+			        ]
+			    }
+			
+			    res.writeHead(200, { 
+			        'Content-Type': 'application/json',
+			        'Cache-Control': 'no-cache'
+			    })
+			    res.end(JSON.stringify(config, null, 2))
+			    return true
+			}
 
 			// ensure загружает сорцы, делает git pull, это не стоит делать на build-папках
 			// Поэтому регулярка выше отсеивает build-папки
@@ -209,7 +232,8 @@ namespace $ {
 				<link href="/_logo.png" rel="icon" />
 				<a href="..">&#x1F4C1; ..</a>
 				` + files
-				.sort($mol_compare_text((item) => item.type))
+				.sort( $mol_compare_text( item => item.name ) )
+				.sort( $mol_compare_text( item => item.type ) )
 				.map( file => `<a href="${file.name}">${file.type === 'dir' ? '&#x1F4C1;' : '&#128196;'} ${file.name}</a>` )
 				.join( '\n' )
 			
@@ -223,7 +247,7 @@ namespace $ {
 		}
 		
 		port() {
-			return 9080
+			return Number(this.$.$mol_env()['MAM_BUILD_SERVER_PORT'] || '9080')
 		}
 		
 		@ $mol_mem

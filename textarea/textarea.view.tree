@@ -4,8 +4,8 @@ $mol_textarea $mol_stack
 		mol_textarea_clickable <= clickable? false
 		mol_textarea_sidebar_showed <= sidebar_showed false
 	event *
-		keydown?event <=> press?event null
-		pointermove?event <=> hover?event null
+		keydown? <=> press? null
+		pointermove? <=> hover? null
 	sub /
 		<= Edit $mol_textarea_edit
 			value? <=> value? \
@@ -18,6 +18,9 @@ $mol_textarea $mol_stack
 			submit? <=> submit? null
 			submit_with_ctrl <= submit_with_ctrl true
 		<= View $mol_text_code
+			attr *
+				^
+				inert \
 			text <= value
 			render_visible_only false
 			row_numb* <= row_numb* 0

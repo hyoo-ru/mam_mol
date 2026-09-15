@@ -2,6 +2,7 @@ namespace $ {
 
 	/**
 	 * Returns `Tuple` pushed by `Item`.
+	 * @deprecated Use `[ ... Tuple, Item ]`
 	 * 
 	 * 	$mol_type_tail< [ 1 , 2 ] , 3 > // [ 1 , 2 , 3 ]
 	 */

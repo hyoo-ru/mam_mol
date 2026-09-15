@@ -10,6 +10,7 @@ namespace $ {
 			'page',
 			'block',
 			'text',
+			'emoji',
 			'round',
 			'space',
 			'blur',

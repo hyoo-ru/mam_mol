@@ -71,8 +71,13 @@ namespace $.$$ {
 				return this.hint()
 			} catch( error ) {
 				$mol_fail_log( error )
+				if( error instanceof Error ) return '💥' + error.message
 				return ''
 			}
+		}
+		
+		uri_unsafe() {
+			return $mol_dom_safe_uri( super.uri_unsafe() )
 		}
 		
 	}

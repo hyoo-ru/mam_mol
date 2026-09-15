@@ -11,7 +11,7 @@ namespace $ {
 		error = undefined
 		result = undefined
 		
-		window.dispatchEvent( new Event( '$mol_try' ) )
+		self.dispatchEvent( new Event( '$mol_try' ) )
 		
 		const error2 = error
 		const result2 = result

@@ -7,7 +7,7 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	padding: var(--mol_gap_text);
-	text-align: left;
+	text-align: start;
 	position: relative;
 	font: inherit;
 	flex: 1 1 auto;

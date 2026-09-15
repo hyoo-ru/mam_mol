@@ -69,12 +69,16 @@ namespace $ {
 	}
 
 	function primitive_type(input: $mol_tree2) {
-		let type = 'string'
-		if (input.type && $mol_tree2_js_is_number(input.type)) type = 'number'
+		
+		if( !input.type ) return input.data( 'string' )
+		
+		if( input.type === 'true' || input.type === 'false' ) return input.data( 'boolean' )
+			
+		if( $mol_tree2_js_is_number( input.type ) ) return input.data( 'number' )
 
-		if (input.type === 'true' || input.type === 'false') type = 'boolean'
-
-		return input.data(type)
+		if( /^[+-]?[\d_]+n$/.test( input.type ) ) return input.data( 'bigint' )
+		
+		return $mol_fail( new Error( 'Wrong primitive type', { cause: { type: input.type } } ) )
 	}
 
 	function readonly_arr(input: $mol_tree2, infered: readonly $mol_tree2[]) {

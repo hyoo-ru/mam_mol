@@ -73,7 +73,7 @@ namespace $ {
 		}
 
 		static hsla(
-			hue: number,
+			hue: number | $mol_style_func< 'var' >,
 			saturation: number,
 			lightness: number,
 			alpha: number,
@@ -96,10 +96,10 @@ namespace $ {
 		}
 	
 		static rgba(
-			red: number,
-			green: number,
-			blue: number,
-			alpha: number,
+			red: number | $mol_style_func< 'var' >,
+			green: number | $mol_style_func< 'var' >,
+			blue: number | $mol_style_func< 'var' >,
+			alpha: number | $mol_style_func< 'var' >,
 		) {
 			return new $mol_style_func(
 				'rgba',
@@ -162,8 +162,8 @@ namespace $ {
 			return new $mol_style_func(
 				"drop-shadow",
 				blur_radius
-					? [color, x_offset, y_offset, blur_radius]
-					: [color, x_offset, y_offset]
+					? [color, x_offset, y_offset, blur_radius] as const
+					: [color, x_offset, y_offset] as const
 			);
 		}
 		

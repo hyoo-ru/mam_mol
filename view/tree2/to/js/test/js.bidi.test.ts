@@ -153,13 +153,13 @@ namespace $ {
 				$mol_view_tree2_to_js_test_run(`
 					Foo $mol_view
 						a!? $mol_view
-							expanded <=> cell_test_expanded!? null
+							expanded? <=> cell_test_expanded!? null
 				`)
-			}, `Required prop like some*? at \`.view.tree#4:21/20\`
+			}, `Required prop like some*? at \`.view.tree#4:22/20\`
 <=>
-.view.tree#4:17/3
-expanded
-.view.tree#4:8/8
+.view.tree#4:18/3
+expanded?
+.view.tree#4:8/9
 $mol_view
 .view.tree#3:11/9
 a!?

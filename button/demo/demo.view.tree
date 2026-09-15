@@ -3,7 +3,7 @@ $mol_button_demo $mol_example_small
 	sub /
 		<= Major_enabled $mol_button_major
 			title \Enabled Major
-			click?event <=> fail?event null
+			click? <=> fail? null
 		-
 		<= Major_disabled $mol_button_major
 			title \Disabled Major
@@ -11,19 +11,19 @@ $mol_button_demo $mol_example_small
 		-
 		<= Minor_enabled $mol_button_minor
 			title \Enabled Minor
-			click?event <=> fail?event null
+			click? <=> fail? null
 		-
 		<= Minor_disabled $mol_button_minor
 			title \Disabled Minor
 			enabled false
 		-
 		<= Minor_icon_only $mol_button_minor
-			click?event <=> fail?event null
+			click? <=> fail? null
 			sub /
 				<= Minor_icon_only_icon $mol_icon_cursor_default_click_outline
 		-
 		<= Minor_iconed $mol_button_minor
-			click?event <=> fail?event null
+			click? <=> fail? null
 			sub /
 				<= Minor_iconed_icon $mol_icon_cursor_default_click_outline
 				\Minor with Icon

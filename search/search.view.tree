@@ -7,7 +7,7 @@ $mol_search $mol_pop
 			key * escape? <=> clear? null
 		<= Nav $mol_nav
 			keys_y <= nav_components /$mol_view
-			current_y?component <=> nav_focused?component null
+			current_y? <=> nav_focused? null
 	showed? <=> suggests_showed? false
 	align_hor \right
 	Anchor $mol_view
@@ -15,7 +15,7 @@ $mol_search $mol_pop
 			<= Query $mol_string
 				value? <=> query? \
 				hint <= hint @ \Search...
-				submit?event <=> submit?event null
+				submit? <=> submit? null
 				enabled <= enabled true
 				keyboard <= keyboard \search
 				enter <= enter \search
@@ -23,7 +23,7 @@ $mol_search $mol_pop
 			<= Clear $mol_button_minor
 				hint @ \Clear
 				enabled <= enabled true
-				click?event <=> clear?event null
+				click? <=> clear? null
 				sub /
 					<= Clear_icon $mol_icon_close
 	bubble_content /$mol_view_content
@@ -32,7 +32,7 @@ $mol_search $mol_pop
 				<= Menu $mol_list
 					rows <= menu_items /$mol_view
 	Suggest* $mol_button_minor
-		click?event <=> suggest_select*?event null
+		click? <=> suggest_select*? null
 		sub <= suggest_content* /$mol_view_content
 			<= Suggest_label* $mol_dimmer
 				haystack <= suggest_label* \

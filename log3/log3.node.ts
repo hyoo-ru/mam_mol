@@ -12,7 +12,7 @@ namespace $ {
 			event : $mol_log3_event<{}> ,
 		) {
 
-			if( !event.time ) event = { time : new Date().toISOString() , ... event }
+			if( !event.time ) event = { ... event, time : new Date().toISOString() }
 
 			let tree = this.$mol_tree2_from_json( event )
 			tree = tree.struct( type, tree.kids )

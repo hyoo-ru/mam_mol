@@ -2,9 +2,17 @@ namespace $.$$ {
 	$mol_test({
 		
 		"Empty release"( $ ) {
+			
 			const pool = new $mol_memory_pool
+			$mol_assert_equal( pool.empty(), true )
+			
 			pool.release( 0, 0 )
 			$mol_assert_equal( pool.acquire( 8 ), 0 )
+			$mol_assert_equal( pool.empty(), false )
+			
+			pool.release( 0, 8 )
+			$mol_assert_equal( pool.empty(), true )
+			
 		},
 		
 		"linear allocation"( $ ) {

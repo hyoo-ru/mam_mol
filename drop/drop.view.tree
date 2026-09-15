@@ -1,13 +1,13 @@
 $mol_drop $mol_ghost
 	enabled? true
 	event *
-		dragenter?event <=> enter?event null
-		dragover?event <=> move?event null
-		dragleave?event <=> leave?event null
-		drop?event <=> drop?event null
+		dragenter? <=> enter? null
+		dragover? <=> move? null
+		dragleave? <=> leave? null
+		drop? <=> drop? null
 	attr * mol_drop_status <= status? \ready
-	adopt?transfer *
-	receive?transfer null
+	adopt? *
+	receive? null
 	allow /
 		\copy
 		\move

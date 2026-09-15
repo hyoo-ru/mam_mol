@@ -1,5 +1,5 @@
 [mol_filler] {
-	text-align: left;
+	text-align: start;
 	padding: var(--mol_gap_text);
 	flex-shrink: 0;
 }

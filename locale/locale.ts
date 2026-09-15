@@ -19,6 +19,24 @@ namespace $ {
 		static lang( next? : string ) {
 			return this.$.$mol_state_local.value( 'locale' , next ) || $mol_dom_context.navigator.language.replace( /-.*/ , '' ) || this.lang_default()
 		}
+
+		static langs_rtl() {
+			return ['ar', 'he', 'fa', 'ur', 'yi', 'ps', 'ug', 'sd']
+		}
+
+		@ $mol_mem
+		static direction() {
+			const lang = this.lang()
+			let direction
+
+			try {
+				direction = new Intl.Locale(lang).getTextInfo().direction
+			} catch (e) {
+				$mol_fail_log(e)
+			}
+
+			return direction ?? ( this.langs_rtl().includes(lang) ? 'rtl' : 'ltr' )
+		}
 		
 		@ $mol_mem_key
 		static source( lang : string ) {
