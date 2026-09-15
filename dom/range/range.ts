@@ -127,7 +127,6 @@ namespace $ {
 			const [ focusNode, focusOffset ] = this.extend.native()
 
 			const sel = $mol_dom_context.document.getSelection()!
-			console.log( 'select', anchorNode, anchorOffset, focusNode, focusOffset )
 			sel.setBaseAndExtent( anchorNode, anchorOffset, focusNode, focusOffset )
 			
 			return this
