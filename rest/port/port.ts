@@ -10,6 +10,7 @@ namespace $ {
 		
 		send_code( code: $mol_rest_code ) {}
 		send_type( mime: $mol_rest_port_mime ) {}
+		send_name( name: string ) {}
 		
 		origin() { return 'unknown' }
 		address() { return 'unknown' }
