@@ -124,7 +124,7 @@ namespace $.$$ {
 				start.move_chars( div, +4 )!,
 				start.move_chars( div, +5 )!,
 			], [
-				$mol_dom_point.head( div.firstChild! ),
+				$mol_dom_point.head( div ),
 				$mol_dom_point.foot( div.firstChild! ),
 				new $mol_dom_point( span.firstChild!, 1 ),
 				$mol_dom_point.foot( span.firstChild! ),
