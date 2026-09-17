@@ -31,8 +31,8 @@ namespace $.$$ {
 			
 			$mol_assert_equal( { name: 'foo', age: 123 }, User.guard({ name: 'foo', age: 123 }) )
 			$mol_assert_equal( { name: 'foo', age: 123, salary: 777 }, User.guard({ name: 'foo', age: 123, salary: 777 }) )
-			$mol_assert_fail( ()=> User.guard( {} ), 'Wrong field' )
-			$mol_assert_fail( ()=> User.guard( { name: 'foo', age: 'bar'} ), 'Wrong field' )
+			$mol_assert_fail( ()=> User.guard( {} ), 'Wrong string' )
+			$mol_assert_fail( ()=> User.guard( { name: 'foo', age: 'bar'} ), 'Wrong number' )
 			
 		},
 		
@@ -60,7 +60,7 @@ namespace $.$$ {
 				{ name: 'foo', age: 123, space: 'bar' },
 				Admin.guard({ name: 'foo', age: 123, space: 'bar' }),
 			)
-			$mol_assert_fail( ()=> Admin.guard({ name: 'foo', age: 123 }), 'Wrong field' )
+			$mol_assert_fail( ()=> Admin.guard({ name: 'foo', age: 123 }), 'Wrong string' )
 			
 		},
 		
