@@ -1,0 +1,10 @@
+$mol_paragraph_demo $mol_example_small
+	title \Paragraph
+	sub /
+		<= Just_text $mol_paragraph title \Just simple text
+	tags /
+		\typography
+		\text
+	aspects /
+		\Widget/Text
+		\Type/String
