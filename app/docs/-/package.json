@@ -158,6 +158,7 @@
     "$mol_charset_buffer",
     "$mol_file_transaction",
     "$mol_hotkey",
+    "$mol_hotkey2",
     "$mol_keyboard_code",
     "$mol_keyboard",
     "$mol_locale",

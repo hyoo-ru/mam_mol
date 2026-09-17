@@ -1,11 +1,4 @@
-	($.$mol_hotkey) = class $mol_hotkey extends ($.$mol_plugin) {
-		keydown(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		event(){
-			return {...(super.event()), "keydown": (next) => (this.keydown(next))};
-		}
+	($.$mol_hotkey) = class $mol_hotkey extends ($.$mol_hotkey2) {
 		key(){
 			return {};
 		}
@@ -19,6 +12,5 @@
 			return false;
 		}
 	};
-	($mol_mem(($.$mol_hotkey.prototype), "keydown"));
 
 //# sourceMappingURL=hotkey.view.tree.js.map

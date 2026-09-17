@@ -157,6 +157,7 @@
     "$mol_app_supplies_enter",
     "$mol_string",
     "$mol_hotkey",
+    "$mol_hotkey2",
     "$mol_keyboard_code",
     "$mol_keyboard",
     "$mol_form_field",

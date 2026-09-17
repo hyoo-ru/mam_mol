@@ -1,30 +1,25 @@
 namespace $.$$ {
 	/**
 	 * Plugin which adds handlers for keyboard keys.
+	 * @deprecated Use $mol_hotkey2
 	 * @see [mol_keyboard_code](../keyboard/code/code.ts)
 	 */
 	export class $mol_hotkey extends $.$mol_hotkey {
 
-		key() {
-			return super.key() as {
-				[ key in keyof typeof $mol_keyboard_code ]? : ( event : KeyboardEvent )=> void
-			}
-		}
-		
-		keydown( event? : KeyboardEvent ) {
-
-			if( !event ) return
-			if( event.defaultPrevented ) return
-
-			let name = $mol_keyboard_code[ event.keyCode ] as keyof typeof $mol_keyboard_code
+		@ $mol_mem
+		action() {
 			
-			if( this.mod_ctrl() !== ( event.ctrlKey || event.metaKey ) ) return
-			if( this.mod_alt() !== event.altKey ) return
-			if( this.mod_shift() !== event.shiftKey ) return
+			const prefix = [ ... new Set([
+				... this.mod_ctrl() ? [ 'ctrl_' ] : [],
+				... this.mod_alt() ? [ 'alt_' ] : [],
+				... this.mod_shift() ? [ 'shift_' ] : [],
+			]) ].join( '' )
 			
-			const handle = this.key()[ name ]
-			if( handle ) handle( event )
-
+			return Object.fromEntries(
+				Object.entries( this.key() )
+					.map( ([ key, val ])=>[ prefix + key, val ] )
+			)
+			
 		}
 		
 	}

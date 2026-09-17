@@ -177,6 +177,7 @@
     "$mol_support",
     "$mol_search",
     "$mol_hotkey",
+    "$mol_hotkey2",
     "$mol_string",
     "$mol_icon_close",
     "$mol_icon",

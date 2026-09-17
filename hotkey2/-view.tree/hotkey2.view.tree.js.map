@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/hotkey2/hotkey2.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_hotkey2 $mol_plugin\n\tevent *\n\t\t^\n\t\tkeydown? <=> keydown? null\n\taction *\n"
+	],
+	"mappings": "AAAA,AAAA,uCAAa,wBAAb;AAAA,AAGe;AAAA,AAAA;AAAA,UAAS,IAAT;AAAA;AAFd;AAAA,AAAA,UAAM,CACL,kBADK,EAEL,qBAAS,KAAI,cAAJ,CAFJ,CAAN;AAAA;AAGA;AAAA,AAAA,UAAO,EAAP;AAAA;AAJD,CAAA;AAGe,YAHf,CAGe,qCAHf;"
+}
