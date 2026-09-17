@@ -1,7 +1,4 @@
-$mol_hotkey $mol_plugin
-	event *
-		^
-		keydown? <=> keydown? null
+$mol_hotkey $mol_hotkey2
 	key *
 	mod_ctrl false
 	mod_alt false
