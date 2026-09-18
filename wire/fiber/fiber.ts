@@ -158,6 +158,14 @@ namespace $ {
 					if( this.cursor !== $mol_wire_cursor.doubt ) break check
 				}
 				
+				// Any pub may be outdated again by a side effect of the check,
+				// and such notice is lost, as self doubt is announced already.
+				for( let i = this.pub_from ; i < this.sub_from; i += 2 ) {
+					if( !( this.data[i] as $mol_wire_pub )?.outdated ) continue
+					this.cursor = $mol_wire_cursor.stale
+					break check
+				}
+				
 				this.cursor = $mol_wire_cursor.fresh
 				return
 				
@@ -181,7 +189,17 @@ namespace $ {
 					} else {
 						
 						const put = ( res: Result )=> {
-							if( this.cache === result ) this.put( res )
+							
+							if( this.cache !== result ) return res
+							
+							// Pubs may change while awaiting, but `put` makes self fresh
+							// unconditionally, so restore the notice to pull again later.
+							const stale = this.outdated
+							
+							this.put( res )
+							
+							if( stale ) this.absorb( $mol_wire_cursor.stale )
+							
 							return res
 						}
 
