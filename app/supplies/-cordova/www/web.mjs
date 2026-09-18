@@ -8789,6 +8789,7 @@ var $;
         ol: {},
         li: {},
         details: {},
+        section: {},
         summary: {},
         hr: {},
         table: {},
