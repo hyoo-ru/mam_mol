@@ -12,10 +12,6 @@ namespace $ {
 		protected pub_from = 0 // 4B
 		protected cursor = $mol_wire_cursor.stale // 4B
 		
-		get temp() {
-			return false
-		}
-		
 		get pub_list() {
 			const res = [] as $mol_wire_pub[]
 			const max = this.cursor >=0 ? this.cursor : this.sub_from
@@ -185,6 +181,11 @@ namespace $ {
 			
 		}
 
+		override get outdated() {
+			return this.cursor !== $mol_wire_cursor.fresh
+				&& this.cursor !== $mol_wire_cursor.final
+		}
+		
 		absorb( quant = $mol_wire_cursor.stale, pos = -1 ) {
 			
 			if( this.cursor === $mol_wire_cursor.final ) return
@@ -193,26 +194,23 @@ namespace $ {
 			this.cursor = quant
 			this.emit( $mol_wire_cursor.doubt )
 			
-			// if( pos >= 0 && pos < this.sub_from - 2 ) {
+			if( quant !== $mol_wire_cursor.stale ) return
+			if( !this.incompleted ) return
+			
+			// Notice from own task resumes the same calculation, but from a regular
+			// pub it makes awaited tasks based on outdated data, so restart them.
+			if( ( this.data[ pos ] as $mol_wire_pub | undefined )?.temp ) return
+			
+			for(
+				let cursor = this.pub_from;
+				cursor < this.sub_from;
+				cursor += 2
+			) {
 				
-			// 	const pub = this.data[ pos ] as $mol_wire_pub
-			// 	if( pub instanceof $mol_wire_task ) return
+				const pub = this.data[ cursor ] as $mol_wire_pub | undefined
+				if( pub?.temp ) ( pub as $mol_wire_fiber< unknown, unknown[], unknown > ).destructor()
 				
-			// 	for(
-			// 		let cursor = this.pub_from;
-			// 		cursor < this.sub_from;
-			// 		cursor += 2
-			// 	) {
-					
-			// 		const pub = this.data[ cursor ] as $mol_wire_pub
-					
-			// 		if( pub instanceof $mol_wire_task ) {
-			// 			pub.destructor()
-			// 		}
-					
-			// 	}
-				
-			// }
+			}
 			
 		}
 		
