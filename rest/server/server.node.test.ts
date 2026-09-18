@@ -3,15 +3,10 @@ namespace $.$$ {
 
 		async 'ws socket is closed by server after peer half close'( $ ) {
 
-			const ports = [] as $mol_rest_port[]
-
 			const server = $mol_rest_server.make({
 				$,
 				root: ()=> $mol_rest_resource.make({
-					OPEN: ( msg: $mol_rest_message )=> {
-						ports.push( msg.port )
-						return 'test'
-					},
+					OPEN: ()=> 'test',
 				}),
 			})
 
@@ -43,18 +38,9 @@ namespace $.$$ {
 						done => socket.once( 'data', chunk => done( String( chunk ) ) )
 					)
 					$mol_assert_equal( handshake.startsWith( 'HTTP/1.1 101' ), true )
-					$mol_assert_equal( ports.length, 1 )
-
-					const accepted = ( ports[0] as $mol_rest_port_ws_node ).socket
 
 					socket.end()
-
-					for( let i = 0; i < 30; ++i ) {
-						if( accepted.writableEnded ) break
-						await new Promise( done => setTimeout( done, 10 ) )
-					}
-
-					$mol_assert_equal( accepted.writableEnded, true )
+					await new Promise( done => socket.once( 'end', done ) )
 
 				} finally {
 					socket.destroy()
