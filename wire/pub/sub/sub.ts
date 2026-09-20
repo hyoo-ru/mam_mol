@@ -185,6 +185,11 @@ namespace $ {
 			
 		}
 
+		override get outdated() {
+			return this.cursor !== $mol_wire_cursor.fresh
+				&& this.cursor !== $mol_wire_cursor.final
+		}
+		
 		absorb( quant = $mol_wire_cursor.stale, pos = -1 ) {
 			
 			if( this.cursor === $mol_wire_cursor.final ) return

@@ -158,6 +158,14 @@ namespace $ {
 					if( this.cursor !== $mol_wire_cursor.doubt ) break check
 				}
 				
+				// Any pub may be outdated again by a side effect of the check,
+				// and such notice is lost, as self doubt is announced already.
+				for( let i = this.pub_from ; i < this.sub_from; i += 2 ) {
+					if( !( this.data[i] as $mol_wire_pub )?.outdated ) continue
+					this.cursor = $mol_wire_cursor.stale
+					break check
+				}
+				
 				this.cursor = $mol_wire_cursor.fresh
 				return
 				

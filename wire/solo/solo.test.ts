@@ -594,6 +594,44 @@ namespace $ {
 			
 		},
 
+		'Pub outdated by side effect of own check'( $ ) {
+
+			class App extends $mol_object2 {
+
+				static $ = $
+
+				@ $mol_wire_solo
+				static trigger( next = 0 ) { return next }
+
+				@ $mol_wire_solo
+				static source( next = 0 ) { return next }
+
+				@ $mol_wire_solo
+				static data() { return this.source() }
+
+				/** Pushes to `source` without changing own value. */
+				@ $mol_wire_solo
+				static writer() {
+					this.source( this.trigger() )
+					return null
+				}
+
+				@ $mol_wire_solo
+				static view() {
+					const data = this.data()
+					this.writer()
+					return data
+				}
+
+			}
+
+			$mol_assert_equal( App.view(), 0 )
+
+			App.trigger( 1 )
+			$mol_assert_equal( App.view(), 1 )
+
+		} ,
+
 		'Owned value has js-path name' () {
 
 			class App extends $mol_object2 {

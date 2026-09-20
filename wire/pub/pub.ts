@@ -88,6 +88,13 @@ namespace $ {
 		fresh() {}
 		
 		/**
+		 * Requires actualization or not.
+		 */
+		get outdated() {
+			return false
+		}
+		
+		/**
 		 * Allow to put data to caches in the subtree.
 		 */
 		complete() {}
