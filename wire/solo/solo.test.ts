@@ -594,6 +594,42 @@ namespace $ {
 			
 		},
 
+		async 'Restart awaited task when pub changed'( $ ) {
+
+			const loads = [] as number[]
+
+			class App extends $mol_object2 {
+
+				static $ = $
+
+				@ $mol_wire_solo
+				static param( next = 0 ) { return next }
+
+				/** Snapshots param without subscription, like a request url. */
+				static async load() {
+					const param = $mol_wire_probe( ()=> this.param() ) ?? 0
+					loads.push( param )
+					return param
+				}
+
+				@ $mol_wire_solo
+				static data(): number {
+					this.param()
+					return $mol_wire_sync( this ).load()
+				}
+
+			}
+
+			const wait = $mol_wire_async( App ).data()
+			App.param( 1 )
+
+			$mol_assert_equal( await $mol_wire_async( App ).data(), 1 )
+			$mol_assert_like( loads, [ 0, 1 ] )
+
+			await wait.catch( ()=> {} )
+
+		} ,
+
 		'Pub outdated by side effect of own check'( $ ) {
 
 			class App extends $mol_object2 {
