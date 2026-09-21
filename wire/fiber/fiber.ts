@@ -121,6 +121,7 @@ namespace $ {
 			const cursor = {
 				[ $mol_wire_cursor.stale ]: '🔴',
 				[ $mol_wire_cursor.doubt ]: '🟡',
+				[ $mol_wire_cursor.checking ]: '🟠',
 				[ $mol_wire_cursor.fresh ]: '🟢',
 				[ $mol_wire_cursor.final ]: '🔵',
 			}[ this.cursor ] ?? this.cursor.toString()
