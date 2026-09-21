@@ -153,17 +153,14 @@ namespace $ {
 			
 			check: if( this.cursor === $mol_wire_cursor.doubt ) {
 				
+				// Own doubt is lowered for the check, because a pub may outdate
+				// self by a side effect, but such notice would be absorbed as
+				// already announced one and lost.
+				this.cursor = $mol_wire_cursor.checking
+				
 				for( let i = this.pub_from ; i < this.sub_from; i += 2 ) {
 					;( this.data[i] as $mol_wire_pub )?.fresh()
-					if( this.cursor !== $mol_wire_cursor.doubt ) break check
-				}
-				
-				// Any pub may be outdated again by a side effect of the check,
-				// and such notice is lost, as self doubt is announced already.
-				for( let i = this.pub_from ; i < this.sub_from; i += 2 ) {
-					if( !( this.data[i] as $mol_wire_pub )?.outdated ) continue
-					this.cursor = $mol_wire_cursor.stale
-					break check
+					if( this.cursor !== $mol_wire_cursor.checking ) break check
 				}
 				
 				this.cursor = $mol_wire_cursor.fresh

@@ -88,13 +88,6 @@ namespace $ {
 		fresh() {}
 		
 		/**
-		 * Requires actualization or not.
-		 */
-		get outdated() {
-			return false
-		}
-		
-		/**
 		 * Lives inside single calculation of subscriber or not.
 		 */
 		get temp() {
