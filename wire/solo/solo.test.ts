@@ -668,6 +668,51 @@ namespace $ {
 
 		} ,
 
+		'Mutually writing pubs settle their sub'( $ ) {
+
+			class App extends $mol_object2 {
+
+				static $ = $
+
+				static runs = { left: 0, right: 0 }
+
+				@ $mol_wire_solo
+				static left_value( next = 0 ) { return next }
+
+				@ $mol_wire_solo
+				static right_value( next = 0 ) { return next }
+
+				/** Pushes a new value to the pub of `right` on every run. */
+				@ $mol_wire_solo
+				static left() {
+					this.right_value( ++ this.runs.left )
+					return this.left_value() > 1e9 ? 1 : 0
+				}
+
+				/** Pushes a new value to the pub of `left` on every run. */
+				@ $mol_wire_solo
+				static right() {
+					this.left_value( ++ this.runs.right )
+					return this.right_value() > 1e9 ? 1 : 0
+				}
+
+				@ $mol_wire_solo
+				static view() {
+					return this.left() + this.right()
+				}
+
+			}
+
+			$mol_assert_equal( App.view(), 0 )
+
+			const settled = { ... App.runs }
+
+			for( let i = 0; i < 10; ++ i ) $mol_assert_equal( App.view(), 0 )
+
+			$mol_assert_like( App.runs, settled )
+
+		} ,
+
 		'Owned value has js-path name' () {
 
 			class App extends $mol_object2 {
