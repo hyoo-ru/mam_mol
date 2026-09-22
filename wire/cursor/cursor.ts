@@ -1,6 +1,6 @@
 namespace $ {
 	
-	/** Special status statuses. */
+	/** Special status statuses. The lesser value, the stabler state. */
 	export enum $mol_wire_cursor {
 		
 		/** Update required. */
@@ -10,13 +10,13 @@ namespace $ {
 		doubt = -2,
 		
 		/** Doubt check in progress, so any incoming quant is noticeable. */
-		checking = -5,
+		check = -3,
 		
 		/** Actual state but may be dropped. */
-		fresh = -3,
+		fresh = -4,
 		
 		/** State will never be changed. */
-		final = -4,
+		final = -5,
 		
 	}
 	
