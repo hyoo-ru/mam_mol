@@ -167,6 +167,8 @@ namespace $ {
 					return
 				}
 				
+				socket.end()
+				
 			} )
 			
 			socket.on( 'end', onclose )
@@ -176,7 +178,7 @@ namespace $ {
 			
 			const key_in = req.headers["sec-websocket-key"]
 			const magic = '258EAFA5-E914-47DA-95CA-C5AB0DC85B11'
-			const key_out =  $mol_base64_encode( $mol_crypto_hash( $mol_charset_encode( key_in + magic ) ) )
+			const key_out =  $mol_base64_encode( $mol_crypto2_hash( $mol_charset_encode( key_in + magic ) ) )
 			
 			socket.write(
 				'HTTP/1.1 101 WS Handshaked\r\n' +

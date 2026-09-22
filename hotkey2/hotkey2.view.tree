@@ -1,0 +1,5 @@
+$mol_hotkey2 $mol_plugin
+	event *
+		^
+		keydown? <=> keydown? null
+	action *
