@@ -194,7 +194,10 @@ namespace $ {
 			
 			// Notice from own task resumes the same calculation, but from a regular
 			// pub it makes awaited tasks based on outdated data, so restart them.
-			if( ( this.data[ pos ] as $mol_wire_pub | undefined )?.temp ) return
+			
+			const pub = this.data[ pos ] as $mol_wire_pub
+
+			if( pub?.temp ) return
 			
 			for(
 				let cursor = this.pub_from;
@@ -202,9 +205,11 @@ namespace $ {
 				cursor += 2
 			) {
 				
-				const pub = this.data[ cursor ] as $mol_wire_pub | undefined
-				if( pub?.temp ) ( pub as $mol_wire_fiber< unknown, unknown[], unknown > ).destructor()
-				
+				const pub = this.data[ cursor ] as $mol_wire_pub
+
+				if( pub?.temp ) {
+					( pub as $mol_wire_fiber< unknown, unknown[], unknown > ).destructor()
+				}
 			}
 			
 		}
