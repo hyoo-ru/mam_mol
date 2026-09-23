@@ -185,7 +185,7 @@ namespace $ {
 			
 			if( this.cursor === $mol_wire_cursor.final ) return
 			
-			if( this.cursor !== $mol_wire_cursor.check && this.cursor >= quant ) return
+			if( this.cursor >= quant ) return
 			
 			this.cursor = quant
 			this.emit( $mol_wire_cursor.doubt )

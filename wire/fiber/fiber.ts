@@ -66,6 +66,9 @@ namespace $ {
 		
 		public cache: Result | Error | Promise< Result | Error > = undefined as any
 		
+		/** Doubt walk is in progress, so a repeated quant must not be dropped. */
+		protected checking = false
+		
 		get args() {
 			return this.data.slice( 0 , this.pub_from ) as any as Args
 		}
@@ -120,7 +123,6 @@ namespace $ {
 			
 			const cursor = {
 				[ $mol_wire_cursor.stale ]: '🔴',
-				[ $mol_wire_cursor.check ]: '🟠',
 				[ $mol_wire_cursor.doubt ]: '🟡',
 				[ $mol_wire_cursor.fresh ]: '🟢',
 				[ $mol_wire_cursor.final ]: '🔵',
@@ -145,6 +147,16 @@ namespace $ {
 			else super.emit( quant )
 		}
 		
+		override absorb( quant = $mol_wire_cursor.stale, pos = -1 ) {
+			
+			// Cursor stays `doubt`, so `>=` would drop a repeated doubt.
+			// The walk watches this flag instead of a cursor value.
+			if( this.checking ) this.checking = false
+			
+			super.absorb( quant, pos )
+			
+		}
+		
 		fresh() {
 
 			type Result = typeof this.cache
@@ -154,13 +166,17 @@ namespace $ {
 			
 			check: if( this.cursor === $mol_wire_cursor.doubt ) {
 				
-				this.cursor = $mol_wire_cursor.check
+				this.checking = true
 				
 				for( let i = this.pub_from ; i < this.sub_from; i += 2 ) {
 					;( this.data[i] as $mol_wire_pub )?.fresh()
-					if( this.cursor !== $mol_wire_cursor.check ) break check
+					if( !this.checking || this.cursor !== $mol_wire_cursor.doubt ) {
+						this.checking = false
+						break check
+					}
 				}
 				
+				this.checking = false
 				this.cursor = $mol_wire_cursor.fresh
 				return
 				
