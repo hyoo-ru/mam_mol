@@ -140,20 +140,33 @@ namespace $ {
 			const tree = this.$.$mol_tree2_from_string( file.text() , file.path() )
 			const dir = file.parent().path()
 
-			let content = ''
+			let content = [] as string[]
 			for( const step of tree.select( 'build' , null ).kids ) {
 
-				const res = this.$.$mol_file.unwatched(() => this.$.$mol_run.spawn( { command: step.text(), dir } ), dir )
-					.stdout.toString().trim()
-				if( step.type ) content += `namespace $ { export let ${ step.type } = ${ JSON.stringify( res ) } }`
+				// unsafe for developer
+				// const res = this.$.$mol_file.unwatched(() => this.$.$mol_run.spawn( { command: step.text(), dir } ), dir )
+				// 	.stdout.toString().trim()
+				// if( step.type ) content += `namespace $ { export let ${ step.type } = ${ JSON.stringify( res ) } }`
+				
+				if( step.type ) content.push( step.text() )
 
 			}
 
-			if( !content ) return []
+			if( !content.length ) return []
+			
+			this.$.$mol_log3_warn({
+				message: 'Shell command required',
+				hint: 'Check command for safety and execute manually',
+				place: `${this}.metaTreeTranspile`,
+				source: file.relate(),
+				script: content,
+			})
 
-			const script = file.parent().resolve( `-meta.tree/${ name }.ts` )
-			script.text( content )
-			return [ script ]
+			// const script = file.parent().resolve( `-meta.tree/${ name }.ts` )
+			// script.text( content )
+			// return [ script ]
+			
+			return []
 
 		}
 	
