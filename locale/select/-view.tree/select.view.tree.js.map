@@ -4,7 +4,7 @@
 		"mol/locale/select/select.view.tree"
 	],
 	"sourcesContent": [
-		"$mol_locale_select $mol_select\n"
+		"$mol_locale_select $mol_select\n\tlangs /string\n\t\t\\en\n"
 	],
-	"mappings": "AAAA,AAAA,mDAAmB,wBAAnB,EAAA;"
+	"mappings": "AAAA,AAAA,mDAAmB,wBAAnB;AAAA,AACC;AAAA,AAAA,UAAM,CACJ,IADI,CAAN;AAAA;AADD,CAAA;"
 }

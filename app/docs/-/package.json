@@ -730,9 +730,7 @@
     "$mol_icon_eye",
     "$mol_lights_demo",
     "$mol_locale_demo",
-    "$mol_locale_select",
-    "$mol_lang_iso639",
-    "$mol_lang"
+    "$mol_locale_select"
   ],
   "dependencies": {
     "autoinstall": "*",

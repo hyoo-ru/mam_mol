@@ -7137,6 +7137,8 @@ $mol_lights_demo $mol_example_small
 		\Theme
 
 $mol_locale_select $mol_select
+	langs /string
+		\en
 
 $mol_locale_demo $mol_example_small
 	title \Example usages of $mol_locale component
