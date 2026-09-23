@@ -6,11 +6,11 @@ namespace $ {
 		/** Update required. */
 		stale = -1,
 		
-		/** Some of (transitive) pub update required. */
-		doubt = -2,
-		
 		/** Doubt check in progress, so any incoming quant is noticeable. */
-		check = -3,
+		check = -2,
+		
+		/** Some of (transitive) pub update required. */
+		doubt = -3,
 		
 		/** Actual state but may be dropped. */
 		fresh = -4,

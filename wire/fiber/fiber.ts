@@ -120,8 +120,8 @@ namespace $ {
 			
 			const cursor = {
 				[ $mol_wire_cursor.stale ]: '🔴',
-				[ $mol_wire_cursor.doubt ]: '🟡',
 				[ $mol_wire_cursor.check ]: '🟠',
+				[ $mol_wire_cursor.doubt ]: '🟡',
 				[ $mol_wire_cursor.fresh ]: '🟢',
 				[ $mol_wire_cursor.final ]: '🔵',
 			}[ this.cursor ] ?? this.cursor.toString()
@@ -154,9 +154,6 @@ namespace $ {
 			
 			check: if( this.cursor === $mol_wire_cursor.doubt ) {
 				
-				// Own doubt is lowered for the check, because a pub may outdate
-				// self by a side effect, but such notice would be absorbed as
-				// already announced one and lost.
 				this.cursor = $mol_wire_cursor.check
 				
 				for( let i = this.pub_from ; i < this.sub_from; i += 2 ) {

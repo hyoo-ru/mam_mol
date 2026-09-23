@@ -184,17 +184,15 @@ namespace $ {
 		absorb( quant = $mol_wire_cursor.stale, pos = -1 ) {
 			
 			if( this.cursor === $mol_wire_cursor.final ) return
-			if( this.cursor >= quant ) return
+			
+			if( this.cursor !== $mol_wire_cursor.check && this.cursor >= quant ) return
 			
 			this.cursor = quant
 			this.emit( $mol_wire_cursor.doubt )
 			
 			if( quant !== $mol_wire_cursor.stale ) return
 			if( !this.incompleted ) return
-			
-			// Notice from own task resumes the same calculation, but from a regular
-			// pub it makes awaited tasks based on outdated data, so restart them.
-			
+
 			const pub = this.data[ pos ] as $mol_wire_pub
 
 			if( pub?.temp ) return
