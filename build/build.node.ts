@@ -251,7 +251,7 @@ namespace $ {
 				let files = [] as $mol_file[]
 
 				if( /(meta\.tree)$/.test( name ) ) {
-					files = this.metaTreeTranspile( child_path )
+					// files = this.metaTreeTranspile( child_path ) // unsafe for developer
 				} else if( /(view\.tree)$/.test( name ) ) {
 					files = this.viewTreeTranspile( child_path )
 				} else if( /(\.css)$/.test( name ) ) {
