@@ -1,1 +1,3 @@
 $mol_locale_select $mol_select
+	langs /string
+		\en
