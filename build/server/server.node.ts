@@ -178,6 +178,21 @@ namespace $ {
 			req : typeof $node.express.request ,
 			res : typeof $node.express.response,
 		) {
+			
+			if( req.path === '/.well-known/appspecific/com.chrome.devtools.json' ) {
+				
+				const file = this.build().root().resolve( req.path )
+				if( file.exists() ) return false
+				
+			    file.text( JSON.stringify( {
+					workspace: {
+						root: this.build().root().path(),
+						uuid: $mol_dom.crypto.randomUUID(),
+					},
+			    }, null, '\t' ) )
+				
+			    return false
+			}
 
 			try {
 				
@@ -268,32 +283,8 @@ namespace $ {
 
 			const root = this.$.$mol_file.absolute( this.rootPublic() )
 			const dir = root.resolve( req.path )
-
 			const path = dir.path()
 			
-			// Handle .well-known paths (browser/dev tools standard paths)
-			if (req.path === '/.well-known/appspecific/com.chrome.devtools.json') {
-			    const root = this.build().root().path()
-			    
-			    const config = {
-			        version: 1,
-			        description: 'MAM ($mol) Framework DevTools Configuration',
-			        mappings: [
-			            {
-			                url: `http://localhost:${this.port()}/`,
-			                path: root,
-			            }
-			        ]
-			    }
-			
-			    res.writeHead(200, { 
-			        'Content-Type': 'application/json',
-			        'Cache-Control': 'no-cache'
-			    })
-			    res.end(JSON.stringify(config, null, 2))
-			    return true
-			}
-
 			// ensure загружает сорцы, делает git pull, это не стоит делать на build-папках
 			// Поэтому регулярка выше отсеивает build-папки
 			this.ensure( path )

@@ -1,5 +1,7 @@
 # $mol_hotkey
 
+> **Deprecated** Use [$mol_hotkey2](../hotkey2)
+
 Plugin which adds handlers for keyboard keys.
 
 ## Usage example

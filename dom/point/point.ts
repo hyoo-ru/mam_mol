@@ -74,7 +74,7 @@ namespace $ {
 		native() {
 			if( this.is_tail() ) return [
 				this.node.parentNode!,
-				[ ... this.node.parentNode!.childNodes ].indexOf( this.node as ChildNode ),
+				[ ... this.node.parentNode!.childNodes ].indexOf( this.node as ChildNode ) + 1,
 			] as const
 			return [ this.node, this.pos ] as const
 		}
@@ -130,10 +130,11 @@ namespace $ {
 		}
 
 		move_chars( root: Element, offset: number ): $mol_dom_point {
-
+			
+			if( offset === 0 ) return this
 			if( this.node === root && this.is_tail() ) return $mol_dom_point.foot( root )
 
-			const axis = Math.abs( offset ) as -1 | 0 | 1
+			const axis = Math.sign( offset ) as -1 | 0 | 1
 			if( axis < 0 ) $mol_fail( new Error( 'Unsupported yet' ) )
 			
 			if( this.node.nodeValue && this.pos >= 0 ) {
