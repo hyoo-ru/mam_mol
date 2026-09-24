@@ -18,7 +18,7 @@ namespace $.$$ {
 			$mol_assert_equal( 0, $mol_schema_integer.cast( 1.5 ) )
 			
 			$mol_assert_equal( 0, $mol_schema_integer.guard( 0 ) )
-			$mol_assert_fail( ()=> $mol_schema_integer.guard( '' ), 'Wrong type' )
+			$mol_assert_fail( ()=> $mol_schema_integer.guard( '' ), 'Wrong number' )
 			$mol_assert_fail( ()=> $mol_schema_integer.guard( Number.NaN ), 'Non finite' )
 			$mol_assert_fail( ()=> $mol_schema_integer.guard( 1.5 ), 'Non integer' )
 			
