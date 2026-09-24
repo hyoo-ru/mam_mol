@@ -152,13 +152,13 @@ namespace $ {
 			if( this.cursor === $mol_wire_cursor.fresh ) return
 			if( this.cursor === $mol_wire_cursor.final ) return
 			
-			check: if( this.cursor === $mol_wire_cursor.doubt ) {
+			check: if( this.cursor === $mol_wire_cursor.check ) {
 				
-				this.cursor = $mol_wire_cursor.check
+				this.cursor = $mol_wire_cursor.doubt
 				
 				for( let i = this.pub_from ; i < this.sub_from; i += 2 ) {
 					;( this.data[i] as $mol_wire_pub )?.fresh()
-					if( this.cursor !== $mol_wire_cursor.check ) break check
+					if( this.cursor !== $mol_wire_cursor.doubt ) break check
 				}
 				
 				this.cursor = $mol_wire_cursor.fresh
