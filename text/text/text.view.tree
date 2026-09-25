@@ -14,13 +14,13 @@ $mol_text $mol_list
 		auto_scroll null
 		highlight <= highlight \
 		uri_resolve* <= uri_resolve* \
-		sidebar_showed <= code_sidebar_showed true
+		code_sidebar_showed <= code_sidebar_showed true
 	List* $mol_text_list
 		type <= list_type* \-
 		text <= list_text* \
 		highlight <= highlight \
 		uri_resolve* <= uri_resolve* \
-		sidebar_showed <= code_sidebar_showed true
+		code_sidebar_showed <= code_sidebar_showed true
 	item_index* 0
 	Header* $mol_text_header
 		minimal_height 40
@@ -45,7 +45,7 @@ $mol_text $mol_list
 		text <= table_cell_text* \
 		highlight <= highlight \
 		uri_resolve* <= uri_resolve* \
-		sidebar_showed <= code_sidebar_showed true
+		code_sidebar_showed <= code_sidebar_showed true
 	- \Grid
 	Grid* $mol_grid
 		rows <= grid_rows* /
@@ -56,7 +56,7 @@ $mol_text $mol_list
 		text <= grid_cell_text* \
 		highlight <= highlight \
 		uri_resolve* <= uri_resolve* \
-		sidebar_showed <= code_sidebar_showed true
+		code_sidebar_showed <= code_sidebar_showed true
 	- \Lines
 	String* $mol_dimmer
 		dom_name \span
@@ -88,13 +88,13 @@ $mol_text $mol_list
 				text <= spoiler_label* \
 				highlight <= highlight \
 				uri_resolve* <= uri_resolve* \
-				sidebar_showed <= code_sidebar_showed true
+				code_sidebar_showed <= code_sidebar_showed true
 		content /
 			<= Spoiler_content* $mol_text
 				text <= spoiler_content* \
 				highlight <= highlight \
 				uri_resolve* <= uri_resolve* \
-				sidebar_showed <= code_sidebar_showed true
+				code_sidebar_showed <= code_sidebar_showed true
 
 $mol_text_header $mol_paragraph
 	level 1
