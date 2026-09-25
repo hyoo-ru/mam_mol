@@ -120,6 +120,7 @@ namespace $ {
 			
 			const cursor = {
 				[ $mol_wire_cursor.stale ]: '🔴',
+				[ $mol_wire_cursor.check ]: '🟠',
 				[ $mol_wire_cursor.doubt ]: '🟡',
 				[ $mol_wire_cursor.fresh ]: '🟢',
 				[ $mol_wire_cursor.final ]: '🔵',
@@ -151,7 +152,9 @@ namespace $ {
 			if( this.cursor === $mol_wire_cursor.fresh ) return
 			if( this.cursor === $mol_wire_cursor.final ) return
 			
-			check: if( this.cursor === $mol_wire_cursor.doubt ) {
+			check: if( this.cursor === $mol_wire_cursor.check ) {
+				
+				this.cursor = $mol_wire_cursor.doubt
 				
 				for( let i = this.pub_from ; i < this.sub_from; i += 2 ) {
 					;( this.data[i] as $mol_wire_pub )?.fresh()
