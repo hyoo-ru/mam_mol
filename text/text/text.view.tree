@@ -10,15 +10,17 @@ $mol_text $mol_list
 	Paragraph* $mol_paragraph
 		sub <= block_content* /
 	Quote* $mol_text
-		uri_resolve* <= uri_resolve* \
 		text <= quote_text* \
-		highlight <= highlight \
 		auto_scroll null
-	List* $mol_text_list
+		highlight <= highlight \
 		uri_resolve* <= uri_resolve* \
+		code_sidebar_showed <= code_sidebar_showed true
+	List* $mol_text_list
 		type <= list_type* \-
 		text <= list_text* \
 		highlight <= highlight \
+		uri_resolve* <= uri_resolve* \
+		code_sidebar_showed <= code_sidebar_showed true
 	item_index* 0
 	Header* $mol_text_header
 		minimal_height 40
@@ -30,7 +32,7 @@ $mol_text $mol_list
 		row_themes <= pre_themes* /string
 		highlight <= highlight \
 		uri_resolve* <= uri_resolve* \
-		sidebar_showed <= pre_sidebar_showed <= code_sidebar_showed true
+		sidebar_showed <= code_sidebar_showed true
 	Cut* $mol_view dom_name \hr
 	- \Table
 	Table* $mol_grid
@@ -40,9 +42,10 @@ $mol_text $mol_list
 		cells <= table_cells* /
 	Table_cell* $mol_text
 		auto_scroll null
+		text <= table_cell_text* \
 		highlight <= highlight \
 		uri_resolve* <= uri_resolve* \
-		text <= table_cell_text* \
+		code_sidebar_showed <= code_sidebar_showed true
 	- \Grid
 	Grid* $mol_grid
 		rows <= grid_rows* /
@@ -50,9 +53,10 @@ $mol_text $mol_list
 		cells <= grid_cells* /
 	Grid_cell* $mol_text
 		auto_scroll null
+		text <= grid_cell_text* \
 		highlight <= highlight \
 		uri_resolve* <= uri_resolve* \
-		text <= grid_cell_text* \
+		code_sidebar_showed <= code_sidebar_showed true
 	- \Lines
 	String* $mol_dimmer
 		dom_name \span
@@ -82,9 +86,15 @@ $mol_text $mol_list
 		label /
 			<= Spoiler_label* $mol_text
 				text <= spoiler_label* \
+				highlight <= highlight \
+				uri_resolve* <= uri_resolve* \
+				code_sidebar_showed <= code_sidebar_showed true
 		content /
 			<= Spoiler_content* $mol_text
 				text <= spoiler_content* \
+				highlight <= highlight \
+				uri_resolve* <= uri_resolve* \
+				code_sidebar_showed <= code_sidebar_showed true
 
 $mol_text_header $mol_paragraph
 	level 1
