@@ -63,7 +63,8 @@ namespace $ {
 			
 			this.api.bindTexture( this.api.TEXTURE_2D_ARRAY, this.native )
 			
-			const size = data[0].width
+			const first = data[0]
+			const size = 'displayWidth' in first ? first.displayWidth : first.width
 			
 			this.api.texImage3D(
 				this.api.TEXTURE_2D_ARRAY,
