@@ -56,3 +56,6 @@
 	flex-direction: column;
 }
 
+[mol_select_bubble_pane][mol_scroll] {
+	max-height: inherit;
+}
