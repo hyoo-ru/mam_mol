@@ -16,6 +16,8 @@ $mol_string_demo $mol_example_small
 			value? <=> name2?
 		<= Button $mol_string_button
 			value? <=> name2?
+		<= Link $mol_string_link
+			value? <=> name2?
 	tags /
 		\input
 		\text
