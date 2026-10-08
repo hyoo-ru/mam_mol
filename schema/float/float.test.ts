@@ -14,7 +14,7 @@ namespace $.$$ {
 			$mol_assert_equal( Number.NaN, $mol_schema_float.cast( '0' ) )
 			
 			$mol_assert_equal( Number.EPSILON, $mol_schema_float.guard( Number.EPSILON ) )
-			$mol_assert_fail( ()=> $mol_schema_float.guard( '0' ), 'Wrong type' )
+			$mol_assert_fail( ()=> $mol_schema_float.guard( '0' ), 'Wrong float' )
 			
 		},
 		
