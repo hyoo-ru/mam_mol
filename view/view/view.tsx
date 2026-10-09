@@ -3,9 +3,6 @@ namespace $ {
 
 	export type $mol_view_content = $mol_view|Node|string|number|boolean|null
 
-	export type $mol_view_event = ( event : Event )=> void
-	export type $mol_view_attr = Record<string, boolean | number | string | null | undefined>
-	
 	export function $mol_view_visible_width() {
 		return $mol_window.size().width
 	}
