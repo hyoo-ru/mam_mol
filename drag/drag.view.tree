@@ -6,7 +6,7 @@ $mol_drag $mol_ghost
 		dragend? <=> drag_end? <=> end? null
 	attr *
 		^
-		draggable true
+		draggable <= draggable true
 		mol_drag_status <= status? \ready
 	transfer *string
 		text/plain <= plain <= title
