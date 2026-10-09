@@ -4420,16 +4420,18 @@ $mol_dimmer_demo $mol_example_small
 
 $mol_drag $mol_ghost
 	event *
+		^
 		dragstart? <=> drag_start? <=> start? null
 		drag? <=> drag_move? <=> move? null
 		dragend? <=> drag_end? <=> end? null
 	attr *
-		draggable true
+		^
+		draggable <= draggable true
 		mol_drag_status <= status? \ready
-	transfer *
-		text/plain \
-		text/html \
-		text/uri-list \
+	transfer *string
+		text/plain <= plain <= title
+		text/html <= html \
+		text/uri-list <= uris \
 	allow_copy true
 	allow_link true
 	allow_move true
@@ -4438,11 +4440,14 @@ $mol_drag $mol_ghost
 $mol_drop $mol_ghost
 	enabled? true
 	event *
+		^
 		dragenter? <=> enter? null
 		dragover? <=> move? null
 		dragleave? <=> leave? null
 		drop? <=> drop? null
-	attr * mol_drop_status <= status? \ready
+	attr *
+		^
+		mol_drop_status <= status? \ready
 	adopt? *
 	receive? null
 	allow /

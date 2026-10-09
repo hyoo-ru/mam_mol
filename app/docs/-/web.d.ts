@@ -17144,21 +17144,21 @@ declare namespace $ {
 		drag_move( next?: ReturnType< $mol_drag['move'] > ): ReturnType< $mol_drag['move'] >
 		end( next?: any ): any
 		drag_end( next?: ReturnType< $mol_drag['end'] > ): ReturnType< $mol_drag['end'] >
+		draggable( ): boolean
 		status( next?: string ): string
+		plain( ): ReturnType< $mol_drag['title'] >
+		html( ): string
+		uris( ): string
 		event( ): ({ 
 			dragstart( next?: ReturnType< $mol_drag['drag_start'] > ): ReturnType< $mol_drag['drag_start'] >,
 			drag( next?: ReturnType< $mol_drag['drag_move'] > ): ReturnType< $mol_drag['drag_move'] >,
 			dragend( next?: ReturnType< $mol_drag['drag_end'] > ): ReturnType< $mol_drag['drag_end'] >,
-		}) 
+		})  & ReturnType< $mol_ghost['event'] >
 		attr( ): ({ 
-			'draggable': boolean,
+			'draggable': ReturnType< $mol_drag['draggable'] >,
 			'mol_drag_status': ReturnType< $mol_drag['status'] >,
-		}) 
-		transfer( ): ({ 
-			'text/plain': string,
-			'text/html': string,
-			'text/uri-list': string,
-		}) 
+		})  & ReturnType< $mol_ghost['attr'] >
+		transfer( ): Record<string, string>
 		allow_copy( ): boolean
 		allow_link( ): boolean
 		allow_move( ): boolean
@@ -17193,10 +17193,10 @@ declare namespace $ {
 			dragover( next?: ReturnType< $mol_drop['move'] > ): ReturnType< $mol_drop['move'] >,
 			dragleave( next?: ReturnType< $mol_drop['leave'] > ): ReturnType< $mol_drop['leave'] >,
 			drop( next?: ReturnType< $mol_drop['drop'] > ): ReturnType< $mol_drop['drop'] >,
-		}) 
+		})  & ReturnType< $mol_ghost['event'] >
 		attr( ): ({ 
 			'mol_drop_status': ReturnType< $mol_drop['status'] >,
-		}) 
+		})  & ReturnType< $mol_ghost['attr'] >
 		adopt( next?: Record<string, any> ): Record<string, any>
 		receive( next?: any ): any
 		allow( ): readonly(any)[]

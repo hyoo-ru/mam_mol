@@ -33595,25 +33595,42 @@ var $;
 		drag_end(next){
 			return (this.end(next));
 		}
+		draggable(){
+			return true;
+		}
 		status(next){
 			if(next !== undefined) return next;
 			return "ready";
 		}
+		plain(){
+			return (this.title());
+		}
+		html(){
+			return "";
+		}
+		uris(){
+			return "";
+		}
 		event(){
 			return {
+				...(super.event()), 
 				"dragstart": (next) => (this.drag_start(next)), 
 				"drag": (next) => (this.drag_move(next)), 
 				"dragend": (next) => (this.drag_end(next))
 			};
 		}
 		attr(){
-			return {"draggable": true, "mol_drag_status": (this.status())};
+			return {
+				...(super.attr()), 
+				"draggable": (this.draggable()), 
+				"mol_drag_status": (this.status())
+			};
 		}
 		transfer(){
 			return {
-				"text/plain": "", 
-				"text/html": "", 
-				"text/uri-list": ""
+				"text/plain": (this.plain()), 
+				"text/html": (this.html()), 
+				"text/uri-list": (this.uris())
 			};
 		}
 		allow_copy(){
@@ -33710,6 +33727,7 @@ var $;
 		}
 		event(){
 			return {
+				...(super.event()), 
 				"dragenter": (next) => (this.enter(next)), 
 				"dragover": (next) => (this.move(next)), 
 				"dragleave": (next) => (this.leave(next)), 
@@ -33717,7 +33735,7 @@ var $;
 			};
 		}
 		attr(){
-			return {"mol_drop_status": (this.status())};
+			return {...(super.attr()), "mol_drop_status": (this.status())};
 		}
 		adopt(next){
 			if(next !== undefined) return next;
@@ -33800,9 +33818,10 @@ var $;
                 return transfer;
             }
             drop(event) {
-                if (event.defaultPrevented)
+                const e = $mol_dom_event.wrap(event);
+                if (e.prevented())
                     return;
-                event.preventDefault();
+                e.prevented(true);
                 setTimeout(() => this.status('ready'));
                 const obj = this.adopt(event.dataTransfer);
                 if (!obj)
@@ -39133,7 +39152,7 @@ var $;
         { indent: $mol_regexp.repeat('  ') },
         { marker: '!' },
         ' ',
-        { content: $hyoo_marked_line_content },
+        [{ content: $hyoo_marked_line_content }],
         $mol_regexp.line_end,
     ]);
     $.$hyoo_marked_table_row = $mol_regexp.from({ content: [
@@ -39227,10 +39246,7 @@ var $;
                     NL);
             }
             if (token.script) {
-                return $mol_jsx("pre", null,
-                    NL,
-                    script_lines(token.script),
-                    NL);
+                return $mol_jsx("pre", null, script_lines(token.script));
             }
             if (token.quote) {
                 return $mol_jsx("blockquote", { style: "break-before: avoid" },

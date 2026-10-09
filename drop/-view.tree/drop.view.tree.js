@@ -25,6 +25,7 @@
 		}
 		event(){
 			return {
+				...(super.event()), 
 				"dragenter": (next) => (this.enter(next)), 
 				"dragover": (next) => (this.move(next)), 
 				"dragleave": (next) => (this.leave(next)), 
@@ -32,7 +33,7 @@
 			};
 		}
 		attr(){
-			return {"mol_drop_status": (this.status())};
+			return {...(super.attr()), "mol_drop_status": (this.status())};
 		}
 		adopt(next){
 			if(next !== undefined) return next;

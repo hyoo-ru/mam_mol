@@ -12,10 +12,10 @@ declare namespace $ {
 			dragover( next?: ReturnType< $mol_drop['move'] > ): ReturnType< $mol_drop['move'] >,
 			dragleave( next?: ReturnType< $mol_drop['leave'] > ): ReturnType< $mol_drop['leave'] >,
 			drop( next?: ReturnType< $mol_drop['drop'] > ): ReturnType< $mol_drop['drop'] >,
-		}) 
+		})  & ReturnType< $mol_ghost['event'] >
 		attr( ): ({ 
 			'mol_drop_status': ReturnType< $mol_drop['status'] >,
-		}) 
+		})  & ReturnType< $mol_ghost['attr'] >
 		adopt( next?: Record<string, any> ): Record<string, any>
 		receive( next?: any ): any
 		allow( ): readonly(any)[]

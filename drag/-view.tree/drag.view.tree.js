@@ -20,25 +20,42 @@
 		drag_end(next){
 			return (this.end(next));
 		}
+		draggable(){
+			return true;
+		}
 		status(next){
 			if(next !== undefined) return next;
 			return "ready";
 		}
+		plain(){
+			return (this.title());
+		}
+		html(){
+			return "";
+		}
+		uris(){
+			return "";
+		}
 		event(){
 			return {
+				...(super.event()), 
 				"dragstart": (next) => (this.drag_start(next)), 
 				"drag": (next) => (this.drag_move(next)), 
 				"dragend": (next) => (this.drag_end(next))
 			};
 		}
 		attr(){
-			return {"draggable": true, "mol_drag_status": (this.status())};
+			return {
+				...(super.attr()), 
+				"draggable": (this.draggable()), 
+				"mol_drag_status": (this.status())
+			};
 		}
 		transfer(){
 			return {
-				"text/plain": "", 
-				"text/html": "", 
-				"text/uri-list": ""
+				"text/plain": (this.plain()), 
+				"text/html": (this.html()), 
+				"text/uri-list": (this.uris())
 			};
 		}
 		allow_copy(){
