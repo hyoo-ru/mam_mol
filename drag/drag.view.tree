@@ -1,15 +1,15 @@
 $mol_drag $mol_ghost
-	event *
+	event *$mol_view_event
 		dragstart? <=> drag_start? <=> start? null
 		drag? <=> drag_move? <=> move? null
 		dragend? <=> drag_end? <=> end? null
-	attr *
+	attr *$mol_view_attr
 		draggable true
 		mol_drag_status <= status? \ready
-	transfer *
-		text/plain \
-		text/html \
-		text/uri-list \
+	transfer *string
+		text/plain <= plain <= title
+		text/html <= html \
+		text/uri-list <= uris \
 	allow_copy true
 	allow_link true
 	allow_move true
