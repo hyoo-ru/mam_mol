@@ -1,9 +1,11 @@
 $mol_drag $mol_ghost
-	event *$mol_view_event
+	event *
+		^
 		dragstart? <=> drag_start? <=> start? null
 		drag? <=> drag_move? <=> move? null
 		dragend? <=> drag_end? <=> end? null
-	attr *$mol_view_attr
+	attr *
+		^
 		draggable true
 		mol_drag_status <= status? \ready
 	transfer *string
