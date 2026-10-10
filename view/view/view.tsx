@@ -2,7 +2,7 @@
 namespace $ {
 
 	export type $mol_view_content = $mol_view|Node|string|number|boolean|null
-	
+
 	export function $mol_view_visible_width() {
 		return $mol_window.size().width
 	}
