@@ -107,6 +107,14 @@ namespace $ {
 		let pos = 0
 		let page_offset = 0
 		
+		/** Char by char concatenation builds a rope with ~32 bytes per char, kept until flattened. */
+		const codes = [] as number[]
+		const flush = ()=> {
+			text += String.fromCodePoint( ... codes )
+			codes.length = 0
+			return text
+		}
+		
 		const read_code = ()=> {
 			let code = buffer[ pos ++ ]
 			if( code >= 0x80 ) code = ( ( mode + code ) & 0x7F ) | 0x80
@@ -116,7 +124,7 @@ namespace $ {
 		const read_remap = ()=> {
 			let code = read_code()
 			if( code >= 0x80 ) code = ascii_set[ code - 0x80 ]
-			if( code === undefined ) $mol_fail( new Error( 'Wrong byte', { cause: { text, pos: pos - 1 } } ) )
+			if( code === undefined ) $mol_fail( new Error( 'Wrong byte', { cause: { text: flush(), pos: pos - 1 } } ) )
 			return code
 		}
 		
@@ -133,17 +141,18 @@ namespace $ {
 				} else if( !ascii_map[ code ] ) {
 					if( code >= 0x80 ) code = ascii_set[ code - 0x80 ]
 					if( mode < tiny_mode ) {
-						if( pos === buffer.length ) $mol_fail( new Error( 'Expected 2 bytes', { cause: { text, pos: pos - 1 } } ) )
+						if( pos === buffer.length ) $mol_fail( new Error( 'Expected 2 bytes', { cause: { text: flush(), pos: pos - 1 } } ) )
 						code |= read_remap() << 7
 					}
 					if( mode === full_mode ) {
-						if( pos === buffer.length ) $mol_fail( new Error( 'Expected 3 bytes', { cause: { text, pos: pos - 2 } } ) )
+						if( pos === buffer.length ) $mol_fail( new Error( 'Expected 3 bytes', { cause: { text: flush(), pos: pos - 2 } } ) )
 						code |= read_remap() << 14
 					}
 					code += page_offset
 				}
 				
-				text += String.fromCodePoint( code )
+				codes.push( code )
+				if( codes.length === 4096 ) flush()
 				
 			} else if( code >= tiny_mode ) { // Tiny Set
 				
@@ -165,10 +174,10 @@ namespace $ {
 		}
 		
 		if( mode !== tiny_mode ) {
-			return $mol_fail( new Error( 'Wrong ending', { cause: { text, mode } } ) )
+			return $mol_fail( new Error( 'Wrong ending', { cause: { text: flush(), mode } } ) )
 		}
 		
-		return text
+		return flush()
 	}
 
 }
