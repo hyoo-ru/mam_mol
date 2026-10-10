@@ -62,6 +62,11 @@ namespace $.$$ {
 			] )
 		},
 		
+		"Long mixed text"( $ ) {
+			const text = 'allô 美しい мир, 🏴‍☠\n'.repeat( 1000 )
+			$mol_assert_equal( $mol_charset_ucf_decode( $mol_charset_ucf_encode( text ) ), text )
+		},
+		
 		"Wrong ending"( $ ) {
 			const bin = new Uint8Array([ 0x88, 0x3C, 0xE2, 0x40 ])
 			const error = $mol_assert_fail( ()=> $mol_charset_ucf_decode( bin ), 'Wrong ending' )
