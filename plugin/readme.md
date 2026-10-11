@@ -6,4 +6,5 @@ Honor plugins:
 
 - [$mol_theme_auto](../theme/auto)
 - [$mol_hotkey](../hotkey)
+- [$mol_selection](../selection)
 - [$mol_speech](../speech)
