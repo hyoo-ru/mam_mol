@@ -152,7 +152,7 @@ namespace $ {
 				}
 				
 				codes.push( code )
-				if( codes.length === 4096 ) flush()
+				if( codes.length === 1024 ) flush()
 				
 			} else if( code >= tiny_mode ) { // Tiny Set
 				
