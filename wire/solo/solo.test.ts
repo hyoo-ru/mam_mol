@@ -594,6 +594,83 @@ namespace $ {
 			
 		},
 
+		async 'Restart awaited task when pub changed'( $ ) {
+
+			const loads = [] as number[]
+
+			class App extends $mol_object2 {
+
+				static $ = $
+
+				@ $mol_wire_solo
+				static param( next = 0 ) { return next }
+
+				/** Snapshots param without subscription, like a request url. */
+				static async load() {
+					const param = $mol_wire_probe( ()=> this.param() ) ?? 0
+					loads.push( param )
+					return param
+				}
+
+				@ $mol_wire_solo
+				static data(): number {
+					this.param()
+					return $mol_wire_sync( this ).load()
+				}
+
+			}
+
+			const wait = $mol_wire_async( App ).data()
+			App.param( 1 )
+
+			$mol_assert_equal( await $mol_wire_async( App ).data(), 1 )
+			$mol_assert_like( loads, [ 0, 1 ] )
+
+			await wait.catch( ()=> {} )
+
+		} ,
+
+		/**
+		 * Like $giper_baza_land.diff_apply destroyed mid-flight: Cursor goes
+		 * non-tracking while auto still points at the temp → mem read uses
+		 * once() → task_get → Promo; outer track_cut → Cut. Also leaks auto
+		 * so later ws onclose / $mol_state_time hit Promo again.
+		 */
+		'Destroy running action does not Promo or Cut'( $ ) {
+
+			class App extends $mol_object2 {
+
+				static $ = $
+
+				@ $mol_wire_solo
+				static flag( next = 0 ) { return next }
+
+				@ $mol_wire_method
+				static work() {
+					const fiber = $mol_wire_auto()!
+					fiber.destructor()
+					// channel() → once() while auto was this temp
+					return this.flag()
+				}
+
+				@ $mol_wire_solo
+				static view() {
+					try {
+						this.work()
+						return 'ok'
+					} catch( error: any ) {
+						return error?.message ?? String( error )
+					}
+				}
+
+			}
+
+			$mol_assert_equal( App.view(), 'ok' )
+			// auto must not stay as the dead temp (would Promo on once/task_get)
+			$mol_assert_equal( App.flag( 1 ), 1 )
+
+		} ,
+
 		'Owned value has js-path name' () {
 
 			class App extends $mol_object2 {

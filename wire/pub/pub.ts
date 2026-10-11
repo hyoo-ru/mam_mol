@@ -88,6 +88,13 @@ namespace $ {
 		fresh() {}
 		
 		/**
+		 * Lives inside single calculation of subscriber or not.
+		 */
+		get temp() {
+			return false
+		}
+		
+		/**
 		 * Allow to put data to caches in the subtree.
 		 */
 		complete() {}
