@@ -38,7 +38,15 @@ namespace $ {
 		@ $mol_mem
 		static estimate() {
 			$mol_state_time.now( 1000 )
-			return $mol_wire_sync( this.native() ?? {} ).estimate()
+			try {
+				return $mol_wire_sync( this.native() ?? {} ).estimate()
+			} catch( error ) {
+				$mol_fail_log( error )
+				return {
+					usage: 0,
+					quota: 0,
+				} as StorageEstimate
+			}
 		}
 		
 		static override total() {

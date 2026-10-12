@@ -9,11 +9,14 @@ namespace $ {
 		/** Some of (transitive) pub update required. */
 		doubt = -2,
 		
+		/** Doubt check in progress, so any incoming quant is noticeable. */
+		check = -3,
+		
 		/** Actual state but may be dropped. */
-		fresh = -3,
+		fresh = -4,
 		
 		/** State will never be changed. */
-		final = -4,
+		final = -5,
 		
 	}
 	
