@@ -669,6 +669,56 @@ namespace $ {
 		} ,
 
 		/**
+		 * Like `_stat_update` → `home.tick` → `stat(null)!.tick()`:
+		 * tick is doubt, clock is stale. Checking clock restales tick.
+		 * A parent that only pulls tick then hits fresh cache — that graph
+		 * stays green even if check falls into track_on. The parent must
+		 * resync the host (stat(null)) before the pull, so a premature
+		 * check-body is a wasted run and the new host ticks again.
+		 */
+		'Stale pub of a doubt sub does not rerun the sub'( $ ) {
+
+			class App extends $mol_object2 {
+
+				static $ = $
+				static runs = 0
+
+				@ $mol_wire_solo
+				static seed( next = 0 ) { return next }
+
+				/** Always a new value on recalc, like Date.now(). */
+				@ $mol_wire_solo
+				static clock() { return this.seed() + Math.random() }
+
+				@ $mol_wire_solo
+				static pawn( next?: App | null ) {
+					return next ?? new App
+				}
+
+				@ $mol_wire_solo
+				static auto() {
+					this.pawn( null )!.tick()
+					return null
+				}
+
+				@ $mol_wire_solo
+				tick() {
+					App.clock()
+					return ++ App.runs
+				}
+
+			}
+
+			$mol_assert_equal( App.auto(), null )
+			$mol_assert_equal( App.runs, 1 )
+
+			App.seed( 1 )
+			App.auto()
+			$mol_assert_equal( App.runs, 2 )
+
+		} ,
+
+		/**
 		 * Like $giper_baza_land.diff_apply destroyed mid-flight: Cursor goes
 		 * non-tracking while auto still points at the temp → mem read uses
 		 * once() → task_get → Promo; outer track_cut → Cut. Also leaks auto
