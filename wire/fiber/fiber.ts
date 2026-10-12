@@ -154,20 +154,37 @@ namespace $ {
 			// Reentrant fresh during doubt-check must not fall into track_on.
 			if( this.cursor === $mol_wire_cursor.check ) return
 			
-			check: if( this.cursor === $mol_wire_cursor.doubt ) {
+			if( this.cursor === $mol_wire_cursor.doubt ) {
 				
 				// Own doubt is lowered for the check, because a pub may outdate
 				// self by a side effect, but such notice would be absorbed as
 				// already announced one and lost.
 				this.cursor = $mol_wire_cursor.check
 				
-				for( let i = this.pub_from ; i < this.sub_from; i += 2 ) {
-					;( this.data[i] as $mol_wire_pub )?.fresh()
-					if( this.cursor !== $mol_wire_cursor.check ) break check
+				// Subscriber already in check is walking us as a pub.
+				// After absorb that subscriber leaves check, so remember now.
+				let nested = false
+				for( let i = this.sub_from; i < this.data.length; i += 2 ) {
+					const sub = this.data[i] as $mol_wire_pub_sub
+					if( (sub as $mol_wire_fiber<any, any, any>).cursor === $mol_wire_cursor.check ) {
+						nested = true
+						break
+					}
 				}
 				
-				this.cursor = $mol_wire_cursor.fresh
-				return
+				for( let i = this.pub_from ; i < this.sub_from; i += 2 ) {
+					;( this.data[i] as $mol_wire_pub )?.fresh()
+					if( this.cursor === $mol_wire_cursor.check ) continue
+					// Restaled. Nested pub must not fall into track_on —
+					// the subscriber in check pulls.
+					if( nested ) return
+					break
+				}
+				
+				if( this.cursor === $mol_wire_cursor.check ) {
+					this.cursor = $mol_wire_cursor.fresh
+					return
+				}
 				
 			}
 			
