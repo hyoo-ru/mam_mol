@@ -12,10 +12,6 @@ namespace $ {
 		protected pub_from = 0 // 4B
 		protected cursor = $mol_wire_cursor.stale // 4B
 		
-		get temp() {
-			return false
-		}
-		
 		get pub_list() {
 			const res = [] as $mol_wire_pub[]
 			const max = this.cursor >=0 ? this.cursor : this.sub_from
@@ -36,6 +32,10 @@ namespace $ {
 			
 			if( this.cursor >= this.pub_from ) {
 				$mol_fail( new Error( 'Circular subscription' ) )
+			}
+			
+			if( this.cursor === $mol_wire_cursor.check ) {
+				$mol_fail( new Error( 'Circular checking' ) )
 			}
 			
 			super.promote()
@@ -99,8 +99,9 @@ namespace $ {
 				cursor < this.cursor;
 				cursor += 2
 			) {
-				const pub = this.data[ cursor ] as $mol_wire_pub
-				pub.fresh()
+				const pub = this.data[ cursor ] as $mol_wire_pub | undefined
+				// Slot may be cleared by pub_off when a temp was destroyed mid-calc.
+				pub?.fresh()
 			}
 			
 			this.cursor = $mol_wire_cursor.fresh
@@ -113,6 +114,10 @@ namespace $ {
 		}
 		
 		destructor() {
+			
+			// Mid-calc destroy (absorb restarts a temp): stop promoting into this
+			// fiber so track_next does not throw 'Promo to non begun sub'.
+			if( $mol_wire_auto() === this ) $mol_wire_auto( null )
 			
 			for(
 				let cursor = this.data.length - 2;
@@ -193,26 +198,28 @@ namespace $ {
 			this.cursor = quant
 			this.emit( $mol_wire_cursor.doubt )
 			
-			// if( pos >= 0 && pos < this.sub_from - 2 ) {
+			if( quant !== $mol_wire_cursor.stale ) return
+			if( !this.incompleted ) return
+			
+			// Notice from own task resumes the same calculation, but from a regular
+			// pub it makes awaited tasks based on outdated data, so restart them.
+			
+			const pub = this.data[ pos ] as $mol_wire_pub
+
+			if( pub?.temp ) return
+			
+			for(
+				let cursor = this.pub_from;
+				cursor < this.sub_from;
+				cursor += 2
+			) {
 				
-			// 	const pub = this.data[ pos ] as $mol_wire_pub
-			// 	if( pub instanceof $mol_wire_task ) return
-				
-			// 	for(
-			// 		let cursor = this.pub_from;
-			// 		cursor < this.sub_from;
-			// 		cursor += 2
-			// 	) {
-					
-			// 		const pub = this.data[ cursor ] as $mol_wire_pub
-					
-			// 		if( pub instanceof $mol_wire_task ) {
-			// 			pub.destructor()
-			// 		}
-					
-			// 	}
-				
-			// }
+				const pub = this.data[ cursor ] as $mol_wire_pub
+
+				if( pub?.temp ) {
+					( pub as $mol_wire_fiber< unknown, unknown[], unknown > ).destructor()
+				}
+			}
 			
 		}
 		

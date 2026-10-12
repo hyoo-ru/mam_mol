@@ -998,10 +998,12 @@ var $;
         $mol_wire_cursor[$mol_wire_cursor["stale"] = -1] = "stale";
         /** Some of (transitive) pub update required. */
         $mol_wire_cursor[$mol_wire_cursor["doubt"] = -2] = "doubt";
+        /** Doubt check in progress, so any incoming quant is noticeable. */
+        $mol_wire_cursor[$mol_wire_cursor["check"] = -3] = "check";
         /** Actual state but may be dropped. */
-        $mol_wire_cursor[$mol_wire_cursor["fresh"] = -3] = "fresh";
+        $mol_wire_cursor[$mol_wire_cursor["fresh"] = -4] = "fresh";
         /** State will never be changed. */
-        $mol_wire_cursor[$mol_wire_cursor["final"] = -4] = "final";
+        $mol_wire_cursor[$mol_wire_cursor["final"] = -5] = "final";
     })($mol_wire_cursor = $.$mol_wire_cursor || ($.$mol_wire_cursor = {}));
 })($ || ($ = {}));
 
@@ -1080,6 +1082,12 @@ var $;
          * Enforce actualization. Should not throw errors.
          */
         fresh() { }
+        /**
+         * Lives inside single calculation of subscriber or not.
+         */
+        get temp() {
+            return false;
+        }
         /**
          * Allow to put data to caches in the subtree.
          */
@@ -1366,9 +1374,6 @@ var $;
     class $mol_wire_pub_sub extends $mol_wire_pub {
         pub_from = 0; // 4B
         cursor = $mol_wire_cursor.stale; // 4B
-        get temp() {
-            return false;
-        }
         get pub_list() {
             const res = [];
             const max = this.cursor >= 0 ? this.cursor : this.sub_from;
@@ -1387,6 +1392,9 @@ var $;
         promote() {
             if (this.cursor >= this.pub_from) {
                 $mol_fail(new Error('Circular subscription'));
+            }
+            if (this.cursor === $mol_wire_cursor.check) {
+                $mol_fail(new Error('Circular checking'));
             }
             super.promote();
         }
@@ -1429,7 +1437,8 @@ var $;
             }
             for (let cursor = this.pub_from; cursor < this.cursor; cursor += 2) {
                 const pub = this.data[cursor];
-                pub.fresh();
+                // Slot may be cleared by pub_off when a temp was destroyed mid-calc.
+                pub?.fresh();
             }
             this.cursor = $mol_wire_cursor.fresh;
         }
@@ -1438,6 +1447,10 @@ var $;
             this.data[sub_pos + 1] = undefined;
         }
         destructor() {
+            // Mid-calc destroy (absorb restarts a temp): stop promoting into this
+            // fiber so track_next does not throw 'Promo to non begun sub'.
+            if ($mol_wire_auto() === this)
+                $mol_wire_auto(null);
             for (let cursor = this.data.length - 2; cursor >= this.sub_from; cursor -= 2) {
                 const sub = this.data[cursor];
                 const pos = this.data[cursor + 1];
@@ -1483,20 +1496,21 @@ var $;
                 return;
             this.cursor = quant;
             this.emit($mol_wire_cursor.doubt);
-            // if( pos >= 0 && pos < this.sub_from - 2 ) {
-            // 	const pub = this.data[ pos ] as $mol_wire_pub
-            // 	if( pub instanceof $mol_wire_task ) return
-            // 	for(
-            // 		let cursor = this.pub_from;
-            // 		cursor < this.sub_from;
-            // 		cursor += 2
-            // 	) {
-            // 		const pub = this.data[ cursor ] as $mol_wire_pub
-            // 		if( pub instanceof $mol_wire_task ) {
-            // 			pub.destructor()
-            // 		}
-            // 	}
-            // }
+            if (quant !== $mol_wire_cursor.stale)
+                return;
+            if (!this.incompleted)
+                return;
+            // Notice from own task resumes the same calculation, but from a regular
+            // pub it makes awaited tasks based on outdated data, so restart them.
+            const pub = this.data[pos];
+            if (pub?.temp)
+                return;
+            for (let cursor = this.pub_from; cursor < this.sub_from; cursor += 2) {
+                const pub = this.data[cursor];
+                if (pub?.temp) {
+                    pub.destructor();
+                }
+            }
         }
         [$mol_dev_format_head]() {
             return $mol_dev_format_native(this);
@@ -1651,7 +1665,8 @@ var $;
         [$mol_dev_format_head]() {
             const cursor = {
                 [$mol_wire_cursor.stale]: '🔴',
-                [$mol_wire_cursor.doubt]: '🟡',
+                [$mol_wire_cursor.doubt]: '🟠',
+                [$mol_wire_cursor.check]: '🟡',
                 [$mol_wire_cursor.fresh]: '🟢',
                 [$mol_wire_cursor.final]: '🔵',
             }[this.cursor] ?? this.cursor.toString();
@@ -1675,10 +1690,11 @@ var $;
             if (this.cursor === $mol_wire_cursor.final)
                 return;
             check: if (this.cursor === $mol_wire_cursor.doubt) {
+                this.cursor = $mol_wire_cursor.check;
                 for (let i = this.pub_from; i < this.sub_from; i += 2) {
                     ;
                     this.data[i]?.fresh();
-                    if (this.cursor !== $mol_wire_cursor.doubt)
+                    if (this.cursor !== $mol_wire_cursor.check)
                         break check;
                 }
                 this.cursor = $mol_wire_cursor.fresh;
@@ -1687,62 +1703,74 @@ var $;
             const bu = this.track_on();
             let result;
             try {
-                switch (this.pub_from) {
-                    case 0:
-                        result = this.task.call(this.host);
-                        break;
-                    case 1:
-                        result = this.task.call(this.host, this.data[0]);
-                        break;
-                    default:
-                        result = this.task.call(this.host, ...this.args);
-                        break;
+                try {
+                    switch (this.pub_from) {
+                        case 0:
+                            result = this.task.call(this.host);
+                            break;
+                        case 1:
+                            result = this.task.call(this.host, this.data[0]);
+                            break;
+                        default:
+                            result = this.task.call(this.host, ...this.args);
+                            break;
+                    }
+                    if ($mol_promise_like(result)) {
+                        if (wrappers.has(result)) {
+                            result = wrappers.get(result).then(a => a);
+                        }
+                        else {
+                            const put = (res) => {
+                                if (this.cache === result)
+                                    this.put(res);
+                                return res;
+                            };
+                            wrappers.set(result, result = Object.assign(result.then(put, put), { destructor: result.destructor || (() => { }) }));
+                            wrappers.set(result, result);
+                            const error = new Error(`Promise in ${this}`);
+                            Object.defineProperty(result, 'stack', { get: () => error.stack });
+                        }
+                    }
                 }
-                if ($mol_promise_like(result)) {
-                    if (wrappers.has(result)) {
-                        result = wrappers.get(result).then(a => a);
+                catch (error) {
+                    if (error instanceof Error || $mol_promise_like(error)) {
+                        result = error;
                     }
                     else {
-                        const put = (res) => {
-                            if (this.cache === result)
-                                this.put(res);
-                            return res;
-                        };
-                        wrappers.set(result, result = Object.assign(result.then(put, put), { destructor: result.destructor || (() => { }) }));
-                        wrappers.set(result, result);
-                        const error = new Error(`Promise in ${this}`);
-                        Object.defineProperty(result, 'stack', { get: () => error.stack });
+                        result = new Error(String(error), { cause: error });
+                    }
+                    if ($mol_promise_like(result)) {
+                        if (wrappers.has(result)) {
+                            result = wrappers.get(result);
+                        }
+                        else {
+                            const put = (v) => {
+                                if (this.cache === result)
+                                    this.absorb();
+                                return v;
+                            };
+                            wrappers.set(result, result = Object.assign(result.then(put, put), { destructor: result.destructor || (() => { }) }));
+                            const error = new Error(`Promise in ${this}`);
+                            Object.defineProperty(result, 'stack', { get: () => error.stack });
+                        }
                     }
                 }
+                // Temp destroyed mid-calc (absorb restart): cut/off would throw.
+                if (this.cursor < this.pub_from)
+                    return this;
+                if (!$mol_promise_like(result)) {
+                    this.track_cut();
+                }
+                this.track_off(bu);
+                this.put(result);
             }
-            catch (error) {
-                if (error instanceof Error || $mol_promise_like(error)) {
-                    result = error;
-                }
-                else {
-                    result = new Error(String(error), { cause: error });
-                }
-                if ($mol_promise_like(result)) {
-                    if (wrappers.has(result)) {
-                        result = wrappers.get(result);
-                    }
-                    else {
-                        const put = (v) => {
-                            if (this.cache === result)
-                                this.absorb();
-                            return v;
-                        };
-                        wrappers.set(result, result = Object.assign(result.then(put, put), { destructor: result.destructor || (() => { }) }));
-                        const error = new Error(`Promise in ${this}`);
-                        Object.defineProperty(result, 'stack', { get: () => error.stack });
-                    }
+            finally {
+                // If cut threw or destructor nulled auto — put outer back
+                // (else once()/onclose → Promo to non begun sub).
+                if ($mol_wire_auto() === this || !$mol_wire_auto()) {
+                    $mol_wire_auto(bu);
                 }
             }
-            if (!$mol_promise_like(result)) {
-                this.track_cut();
-            }
-            this.track_off(bu);
-            this.put(result);
             return this;
         }
         refresh() {
@@ -4429,7 +4457,16 @@ var $;
         }
         static estimate() {
             $mol_state_time.now(1000);
-            return $mol_wire_sync(this.native() ?? {}).estimate();
+            try {
+                return $mol_wire_sync(this.native() ?? {}).estimate();
+            }
+            catch (error) {
+                $mol_fail_log(error);
+                return {
+                    usage: 0,
+                    quota: 0,
+                };
+            }
         }
         static total() {
             return this.estimate().quota ?? 0;

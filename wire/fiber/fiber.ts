@@ -120,7 +120,8 @@ namespace $ {
 			
 			const cursor = {
 				[ $mol_wire_cursor.stale ]: '🔴',
-				[ $mol_wire_cursor.doubt ]: '🟡',
+				[ $mol_wire_cursor.doubt ]: '🟠',
+				[ $mol_wire_cursor.check ]: '🟡',
 				[ $mol_wire_cursor.fresh ]: '🟢',
 				[ $mol_wire_cursor.final ]: '🔵',
 			}[ this.cursor ] ?? this.cursor.toString()
@@ -153,9 +154,11 @@ namespace $ {
 			
 			check: if( this.cursor === $mol_wire_cursor.doubt ) {
 				
+				this.cursor = $mol_wire_cursor.check
+				
 				for( let i = this.pub_from ; i < this.sub_from; i += 2 ) {
 					;( this.data[i] as $mol_wire_pub )?.fresh()
-					if( this.cursor !== $mol_wire_cursor.doubt ) break check
+					if( this.cursor !== $mol_wire_cursor.check ) break check
 				}
 				
 				this.cursor = $mol_wire_cursor.fresh
@@ -168,74 +171,89 @@ namespace $ {
 
 			try {
 
-				switch( this.pub_from ) {
-					case 0: result = (this.task as any).call( this.host! ); break
-					case 1: result = (this.task as any).call( this.host!, this.data[0] ); break
-					default: result = (this.task as any).call( this.host!, ... this.args ); break
-				}
-				
-				if( $mol_promise_like( result ) ) {
+				try {
 
-					if( wrappers.has( result ) ) {
-						result = wrappers.get( result )!.then(a=>a)
-					} else {
-						
-						const put = ( res: Result )=> {
-							if( this.cache === result ) this.put( res )
-							return res
-						}
-
-						wrappers.set( result, result = Object.assign(
-							result.then( put, put ),
-							{ destructor: ( result as any ).destructor || (()=> {}) }
-						) )
-						wrappers.set( result, result )
-
-						const error = new Error( `Promise in ${ this }` )
-						Object.defineProperty( result, 'stack', { get: ()=> error.stack } )
-
-					}
-				}
-				
-			} catch( error: any ) {
-				
-				if( error instanceof Error || $mol_promise_like( error ) ) {
-					result = error
-				} else {
-					result = new Error( String( error ), { cause: error } )
-				}
-				
-				if( $mol_promise_like( result ) ) {
-					
-					if( wrappers.has( result ) ) {
-						result = wrappers.get( result )!
-					} else {
-						
-						const put = ( v: any )=> {
-							if( this.cache === result ) this.absorb()
-							return v
-						}
-						
-						wrappers.set( result, result = Object.assign(
-							result.then( put, put ),
-							{ destructor: ( result as any ).destructor || (()=> {}) }
-						) )
-						
-						const error = new Error( `Promise in ${ this }` )
-						Object.defineProperty( result, 'stack', { get: ()=> error.stack } )
-
+					switch( this.pub_from ) {
+						case 0: result = (this.task as any).call( this.host! ); break
+						case 1: result = (this.task as any).call( this.host!, this.data[0] ); break
+						default: result = (this.task as any).call( this.host!, ... this.args ); break
 					}
 					
+					if( $mol_promise_like( result ) ) {
+
+						if( wrappers.has( result ) ) {
+							result = wrappers.get( result )!.then(a=>a)
+						} else {
+							
+							const put = ( res: Result )=> {
+								if( this.cache === result ) this.put( res )
+								return res
+							}
+
+							wrappers.set( result, result = Object.assign(
+								result.then( put, put ),
+								{ destructor: ( result as any ).destructor || (()=> {}) }
+							) )
+							wrappers.set( result, result )
+
+							const error = new Error( `Promise in ${ this }` )
+							Object.defineProperty( result, 'stack', { get: ()=> error.stack } )
+
+						}
+					}
+					
+				} catch( error: any ) {
+					
+					if( error instanceof Error || $mol_promise_like( error ) ) {
+						result = error
+					} else {
+						result = new Error( String( error ), { cause: error } )
+					}
+					
+					if( $mol_promise_like( result ) ) {
+						
+						if( wrappers.has( result ) ) {
+							result = wrappers.get( result )!
+						} else {
+							
+							const put = ( v: any )=> {
+								if( this.cache === result ) this.absorb()
+								return v
+							}
+							
+							wrappers.set( result, result = Object.assign(
+								result.then( put, put ),
+								{ destructor: ( result as any ).destructor || (()=> {}) }
+							) )
+							
+							const error = new Error( `Promise in ${ this }` )
+							Object.defineProperty( result, 'stack', { get: ()=> error.stack } )
+
+						}
+						
+					}
+					
+				}
+				
+				// Temp destroyed mid-calc (absorb restart): cut/off would throw.
+				if( this.cursor < this.pub_from ) return this
+				
+				if( ! $mol_promise_like( result ) ) {
+					this.track_cut()
+				}
+				
+				this.track_off( bu )
+				this.put( result )
+				
+			} finally {
+				
+				// If cut threw or destructor nulled auto — put outer back
+				// (else once()/onclose → Promo to non begun sub).
+				if( $mol_wire_auto() === this || ! $mol_wire_auto() ) {
+					$mol_wire_auto( bu )
 				}
 				
 			}
-			
-			if( ! $mol_promise_like( result ) ) {
-				this.track_cut()
-			}
-			
-			this.track_off( bu )
-			this.put( result )
 			
 			return this
 		}
