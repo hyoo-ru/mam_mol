@@ -35251,7 +35251,7 @@ var $;
             return String(val ?? '');
         }
         function norm_number(val) {
-            return val === '' ? Number.NaN : Number(val ?? 0);
+            return val === '' || val === null ? Number.NaN : Number(val ?? 0);
         }
         function norm_bool(val) {
             return Boolean(val ?? false);
