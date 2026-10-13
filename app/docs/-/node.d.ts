@@ -165,12 +165,10 @@ declare namespace $ {
         stale = -1,
         /** Some of (transitive) pub update required. */
         doubt = -2,
-        /** Doubt check in progress, so any incoming quant is noticeable. */
-        check = -3,
         /** Actual state but may be dropped. */
-        fresh = -4,
+        fresh = -3,
         /** State will never be changed. */
-        final = -5
+        final = -4
     }
 }
 
@@ -215,10 +213,6 @@ declare namespace $ {
          * Enforce actualization. Should not throw errors.
          */
         fresh(): void;
-        /**
-         * Lives inside single calculation of subscriber or not.
-         */
-        get temp(): boolean;
         /**
          * Allow to put data to caches in the subtree.
          */
@@ -326,6 +320,7 @@ declare namespace $ {
     class $mol_wire_pub_sub extends $mol_wire_pub implements $mol_wire_sub {
         protected pub_from: number;
         protected cursor: $mol_wire_cursor;
+        get temp(): boolean;
         get pub_list(): $mol_wire_pub[];
         track_on(): $mol_wire_sub | null;
         promote(): void;
@@ -20371,8 +20366,8 @@ declare namespace $ {
         readonly table: string;
         readonly header: string;
         readonly list: string;
-        readonly cut: string;
         readonly quote: string;
+        readonly cut: string;
         readonly paragraph: string;
         readonly script: string;
         readonly win_end: string;

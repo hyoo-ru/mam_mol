@@ -632,7 +632,7 @@ declare namespace $ {
      * Theme css variables
      * @see https://mol.hyoo.ru/#!section=demos/demo=mol_textarea_demo
      */
-    const $mol_theme: Record<"image" | "line" | "text" | "field" | "current" | "focus" | "hover" | "hue" | "back" | "card" | "special" | "control" | "shade" | "spirit" | "hue_spread", $mol_style_func<"var", unknown>>;
+    const $mol_theme: Record<"image" | "line" | "text" | "hue" | "back" | "hover" | "card" | "current" | "special" | "control" | "shade" | "focus" | "field" | "spirit" | "hue_spread", $mol_style_func<"var", unknown>>;
 }
 
 declare namespace $ {
@@ -800,12 +800,10 @@ declare namespace $ {
         stale = -1,
         /** Some of (transitive) pub update required. */
         doubt = -2,
-        /** Doubt check in progress, so any incoming quant is noticeable. */
-        check = -3,
         /** Actual state but may be dropped. */
-        fresh = -4,
+        fresh = -3,
         /** State will never be changed. */
-        final = -5
+        final = -4
     }
 }
 
@@ -850,10 +848,6 @@ declare namespace $ {
          * Enforce actualization. Should not throw errors.
          */
         fresh(): void;
-        /**
-         * Lives inside single calculation of subscriber or not.
-         */
-        get temp(): boolean;
         /**
          * Allow to put data to caches in the subtree.
          */
@@ -961,6 +955,7 @@ declare namespace $ {
     class $mol_wire_pub_sub extends $mol_wire_pub implements $mol_wire_sub {
         protected pub_from: number;
         protected cursor: $mol_wire_cursor;
+        get temp(): boolean;
         get pub_list(): $mol_wire_pub[];
         track_on(): $mol_wire_sub | null;
         promote(): void;
@@ -1700,7 +1695,7 @@ declare namespace $ {
      * Z-index values for layers
      * https://page.hyoo.ru/#!=xthcpx_wqmiba
      */
-    let $mol_layer: Record<"focus" | "hover" | "float" | "speck" | "popup", $mol_style_func<"var", unknown>>;
+    let $mol_layer: Record<"float" | "hover" | "focus" | "speck" | "popup", $mol_style_func<"var", unknown>>;
 }
 
 declare namespace $ {

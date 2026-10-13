@@ -694,7 +694,7 @@ declare namespace $ {
      * Theme css variables
      * @see https://mol.hyoo.ru/#!section=demos/demo=mol_textarea_demo
      */
-    const $mol_theme: Record<"image" | "line" | "text" | "field" | "current" | "focus" | "hover" | "hue" | "back" | "card" | "special" | "control" | "shade" | "spirit" | "hue_spread", $mol_style_func<"var", unknown>>;
+    const $mol_theme: Record<"image" | "line" | "text" | "field" | "focus" | "hue" | "back" | "hover" | "card" | "current" | "special" | "control" | "shade" | "spirit" | "hue_spread", $mol_style_func<"var", unknown>>;
 }
 
 declare namespace $ {
@@ -705,7 +705,7 @@ declare namespace $ {
      * Gap in CSS
      * @see https://page.hyoo.ru/#!=msdb74_bm7nsq
      */
-    let $mol_gap: Record<"text" | "block" | "blur" | "emoji" | "page" | "space" | "round", $mol_style_func<"var", unknown>>;
+    let $mol_gap: Record<"text" | "block" | "emoji" | "blur" | "page" | "space" | "round", $mol_style_func<"var", unknown>>;
 }
 
 declare namespace $ {
@@ -862,12 +862,10 @@ declare namespace $ {
         stale = -1,
         /** Some of (transitive) pub update required. */
         doubt = -2,
-        /** Doubt check in progress, so any incoming quant is noticeable. */
-        check = -3,
         /** Actual state but may be dropped. */
-        fresh = -4,
+        fresh = -3,
         /** State will never be changed. */
-        final = -5
+        final = -4
     }
 }
 
@@ -912,10 +910,6 @@ declare namespace $ {
          * Enforce actualization. Should not throw errors.
          */
         fresh(): void;
-        /**
-         * Lives inside single calculation of subscriber or not.
-         */
-        get temp(): boolean;
         /**
          * Allow to put data to caches in the subtree.
          */
@@ -1023,6 +1017,7 @@ declare namespace $ {
     class $mol_wire_pub_sub extends $mol_wire_pub implements $mol_wire_sub {
         protected pub_from: number;
         protected cursor: $mol_wire_cursor;
+        get temp(): boolean;
         get pub_list(): $mol_wire_pub[];
         track_on(): $mol_wire_sub | null;
         promote(): void;
@@ -1716,7 +1711,7 @@ declare namespace $ {
      * Z-index values for layers
      * https://page.hyoo.ru/#!=xthcpx_wqmiba
      */
-    let $mol_layer: Record<"focus" | "hover" | "float" | "speck" | "popup", $mol_style_func<"var", unknown>>;
+    let $mol_layer: Record<"focus" | "float" | "hover" | "speck" | "popup", $mol_style_func<"var", unknown>>;
 }
 
 declare namespace $ {
@@ -4692,7 +4687,7 @@ declare namespace $.$$ {
         col_head_content(colId: string): readonly string[];
         rows(): readonly $mol_view[];
         cells(row_id: string[]): readonly $mol_view[];
-        col_type(col_id: string): "text" | "number" | "branch";
+        col_type(col_id: string): "number" | "text" | "branch";
         Cell(id: {
             row: string[];
             col: string;
@@ -10630,7 +10625,7 @@ declare namespace $.$$ {
     class $mol_audio_status extends $.$mol_audio_status {
         status(next?: $mol_audio_room_status): $mol_audio_room_status;
         wakeup(): void;
-        Icon(): $mol_icon_play | $mol_icon_power_sleep | $mol_icon_alert | $mol_icon_pause | $mol_icon_sleep;
+        Icon(): $mol_icon_play | $mol_icon_alert | $mol_icon_power_sleep | $mol_icon_pause | $mol_icon_sleep;
         wakeup_enabled(): boolean;
         status_name(): string;
     }
@@ -11775,7 +11770,7 @@ declare namespace $.$$ {
         }): number;
         col_head_title(col: string): string;
         event_sort_toggle(col: string, next?: Event): void;
-        col_type(col: string): "text" | "number" | "branch";
+        col_type(col: string): "number" | "text" | "branch";
         cell_content_number(id: {
             row: string[];
             col: string;
@@ -20324,19 +20319,19 @@ declare namespace $ {
 declare namespace $ {
     let $hyoo_marked_flow: $mol_regexp<{
         [x: string]: string;
-        readonly cut: string;
-        readonly list: string;
         readonly table: string;
+        readonly cut: string;
         readonly header: string;
+        readonly list: string;
         readonly quote: string;
         readonly paragraph: string;
         readonly script: string;
         readonly win_end: string;
         readonly mac_end: string;
         readonly content: string;
-        readonly kids: string;
         readonly indent: string;
         readonly marker: string;
+        readonly kids: string;
     }>;
 }
 
@@ -25097,7 +25092,7 @@ declare namespace $.$$ {
         type_auto(): "Null" | "Bool" | "Bint" | "Real" | "Date" | "Text" | "List" | "Tupl";
         type_mutable(): boolean;
         type_option_content(type: string): readonly any[];
-        Type_icon(type: string): $mol_icon_flag_checkered | $mol_icon_pound | $mol_icon_division | $mol_icon_clock_outline | $mol_icon_card_text_outline | $mol_icon_format_list_bulleted | $mol_icon_table | $mol_icon_circle_off_outline;
+        Type_icon(type: string): $mol_icon_clock_outline | $mol_icon_flag_checkered | $mol_icon_pound | $mol_icon_division | $mol_icon_card_text_outline | $mol_icon_format_list_bulleted | $mol_icon_table | $mol_icon_circle_off_outline;
         bool(next?: boolean): boolean;
         bint(next?: bigint): bigint;
         real(next?: number): number;
@@ -25105,7 +25100,7 @@ declare namespace $.$$ {
         text(next?: string): string;
         list(next?: readonly unknown[]): readonly unknown[];
         tupl(next?: [readonly string[], readonly unknown[]]): [readonly string[], readonly unknown[]];
-        head(): ($.$mol_string | $mol_button_minor | $.$mol_bigint_field | $.$mol_number | $.$mol_date | $.$mol_textarea)[];
+        head(): ($.$mol_string | $mol_button_minor | $.$mol_number | $.$mol_textarea | $.$mol_date | $.$mol_bigint_field)[];
         body(): $mol_bar[];
         item_key(index: number): string | number;
         item_val(index: number, next?: unknown): unknown;
