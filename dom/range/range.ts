@@ -3,7 +3,7 @@ namespace $ {
 		
 		constructor(
 			readonly anchor: $mol_dom_point,
-			readonly extend: $mol_dom_point,
+			readonly extend: $mol_dom_point = anchor,
 		) { super() }
 		
 		/** Iterator for deep comparison. */
@@ -43,6 +43,25 @@ namespace $ {
 		/** Deeper Element which contain whole selection. */
 		container() {
 			return this.native().commonAncestorContainer
+		}
+		
+		/** Returns range with points ordered in document order. */
+		ordered() {
+			const anchor = new $mol_dom_range( this.anchor )
+			return anchor.point_compare( this.extend ) >= 0 ? this : this.swap()
+		}
+		
+		/** Raises range boundaries to a common parent. */
+		lifted() {
+			
+			const ordered = this.ordered()
+			const container = ordered.container()
+			
+			return new $mol_dom_range(
+				$mol_dom_point.nose( ordered.anchor.lifted_to( container ) ),
+				$mol_dom_point.tail( ordered.extend.lifted_to( container ) ),
+			)
+			
 		}
 		
 		/** Has now content. */
