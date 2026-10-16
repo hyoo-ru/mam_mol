@@ -88,7 +88,7 @@ namespace $ {
 						}
 					}
 
-				} else if( key === '@media' || key === '@container') {
+				} else if( key === '@media' || key === '@container' || key === '@supports') {
 
 					const media = (config as any)[key] as any
 
