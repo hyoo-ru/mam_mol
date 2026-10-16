@@ -502,6 +502,10 @@ namespace $ {
 
 		/** @see https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-behavior */
 		scroll?: {
+			/** @see https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/scroll-marker-group */
+			marker?: {
+				group?: 'before' | 'after' | Common
+			}
 
 			/** @see https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-snap-align */
 			snap?: {
@@ -693,8 +697,6 @@ namespace $ {
 		 */
 		opacity: number | Common
 
-		scrollMarkerGroup?: 'before' | 'after' | Common
-		
 	}
 
 	type Container_type = 'normal' | 'size' | 'inline-size' | 'scroll-state' | 'anchored'
