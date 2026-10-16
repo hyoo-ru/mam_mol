@@ -37,7 +37,7 @@ namespace $ {
 			} finally {
 				
 				trans.abort()
-				await db.kill()
+				db.kill()
 				
 			}
 
@@ -68,7 +68,7 @@ namespace $ {
 			} finally {
 				
 				trans.abort()
-				await db.kill()
+				db.kill()
 				
 			}
 
