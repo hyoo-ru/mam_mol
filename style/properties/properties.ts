@@ -42,7 +42,7 @@ namespace $ {
 	| 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue'
 	| 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise'
 	| 'violet' | 'wheat' | 'white' | 'whitesmoke' | 'yellow' | 'yellowgreen'
-	| 'transparent' | 'currentcolor'
+	| 'transparent' | 'currentColor'
 	| $mol_style_func< 'hsla' | 'rgba' | 'var' >
 	| `#${string}`
 	| `hsl(${Space}${Angle} ${Portion} ${Portion}${'' | `${Space}/${Space}${Portion}`}${Space})`
@@ -502,6 +502,10 @@ namespace $ {
 
 		/** @see https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-behavior */
 		scroll?: {
+			/** @see https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/scroll-marker-group */
+			marker?: {
+				group?: 'before' | 'after' | Common
+			}
 
 			/** @see https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-snap-align */
 			snap?: {
@@ -692,7 +696,7 @@ namespace $ {
 		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/opacity
 		 */
 		opacity: number | Common
-		
+
 	}
 
 	type Container_type = 'normal' | 'size' | 'inline-size' | 'scroll-state' | 'anchored'

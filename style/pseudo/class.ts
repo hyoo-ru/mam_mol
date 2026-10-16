@@ -44,7 +44,7 @@ namespace $ {
 	| ':root'
 	| ':scope'
 	| ':target'
+	| ':target-current'
 	| ':valid'
 	| ':visited'
-
 }
