@@ -42,7 +42,7 @@ namespace $ {
 	| 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue'
 	| 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise'
 	| 'violet' | 'wheat' | 'white' | 'whitesmoke' | 'yellow' | 'yellowgreen'
-	| 'transparent' | 'currentcolor'
+	| 'transparent' | 'currentColor'
 	| $mol_style_func< 'hsla' | 'rgba' | 'var' >
 	| `#${string}`
 	| `hsl(${Space}${Angle} ${Portion} ${Portion}${'' | `${Space}/${Space}${Portion}`}${Space})`
@@ -692,6 +692,8 @@ namespace $ {
 		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/opacity
 		 */
 		opacity: number | Common
+
+		scrollMarkerGroup?: 'before' | 'after' | Common
 		
 	}
 
