@@ -14,7 +14,7 @@ namespace $.$$ {
 			$mol_assert_equal( false, $mol_schema_boolean.cast( 'true' ) )
 			
 			$mol_assert_equal( false, $mol_schema_boolean.guard( false ) )
-			$mol_assert_fail( ()=> $mol_schema_boolean.guard( null ), 'Wrong type' )
+			$mol_assert_fail( ()=> $mol_schema_boolean.guard( null ), 'Wrong boolean' )
 			
 		},
 		
