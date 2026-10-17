@@ -10,6 +10,8 @@ $mol_audio_demo_sequencer $mol_example_small
 				notes? <=> notes? \e e e _ e e e _ e g c d e _ _ _/2 f f f f f e e e e/2 e/2 d d e d _ g _
 				note_length? <=> note_length? .25
 				note_off_part? <=> note_off_part? .4
+				instrument* <= Beep* $mol_audio_vibe
+					shape_default <= shape
 	sub /
 		<= List $mol_list rows /
 			<= Note_settings $mol_row sub /
@@ -25,11 +27,23 @@ $mol_audio_demo_sequencer $mol_example_small
 						precision .1
 						value_min .1
 						value? <=> note_off_part?
-			<= Notes_field $mol_form_field
-				name \Notes
-				control <= Notes $mol_textarea
-					hint \Example: e _ c#5/2 _/2
-					value? <=> notes?
+			<= Shape $mol_labeler
+				title <= shape_label \Shape
+				content /
+					<= Shape_select $mol_select
+						Filter null
+						value? <=> shape? null
+						options /$mol_audio_vibe_shape
+							\sine
+							\square
+							\sawtooth
+							\triangle
+			<= Notes_row $mol_row sub /
+				<= Notes_field $mol_form_field
+					name \Notes
+					control <= Notes $mol_textarea
+						hint \Example: e _ c#5/2 _/2
+						value? <=> notes?
 			<= Beep_row $mol_row sub /
 				<= Beep_active $mol_check_icon
 					hint \Play / Pause
