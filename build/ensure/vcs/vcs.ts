@@ -17,6 +17,15 @@ namespace $ {
 			return null as $mol_tree2 | null
 		}
 
+		@ $mol_mem
+		overrides() {
+			const overrides = this.meta(this.root().path())
+			return overrides?.select('override')?.kids
+				?.map(
+					item => (item.kids?.[0].value?.split(' ') ?? []) as [string, string]
+				) ?? []
+		}
+
 		@ $mol_mem_key
 		protected repo( path : string ) {
 			const vcs_type = this.vcs_type()
@@ -29,11 +38,15 @@ namespace $ {
 			const parent = mod.parent()
 			const mapping = this.meta( parent.path() )
 
+			
 			const url_branch = mapping?.select( 'pack' , mod.name(), vcs_type).kids
 				.find($mol_guard_defined)?.kids[0]
-
-			const url = url_branch?.value ?? null
+			
+			let url = url_branch?.value ?? null
 			const branch = url_branch?.kids[0]?.value ?? null
+			
+			const parts = this.overrides().find(([from, to]) => url?.startsWith(from))
+			if (url && parts) url = parts[1] + url.slice(parts[0].length)
 
 			return url ? { url, branch } : null
 		}
