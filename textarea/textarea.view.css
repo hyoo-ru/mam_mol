@@ -12,24 +12,22 @@
 }
 
 [mol_textarea_view] {
-	pointer-events: none;
+    interactivity: inert;
 	white-space: inherit;
 	font-family: inherit;
 	tab-size: inherit;
-	user-select: none;
 }
 
 [mol_textarea_view_copy] {
-	pointer-events: all;
+    interactivity: initial;
 }
 
 [mol_textarea_clickable] > [mol_textarea_view] {
-	pointer-events: all;
-	user-select: auto;
+    interactivity: initial;
 }
 
 [mol_textarea_clickable] > [mol_textarea_edit] {
-	user-select: none;
+    interactivity: inert;
 }
 
 [mol_textarea_edit] {
