@@ -63,6 +63,10 @@ namespace $ {
 				remote: req.socket.remoteAddress + ':' + req.socket.remotePort
 			})
 			
+			if( Number( req.headers['content-length'] ) > this.message_limit ) {
+				return port.send_code( $mol_rest_code["Request Entity Too Large"] )
+			}
+			
 			$mol_wire_sync( res ).setHeader( 'Access-Control-Allow-Origin', '*' )
 			$mol_wire_sync( res ).setHeader( 'Access-Control-Allow-Methods', '*' )
 			$mol_wire_sync( res ).setHeader( 'Access-Control-Allow-Headers', '*' )
@@ -201,7 +205,7 @@ namespace $ {
 		
 		_ws_income_chunks = new WeakMap< InstanceType< typeof $node.stream.Duplex >, Uint8Array< ArrayBuffer >[] >
 		_ws_income_frames = new WeakMap< InstanceType< typeof $node.stream.Duplex >, ( string | Uint8Array< ArrayBuffer > )[] >
-		ws_message_size_max = 64 * 1024 * 1024 // 64MiB
+		message_limit = 16 * 1024 * 1024 // 16MiB
 		
 		async ws_income(
 			chunk: Uint8Array< ArrayBuffer >,
@@ -240,9 +244,9 @@ namespace $ {
 					total_size += typeof frame === 'string' ? frame.length : frame.byteLength
 				}
 				
-				if( total_size > this.ws_message_size_max ) throw new Error( 'WebSocket message too large', { cause: {
+				if( total_size > this.message_limit ) throw new Error( 'WebSocket message too large', { cause: {
 					size: total_size,
-					limit: this.ws_message_size_max,
+					limit: this.message_limit,
 				} } )
 				
 				const msg_size = header_size + frame_size

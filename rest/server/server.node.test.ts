@@ -5,7 +5,7 @@ namespace $ {
 		async 'Close socket on oversized fragmented WebSocket message'( $ ) {
 			
 			const server = $mol_rest_server.make({
-				ws_message_size_max: 5
+				message_limit: 5
 			})
 			
 			let closed = false
