@@ -7,11 +7,8 @@ namespace $.$$ {
 
 		override destructor() {
 			super.destructor()
-			// dom_node is solid and, via dom_node_external, subscribed to Sub().
-			// Release it or Sub stays owned and its destructor never runs.
-			const task = ( this.dom_node as { orig?: { name: string } } ).orig
-			const fiber = task && ( this as any )[ task.name + '()' ] as { destructor(): void } | null
-			fiber?.destructor()
+			// Solid dom_node subscribes to Sub() and would keep it after this view is gone.
+			$mol_wire_atom_extract( this , this.dom_node )?.destructor()
 		}
 		
 		override dom_node_external( next?: Element ) {
