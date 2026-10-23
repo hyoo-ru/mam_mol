@@ -4,6 +4,12 @@ namespace $.$$ {
 	 * Mixin view logic to DOM node of another component.
 	 */
 	export class $mol_ghost extends $.$mol_ghost {
+
+		override destructor() {
+			super.destructor()
+			// Solid dom_node subscribes to Sub() and would keep it after this view is gone.
+			$mol_wire_atom_extract( this , this.dom_node )?.destructor()
+		}
 		
 		override dom_node_external( next?: Element ) {
 			return this.Sub().dom_node( next )
