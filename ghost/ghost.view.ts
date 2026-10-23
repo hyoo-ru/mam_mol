@@ -4,6 +4,15 @@ namespace $.$$ {
 	 * Mixin view logic to DOM node of another component.
 	 */
 	export class $mol_ghost extends $.$mol_ghost {
+
+		override destructor() {
+			super.destructor()
+			// dom_node is solid and, via dom_node_external, subscribed to Sub().
+			// Release it or Sub stays owned and its destructor never runs.
+			const task = ( this.dom_node as { orig?: { name: string } } ).orig
+			const fiber = task && ( this as any )[ task.name + '()' ] as { destructor(): void } | null
+			fiber?.destructor()
+		}
 		
 		override dom_node_external( next?: Element ) {
 			return this.Sub().dom_node( next )
