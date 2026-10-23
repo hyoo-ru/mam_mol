@@ -1,2 +1,6 @@
 $mol_ghost $mol_view
 	Sub $mol_view
+		title => title
+		minimal_width => minimal_width
+		minimal_height => minimal_height
+		dom_node? => dom_node_external?

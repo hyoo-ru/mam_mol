@@ -5,12 +5,8 @@ namespace $.$$ {
 	 */
 	export class $mol_ghost extends $.$mol_ghost {
 		
-		override dom_node_external( next?: Element ) {
-			return this.Sub().dom_node( next )
-		}
-		
 		@ $mol_mem
-		dom_node_actual() {
+		override dom_node_actual() {
 			this.dom_node()
 			const node = this.Sub().dom_node_actual()
 
@@ -25,7 +21,7 @@ namespace $.$$ {
 			return node
 		}
 		
-		dom_tree() {
+		override dom_tree() {
 			
 			const Sub = this.Sub()
 			const node = Sub.dom_tree()
@@ -40,16 +36,10 @@ namespace $.$$ {
 			return node
 		}
 
-		title() {
-			return this.Sub().title()
-		}
-		
-		minimal_width() {
-			return this.Sub().minimal_width()
-		}
-
-		minimal_height() {
-			return this.Sub().minimal_height()
+		override destructor() {
+			const sub = $mol_wire_probe(() => this.Sub())
+			sub?.destructor()
+			super.destructor()
 		}
 
 	}
