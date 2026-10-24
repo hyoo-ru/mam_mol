@@ -128,7 +128,7 @@ namespace $ {
 						ref.struct( '(,)' )
 					])
 				]),
-				...class_overrides.call(this, ref.kids, belt),
+				... class_overrides.call( this, ref.kids, belt ),
 				ref.struct("obj")
 			] : [
 				ref.struct( '...', [
@@ -221,7 +221,7 @@ namespace $ {
 								input.struct( '(,)', input.select( '/', null ).hack( belt ) ),
 							] ),
 						] ),
-						... class_overrides.call(this, input.kids, belt),
+						... class_overrides.call( this, input.kids, belt ),
 						input.struct( 'obj' ),
 					]
 					
@@ -259,7 +259,7 @@ namespace $ {
 	}
 
 	function class_overrides(this: $, kids: readonly $mol_tree2[], belt: $mol_tree2_belt<Context>) {
-		return kids.filter(over => over.kids[0]?.type === '=>').map(over => 
+		return kids.filter( over => over.type[0] !== "/" && over.kids[0]?.type !== '=>' ).map(over => 
 			over.struct( '=', [
 				over.struct( '()', [
 					over.struct( 'obj' ),
