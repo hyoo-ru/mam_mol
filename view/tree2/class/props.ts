@@ -30,6 +30,9 @@ namespace $ {
 		const props_inner = {} as Record<string, $mol_tree2>
 
 		const add_inner = ( prop: $mol_tree2 ) => {
+			const op = prop.kids[0]
+			if ( op?.type === "^" && op.kids.every( k => k.kids[0].type === "=>" ) ) return
+
 			const { name } = this.$mol_view_tree2_prop_parts(prop)
 			const prev = props_inner[name]
 			if (prev && prev.kids[0]?.toString() !== prop.kids[0]?.toString()) {
