@@ -119,7 +119,7 @@ namespace $ {
 			
 			'=>': bind => [],
 			
-			'^': ( ref, belt, context )=> [
+			'^': ( ref, belt, context )=> { if (op?.type !== "^") return [
 				ref.struct( '...', [
 					
 					// prop ^ foo
@@ -151,7 +151,16 @@ namespace $ {
 					] ),
 					
 				] ),
-			],
+			]
+				const fake = ref.struct("fake", [ref.struct('$mol_view', ref.kids)])
+				const hacked = fake.hack(belt, context)
+				;(hacked[0].kids as $mol_tree2[])[1] = ref.struct( '()', [
+					ref.struct( 'super' ),
+					ref.struct( '[]', [ ref.data( name ) ] ),
+					ref.struct( '(,)' )
+				] )
+				return hacked
+			},
 
 			'=': bind => [ bind.struct( '()', [
 				bind.struct( 'this' ),
