@@ -99,6 +99,27 @@ namespace $ {
 				] ),
 			] )
 		}
+
+		const class_overrides = (kids: readonly $mol_tree2[], belt: $mol_tree2_belt<Context>) => {
+			if( ! next ) addons.push( decorate() )
+			return kids
+				.filter(over => over.type[0] !== "/" && over.kids[0]?.type !== '=>')
+				.map(over =>
+					over.struct( '=', [
+						over.struct( '()', [
+							over.struct( 'obj' ),
+							over.struct( '[]', [
+								over.data( name_of.call(this, over ) ),
+							] ),
+						] ),
+						over.struct( '=>', [
+							args_of.call(this, over ),
+							over.struct( '()', over.hack( belt, { chain: [ over.type ] } )),
+						] ),
+					] )
+				)
+		}
+
 		const op = prop.kids[0]
 		const is_delegate = op?.type === '<=>' || op?.type === '='
 		if( ! is_delegate && next ) addons.push( decorate() )
@@ -128,7 +149,7 @@ namespace $ {
 						ref.struct( '(,)' )
 					])
 				]),
-				... class_overrides.call( this, ref.kids, belt ),
+				... class_overrides( ref.kids, belt ),
 				ref.struct("obj")
 			] : [
 				ref.struct( '...', [
@@ -206,7 +227,7 @@ namespace $ {
 				]
 
 				if( $mol_view_tree2_class_match( input ) ) {
-					if( ! next ) addons.push( decorate() )
+					
 					return [
 						input.struct( 'const', [
 							input.struct( 'obj' ),
@@ -256,23 +277,6 @@ namespace $ {
 		)
 
 		return acc
-	}
-
-	function class_overrides(this: $, kids: readonly $mol_tree2[], belt: $mol_tree2_belt<Context>) {
-		return kids.filter( over => over.type[0] !== "/" && over.kids[0]?.type !== '=>' ).map(over => 
-			over.struct( '=', [
-				over.struct( '()', [
-					over.struct( 'obj' ),
-					over.struct( '[]', [
-						over.data( name_of.call(this, over ) ),
-					] ),
-				] ),
-				over.struct( '=>', [
-					args_of.call(this, over ),
-					over.struct( '()', over.hack( belt, { chain: [ over.type ] } )),
-				] ),
-			] )
-		)
 	}
 
 	export function $mol_view_tree2_to_js( this: $, descr: $mol_tree2 ) {
