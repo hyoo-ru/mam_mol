@@ -1,0 +1,16 @@
+$mol_passkey_button $mol_row
+	salt \mol_passkey
+	storage_key \mol_passkey_id
+	key? null
+	error? \
+	sub /
+		<= Unlock $mol_button_major
+			title @ \Unlock with passkey
+			click? <=> unlock? null
+		<= Fail $mol_status
+			message <= error?
+		<= Fresh $mol_button_minor
+			title @ \Create new passkey (old key will be lost)
+			click? <=> create? null
+
+
