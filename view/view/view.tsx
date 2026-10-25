@@ -205,7 +205,7 @@ namespace $ {
 
 		@ $mol_mem
 		dom_node( next? : Element ) {
-			$mol_wire_solid()
+			// $mol_wire_solid()
 			const node = this.dom_node_external( next )
 			$mol_dom_render_attributes( node , this.attr_static() )
 			
