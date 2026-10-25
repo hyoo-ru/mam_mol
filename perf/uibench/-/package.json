@@ -113,7 +113,6 @@
     "$mol_wire_probe",
     "$mol_wire_watch",
     "$mol_const",
-    "$mol_wire_solid",
     "$mol_dom_render_attributes",
     "$mol_dom_render_events",
     "$mol_plugin",
