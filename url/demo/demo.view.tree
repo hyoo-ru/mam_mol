@@ -1,0 +1,25 @@
+$mol_url_demo $mol_example_small
+	title \Url input field based on $mol_string
+	sub /
+		<= Simple $mol_url
+			name \Preset value
+			value? <=> simple_value? \https://mol.hyoo.ru
+		<= Hint $mol_url
+			name \With hint
+			value? <=> value? \
+			hint \https://mol.hyoo.ru
+		<= Message $mol_url
+			name \Custom message
+			value? <=> value? \
+			hint \https://mol.hyoo.ru
+			message \Message
+		<= Optional $mol_url
+			name \Optional
+			value? <=> value? \
+			hint \https://mol.hyoo.ru
+			check null
+	tags /
+		\input
+	aspects /
+		\Widget/Control
+		\Type/String
