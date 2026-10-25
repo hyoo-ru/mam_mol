@@ -469,7 +469,9 @@ namespace $ {
 		
 		@ $mol_mem
 		repl() {
-			
+
+			if( !process.stdin.isTTY ) return null
+
 			const terminal = $node.readline.createInterface({
 				input: process.stdin,
 				output: process.stdout,
