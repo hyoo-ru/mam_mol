@@ -31,6 +31,12 @@ $mol_number_demo $mol_example_small
 							<= Hint_number $mol_number
 								hint \Any number
 								value? <=> value?
+					-
+					<= Button_number_label $mol_labeler
+						title \Button
+						content /
+							<= Number_button $mol_number_button
+								value? <=> value?
 			-
 			<= Section_disabled $mol_section
 				title \Disabled
