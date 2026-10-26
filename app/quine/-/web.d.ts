@@ -3079,11 +3079,27 @@ declare namespace $ {
 
 //# sourceMappingURL=float.view.tree.d.ts.map
 declare namespace $ {
+    class $mol_dom_transfer extends $mol_object {
+        readonly native: DataTransfer;
+        static wrap(native: DataTransfer): $mol_dom_transfer;
+        constructor(native: DataTransfer);
+        get(type: string): string;
+        files(): {
+            [x: number]: File;
+            readonly length: number;
+            item: (index: number) => File | null;
+            [Symbol.iterator]: () => ArrayIterator<File>;
+        };
+    }
+}
+
+declare namespace $ {
     class $mol_dom_event<EventType extends Event> extends $mol_object {
         readonly native: EventType;
+        static wrap<EventType extends Event>(event: EventType): $mol_dom_event<EventType>;
         constructor(native: EventType);
         prevented(next?: boolean): boolean;
-        static wrap<EventType extends Event>(event: EventType): $mol_dom_event<EventType>;
+        transfer(): $mol_dom_transfer | null;
     }
 }
 

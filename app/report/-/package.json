@@ -164,6 +164,7 @@
     "$mol_keyboard",
     "$mol_button_typed",
     "$mol_dom_event",
+    "$mol_dom_transfer",
     "$mol_dimmer",
     "$mol_paragraph",
     "$mol_regexp",

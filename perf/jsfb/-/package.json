@@ -147,6 +147,7 @@
     "$mol_check",
     "$mol_dom_event",
     "$mol_action",
+    "$mol_dom_transfer",
     "$mol_icon_close",
     "$mol_icon",
     "$mol_svg_root",

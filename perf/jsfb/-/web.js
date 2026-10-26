@@ -3705,7 +3705,7 @@ var $;
             boxSizing: 'border-box',
             willChange: 'scroll-position',
             scroll: {
-                padding: [rem(.75), 0],
+                padding: ['2.5rem', 0],
             },
             maxHeight: per(100),
             maxWidth: per(100),
@@ -4355,8 +4355,106 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    const factories = new WeakMap();
+    function factory(val) {
+        let make = factories.get(val);
+        if (make)
+            return make;
+        make = $mol_func_name_from((...args) => new val(...args), val);
+        factories.set(val, make);
+        return make;
+    }
+    const getters = new WeakMap();
+    function get_prop(host, field) {
+        let props = getters.get(host);
+        let get_val = props?.[field];
+        if (get_val)
+            return get_val;
+        get_val = (next) => {
+            if (next !== undefined)
+                host[field] = next;
+            return host[field];
+        };
+        Object.defineProperty(get_val, 'name', { value: field });
+        if (!props) {
+            props = {};
+            getters.set(host, props);
+        }
+        props[field] = get_val;
+        return get_val;
+    }
+    /**
+     * Convert asynchronous (promise-based) API to synchronous by wrapping function and method calls in a fiber.
+     * @see https://mol.hyoo.ru/#!section=docs/=1fcpsq_1wh0h2
+     */
+    function $mol_wire_sync(obj) {
+        return new Proxy(obj, {
+            get(obj, field) {
+                let val = obj[field];
+                const temp = $mol_wire_task.getter(typeof val === 'function' ? val : get_prop(obj, field));
+                if (typeof val !== 'function')
+                    return temp(obj, []).sync();
+                return function $mol_wire_sync(...args) {
+                    const fiber = temp(obj, args);
+                    return fiber.sync();
+                };
+            },
+            set(obj, field, next) {
+                const temp = $mol_wire_task.getter(get_prop(obj, field));
+                temp(obj, [next]).sync();
+                return true;
+            },
+            construct(obj, args) {
+                const temp = $mol_wire_task.getter(factory(obj));
+                return temp(obj, args).sync();
+            },
+            apply(obj, self, args) {
+                const temp = $mol_wire_task.getter(obj);
+                return temp(self, args).sync();
+            },
+        });
+    }
+    $.$mol_wire_sync = $mol_wire_sync;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_dom_transfer extends $mol_object {
+        native;
+        static wrap(native) {
+            return new this(native);
+        }
+        constructor(native) {
+            super();
+            this.native = native;
+        }
+        get(type) {
+            return this.native.getData(type);
+        }
+        files() {
+            return $mol_wire_sync(this.native.files);
+        }
+    }
+    __decorate([
+        $mol_action
+    ], $mol_dom_transfer.prototype, "files", null);
+    __decorate([
+        $mol_action
+    ], $mol_dom_transfer, "wrap", null);
+    $.$mol_dom_transfer = $mol_dom_transfer;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_dom_event extends $mol_object {
         native;
+        static wrap(event) {
+            return new this(event);
+        }
         constructor(native) {
             super();
             this.native = native;
@@ -4366,13 +4464,19 @@ var $;
                 this.native.preventDefault();
             return this.native.defaultPrevented;
         }
-        static wrap(event) {
-            return new this.$.$mol_dom_event(event);
+        transfer() {
+            const transfer = this.native instanceof ClipboardEvent ? this.native.clipboardData
+                : this.native instanceof DragEvent ? this.native.dataTransfer
+                    : null;
+            return transfer && $mol_dom_transfer.wrap(transfer);
         }
     }
     __decorate([
         $mol_action
     ], $mol_dom_event.prototype, "prevented", null);
+    __decorate([
+        $mol_action
+    ], $mol_dom_event.prototype, "transfer", null);
     __decorate([
         $mol_action
     ], $mol_dom_event, "wrap", null);

@@ -165,6 +165,7 @@
     "$mol_keyboard",
     "$mol_button_typed",
     "$mol_dom_event",
+    "$mol_dom_transfer",
     "$mol_icon_brightness_4",
     "$mol_icon_brightness",
     "$mol_icon",

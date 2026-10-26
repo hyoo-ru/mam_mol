@@ -4317,7 +4317,7 @@ var $;
             boxSizing: 'border-box',
             willChange: 'scroll-position',
             scroll: {
-                padding: [rem(.75), 0],
+                padding: ['2.5rem', 0],
             },
             maxHeight: per(100),
             maxWidth: per(100),
