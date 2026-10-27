@@ -4469,16 +4469,15 @@ var $;
         }
         static estimate() {
             $mol_state_time.now(1000);
-            try {
-                return $mol_wire_sync(this.native() ?? {}).estimate();
-            }
-            catch (error) {
-                $mol_fail_log(error);
-                return {
-                    usage: 0,
-                    quota: 0,
-                };
-            }
+            // try {
+            return $mol_wire_sync(this.native() ?? {}).estimate();
+            // } catch( error ) {
+            // 	$mol_fail_log( error )
+            // 	return {
+            // 		usage: 0,
+            // 		quota: 0,
+            // 	} as StorageEstimate
+            // }
         }
         static total() {
             return this.estimate().quota ?? 0;
