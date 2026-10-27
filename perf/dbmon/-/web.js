@@ -4412,34 +4412,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    /** State of time moment */
-    class $mol_state_time extends $mol_object {
-        static task(precision, reset) {
-            if (precision) {
-                return new $mol_after_timeout(precision, () => this.task(precision, null));
-            }
-            else {
-                return new $mol_after_frame(() => this.task(precision, null));
-            }
-        }
-        static now(precision) {
-            this.task(precision);
-            return Date.now();
-        }
-    }
-    __decorate([
-        $mol_mem_key
-    ], $mol_state_time, "task", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_state_time, "now", null);
-    $.$mol_state_time = $mol_state_time;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
     class $mol_storage_web extends $mol_storage {
         static native() {
             return this.$.$mol_dom_context.navigator.storage ?? {
@@ -4467,17 +4439,9 @@ var $;
             }
             return next ?? $mol_wire_sync(native).persisted();
         }
-        static estimate() {
-            $mol_state_time.now(1000);
-            // try {
+        static estimate(next) {
+            new this.$.$mol_after_timeout(1000, $mol_wire_async(() => this.estimate(null)));
             return $mol_wire_sync(this.native() ?? {}).estimate();
-            // } catch( error ) {
-            // 	$mol_fail_log( error )
-            // 	return {
-            // 		usage: 0,
-            // 		quota: 0,
-            // 	} as StorageEstimate
-            // }
         }
         static total() {
             return this.estimate().quota ?? 0;
@@ -6090,6 +6054,34 @@ var $;
 	};
 	($mol_mem(($.$mol_perf_dbmon_query.prototype), "Elapsed"));
 
+
+;
+"use strict";
+var $;
+(function ($) {
+    /** State of time moment */
+    class $mol_state_time extends $mol_object {
+        static task(precision, reset) {
+            if (precision) {
+                return new $mol_after_timeout(precision, () => this.task(precision, null));
+            }
+            else {
+                return new $mol_after_frame(() => this.task(precision, null));
+            }
+        }
+        static now(precision) {
+            this.task(precision);
+            return Date.now();
+        }
+    }
+    __decorate([
+        $mol_mem_key
+    ], $mol_state_time, "task", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_state_time, "now", null);
+    $.$mol_state_time = $mol_state_time;
+})($ || ($ = {}));
 
 ;
 "use strict";
