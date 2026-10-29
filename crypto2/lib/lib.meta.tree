@@ -5,3 +5,4 @@ include \/mol/crypto2/cipher
 include \/mol/crypto2/public
 include \/mol/crypto2/private
 include \/mol/crypto2/nonce
+include \/mol/crypto2/padding
