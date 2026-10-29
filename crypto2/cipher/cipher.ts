@@ -56,7 +56,7 @@ namespace $ {
 			return $mol_crypto2_socket.from( this.asArray() )
 		}
 		
-		/** Makes shared secret for combination of Chiper and Soacket. */
+		/** Makes shared secret for combination of Chiper and Socket. */
 		async secret( pub: $mol_crypto2_socket ) {
 				
 			return $mol_crypto_sacred.from( new Uint8Array(
