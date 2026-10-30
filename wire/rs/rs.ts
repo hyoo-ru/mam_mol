@@ -26,6 +26,17 @@ namespace $ {
 			return this.call( 'mol_wire_alive' )
 		}
 
+		text( value : string ) {
+			const bytes = new TextEncoder().encode( value )
+			const ptr = this.call( 'mol_wire_alloc' , bytes.length )
+			this.wasm.memory( ptr , bytes.length ).set( bytes )
+			return [ ptr , bytes.length ] as const
+		}
+
+		string( ptr : number , len : number ) {
+			return this.wasm.string( ptr , len )
+		}
+
 	}
 
 }
