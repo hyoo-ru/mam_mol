@@ -583,6 +583,7 @@ namespace $ {
 			this.bundle([ path , 'web.deps.json' ])
 			this.bundle([ path , 'web.css' ])
 			this.bundle([ path , 'web.js' ])
+			this.bundle([ path , 'web.wasm' ])
 			this.bundle([ path , 'web.test.js' ])
 			this.bundle([ path , 'web.test.html' ])
 			this.bundle([ path , 'web.baza' ])
@@ -626,7 +627,10 @@ namespace $ {
 			this.bundleAllWebAudit(path)
 			this.bundleAllNode(path)
 			this.bundleAllNodeAudit(path)
-			
+
+			this.bundle([ path , 'native.test' ])
+			this.bundle([ path , 'native' ])
+
 			this.bundle([ path , 'package.json' ])
 			this.bundle([ path , 'manifest.json' ])
 			this.bundle([ path , 'readme.md' ])
@@ -647,7 +651,7 @@ namespace $ {
 			var stages = [ 'test' , 'dev' ]
 			if( bundle ) {
 				
-				var [ bundle , tags , type , locale ] = /^(.*?)(?:\.(audit\.js|test\.js|test\.html|js|css|deps\.json|locale=(\w+)\.json|baza))?$/.exec(
+				var [ bundle , tags , type , locale ] = /^(.*?)(?:\.(audit\.js|test\.js|test\.html|js|css|deps\.json|locale=(\w+)\.json|baza|wasm))?$/.exec(
 					bundle
 				)!
 				
@@ -726,6 +730,18 @@ namespace $ {
 			
 			if( !bundle || bundle === 'test.html' ) {
 				res = res.concat( this.bundleTestHtml( path ) )
+			}
+
+			if( !bundle || bundle === 'native.test' ) {
+				res = res.concat( this.bundleNativeTest( path ) )
+			}
+
+			if( !bundle || bundle === 'native' ) {
+				res = res.concat( this.bundleNative( path ) )
+			}
+
+			if( !bundle || bundle === 'web.wasm' ) {
+				res = res.concat( this.bundleWasm( path ) )
 			}
 
 			if( !bundle || /\//.test( bundle ) ) {
@@ -1528,12 +1544,183 @@ namespace $ {
 			
 			const target = pack.resolve( `-/${bundle}.deps.json` )
 			target.text( JSON.stringify( data ) )
-			
+
 			this.logBundle( target , Date.now() - start )
-			
+
 			return [ target ]
 		}
+
+		@ $mol_mem_key
+		sources_rs( [ path , exclude ] : [ path : string , exclude : readonly string[] ] ) : $mol_file[] {
+			return this.sourcesAll( [ path , exclude ] ).filter( src => /\.rs$/.test( src.name() ) )
+		}
+
+		rs_ident( name : string ) {
+			return $mol_build_rs_keywords.includes( name ) ? 'r#' + name : name
+		}
+
+		@ $mol_mem_key
+		rs_crate( [ path , bundle ] : [ path : string , bundle : 'node' | 'web' ] ) {
+
+			const exclude = [ bundle === 'web' ? 'node' : 'web' ]
+			const pack = $mol_file.absolute( path )
+			const sources = this.sources_rs( [ path , exclude ] )
+			if( !sources.some( src => src.parent() === pack ) ) return null
+
+			const root = this.root()
+			const segments = pack.relate( root ).split( '/' )
+			const name = segments.join( '_' )
+			const dir = pack.resolve( `-/rust/${ bundle }` )
+
+			type Dir = { files : $mol_file[] , tests : $mol_file[] , kids : Map< string , Dir > }
+			const make = (): Dir => ({ files : [] , tests : [] , kids : new Map })
+			const tree = make()
+
+			for( const src of sources ) {
+				let node = tree
+				for( const seg of src.parent().relate( root ).split( '/' ) ) {
+					if( !node.kids.has( seg ) ) node.kids.set( seg , make() )
+					node = node.kids.get( seg )!
+				}
+				const list = /\.test\./.test( src.name() ) ? node.tests : node.files
+				list.push( src )
+			}
+
+			const include = ( src : $mol_file )=> `include!( ${ JSON.stringify( src.path() ) } );`
+
+			const render = ( node : Dir , indent : string ) : string[] => [
+				... node.files.map( src => indent + include( src ) ),
+				... node.tests.map( src => {
+					const mod = 'test_' + src.name().replace( /\.rs$/ , '' ).replace( /[^a-z0-9]+/gi , '_' )
+					return `${ indent }#[cfg(test)] mod ${ mod } { use super::*; ${ include( src ) } }`
+				} ),
+				... [ ... node.kids ].flatMap( ([ seg , kid ])=> [
+					`${ indent }pub mod ${ this.rs_ident( seg ) } {`,
+					... render( kid , indent + '\t' ),
+					`${ indent }}`,
+				] ),
+			]
+
+			const lib = dir.resolve( 'src/lib.rs' )
+			lib.text( [ '#![allow(dead_code, unused_imports)]' , ... render( tree , '' ) , '' ].join( '\n' ) )
+
+			const has_main = bundle === 'node' && sources
+				.filter( src => src.parent() === pack && !/\.test\./.test( src.name() ) )
+				.some( src => /^\s*pub\s+fn\s+main\s*\(/m.test( src.text() ) )
+
+			const main = dir.resolve( 'src/main.rs' )
+			if( has_main ) {
+				main.text( `fn main() {\n\t${ name }::${ segments.map( seg => this.rs_ident( seg ) ).join( '::' ) }::main()\n}\n` )
+			} else if( main.exists() ) {
+				main.exists( false )
+			}
+
+			const crates = new Set< string >()
+			for( const src of sources ) {
+				const text = src.text().replace( /\/\*[\s\S]*?\*\//g , '' ).replace( /\/\/.*$/gm , '' )
+				for( const [ , crate ] of text.matchAll( /(?<![\w:])::([a-z_][a-z0-9_]*)::/g ) ) {
+					if( [ 'std' , 'core' , 'alloc' ].includes( crate ) ) continue
+					crates.add( crate )
+				}
+			}
+
+			const manifest = dir.resolve( 'Cargo.toml' )
+			manifest.text( [
+				'[package]',
+				`name = ${ JSON.stringify( name ) }`,
+				'version = "0.0.0"',
+				'edition = "2021"',
+				'',
+				'[lib]',
+				'path = "src/lib.rs"',
+				... bundle === 'web' ? [ 'crate-type = ["cdylib"]' ] : [],
+				'',
+				'[dependencies]',
+				... [ ... crates ].sort().map( crate => `${ crate } = "*"` ),
+				'',
+				... bundle === 'web' ? [ '[profile.release]' , 'opt-level = "s"' , 'lto = true' , 'panic = "abort"' , '' ] : [],
+				'[workspace]',
+				'',
+			].join( '\n' ) )
+
+			const version = sources.map( src => src.version() ).join( ';' )
+
+			return { dir , name , has_main , lib , version }
+		}
+
+		rs_cargo( dir : $mol_file , args : readonly string[] ) {
+			const path = dir.path()
+			this.$.$mol_file.unwatched( ()=> this.$.$mol_run.spawn( {
+				command : [ 'cargo' , ... args , '--quiet' ],
+				dir : path ,
+			} ) , path )
+		}
+
+		rs_copy( from : $mol_file , target : $mol_file ) {
+			target.parent().exists( true )
+			this.$.$mol_file.unwatched( ()=> $node.fs.copyFileSync( from.path() , target.path() ) , target.parent().path() )
+		}
+
+		@ $mol_mem_key
+		bundleWasm( path : string ) : $mol_file[] {
+			const start = this.now()
+			const crate = this.rs_crate( [ path , 'web' ] )
+			if( !crate ) return []
+
+			const triple = 'wasm32-unknown-unknown'
+			try {
+				this.rs_cargo( crate.dir , [ 'build' , '--release' , '--target' , triple ] )
+			} catch( error : any ) {
+				if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
+				if( /target may not be installed|can't find crate for `(core|std)`/.test( error.message ) ) {
+					error.message += `\nRun: rustup target add ${ triple }`
+				}
+				$mol_fail_hidden( error )
+			}
+
+			const target = $mol_file.absolute( path ).resolve( '-/web.wasm' )
+			this.rs_copy( crate.dir.resolve( `target/${ triple }/release/${ crate.name }.wasm` ) , target )
+			this.logBundle( target , this.now() - start )
+
+			return [ target ]
+		}
+
+		@ $mol_mem_key
+		bundleNative( path : string ) : $mol_file[] {
+			const start = this.now()
+			const crate = this.rs_crate( [ path , 'node' ] )
+			if( !crate?.has_main ) return []
+
+			this.rs_cargo( crate.dir , [ 'build' , '--release' ] )
+
+			const ext = process.platform === 'win32' ? '.exe' : ''
+			const target = $mol_file.absolute( path ).resolve( `-/native${ ext }` )
+			this.rs_copy( crate.dir.resolve( `target/release/${ crate.name }${ ext }` ) , target )
+			this.logBundle( target , this.now() - start )
+
+			return [ target ]
+		}
+
+		@ $mol_mem_key
+		bundleNativeTest( path : string ) : $mol_file[] {
+			const start = this.now()
+			const crate = this.rs_crate( [ path , 'node' ] )
+			if( !crate ) return []
+
+			this.rs_cargo( crate.dir , [ 'test' ] )
+			this.logBundle( crate.lib , this.now() - start )
+
+			return [ crate.lib ]
+		}
 	}
+
+	const $mol_build_rs_keywords = [
+		'as', 'async', 'await', 'box', 'break', 'const', 'continue', 'crate', 'do', 'dyn', 'else', 'enum',
+		'extern', 'false', 'final', 'fn', 'for', 'gen', 'if', 'impl', 'in', 'let', 'loop', 'macro', 'match',
+		'mod', 'move', 'mut', 'override', 'priv', 'pub', 'ref', 'return', 'self', 'static', 'struct',
+		'super', 'trait', 'true', 'try', 'type', 'typeof', 'unsafe', 'unsized', 'use', 'virtual', 'where',
+		'while', 'yield',
+	]
 	
 	function $mol_build_depsMerge(
 		target : { [ index : string ] : number } ,
@@ -1712,6 +1899,30 @@ namespace $ {
 		return depends
 	}
 	
+	$mol_build.dependors[ 'rs' ] = source => {
+		const depends : { [ index : string ] : number } = {}
+
+		const lines = String( source.text() )
+		.replace( /\/\*[\s\S]*?\*\//g , '' )
+		.replace( /\/\/.*$/gm , '' )
+		.split( '\n' )
+
+		for( const line of lines ) {
+			const indent = /^([\s\t]*)/.exec( line )!
+			const priority = -indent[ 0 ].replace( /\t/g , '    ' ).length / 4
+
+			line.replace( /\bcrate((?:::(?:r#)?[a-z][a-z0-9_]*\b(?!\s*[(!]))+)/g , ( str , chain : string )=> {
+				const names = chain.split( '::' ).slice( 1 ).map( name => name.replace( /^r#/ , '' ) )
+				for( let i = 1 ; i <= names.length ; ++i ) {
+					$mol_build_depsMerge( depends , { [ '/' + names.slice( 0 , i ).join( '/' ) ] : priority } )
+				}
+				return str
+			} )
+		}
+
+		return depends
+	}
+
 	$mol_build.dependors[ 'view.tree' ] = source => {
 		return {
 			[`/${ source.parent().relate() }/-view.tree/${ source.name() }.js`]: 0,
