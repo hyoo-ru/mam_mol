@@ -99,6 +99,27 @@ namespace $ {
 				] ),
 			] )
 		}
+
+		const class_overrides = (kids: readonly $mol_tree2[], belt: $mol_tree2_belt<Context>) => {
+			if( ! next ) addons.push( decorate() )
+			return kids
+				.filter(over => over.type[0] !== "/" && over.kids[0]?.type !== '=>')
+				.map(over =>
+					over.struct( '=', [
+						over.struct( '()', [
+							over.struct( 'obj' ),
+							over.struct( '[]', [
+								over.data( name_of.call(this, over ) ),
+							] ),
+						] ),
+						over.struct( '=>', [
+							args_of.call(this, over ),
+							over.struct( '()', over.hack( belt, { chain: [ over.type ] } )),
+						] ),
+					] )
+				)
+		}
+
 		const op = prop.kids[0]
 		const is_delegate = op?.type === '<=>' || op?.type === '='
 		if( ! is_delegate && next ) addons.push( decorate() )
@@ -119,7 +140,18 @@ namespace $ {
 			
 			'=>': bind => [],
 			
-			'^': ( ref, belt, context )=> [
+			'^': ( ref, belt, context )=> op?.type === "^" ? [
+				ref.struct( "const", [
+					ref.struct( "obj" ),
+					ref.struct( '()', [
+						ref.struct( 'super' ),
+						ref.struct( '[]', [ ref.data( name ) ] ),
+						ref.struct( '(,)' )
+					])
+				]),
+				... class_overrides( ref.kids, belt ),
+				ref.struct("obj")
+			] : [
 				ref.struct( '...', [
 					
 					// prop ^ foo
@@ -195,36 +227,7 @@ namespace $ {
 				]
 
 				if( $mol_view_tree2_class_match( input ) ) {
-					if( ! next ) addons.push( decorate() )
 					
-					const overrides = [] as $mol_tree2[]
-					
-					for( const over of input.kids ) {
-						
-						if( over.type[0] === '/' ) continue
-						const bind = over.kids[0]
-						if( bind.type === '=>' ) continue
-
-						const over_name = name_of.call(this, over )
-
-						const body = [
-							args_of.call(this, over ),
-							over.struct( '()', over.hack( belt, { chain: [ over.type ] } )),
-						]
-
-						overrides.push(
-							over.struct( '=', [
-								over.struct( '()', [
-									over.struct( 'obj' ),
-									over.struct( '[]', [
-										over.data( over_name ),
-									] ),
-								] ),
-								over.struct( '=>', body ),
-							] ),
-						)
-					}
-						
 					return [
 						input.struct( 'const', [
 							input.struct( 'obj' ),
@@ -239,7 +242,7 @@ namespace $ {
 								input.struct( '(,)', input.select( '/', null ).hack( belt ) ),
 							] ),
 						] ),
-						... overrides,
+						... class_overrides.call( this, input.kids, belt ),
 						input.struct( 'obj' ),
 					]
 					
