@@ -1610,7 +1610,9 @@ namespace $ {
 
 			const main = dir.resolve( 'src/main.rs' )
 			if( has_main ) {
-				main.text( `fn main() {\n\t${ name }::${ segments.map( seg => this.rs_ident( seg ) ).join( '::' ) }::main()\n}\n` )
+				const entry = `${ name }::${ segments.map( seg => this.rs_ident( seg ) ).join( '::' ) }::main`
+				const wire = sources.some( src => src.parent().relate( root ) === 'mol/wire' )
+				main.text( wire ? `fn main() {\n\t${ name }::mol::wire::run( ${ entry } )\n}\n` : `fn main() {\n\t${ entry }()\n}\n` )
 			} else if( main.exists() ) {
 				main.exists( false )
 			}
