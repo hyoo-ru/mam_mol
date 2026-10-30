@@ -36,7 +36,7 @@ struct Node {
 	kind: Kind,
 	state: State,
 	busy: bool,
-	pinned: bool,
+	solid: bool,
 	root: bool,
 	value: Option<Box<dyn Any>>,
 	task: Option<Rc<dyn Any>>,
@@ -56,7 +56,7 @@ impl Node {
 			kind,
 			state: State::Stale,
 			busy: false,
-			pinned: false,
+			solid: false,
 			root,
 			value: None,
 			task: None,
@@ -76,6 +76,7 @@ struct Runtime {
 	free: Vec<u32>,
 	current: Option<Id>,
 	owner: Option<Id>,
+	host: Option<Id>,
 	queue: Vec<Id>,
 	touched: Vec<Id>,
 	orphans: Vec<Id>,
@@ -197,7 +198,7 @@ impl Runtime {
 
 	fn evict(&mut self, id: Id, garbage: &mut Garbage) {
 		let Some(node) = self.get(id) else { return };
-		if node.kind != Kind::Atom || node.root || node.pinned || node.busy || !node.subs.is_empty() {
+		if node.kind != Kind::Atom || node.root || node.solid || node.busy || !node.subs.is_empty() {
 			return;
 		}
 		if node.detach.is_some() {
@@ -298,6 +299,14 @@ pub fn untracked<R>(task: impl FnOnce() -> R) -> R {
 	within(None, owner, task)
 }
 
+pub fn solid() {
+	rt(|rt| {
+		if let Some(host) = rt.host {
+			rt.node(host).solid = true;
+		}
+	})
+}
+
 pub fn alive() -> usize {
 	rt(|rt| rt.alive())
 }
@@ -376,7 +385,9 @@ fn calc<T: Value>(id: Id, next: Option<T>) {
 		rt.unlink_pubs(id);
 		rt.node(id).busy = true;
 	});
+	let host = rt(|rt| rt.host.replace(id));
 	let value = within(if put { None } else { Some(id) }, None, || task(next));
+	rt(|rt| rt.host = host);
 	let owning = value.owning();
 
 	collect(|rt, garbage| {
@@ -387,7 +398,6 @@ fn calc<T: Value>(id: Id, next: Option<T>) {
 		let node = rt.node(id);
 		node.busy = false;
 		node.state = State::Fresh;
-		node.pinned = put;
 		let changed = node.value.as_ref().and_then(|v| v.downcast_ref::<T>()) != Some(&value);
 		if changed {
 			garbage.extend(node.value.replace(Box::new(value)));
@@ -395,7 +405,9 @@ fn calc<T: Value>(id: Id, next: Option<T>) {
 				rt.mark(sub, State::Stale);
 			}
 		}
-		rt.touched.push(id);
+		if !put {
+			rt.touched.push(id);
+		}
 	});
 }
 

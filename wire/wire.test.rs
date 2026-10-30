@@ -27,6 +27,7 @@ impl Item {
 #[derive(Clone, Copy, Default)]
 struct Counter {
 	count: Mem<i32>,
+	level: Mem<i32>,
 	parity: Mem<bool>,
 	double: Mem<i32>,
 	label: Mem<String>,
@@ -44,6 +45,13 @@ struct Counter {
 impl Counter {
 	fn count(self, next: Option<i32>) -> i32 {
 		self.count.call(next, |next| next.unwrap_or(1))
+	}
+
+	fn level(self, next: Option<i32>) -> i32 {
+		self.level.call(next, |next| {
+			solid();
+			next.unwrap_or(1)
+		})
 	}
 
 	fn parity(self) -> bool {
@@ -225,6 +233,51 @@ fn observed_caches_survive_sync() {
 	drop(auto);
 	sync();
 	assert_eq!(alive(), base - 1 - 1);
+}
+
+#[test]
+fn put_state_kept_until_first_unsubscribe() {
+	let app = Root::<Counter>::default();
+	app.count(Some(5));
+	sync();
+	assert_eq!(app.count(None), 5);
+	let auto = Auto::new({
+		let app = *app;
+		move || {
+			app.count(None);
+		}
+	});
+	sync();
+	assert_eq!(app.count(None), 5);
+	drop(auto);
+	sync();
+	assert_eq!(app.count(None), 1);
+}
+
+#[test]
+fn solid_state_survives_unsubscribe() {
+	let app = Root::<Counter>::default();
+	app.level(Some(5));
+	let auto = Auto::new({
+		let app = *app;
+		move || {
+			app.level(None);
+		}
+	});
+	sync();
+	drop(auto);
+	sync();
+	assert_eq!(app.level(None), 5);
+}
+
+#[test]
+fn solid_state_freed_with_owner() {
+	{
+		let app = Root::<Counter>::default();
+		app.level(Some(5));
+		sync();
+	}
+	assert_eq!(alive(), 0);
 }
 
 #[test]
