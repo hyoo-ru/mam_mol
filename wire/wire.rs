@@ -113,7 +113,7 @@ impl Runtime {
 		};
 		match owner {
 			Some(o) => self.node(o).kids.push(id),
-			None if !root => self.orphans.push(id),
+			None if !root => self.orphan(id),
 			None => {}
 		}
 		id
@@ -160,6 +160,16 @@ impl Runtime {
 		}
 	}
 
+	fn touch(&mut self, id: Id) {
+		self.touched.push(id);
+		self.scheduled_check();
+	}
+
+	fn orphan(&mut self, id: Id) {
+		self.orphans.push(id);
+		self.scheduled_check();
+	}
+
 	fn scheduled_check(&mut self) {
 		if !self.scheduled {
 			self.scheduled = true;
@@ -172,7 +182,7 @@ impl Runtime {
 			if let Some(node) = self.get_mut(dep) {
 				node.subs.retain(|s| *s != id);
 				if node.subs.is_empty() {
-					self.touched.push(dep);
+					self.touch(dep);
 				}
 			}
 		}
@@ -236,7 +246,7 @@ impl Runtime {
 			if let Some(node) = self.get_mut(dep) {
 				node.subs.retain(|s| *s != id);
 				if node.subs.is_empty() {
-					self.touched.push(dep);
+					self.touch(dep);
 				}
 			}
 		}
@@ -406,7 +416,7 @@ fn calc<T: Value>(id: Id, next: Option<T>) {
 			}
 		}
 		if !put {
-			rt.touched.push(id);
+			rt.touch(id);
 		}
 	});
 }

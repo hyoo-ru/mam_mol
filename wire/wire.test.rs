@@ -1,5 +1,6 @@
 use std::cell::RefCell;
 use std::collections::HashMap;
+use std::rc::Rc;
 
 thread_local! {
 	static HITS: RefCell<HashMap<&'static str, u32>> = RefCell::new(HashMap::new());
@@ -391,4 +392,37 @@ fn ownership_never_moves() {
 fn cycle_panics() {
 	let app = Root::<Counter>::default();
 	app.ping();
+}
+
+#[test]
+fn tick_after_each_task() {
+	let base = alive();
+	let seen = Rc::new(RefCell::new(Vec::new()));
+	let log = seen.clone();
+	run(move || {
+		let root = Root::<Counter>::default();
+		let app = *root;
+		let view = Auto::new(move || log.borrow_mut().push(app.double()));
+		app.count(Some(2));
+		app.count(Some(3));
+		after(move || {
+			app.count(Some(4));
+			after(move || drop((view, root)));
+		});
+	});
+	assert_eq!(*seen.borrow(), vec![2, 6, 8]);
+	assert_eq!(alive(), base);
+}
+
+#[test]
+fn unobserved_reaped_after_task() {
+	let root = Root::<Counter>::default();
+	let app = *root;
+	run(move || {
+		app.double();
+		after(move || {
+			app.double();
+		});
+	});
+	assert_eq!(hits("double"), 2);
 }
