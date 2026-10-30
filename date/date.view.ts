@@ -6,11 +6,12 @@ namespace $.$$ {
 	 */
 	export class $mol_date extends $.$mol_date {
 
-		trigger_content() {
+		override trigger_content() {
+			if (this.error()) return [ this.Error(), this.Icon() ]
 			return [ this.value() || this.Icon() ]
 		}
 
-		input_mask( val : string ) {
+		override input_mask( val : string ) {
 			return val.length > 8 ? '____-__-__ __:__' : '____-__-__ '
 		}
 
@@ -18,16 +19,23 @@ namespace $.$$ {
 			return [
 				this.Today(),
 				this.Input(),
-				... this.value() ? [ this.Clear() ] : [],
+				... this.error() || this.value() ? [ this.Clear() ] : [],
 			]
 		}
 
+		override error() {
+			const err = $mol_error_fence<[Error| null]>(
+				() => (this.value_moment(), [ null ]),
+				e => ($mol_fail_log(e), [e])
+			)?.[0]
+
+			return ! err ? '' : this.$.$mol_error_message(err)
+		}
+
 		@ $mol_mem
-		value( val? : string ) {
+		override value( val? : string ) {
 
-			const moment = this.value_moment()
-
-			if( val === undefined ) return moment?.toString( 'YYYY-MM-DD hh:mm' ) ?? ''
+			if( val === undefined ) return this.value_moment()?.toString( 'YYYY-MM-DD hh:mm' ) ?? ''
 
 			const moment2 = val && $mol_try( ()=> new $mol_time_moment( val ) ) || null
 			if( moment2 instanceof Error ) return val
@@ -52,7 +60,7 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		value_number( next? : number ): number {
+		override value_number( next? : number ): number {
 
 			const value = this.value()
 
@@ -73,7 +81,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		value_moment_today() {
-			return this.value()
+			return ! this.error() && this.value()
 				? new $mol_time_moment().mask( this.value() )
 				: new $mol_time_moment()
 		}
@@ -85,7 +93,7 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		month_moment( next? : $mol_time_moment ) {
+		override month_moment( next? : $mol_time_moment ) {
 
 			if( next ) return next
 
@@ -99,13 +107,17 @@ namespace $.$$ {
 			return moment
 		}
 
-		day_selected( day : string ) {
-			return this.value_moment()?.toString( 'YYYY-MM-DD' ) === day
+		protected value_moment_safe() {
+			return this.error() ? null : this.value_moment()
 		}
 
-		day_click( day : string ) {
+		override day_selected( day : string ) {
+			return this.value_moment_safe()?.toString( 'YYYY-MM-DD' ) === day
+		}
+
+		override day_click( day : string ) {
 			const moment = new $mol_time_moment( day )
-			this.value_moment( this.value_moment()?.merge( moment ) ?? moment )
+			this.value_moment( this.value_moment_safe()?.merge( moment ) ?? moment )
 			this.showed( false )
 		}
 
