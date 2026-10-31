@@ -1,6 +1,7 @@
 $mol_date $mol_pick
 	Icon $mol_icon_calendar
 	-
+	Error $mol_speck value <= error \
 	bubble_content /
 		<= Input_row $mol_view sub <= input_content /
 			<= Today $mol_button_minor
