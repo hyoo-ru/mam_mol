@@ -23,6 +23,7 @@ namespace $.$$ {
 			]
 		}
 
+		@ $mol_mem
 		override error() {
 			const err = $mol_error_fence<[Error| null]>(
 				() => (this.value_moment(), [ null ]),
@@ -48,9 +49,8 @@ namespace $.$$ {
 		@ $mol_mem
 		value_moment( next? : $mol_time_moment ) {
 
-			const stamp = this.value_number()
-			
 			if( next === undefined ) {
+				const stamp = this.value_number()
 				return isNaN( stamp ) ? null! : new $mol_time_moment( stamp )
 			}
 			
@@ -62,9 +62,8 @@ namespace $.$$ {
 		@ $mol_mem
 		override value_number( next? : number ): number {
 
-			const value = this.value()
-
 			if( next === undefined ) {
+				const value = this.value()
 
 				if (!value) return NaN
 				const moment = $mol_try( ()=> new $mol_time_moment( value ) )
@@ -74,7 +73,7 @@ namespace $.$$ {
 			}
 
 			const moment = $mol_try( ()=> new $mol_time_moment( next ) )
-			this.value(moment.toString(value.length > 12 ? 'YYYY-MM-DD hh:mm': 'YYYY-MM-DD' ))
+			this.value(moment.toString(this.error() || this.value().length > 12 ? 'YYYY-MM-DD hh:mm': 'YYYY-MM-DD' ))
 
 			return next
 		}
