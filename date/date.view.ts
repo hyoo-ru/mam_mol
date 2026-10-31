@@ -6,6 +6,7 @@ namespace $.$$ {
 	 */
 	export class $mol_date extends $.$mol_date {
 
+		@ $mol_mem
 		override trigger_content() {
 			if (this.error()) return [ this.Error(), this.Icon() ]
 			return [ this.value() || this.Icon() ]
@@ -15,6 +16,7 @@ namespace $.$$ {
 			return val.length > 8 ? '____-__-__ __:__' : '____-__-__ '
 		}
 
+		@ $mol_mem
 		override input_content() {
 			return [
 				this.Today(),
