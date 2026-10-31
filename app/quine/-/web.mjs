@@ -5875,8 +5875,9 @@ var $;
             return next ?? $mol_wire_sync(native).persisted();
         }
         static estimate(next) {
+            const res = $mol_wire_sync(this.native() ?? {}).estimate();
             new this.$.$mol_after_timeout(1000, $mol_wire_async(() => this.estimate(null)));
-            return $mol_wire_sync(this.native() ?? {}).estimate();
+            return res;
         }
         static total() {
             return this.estimate().quota ?? 0;
