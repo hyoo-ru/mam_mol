@@ -1,4 +1,7 @@
 	($.$mol_date) = class $mol_date extends ($.$mol_pick) {
+		error(){
+			return "";
+		}
 		enabled(){
 			return true;
 		}
@@ -196,6 +199,11 @@
 			const obj = new this.$.$mol_icon_calendar();
 			return obj;
 		}
+		Error(){
+			const obj = new this.$.$mol_speck();
+			(obj.value) = () => ((this.error()));
+			return obj;
+		}
 		bubble_content(){
 			return [(this.Input_row()), (this.Calendar())];
 		}
@@ -234,6 +242,7 @@
 	($mol_mem(($.$mol_date.prototype), "Calendar_tools"));
 	($mol_mem(($.$mol_date.prototype), "Calendar"));
 	($mol_mem(($.$mol_date.prototype), "Icon"));
+	($mol_mem(($.$mol_date.prototype), "Error"));
 	($mol_mem(($.$mol_date.prototype), "value_number"));
 	($mol_mem(($.$mol_date.prototype), "value_moment"));
 	($.$mol_date_calendar) = class $mol_date_calendar extends ($.$mol_calendar) {

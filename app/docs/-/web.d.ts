@@ -16802,7 +16802,13 @@ declare namespace $ {
 		,
 		ReturnType< $mol_date_calendar['head'] >
 	>
+	type $mol_speck__value_mol_date_32 = $mol_type_enforce<
+		ReturnType< $mol_date['error'] >
+		,
+		ReturnType< $mol_speck['value'] >
+	>
 	export class $mol_date extends $mol_pick {
+		error( ): string
 		enabled( ): boolean
 		today_click( next?: any ): any
 		Today_icon( ): $mol_icon_calendar_today
@@ -16847,6 +16853,7 @@ declare namespace $ {
 		Calendar_tools( ): $mol_view
 		Calendar( ): $mol_date_calendar
 		Icon( ): $mol_icon_calendar
+		Error( ): $mol_speck
 		bubble_content( ): readonly(any)[]
 		value_number( next?: number ): number
 		value_moment( next?: $mol_time_moment ): $mol_time_moment
@@ -16888,15 +16895,17 @@ declare namespace $.$$ {
      * @see https://mol.hyoo.ru/#!section=demos/demo=mol_date_demo
      */
     class $mol_date extends $.$mol_date {
-        trigger_content(): (string | $mol_icon_calendar)[];
+        trigger_content(): ($mol_speck | $mol_icon_calendar)[] | (string | $mol_icon_calendar)[];
         input_mask(val: string): "____-__-__ __:__" | "____-__-__ ";
         input_content(): ($mol_button_minor | $.$mol_format)[];
+        error(): string;
         value(val?: string): string;
         value_moment(next?: $mol_time_moment): $mol_time_moment;
         value_number(next?: number): number;
         value_moment_today(): $mol_time_moment;
         clear(): void;
         month_moment(next?: $mol_time_moment): $mol_time_moment;
+        protected value_moment_safe(): $mol_time_moment | null;
         day_selected(day: string): boolean;
         day_click(day: string): void;
         month_prev(): void;

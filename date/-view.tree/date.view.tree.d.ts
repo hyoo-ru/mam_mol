@@ -155,7 +155,13 @@ declare namespace $ {
 		,
 		ReturnType< $mol_date_calendar['head'] >
 	>
+	type $mol_speck__value_mol_date_32 = $mol_type_enforce<
+		ReturnType< $mol_date['error'] >
+		,
+		ReturnType< $mol_speck['value'] >
+	>
 	export class $mol_date extends $mol_pick {
+		error( ): string
 		enabled( ): boolean
 		today_click( next?: any ): any
 		Today_icon( ): $mol_icon_calendar_today
@@ -200,6 +206,7 @@ declare namespace $ {
 		Calendar_tools( ): $mol_view
 		Calendar( ): $mol_date_calendar
 		Icon( ): $mol_icon_calendar
+		Error( ): $mol_speck
 		bubble_content( ): readonly(any)[]
 		value_number( next?: number ): number
 		value_moment( next?: $mol_time_moment ): $mol_time_moment
