@@ -12,6 +12,7 @@ $mol_pop $mol_view
 	sub_visible /
 		<= Anchor
 		<= Follower $mol_follower
+			visible <= anchor_visible false
 			offset <= bubble_offset /number
 				0
 				1

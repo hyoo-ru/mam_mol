@@ -36,34 +36,14 @@ namespace $.$$ {
 
 			const doc = this.$.$mol_dom_context.document.documentElement
 
-			if (! this.shift_x) {
-				if (left < 0) this.shift_x = - left
-
-				const left_max = doc.clientWidth - width
-				const shift_x = left_max - left
-				if (shift_x < 0 ) this.shift_x = shift_x
-			}
-
-			if (! this.shift_y) {
-				if (top < 0) this.shift_y = - top
-
-				const top_max = doc.clientHeight - height
-				const shift_y = top_max - top
-				if (shift_y < 0 ) this.shift_y = shift_y
-			}
-
-			left += this.shift_x
-			top += this.shift_y
-
-			// left = Math.max(0, Math.min(left, doc.clientWidth - width))
-			// top  = Math.max( 0, Math.min( top,  doc.clientHeight - height ) )
+			left = Math.max(0, Math.min(left, doc.clientWidth - width))
+			top  = Math.max( 0, Math.min( top,  doc.clientHeight - height ) )
 
 			return { left, top }
 		}
 
-		protected shift_x = 0
-		protected shift_y = 0
-		
+		override visibility() { return this.visible() ? null : 'hidden' }
+
 		@ $mol_mem
 		transform() {
 			

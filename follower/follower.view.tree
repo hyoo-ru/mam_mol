@@ -9,3 +9,5 @@ $mol_follower $mol_ghost
 	style *
 		^
 		transform <= transform \
+		visibility <= visibility null string
+	visible true
