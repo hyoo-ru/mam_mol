@@ -34,10 +34,10 @@ namespace $.$$ {
 				+ offset[1] * ( anchor_rect?.height ?? 0 )
 			)
 
-			const doc = this.$.$mol_dom_context.document.documentElement
+			const size = this.$.$mol_window.size()
 
-			left = Math.max(0, Math.min(left, doc.clientWidth - width))
-			top  = Math.max( 0, Math.min( top,  doc.clientHeight - height ) )
+			left = Math.max(0, Math.min(left, size.width - width))
+			top  = Math.max( 0, Math.min( top,  size.height - height ) )
 
 			return { left, top }
 		}
