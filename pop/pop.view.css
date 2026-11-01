@@ -12,19 +12,18 @@
 [mol_pop_bubble] {
 	border: none;
 	padding: 0;
+	margin: 0;
 	color: var(--mol_theme_text);
 	box-shadow: 0 0 1rem hsla(0,0%,0%,.5);
 	border-radius: var(--mol_gap_round);
 	position: fixed;
 	z-index: var(--mol_layer_popup);
 	background: var(--mol_theme_back);
-	max-width: none;
-	max-height: none;
 	/* overflow: hidden;
 	overflow-y: scroll;
 	overflow-y: overlay; */
 	word-break: normal;
-	width: max-content;
+	min-width: auto;
 	/* height: max-content; */
 	flex-direction: column;
 	max-width: 100vw;
