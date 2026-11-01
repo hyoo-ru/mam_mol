@@ -16,11 +16,9 @@ namespace $.$$ {
 		override anchor_visible() {
 			const rect = this.Anchor().view_rect()
 			if (! rect) return false
-			const doc = this.$.$mol_dom_context.document.documentElement
-			const width = doc.clientWidth
-			const height = doc.clientHeight
+			const size = this.$.$mol_window.size()
 
-			return rect.top > 0 && rect.left > 0 && rect.bottom <= height && rect.right <= width
+			return rect.top > 0 && rect.left > 0 && rect.bottom <= size.height && rect.right <= size.width
 		}
 
 		@ $mol_mem
