@@ -23,7 +23,7 @@
 	overflow-y: scroll;
 	overflow-y: overlay; */
 	word-break: normal;
-	min-width: auto;
+	width: max-content;
 	/* height: max-content; */
 	flex-direction: column;
 	max-width: 100vw;
