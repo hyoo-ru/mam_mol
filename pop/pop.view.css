@@ -35,6 +35,10 @@
 	animation: mol_pop_show .1s ease-in;
 }
 
+[mol_pop_bubble]:where(:not([mol_pop_bubble_visible])) {
+	visibility: hidden;
+}
+
 :where( [mol_pop_bubble] > * ) {
 	background: var(--mol_theme_card);
 }

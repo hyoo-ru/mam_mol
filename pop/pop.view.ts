@@ -23,8 +23,6 @@ namespace $.$$ {
 			return rect.top > 0 && rect.left > 0 && rect.bottom <= height && rect.right <= width
 		}
 
-		override follower_visibility() { return this.anchor_visible() ? null : 'hidden' }
-
 		@ $mol_mem
 		sub_visible() {
 			return [
