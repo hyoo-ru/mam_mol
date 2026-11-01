@@ -9,10 +9,11 @@ $mol_pop $mol_view
 		<= bubble null
 	sub /
 		<= Anchor null
+	anchor_visible false
 	sub_visible /
 		<= Anchor
-		<= Follower $mol_follower
-			visible <= anchor_visible false
+		<= Follower $mol_pop_follower
+			visibility <= follower_visibility null string
 			offset <= bubble_offset /number
 				0
 				1
@@ -23,6 +24,11 @@ $mol_pop $mol_view
 			Sub <= Bubble $mol_pop_bubble
 				content <= bubble_content /$mol_view_content
 				height_max <= height_max 9999
+
+$mol_pop_follower $mol_follower
+	style *
+		^
+		visibility <= visibility null string
 
 $mol_pop_bubble $mol_view
 	sub <= content /$mol_view_content

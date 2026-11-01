@@ -42,8 +42,6 @@ namespace $.$$ {
 			return { left, top }
 		}
 
-		override visibility() { return this.visible() ? null : 'hidden' }
-
 		@ $mol_mem
 		transform() {
 			
