@@ -3,7 +3,7 @@ namespace $ {
 	export type $mol_build_checker_status = 'ready' | 'watching'
 
 	export type $mol_build_checker_shared = {
-		recheck(): $mol_build_checker_changes | null
+		recheck( versions: string ): $mol_build_checker_changes | null
 		transpile(text: string): { map: $mol_sourcemap_raw, text: string }
 	}
 
@@ -146,11 +146,12 @@ namespace $ {
 		}
 
 		// Do not place async logic here, to prevent recheck calls race
-		recheck() {
+		recheck( _versions: string ) {
 			this.changes_cut('watch_off')
 			this.watching(true) // enable host pull in start
 			this.host() // wait host started
 			this.recheck_internal()
+			this.errors = this.errors_all()
 			return this.changes_cut()
 		}
 
@@ -252,8 +253,29 @@ namespace $ {
 			const service = $node.typescript.createWatchProgram( host )
 
 			return {
+				service,
 				destructor : ()=> service.close()
 			}
+		}
+
+		protected errors_all() {
+			const program = this.host()?.service.getProgram()
+			if( !program ) return []
+
+			const root = this.root()
+			const diagnostics = [
+				... program.getSyntacticDiagnostics(),
+				... program.getSemanticDiagnostics(),
+			]
+
+			return diagnostics.flatMap( diagnostic => diagnostic.file ? [[
+				diagnostic.file.fileName,
+				$node.typescript.formatDiagnostic( diagnostic , {
+					getCurrentDirectory : ()=> root ,
+					getCanonicalFileName : ( path : string )=> path.toLowerCase() ,
+					getNewLine : ()=> '\n' ,
+				}),
+			] as [ string, string ]] : [] )
 		}
 
 	}
