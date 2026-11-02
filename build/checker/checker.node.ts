@@ -146,6 +146,8 @@ namespace $ {
 		}
 
 		// Do not place async logic here, to prevent recheck calls race
+		// versions are not used here: they make $mol_wire in builder create a new recheck task after file changes,
+		// otherwise restarted audit reuses the answer computed for old file versions
 		recheck( _versions: string ) {
 			this.changes_cut('watch_off')
 			this.watching(true) // enable host pull in start

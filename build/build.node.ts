@@ -845,6 +845,7 @@ namespace $ {
 			const versions = paths.map( path => $mol_file.absolute( path ).version() ).join( ',' )
 
 			this.recheck_count()
+			// new versions - new recheck task, old answer from restarted audit is not reused
 			const changes = checker?.recheck( versions )
 			if ( changes ) this.checker_changes_add(changes)
 
