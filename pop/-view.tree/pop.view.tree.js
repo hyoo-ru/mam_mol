@@ -14,6 +14,9 @@
 		bubble_align(){
 			return [0, 0];
 		}
+		anchor_visible(){
+			return false;
+		}
 		bubble_content(){
 			return [];
 		}
@@ -22,6 +25,7 @@
 		}
 		Bubble(){
 			const obj = new this.$.$mol_pop_bubble();
+			(obj.visible) = () => ((this.anchor_visible()));
 			(obj.content) = () => ((this.bubble_content()));
 			(obj.height_max) = () => ((this.height_max()));
 			return obj;
@@ -73,6 +77,9 @@
 		height_max(){
 			return 9999;
 		}
+		visible(){
+			return false;
+		}
 		sub(){
 			return (this.content());
 		}
@@ -82,6 +89,7 @@
 		attr(){
 			return {
 				...(super.attr()), 
+				"mol_pop_bubble_visible": (this.visible()), 
 				"tabindex": 0, 
 				"popover": "manual"
 			};

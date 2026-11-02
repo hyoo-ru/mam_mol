@@ -12,14 +12,13 @@
 [mol_pop_bubble] {
 	border: none;
 	padding: 0;
+	margin: 0;
 	color: var(--mol_theme_text);
 	box-shadow: 0 0 1rem hsla(0,0%,0%,.5);
 	border-radius: var(--mol_gap_round);
 	position: fixed;
 	z-index: var(--mol_layer_popup);
 	background: var(--mol_theme_back);
-	max-width: none;
-	max-height: none;
 	/* overflow: hidden;
 	overflow-y: scroll;
 	overflow-y: overlay; */
@@ -34,6 +33,10 @@
 	/* Safari ios layer fix, https://t.me/mam_mol/170017 */
 	transform: translateZ(0);
 	animation: mol_pop_show .1s ease-in;
+}
+
+[mol_pop_bubble]:where(:not([mol_pop_bubble_visible])) {
+	visibility: hidden;
 }
 
 :where( [mol_pop_bubble] > * ) {

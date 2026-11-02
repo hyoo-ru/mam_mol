@@ -6417,16 +6417,21 @@ var $;
                     return null;
                 const offset = this.offset();
                 const align = this.align();
-                const left = Math.floor((prev?.left ?? 0)
+                const width = self_rect?.width ?? 0;
+                const height = self_rect?.height ?? 0;
+                let left = Math.floor((prev?.left ?? 0)
                     - (self_rect?.left ?? 0)
-                    + (self_rect?.width ?? 0) * align[0]
+                    + width * align[0]
                     + (anchor_rect?.left ?? 0)
                     + offset[0] * (anchor_rect?.width ?? 0));
-                const top = Math.floor((prev?.top ?? 0)
+                let top = Math.floor((prev?.top ?? 0)
                     - (self_rect?.top ?? 0)
-                    + (self_rect?.height ?? 0) * align[1]
+                    + height * align[1]
                     + (anchor_rect?.top ?? 0)
                     + offset[1] * (anchor_rect?.height ?? 0));
+                const size = this.$.$mol_window.size();
+                left = Math.max(0, Math.min(left, size.width - width));
+                top = Math.max(0, Math.min(top, size.height - height));
                 return { left, top };
             }
             transform() {
@@ -6471,6 +6476,9 @@ var $;
 		bubble_align(){
 			return [0, 0];
 		}
+		anchor_visible(){
+			return false;
+		}
 		bubble_content(){
 			return [];
 		}
@@ -6479,6 +6487,7 @@ var $;
 		}
 		Bubble(){
 			const obj = new this.$.$mol_pop_bubble();
+			(obj.visible) = () => ((this.anchor_visible()));
 			(obj.content) = () => ((this.bubble_content()));
 			(obj.height_max) = () => ((this.height_max()));
 			return obj;
@@ -6530,6 +6539,9 @@ var $;
 		height_max(){
 			return 9999;
 		}
+		visible(){
+			return false;
+		}
 		sub(){
 			return (this.content());
 		}
@@ -6539,6 +6551,7 @@ var $;
 		attr(){
 			return {
 				...(super.attr()), 
+				"mol_pop_bubble_visible": (this.visible()), 
 				"tabindex": 0, 
 				"popover": "manual"
 			};
@@ -6564,6 +6577,13 @@ var $;
             showed(next = false) {
                 this.focused();
                 return next;
+            }
+            anchor_visible() {
+                const rect = this.Anchor().view_rect();
+                if (!rect)
+                    return false;
+                const size = this.$.$mol_window.size();
+                return rect.top > 0 && rect.left > 0 && rect.bottom <= size.height && rect.right <= size.width;
             }
             sub_visible() {
                 return [
@@ -6651,6 +6671,9 @@ var $;
         ], $mol_pop.prototype, "showed", null);
         __decorate([
             $mol_mem
+        ], $mol_pop.prototype, "anchor_visible", null);
+        __decorate([
+            $mol_mem
         ], $mol_pop.prototype, "sub_visible", null);
         __decorate([
             $mol_mem
@@ -6681,7 +6704,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/pop/pop.view.css", "@keyframes mol_pop_show {\n\tfrom {\n\t\topacity: 0;\n\t}\n}\n\n[mol_pop] {\n\tposition: relative;\n\tdisplay: inline-flex;\n}\n\n[mol_pop_bubble] {\n\tborder: none;\n\tpadding: 0;\n\tcolor: var(--mol_theme_text);\n\tbox-shadow: 0 0 1rem hsla(0,0%,0%,.5);\n\tborder-radius: var(--mol_gap_round);\n\tposition: fixed;\n\tz-index: var(--mol_layer_popup);\n\tbackground: var(--mol_theme_back);\n\tmax-width: none;\n\tmax-height: none;\n\t/* overflow: hidden;\n\toverflow-y: scroll;\n\toverflow-y: overlay; */\n\tword-break: normal;\n\twidth: max-content;\n\t/* height: max-content; */\n\tflex-direction: column;\n\tmax-width: 100vw;\n\tmax-height: 80vw;\n\tcontain: paint;\n\ttransition-property: opacity;\n\t/* Safari ios layer fix, https://t.me/mam_mol/170017 */\n\ttransform: translateZ(0);\n\tanimation: mol_pop_show .1s ease-in;\n}\n\n:where( [mol_pop_bubble] > * ) {\n\tbackground: var(--mol_theme_card);\n}\n\n[mol_pop_bubble][mol_scroll] {\n\tbackground: var(--mol_theme_back);\n}\n\n[mol_pop_bubble]:focus {\n\toutline: none;\n}\n");
+    $mol_style_attach("mol/pop/pop.view.css", "@keyframes mol_pop_show {\n\tfrom {\n\t\topacity: 0;\n\t}\n}\n\n[mol_pop] {\n\tposition: relative;\n\tdisplay: inline-flex;\n}\n\n[mol_pop_bubble] {\n\tborder: none;\n\tpadding: 0;\n\tmargin: 0;\n\tcolor: var(--mol_theme_text);\n\tbox-shadow: 0 0 1rem hsla(0,0%,0%,.5);\n\tborder-radius: var(--mol_gap_round);\n\tposition: fixed;\n\tz-index: var(--mol_layer_popup);\n\tbackground: var(--mol_theme_back);\n\t/* overflow: hidden;\n\toverflow-y: scroll;\n\toverflow-y: overlay; */\n\tword-break: normal;\n\twidth: max-content;\n\t/* height: max-content; */\n\tflex-direction: column;\n\tmax-width: 100vw;\n\tmax-height: 80vw;\n\tcontain: paint;\n\ttransition-property: opacity;\n\t/* Safari ios layer fix, https://t.me/mam_mol/170017 */\n\ttransform: translateZ(0);\n\tanimation: mol_pop_show .1s ease-in;\n}\n\n[mol_pop_bubble]:where(:not([mol_pop_bubble_visible])) {\n\tvisibility: hidden;\n}\n\n:where( [mol_pop_bubble] > * ) {\n\tbackground: var(--mol_theme_card);\n}\n\n[mol_pop_bubble][mol_scroll] {\n\tbackground: var(--mol_theme_back);\n}\n\n[mol_pop_bubble]:focus {\n\toutline: none;\n}\n");
 })($ || ($ = {}));
 
 ;
@@ -27223,7 +27246,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/calendar/calendar.view.css", "[mol_calendar] {\n\tdisplay: table;\n\tfont-family: monospace;\n}\n\n[mol_calendar_head] {\n\tdisplay: table-caption;\n\tbackground: inherit;\n\twidth: max-content;\n}\n\n[mol_calendar_title] {\n\tjustify-content: center;\n}\n\n[mol_calendar_weekdays] ,\n[mol_calendar_week] {\n\tdisplay: table-row;\n\tpadding: 0;\n}\n\n[mol_calendar_day] {\n\tdisplay: table-cell;\n\tpadding: .25rem .5rem;\n\ttext-align: center;\n\tword-break: normal;\n\tbox-shadow: none;\n\tborder-radius: var(--mol_gap_round);\n}\n\n[mol_calendar_weekday] {\n\tcolor: var(--mol_theme_shade);\n\tborder-bottom: 1px solid var(--mol_theme_line);\n}\n\n[mol_calendar_holiday] {\n\tcolor: var(--mol_theme_special);\n}\n\n[mol_calendar_today] {\n\tfont-weight: bolder;\n}\n\n[mol_calendar_ghost] {\n\topacity: .2;\n}\n");
+    $mol_style_attach("mol/calendar/calendar.view.css", "[mol_calendar] {\n\tdisplay: table;\n\tfont-family: monospace;\n}\n\n[mol_calendar_head] {\n\tdisplay: table-caption;\n\tbackground: inherit;\n\tmin-width: max-content;\n}\n\n[mol_calendar_title] {\n\tjustify-content: center;\n}\n\n[mol_calendar_weekdays] ,\n[mol_calendar_week] {\n\tdisplay: table-row;\n\tpadding: 0;\n}\n\n[mol_calendar_day] {\n\tdisplay: table-cell;\n\tpadding: .25rem .5rem;\n\ttext-align: center;\n\tword-break: normal;\n\tbox-shadow: none;\n\tborder-radius: var(--mol_gap_round);\n}\n\n[mol_calendar_weekday] {\n\tcolor: var(--mol_theme_shade);\n\tborder-bottom: 1px solid var(--mol_theme_line);\n}\n\n[mol_calendar_holiday] {\n\tcolor: var(--mol_theme_special);\n}\n\n[mol_calendar_today] {\n\tfont-weight: bolder;\n}\n\n[mol_calendar_ghost] {\n\topacity: .2;\n}\n");
 })($ || ($ = {}));
 
 ;
