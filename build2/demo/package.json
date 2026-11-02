@@ -1,0 +1,12 @@
+{
+	"scripts": {
+		"start": "cd ../../.. && npx mam mol/build2/start && node mol/build2/start/-/node.js mol/build2/demo"
+	},
+	"dependencies": {
+		"date-fns": "^4.4.0",
+		"marked": "^18.1.2"
+	},
+	"devDependencies": {
+		"jsdom": "^29.1.1"
+	}
+}
