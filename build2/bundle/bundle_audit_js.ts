@@ -11,24 +11,20 @@ namespace $ {
 			const output = slice.pack().output()
 			const target = output.resolve( `${prefix}.audit.js` )
 
-			const changes = this.checker( slice )?.recheck()
+			const paths = this.ts_paths( slice )
+			const versions = paths.map( path => this.$.$mol_file2.absolute( path ).version() ).join( ',' )
+
+			const changes = this.checker( slice )?.recheck( versions )
 			if( changes ) this.checker_changes_apply( changes )
 			
-			const errors = [] as Error[]
-
-			const paths = this.ts_paths( slice )
-
 			for( const path of paths ) {
-
 				if( /\.d\.ts/.test( path ) ) continue
 				this.root().convert([ this.$.$mol_build2_convert_ts, this.$.$mol_file2.absolute( path ) ])?.transpile_out()
-
-				const error = this.on_error( path )
-				if( !error ) continue
-				
-				errors.push( new Error( error ) )
-				this.on_error( path, null )
 			}
+
+			const errors = ( changes?.errors ?? [] )
+				.filter( ([ path ])=> !/\.d\.ts$/.test( path ) )
+				.map( ([ , error ])=> new Error( error ) )
 			
 			this.log( target, Date.now() - start )
 			
@@ -83,9 +79,6 @@ namespace $ {
 			for( const [ path, data ] of changes.writes ) {
 				this.$.$mol_file2.relative( path ).text( data, 'virt' )
 			}
-			for( const [ path, error ] of changes.errors ) {
-				this.on_error( path, error )
-			}
 		}
 
 		@ $mol_mem_key
@@ -113,13 +106,6 @@ namespace $ {
 			}
 
 			return sources.map( src => src.path() )
-		}
-
-		@ $mol_mem_key
-		on_error( path: string, next = null as null | string ) {
-			if( /\.d\.ts$/.test( path ) ) return next
-			this.root().convert([ this.$.$mol_build2_convert_ts, this.$.$mol_file2.absolute( path ) ])?.transpile_out()
-			return next
 		}
 
 	}

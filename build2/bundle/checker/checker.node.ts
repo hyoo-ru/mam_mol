@@ -8,7 +8,7 @@ namespace $ {
 	}
 
 	export type $mol_build2_bundle_checker_shared = {
-		recheck(): $mol_build2_bundle_checker_changes | null
+		recheck( versions: string ): $mol_build2_bundle_checker_changes | null
 	}
 
 	export type $mol_build2_bundle_checker_remote = {
@@ -134,12 +134,13 @@ namespace $ {
 			this.run()
 		}
 
-		recheck() {
+		recheck( _versions: string ) {
 			this.changes_tick?.destructor()
 			this.changes_tick = undefined
 			this.watching( true )
 			this.host()
 			this.recheck_internal()
+			this.errors = this.errors_all()
 			return this.changes_cut()
 		}
 
@@ -179,12 +180,7 @@ namespace $ {
 				$node.typescript.createEmitAndSemanticDiagnosticsBuilderProgram,
 				( diagnostic: import('typescript').Diagnostic )=> {
 					if( diagnostic.file ) {
-						const error = $node.typescript.formatDiagnostic( diagnostic, {
-							getCurrentDirectory: ()=> this.root_path(),
-							getCanonicalFileName: ( path: string )=> path.toLowerCase(),
-							getNewLine: ()=> '\n',
-						})
-						this.error_add( diagnostic.file.getSourceFile().fileName, error )
+						this.error_add( diagnostic.file.getSourceFile().fileName, this.diagnostic_format( diagnostic ) )
 					} else {
 						const text = diagnostic.messageText
 						this.$.$mol_log3_fail({
@@ -205,8 +201,32 @@ namespace $ {
 			const service = $node.typescript.createWatchProgram( host )
 
 			return {
+				service,
 				destructor: ()=> service.close(),
 			}
+		}
+
+		diagnostic_format( diagnostic: import('typescript').Diagnostic ) {
+			return $node.typescript.formatDiagnostic( diagnostic, {
+				getCurrentDirectory: ()=> this.root_path(),
+				getCanonicalFileName: ( path: string )=> path.toLowerCase(),
+				getNewLine: ()=> '\n',
+			})
+		}
+
+		errors_all() {
+			const program = this.host()?.service.getProgram()
+			if( !program ) return []
+
+			const diagnostics = [
+				... program.getSyntacticDiagnostics(),
+				... program.getSemanticDiagnostics(),
+			]
+
+			return diagnostics.flatMap( diagnostic => diagnostic.file
+				? [[ diagnostic.file.fileName, this.diagnostic_format( diagnostic ) ] as [ string, string ]]
+				: []
+			)
 		}
 
 	}
