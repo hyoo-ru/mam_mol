@@ -3,7 +3,7 @@ namespace $ {
 	export type $mol_build_checker_status = 'ready' | 'watching'
 
 	export type $mol_build_checker_shared = {
-		recheck(): $mol_build_checker_changes | null
+		recheck(version?: number): $mol_build_checker_changes | null
 		transpile(text: string): { map: $mol_sourcemap_raw, text: string }
 	}
 

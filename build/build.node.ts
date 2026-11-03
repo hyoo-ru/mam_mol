@@ -851,8 +851,8 @@ namespace $ {
 			var exclude_ext = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
 
 			const checker = this.checker({ path , exclude: exclude_ext , bundle })
-			this.recheck_count()
-			const changes = checker?.recheck()
+
+			const changes = checker?.recheck(this.recheck_count())
 			if ( changes ) this.checker_changes_add(changes)
 
 			const errors = [] as Error[]
