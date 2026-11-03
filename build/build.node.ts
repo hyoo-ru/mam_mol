@@ -22,9 +22,12 @@ namespace $ {
 		}
 
 		@ $mol_action
-		checker_changes_add({ writes }: $mol_build_checker_changes) {
+		checker_changes_add({ writes, errors }: $mol_build_checker_changes) {
 			for (const [path, data] of writes) {
 				this.$.$mol_file.relative( path ).text( data, 'virt' )
+			}
+			for (const [filename, error] of errors) {
+				this.js_error( filename , error )
 			}
 		}
 
@@ -401,6 +404,13 @@ namespace $ {
 			}
 
 			return sources.map( src => src.path() )
+		}
+
+		@ $mol_mem_key
+		js_error( path : string , next = null as null | string ) {
+			this.js_content( path )
+			this.recheck_count(null)
+			return next
 		}
 
 		@ $mol_mem_key
@@ -841,19 +851,22 @@ namespace $ {
 			var exclude_ext = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
 
 			const checker = this.checker({ path , exclude: exclude_ext , bundle })
-			const paths = this.tsPaths({ path , exclude: exclude_ext , bundle })
-
-			// new count - new recheck task, old answer from restarted audit is not reused
 			const changes = checker?.recheck( this.recheck_count() )
 			if ( changes ) this.checker_changes_add(changes)
 
-			for( const path of paths ) {
-				this.js_content( path ) // recheck on file change
-			}
+			const errors = [] as Error[]
+			const paths = this.tsPaths({ path , exclude: exclude_ext , bundle })
 
-			const errors = ( changes?.errors ?? [] )
-				.filter( ([ filename ])=> paths.includes( filename ) )
-				.map( ([ , error ])=> new Error( error ) )
+			for( const path of paths ) {
+
+				this.js_content( path ) // recheck on file change
+
+				const error = this.js_error( path )
+				if( !error ) continue
+				
+				errors.push( new Error( error ) )
+				this.js_error( path, null ) // ts will refill it on change
+			}
 			
 			this.logBundle( target , Date.now() - start )
 			
