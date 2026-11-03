@@ -3,7 +3,7 @@ namespace $ {
 	export type $mol_build_checker_status = 'ready' | 'watching'
 
 	export type $mol_build_checker_shared = {
-		recheck( versions: string ): $mol_build_checker_changes | null
+		recheck( count: number ): $mol_build_checker_changes | null
 		transpile(text: string): { map: $mol_sourcemap_raw, text: string }
 	}
 
@@ -146,9 +146,9 @@ namespace $ {
 		}
 
 		// Do not place async logic here, to prevent recheck calls race
-		// versions are not used here: they make $mol_wire in builder create a new recheck task after file changes,
+		// count is not used here: it makes $mol_wire in builder create a new recheck task after file changes,
 		// otherwise restarted audit reuses the answer computed for old file versions
-		recheck( _versions: string ) {
+		recheck( _count: number ) {
 			this.changes_cut('watch_off')
 			this.watching(true) // enable host pull in start
 			this.host() // wait host started

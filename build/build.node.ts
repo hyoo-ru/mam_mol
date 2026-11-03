@@ -826,7 +826,7 @@ namespace $ {
 			return [ targetMJS, targetJSMap ]
 		}
 
-		@ $mol_action
+		@ $mol_mem
 		protected recheck_count(next?: null): number {
 			return ($mol_wire_probe(() => this.recheck_count()) ?? -1) + 1
 		}
@@ -842,11 +842,9 @@ namespace $ {
 
 			const checker = this.checker({ path , exclude: exclude_ext , bundle })
 			const paths = this.tsPaths({ path , exclude: exclude_ext , bundle })
-			const versions = paths.map( path => $mol_file.absolute( path ).version() ).join( ',' )
 
-			this.recheck_count()
-			// new versions - new recheck task, old answer from restarted audit is not reused
-			const changes = checker?.recheck( versions )
+			// new count - new recheck task, old answer from restarted audit is not reused
+			const changes = checker?.recheck( this.recheck_count() )
 			if ( changes ) this.checker_changes_add(changes)
 
 			for( const path of paths ) {
