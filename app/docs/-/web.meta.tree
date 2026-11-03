@@ -25,13 +25,19 @@
 	include \/mol/view/tree/test
 \/mol/app/demo/main
 	deploy \/mol/readme.md
-\/rise/demo
-	include \/rise/drag/demo
-	include \/rise/resize/demo
-	include \/rise/resize/ratio/demo
-	include \/rise/toggle/demo
-	include \/rise/range/demo
-	include \/rise/radio/demo
+\/giper
+	pack balls git \https://github.com/giper-dev/balls.git
+	pack baza git \https://github.com/giper-dev/baza.git
+	pack bot git \https://github.com/giper-dev/bot.git
+	pack canary git \https://github.com/giper-dev/canary.git
+	pack iq git \https://github.com/giper-dev/iq.git
+	pack lines git \https://github.com/giper-dev/lines.git
+	pack lingua git \https://github.com/giper-dev/lingua.git
+	pack player git \https://github.com/giper-dev/player.git
+	pack search git \https://github.com/giper-dev/search.git
+	pack web git \https://github.com/giper-dev/web.git
+\/giper/baza/glob
+	deploy \giper/baza/glob/glob.baza
 \/hyoo
 	pack about git \https://github.com/hyoo-ru/about.hyoo.ru.git
 	pack artist git \https://github.com/hyoo-ru/artist.hyoo.ru.git
@@ -97,6 +103,37 @@
 	pack home git \https://github.com/hyoo-ru/hyoo.ru.git
 	pack idea git \https://github.com/hyoo-ru/idea.hyoo.ru.git
 	pack intern git \https://github.com/hyoo-ru/intern.hyoo.ru.git
+\/giper/baza/file
+	include \/mol/offline/install
+\/giper/baza/app
+	include \/mol/offline/install
+	deploy \/giper/baza/logo/logo.svg
+	deploy \/giper/baza/logo/logo-512.png
+	deploy \/giper/baza/logo/bg.webp
+	deploy \/giper/baza/diagram/reg.png
+	deploy \/giper/baza/diagram/list.png
+	deploy \/giper/baza/diagram/dict.png
+	deploy \/giper/baza/diagram/tree.png
+	deploy \/giper/baza/diagram/text.png
+	deploy \/giper/baza/diagram/rich.png
+	deploy \/giper/baza/diagram/json.png
+	deploy \/giper/baza/diagram/sync.png
+	deploy \/giper/baza/diagram/pack.png
+	deploy \/giper/baza/diagram/units.png
+	deploy \/giper/baza/diagram/pass.png
+	deploy \/giper/baza/diagram/gift.png
+	deploy \/giper/baza/diagram/sand.png
+	deploy \/giper/baza/diagram/seal.png
+	deploy \/giper/baza/diagram/files.png
+	deploy \/giper/baza/diagram/network.png
+	deploy \/giper/baza/diagram/jepsen.png
+\/rise/demo
+	include \/rise/drag/demo
+	include \/rise/resize/demo
+	include \/rise/resize/ratio/demo
+	include \/rise/toggle/demo
+	include \/rise/range/demo
+	include \/rise/radio/demo
 \/hyoo/crowd/app
 	deploy \/hyoo/crowd/logo/logo.svg
 \/mol/app/quine
