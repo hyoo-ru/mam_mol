@@ -836,7 +836,7 @@ namespace $ {
 			return [ targetMJS, targetJSMap ]
 		}
 
-		@ $mol_action
+		@ $mol_mem
 		protected recheck_count(next?: null): number {
 			return ($mol_wire_probe(() => this.recheck_count()) ?? -1) + 1
 		}
@@ -851,8 +851,8 @@ namespace $ {
 			var exclude_ext = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
 
 			const checker = this.checker({ path , exclude: exclude_ext , bundle })
-			this.recheck_count()
-			const changes = checker?.recheck()
+
+			const changes = checker?.recheck(this.recheck_count()) // recall recheck if content changed while reading file in js_content
 			if ( changes ) this.checker_changes_add(changes)
 
 			const errors = [] as Error[]
