@@ -852,7 +852,7 @@ namespace $ {
 
 			const checker = this.checker({ path , exclude: exclude_ext , bundle })
 
-			const changes = checker?.recheck(this.recheck_count())
+			const changes = checker?.recheck(this.recheck_count()) // recall recheck if content changed while reading file in js_content
 			if ( changes ) this.checker_changes_add(changes)
 
 			const errors = [] as Error[]
