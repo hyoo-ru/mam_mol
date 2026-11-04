@@ -836,7 +836,7 @@ namespace $ {
 			return [ targetMJS, targetJSMap ]
 		}
 
-		@ $mol_action
+		@ $mol_mem
 		protected recheck_count(next?: null): number {
 			return ($mol_wire_probe(() => this.recheck_count()) ?? -1) + 1
 		}
