@@ -108,11 +108,18 @@ namespace $ {
 			// Пока применяются изменения, run должен ожидать конца flush
 
 			for (const file of this.changed) {
+				try {
+					file.reset()
+				} catch (error) {
+					if ($mol_fail_catch(error)) $mol_fail_log(error)
+				}
+			}
+
+			for (const file of this.changed) {
 				const parent = file.parent()
 
 				try {
 					if ( $mol_wire_probe(() => parent.sub()) ) parent.sub(null)
-					file.reset()
 				} catch (error) {
 					if ($mol_fail_catch(error)) $mol_fail_log(error)
 				}
@@ -362,6 +369,7 @@ namespace $ {
 			if (! this.exists() ) return []
 			if ( this.type() !== 'dir') return []
 
+			this.watcher()
 			this.version()
 
 			// Если дочерний file удалился, список надо обновить
