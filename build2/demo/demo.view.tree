@@ -1,0 +1,11 @@
+$mol_build2_demo $mol_page
+	title @ \Markdown на npm
+	tools /
+		<= Stamp $mol_paragraph
+			title <= stamp \
+	body /
+		<= Source $mol_textarea
+			hint @ \Markdown
+			value? <=> source? \
+		<= Preview $mol_html_view
+			html <= preview \
