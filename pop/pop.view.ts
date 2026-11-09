@@ -13,6 +13,15 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
+		override anchor_visible() {
+			const rect = this.Anchor().view_rect()
+			if (! rect) return false
+			const size = this.$.$mol_window.size()
+
+			return rect.top > 0 && rect.left > 0 && rect.bottom <= size.height && rect.right <= size.width
+		}
+
+		@ $mol_mem
 		sub_visible() {
 			return [
 				this.Anchor() ,
