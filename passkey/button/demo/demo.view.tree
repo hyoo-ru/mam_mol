@@ -1,0 +1,7 @@
+$mol_passkey_button_demo $mol_example_small
+	sub /
+		<= Title \Passkey secret
+		<= Passkey $mol_passkey_button
+			key? => key?
+		<= Info $mol_paragraph
+			title <= info \
