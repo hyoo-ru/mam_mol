@@ -1844,6 +1844,26 @@ $mol_icon_xml $mol_icon path \M12.89,3L14.85,3.4L11.11,21L9.15,20.6L12.89,3M19.5
 
 $mol_icon_marker $mol_icon path \M18.5,1.15C17.97,1.15 17.46,1.34 17.07,1.73L11.26,7.55L16.91,13.2L22.73,7.39C23.5,6.61 23.5,5.35 22.73,4.56L19.89,1.73C19.5,1.34 19,1.15 18.5,1.15M10.3,8.5L4.34,14.46C3.56,15.24 3.56,16.5 4.36,17.31C3.14,18.54 1.9,19.77 0.67,21H6.33L7.19,20.14C7.97,20.9 9.22,20.89 10,20.12L15.95,14.16
 
+$mol_icon_upload $mol_icon path \M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z
+
+$mol_button_open $mol_button_minor
+	sub /
+		<= Icon $mol_icon_upload
+		<= Native $mol_button_open_native
+			files? <=> files_handled? <=> files? /File
+			accept <= accept \
+			multiple <= multiple true
+
+$mol_button_open_native $mol_view
+	dom_name \input
+	files? /File
+	attr *
+		type \file
+		accept <= accept \
+		multiple <= multiple true
+	event *
+		change? <=> picked? null
+
 $giper_baza_rich_edit $mol_view
 	pawn? $giper_baza_rich
 	attr *
@@ -1954,6 +1974,10 @@ $giper_baza_rich_edit $mol_view
 							hint \Alt+C
 							enabled? <=> selected? false
 							click? <=> inline_toggle*code?
+				<= Attach $mol_button_open
+					hint @ \Attach file
+					enabled? <=> selected? false
+					files? <=> attach_files? /
 				- <= Search_toggle $mol_check_icon
 					hint @ \Search / Replace
 					checked? <=> search_active? false
@@ -2212,26 +2236,6 @@ $giper_baza_land_grab $mol_select
 		read @ \👀 Readable
 		deny @ \🔐 Private
 	grab? null $giper_baza_rank_preset
-
-$mol_icon_upload $mol_icon path \M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z
-
-$mol_button_open $mol_button_minor
-	sub /
-		<= Icon $mol_icon_upload
-		<= Native $mol_button_open_native
-			files? <=> files_handled? <=> files? /File
-			accept <= accept \
-			multiple <= multiple true
-
-$mol_button_open_native $mol_view
-	dom_name \input
-	files? /File
-	attr *
-		type \file
-		accept <= accept \
-		multiple <= multiple true
-	event *
-		change? <=> picked? null
 
 $giper_baza_land_rights $mol_list
 	land $giper_baza_land

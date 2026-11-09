@@ -40139,6 +40139,78 @@ declare namespace $ {
 
 //# sourceMappingURL=marker.view.tree.d.ts.map
 declare namespace $ {
+
+	export class $mol_icon_upload extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=upload.view.tree.d.ts.map
+declare namespace $ {
+
+	type $mol_button_open_native__files_mol_button_open_1 = $mol_type_enforce<
+		ReturnType< $mol_button_open['files_handled'] >
+		,
+		ReturnType< $mol_button_open_native['files'] >
+	>
+	type $mol_button_open_native__accept_mol_button_open_2 = $mol_type_enforce<
+		ReturnType< $mol_button_open['accept'] >
+		,
+		ReturnType< $mol_button_open_native['accept'] >
+	>
+	type $mol_button_open_native__multiple_mol_button_open_3 = $mol_type_enforce<
+		ReturnType< $mol_button_open['multiple'] >
+		,
+		ReturnType< $mol_button_open_native['multiple'] >
+	>
+	export class $mol_button_open extends $mol_button_minor {
+		Icon( ): $mol_icon_upload
+		files( next?: readonly(File)[] ): readonly(File)[]
+		files_handled( next?: ReturnType< $mol_button_open['files'] > ): ReturnType< $mol_button_open['files'] >
+		accept( ): string
+		multiple( ): boolean
+		Native( ): $mol_button_open_native
+		sub( ): readonly(any)[]
+	}
+	
+	export class $mol_button_open_native extends $mol_view {
+		accept( ): string
+		multiple( ): boolean
+		picked( next?: any ): any
+		dom_name( ): string
+		files( next?: readonly(File)[] ): readonly(File)[]
+		attr( ): ({ 
+			'type': string,
+			'accept': ReturnType< $mol_button_open_native['accept'] >,
+			'multiple': ReturnType< $mol_button_open_native['multiple'] >,
+		}) 
+		event( ): ({ 
+			change( next?: ReturnType< $mol_button_open_native['picked'] > ): ReturnType< $mol_button_open_native['picked'] >,
+		}) 
+	}
+	
+}
+
+//# sourceMappingURL=open.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $mol_button_open extends $.$mol_button_open {
+        files_handled(next?: readonly File[]): readonly File[];
+    }
+    /**
+     * File open button
+     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_button_demo
+     */
+    class $mol_button_open_native extends $.$mol_button_open_native {
+        dom_node(): HTMLInputElement;
+        picked(): void;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
     function $mol_jsx_attach<Result>(next: typeof $mol_jsx_document, action: () => Result): Result;
 }
 
@@ -43713,39 +43785,54 @@ declare namespace $ {
 		,
 		ReturnType< $mol_pick['bubble_content'] >
 	>
-	type $mol_bar__sub_giper_baza_rich_edit_50 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_bar['sub'] >
-	>
-	type $mol_string__hint_giper_baza_rich_edit_51 = $mol_type_enforce<
+	type $mol_button_open__hint_giper_baza_rich_edit_50 = $mol_type_enforce<
 		string
 		,
-		ReturnType< $mol_string['hint'] >
+		ReturnType< $mol_button_open['hint'] >
 	>
-	type $mol_string__hint_giper_baza_rich_edit_52 = $mol_type_enforce<
-		string
+	type $mol_button_open__enabled_giper_baza_rich_edit_51 = $mol_type_enforce<
+		ReturnType< $giper_baza_rich_edit['selected'] >
 		,
-		ReturnType< $mol_string['hint'] >
+		ReturnType< $mol_button_open['enabled'] >
+	>
+	type $mol_button_open__files_giper_baza_rich_edit_52 = $mol_type_enforce<
+		ReturnType< $giper_baza_rich_edit['attach_files'] >
+		,
+		ReturnType< $mol_button_open['files'] >
 	>
 	type $mol_bar__sub_giper_baza_rich_edit_53 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_bar['sub'] >
 	>
-	type $mol_float__sub_giper_baza_rich_edit_54 = $mol_type_enforce<
+	type $mol_string__hint_giper_baza_rich_edit_54 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_string['hint'] >
+	>
+	type $mol_string__hint_giper_baza_rich_edit_55 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_string['hint'] >
+	>
+	type $mol_bar__sub_giper_baza_rich_edit_56 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_bar['sub'] >
+	>
+	type $mol_float__sub_giper_baza_rich_edit_57 = $mol_type_enforce<
 		ReturnType< $giper_baza_rich_edit['tools'] >
 		,
 		ReturnType< $mol_float['sub'] >
 	>
-	type $mol_view__attr_giper_baza_rich_edit_55 = $mol_type_enforce<
+	type $mol_view__attr_giper_baza_rich_edit_58 = $mol_type_enforce<
 		({ 
 			'contenteditable': ReturnType< $giper_baza_rich_edit['editable'] >,
 		}) 
 		,
 		ReturnType< $mol_view['attr'] >
 	>
-	type $mol_view__event_giper_baza_rich_edit_56 = $mol_type_enforce<
+	type $mol_view__event_giper_baza_rich_edit_59 = $mol_type_enforce<
 		({ 
 			input( next?: ReturnType< $giper_baza_rich_edit['save'] > ): ReturnType< $giper_baza_rich_edit['save'] >,
 			paste( next?: ReturnType< $giper_baza_rich_edit['paste'] > ): ReturnType< $giper_baza_rich_edit['paste'] >,
@@ -43754,7 +43841,7 @@ declare namespace $ {
 		,
 		ReturnType< $mol_view['event'] >
 	>
-	type $mol_view__sub_giper_baza_rich_edit_57 = $mol_type_enforce<
+	type $mol_view__sub_giper_baza_rich_edit_60 = $mol_type_enforce<
 		ReturnType< $giper_baza_rich_edit['content'] >
 		,
 		ReturnType< $mol_view['sub'] >
@@ -43790,6 +43877,8 @@ declare namespace $ {
 		Del_button( ): $mol_button_minor
 		Code_button( ): $mol_button_minor
 		Inline_format_menu( ): $mol_pick
+		attach_files( next?: readonly(any)[] ): readonly(any)[]
+		Attach( ): $mol_button_open
 		Main( ): $mol_bar
 		Search_query( ): $mol_string
 		Search_replace( ): $mol_string
@@ -43835,6 +43924,7 @@ declare namespace $.$$ {
         block_unwrap(event: KeyboardEvent): void;
         /** Wraps selecion to given element type. */
         inline_toggle(Type: string, event: KeyboardEvent): void;
+        attach_files(files: readonly File[]): never[];
         paste(event: ClipboardEvent): void;
         hover(event: PointerEvent): void;
     }
@@ -44887,78 +44977,6 @@ declare namespace $.$$ {
     class $giper_baza_land_grab extends $.$giper_baza_land_grab {
         value(rights?: string): string;
     }
-}
-
-declare namespace $ {
-
-	export class $mol_icon_upload extends $mol_icon {
-		path( ): string
-	}
-	
-}
-
-//# sourceMappingURL=upload.view.tree.d.ts.map
-declare namespace $ {
-
-	type $mol_button_open_native__files_mol_button_open_1 = $mol_type_enforce<
-		ReturnType< $mol_button_open['files_handled'] >
-		,
-		ReturnType< $mol_button_open_native['files'] >
-	>
-	type $mol_button_open_native__accept_mol_button_open_2 = $mol_type_enforce<
-		ReturnType< $mol_button_open['accept'] >
-		,
-		ReturnType< $mol_button_open_native['accept'] >
-	>
-	type $mol_button_open_native__multiple_mol_button_open_3 = $mol_type_enforce<
-		ReturnType< $mol_button_open['multiple'] >
-		,
-		ReturnType< $mol_button_open_native['multiple'] >
-	>
-	export class $mol_button_open extends $mol_button_minor {
-		Icon( ): $mol_icon_upload
-		files( next?: readonly(File)[] ): readonly(File)[]
-		files_handled( next?: ReturnType< $mol_button_open['files'] > ): ReturnType< $mol_button_open['files'] >
-		accept( ): string
-		multiple( ): boolean
-		Native( ): $mol_button_open_native
-		sub( ): readonly(any)[]
-	}
-	
-	export class $mol_button_open_native extends $mol_view {
-		accept( ): string
-		multiple( ): boolean
-		picked( next?: any ): any
-		dom_name( ): string
-		files( next?: readonly(File)[] ): readonly(File)[]
-		attr( ): ({ 
-			'type': string,
-			'accept': ReturnType< $mol_button_open_native['accept'] >,
-			'multiple': ReturnType< $mol_button_open_native['multiple'] >,
-		}) 
-		event( ): ({ 
-			change( next?: ReturnType< $mol_button_open_native['picked'] > ): ReturnType< $mol_button_open_native['picked'] >,
-		}) 
-	}
-	
-}
-
-//# sourceMappingURL=open.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $mol_button_open extends $.$mol_button_open {
-        files_handled(next?: readonly File[]): readonly File[];
-    }
-    /**
-     * File open button
-     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_button_demo
-     */
-    class $mol_button_open_native extends $.$mol_button_open_native {
-        dom_node(): HTMLInputElement;
-        picked(): void;
-    }
-}
-
-declare namespace $ {
 }
 
 declare namespace $ {
