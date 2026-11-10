@@ -6,7 +6,7 @@ namespace $ {
 		
 		textDecoration: 'none',
 		color: $mol_theme.control,
-		stroke: 'currentcolor',
+		stroke: 'currentColor',
 		cursor: 'pointer',
 		padding: $mol_gap.text,
 		boxSizing: 'border-box',

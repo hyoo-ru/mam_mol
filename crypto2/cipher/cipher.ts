@@ -56,17 +56,17 @@ namespace $ {
 			return $mol_crypto2_socket.from( this.asArray() )
 		}
 		
-		/** Makes shared secret for combination of Chiper and Soacket. */
+		/** Makes shared secret for combination of Chiper and Socket. */
 		async secret( pub: $mol_crypto2_socket ) {
 				
-			return $mol_crypto_sacred.from( new Uint8Array(
+			return $mol_crypto2_secret.from( new Uint8Array(
 				await $mol_crypto_native.subtle.deriveBits(
 					{
 						name: "X25519",
 						public: await pub.native(),
 					},
 					await this.nativePrivate(),
-					$mol_crypto_sacred.size * 8,
+					$mol_crypto2_secret.size * 8,
 				).catch( $mol_crypto_restack )
 			) )
 			

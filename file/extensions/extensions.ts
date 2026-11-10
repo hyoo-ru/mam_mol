@@ -93,4 +93,8 @@ namespace $ {
 		
 	} as Record< string, $mol_rest_port_mime >
 	
+	export let $mol_file_extensions_mime = Object.fromEntries(
+		Object.entries( $mol_file_extensions ).map( ([ ext, mime ])=>[ mime, ext ] )
+	)
+	
 }

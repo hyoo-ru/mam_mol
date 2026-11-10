@@ -6,6 +6,9 @@ namespace $ {
 		return null
 	}
 	
+	// Get once because chrome switches to light on print
+	const base = $.$mol_media.match( '(prefers-color-scheme: light)' )
+	
 	/**
 	 * Switcher between light/dark themes (usually for `mol_theme_auto` plugin).
 	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_lights_demo
@@ -13,8 +16,6 @@ namespace $ {
 	export function $mol_lights( this : $ , next? : boolean ) {
 		
 		const arg = parse( this.$mol_state_arg.value( 'mol_lights' ) )
-		
-		const base = this.$mol_media.match( '(prefers-color-scheme: light)' )
 		
 		if( next === undefined ) {
 			return arg ?? this.$mol_state_local.value< boolean >( '$mol_lights' ) ?? base

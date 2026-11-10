@@ -36,9 +36,10 @@ namespace $ {
 		}
 		
 		@ $mol_mem
-		static estimate() {
-			$mol_state_time.now( 1000 )
-			return $mol_wire_sync( this.native() ?? {} ).estimate()
+		static estimate( next?: null ) {
+			const res = $mol_wire_sync( this.native() ?? {} ).estimate()
+			new this.$.$mol_after_timeout( 1000, $mol_wire_async( ()=> this.estimate( null ) ) )
+			return res
 		}
 		
 		static override total() {

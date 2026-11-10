@@ -29,6 +29,12 @@ namespace $ {
 			
 			this.output.setHeader( 'content-disposition', `inline; filename*=UTF-8''${ utf8 }` )
 		}
+
+		@ $mol_action
+		send_prop( name: string, value: string ) {
+			if( this.output.writableEnded ) return
+			this.output.setHeader( name, value )
+		}
 		
 		@ $mol_action
 		send_bin( data: Uint8Array< ArrayBuffer > ) {

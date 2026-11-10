@@ -18,6 +18,9 @@ namespace $ {
 	| '::spelling-error'
 	| '::grammar-error'
 
+	| '::scroll-marker'
+	| '::scroll-marker-group'
+
 	// webkit
 	| '::-webkit-calendar-picker-indicator'
 	| '::-webkit-color-swatch'

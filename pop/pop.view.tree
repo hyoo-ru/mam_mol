@@ -20,6 +20,7 @@ $mol_pop $mol_view
 				0
 			Anchor <= Anchor
 			Sub <= Bubble $mol_pop_bubble
+				visible <= anchor_visible false
 				content <= bubble_content /$mol_view_content
 				height_max <= height_max 9999
 
@@ -30,5 +31,6 @@ $mol_pop_bubble $mol_view
 		maxHeight <= height_max 9999
 	attr *
 		^
+		mol_pop_bubble_visible <= visible false
 		tabindex 0
 		popover \manual

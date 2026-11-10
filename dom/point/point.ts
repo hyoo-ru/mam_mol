@@ -23,6 +23,13 @@ namespace $ {
 			return [ this.node, this.pos ].values()
 		}
 		
+		/** Point before the node. */
+		static nose( node: Node ) {
+			return node.previousSibling
+				? new this( node.previousSibling, -1 )
+				: new this( node.parentNode!, 0 )
+		}
+		
 		/** Point after start of the node. */
 		static head( node: Node ) {
 			return new this( node, 0 )
@@ -34,7 +41,7 @@ namespace $ {
 			return new this( node, length )
 		}
 
-		/** Point after end of the node. */
+		/** Point after the node. */
 		static tail( node: Node ) {
 			return new this( node, -1 )
 		}
@@ -72,11 +79,23 @@ namespace $ {
 		}
 
 		native() {
-			if( this.is_tail() ) return [
+			
+			if( !this.is_tail() ) return [ this.node, this.pos ] as const
+			
+			return [
 				this.node.parentNode!,
 				[ ... this.node.parentNode!.childNodes ].indexOf( this.node as ChildNode ) + 1,
 			] as const
-			return [ this.node, this.pos ] as const
+			
+		}
+		
+		/** Finds child of container which contains this point. */
+		lifted_to( container: Node ): Node {
+			
+			if( this.node === container ) return container
+			if( this.node.parentNode === container ) return this.node
+			
+			return $mol_dom_point.head( this.node.parentNode! ).lifted_to( container )
 		}
 		
 		/** Point near the node. -1: before, +1: after. */
@@ -153,6 +172,20 @@ namespace $ {
 			}
 
 		}
+		
+		// split( ) {
+			
+		// 	if( this.is_tail() ) {
+		// 		if( !this.node.nextSibling ) return $mol_dom_point.tail( this.node.parentNode as Element )
+		// 		const tail = this.node.parentElement
+		// 	}
+			
+		// 	switch( this.node.nodeType ) {
+		// 		case this.node.ELEMENT_NODE: {
+		// 		}
+		// 	}
+			
+		// }
 
 	}
 	

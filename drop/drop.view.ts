@@ -54,10 +54,9 @@ namespace $.$$ {
 		}
 
 		drop( event : DragEvent ) {
-
-			if( event.defaultPrevented ) return
-
-			event.preventDefault()
+			const e = $mol_dom_event.wrap(event)
+			if (e.prevented()) return
+			e.prevented(true)
 
 			setTimeout( ()=> this.status( 'ready' ) )
 			

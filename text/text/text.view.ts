@@ -135,7 +135,7 @@ namespace $.$$ {
 			.map( ( row , rowId ) => {
 				const cells = [] as string[]
 				for( const line of row.trim().split( /\r?\n/ ) ) {
-					const [ _, indent, content ] = /^( *)! (.*)/.exec( line )!
+					const [ _, indent, content ] = /^( *)! (.*)/.exec( line ) ?? [ '', '', '' ]
 					const col = Math.ceil( indent.length / 2 )
 					cells[ col ] = ( cells[ col ] ? cells[ col ] + '\n' : '' ) + content
 				}

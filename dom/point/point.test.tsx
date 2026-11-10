@@ -64,6 +64,24 @@ namespace $.$$ {
 			
 		},
 		
+		"Lift points to common parent"( $ ) {
+			
+			const div = <div>
+				123
+				<p>
+					<span>one</span>
+				</p>
+				456
+			</div>
+			
+			const para = div.firstChild!.nextSibling!
+			const deep = para.firstChild!.firstChild!
+			
+			$mol_assert_equal( $mol_dom_point.head( deep ).lifted_to( div ), para )
+			$mol_assert_equal( $mol_dom_point.head( div.firstChild! ).lifted_to( div ), div.firstChild! )
+			
+		},
+		
 		"move by steps to the end"( $ ) {
 
 			const div = <div>1<span>23</span><br/>4</div>
