@@ -8,8 +8,12 @@ namespace $.$$ {
 			return $mol_error_fence(
 				() => this.bid() ? 'bid' as string: null,
 				e => ($mol_fail_log(e), 'bid'),
-				p => null
+				p => null // do not flash all form field if bid is async
 			)
+		}
+		override label() {
+			this.bid() // flash label if bids async
+			return super.label()
 		}
 
 		@ $mol_mem
