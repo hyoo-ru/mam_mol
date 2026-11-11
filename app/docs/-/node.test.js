@@ -23981,10 +23981,17 @@ var $;
          */
         class $mol_form_field extends $.$mol_form_field {
             state() {
-                return this.bid() ? 'bid' : null;
+                return $mol_error_fence(() => this.bid() ? 'bid' : null, e => e, p => null // do not flash all form field if bid is async
+                );
+            }
+            label() {
+                // flash label if bids async
+                // bid handles error - prevent hiding label on first fetch error
+                this.bid();
+                return super.label();
             }
             bid() {
-                return this.bids().filter(Boolean)[0] ?? '';
+                return $mol_error_fence(() => this.bids().filter(Boolean)[0] ?? '', e => ($mol_fail_log(e), this.$.$mol_error_message(e)));
             }
         }
         __decorate([

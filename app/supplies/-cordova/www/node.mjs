@@ -6567,6 +6567,34 @@ var $;
 
 ;
 "use strict";
+var $;
+(function ($) {
+    function pass(data) {
+        return data;
+    }
+    function $mol_error_fence(task, fallback, loading = pass) {
+        try {
+            return task();
+        }
+        catch (error) {
+            let normalized;
+            try {
+                normalized = $mol_promise_like(error) ? loading(error) : fallback(error);
+            }
+            catch (sub_error) {
+                normalized = $mol_promise_like(sub_error) ? sub_error : new $mol_error_mix(sub_error.message, { error }, sub_error);
+            }
+            if (normalized instanceof Error || $mol_promise_like(normalized)) {
+                $mol_fail_hidden(normalized);
+            }
+            return normalized;
+        }
+    }
+    $.$mol_error_fence = $mol_error_fence;
+})($ || ($ = {}));
+
+;
+"use strict";
 
 
 ;
@@ -6580,10 +6608,17 @@ var $;
          */
         class $mol_form_field extends $.$mol_form_field {
             state() {
-                return this.bid() ? 'bid' : null;
+                return $mol_error_fence(() => this.bid() ? 'bid' : null, e => e, p => null // do not flash all form field if bid is async
+                );
+            }
+            label() {
+                // flash label if bids async
+                // bid handles error - prevent hiding label on first fetch error
+                this.bid();
+                return super.label();
             }
             bid() {
-                return this.bids().filter(Boolean)[0] ?? '';
+                return $mol_error_fence(() => this.bids().filter(Boolean)[0] ?? '', e => ($mol_fail_log(e), this.$.$mol_error_message(e)));
             }
         }
         __decorate([
