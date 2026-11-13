@@ -5,7 +5,7 @@ namespace $ {
 			
 			const db = await $$.$mol_db<{
 				letters: { Key: number, Doc: string, Indexes: {} }
-			}>( '$mol_db_test',
+			}>( '$mol_db_test_crud',
 				mig => mig.store_make( 'letters' )
 			)
 			const trans = db.change( 'letters' )
@@ -47,7 +47,7 @@ namespace $ {
 			
 			const db = await $$.$mol_db<{
 				letters: { Key: number, Doc: string, Indexes: {} }
-			}>( '$mol_db_test',
+			}>( '$mol_db_test_select',
 				mig => mig.store_make( 'letters' )
 			)
 			const trans = db.change( 'letters' )
