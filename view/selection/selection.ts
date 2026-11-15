@@ -6,7 +6,7 @@ namespace $ {
 		static focused( next? : Element[], notify?: 'notify' ) : Element[] {
 			
 			const parents : Element[] = []
-			let element = next?.[0] ?? $mol_dom_context.document.activeElement
+			let element = next?.[0] ?? $mol_dom.document.activeElement
 			while( element?.shadowRoot ) {
 				element = element!.shadowRoot.activeElement
 			}
@@ -14,7 +14,7 @@ namespace $ {
 			while( element ) {
 				parents.push( element )
 				const parent = element.parentNode
-				if( parent instanceof ShadowRoot ) element = parent.host
+				if( parent instanceof $mol_dom.ShadowRoot ) element = parent.host
 				else element = parent as HTMLElement
 			}
 			
@@ -25,7 +25,7 @@ namespace $ {
 				const element = this.focused()![0] as HTMLElement
 				
 				if( element ) element.focus()
-				else $mol_dom_context.blur()
+				else $mol_dom.blur()
 				
 			} )
 
