@@ -625,6 +625,7 @@
     "$hyoo_marked_quote",
     "$hyoo_marked_table",
     "$hyoo_marked_script",
+    "$hyoo_marked_spoiler",
     "$hyoo_marked_paragraph",
     "$hyoo_harp_demo",
     "$hyoo_harp",
