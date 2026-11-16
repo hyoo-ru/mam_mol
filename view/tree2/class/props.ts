@@ -1,6 +1,6 @@
 namespace $ {
 	const err = $mol_view_tree2_error_str
-	type Context = { factory?: $mol_tree2 }
+	type Context = { factory?: $mol_tree2, in_struct?: boolean }
 	const is_writable = (input: $mol_tree2) => input.type.includes('?')
 
 	export function $mol_view_tree2_class_props(
@@ -30,6 +30,9 @@ namespace $ {
 		const props_inner = {} as Record<string, $mol_tree2>
 
 		const add_inner = ( prop: $mol_tree2 ) => {
+			const op = prop.kids[0]
+			if ( op?.type === "^" && op.kids.every( k => k.kids[0].type === "=>" ) ) return
+
 			const { name } = this.$mol_view_tree2_prop_parts(prop)
 			const prev = props_inner[name]
 			if (prev && prev.kids[0]?.toString() !== prop.kids[0]?.toString()) {
@@ -52,11 +55,14 @@ namespace $ {
 			'<=>': upper,
 
 			'^': ( operator, belt, context) => {
+				if ( !context.in_struct ) return [ operator.clone( operator.hack( belt, context ) ) ]
 				if (operator.kids.length === 0) return [ operator ]
 				return upper(operator, belt, context)
 			},
 
 			'': (left, belt, context) => {
+				context = { ...context, in_struct: left.type[0] === "*" || left.type[0] === "/" }
+
 				let right
 				const operator = left.kids[0]
 
@@ -85,16 +91,17 @@ namespace $ {
 				}
 
 				if (right) context = { factory: right.clone([]) }
-				else if( operator && ! context.factory && $mol_view_tree2_class_match( operator ) ) {
-					context = { factory: left.clone([]) }
-				}
+				else if( !context.factory && (
+					!context.in_struct
+					|| (operator && $mol_view_tree2_class_match(operator)))
+				) context = { ...context, factory: left.clone([]) }
 				
 				const hacked = left.clone( left.hack( belt, context ) )
 
 				return [ hacked ]
 			}
 
-		}, { factory: undefined } as Context)
+		}, { factory: undefined, in_struct: true } as Context)
 
 		for (const prop of props_root ) add_inner(prop)
 		
