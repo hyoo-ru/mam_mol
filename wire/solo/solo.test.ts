@@ -631,12 +631,8 @@ namespace $ {
 		} ,
 
 		/**
-		 * Like `_stat_update` → `home.tick` → `stat(null)!.tick()`:
-		 * tick is doubt, clock is stale. Checking clock restales tick.
-		 * A parent that only pulls tick then hits fresh cache — that graph
-		 * stays green even if check falls into track_on. The parent must
-		 * resync the host (stat(null)) before the pull, so a premature
-		 * check-body is a wasted run and the new host ticks again.
+		 * Stale publisher runs the doubt subscriber once.
+		 * The parent runs again only because that result changed, and then reads the fresh cache.
 		 */
 		'Stale pub of a doubt sub does not rerun the sub'( $ ) {
 
@@ -659,7 +655,7 @@ namespace $ {
 
 				@ $mol_wire_solo
 				static auto() {
-					this.pawn( null )!.tick()
+					this.pawn()!.tick()
 					return null
 				}
 
@@ -681,10 +677,52 @@ namespace $ {
 		} ,
 
 		/**
-		 * Like $giper_baza_land.diff_apply destroyed mid-flight: Cursor goes
-		 * non-tracking while auto still points at the temp → mem read uses
-		 * once() → task_get → Promo; outer track_cut → Cut. Also leaks auto
-		 * so later ws onclose / $mol_state_time hit Promo again.
+		 * Inner reads a changed publisher but returns the same value.
+		 * Only the inner runs again. The outer keeps its cache.
+		 */
+		'Outer stays fresh when inner value stays the same'( $ ) {
+
+			class App extends $mol_object2 {
+
+				static $ = $
+				static inner_runs = 0
+				static outer_runs = 0
+
+				@ $mol_wire_solo
+				static seed( next = 0 ) { return next }
+
+				@ $mol_wire_solo
+				static clock() { return this.seed() + Math.random() }
+
+				@ $mol_wire_solo
+				static inner() {
+					this.clock()
+					++ this.inner_runs
+					return 1
+				}
+
+				@ $mol_wire_solo
+				static outer() {
+					++ this.outer_runs
+					return this.inner()
+				}
+
+			}
+
+			$mol_assert_equal( App.outer(), 1 )
+			$mol_assert_equal( App.inner_runs, 1 )
+			$mol_assert_equal( App.outer_runs, 1 )
+
+			App.seed( 1 )
+			$mol_assert_equal( App.outer(), 1 )
+			$mol_assert_equal( App.inner_runs, 2 )
+			$mol_assert_equal( App.outer_runs, 1 )
+
+		} ,
+
+		/**
+		 * Destroying a temp fiber mid-run lets the outer read finish.
+		 * The dead fiber does not stay current, so the next read subscribes as usual.
 		 */
 		'Destroy running action does not Promo or Cut'( $ ) {
 
