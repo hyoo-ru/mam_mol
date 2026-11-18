@@ -191,10 +191,8 @@ namespace $ {
 			if( this.cursor === $mol_wire_cursor.final ) return
 			if( this.cursor >= quant ) return
 			
-			// Check already walks pubs. Subscribers learn the result from put.
-			const checking = this.cursor === $mol_wire_cursor.check
 			this.cursor = quant
-			if( !checking ) this.emit( $mol_wire_cursor.doubt )
+			this.emit( $mol_wire_cursor.doubt )
 			
 			if( quant !== $mol_wire_cursor.stale ) return
 			if( !this.incompleted ) return
