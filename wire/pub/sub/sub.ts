@@ -191,8 +191,10 @@ namespace $ {
 			if( this.cursor === $mol_wire_cursor.final ) return
 			if( this.cursor >= quant ) return
 			
+			// Check learns the result from put, not from this invalidation.
+			const checking = this.cursor === $mol_wire_cursor.check
 			this.cursor = quant
-			this.emit( $mol_wire_cursor.doubt )
+			if( !checking ) this.emit( $mol_wire_cursor.doubt )
 			
 			if( quant !== $mol_wire_cursor.stale ) return
 			if( !this.incompleted ) return

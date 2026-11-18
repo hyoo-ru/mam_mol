@@ -677,6 +677,50 @@ namespace $ {
 		} ,
 
 		/**
+		 * Inner reads a changed publisher and returns the same value.
+		 * The outer does not run again.
+		 */
+		'Outer stays fresh when inner value stays the same'( $ ) {
+
+			class App extends $mol_object2 {
+
+				static $ = $
+				static inner_runs = 0
+				static outer_runs = 0
+
+				@ $mol_wire_solo
+				static seed( next = 0 ) { return next }
+
+				@ $mol_wire_solo
+				static clock() { return this.seed() + Math.random() }
+
+				@ $mol_wire_solo
+				static inner() {
+					this.clock()
+					++ this.inner_runs
+					return 1
+				}
+
+				@ $mol_wire_solo
+				static outer() {
+					++ this.outer_runs
+					return this.inner()
+				}
+
+			}
+
+			$mol_assert_equal( App.outer(), 1 )
+			$mol_assert_equal( App.inner_runs, 1 )
+			$mol_assert_equal( App.outer_runs, 1 )
+
+			App.seed( 1 )
+			$mol_assert_equal( App.outer(), 1 )
+			$mol_assert_equal( App.inner_runs, 2 )
+			$mol_assert_equal( App.outer_runs, 1 )
+
+		} ,
+
+		/**
 		 * Destroying a temp fiber mid-run lets the outer read finish.
 		 * The dead fiber does not stay current, so the next read subscribes as usual.
 		 */
