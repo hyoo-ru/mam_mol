@@ -631,12 +631,8 @@ namespace $ {
 		} ,
 
 		/**
-		 * Like `_stat_update` → `home.tick` → `stat(null)!.tick()`:
-		 * tick is doubt, clock is stale. Checking clock restales tick.
-		 * A parent that only pulls tick then hits fresh cache — that graph
-		 * stays green even if check falls into track_on. The parent must
-		 * resync the host (stat(null)) before the pull, so a premature
-		 * check-body is a wasted run and the new host ticks again.
+		 * Restaling a doubt subscriber during the parent's check does not run it.
+		 * The parent runs again, resyncs the host, and that host ticks once.
 		 */
 		'Stale pub of a doubt sub does not rerun the sub'( $ ) {
 
@@ -681,10 +677,8 @@ namespace $ {
 		} ,
 
 		/**
-		 * Like $giper_baza_land.diff_apply destroyed mid-flight: Cursor goes
-		 * non-tracking while auto still points at the temp → mem read uses
-		 * once() → task_get → Promo; outer track_cut → Cut. Also leaks auto
-		 * so later ws onclose / $mol_state_time hit Promo again.
+		 * Destroying a temp fiber mid-run lets the outer read finish.
+		 * The dead fiber does not stay current, so the next read subscribes as usual.
 		 */
 		'Destroy running action does not Promo or Cut'( $ ) {
 
