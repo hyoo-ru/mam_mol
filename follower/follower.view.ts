@@ -36,11 +36,17 @@ namespace $.$$ {
 
 			const size = this.$.$mol_window.size()
 
-			left = Math.max(0, Math.min(left, size.width - width))
+			const rtl = this.locale().direction() === 'rtl'
+			const min = rtl ? -size.width : 0
+			const max = rtl ? 0 : size.width - width
+
+			left = Math.max(min, Math.min(left, max))
 			top  = Math.max( 0, Math.min( top,  size.height - height ) )
 
 			return { left, top }
 		}
+
+		locale() { return this.$.$mol_locale }
 
 		@ $mol_mem
 		transform() {
