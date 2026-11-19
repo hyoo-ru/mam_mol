@@ -7,6 +7,7 @@ namespace $ {
 		
 		@ $mol_mem
 		static stats() {
+			$mol_mem_persist()
 			$mol_state_time.now( 1000 )
 			return $node.fs.statfsSync( '.' )
 		}
