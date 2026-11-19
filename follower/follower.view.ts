@@ -13,34 +13,37 @@ namespace $.$$ {
 			const anchor_rect = this.Anchor()?.view_rect()
 			if( !anchor_rect ) return null
 
+			const size = this.$.$mol_window.size()
 			const offset = this.offset()
 			const align = this.align()
+
 			const width = self_rect?.width ?? 0
 			const height = self_rect?.height ?? 0
 
 			let left = Math.floor(
-				( prev?.left ?? 0 )
-				- (self_rect?.left ?? 0)
 				+ width * align[0]
-				+ ( anchor_rect?.left ?? 0 )
-				+ offset[0] * ( anchor_rect?.width ?? 0 )
+				+ anchor_rect.left
+				+ offset[0] * anchor_rect.width
 			)
-			
+
+			const base_left = (prev?.left ?? 0) - (self_rect?.left ?? 0)
+
+			left = Math.max(0, Math.min(left, size.width - width)) + base_left
+
 			let top = Math.floor(
-				( prev?.top ?? 0 )
-				- ( self_rect?.top ?? 0 )
 				+ height * align[1]
-				+ ( anchor_rect?.top ?? 0 )
-				+ offset[1] * ( anchor_rect?.height ?? 0 )
+				+ anchor_rect.top
+				+ offset[1] * anchor_rect.height
 			)
 
-			const size = this.$.$mol_window.size()
+			const base_top = (prev?.top ?? 0) - (self_rect?.top ?? 0)
 
-			left = Math.max(0, Math.min(left, size.width - width))
-			top  = Math.max( 0, Math.min( top,  size.height - height ) )
+			top  = Math.max( 0, Math.min( top,  size.height - height ) ) + base_top
 
 			return { left, top }
 		}
+
+		locale() { return this.$.$mol_locale }
 
 		@ $mol_mem
 		transform() {
