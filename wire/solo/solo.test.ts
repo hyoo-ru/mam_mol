@@ -594,6 +594,209 @@ namespace $ {
 			
 		},
 
+		async 'Restart awaited task when pub changed'( $ ) {
+
+			const loads = [] as number[]
+
+			class App extends $mol_object2 {
+
+				static $ = $
+
+				@ $mol_wire_solo
+				static param( next = 0 ) { return next }
+
+				/** Snapshots param without subscription, like a request url. */
+				static async load() {
+					const param = $mol_wire_probe( ()=> this.param() ) ?? 0
+					loads.push( param )
+					return param
+				}
+
+				@ $mol_wire_solo
+				static data(): number {
+					this.param()
+					return $mol_wire_sync( this ).load()
+				}
+
+			}
+
+			const wait = $mol_wire_async( App ).data()
+			App.param( 1 )
+
+			$mol_assert_equal( await $mol_wire_async( App ).data(), 1 )
+			$mol_assert_like( loads, [ 0, 1 ] )
+
+			await wait.catch( ()=> {} )
+
+		} ,
+
+		/**
+		 * Restaling a doubt subscriber during the parent's check does not run it.
+		 * The parent runs again, resyncs the host, and that host ticks once.
+		 */
+		'Stale pub of a doubt sub does not rerun the sub'( $ ) {
+
+			class App extends $mol_object2 {
+
+				static $ = $
+				static runs = 0
+
+				@ $mol_wire_solo
+				static seed( next = 0 ) { return next }
+
+				/** Always a new value on recalc, like Date.now(). */
+				@ $mol_wire_solo
+				static clock() { return this.seed() + Math.random() }
+
+				@ $mol_wire_solo
+				static pawn( next?: App | null ) {
+					return next ?? new App
+				}
+
+				@ $mol_wire_solo
+				static auto() {
+					this.pawn( null )!.tick()
+					return null
+				}
+
+				@ $mol_wire_solo
+				tick() {
+					App.clock()
+					return ++ App.runs
+				}
+
+			}
+
+			$mol_assert_equal( App.auto(), null )
+			$mol_assert_equal( App.runs, 1 )
+
+			App.seed( 1 )
+			App.auto()
+			$mol_assert_equal( App.runs, 2 )
+
+		} ,
+
+		/**
+		 * Inner reads a changed publisher and returns the same value.
+		 * The outer does not run again.
+		 */
+		'Outer stays fresh when inner value stays the same'( $ ) {
+
+			class App extends $mol_object2 {
+
+				static $ = $
+				static inner_runs = 0
+				static outer_runs = 0
+
+				@ $mol_wire_solo
+				static seed( next = 0 ) { return next }
+
+				@ $mol_wire_solo
+				static clock() { return this.seed() + Math.random() }
+
+				@ $mol_wire_solo
+				static inner() {
+					this.clock()
+					++ this.inner_runs
+					return 1
+				}
+
+				@ $mol_wire_solo
+				static outer() {
+					++ this.outer_runs
+					return this.inner()
+				}
+
+			}
+
+			$mol_assert_equal( App.outer(), 1 )
+			$mol_assert_equal( App.inner_runs, 1 )
+			$mol_assert_equal( App.outer_runs, 1 )
+
+			App.seed( 1 )
+			$mol_assert_equal( App.outer(), 1 )
+			$mol_assert_equal( App.inner_runs, 2 )
+			$mol_assert_equal( App.outer_runs, 1 )
+
+		} ,
+
+		/**
+		 * Destroying a temp fiber mid-run lets the outer read finish.
+		 * The dead fiber does not stay current, so the next read subscribes as usual.
+		 */
+		'Destroy running action does not Promo or Cut'( $ ) {
+
+			class App extends $mol_object2 {
+
+				static $ = $
+
+				@ $mol_wire_solo
+				static flag( next = 0 ) { return next }
+
+				@ $mol_wire_method
+				static work() {
+					const fiber = $mol_wire_auto()!
+					fiber.destructor()
+					// channel() → once() while auto was this temp
+					return this.flag()
+				}
+
+				@ $mol_wire_solo
+				static view() {
+					try {
+						this.work()
+						return 'ok'
+					} catch( error: any ) {
+						return error?.message ?? String( error )
+					}
+				}
+
+			}
+
+			$mol_assert_equal( App.view(), 'ok' )
+			// auto must not stay as the dead temp (would Promo on once/task_get)
+			$mol_assert_equal( App.flag( 1 ), 1 )
+
+		} ,
+
+		'Pub outdated by side effect of own check'( $ ) {
+
+			class App extends $mol_object2 {
+
+				static $ = $
+
+				@ $mol_wire_solo
+				static trigger( next = 0 ) { return next }
+
+				@ $mol_wire_solo
+				static source( next = 0 ) { return next }
+
+				@ $mol_wire_solo
+				static data() { return this.source() }
+
+				/** Pushes to `source` without changing own value. */
+				@ $mol_wire_solo
+				static writer() {
+					this.source( this.trigger() )
+					return null
+				}
+
+				@ $mol_wire_solo
+				static view() {
+					const data = this.data()
+					this.writer()
+					return data
+				}
+
+			}
+
+			$mol_assert_equal( App.view(), 0 )
+
+			App.trigger( 1 )
+			$mol_assert_equal( App.view(), 1 )
+
+		} ,
+
 		'Owned value has js-path name' () {
 
 			class App extends $mol_object2 {
