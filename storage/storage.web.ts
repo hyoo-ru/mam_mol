@@ -37,6 +37,7 @@ namespace $ {
 		
 		@ $mol_mem
 		static estimate( next?: null ) {
+			$mol_mem_persist()
 			const res = $mol_wire_sync( this.native() ?? {} ).estimate()
 			new this.$.$mol_after_timeout( 1000, $mol_wire_async( ()=> this.estimate( null ) ) )
 			return res
