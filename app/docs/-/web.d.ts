@@ -7596,7 +7596,8 @@ declare namespace $ {
         lord(next?: $giper_baza_link): $giper_baza_link;
         /** Unique number for encryption */
         salt(): Uint8Array<ArrayBuffer>;
-        hash(): $giper_baza_link;
+        _hash: null | $giper_baza_link;
+        hash(refresh?: null): $giper_baza_link;
         tier_min(): $giper_baza_rank_tier;
         encoded(): boolean;
         _land: null | $giper_baza_land;
