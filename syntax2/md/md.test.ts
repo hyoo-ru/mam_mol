@@ -35,5 +35,19 @@ namespace $ {
 			
 		} ,
 		
+		'$mol_syntax2_md_lookbehind compiles where supported'() {
+			$mol_assert_equal( $mol_syntax2_md_lookbehind( '(?<=a)b' ).exec( 'ab' )?.[0] , 'b' )
+		} ,
+		
+		'$mol_syntax2_md_lookbehind never matches when not compiled'() {
+			$mol_assert_equal( $mol_syntax2_md_lookbehind( '(' ).test( '(' ) , false )
+		} ,
+		
+		'$mol_syntax2_md_code keywords after indent'() {
+			const tokens = [] as string[]
+			$mol_syntax2_md_code.tokenize( '\treturn x' , ( name , found )=> tokens.push( `${ name }:${ found }` ) )
+			$mol_assert_equal( tokens , [ 'code-indent:\t' , 'code-keyword:return ' , 'code-word:x' ] )
+		} ,
+		
 	})
 }
