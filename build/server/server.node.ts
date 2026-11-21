@@ -45,7 +45,135 @@ namespace $ {
 	
 	
 		expressGenerator() { return this.sync_middleware(this.handleRequest.bind(this)) }
-		
+
+		override expressHandlers() {
+			return [ this.expressEditor(), ... super.expressHandlers() ]
+		}
+
+		expressEditor() { return this.sync_middleware( this.expressEditorRequest.bind( this ) ) }
+
+		expressEditorRequest(
+			req : typeof $node.express.request ,
+			res : typeof $node.express.response ,
+		) {
+
+			if( req.path === '/mol/build/client/client.js' ) {
+				res.set( 'Cache-Control', 'no-cache' )
+				return
+			}
+
+			if( req.path !== '/-/edit' ) return
+
+			const place = this.edit_place( String( req.query.class ?? '' ), String( req.query.prop ?? '' ) )
+			this.edit_open( place )
+
+			res.writeHead( 200, { 'Content-Type': 'text/plain' } )
+			res.end( `${ place.file }:${ place.row }:${ place.col }` )
+			return true
+
+		}
+
+		edit_place( name: string, prop: string ) {
+
+			const root = this.build().root()
+			const parts = name.replace( /^\$/, '' ).split( '_' )
+
+			for( let depth = parts.length; depth > 0; --depth ) {
+
+				const dir = root.resolve( parts.slice( 0, depth ).join( '/' ) )
+				if( dir.type() !== 'dir' ) continue
+
+				const place = this.edit_place_dir( dir, name, prop )
+				if( place ) return place
+
+			}
+
+			return $mol_fail( new Error( `Unknown class ${ name }` ) )
+
+		}
+
+		edit_place_dir( dir: $mol_file, name: string, prop: string ) {
+
+			let fallback = null as null | { file: string, row: number, col: number }
+
+			const trees = dir.sub().filter( file => /\.view\.tree$/.test( file.name() ) )
+
+			for( const file of trees ) {
+
+				const tree = this.$.$mol_tree2_from_string( file.text(), file.path() )
+				const cls = tree.kids.find( kid => kid.type === name )
+				if( !cls ) continue
+
+				const span = prop ? this.edit_prop( cls, prop ) : cls.span
+				if( span ) return { file: span.uri, row: span.row, col: span.col }
+
+				fallback ??= { file: cls.span.uri, row: cls.span.row, col: cls.span.col }
+
+			}
+
+			const scripts = dir.sub().filter( file => /\.tsx?$/.test( file.name() ) && !/\.test\.tsx?$/.test( file.name() ) )
+
+			const class_pattern = new RegExp( `class\\s+\\${ name }\\b` )
+			const prop_pattern = new RegExp( `^[ \\t]*(?:(?:override|static|async|get|set)\\s+)*${ prop }\\s*[(<]`, 'm' )
+
+			for( const file of scripts ) {
+
+				const text = file.text()
+				const cls = class_pattern.exec( text )
+				if( !cls ) continue
+
+				const found = prop ? prop_pattern.exec( text ) : cls
+				if( !found ) {
+					fallback ??= { file: file.path(), row: text.slice( 0, cls.index ).split( '\n' ).length, col: 1 }
+					continue
+				}
+
+				return { file: file.path(), row: text.slice( 0, found.index ).split( '\n' ).length, col: 1 }
+
+			}
+
+			return fallback
+
+		}
+
+		edit_prop( cls: $mol_tree2, prop: string ) {
+
+			let ref = undefined as undefined | $mol_span
+
+			const visit = ( node: $mol_tree2 ): undefined | $mol_span => {
+				for( const kid of node.kids ) {
+					if( kid.type.match( /^\w+/ )?.[0] === prop ) {
+						if( kid.kids.length ) return kid.span
+						ref ??= kid.span
+					}
+					const found = visit( kid )
+					if( found ) return found
+				}
+			}
+
+			return visit( cls ) ?? ref
+
+		}
+
+		edit_open( { file, row, col }: { file: string, row: number, col: number } ) {
+
+			const editor = this.$.$mol_env()[ 'LAUNCH_EDITOR' ]
+			if( !editor ) return $mol_fail( new Error( 'Set LAUNCH_EDITOR, for example: LAUNCH_EDITOR=zed or LAUNCH_EDITOR="code -g"' ) )
+
+			const command = /\{file\}/.test( editor )
+				? editor.replace( '{file}', file ).replace( '{row}', String( row ) ).replace( '{col}', String( col ) )
+				: `${ editor } "${ file }:${ row }:${ col }"`
+
+			this.$.$mol_log3_come({
+				place: `${this}.edit_open()`,
+				message: 'Edit',
+				command,
+			})
+
+			$node[ 'child_process' ].spawn( command, { shell: true, stdio: 'ignore', detached: true } ).unref()
+
+		}
+
 		handleRequest(
 			req : typeof $node.express.request ,
 			res : typeof $node.express.response,
