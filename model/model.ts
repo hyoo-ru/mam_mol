@@ -15,12 +15,38 @@ namespace $ {
 			return instance
 		}
 
+        @ $mol_mem
+        token( next? : string | null ) {
+            return this.$.$mol_state_local.value( 'token' , next )
+        }
+
+        @ $mol_mem
+        headers() {
+
+            const headers = {
+            } as Record<string, string | string[]>
+
+            const token = this.token()
+            if( !token ) return headers
+
+            return {
+                ... headers,
+                'Authorization': `Bearer ${token}`,
+            }
+
+        }
+
 		uri() {
 			return ''
 		}
 
+		@ $mol_mem
+        api_base( next?: string ) {
+            return this.$.$mol_state_local.value( '$api_base', next ) ?? $mol_dom_context.location.origin + '/'
+        }
+
 		resource_url() {
-			return this.uri()
+			return this.api_base() + this.uri()
 		}
 
 		method_put() {
@@ -28,17 +54,18 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		json( next? : null | Partial< Raw > ): Raw {
+		json( next? : Raw ) {
 			
 			const prev = this.json_update()
 			if( next ) return this.json_update({ ... prev, ... next })
 			if( next === undefined && prev !== undefined ) return prev
 			
-			let json = $mol_fetch.json( this.resource_url() , {
+			const json = this.$.$mol_fetch.json( this.resource_url() , {
 				method : next ? this.method_put() : 'GET' ,
 				body : next && JSON.stringify( next ) ,
 				headers : { 
 					'content-type' : 'application/json',
+					... this.headers()
 				},
 			} ) as Raw
 			
