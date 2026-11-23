@@ -191,4 +191,17 @@ namespace $ {
 		}
 		
 	}
+	export function $mol_wire_atom_extract<
+		Host,
+		Args extends readonly unknown[],
+		Result,
+	>(
+		host: Host,
+		channel: ( this: Host, ... args: Args )=> Result,
+	) {
+		const task = ( channel as { orig?: { name: string } } ).orig
+		const fiber = task && ( host as any )[ task.name + '()' ]
+		if( fiber instanceof $mol_wire_atom ) return fiber as $mol_wire_atom< Host, Args, Result >
+		return null
+	}
 }
