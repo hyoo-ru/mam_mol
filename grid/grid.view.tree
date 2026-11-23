@@ -12,7 +12,7 @@ $mol_grid $mol_view
 	sub /
 		<= Head
 		<= Table $mol_grid_table
-			sub <= rows /$mol_view
+			rows <= rows /$mol_view
 	Head $mol_grid_row
 		cells <= head_cells /$mol_view
 	Row* $mol_grid_row
