@@ -42,13 +42,22 @@ namespace $.$$ {
 			return coords.length ? coords.center() : new $mol_vector_2d( NaN , NaN )
 		}
 		
-		event_coords( event: PointerEvent | WheelEvent ) {
+		event_relative_coords( event: PointerEvent | WheelEvent ) {
 			
 			const { left, top } = this.view_rect()!
 			
 			return new $mol_vector_2d(
 				Math.round( event.pageX - left ),
 				Math.round( event.pageY - top ),
+			)
+			
+		}
+		
+		event_coords( event: PointerEvent | WheelEvent ) {
+			
+			return new $mol_vector_2d(
+				Math.round( event.pageX ),
+				Math.round( event.pageY ),
 			)
 			
 		}
@@ -108,7 +117,7 @@ namespace $.$$ {
 			if( event instanceof WheelEvent ) {
 				this.pointer_events([ event as any ])
 				if( event.shiftKey ) return this.action_type( 'pan' )
-				return this.action_type( 'zoom' )
+				return this.action_type(this.allow_zoom() ? 'zoom' : '')
 			}
 			
 			return this.action_type( '' )
