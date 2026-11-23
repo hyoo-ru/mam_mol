@@ -3,8 +3,8 @@ $mol_svg_text_box $mol_svg_group
 	width 0
 	sub /
 		<= Back $mol_svg_rect
-			width <= box_width \0.5rem
-			height <= box_height \1rem
+			width <= box_width \8
+			height <= box_height \16
 			pos /
 				<= box_pos_x <= pos_x
 				<= box_pos_y \0
