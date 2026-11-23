@@ -11,12 +11,18 @@ namespace $ {
 				if( this !== $mol_schema_range_ ) return super.toString()
 				return '$mol_schema_range<' + $mol_key(Range) + '>'
 			}	
-			
-			static guard< This extends typeof $mol_schema_any, Val >( this: This, value: Val ): Val & This['default'] {
-				if( typeof value !== 'number' && typeof value !== 'bigint' ) return $mol_fail( new TypeError( 'Uncomparable type', { cause: { value, schema: this } } ) )
-				if(!( value <= Range[1] )) return $mol_fail( new TypeError( 'Too large', { cause: { value, schema: this } } ) )
-				if(!( value >= Range[0] )) return $mol_fail( new TypeError( 'Too small', { cause: { value, schema: this } } ) )
-				return value
+
+			static *issues_lazy< This extends typeof $mol_schema_any, Value >(
+				this: This,
+				value: Value,
+				path: $mol_schema_issue_path = [],
+			): $mol_schema_issues<Value> {
+				if( typeof value !== 'number' && typeof value !== 'bigint' )
+					yield { message: 'Uncomparable type', path, value, schema: this }
+				else if(!( value <= Range[1] ))
+					yield { message: 'Too large', path, value, schema: this }
+				else if(!( value >= Range[0] ))
+					yield { message: 'Too small', path, value, schema: this }
 			}
 			
 			static cast< This extends typeof $mol_schema_any >( this: This, value: Value ): This['default'] {

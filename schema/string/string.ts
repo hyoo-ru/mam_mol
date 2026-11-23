@@ -1,9 +1,13 @@
 namespace $ {
 	export class $mol_schema_string extends $mol_schema_any {
 		
-		static guard< This extends typeof $mol_schema_any, Value >( this: This, value: Value ): Value & This['default'] {
-			if( typeof value === 'string' ) return value
-			return $mol_fail( new TypeError( 'Wrong type', { cause: { value, schema: this } } ) )
+		static *issues_lazy< This extends typeof $mol_schema_any, Value >(
+			this: This,
+			value: Value,
+			path: $mol_schema_issue_path = [],
+		): $mol_schema_issues<Value> {
+			if( typeof value === 'string' ) return
+			yield { message: 'Wrong string', path, value, schema: this }
 		}
 		
 		static cast< This extends typeof $mol_schema_any >( this: This, value: unknown ): This['default'] {

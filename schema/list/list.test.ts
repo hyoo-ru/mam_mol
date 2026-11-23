@@ -24,7 +24,7 @@ namespace $.$$ {
 			$mol_assert_equal( [], Vector.guard( [] ) )
 			$mol_assert_equal( [ 123 ], Vector.guard( [ 123 ] ) )
 			$mol_assert_fail( ()=> Vector.guard( 0 ), 'Non array' )
-			$mol_assert_fail( ()=> Vector.guard( [ false ] ), 'Wrong item' )
+			$mol_assert_fail( ()=> Vector.guard( [ false ] ), 'Wrong float' )
 			
 		},
 		
