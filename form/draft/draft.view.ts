@@ -64,7 +64,12 @@ namespace $.$$ {
 		}
 
 		override model_pick(field: string, next?: $mol_form_draft_state_value | null) {
-			return (this.model() as unknown as Model)[field](next)
+			const model = this.model() as unknown as Model
+			// Enrich error to add field and model.
+			return $mol_error_fence(
+				() => model[field](next),
+				e => new $mol_error_mix(next === undefined ? 'Field read failed' : 'Field write failed', { field, model }, e)
+			)
 		}
 
 		override state_pick(field: string, next?: $mol_form_draft_state_value | null) {
