@@ -65,11 +65,10 @@ namespace $.$$ {
 
 		override model_pick(field: string, next?: $mol_form_draft_state_value | null) {
 			const model = this.model() as unknown as Model
-			// User edited the form but didn't save it (only to local storage)
 			// Enrich error to add field and model.
 			return $mol_error_fence(
 				() => model[field](next),
-				e => new $mol_error_mix(next === undefined ? 'Field read failed' : 'Field read failed', { field, model }, e)
+				e => new $mol_error_mix(next === undefined ? 'Field read failed' : 'Field write failed', { field, model }, e)
 			)
 		}
 
