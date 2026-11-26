@@ -35392,7 +35392,9 @@ var $;
                 return norm_bool(this.value(field, next));
             }
             model_pick(field, next) {
-                return this.model()[field](next);
+                const model = this.model();
+                // Enrich error to add field and model.
+                return $mol_error_fence(() => model[field](next), e => new $mol_error_mix(next === undefined ? 'Field read failed' : 'Field write failed', { field, model }, e));
             }
             state_pick(field, next) {
                 return this.state(next === undefined ? next : { ...this.state(), [field]: next })[field];
